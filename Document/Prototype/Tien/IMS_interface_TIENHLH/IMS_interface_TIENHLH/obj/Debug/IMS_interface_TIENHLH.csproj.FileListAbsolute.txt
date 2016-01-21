@@ -1,0 +1,66 @@
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\ApplicationInsights.config
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\roslyn\csc.exe
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\roslyn\vbc.exe
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\roslyn\VBCSCompiler.exe
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\IMS_interface_TIENHLH.dll.config
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\IMS_interface_TIENHLH.dll
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\IMS_interface_TIENHLH.pdb
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\Microsoft.AI.Web.dll
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\Microsoft.ApplicationInsights.dll
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\Microsoft.AI.Web.xml
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\Microsoft.ApplicationInsights.xml
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\obj\Debug\IMS_interface_TIENHLH.csprojResolveAssemblyReference.cache
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\obj\Debug\IMS_interface_TIENHLH.dll
+C:\Users\Mol\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\obj\Debug\IMS_interface_TIENHLH.pdb
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\ApplicationInsights.config
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\roslyn\csc.exe
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\roslyn\vbc.exe
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\roslyn\VBCSCompiler.exe
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\IMS_interface_TIENHLH.dll.config
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\IMS_interface_TIENHLH.dll
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\IMS_interface_TIENHLH.pdb
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\Microsoft.AI.Web.dll
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\Microsoft.ApplicationInsights.dll
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\Microsoft.AI.Web.xml
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\Microsoft.ApplicationInsights.xml
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\obj\Debug\IMS_interface_TIENHLH.csprojResolveAssemblyReference.cache
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\obj\Debug\IMS_interface_TIENHLH.dll
+C:\Users\Tien Huynh\Desktop\INTERFACE_TIENHLH\IMS_interface_TIENHLH\IMS_interface_TIENHLH\obj\Debug\IMS_interface_TIENHLH.pdb

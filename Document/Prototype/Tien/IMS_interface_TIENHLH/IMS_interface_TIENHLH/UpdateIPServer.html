@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Update ServerIP</title>
+	<meta charset="utf-8" />
+</head>
+<body>
+    <h2>Update IP Address of server</h2>
+    <label>IP Address:</label>
+    <input value="120.7.85.0" disabled/>
+    <br />
+    <br />
+    <label>Status:</label>
+    <input value="deactivate"/>
+    <br />
+    <br />
+    <label>Do you want to change to new IP Address?</label>
+    <label><input type="radio" />Yes</label>
+    <label><input type="radio" />No</label>
+    <br />
+    <br />
+    <label>Do you want to change to new IP Address with condition about region?</label>
+    <label><input type="radio" />Yes</label>
+    <label><input type="radio"  />No</label>
+    <br />
+    <br />
+    <label>Your choice:</label>
+    <label><input type="radio" />Same region with IP of this server</label>
+    <label><input type="radio" />Same region with default gateway</label>
+    <br />
+    <br />
+    <label>Which IP do you want to same region?</label>
+    <select>
+        <option>IP 1</option>
+        <option>IP 2</option>
+    </select>
+    <br />
+    <br />
+    <label>List IP available with your condition:</label>
+    <table border="1">
+        <tr>
+            <td>IP 15</td>
+            <td><input type="radio" /></td>
+        </tr>
+        <tr>
+            <td>IP 16</td>
+            <td><input type="radio" /></td>
+        </tr>
+    </table>
+    <br />
+    <br />
+    <label>Which default gateway do you want to same region?</label>
+    <select>
+        <option>IP 1</option>
+        <option>IP 2</option>
+    </select>
+    <br />
+    <br />
+    <label>List IP available with your condition:</label>
+    <table border="1">
+        <tr>
+            <td>IP 15</td>
+            <td><input type="radio" /></td>
+        </tr>
+        <tr>
+            <td>IP 16</td>
+            <td><input type="radio" /></td>
+        </tr>
+    </table>
+    <br />
+    <br />
+    <input type="button" value="Save" />
+    <input type="button" value="Cancel" />
+</body>
+</html>
