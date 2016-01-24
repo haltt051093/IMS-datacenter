@@ -1,0 +1,57 @@
+﻿@model IEnumerable<IMS.Models.LogConfirmedRequest>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IsConfirmed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LogTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Account.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LogRequest.Comment)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Server.Maker)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsConfirmed)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LogTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Account.Username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LogRequest.Comment)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Server.Maker)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.LogId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.LogId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.LogId })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,50 @@
+﻿@model IMS.Models.LogUpgradedServer
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>LogUpgradedServer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UpgradedContent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpgradedContent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LogTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LogTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Account.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Account.Username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Server.Maker)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Server.Maker)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.LogId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
