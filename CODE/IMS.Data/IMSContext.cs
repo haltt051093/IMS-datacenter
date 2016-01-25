@@ -32,5 +32,7 @@ namespace IMS.Data
             modelBuilder.Entity<Server>();
 
         }
+
+        public System.Data.Entity.DbSet<IMS.Data.Models.Account> Account { get; set; }
     }
 }

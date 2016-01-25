@@ -21,6 +21,8 @@ namespace IMS.Data.Models
 
         public DateTime? RegisteredDate { get; set; }
 
+        public int? RequestId { get; set; }
+
         public virtual Server Server { get; set; }
     }
 }

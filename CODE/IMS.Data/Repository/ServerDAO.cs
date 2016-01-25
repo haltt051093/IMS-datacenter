@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IMS.Data.Generic;
 using IMS.Data.Models;
+using IMS.Data.ViewModels;
 
 namespace IMS.Data.Repository
 {

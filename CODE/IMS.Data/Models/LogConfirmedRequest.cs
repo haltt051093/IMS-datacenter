@@ -12,7 +12,7 @@ namespace IMS.Data.Models
         [Key]
         public int LogId { get; set; }
 
-        public int? LogRequestedId { get; set; }
+        public int? RequestId { get; set; }
 
         public int? StaffId { get; set; }
 
@@ -22,9 +22,11 @@ namespace IMS.Data.Models
 
         public DateTime? LogTime { get; set; }
 
+        public string Comment { get; set; }
+
         public virtual Account Account { get; set; }
 
-        public virtual LogRequest LogRequest { get; set; }
+        public virtual Request Request { get; set; }
 
         public virtual Server Server { get; set; }
     }

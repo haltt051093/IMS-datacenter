@@ -1,0 +1,83 @@
+﻿@model IEnumerable<IMS.Models.AccountIndexViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.Raw("Username")
+        </th>
+        <th>
+           @Html.Raw("Role")
+        </th>
+        <th>
+            @Html.Raw("Status")
+        </th>
+        <th>
+            @Html.Raw("Full Name")
+        </th>
+        <th>
+            @Html.Raw("Phone")
+        </th>
+        <th>
+            @Html.Raw("Email")
+        </th>
+        <th>
+            @Html.Raw("Address")
+        </th>
+        <th>
+            @Html.Raw("Identification")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Role.RoleName)
+        </td>
+        <td>
+            @if (item.Status == true)
+            {
+                @Html.Raw("Activate")
+            }
+            else
+            {
+                @Html.Raw("Deactivate")
+            }
+            
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fullname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Identification)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.AccountId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.AccountId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AccountId })
+        </td>
+    </tr>
+}
+
+</table>

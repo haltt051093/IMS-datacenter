@@ -14,8 +14,6 @@ namespace IMS.Data.Models
 
         public int? ServerId { get; set; }
 
-        public int? PreAssignedIP { get; set; }
-
         public int? AssignedIP { get; set; }
 
         public int? StaffId { get; set; }
@@ -27,8 +25,6 @@ namespace IMS.Data.Models
         public virtual Account Account { get; set; }
 
         public virtual IPAddressPool IPAddressPool { get; set; }
-
-        public virtual IPAddressPool IPAddressPool1 { get; set; }
 
         public virtual Server Server { get; set; }
     }

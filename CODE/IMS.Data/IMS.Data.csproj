@@ -56,30 +56,37 @@
     <Compile Include="Generic\BaseBLO.cs" />
     <Compile Include="Generic\BaseDAO.cs" />
     <Compile Include="Generic\BaseModel.cs" />
-    <Compile Include="Models\Account.cs" />
     <Compile Include="IMSContext.cs" />
+    <Compile Include="Models\Account.cs" />
     <Compile Include="Models\IPAddressPool.cs" />
     <Compile Include="Models\Location.cs" />
-    <Compile Include="Models\LogAppointment.cs" />
-    <Compile Include="Models\LogBlockedIP.cs" />
     <Compile Include="Models\LogConfirmedRequest.cs" />
     <Compile Include="Models\LogIPAllocation.cs" />
+    <Compile Include="Models\LogIPStatus.cs" />
     <Compile Include="Models\LogNote.cs" />
-    <Compile Include="Models\LogRequest.cs" />
+    <Compile Include="Models\LogRequestStatus.cs" />
     <Compile Include="Models\LogServerDelivery.cs" />
     <Compile Include="Models\LogServerMoving.cs" />
     <Compile Include="Models\LogUpgradedServer.cs" />
+    <Compile Include="Models\Model1.cs" />
     <Compile Include="Models\Rack.cs" />
+    <Compile Include="Models\Request.cs" />
     <Compile Include="Models\RequestType.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Server.cs" />
     <Compile Include="Models\ServerAttribute.cs" />
     <Compile Include="Models\ServerIP.cs" />
+    <Compile Include="Models\Shift.cs" />
+    <Compile Include="Models\ShiftGroup.cs" />
+    <Compile Include="Models\StaffAssignment.cs" />
+    <Compile Include="Models\sysdiagrams.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\AccountDAO.cs" />
     <Compile Include="Repository\ServerDAO.cs" />
+    <Compile Include="ViewModels\ServerViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

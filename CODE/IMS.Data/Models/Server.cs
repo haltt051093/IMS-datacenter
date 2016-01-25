@@ -13,21 +13,18 @@ namespace IMS.Data.Models
     {
         public int ServerId { get; set; }
 
-        public int CustomerId { get; set; }
+        public int? CustomerId { get; set; }
 
-        [Required]
         [StringLength(50)]
         public string Maker { get; set; }
 
-        [Required]
         [StringLength(50)]
         public string Modern { get; set; }
 
-        [Required]
         [StringLength(50)]
         public string Power { get; set; }
 
-        public int Size { get; set; }
+        public int? Size { get; set; }
 
         [StringLength(50)]
         public string Status { get; set; }
@@ -38,5 +35,10 @@ namespace IMS.Data.Models
 
         public DateTime? RegisteredDate { get; set; }
 
+        public int? RequestId { get; set; }
+
+        public virtual Account Account { get; set; }
+
+        public virtual Location Location { get; set; }
     }
 }
