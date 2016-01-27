@@ -1,4 +1,4 @@
-﻿@model IEnumerable<IMS.Models.AccountIndexViewModel>
+﻿@model IMS.Models.AccountIndexViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -39,13 +39,13 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.Accounts) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Username)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Role.RoleName)
+            @Html.DisplayFor(modelItem => item.RoleName)
         </td>
         <td>
             @if (item.Status == true)
@@ -56,7 +56,6 @@
             {
                 @Html.Raw("Deactivate")
             }
-            
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Fullname)
@@ -74,7 +73,10 @@
             @Html.DisplayFor(modelItem => item.Identification)
         </td>
         <td>
-            @Html.ActionLink("Edit", "EditStaff", new {id = item.AccountId}) 
+            @{
+                var action = item.RoleName == "Customer" ? "EditCustomer" : "EditStaff";
+            }
+            @Html.ActionLink("Edit", action, new {id = item.AccountId})
             @Html.ActionLink("Delete", "Delete", new {id = item.AccountId})
         </td>
     </tr>

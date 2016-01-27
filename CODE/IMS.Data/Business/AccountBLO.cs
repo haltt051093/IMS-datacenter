@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.Repository;
+using IMS.Data.ViewModels;
 
 namespace IMS.Data.Business
 {
@@ -36,6 +37,11 @@ namespace IMS.Data.Business
         public virtual string GeneratePassword()
         {
             return dao.GeneratePassword();
+        }
+
+        public List<AccountExtendedModel> GetAllAccount()
+        {
+            return dao.GetAllAccount();
         }
     }
 }

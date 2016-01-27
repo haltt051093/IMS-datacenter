@@ -74,11 +74,6 @@ namespace IMS.Data.Generic
             return IMSContext.Current.Set<TModel>().ToList<TModel>();
         }
 
-        public virtual List<TModel> GetAllExcept(Expression<Func<TModel, bool>> predicate)
-        {
-            return IMSContext.Current.Set<TModel>().Where(predicate).ToList(); 
-        } 
-
         public virtual void AddMany(IEnumerable<TModel> entries)
         {
             foreach (var entry in entries)
@@ -155,11 +150,11 @@ namespace IMS.Data.Generic
             return result;
         }
 
-        //public virtual List<CustomModel> RawQuery<CustomModel>(string sql, object[] parameters) where CustomModel : class
-        //{
-        //    return IMSContext.Current.Database.SqlQuery<CustomModel>(sql, parameters)
-        //            .ToList();
-        //}
+        public virtual List<CustomModel> RawQuery<CustomModel>(string sql, object[] parameters) where CustomModel : class
+        {
+            return IMSContext.Current.Database.SqlQuery<CustomModel>(sql, new object[] {})
+                    .ToList();
+        }
 
         protected virtual void CopyValues(TModel source, TModel target)
         {

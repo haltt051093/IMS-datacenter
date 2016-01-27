@@ -16,12 +16,9 @@ namespace IMS.Controllers
         // GET: Account
         public ActionResult Index()
         {
-            IEnumerable<AccountIndexViewModel> AccountViewModels = new List<AccountIndexViewModel>();
-            var Accounts = AccountBLO.Current.GetAll();
-            // su dung mapping cho list
-            AccountViewModels = Mapper.Map<List<Account>,
-            List<AccountIndexViewModel>>(Accounts);
-            return View(AccountViewModels);
+            var data = new AccountIndexViewModel();
+            data.Accounts = AccountBLO.Current.GetAllAccount();
+            return View(data);
         }
 
 
@@ -42,13 +39,8 @@ namespace IMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                // su dung mapping cho list
                 var account = Mapper.Map<AccountCreateViewModel, Account>(accountCreateViewModel);
                 AccountBLO.Current.Add(account);
-                //save to ShiftGroup table
-                ShiftGroup group = accountCreateViewModel.Group;
-                group.StaffId = account.AccountId;
-                ShiftGroupBLO.Current.Add(group);
                 return RedirectToAction("Index");
             }
             return View(accountCreateViewModel);
@@ -63,7 +55,6 @@ namespace IMS.Controllers
             {
                 // su dung mapping cho list
                 var account = Mapper.Map<AccountCreateViewModel, Account>(accountCreateViewModel);
-                //account.Password = AccountBLO.Current.GeneratePassword();
                 AccountBLO.Current.Add(account);
                 return RedirectToAction("Index");
             }
@@ -77,7 +68,7 @@ namespace IMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Account account = AccountBLO.Current.Get(id);
+            Account account = AccountBLO.Current.GetByModel(new Account() {AccountId = id?? 0});
             if (account == null)
             {
                 return HttpNotFound();
@@ -94,18 +85,18 @@ namespace IMS.Controllers
 
         // POST: Account/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult EditStaff(AccountCreateViewModel viewmodel)
         {
-            try
-            {
-                // TODO: Add update logic here
+            Account account = Mapper.Map<AccountCreateViewModel, Account>(viewmodel);
+            AccountBLO.Current.AddOrUpdate(account);
+            return View("Index");
+        }
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+        // POST: Account/Edit/5
+        [HttpPost]
+        public ActionResult EditCustomer(int id, FormCollection collection)
+        {
+            return View("Index");
         }
 
         // GET: Account/Delete/5

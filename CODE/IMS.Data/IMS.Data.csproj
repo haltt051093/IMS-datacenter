@@ -71,7 +71,7 @@
     <Compile Include="Business\ServerBLO.cs" />
     <Compile Include="Business\ServerIPBLO.cs" />
     <Compile Include="Business\ShiftBLO.cs" />
-    <Compile Include="Business\ShiftGroupBLO.cs" />
+    <Compile Include="Business\GroupBLO.cs" />
     <Compile Include="Business\StaffAssignmentBLO.cs" />
     <Compile Include="Generic\BaseBLO.cs" />
     <Compile Include="Generic\BaseDAO.cs" />
@@ -98,7 +98,7 @@
     <Compile Include="Models\ServerAttribute.cs" />
     <Compile Include="Models\ServerIP.cs" />
     <Compile Include="Models\Shift.cs" />
-    <Compile Include="Models\ShiftGroup.cs" />
+    <Compile Include="Models\Group.cs" />
     <Compile Include="Models\StaffAssignment.cs" />
     <Compile Include="Models\sysdiagrams.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -122,8 +122,9 @@
     <Compile Include="Repository\ServerDAO.cs" />
     <Compile Include="Repository\ServerIPDAO.cs" />
     <Compile Include="Repository\ShiftDAO.cs" />
-    <Compile Include="Repository\ShiftGroupDAO.cs" />
+    <Compile Include="Repository\GroupDAO.cs" />
     <Compile Include="Repository\StaffAssignmentDAO.cs" />
+    <Compile Include="ViewModels\AccountExtendedModel.cs" />
     <Compile Include="ViewModels\ServerViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

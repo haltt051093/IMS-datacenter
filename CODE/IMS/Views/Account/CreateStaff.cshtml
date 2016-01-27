@@ -17,13 +17,6 @@
         <h4>Account</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -34,26 +27,26 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Role, "Role", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.RoleId, "Role", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @{
                     var roles = RoleBLO.Current.GetAll().Where(c => c.RoleName != "Customer");
                     var myList = new SelectList(roles, "RoleId", "RoleName");
                 }
-                @Html.DropDownListFor(model => model.Role, myList, new { @class = "form-control", style = "width:200px" })
-                @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.RoleId, myList, new { @class = "form-control", style = "width:200px" })
+                @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Group, "Group", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.GroupId, "Group", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @{
-                    var group = ShiftGroupBLO.Current.SelectGroup();
-                    var myList1 = new SelectList(group,"GroupId","GroupName");
+                    var groups = GroupBLO.Current.GetAll().Where(g => g.GroupName != "No Group");
+                    var myList1 = new SelectList(groups, "GroupId","GroupName");
                 }
-                @Html.DropDownListFor(model => model.Group, myList1, new { @class = "form-control", style = "width:200px" })
-                @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.GroupId, myList1, new { @class = "form-control", style = "width:200px" })
+                @Html.ValidationMessageFor(model => model.GroupId, "", new { @class = "text-danger" })
             </div>
         </div>
 

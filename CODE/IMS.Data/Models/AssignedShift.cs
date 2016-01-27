@@ -21,6 +21,6 @@ namespace IMS.Data.Models
 
         public virtual Shift Shift { get; set; }
 
-        public virtual ShiftGroup ShiftGroup { get; set; }
+        public virtual Group Group { get; set; }
     }
 }

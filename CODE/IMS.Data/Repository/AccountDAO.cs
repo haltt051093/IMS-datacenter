@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 using System.Text;
+using IMS.Data.ViewModels;
 
 namespace IMS.Data.Repository
 {
@@ -46,7 +48,27 @@ namespace IMS.Data.Repository
 
         public override Account GetByKeys(Account entry)
         {
-            return Query(x => x.Username == entry.Username && x.Password == entry.Password).FirstOrDefault();
+            return Query(x => x.AccountId ==  entry.AccountId).FirstOrDefault();
+        }
+
+        //public List<AccountExtendedModel> GetAllAccount()
+        //{
+        //    var query = from a in Table()
+        //        join r in RoleDAO.Current.Table()
+        //            on a.RoleId equals r.RoleId into ar
+        //        from subr in ar.DefaultIfEmpty()
+        //        select new AccountExtendedModel {Account = a, Role = subr ?? new Role()};
+        //    return query.ToList();
+        //}
+
+        public List<AccountExtendedModel> GetAllAccount()
+        {
+            string query = @"select a.*,r.RoleName, g.GroupName from Account as a
+                            left join Role as r
+                            on a.RoleId = r.RoleId
+                            join [Group] g
+                            on a.GroupId = g.GroupId";
+            return RawQuery<AccountExtendedModel>(query, new object[] {});
         }
     }
 }
