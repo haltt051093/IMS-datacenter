@@ -1,3 +1,5 @@
+using IMS.Data.Generic;
+
 namespace IMS.Data.Models
 {
     using System;
@@ -7,15 +9,17 @@ namespace IMS.Data.Models
     using System.Data.Entity.Spatial;
 
     [Table("ShiftGroup")]
-    public partial class ShiftGroup
+    public partial class ShiftGroup : BaseModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ShiftGroup()
         {
-            Shift = new HashSet<Shift>();
+            AssignedShift = new HashSet<AssignedShift>();
         }
 
         [Key]
+        public int ShiftGroupId { get; set; }
+
         public int GroupId { get; set; }
 
         public int? StaffId { get; set; }
@@ -28,6 +32,6 @@ namespace IMS.Data.Models
         public virtual Account Account { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Shift> Shift { get; set; }
+        public virtual ICollection<AssignedShift> AssignedShift { get; set; }
     }
 }

@@ -1,3 +1,5 @@
+using IMS.Data.Generic;
+
 namespace IMS.Data.Models
 {
     using System;
@@ -7,7 +9,7 @@ namespace IMS.Data.Models
     using System.Data.Entity.Spatial;
 
     [Table("LogUpgradedServer")]
-    public partial class LogUpgradedServer
+    public partial class LogUpgradedServer : BaseModel
     {
         [Key]
         public int LogId { get; set; }

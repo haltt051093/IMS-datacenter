@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
@@ -25,31 +26,70 @@ namespace IMS.Controllers
 
 
         // GET: Account/Create
-        public ActionResult Create()
+        public ActionResult CreateCustomer()
         {
-            return View();
+            return View("CreateCustomer");
         }
 
-        // POST: Account/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult CreateStaff()
         {
-            try
-            {
-                // TODO: Add insert logic here
+            return View("CreateStaff");
+        }
 
+        // POST: Account/CreateStaff
+        [HttpPost]
+        public ActionResult CreateStaff(AccountCreateViewModel accountCreateViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                // su dung mapping cho list
+                var account = Mapper.Map<AccountCreateViewModel, Account>(accountCreateViewModel);
+                AccountBLO.Current.Add(account);
+                //save to ShiftGroup table
+                ShiftGroup group = accountCreateViewModel.Group;
+                group.StaffId = account.AccountId;
+                ShiftGroupBLO.Current.Add(group);
                 return RedirectToAction("Index");
             }
-            catch
+            return View(accountCreateViewModel);
+        }
+
+        //POST: Account/CreateCustomer
+        //Doing
+        [HttpPost]
+        public ActionResult CreateCustomer(AccountCreateViewModel accountCreateViewModel)
+        {
+            if (ModelState.IsValid)
             {
-                return View();
+                // su dung mapping cho list
+                var account = Mapper.Map<AccountCreateViewModel, Account>(accountCreateViewModel);
+                //account.Password = AccountBLO.Current.GeneratePassword();
+                AccountBLO.Current.Add(account);
+                return RedirectToAction("Index");
             }
+            return View(accountCreateViewModel);
         }
 
         // GET: Account/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult EditStaff(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Account account = AccountBLO.Current.Get(id);
+            if (account == null)
+            {
+                return HttpNotFound();
+            }
+            var accountviewmodel = Mapper.Map<Account, AccountCreateViewModel>(account);
+            return View(accountviewmodel);
+        }
+
+        // GET: Account/Edit/5
+        public ActionResult EditCustomer(int id)
+        {
+            return View("EditCustomer");
         }
 
         // POST: Account/Edit/5

@@ -1,3 +1,5 @@
+using IMS.Data.Generic;
+
 namespace IMS.Data.Models
 {
     using System;
@@ -6,7 +8,7 @@ namespace IMS.Data.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class LogIPStatus
+    public partial class LogIPStatus : BaseModel
     {
         [Key]
         public int LogId { get; set; }

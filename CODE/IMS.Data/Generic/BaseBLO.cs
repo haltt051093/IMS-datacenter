@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,11 +10,17 @@ namespace IMS.Data.Generic
     public abstract class BaseBLO<TModel> where TModel : BaseModel
     {
         protected BaseDAO<TModel> baseDao;
+        
 
         public virtual TModel GetByModel(TModel entry)
         {
             var result = baseDao.GetByKeys(entry);
             return result == null ? null : result.DuplicateProperties<TModel>();
+        }
+
+        public TModel Get(params object[] keyValues)
+        {
+            return baseDao.Get(keyValues);
         }
 
         public virtual void Add(TModel entry)
@@ -41,6 +48,10 @@ namespace IMS.Data.Generic
             return baseDao.GetAll();
         }
 
+        //public virtual IEnumerable<TModel> GetAllExcept(IEnumerable<TModel> entries)
+        //{
+        //    return baseDao.GetAllExcept(entries);
+        //}
         public virtual void AddMany(IEnumerable<TModel> entries)
         {
             baseDao.AddMany(entries);

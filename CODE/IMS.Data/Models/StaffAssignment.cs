@@ -1,3 +1,5 @@
+using IMS.Data.Generic;
+
 namespace IMS.Data.Models
 {
     using System;
@@ -7,7 +9,7 @@ namespace IMS.Data.Models
     using System.Data.Entity.Spatial;
 
     [Table("StaffAssignment")]
-    public partial class StaffAssignment
+    public partial class StaffAssignment : BaseModel
     {
         public int Id { get; set; }
 
@@ -22,8 +24,12 @@ namespace IMS.Data.Models
 
         public DateTime? ChangedStatusTime { get; set; }
 
+        public string Comment { get; set; }
+
         public virtual Account Account { get; set; }
 
         public virtual Account Account1 { get; set; }
+
+        public virtual Request Request { get; set; }
     }
 }

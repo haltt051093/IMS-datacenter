@@ -52,12 +52,33 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business\AccountBLO.cs" />
+    <Compile Include="Business\AssignedShiftBLO.cs" />
+    <Compile Include="Business\IPAddressPoolBLO.cs" />
+    <Compile Include="Business\LocationBLO.cs" />
+    <Compile Include="Business\LogConfirmedRequestBLO.cs" />
+    <Compile Include="Business\LogIPAllocationBLO.cs" />
+    <Compile Include="Business\LogIPStatusBLO.cs" />
+    <Compile Include="Business\LogNoteBLO.cs" />
+    <Compile Include="Business\LogRequestStatusBLO.cs" />
+    <Compile Include="Business\LogServerDeliveryBLO.cs" />
+    <Compile Include="Business\LogServerMovingBLO.cs" />
+    <Compile Include="Business\LogUpgradedServerBLO.cs" />
+    <Compile Include="Business\RackBLO.cs" />
+    <Compile Include="Business\RequestBLO.cs" />
+    <Compile Include="Business\RequestTypeBLO.cs" />
+    <Compile Include="Business\RoleBLO.cs" />
+    <Compile Include="Business\ServerAttributeBLO.cs" />
     <Compile Include="Business\ServerBLO.cs" />
+    <Compile Include="Business\ServerIPBLO.cs" />
+    <Compile Include="Business\ShiftBLO.cs" />
+    <Compile Include="Business\ShiftGroupBLO.cs" />
+    <Compile Include="Business\StaffAssignmentBLO.cs" />
     <Compile Include="Generic\BaseBLO.cs" />
     <Compile Include="Generic\BaseDAO.cs" />
     <Compile Include="Generic\BaseModel.cs" />
     <Compile Include="IMSContext.cs" />
     <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\AssignedShift.cs" />
     <Compile Include="Models\IPAddressPool.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\LogConfirmedRequest.cs" />
@@ -82,7 +103,27 @@
     <Compile Include="Models\sysdiagrams.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\AccountDAO.cs" />
+    <Compile Include="Repository\AssignedShiftDAO.cs" />
+    <Compile Include="Repository\IPAddressPoolDAO.cs" />
+    <Compile Include="Repository\LocationDAO.cs" />
+    <Compile Include="Repository\LogConfirmedRequestDAO.cs" />
+    <Compile Include="Repository\LogIPAllocationDAO.cs" />
+    <Compile Include="Repository\LogIPStatusDAO.cs" />
+    <Compile Include="Repository\LogNoteDAO.cs" />
+    <Compile Include="Repository\LogRequestStatusDAO.cs" />
+    <Compile Include="Repository\LogServerDeliveryDAO.cs" />
+    <Compile Include="Repository\LogServerMovingDAO.cs" />
+    <Compile Include="Repository\LogUpgradedServerDAO.cs" />
+    <Compile Include="Repository\RackDAO.cs" />
+    <Compile Include="Repository\RequestDAO.cs" />
+    <Compile Include="Repository\RequestTypeDAO.cs" />
+    <Compile Include="Repository\RoleDAO.cs" />
+    <Compile Include="Repository\ServerAttributeDAO.cs" />
     <Compile Include="Repository\ServerDAO.cs" />
+    <Compile Include="Repository\ServerIPDAO.cs" />
+    <Compile Include="Repository\ShiftDAO.cs" />
+    <Compile Include="Repository\ShiftGroupDAO.cs" />
+    <Compile Include="Repository\StaffAssignmentDAO.cs" />
     <Compile Include="ViewModels\ServerViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

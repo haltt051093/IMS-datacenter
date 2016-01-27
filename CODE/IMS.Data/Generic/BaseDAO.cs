@@ -11,11 +11,20 @@ namespace IMS.Data.Generic
 {
     public abstract class BaseDAO<TModel> where TModel : BaseModel
     {
-        protected BaseDAO()
-        {
-        }
+       
+       // private readonly IDbSet<TModel> dbSet;
 
         public abstract TModel GetByKeys(TModel entry);
+        private readonly IDbSet<TModel> dbSet;
+
+        protected BaseDAO()
+        {
+            dbSet = IMSContext.Current.Set<TModel>();
+        }
+        public virtual TModel Get(params object[] keyValues)
+        {
+            return dbSet.Find(keyValues);
+        }
 
         public virtual void Add(TModel entry)
         {
@@ -64,6 +73,11 @@ namespace IMS.Data.Generic
         {
             return IMSContext.Current.Set<TModel>().ToList<TModel>();
         }
+
+        public virtual List<TModel> GetAllExcept(Expression<Func<TModel, bool>> predicate)
+        {
+            return IMSContext.Current.Set<TModel>().Where(predicate).ToList(); 
+        } 
 
         public virtual void AddMany(IEnumerable<TModel> entries)
         {

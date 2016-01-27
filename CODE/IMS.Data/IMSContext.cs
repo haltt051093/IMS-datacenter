@@ -34,5 +34,7 @@ namespace IMS.Data
         }
 
         public System.Data.Entity.DbSet<IMS.Data.Models.Account> Account { get; set; }
+
+        public System.Data.Entity.DbSet<IMS.Data.Models.Role> Role { get; set; }
     }
 }

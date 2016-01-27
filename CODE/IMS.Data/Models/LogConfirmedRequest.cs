@@ -1,3 +1,5 @@
+using IMS.Data.Generic;
+
 namespace IMS.Data.Models
 {
     using System;
@@ -7,7 +9,7 @@ namespace IMS.Data.Models
     using System.Data.Entity.Spatial;
 
     [Table("LogConfirmedRequest")]
-    public partial class LogConfirmedRequest
+    public partial class LogConfirmedRequest : BaseModel
     {
         [Key]
         public int LogId { get; set; }
@@ -18,6 +20,8 @@ namespace IMS.Data.Models
 
         public int? ServerId { get; set; }
 
+        public int? IPAddressId { get; set; }
+
         public bool? IsConfirmed { get; set; }
 
         public DateTime? LogTime { get; set; }
@@ -25,6 +29,8 @@ namespace IMS.Data.Models
         public string Comment { get; set; }
 
         public virtual Account Account { get; set; }
+
+        public virtual IPAddressPool IPAddressPool { get; set; }
 
         public virtual Request Request { get; set; }
 

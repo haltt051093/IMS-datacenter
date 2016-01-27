@@ -1,3 +1,5 @@
+using IMS.Data.Generic;
+
 namespace IMS.Data.Models
 {
     using System;
@@ -7,7 +9,7 @@ namespace IMS.Data.Models
     using System.Data.Entity.Spatial;
 
     [Table("Request")]
-    public partial class Request
+    public partial class Request : BaseModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Request()
@@ -17,6 +19,7 @@ namespace IMS.Data.Models
             LogServerDelivery = new HashSet<LogServerDelivery>();
             LogUpgradedServer = new HashSet<LogUpgradedServer>();
             Server = new HashSet<Server>();
+            StaffAssignment = new HashSet<StaffAssignment>();
         }
 
         public int RequestId { get; set; }
@@ -49,5 +52,8 @@ namespace IMS.Data.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Server> Server { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StaffAssignment> StaffAssignment { get; set; }
     }
 }

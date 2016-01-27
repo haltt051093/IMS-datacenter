@@ -32,5 +32,10 @@ namespace IMS.Data.Business
             baseDao = AccountDAO.Current;
             dao = AccountDAO.Current;
         }
+
+        public virtual string GeneratePassword()
+        {
+            return dao.GeneratePassword();
+        }
     }
 }

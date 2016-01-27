@@ -1,3 +1,5 @@
+using IMS.Data.Generic;
+
 namespace IMS.Data.Models
 {
     using System;
@@ -7,14 +9,8 @@ namespace IMS.Data.Models
     using System.Data.Entity.Spatial;
 
     [Table("Location")]
-    public partial class Location
+    public partial class Location : BaseModel
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Location()
-        {
-            LogServerMoving = new HashSet<LogServerMoving>();
-            Server = new HashSet<Server>();
-        }
 
         public int LocationId { get; set; }
 

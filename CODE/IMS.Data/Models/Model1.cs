@@ -8,32 +8,33 @@ namespace IMS.Data.Models
     public partial class Model1 : DbContext
     {
         public Model1()
-            : base("name=Model1")
+            : base("name=Model11")
         {
         }
 
-        public virtual DbSet<Account> Account { get; set; }
-        public virtual DbSet<IPAddressPool> IPAddressPool { get; set; }
-        public virtual DbSet<Location> Location { get; set; }
-        public virtual DbSet<LogConfirmedRequest> LogConfirmedRequest { get; set; }
-        public virtual DbSet<LogIPAllocation> LogIPAllocation { get; set; }
-        public virtual DbSet<LogIPStatus> LogIPStatus { get; set; }
-        public virtual DbSet<LogNote> LogNote { get; set; }
-        public virtual DbSet<LogRequestStatus> LogRequestStatus { get; set; }
-        public virtual DbSet<LogServerDelivery> LogServerDelivery { get; set; }
-        public virtual DbSet<LogServerMoving> LogServerMoving { get; set; }
-        public virtual DbSet<LogUpgradedServer> LogUpgradedServer { get; set; }
-        public virtual DbSet<Rack> Rack { get; set; }
-        public virtual DbSet<Request> Request { get; set; }
-        public virtual DbSet<RequestType> RequestType { get; set; }
-        public virtual DbSet<Role> Role { get; set; }
-        public virtual DbSet<Server> Server { get; set; }
-        public virtual DbSet<ServerAttribute> ServerAttribute { get; set; }
-        public virtual DbSet<ServerIP> ServerIP { get; set; }
-        public virtual DbSet<Shift> Shift { get; set; }
-        public virtual DbSet<ShiftGroup> ShiftGroup { get; set; }
-        public virtual DbSet<StaffAssignment> StaffAssignment { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        //public virtual DbSet<Account> Account { get; set; }
+        //public virtual DbSet<AssignedShift> AssignedShift { get; set; }
+        //public virtual DbSet<IPAddressPool> IPAddressPool { get; set; }
+        //public virtual DbSet<Location> Location { get; set; }
+        //public virtual DbSet<LogConfirmedRequest> LogConfirmedRequest { get; set; }
+        //public virtual DbSet<LogIPAllocation> LogIPAllocation { get; set; }
+        //public virtual DbSet<LogIPStatus> LogIPStatus { get; set; }
+        //public virtual DbSet<LogNote> LogNote { get; set; }
+        //public virtual DbSet<LogRequestStatus> LogRequestStatus { get; set; }
+        //public virtual DbSet<LogServerDelivery> LogServerDelivery { get; set; }
+        //public virtual DbSet<LogServerMoving> LogServerMoving { get; set; }
+        //public virtual DbSet<LogUpgradedServer> LogUpgradedServer { get; set; }
+        //public virtual DbSet<Rack> Rack { get; set; }
+        //public virtual DbSet<Request> Request { get; set; }
+        //public virtual DbSet<RequestType> RequestType { get; set; }
+        //public virtual DbSet<Role> Role { get; set; }
+        //public virtual DbSet<Server> Server { get; set; }
+        //public virtual DbSet<ServerAttribute> ServerAttribute { get; set; }
+        //public virtual DbSet<ServerIP> ServerIP { get; set; }
+        //public virtual DbSet<Shift> Shift { get; set; }
+        //public virtual DbSet<ShiftGroup> ShiftGroup { get; set; }
+        //public virtual DbSet<StaffAssignment> StaffAssignment { get; set; }
+        //public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
 
         //protected override void OnModelCreating(DbModelBuilder modelBuilder)
         //{
@@ -106,6 +107,11 @@ namespace IMS.Data.Models
         //        .HasMany(e => e.StaffAssignment1)
         //        .WithOptional(e => e.Account1)
         //        .HasForeignKey(e => e.ShiftHeadId);
+
+        //    modelBuilder.Entity<IPAddressPool>()
+        //        .HasMany(e => e.LogConfirmedRequest)
+        //        .WithOptional(e => e.IPAddressPool)
+        //        .HasForeignKey(e => e.IPAddressId);
 
         //    modelBuilder.Entity<IPAddressPool>()
         //        .HasMany(e => e.LogIPAllocation)
