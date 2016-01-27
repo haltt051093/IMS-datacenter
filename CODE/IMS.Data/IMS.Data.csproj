@@ -89,7 +89,6 @@
     <Compile Include="Models\LogServerDelivery.cs" />
     <Compile Include="Models\LogServerMoving.cs" />
     <Compile Include="Models\LogUpgradedServer.cs" />
-    <Compile Include="Models\Model1.cs" />
     <Compile Include="Models\Rack.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\RequestType.cs" />
@@ -100,7 +99,6 @@
     <Compile Include="Models\Shift.cs" />
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\StaffAssignment.cs" />
-    <Compile Include="Models\sysdiagrams.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\AccountDAO.cs" />
     <Compile Include="Repository\AssignedShiftDAO.cs" />

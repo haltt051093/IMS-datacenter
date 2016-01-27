@@ -89,7 +89,7 @@ namespace IMS.Controllers
         {
             Account account = Mapper.Map<AccountCreateViewModel, Account>(viewmodel);
             AccountBLO.Current.AddOrUpdate(account);
-            return View("Index");
+            return RedirectToAction("Index");
         }
 
         // POST: Account/Edit/5

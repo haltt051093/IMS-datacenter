@@ -1,14 +1,9 @@
+using System;
+using System.ComponentModel.DataAnnotations;
 using IMS.Data.Generic;
 
 namespace IMS.Data.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
-
-    [Table("LogServerMoving")]
     public partial class LogServerMoving : BaseModel
     {
         [Key]
@@ -23,11 +18,5 @@ namespace IMS.Data.Models
         public string Reason { get; set; }
 
         public DateTime? LogTime { get; set; }
-
-        public virtual Account Account { get; set; }
-
-        public virtual Location Location { get; set; }
-
-        public virtual Server Server { get; set; }
     }
 }

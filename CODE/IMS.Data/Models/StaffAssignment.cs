@@ -1,14 +1,9 @@
+using System;
+using System.ComponentModel.DataAnnotations;
 using IMS.Data.Generic;
 
 namespace IMS.Data.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
-
-    [Table("StaffAssignment")]
     public partial class StaffAssignment : BaseModel
     {
         public int Id { get; set; }
@@ -25,11 +20,5 @@ namespace IMS.Data.Models
         public DateTime? ChangedStatusTime { get; set; }
 
         public string Comment { get; set; }
-
-        public virtual Account Account { get; set; }
-
-        public virtual Account Account1 { get; set; }
-
-        public virtual Request Request { get; set; }
     }
 }

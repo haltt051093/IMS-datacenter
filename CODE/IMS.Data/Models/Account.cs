@@ -1,14 +1,8 @@
-using IMS.Data.Generic;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.Spatial;
+using IMS.Data.Generic;
 
 namespace IMS.Data.Models
 {
-    
-    [Table("Account")]
     public partial class Account : BaseModel
     {
         [Key]
