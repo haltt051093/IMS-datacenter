@@ -102,7 +102,8 @@ namespace IMS.Controllers
         // GET: Account/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            AccountBLO.Current.Remove(new Account() {AccountId = id});
+            return RedirectToAction("Index");
         }
 
         // POST: Account/Delete/5

@@ -13,9 +13,14 @@ namespace IMS.App_Start
         {
             AutoMapper.Mapper.Initialize(config =>
             {
+                //account
                 config.CreateMap<Account, AccountIndexViewModel>();
                 config.CreateMap<AccountCreateViewModel, Account>();
                 config.CreateMap<Account, AccountCreateViewModel>();
+                //server
+                config.CreateMap<Server, ServerIndexViewModel > ();
+                config.CreateMap<ServerCreateViewModel, Server>();
+                config.CreateMap<Server, ServerCreateViewModel > ();
             });
         }
     }

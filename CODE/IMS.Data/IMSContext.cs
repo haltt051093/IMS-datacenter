@@ -27,7 +27,7 @@ namespace IMS.Data
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Conventions.Remove<PluralizingEntitySetNameConvention>();
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Entity<Account>();
             modelBuilder.Entity<AssignedShift>();
             modelBuilder.Entity<Group>();
@@ -52,8 +52,6 @@ namespace IMS.Data
             modelBuilder.Entity<ServerAttribute>();
         }
 
-        public System.Data.Entity.DbSet<IMS.Data.Models.Account> Account { get; set; }
-
-        public System.Data.Entity.DbSet<IMS.Data.Models.Role> Role { get; set; }
+        public System.Data.Entity.DbSet<IMS.Data.Models.Server> Servers { get; set; }
     }
 }
