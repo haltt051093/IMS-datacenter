@@ -10,7 +10,6 @@ namespace IMS.Data.Models
 
     public partial class Status : BaseModel
     {
-        [Key]
         [StringLength(50)]
         public string StatusCode { get; set; }
 

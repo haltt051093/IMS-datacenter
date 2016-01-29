@@ -11,7 +11,6 @@ namespace IMS.Data.Models
     [Table("Request")]
     public partial class Request : BaseModel
     {
-        [Key]
         [StringLength(50)]
         public string RequestCode { get; set; }
 

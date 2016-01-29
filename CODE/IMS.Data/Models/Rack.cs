@@ -11,7 +11,6 @@ namespace IMS.Data.Models
     [Table("Rack")]
     public partial class Rack : BaseModel
     {
-        [Key]
         [StringLength(50)]
         public string RackCode { get; set; }
 

@@ -27,26 +27,26 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.RoleId, "Role", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Role, "Role", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @{
                     var roles = RoleBLO.Current.GetAll().Where(c => c.RoleName != "Customer");
-                    var myList = new SelectList(roles, "RoleId", "RoleName");
+                    var myList = new SelectList(roles, "RoleName", "RoleName");
                 }
-                @Html.DropDownListFor(model => model.RoleId, myList, new { @class = "form-control", style = "width:200px" })
-                @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.Role, myList, new { @class = "form-control", style = "width:200px" })
+                @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.GroupId, "Group", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.GroupName, "Group", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @{
                     var groups = GroupBLO.Current.GetAll().Where(g => g.GroupName != "No Group");
-                    var myList1 = new SelectList(groups, "GroupId","GroupName");
+                    var myList1 = new SelectList(groups, "GroupName", "GroupName");
                 }
-                @Html.DropDownListFor(model => model.GroupId, myList1, new { @class = "form-control", style = "width:200px" })
-                @Html.ValidationMessageFor(model => model.GroupId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.GroupName, myList1, new { @class = "form-control", style = "width:200px" })
+                @Html.ValidationMessageFor(model => model.GroupName, "", new { @class = "text-danger" })
             </div>
         </div>
 

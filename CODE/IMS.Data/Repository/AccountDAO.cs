@@ -48,7 +48,7 @@ namespace IMS.Data.Repository
 
         public override Account GetByKeys(Account entry)
         {
-            return Query(x => x.Id ==  entry.Id).FirstOrDefault();
+            return Query(x => x.Id == entry.Id).FirstOrDefault();
         }
 
         //public List<AccountExtendedModel> GetAllAccount()
@@ -65,10 +65,10 @@ namespace IMS.Data.Repository
         {
             string query = @"select a.*,r.RoleName, g.GroupName from Account as a
                             left join Role as r
-                            on a.RoleId = r.RoleId
+                            on a.Role = r.RoleName
                             join [Group] g
-                            on a.GroupId = g.GroupId";
-            return RawQuery<AccountExtendedModel>(query, new object[] {});
+                            on a.GroupName = g.GroupName";
+            return RawQuery<AccountExtendedModel>(query, new object[] { });
         }
     }
 }

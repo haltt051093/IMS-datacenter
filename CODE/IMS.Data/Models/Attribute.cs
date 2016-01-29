@@ -11,7 +11,6 @@ namespace IMS.Data.Models
     [Table("Attribute")]
     public partial class Attribute : BaseModel
     {
-        [Key]
         [StringLength(50)]
         public string AttributeName { get; set; }
     }

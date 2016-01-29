@@ -11,8 +11,6 @@ namespace IMS.Data.Models
     [Table("ServerIP")]
     public partial class ServerIP : BaseModel
     {
-        public int Id { get; set; }
-
         [Required]
         [StringLength(50)]
         public string ServerCode { get; set; }

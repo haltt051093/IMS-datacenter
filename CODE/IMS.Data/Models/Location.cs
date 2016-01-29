@@ -11,7 +11,6 @@ namespace IMS.Data.Models
     [Table("Location")]
     public partial class Location : BaseModel
     {
-        [Key]
         [StringLength(50)]
         public string LocationCode { get; set; }
 

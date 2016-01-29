@@ -76,8 +76,8 @@
             @{
                 var action = item.RoleName == "Customer" ? "EditCustomer" : "EditStaff";
             }
-            @Html.ActionLink("Edit", action, new {id = item.AccountId})
-            @Html.ActionLink("Delete", "Delete", new {id = item.AccountId})
+            @Html.ActionLink("Edit", action, new {id = item.Id})
+            @Html.ActionLink("Delete", "Delete", new {id = item.Id})
         </td>
     </tr>
 }

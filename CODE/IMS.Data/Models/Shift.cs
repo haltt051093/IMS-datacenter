@@ -11,7 +11,6 @@ namespace IMS.Data.Models
     [Table("Shift")]
     public partial class Shift : BaseModel
     {
-        [Key]
         [StringLength(50)]
         public string ShiftName { get; set; }
 

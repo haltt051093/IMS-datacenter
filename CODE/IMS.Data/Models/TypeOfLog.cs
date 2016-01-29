@@ -11,7 +11,6 @@ namespace IMS.Data.Models
     [Table("TypeOfLog")]
     public partial class TypeOfLog : BaseModel
     {
-        [Key]
         [StringLength(50)]
         public string TypeCode { get; set; }
 

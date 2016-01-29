@@ -11,7 +11,6 @@ namespace IMS.Data.Models
     [Table("Object")]
     public partial class Object : BaseModel
     {
-        [Key]
         [Column("Object")]
         [StringLength(50)]
         public string Object1 { get; set; }

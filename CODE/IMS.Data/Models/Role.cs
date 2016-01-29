@@ -11,7 +11,6 @@ namespace IMS.Data.Models
     [Table("Role")]
     public partial class Role : BaseModel
     {
-        [Key]
         [StringLength(50)]
         public string RoleName { get; set; }
     }

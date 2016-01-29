@@ -11,7 +11,6 @@ namespace IMS.Data.Models
     [Table("Account")]
     public partial class Account : BaseModel
     {
-        [Key]
         [StringLength(50)]
         public string Username { get; set; }
 
@@ -40,8 +39,5 @@ namespace IMS.Data.Models
         [StringLength(50)]
         public string GroupName { get; set; }
 
-        public virtual Group Group { get; set; }
-
-        public virtual Role Role1 { get; set; }
     }
 }

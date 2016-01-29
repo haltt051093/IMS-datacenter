@@ -11,7 +11,6 @@ namespace IMS.Data.Models
     [Table("Group")]
     public partial class Group : BaseModel
     {
-        [Key]
         [StringLength(50)]
         public string GroupName { get; set; }
     }

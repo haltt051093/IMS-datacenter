@@ -11,8 +11,6 @@ namespace IMS.Data.Models
     [Table("ServerAttribute")]
     public partial class ServerAttribute : BaseModel
     {
-        public int Id { get; set; }
-
         [StringLength(50)]
         public string AttributeName { get; set; }
 
