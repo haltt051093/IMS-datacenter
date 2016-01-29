@@ -61,7 +61,7 @@
                     var group = GroupBLO.Current.GetAll();
                     var myList1 = new SelectList(group, "GroupName", "GroupName");
                 }
-                @Html.DropDownList("Group", myList1, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("GroupName", myList1, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.GroupName, "", new { @class = "text-danger" })
             </div>
         </div>

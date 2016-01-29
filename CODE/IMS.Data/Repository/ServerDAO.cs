@@ -33,14 +33,18 @@ namespace IMS.Data.Repository
 
         public List<ServerExtendedModel> GetAllServer()
         {
+            //var query = from s in Table()
+            //    join l in LocationDAO.Current.Table()
+            //        on s.LocationCode equals l.LocationCode into sl
+            //    from subl in sl.DefaultIfEmpty()
+            //    join st in StatusDAO.Current.Table()
+            //        on s.Status equals st.StatusCode into stsl
+            //    from subst in stsl.DefaultIfEmpty()
+            //    select new ServerExtendedModel { Location = subl, Server = s, Status = subst };
             var query = from s in Table()
-                join l in LocationDAO.Current.Table()
-                    on s.LocationCode equals l.LocationCode into sl
-                from subl in sl.DefaultIfEmpty()
-                join st in StatusDAO.Current.Table()
-                    on s.Status equals st.StatusCode into stsl
-                from subst in stsl.DefaultIfEmpty()
-                select new ServerExtendedModel { Location = subl, Server = s, Status = subst };
+                        join l in LocationDAO.Current.Table()
+                            on s.LocationCode equals l.LocationCode
+                        select new ServerExtendedModel() {UInRack = l.RackCode+l.RackUnit, Server = s};
             return query.ToList();
         }
     }

@@ -16,7 +16,10 @@
             @Html.Raw("Username")
         </th>
         <th>
-           @Html.Raw("Role")
+            @Html.Raw("Role")
+        </th>
+        <th>
+            @Html.Raw("Group")
         </th>
         <th>
             @Html.Raw("Status")
@@ -46,6 +49,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.RoleName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GroupName)
         </td>
         <td>
             @if (item.Status == true)

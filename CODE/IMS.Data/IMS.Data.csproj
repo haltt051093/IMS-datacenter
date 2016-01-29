@@ -119,7 +119,6 @@
     <Compile Include="Repository\TypeOfLogDAO.cs" />
     <Compile Include="ViewModels\AccountExtendedModel.cs" />
     <Compile Include="ViewModels\ServerExtendedModel.cs" />
-    <Compile Include="ViewModels\ServerViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />

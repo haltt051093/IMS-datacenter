@@ -7,10 +7,10 @@ using IMS.Data.Models;
 
 namespace IMS.Data.ViewModels
 {
-    public class ServerExtendedModel
+    public class ServerExtendedModel : Server
     {
         public Server Server { get; set; }
-        public Location Location { get; set; }
-        public Status Status { get; set; }
+        public string UInRack { get; set; }
+        //public Status Status1 { get; set; }
     }
 }
