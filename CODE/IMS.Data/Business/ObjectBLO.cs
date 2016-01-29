@@ -4,33 +4,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IMS.Data.Generic;
-using IMS.Data.Models;
 using IMS.Data.Repository;
 
 namespace IMS.Data.Business
 {
-    public class LogIPStatusBLO : BaseBLO<LogIPStatus>
+    public class ObjectBLO : BaseBLO<Models.Object>
     {
-        protected LogIPStatusDAO dao;
-        private static LogIPStatusBLO instance;
+        protected ObjectDAO dao;
+        private static ObjectBLO instance;
 
-        public static LogIPStatusBLO Current
+        public static ObjectBLO Current
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new LogIPStatusBLO();
+                    instance = new ObjectBLO();
                 }
                 return instance;
             }
         }
 
 
-        private LogIPStatusBLO()
+        private ObjectBLO()
         {
-            baseDao = LogIPStatusDAO.Current;
-            dao = LogIPStatusDAO.Current;
+            baseDao = ObjectDAO.Current;
+            dao = ObjectDAO.Current;
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using IMS.Data.Models;
+using IMS.Data.ViewModels;
 
 namespace IMS.Models
 {
@@ -10,8 +11,8 @@ namespace IMS.Models
     {
         public ServerIndexViewModel()
         {
-            Accounts = new List<Account>();
+            Servers = new List<ServerExtendedModel>();
         }
-        public List<Account> Accounts { get; set; } 
+        public List<ServerExtendedModel> Servers { get; set; } 
     }
 }

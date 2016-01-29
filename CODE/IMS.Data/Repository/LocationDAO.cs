@@ -26,7 +26,7 @@ namespace IMS.Data.Repository
 
         public override Location GetByKeys(Location entry)
         {
-            return Query(x => x.LocationId == entry.LocationId).FirstOrDefault();
+            return Query(x => x.Id == entry.Id).FirstOrDefault();
         }
     }
 }

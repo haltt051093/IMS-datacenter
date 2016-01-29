@@ -8,25 +8,25 @@ using IMS.Data.Models;
 
 namespace IMS.Data.Repository
 {
-    public class LogConfirmedRequestDAO : BaseDAO<LogConfirmedRequest>
+    public class TypeOfLogDAO : BaseDAO<TypeOfLog>
     {
-        public static LogConfirmedRequestDAO instance;
+        public static TypeOfLogDAO instance;
 
-        public static LogConfirmedRequestDAO Current
+        public static TypeOfLogDAO Current
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new LogConfirmedRequestDAO();
+                    instance = new TypeOfLogDAO();
                 }
                 return instance;
             }
         }
 
-        public override LogConfirmedRequest GetByKeys(LogConfirmedRequest entry)
+        public override TypeOfLog GetByKeys(TypeOfLog entry)
         {
-            return Query(x => x.LogId == entry.LogId).FirstOrDefault();
+            return Query(x => x.Id == entry.Id).FirstOrDefault();
         }
     }
 }

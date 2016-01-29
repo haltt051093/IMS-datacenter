@@ -4,29 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IMS.Data.Generic;
-using IMS.Data.Models;
 
 namespace IMS.Data.Repository
 {
-    public class LogIPStatusDAO : BaseDAO<LogIPStatus>
+    public class ObjectDAO : BaseDAO<Models.Object>
     {
-        public static LogIPStatusDAO instance;
+        public static ObjectDAO instance;
 
-        public static LogIPStatusDAO Current
+        public static ObjectDAO Current
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new LogIPStatusDAO();
+                    instance = new ObjectDAO();
                 }
                 return instance;
             }
         }
 
-        public override LogIPStatus GetByKeys(LogIPStatus entry)
+        public override Models.Object GetByKeys(Models.Object entry)
         {
-            return Query(x => x.LogId == entry.LogId).FirstOrDefault();
+            return Query(x => x.Id == entry.Id).FirstOrDefault();
         }
     }
 }

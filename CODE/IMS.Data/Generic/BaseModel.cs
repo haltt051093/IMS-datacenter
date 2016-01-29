@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,9 @@ namespace IMS.Data.Generic
 {
     public abstract class BaseModel
     {
+        [Key]
+        public int Id { get; set; }
+
         public TResult DuplicateProperties<TResult>() where TResult : BaseModel
         {
             var _type = GetType();

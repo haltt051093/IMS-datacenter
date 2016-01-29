@@ -48,7 +48,7 @@ namespace IMS.Data.Repository
 
         public override Account GetByKeys(Account entry)
         {
-            return Query(x => x.AccountId ==  entry.AccountId).FirstOrDefault();
+            return Query(x => x.Id ==  entry.Id).FirstOrDefault();
         }
 
         //public List<AccountExtendedModel> GetAllAccount()

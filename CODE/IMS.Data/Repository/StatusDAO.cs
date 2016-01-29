@@ -8,25 +8,25 @@ using IMS.Data.Models;
 
 namespace IMS.Data.Repository
 {
-    public class LogServerMovingDAO : BaseDAO<LogServerMoving>
+    public class StatusDAO : BaseDAO<Status>
     {
-        public static LogServerMovingDAO instance;
+        public static StatusDAO instance;
 
-        public static LogServerMovingDAO Current
+        public static StatusDAO Current
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new LogServerMovingDAO();
+                    instance = new StatusDAO();
                 }
                 return instance;
             }
         }
 
-        public override LogServerMoving GetByKeys(LogServerMoving entry)
+        public override Status GetByKeys(Status entry)
         {
-            return Query(x => x.LogId == entry.LogId).FirstOrDefault();
+            return Query(x => x.Id == entry.Id).FirstOrDefault();
         }
     }
 }

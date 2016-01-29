@@ -1,14 +1,21 @@
-using System;
-using System.ComponentModel.DataAnnotations;
 using IMS.Data.Generic;
 
 namespace IMS.Data.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
+    [Table("Server")]
     public partial class Server : BaseModel
     {
-        public int ServerId { get; set; }
+        [StringLength(50)]
+        public string ServerCode { get; set; }
 
-        public int? CustomerId { get; set; }
+        [StringLength(50)]
+        public string Customer { get; set; }
 
         [StringLength(50)]
         public string Maker { get; set; }
@@ -23,14 +30,15 @@ namespace IMS.Data.Models
         [StringLength(50)]
         public string Status { get; set; }
 
-        public int? DefaultIP { get; set; }
+        [StringLength(50)]
+        public string DefaultIP { get; set; }
 
-        public int? LocationId { get; set; }
+        [StringLength(50)]
+        public string LocationCode { get; set; }
 
         public DateTime? RegisteredDate { get; set; }
 
-        public int? RequestId { get; set; }
-
         public int? Outlet { get; set; }
+
     }
 }

@@ -18,9 +18,9 @@ namespace IMS.App_Start
                 config.CreateMap<AccountCreateViewModel, Account>();
                 config.CreateMap<Account, AccountCreateViewModel>();
                 //server
-                config.CreateMap<Server, ServerIndexViewModel > ();
-                config.CreateMap<ServerCreateViewModel, Server>();
-                config.CreateMap<Server, ServerCreateViewModel > ();
+                config.CreateMap<Server, ServerIndexViewModel> ();
+                config.CreateMap<ServerIndexViewModel, Server>();
+                config.CreateMap<Server, ServerIndexViewModel> ();
             });
         }
     }

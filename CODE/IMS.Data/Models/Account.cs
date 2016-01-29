@@ -1,21 +1,25 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using IMS.Data.Generic;
 
 namespace IMS.Data.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
+    [Table("Account")]
     public partial class Account : BaseModel
     {
         [Key]
-        public int AccountId { get; set; }
-
         [StringLength(50)]
         public string Username { get; set; }
 
         [StringLength(50)]
         public string Password { get; set; }
 
-        public int? RoleId { get; set; }
+        [StringLength(50)]
+        public string Role { get; set; }
 
         public bool? Status { get; set; }
 
@@ -33,6 +37,11 @@ namespace IMS.Data.Models
         [StringLength(50)]
         public string Identification { get; set; }
 
-        public int? GroupId { get; set; }
+        [StringLength(50)]
+        public string GroupName { get; set; }
+
+        public virtual Group Group { get; set; }
+
+        public virtual Role Role1 { get; set; }
     }
 }

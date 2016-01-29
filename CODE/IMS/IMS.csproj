@@ -157,6 +157,7 @@
     <Compile Include="Models\AccountIndexViewModel.cs" />
     <Compile Include="Models\HomeIndexViewModel.cs" />
     <Compile Include="Models\ServerCreateViewModel.cs" />
+    <Compile Include="Models\ServerDetailsViewModel.cs" />
     <Compile Include="Models\ServerIndexViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -178,7 +179,6 @@
     <Content Include="Views\Account\CreateStaff.cshtml" />
     <Content Include="Views\Account\EditCustomer.cshtml" />
     <Content Include="Views\Account\EditStaff.cshtml" />
-    <Content Include="Views\Server\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -190,6 +190,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\IPAddress\" />
     <Folder Include="Views\Request\" />
+    <Folder Include="Views\Server\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IMS.Core\IMS.Core.csproj">

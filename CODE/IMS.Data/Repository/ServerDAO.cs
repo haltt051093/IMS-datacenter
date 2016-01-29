@@ -30,5 +30,18 @@ namespace IMS.Data.Repository
         {
             return Query(x => x.Maker == "DELL").FirstOrDefault();
         }
+
+        public List<ServerExtendedModel> GetAllServer()
+        {
+            var query = from s in Table()
+                join l in LocationDAO.Current.Table()
+                    on s.LocationCode equals l.LocationCode into sl
+                from subl in sl.DefaultIfEmpty()
+                join st in StatusDAO.Current.Table()
+                    on s.Status equals st.StatusCode into stsl
+                from subst in stsl.DefaultIfEmpty()
+                select new ServerExtendedModel { Location = subl, Server = s, Status = subst };
+            return query.ToList();
+        }
     }
 }

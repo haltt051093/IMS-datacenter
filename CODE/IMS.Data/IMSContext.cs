@@ -30,17 +30,12 @@ namespace IMS.Data
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Entity<Account>();
             modelBuilder.Entity<AssignedShift>();
+            modelBuilder.Entity<Attribute>();
             modelBuilder.Entity<Group>();
             modelBuilder.Entity<IPAddressPool>();
             modelBuilder.Entity<Location>();
-            modelBuilder.Entity<LogConfirmedRequest>();
-            modelBuilder.Entity<LogIPAllocation>();
-            modelBuilder.Entity<LogIPStatus>();
-            modelBuilder.Entity<LogNote>();
-            modelBuilder.Entity<LogRequestStatus>();
-            modelBuilder.Entity<LogServerDelivery>();
-            modelBuilder.Entity<LogServerMoving>();
-            modelBuilder.Entity<LogUpgradedServer>();
+            modelBuilder.Entity<LogChangedContent>();
+            modelBuilder.Entity<Object>();
             modelBuilder.Entity<Rack>();
             modelBuilder.Entity<Request>();
             modelBuilder.Entity<RequestType>();
@@ -50,6 +45,8 @@ namespace IMS.Data
             modelBuilder.Entity<Shift>();
             modelBuilder.Entity<StaffAssignment>();
             modelBuilder.Entity<ServerAttribute>();
+            modelBuilder.Entity<Status>();
+            modelBuilder.Entity<TypeOfLog>();
         }
 
         public System.Data.Entity.DbSet<IMS.Data.Models.Server> Servers { get; set; }

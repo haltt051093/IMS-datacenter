@@ -26,7 +26,7 @@ namespace IMS.Data.Repository
 
         public override Rack GetByKeys(Rack entry)
         {
-            return Query(x => x.RackId == entry.RackId).FirstOrDefault();
+            return Query(x => x.Id == entry.Id).FirstOrDefault();
         }
     }
 }

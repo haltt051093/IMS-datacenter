@@ -21,9 +21,10 @@ namespace IMS.Data.Generic
         {
             dbSet = IMSContext.Current.Set<TModel>();
         }
-        public virtual TModel Get(params object[] keyValues)
+
+        public TModel GetById(int? id)
         {
-            return dbSet.Find(keyValues);
+            return Query(x => x.Id == id).FirstOrDefault();
         }
 
         public virtual void Add(TModel entry)

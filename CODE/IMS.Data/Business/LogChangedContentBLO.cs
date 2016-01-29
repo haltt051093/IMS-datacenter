@@ -9,28 +9,28 @@ using IMS.Data.Repository;
 
 namespace IMS.Data.Business
 {
-    public class LogRequestStatusBLO : BaseBLO<LogRequestStatus>
+    public class LogChangedContentBLO : BaseBLO<LogChangedContent>
     {
-        protected LogRequestStatusDAO dao;
-        private static LogRequestStatusBLO instance;
+        protected LogChangedContentDAO dao;
+        private static LogChangedContentBLO instance;
 
-        public static LogRequestStatusBLO Current
+        public static LogChangedContentBLO Current
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new LogRequestStatusBLO();
+                    instance = new LogChangedContentBLO();
                 }
                 return instance;
             }
         }
 
 
-        private LogRequestStatusBLO()
+        private LogChangedContentBLO()
         {
-            baseDao = LogRequestStatusDAO.Current;
-            dao = LogRequestStatusDAO.Current;
+            baseDao = LogChangedContentDAO.Current;
+            dao = LogChangedContentDAO.Current;
         }
     }
 }

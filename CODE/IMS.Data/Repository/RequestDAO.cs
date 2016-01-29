@@ -26,7 +26,7 @@ namespace IMS.Data.Repository
 
         public override Request GetByKeys(Request entry)
         {
-            return Query(x => x.RequestId == entry.RequestId).FirstOrDefault();
+            return Query(x => x.Id == entry.Id).FirstOrDefault();
         }
     }
 }

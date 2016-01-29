@@ -8,25 +8,25 @@ using IMS.Data.Models;
 
 namespace IMS.Data.Repository
 {
-    public class LogIPAllocationDAO : BaseDAO<LogIPAllocation>
+    public class RackOfCustomerDAO : BaseDAO<RackOfCustomer>
     {
-        public static LogIPAllocationDAO instance;
+        public static RackOfCustomerDAO instance;
 
-        public static LogIPAllocationDAO Current
+        public static RackOfCustomerDAO Current
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new LogIPAllocationDAO();
+                    instance = new RackOfCustomerDAO();
                 }
                 return instance;
             }
         }
 
-        public override LogIPAllocation GetByKeys(LogIPAllocation entry)
+        public override RackOfCustomer GetByKeys(RackOfCustomer entry)
         {
-            return Query(x => x.LogId == entry.LogId).FirstOrDefault();
+            return Query(x => x.Id == entry.Id).FirstOrDefault();
         }
     }
 }

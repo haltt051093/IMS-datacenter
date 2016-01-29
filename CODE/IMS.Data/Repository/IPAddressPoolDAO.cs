@@ -26,7 +26,7 @@ namespace IMS.Data.Repository
 
         public override IPAddressPool GetByKeys(IPAddressPool entry)
         {
-            return Query(x => x.IPAddress == entry.IPAddress).FirstOrDefault();
+            return Query(x => x.Id == entry.Id).FirstOrDefault();
         }
     }
 }

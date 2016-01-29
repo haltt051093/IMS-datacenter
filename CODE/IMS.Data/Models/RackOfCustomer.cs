@@ -8,12 +8,16 @@ namespace IMS.Data.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("RequestType")]
-    public partial class RequestType : BaseModel
+    [Table("RackOfCustomer")]
+    public partial class RackOfCustomer : BaseModel
     {
-        [Key]
-        [Column("RequestType")]
+        [Required]
         [StringLength(50)]
-        public string RequestType1 { get; set; }
+        public string RackCode { get; set; }
+
+        [StringLength(50)]
+        public string Customer { get; set; }
+
+        public DateTime? RegisteredDate { get; set; }
     }
 }

@@ -18,9 +18,9 @@ namespace IMS.Data.Generic
             return result == null ? null : result.DuplicateProperties<TModel>();
         }
 
-        public TModel Get(params object[] keyValues)
+        public TModel GetById(int? id)
         {
-            return baseDao.Get(keyValues);
+            return baseDao.GetById(id);
         }
 
         public virtual void Add(TModel entry)

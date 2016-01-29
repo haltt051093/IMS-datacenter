@@ -9,28 +9,28 @@ using IMS.Data.Repository;
 
 namespace IMS.Data.Business
 {
-    public class LogServerMovingBLO : BaseBLO<LogServerMoving>
+    public class TypeOfLogBLO : BaseBLO<TypeOfLog>
     {
-        protected LogServerMovingDAO dao;
-        private static LogServerMovingBLO instance;
+        protected TypeOfLogDAO dao;
+        private static TypeOfLogBLO instance;
 
-        public static LogServerMovingBLO Current
+        public static TypeOfLogBLO Current
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new LogServerMovingBLO();
+                    instance = new TypeOfLogBLO();
                 }
                 return instance;
             }
         }
 
 
-        private LogServerMovingBLO()
+        private TypeOfLogBLO()
         {
-            baseDao = LogServerMovingDAO.Current;
-            dao = LogServerMovingDAO.Current;
+            baseDao = TypeOfLogDAO.Current;
+            dao = TypeOfLogDAO.Current;
         }
     }
 }

@@ -9,28 +9,28 @@ using IMS.Data.Repository;
 
 namespace IMS.Data.Business
 {
-    public class LogUpgradedServerBLO : BaseBLO<LogUpgradedServer>
+    public class RackOfCustomerBLO : BaseBLO<RackOfCustomer>
     {
-        protected LogUpgradedServerDAO dao;
-        private static LogUpgradedServerBLO instance;
+        protected RackOfCustomerDAO dao;
+        private static RackOfCustomerBLO instance;
 
-        public static LogUpgradedServerBLO Current
+        public static RackOfCustomerBLO Current
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new LogUpgradedServerBLO();
+                    instance = new RackOfCustomerBLO();
                 }
                 return instance;
             }
         }
 
 
-        private LogUpgradedServerBLO()
+        private RackOfCustomerBLO()
         {
-            baseDao = LogUpgradedServerDAO.Current;
-            dao = LogUpgradedServerDAO.Current;
+            baseDao = RackOfCustomerDAO.Current;
+            dao = RackOfCustomerDAO.Current;
         }
     }
 }

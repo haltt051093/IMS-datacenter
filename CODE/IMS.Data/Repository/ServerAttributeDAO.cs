@@ -26,7 +26,7 @@ namespace IMS.Data.Repository
 
         public override ServerAttribute GetByKeys(ServerAttribute entry)
         {
-            return Query(x => x.AttributeId == entry.AttributeId).FirstOrDefault();
+            return Query(x => x.Id == entry.Id).FirstOrDefault();
         }
     }
 }

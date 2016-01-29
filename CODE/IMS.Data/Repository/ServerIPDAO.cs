@@ -26,7 +26,7 @@ namespace IMS.Data.Repository
 
         public override ServerIP GetByKeys(ServerIP entry)
         {
-            return Query(x => x.ServerId == entry.ServerId).FirstOrDefault();
+            return Query(x => x.Id == entry.Id).FirstOrDefault();
         }
     }
 }

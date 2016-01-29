@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using IMS.Data.Business;
+using IMS.Models;
 
 namespace IMS.Controllers
 {
@@ -11,11 +13,14 @@ namespace IMS.Controllers
         // GET: Server
         public ActionResult Index()
         {
-            return View();
+            var servers = ServerBLO.Current.GetAllServer();
+            var data = new ServerIndexViewModel();
+            data.Servers = servers;
+            return View(data);
         }
 
         // GET: Server/Details/5
-        public ActionResult Details(int id)
+        public ActionResult ServerDetails(int id)
         {
             return View();
         }

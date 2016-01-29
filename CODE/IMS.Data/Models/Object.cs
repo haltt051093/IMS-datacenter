@@ -8,12 +8,12 @@ namespace IMS.Data.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("RequestType")]
-    public partial class RequestType : BaseModel
+    [Table("Object")]
+    public partial class Object : BaseModel
     {
         [Key]
-        [Column("RequestType")]
+        [Column("Object")]
         [StringLength(50)]
-        public string RequestType1 { get; set; }
+        public string Object1 { get; set; }
     }
 }

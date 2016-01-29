@@ -8,25 +8,25 @@ using IMS.Data.Models;
 
 namespace IMS.Data.Repository
 {
-    public class LogUpgradedServerDAO : BaseDAO<LogUpgradedServer>
+    public class AttributeDAO : BaseDAO<Models.Attribute>
     {
-        public static LogUpgradedServerDAO instance;
+        public static AttributeDAO instance;
 
-        public static LogUpgradedServerDAO Current
+        public static AttributeDAO Current
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new LogUpgradedServerDAO();
+                    instance = new AttributeDAO();
                 }
                 return instance;
             }
         }
 
-        public override LogUpgradedServer GetByKeys(LogUpgradedServer entry)
+        public override Models.Attribute GetByKeys(Models.Attribute entry)
         {
-            return Query(x => x.LogId == entry.LogId).FirstOrDefault();
+            return Query(x => x.Id == entry.Id).FirstOrDefault();
         }
     }
 }

@@ -26,7 +26,7 @@ namespace IMS.Data.Repository
 
         public override AssignedShift GetByKeys(AssignedShift entry)
         {
-            return Query(x => x.GroupId == entry.GroupId).FirstOrDefault();
+            return Query(x => x.Id == entry.Id).FirstOrDefault();
         }
 
          

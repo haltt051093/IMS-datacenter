@@ -68,7 +68,7 @@ namespace IMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Account account = AccountBLO.Current.GetByModel(new Account() {AccountId = id?? 0});
+            Account account = AccountBLO.Current.GetById(id);
             if (account == null)
             {
                 return HttpNotFound();
@@ -102,7 +102,7 @@ namespace IMS.Controllers
         // GET: Account/Delete/5
         public ActionResult Delete(int id)
         {
-            AccountBLO.Current.Remove(new Account() {AccountId = id});
+            AccountBLO.Current.Remove(new Account() {Id = id});
             return RedirectToAction("Index");
         }
 

@@ -4,33 +4,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IMS.Data.Generic;
-using IMS.Data.Models;
 using IMS.Data.Repository;
 
 namespace IMS.Data.Business
 {
-    public class LogNoteBLO : BaseBLO<LogNote>
+    public class AttributeBLO : BaseBLO<Models.Attribute>
     {
-        protected LogNoteDAO dao;
-        private static LogNoteBLO instance;
+        protected AttributeDAO dao;
+        private static AttributeBLO instance;
 
-        public static LogNoteBLO Current
+        public static AttributeBLO Current
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new LogNoteBLO();
+                    instance = new AttributeBLO();
                 }
                 return instance;
             }
         }
 
 
-        private LogNoteBLO()
+        private AttributeBLO()
         {
-            baseDao = LogNoteDAO.Current;
-            dao = LogNoteDAO.Current;
+            baseDao = AttributeDAO.Current;
+            dao = AttributeDAO.Current;
         }
     }
 }

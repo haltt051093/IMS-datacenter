@@ -26,7 +26,7 @@ namespace IMS.Data.Repository
 
         public override Role GetByKeys(Role entry)
         {
-            return Query(x => x.RoleName == entry.RoleName).FirstOrDefault();
+            return Query(x => x.Id == entry.Id).FirstOrDefault();
         }
 
         //public List<Role> GetAllExcept(Role role)

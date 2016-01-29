@@ -1,14 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using IMS.Data.Generic;
 
 namespace IMS.Data.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
+    [Table("IPAddressPool")]
     public partial class IPAddressPool : BaseModel
     {
-        public int Id { get; set; }
-
+        [Key]
         [StringLength(50)]
         public string IPAddress { get; set; }
 
@@ -18,7 +21,8 @@ namespace IMS.Data.Models
         [StringLength(50)]
         public string Subnetmask { get; set; }
 
-        public int? StaffId { get; set; }
+        [StringLength(50)]
+        public string Username { get; set; }
 
         public DateTime? RegisteredDate { get; set; }
 
