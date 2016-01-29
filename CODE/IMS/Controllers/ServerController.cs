@@ -13,9 +13,8 @@ namespace IMS.Controllers
         // GET: Server
         public ActionResult Index()
         {
-            var servers = ServerBLO.Current.GetAllServer();
             var data = new ServerIndexViewModel();
-            data.Servers = servers;
+            data.Servers = ServerBLO.Current.GetAllServer(); 
             return View(data);
         }
 

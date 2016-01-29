@@ -20,7 +20,7 @@ namespace IMS.Data.Models
         public int? RackUnit { get; set; }
 
         [StringLength(50)]
-        public string Status { get; set; }
+        public string StatusCode { get; set; }
 
         public virtual Status Status1 { get; set; }
 

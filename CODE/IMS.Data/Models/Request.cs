@@ -27,6 +27,6 @@ namespace IMS.Data.Models
         public DateTime? RequestedTime { get; set; }
 
         [StringLength(50)]
-        public string Status { get; set; }
+        public string StatusCode { get; set; }
     }
 }

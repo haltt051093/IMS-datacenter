@@ -34,18 +34,26 @@ namespace IMS.Data.Repository
         public List<ServerExtendedModel> GetAllServer()
         {
             //var query = from s in Table()
-            //    join l in LocationDAO.Current.Table()
-            //        on s.LocationCode equals l.LocationCode into sl
-            //    from subl in sl.DefaultIfEmpty()
-            //    join st in StatusDAO.Current.Table()
-            //        on s.Status equals st.StatusCode into stsl
-            //    from subst in stsl.DefaultIfEmpty()
-            //    select new ServerExtendedModel { Location = subl, Server = s, Status = subst };
-            var query = from s in Table()
-                        join l in LocationDAO.Current.Table()
-                            on s.LocationCode equals l.LocationCode
-                        select new ServerExtendedModel() {UInRack = l.RackCode+l.RackUnit, Server = s};
-            return query.ToList();
+            //            join l in LocationDAO.Current.Table()
+            //                on s.LocationCode equals l.LocationCode into sl
+            //            from subl in sl.DefaultIfEmpty()
+            //            join st in StatusDAO.Current.Table()
+            //                on s.Status equals st.StatusCode into stsl
+            //            from subst in stsl.DefaultIfEmpty()
+            //            select new ServerExtendedModel { Location = subl, Server = s, Status = subst };
+
+            //return (from s in Table()
+            //        join l in LocationDAO.Current.Table()
+            //            on s.LocationCode equals l.LocationCode intok sl
+            //            on s.LocationCode equals l.LocationCode intok sl
+            //        from fullserver in sl
+            //        select new ServerExtendedModel { Location = fullserver.RackCode, Server = s }).ToList();
+            string query = @"select s.*,l.RackCode,l.RackUnit, st.Status from Server as s
+                            left join Location as l
+                            on s.LocationCode = l.LocationCode
+                            left join Status as st
+                            on s.StatusCode = st.StatusCode";
+            return RawQuery<ServerExtendedModel>(query, new object[] { });
         }
     }
 }

@@ -28,7 +28,7 @@ namespace IMS.Data.Models
         public int? Size { get; set; }
 
         [StringLength(50)]
-        public string Status { get; set; }
+        public string StatusCode { get; set; }
 
         [StringLength(50)]
         public string DefaultIP { get; set; }

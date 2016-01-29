@@ -48,16 +48,22 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.Servers) {
     <tr>
         @*<td>  servername
             @Html.DisplayFor(modelItem => item.ServerCode)
         </td>*@
         <td>
-            @Html.DisplayFor(modelItem => item.Id)
+       @*     @Html.DisplayFor(modelItem => item.Maker + item.Modern)*@
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.)
+            @Html.DisplayFor(modelItem => item.Customer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Maker)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Modern)
@@ -69,13 +75,10 @@
             @Html.DisplayFor(modelItem => item.Size)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.DefaultIP)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.LocationCode)
+            @Html.DisplayFor(modelItem => item.RackCode)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.RegisteredDate)

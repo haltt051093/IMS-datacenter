@@ -14,6 +14,9 @@ namespace IMS.Data.Models
         [StringLength(50)]
         public string RackCode { get; set; }
 
+        [StringLength(50)]
+        public string RackName { get; set; }
+        
         public DateTime? RegisteredDate { get; set; }
 
         public int? MaximumPower { get; set; }

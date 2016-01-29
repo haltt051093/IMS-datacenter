@@ -12,7 +12,7 @@ namespace IMS.Data.Models
     public partial class ServerAttribute : BaseModel
     {
         [StringLength(50)]
-        public string AttributeName { get; set; }
+        public string AttributeCode { get; set; }
 
         [StringLength(50)]
         public string ServerCode { get; set; }

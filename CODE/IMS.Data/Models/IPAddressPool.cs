@@ -21,11 +21,11 @@ namespace IMS.Data.Models
         public string Subnetmask { get; set; }
 
         [StringLength(50)]
-        public string Username { get; set; }
+        public string Staff { get; set; }
 
         public DateTime? RegisteredDate { get; set; }
 
         [StringLength(50)]
-        public string Status { get; set; }
+        public string StatusCode { get; set; }
     }
 }
