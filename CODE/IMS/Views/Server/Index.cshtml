@@ -5,15 +5,22 @@
 }
 
 <h2>Index</h2>
-
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @using (Html.BeginForm("TestDynamicSearch", "Server", FormMethod.Get))
+    {
+        <b>Search By:</b>
+        //@Html.RadioButton("searchBy", "Customer", true)
+        <text>Customer</text>
+        @Html.DropDownList("CustomerSearch","All")
+        <br/>
+        @Html.RadioButton("searchBy", "Maker")
+        <text>Maker</text>
+        @Html.TextBox("search")
+        <input type="submit" value="Search"/>
+    }
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.Raw("Server Name")
-        </th>
         <th>
             @Html.Raw("Customer")
         </th>
@@ -27,37 +34,18 @@
             @Html.Raw("Modern")
         </th>
         <th>
-            @Html.Raw("Power")
-        </th>
-        <th>
-            @Html.Raw("Size")
-        </th>
-
-        <th>
             @Html.Raw("Default IP")
         </th>
         <th>
             @Html.Raw("Location")
-        </th>
-        <th>
-            @Html.Raw("Registered Date")
-        </th>
-        <th>
-            @Html.Raw("Number of Outlet")
         </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model.Servers) {
     <tr>
-        @*<td>  servername
-            @Html.DisplayFor(modelItem => item.ServerCode)
-        </td>*@
         <td>
-       @*     @Html.DisplayFor(modelItem => item.Maker + item.Modern)*@
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Customer)
+            @Html.ActionLink(@item.CustomerName, "ServerDetails", new { id = item.Id })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Status)
@@ -69,27 +57,11 @@
             @Html.DisplayFor(modelItem => item.Modern)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Power)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Size)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.DefaultIP)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.RackCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RegisteredDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Outlet)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
-            @Html.ActionLink("Details", "Details", new {id = item.Id}) |
-            @Html.ActionLink("Delete", "Delete", new {id = item.Id})
+            @Html.DisplayFor(modelItem => item.RackCode )U
+            @Html.DisplayFor(modelItem => item.RackUnit)
         </td>
     </tr>
 }

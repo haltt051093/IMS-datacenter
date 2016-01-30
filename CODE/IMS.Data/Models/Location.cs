@@ -21,9 +21,5 @@ namespace IMS.Data.Models
 
         [StringLength(50)]
         public string StatusCode { get; set; }
-
-        public virtual Status Status1 { get; set; }
-
-        public virtual Status Status2 { get; set; }
     }
 }

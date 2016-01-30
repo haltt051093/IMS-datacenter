@@ -1,0 +1,69 @@
+﻿@model ServerIndexViewModel
+
+@{
+    ViewBag.Title = "TestDynamicSearch";
+}
+
+<h2>Index</h2>
+<p>
+    @using (Html.BeginForm("Search", "Server", FormMethod.Get))
+    {
+        <b>Search By:</b>
+        @Html.RadioButton("searchBy", "Customer", true)
+        <text>Customer</text>
+        <br />
+        @Html.RadioButton("searchBy", "Maker")
+        <text>Maker</text>
+        @Html.TextBox("search")
+        <input type="submit" value="Search" />
+    }
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.Raw("Customer")
+        </th>
+        <th>
+            @Html.Raw("Status")
+        </th>
+        <th>
+            @Html.Raw("Maker")
+        </th>
+        <th>
+            @Html.Raw("Modern")
+        </th>
+        <th>
+            @Html.Raw("Default IP")
+        </th>
+        <th>
+            @Html.Raw("Location")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Servers)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(@item.CustomerName, "ServerDetails", new { id = item.Id })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Maker)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Modern)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DefaultIP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RackCode)U
+                @Html.DisplayFor(modelItem => item.RackUnit)
+            </td>
+        </tr>
+    }
+
+</table>

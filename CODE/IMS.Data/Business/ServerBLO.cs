@@ -39,6 +39,21 @@ namespace IMS.Data.Business
             return dao.GetAllServer();
         }
 
+        public List<AttributeExtendedModel> GetServerAttributes(int id)
+        {
+            return dao.GetServerAttributes(id);
+        }
+
+        public ServerExtendedModel GetServerById(int id)
+        {
+            return dao.GetServerById(id);
+        }
+
+        public List<Server> Search(string searchBy, string searchValue)
+        {
+            return dao.Search(searchBy, searchValue).ToList();
+        }
+
         //public List<ServerViewModel> GetServers()
         //{
         //    var query = @"select *, a.Fullname

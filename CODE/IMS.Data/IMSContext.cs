@@ -50,5 +50,7 @@ namespace IMS.Data
         }
 
         public System.Data.Entity.DbSet<IMS.Data.Models.Server> Servers { get; set; }
+
+        //public System.Data.Entity.DbSet<IMS.Models.ServerDetailsViewModel> Objects { get; set; }
     }
 }

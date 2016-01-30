@@ -1,0 +1,120 @@
+﻿@model ServerDetailsViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Server</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.Raw("Server Code")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Server.ServerCode)
+        </dd>
+
+        <dt>
+            @Html.Raw("Customer")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Server.CustomerName)
+        </dd>
+
+        <dt>
+            @Html.Raw("Maker")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Server.Maker)
+        </dd>
+
+        <dt>
+            @Html.Raw("Modern")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Server.Modern)
+        </dd>
+
+        <dt>
+            @Html.Raw("Power")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Server.Power)
+        </dd>
+
+        <dt>
+            @Html.Raw("Size")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Server.Size)
+        </dd>
+
+        <dt>
+            @Html.Raw("Status")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Server.Status)
+        </dd>
+
+        <dt>
+            @Html.Raw("Default IP")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Server.DefaultIP)
+        </dd>
+
+        <dt>
+            @Html.Raw("Location")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Server.RackCode)U
+            @Html.DisplayFor(model => model.Server.RackUnit)
+        </dd>
+
+        <dt>
+            @Html.Raw("Registered Date")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Server.RegisteredDate)
+        </dd>
+
+        <dt>
+            @Html.Raw("Outlet")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Server.Outlet)
+        </dd>
+        <dt>
+            @Html.Raw("Other Attributes")
+        </dt>
+        <dd>
+            <ul class="list-group">
+                @foreach (var item in Model.Attributes)
+                {
+                    <li class="list-group-item">
+                        @item.AttributeName
+                        :
+                        @item.AttributeValue
+                    </li>
+                }
+            </ul>
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

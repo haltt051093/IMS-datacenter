@@ -178,6 +178,8 @@
     <Content Include="Views\Account\EditCustomer.cshtml" />
     <Content Include="Views\Account\EditStaff.cshtml" />
     <Content Include="Views\Server\Index.cshtml" />
+    <Content Include="Views\Server\ServerDetails.cshtml" />
+    <Content Include="Views\Server\TestDynamicSearch.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

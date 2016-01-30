@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using AutoMapper;
 using IMS.Data.Models;
+using IMS.Data.ViewModels;
 
 namespace IMS.Models
 {
     public class ServerDetailsViewModel
     {
-        public Server Server { get; set; }
-        public List<ServerAttribute> Attributes { get; set; }
+        public ServerExtendedModel Server { get; set; }
+        public List<AttributeExtendedModel> Attributes { get; set; }
     }
 }

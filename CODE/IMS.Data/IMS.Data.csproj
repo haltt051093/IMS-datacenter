@@ -118,6 +118,7 @@
     <Compile Include="Repository\StatusDAO.cs" />
     <Compile Include="Repository\TypeOfLogDAO.cs" />
     <Compile Include="ViewModels\AccountExtendedModel.cs" />
+    <Compile Include="ViewModels\AttributeExtendedModel.cs" />
     <Compile Include="ViewModels\ServerExtendedModel.cs" />
   </ItemGroup>
   <ItemGroup>

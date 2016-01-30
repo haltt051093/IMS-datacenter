@@ -51,6 +51,8 @@ namespace IMS.Data.Repository
             return Query(x => x.Id == entry.Id).FirstOrDefault();
         }
 
+        
+
         //public List<AccountExtendedModel> GetAllAccount()
         //{
         //    var query = from a in Table()
