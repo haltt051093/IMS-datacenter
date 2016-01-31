@@ -1,0 +1,48 @@
+﻿@model IMS.Models.LocationIndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>List of Location</h2>
+<p>
+    @Html.ActionLink("Add rack and location", "CreateLocation")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.Raw("LocationCode")
+        </th>
+        <th>
+            @Html.Raw("RackName")
+        </th>
+        <th>
+            @Html.Raw("RackUnit")
+        </th>
+        <th>
+            @Html.Raw("Status")
+        </th>
+    </tr>
+
+    @foreach (var item in Model.Locations)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LocationCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RackName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RackUnit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+
+
+        </tr>
+    }
+
+</table>

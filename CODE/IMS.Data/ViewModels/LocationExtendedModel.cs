@@ -9,8 +9,9 @@ using IMS.Data.Models;
 namespace IMS.Data.ViewModels
 {
     [NotMapped]
-    public class IPExtendedModel : IPAddressPool
+    public class LocationExtendedModel : Location
     {
         public string Status { get; set; }
+        public string RackName { get; set; }
     }
 }
