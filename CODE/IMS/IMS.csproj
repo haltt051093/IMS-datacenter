@@ -186,15 +186,12 @@
     <Content Include="Views\Server\Index.cshtml" />
     <Content Include="Views\Server\ServerDetails.cshtml" />
     <Content Include="Views\Request\RequestAddServer.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Request\RequestRentRack.cshtml" />
     <Content Include="Views\Request\RequestReturnRack.cshtml" />
     <Content Include="Views\Request\Index.cshtml" />
-=======
     <Content Include="Views\Location\Index.cshtml" />
     <Content Include="Views\Location\CreateLocation.cshtml" />
     <Content Include="Views\IP\Index.cshtml" />
->>>>>>> 7748ff437ffd7466f8641a26af356b6161fbcd50
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
