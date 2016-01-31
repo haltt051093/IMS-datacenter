@@ -148,6 +148,7 @@
     <Compile Include="App_Start\MappingConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\RequestController.cs" />
     <Compile Include="Controllers\ServerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -179,7 +180,7 @@
     <Content Include="Views\Account\EditStaff.cshtml" />
     <Content Include="Views\Server\Index.cshtml" />
     <Content Include="Views\Server\ServerDetails.cshtml" />
-    <Content Include="Views\Server\TestDynamicSearch.cshtml" />
+    <Content Include="Views\Request\RequestAddServer.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -190,7 +191,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\IPAddress\" />
-    <Folder Include="Views\Request\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IMS.Core\IMS.Core.csproj">

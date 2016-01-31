@@ -15,49 +15,48 @@ namespace IMS.Controllers
     public class ServerController : Controller
     {
         // GET: Server
-        public ActionResult Index()
+        public ActionResult Index(string StatusSearch, string MakerSearch, string RackSearch, string searchString)
         {
-            var data = new ServerIndexViewModel();
             var server = ServerBLO.Current.GetAllServer();
-            data.Servers = server;
-            //list customer
-            var customers = new List<string>();
-            var distinctcust = server.OrderBy(x => x.CustomerName).Select(x => x.CustomerName).ToList();
-            customers.AddRange(distinctcust.Distinct());
-            ViewBag.CustomerSearch = new SelectList(customers);
-            return View(data);
-        }
+            var data = new ServerIndexViewModel();
 
-        public ActionResult TestDynamicSearch(string searchBy, string search)
-        {
-            var server = ServerBLO.Current.GetAllServer();
-            //DOING
-            var data = new ServerIndexViewModel();
-            if (!String.IsNullOrEmpty(search))
+            //list status
+            var status = new List<string>();
+            var currentstatus = server.OrderBy(x => x.Status).Select(x => x.Status).ToList();
+            status.AddRange(currentstatus.Distinct());
+            ViewBag.StatusSearch = new SelectList(status);
+            //list maker
+            var makers = new List<string>();
+            var currentmaker = server.OrderBy(x => x.Maker).Select(x => x.Maker).ToList();
+            makers.AddRange(currentmaker.Distinct());
+            ViewBag.MakerSearch = new SelectList(makers);
+            //list rack
+            var racks = new List<string>();
+            var currentrack = server.OrderBy(x => x.RackCode).Select(x => x.RackCode).ToList();
+            racks.AddRange(currentrack.Distinct());
+            ViewBag.RackSearch = new SelectList(racks);
+
+            if (!String.IsNullOrEmpty(searchString))
             {
-                var servers = server.Where(s => s.Customer.Contains(search)).ToList();
-                data.Servers = servers;
+                server = server.Where(s => s.Customer.Contains(searchString.Trim())).ToList();
             }
+            if (!String.IsNullOrWhiteSpace(RackSearch))
+            {
+                server = server.Where(r => r.RackCode.Trim() == RackSearch.Trim()).ToList();
+            }
+            if (!String.IsNullOrEmpty(MakerSearch))
+            {
+                server = server.Where(m => m.Maker.Trim() == MakerSearch.Trim()).ToList();
+            }
+            if (!String.IsNullOrEmpty(StatusSearch))
+            {
+                server = server.Where(st => st.Status.Trim() == StatusSearch.Trim()).ToList();
+            }
+            data.Servers = server;
             return View(data);
-
-            //var value = ServerBLO.Current.Search(searchBy, search);
-            //var test = value;
-            //return View("TestDynamicSearch");
-
-            //if (searchBy == "Customer")
-            //{
-            //    var searchedValues = ServerBLO.Current.GetAllServer().Where(x => x.Customer.StartsWith(search)).ToList();
-            //    var data = new ServerIndexViewModel();
-            //    ;
-            //    return View(data);
-            //}
-            //else
-            //{
-            //    return RedirectToAction("Index");
-            //}
         }
 
-        // GET: Server/Details/5
+        // GET: Server/Details
         public ActionResult ServerDetails(int id)
         {
             if (id == null)
@@ -66,15 +65,15 @@ namespace IMS.Controllers
             }
             var server = ServerBLO.Current.GetServerById(id);
             var serverattributes = ServerBLO.Current.GetServerAttributes(id);
+            var servercurrentips = ServerBLO.Current.GetCurrentIP(id);
             if (server == null)
             {
                 return HttpNotFound();
             }
             var data = new ServerDetailsViewModel();
-            //data = Mapper.Map<Server, ServerDetailsViewModel>(server);
             data.Attributes = serverattributes;
             data.Server = server;
-            // phai dung mapping
+            data.CurrentIPs = servercurrentips;
             return View(data);
         }
     }

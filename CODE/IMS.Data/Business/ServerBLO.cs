@@ -54,6 +54,11 @@ namespace IMS.Data.Business
             return dao.Search(searchBy, searchValue).ToList();
         }
 
+        public List<ServerIP> GetCurrentIP(int id)
+        {
+            return dao.GetCurrentIP(id);
+        }
+
         //public List<ServerViewModel> GetServers()
         //{
         //    var query = @"select *, a.Fullname

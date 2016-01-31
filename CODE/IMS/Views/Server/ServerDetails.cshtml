@@ -113,6 +113,20 @@
                 }
             </ul>
         </dd>
+        <dt>
+            @Html.Raw("Current IP Addresses")
+        </dt>
+        <dd>
+            <ul class="list-group">
+                @foreach (var item in Model.CurrentIPs)
+                {
+                    <li class="list-group-item">
+                        @item.CurrentIP
+                    </li>
+                }
+            </ul>
+        </dd>
+
     </dl>
 </div>
 <p>

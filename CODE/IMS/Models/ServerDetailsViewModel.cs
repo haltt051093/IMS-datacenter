@@ -12,5 +12,6 @@ namespace IMS.Models
     {
         public ServerExtendedModel Server { get; set; }
         public List<AttributeExtendedModel> Attributes { get; set; }
+        public List<ServerIP> CurrentIPs { get; set; } 
     }
 }

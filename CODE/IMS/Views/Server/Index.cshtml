@@ -6,16 +6,22 @@
 
 <h2>Index</h2>
 <p>
-    @using (Html.BeginForm("TestDynamicSearch", "Server", FormMethod.Get))
+    @using (Html.BeginForm("Index", "Server", FormMethod.Get))
     {
         <b>Search By:</b>
         //@Html.RadioButton("searchBy", "Customer", true)
-        <text>Customer</text>
-        @Html.DropDownList("CustomerSearch","All")
         <br/>
-        @Html.RadioButton("searchBy", "Maker")
+        <text>Status</text>
+        @Html.DropDownList("StatusSearch","--Select--")
+        <br/>
         <text>Maker</text>
-        @Html.TextBox("search")
+        @Html.DropDownList("MakerSearch", "--Select--")
+        <br />
+        <text>Rack</text>
+        @Html.DropDownList("RackSearch", "--Select--")
+        <br />
+        <text>Customer</text>
+        @Html.TextBox("searchString")
         <input type="submit" value="Search"/>
     }
 </p>

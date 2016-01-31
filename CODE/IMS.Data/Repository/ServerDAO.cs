@@ -42,7 +42,7 @@ namespace IMS.Data.Repository
             var queryable = servers.AsQueryable();
             return DynamicWhere<Server>(queryable, searchBy, searchValue).ToList();
         }
-
+        //list servers in Index page
         public List<ServerExtendedModel> GetAllServer()
         {
             var query = from s in Table()
@@ -75,7 +75,7 @@ namespace IMS.Data.Repository
             //                on s.StatusCode = st.StatusCode";
             //return RawQuery<ServerExtendedModel>(query, new object[] { });
         }
-
+        //a server with full fields
         public ServerExtendedModel GetServerById(int id)
         {
             var query = from s in Table()
@@ -107,7 +107,7 @@ namespace IMS.Data.Repository
                         };
             return query.FirstOrDefault();
         }
-
+        //get attribute of a server
         public List<AttributeExtendedModel> GetServerAttributes(int id)
         {
             var query = from sa in ServerAttributeDAO.Current.Table()
@@ -126,6 +126,16 @@ namespace IMS.Data.Repository
             ;
             //var query = ServerAttributeDAO.Current.Table().Include("Server").
             //var query = Table().Include("ServerAttribute").Include("Attribute");
+            return query.ToList();
+        }
+        //get current IPs of a server
+        public List<ServerIP> GetCurrentIP(int id)
+        {
+            var query = from s in Table()
+                join si in ServerIPDAO.Current.Table()
+                    on s.ServerCode equals si.ServerCode
+                where s.Id == id
+                select si;
             return query.ToList();
         }
     }
