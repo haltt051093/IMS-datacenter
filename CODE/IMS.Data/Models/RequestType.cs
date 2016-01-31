@@ -11,8 +11,9 @@ namespace IMS.Data.Models
     [Table("RequestType")]
     public partial class RequestType : BaseModel
     {
-        [Column("RequestType")]
         [StringLength(50)]
-        public string RequestType1 { get; set; }
+        public string RequestTypeCode { get; set; }
+        [StringLength(50)]
+        public string RequestTypeName { get; set; }
     }
 }

@@ -1,0 +1,35 @@
+﻿@using IMS.Data.Repository
+@model IMS.Data.Models.RequestType
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <b>Request Type</b>
+        @{
+            var types = RequestTypeDAO.Current.GetAll();
+            var myList = new SelectList(types, "RequestTypeCode", "RequestTypeName");
+        }
+        @Html.DropDownListFor(model => model.RequestTypeCode, myList, new { @class = "form-control", style = "width:200px" })
+
+        @{
+            string requestType = "Not Selected";
+            if (Model.RequestTypeCode.Equals("RT011"))
+            {
+                requestType = "RentRack";
+            }
+        }
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="CreateStaff" name=requestType class="btn btn-default" />
+            </div>
+        </div>
+        @Html.ActionLink("Select request type", "Edit", new { id = item.Id }) |
+    </div>
+}

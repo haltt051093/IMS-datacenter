@@ -181,6 +181,9 @@
     <Content Include="Views\Server\Index.cshtml" />
     <Content Include="Views\Server\ServerDetails.cshtml" />
     <Content Include="Views\Request\RequestAddServer.cshtml" />
+    <Content Include="Views\Request\RequestRentRack.cshtml" />
+    <Content Include="Views\Request\RequestReturnRack.cshtml" />
+    <Content Include="Views\Request\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
