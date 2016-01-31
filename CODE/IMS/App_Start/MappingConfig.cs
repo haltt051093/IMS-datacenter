@@ -20,6 +20,8 @@ namespace IMS.App_Start
                 //server
                 config.CreateMap<Server, ServerDetailsViewModel> ();
                 config.CreateMap<ServerDetailsViewModel, Server>();
+                //rack
+                config.CreateMap<RackCreateViewModel, Rack>();
             });
         }
     }

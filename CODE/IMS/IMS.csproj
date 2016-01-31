@@ -148,6 +148,8 @@
     <Compile Include="App_Start\MappingConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\IPController.cs" />
+    <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\RequestController.cs" />
     <Compile Include="Controllers\ServerController.cs" />
     <Compile Include="Global.asax.cs">
@@ -155,6 +157,9 @@
     </Compile>
     <Compile Include="Models\AccountCreateViewModel.cs" />
     <Compile Include="Models\AccountIndexViewModel.cs" />
+    <Compile Include="Models\IPIndexViewModel.cs" />
+    <Compile Include="Models\LocationIndexViewModel.cs" />
+    <Compile Include="Models\RackCreateViewModel.cs" />
     <Compile Include="Models\ServerCreateViewModel.cs" />
     <Compile Include="Models\ServerDetailsViewModel.cs" />
     <Compile Include="Models\ServerIndexViewModel.cs" />
@@ -181,6 +186,9 @@
     <Content Include="Views\Server\Index.cshtml" />
     <Content Include="Views\Server\ServerDetails.cshtml" />
     <Content Include="Views\Request\RequestAddServer.cshtml" />
+    <Content Include="Views\Location\Index.cshtml" />
+    <Content Include="Views\Location\CreateLocation.cshtml" />
+    <Content Include="Views\IP\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

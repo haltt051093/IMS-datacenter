@@ -1,0 +1,53 @@
+﻿@model IMS.Models.IPIndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>List of IP Address</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.Raw("IPAddress")
+        </th>
+        <th>
+            @Html.Raw("Gateway")
+        </th>
+        <th>
+            @Html.Raw("Subnetmask")
+        </th>
+        <th>
+            @Html.Raw("RegisteredDate")
+        </th>
+        <th>
+            @Html.Raw("Status")
+        </th>
+    </tr>
+
+    @foreach (var item in Model.IPs)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IPAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gateway)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subnetmask)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RegisteredDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+
+        </tr>
+    }
+
+</table>
+
+

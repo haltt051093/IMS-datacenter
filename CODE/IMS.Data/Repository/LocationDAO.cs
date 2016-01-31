@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IMS.Data.Generic;
 using IMS.Data.Models;
+using IMS.Data.ViewModels;
 
 namespace IMS.Data.Repository
 {
@@ -27,6 +28,16 @@ namespace IMS.Data.Repository
         public override Location GetByKeys(Location entry)
         {
             return Query(x => x.Id == entry.Id).FirstOrDefault();
+        }
+        public List<LocationExtendedModel> GetAllLocation()
+        {
+            string query = @"select l.*,s.Status,r.RackName from Location as l
+                            left join Status as s
+                            on s.StatusCode = l.StatusCode
+                            join Rack as r
+                            on r.RackCode = l.RackCode";
+
+            return RawQuery<LocationExtendedModel>(query, new object[] { });
         }
     }
 }
