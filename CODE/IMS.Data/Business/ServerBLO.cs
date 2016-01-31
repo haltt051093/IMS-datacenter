@@ -49,10 +49,10 @@ namespace IMS.Data.Business
             return dao.GetServerById(id);
         }
 
-        public List<Server> Search(string searchBy, string searchValue)
-        {
-            return dao.Search(searchBy, searchValue).ToList();
-        }
+        //public List<Server> Search(string searchBy, string searchValue)
+        //{
+        //    return dao.Search(searchBy, searchValue).ToList();
+        //}
 
         public List<ServerIP> GetCurrentIP(int id)
         {

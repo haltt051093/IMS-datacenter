@@ -160,6 +160,7 @@
     <Compile Include="Models\IPIndexViewModel.cs" />
     <Compile Include="Models\LocationIndexViewModel.cs" />
     <Compile Include="Models\RackCreateViewModel.cs" />
+    <Compile Include="Models\RequestRentRackViewModel.cs" />
     <Compile Include="Models\ServerCreateViewModel.cs" />
     <Compile Include="Models\ServerDetailsViewModel.cs" />
     <Compile Include="Models\ServerIndexViewModel.cs" />
@@ -188,10 +189,12 @@
     <Content Include="Views\Request\RequestAddServer.cshtml" />
     <Content Include="Views\Request\RequestRentRack.cshtml" />
     <Content Include="Views\Request\RequestReturnRack.cshtml" />
-    <Content Include="Views\Request\Index.cshtml" />
     <Content Include="Views\Location\Index.cshtml" />
     <Content Include="Views\Location\CreateLocation.cshtml" />
     <Content Include="Views\IP\Index.cshtml" />
+    <Content Include="Views\Request\Index.cshtml" />
+    <Content Include="Views\Request\RequestUpgradeServer.cshtml" />
+    <Content Include="Views\Request\RequestReturnIP.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -201,7 +204,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\IPAddress\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IMS.Core\IMS.Core.csproj">

@@ -36,12 +36,12 @@ namespace IMS.Data.Repository
         }
 
         //doing
-        public List<Server> Search(string searchBy, string searchValue)
-        {
-            var servers = new List<Server>();
-            var queryable = servers.AsQueryable();
-            return DynamicWhere<Server>(queryable, searchBy, searchValue).ToList();
-        }
+        //public List<Server> Search(string searchBy, string searchValue)
+        //{
+        //    var servers = new List<Server>();
+        //    var queryable = servers.AsQueryable();
+        //    return DynamicWhere<Server>(queryable, searchBy, searchValue).ToList();
+        //}
         //list servers in Index page
         public List<ServerExtendedModel> GetAllServer()
         {

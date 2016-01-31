@@ -6,13 +6,15 @@
 }
 
 <h2>Index</h2>
-@using (Html.BeginForm("Index", "Request", FormMethod.Get))
-{
-    <b>Search By:</b>
-    //@Html.RadioButton("searchBy", "Customer", true)
-    <br />
-        <text>Request Type:</text>
-        @Html.DropDownList("RequestTypes", "--Select--")
-        
-}
-}
+
+<p>
+    @using (Html.BeginForm("Index", "Request", FormMethod.Get))
+    {
+        <b>Search By:</b>
+        var requesttypes = RequestTypeDAO.Current.GetAll().ToList();
+        var myList = new SelectList(requesttypes, "RequestTypeCode", "RequestTypeName");
+        @Html.DropDownListFor(model => model.RequestTypeCode, myList, new { @class = "form-control", style = "width:200px" })
+        <br />
+        <input type="submit" value="Select request" class="btn btn-default" />
+    }
+</p>

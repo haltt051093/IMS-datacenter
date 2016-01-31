@@ -71,5 +71,6 @@ namespace IMS.Data.Generic
         {
             baseDao.RemoveMany(entries);
         }
+
     }
 }
