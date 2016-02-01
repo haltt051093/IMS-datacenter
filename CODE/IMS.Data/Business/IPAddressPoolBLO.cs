@@ -56,10 +56,10 @@ namespace IMS.Data.Business
             return String.Join(".", result);
         }
 
-        public List<string> GenerateIP(string ip, int bitCount)
+        public List<IPAddressPool> GenerateIP(string ipSource, int bitCount, bool fullRange = false)
         {
             var bitMod = bitCount % 8;
-            var bitDiv = (int)Math.Floor((decimal)bitCount / 8);
+            var bitDiv = (int)Math.Floor((double)bitCount / 8) + 1;
             var heads = new List<int>();
 
             var headCount = (int)Math.Pow(2, bitMod);
@@ -69,9 +69,37 @@ namespace IMS.Data.Business
                 heads.Add(headBase * i);
             }
 
-            var ipTemplate = new IPAddressModel(ip);
-            var result = new List<string>();
-            for (int i = 0; i < 256; i++)
+            var ipTemplate = new IPAddressModel(ipSource);
+            var result = new List<IPAddressPool>();
+            var subnetMask = GenerateSubnetMask(bitCount);
+            var gateway = string.Empty;
+            var loopCount = 0;
+            var startIndex = 0;
+            if (!fullRange)
+            {
+                var compareValue = ipTemplate.Fourth;
+                if (bitDiv == 3)
+                {
+                    compareValue = ipTemplate.Third;
+                }
+                else if (bitDiv == 2)
+                {
+                    compareValue = ipTemplate.Second;
+                }
+                for (var i = 0; i < heads.Count - 1; i++)
+                {
+                    if (heads[i] <= compareValue && compareValue < heads[i + 1])
+                    {
+                        startIndex = heads[i];
+                        break;
+                    }
+                    else if (heads[i] <= compareValue && compareValue <= 255)
+                    {
+                        startIndex = heads[i + 1];
+                    }
+                }
+            }
+            for (int i = startIndex; i < 256 && loopCount < 2; i++)
             {
                 if (bitDiv == 2)
                 {
@@ -82,19 +110,63 @@ namespace IMS.Data.Business
                     ipTemplate.Third = i;
                     for (var j = 0; j < 256; j++)
                     {
-                        if (!heads.Contains(i) || !(j == 0 || j == 1))
+                        if (heads.Contains(i) && j == 0)
+                        {
+                            // first IP - skip
+                            if (!fullRange)
+                            {
+                                loopCount++;
+                            }
+                            if (loopCount > 1)
+                            {
+                                break;
+                            }
+                        }
+                        else if (heads.Contains(i) && j == 1)
+                        {
+                            // gateway
+                            ipTemplate.Fourth = j;
+                            gateway = ipTemplate.ToString();
+                        }
+                        else
                         {
                             ipTemplate.Fourth = j;
-                            result.Add(ipTemplate.ToString());
+                            var ip = new IPAddressPool
+                            {
+                                IPAddress = ipTemplate.ToString(),
+                                Gateway = gateway,
+                                Subnetmask = subnetMask
+                            };
+                            result.Add(ip);
                         }
                     }
                 }
                 else if (bitDiv == 4)
                 {
-                    if (!heads.Contains(i) && !heads.Contains(i - 1))
+                    if (heads.Contains(i))
+                    {
+                        // first IP - skip
+                        if (!fullRange)
+                        {
+                            loopCount++;
+                        }
+                    }
+                    else if (heads.Contains(i - 1))
+                    {
+                        // gateway
+                        ipTemplate.Fourth = i;
+                        gateway = ipTemplate.ToString();
+                    }
+                    else
                     {
                         ipTemplate.Fourth = i;
-                        result.Add(ipTemplate.ToString());
+                        var ip = new IPAddressPool
+                        {
+                            IPAddress = ipTemplate.ToString(),
+                            Gateway = gateway,
+                            Subnetmask = subnetMask
+                        };
+                        result.Add(ip);
                     }
                 }
             }
@@ -105,6 +177,21 @@ namespace IMS.Data.Business
             baseDao = IPAddressPoolDAO.Current;
             dao = IPAddressPoolDAO.Current;
 
+        }
+        public void AddIP(List<IPAddressPool> entry)
+        {
+            var ip = new List<IPAddressPool>();
+            for (int i = 0; i < entry.Count; i++)
+            {
+                var item = new IPAddressPool();
+                item.IPAddress = entry[i].IPAddress;
+                item.Gateway = entry[i].Gateway;
+                item.RegisteredDate = DateTime.Now;
+                item.StatusCode = "STATUS10";
+                item.Subnetmask = entry[i].Subnetmask;
+                ip.Add(item);
+            }
+            IPAddressPoolBLO.Current.AddMany(ip);
         }
         public List<IPExtendedModel> GetAllIP()
         {

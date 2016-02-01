@@ -157,6 +157,7 @@
     </Compile>
     <Compile Include="Models\AccountCreateViewModel.cs" />
     <Compile Include="Models\AccountIndexViewModel.cs" />
+    <Compile Include="Models\IPCreateViewModel.cs" />
     <Compile Include="Models\IPIndexViewModel.cs" />
     <Compile Include="Models\LocationIndexViewModel.cs" />
     <Compile Include="Models\RackCreateViewModel.cs" />
@@ -195,6 +196,7 @@
     <Content Include="Views\Request\Index.cshtml" />
     <Content Include="Views\Request\RequestUpgradeServer.cshtml" />
     <Content Include="Views\Request\RequestReturnIP.cshtml" />
+    <Content Include="Views\IP\CreateIP.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
