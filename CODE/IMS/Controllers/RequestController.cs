@@ -46,9 +46,12 @@ namespace IMS.Controllers
         }
 
         // GET: Request/Create
-        public ActionResult RequestReturnRack()
+        public ActionResult RequestReturnRack(RequestReturnRackViewModel viewModel)
         {
-
+            if (ModelState.IsValid)
+            {
+                
+            }
             return RedirectToActionPermanent("Index", "Server");
         }
 

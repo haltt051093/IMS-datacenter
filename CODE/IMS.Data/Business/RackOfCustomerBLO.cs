@@ -32,5 +32,10 @@ namespace IMS.Data.Business
             baseDao = RackOfCustomerDAO.Current;
             dao = RackOfCustomerDAO.Current;
         }
+
+        public List<RackOfCustomer> EmptyRentedRack(string customer)
+        {
+            return dao.EmptyRentedRack(customer);
+        }
     }
 }

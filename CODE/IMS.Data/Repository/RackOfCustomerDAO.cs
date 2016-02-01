@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,28 @@ namespace IMS.Data.Repository
         public override RackOfCustomer GetByKeys(RackOfCustomer entry)
         {
             return Query(x => x.Id == entry.Id).FirstOrDefault();
+        }
+
+        public List<RackOfCustomer> EmptyRentedRack(string customer)
+        {
+            //var list1 = from rc in RackOfCustomerDAO.Current.Table()
+            //            where rc.Customer == customer
+            //            select rc.RackCode;
+            //var query1 = list1.ToList();
+            //var list2 = from s in ServerDAO.Current.Table()
+            //            join l in LocationDAO.Current.Table()
+            //                on s.LocationCode equals l.LocationCode into sl
+            //            from subsl in sl.DefaultIfEmpty()
+            //            select new { subsl.RackCode };
+            //var query2 = list2.ToList();
+            var query = from rc in RackOfCustomerDAO.Current.Table()
+                where !(from s in ServerDAO.Current.Table()
+                    join l in LocationDAO.Current.Table()
+                        on s.LocationCode equals l.LocationCode into sl
+                    from subsl in sl.DefaultIfEmpty()
+                    select subsl.RackCode).Contains(rc.RackCode)
+                select rc;
+            return query.ToList();
         }
     }
 }

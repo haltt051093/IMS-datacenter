@@ -1,23 +1,25 @@
-﻿@model IMS.Data.Models.Request
+﻿@using IMS.Data.Repository
+@model RequestReturnRackViewModel
 
 @{
     ViewBag.Title = "RequestReturnRack";
 }
 
 <h2>RequestReturnRack</h2>
+<p>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <h3>Request return rack</h3>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    <h3>Request return rack</h3>
+        var racks = RackOfCustomerDAO.Current.EmptyRentedRack("manhnh");
+        foreach (var item in Model.RackOfCustomer)
+        {
+            for (int i = 0; i < racks.Count; i++)
+            {
+                @Html.CheckBoxFor(model => model.RackOfCustomer[i].RackCode)
+            }
+        }
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Send Request" class="btn btn-default" />
-        </div>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    }
+</p>
