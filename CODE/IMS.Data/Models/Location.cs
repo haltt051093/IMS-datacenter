@@ -21,5 +21,8 @@ namespace IMS.Data.Models
 
         [StringLength(50)]
         public string StatusCode { get; set; }
+
+        [StringLength(50)]
+        public string ServerCode { get; set; }
     }
 }

@@ -33,9 +33,6 @@ namespace IMS.Data.Models
         [StringLength(50)]
         public string DefaultIP { get; set; }
 
-        [StringLength(50)]
-        public string LocationCode { get; set; }
-
         public DateTime? RegisteredDate { get; set; }
 
         public int? Outlet { get; set; }

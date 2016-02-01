@@ -42,14 +42,25 @@ namespace IMS.Data.Repository
             //            from subsl in sl.DefaultIfEmpty()
             //            select new { subsl.RackCode };
             //var query2 = list2.ToList();
-            var query = from rc in RackOfCustomerDAO.Current.Table()
-                where !(from s in ServerDAO.Current.Table()
-                    join l in LocationDAO.Current.Table()
-                        on s.LocationCode equals l.LocationCode into sl
-                    from subsl in sl.DefaultIfEmpty()
-                    select subsl.RackCode).Contains(rc.RackCode)
-                select rc;
-            return query.ToList();
+
+            //var query = from rcmain in RackOfCustomerDAO.Current.Table()
+            //            where !(from s in ServerDAO.Current.Table()
+            //                    join l in LocationDAO.Current.Table()
+            //                        on s.LocationCode equals l.LocationCode into sl
+            //                    from subsl in sl.DefaultIfEmpty()
+            //                    select new RackOfCustomer() { RackCode = subsl.RackCode, Customer = s.Customer }).Any()
+            //            select rcmain;
+            //return query.ToList();
+
+            var query = @"select DISTINCT rc.RackCode, rc.Customer
+                        from RackOfCustomer rc
+                        where rc.Customer ='" + customer + @"' AND rc.RackCode NOT IN (
+                        select DISTINCT l.RackCode
+                        from Server as s
+                        inner join Location as l
+                        on s.LocationCode = l.LocationCode
+                        where s.Customer = '" + customer + @"')";
+            return RawQuery<RackOfCustomer>(query, new object[] { });
         }
     }
 }

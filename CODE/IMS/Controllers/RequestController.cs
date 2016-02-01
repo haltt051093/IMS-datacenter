@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using IMS.Core;
 using IMS.Data.Business;
 using IMS.Data.Models;
@@ -23,7 +24,14 @@ namespace IMS.Controllers
             {
                 if (requestcode.Equals(Constants.RequestTypeCode.RETURN_RACK))
                 {
-                    return View("RequestReturnRack");
+                    RequestReturnRackViewModel viewmodel = new RequestReturnRackViewModel();
+                    var result = RackOfCustomerDAO.Current.EmptyRentedRack("manhnh");
+                    //List<CheckBox> newList = new List<CheckBox>
+                    //{
+                    //    new CheckBox() {Text = result.FirstOrDefault().ToString()}
+                    //};
+                    //viewmodel.Checkboxracks = newList;
+                    return View("RequestReturnRack",viewmodel);
                 }
                 if (requestcode.Equals(Constants.RequestTypeCode.RENT_RACK))
                 {
@@ -50,7 +58,11 @@ namespace IMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                
+                List<String> rackcodes = viewModel.RackCodes;
+                for (int i = 0; i < rackcodes.Count; i++)
+                {
+                    var rack = rackcodes[i];
+                }
             }
             return RedirectToActionPermanent("Index", "Server");
         }
