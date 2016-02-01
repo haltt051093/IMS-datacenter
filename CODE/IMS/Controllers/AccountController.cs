@@ -55,6 +55,8 @@ namespace IMS.Controllers
             {
                 // su dung mapping cho list
                 var account = Mapper.Map<AccountCreateViewModel, Account>(accountCreateViewModel);
+                account.Role = "Customer";
+                account.GroupName = "No Group";
                 AccountBLO.Current.Add(account);
                 return RedirectToAction("Index");
             }

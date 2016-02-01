@@ -7,8 +7,8 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New Staff", "CreateStaff") <br/>
-    @Html.ActionLink("Create new customer", "CreateCustomer")
+    @Html.ActionLink("Create New Staff", "CreateStaff") <br />
+    @Html.ActionLink("Create New Customer", "CreateCustomer")
 </p>
 <table class="table">
     <tr>
@@ -42,50 +42,51 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model.Accounts) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RoleName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GroupName)
-        </td>
-        <td>
-            @if (item.Status == true)
-            {
-                @Html.Raw("Activate")
-            }
-            else
-            {
-                @Html.Raw("Deactivate")
-            }
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Fullname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Phone)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Identification)
-        </td>
-        <td>
-            @{
-                var action = item.RoleName == "Customer" ? "EditCustomer" : "EditStaff";
-            }
-            @Html.ActionLink("Edit", action, new {id = item.Id})
-            @Html.ActionLink("Delete", "Delete", new {id = item.Id})
-        </td>
-    </tr>
-}
+    @foreach (var item in Model.Accounts)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GroupName)
+            </td>
+            <td>
+                @if (item.Status == true)
+                {
+                    @Html.Raw("Activate")
+                }
+                else
+                {
+                    @Html.Raw("Deactivate")
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fullname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Identification)
+            </td>
+            <td>
+                @{
+                    var action = item.RoleName == "Customer" ? "EditCustomer" : "EditStaff";
+                }
+                @Html.ActionLink("Edit", action, new { id = item.Id })
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+                    }
 
 </table>
