@@ -31,11 +31,12 @@ namespace IMS.Data.Repository
         }
         public List<LocationExtendedModel> GetAllLocation()
         {
-            string query = @"select l.*,s.Status,r.RackName from Location as l
+            string query = @"select l.LocationCode,l.ServerCode, l.RackUnit, s.Status,r.RackName, ser.Id from Location as l
                             left join Status as s
                             on s.StatusCode = l.StatusCode
                             join Rack as r
-                            on r.RackCode = l.RackCode";
+                            on r.RackCode = l.RackCode
+                            left join Server as ser on ser.ServerCode = l.ServerCode";
 
             return RawQuery<LocationExtendedModel>(query, new object[] { });
         }
