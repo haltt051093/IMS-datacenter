@@ -80,9 +80,19 @@ namespace IMS.Controllers
         }
 
         // GET: Account/Edit/5
-        public ActionResult EditCustomer(int id)
-        {
-            return View("EditCustomer");
+        public ActionResult EditCustomer(int? id)
+        {  //nguyen ban chi co dong return 
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest); 
+            }
+            Account account = AccountBLO.Current.GetById(id);
+            if (account == null)
+            {
+                return HttpNotFound();
+            }
+            var accountviewmodel = Mapper.Map<Account, AccountCreateViewModel>(account);
+            return View(accountviewmodel);
         }
 
         // POST: Account/Edit/5
@@ -96,9 +106,13 @@ namespace IMS.Controllers
 
         // POST: Account/Edit/5
         [HttpPost]
-        public ActionResult EditCustomer(int id, FormCollection collection)
+        public ActionResult EditCustomer(AccountCreateViewModel viewmodel)
         {
-            return View("Index");
+            Account account = Mapper.Map<AccountCreateViewModel, Account>(viewmodel);
+            account.GroupName = "No Group";
+            AccountBLO.Current.AddOrUpdate(account);
+            
+            return RedirectToAction("Index");
         }
 
         // GET: Account/Delete/5
