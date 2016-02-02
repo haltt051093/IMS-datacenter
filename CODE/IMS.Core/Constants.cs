@@ -43,6 +43,11 @@ namespace IMS.Core
             public const string RACK_RENTED = "STATUS20";
             public const string RACK_USING = "STATUS21";
         }
+
+        public class Test
+        {
+            public const string CUSTOMER_MANHNH = "manhnh";
+        }
     }
 }
 

@@ -166,6 +166,7 @@
     <Compile Include="Models\LocationIndexViewModel.cs" />
     <Compile Include="Models\RackCreateViewModel.cs" />
     <Compile Include="Models\RequestRentRackViewModel.cs" />
+    <Compile Include="Models\RequestReturnIPViewModel.cs" />
     <Compile Include="Models\RequestReturnRackViewModel.cs" />
     <Compile Include="Models\ServerCreateViewModel.cs" />
     <Compile Include="Models\ServerDetailsViewModel.cs" />

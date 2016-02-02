@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.Repository;
+using IMS.Data.ViewModels;
 
 namespace IMS.Data.Business
 {
@@ -33,7 +34,7 @@ namespace IMS.Data.Business
             dao = RackOfCustomerDAO.Current;
         }
 
-        public List<RackOfCustomer> EmptyRentedRack(string customer)
+        public List<RackOfCustomerExtendedModel> EmptyRentedRack(string customer)
         {
             return dao.EmptyRentedRack(customer);
         }

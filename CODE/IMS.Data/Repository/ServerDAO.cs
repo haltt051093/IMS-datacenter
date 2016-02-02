@@ -45,9 +45,11 @@ namespace IMS.Data.Repository
         //list servers in Index page
         public List<ServerExtendedModel> GetAllServer()
         {
+            var distinct = LocationDAO.Current.Table().GroupBy(item => item.ServerCode)
+                .Select(e => e.FirstOrDefault());
             var query = from s in Table()
-                        join l in LocationDAO.Current.Table()
-                            on s.LocationCode equals l.LocationCode into sl
+                        join l in distinct
+                            on s.ServerCode equals l.ServerCode into sl
                         from subl in sl.DefaultIfEmpty()
                         join st in StatusDAO.Current.Table()
                             on s.StatusCode equals st.StatusCode into stsl
@@ -78,9 +80,11 @@ namespace IMS.Data.Repository
         //a server with full fields
         public ServerExtendedModel GetServerById(int id)
         {
+            var distinct = LocationDAO.Current.Table().GroupBy(item => item.ServerCode)
+                .Select(e => e.FirstOrDefault());
             var query = from s in Table()
-                        join l in LocationDAO.Current.Table()
-                            on s.LocationCode equals l.LocationCode into sl
+                        join l in distinct
+                            on s.ServerCode equals l.ServerCode into sl
                         from subl in sl.DefaultIfEmpty()
                         join st in StatusDAO.Current.Table()
                             on s.StatusCode equals st.StatusCode into stsl

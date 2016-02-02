@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IMS.Data.Generic;
 using IMS.Data.Models;
+using IMS.Data.ViewModels;
 
 namespace IMS.Data.Repository
 {
@@ -30,7 +31,7 @@ namespace IMS.Data.Repository
             return Query(x => x.Id == entry.Id).FirstOrDefault();
         }
 
-        public List<RackOfCustomer> EmptyRentedRack(string customer)
+        public List<RackOfCustomerExtendedModel> EmptyRentedRack(string customer)
         {
             //var list1 = from rc in RackOfCustomerDAO.Current.Table()
             //            where rc.Customer == customer
@@ -52,15 +53,17 @@ namespace IMS.Data.Repository
             //            select rcmain;
             //return query.ToList();
 
-            var query = @"select DISTINCT rc.RackCode, rc.Customer
+            var query = @"select DISTINCT rc.RackCode, rc.Customer, r.RackName
                         from RackOfCustomer rc
+						left join Rack as r
+						on r.RackCode = rc.RackCode
                         where rc.Customer ='" + customer + @"' AND rc.RackCode NOT IN (
                         select DISTINCT l.RackCode
                         from Server as s
                         inner join Location as l
-                        on s.LocationCode = l.LocationCode
-                        where s.Customer = '" + customer + @"')";
-            return RawQuery<RackOfCustomer>(query, new object[] { });
+                        on s.ServerCode = l.ServerCode
+                        where s.Customer = '" + customer + "')";
+            return RawQuery<RackOfCustomerExtendedModel>(query, new object[] { });
         }
     }
 }

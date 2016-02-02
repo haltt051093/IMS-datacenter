@@ -122,6 +122,7 @@
     <Compile Include="ViewModels\IPAddressModel.cs" />
     <Compile Include="ViewModels\IPExtendedModel.cs" />
     <Compile Include="ViewModels\LocationExtendedModel.cs" />
+    <Compile Include="ViewModels\RackOfCustomerExtendedModel.cs" />
     <Compile Include="ViewModels\RequestExtendedModel.cs" />
     <Compile Include="ViewModels\ServerExtendedModel.cs" />
   </ItemGroup>

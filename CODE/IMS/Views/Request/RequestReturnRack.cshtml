@@ -12,21 +12,20 @@
     {
         @Html.AntiForgeryToken()
         <h3>Request return rack</h3>
-    @*<p>
-        @for (int i = 0; i < Model.Checkboxracks.Count; i++)
+    <p>
+        @for (var i = 0; i < Model.RackOfCustomer.Count; i++)
         {
-            @Html.CheckBoxFor(r => r.RackOfCustomer[i].IsDynamic())
+            <div class="checkbox">
+                @Html.HiddenFor(x => x.RackOfCustomer[i].Value)
+                <label>
+                    @Html.CheckBoxFor(x => x.RackOfCustomer[i].Selected)
+                    @Html.DisplayFor(x => x.RackOfCustomer[i].Text)
+                </label>
+            </div>
         }
-
-    </p>*@
-
-    @*for (var i = 0; i < racks.Count; i++)
-        {
-            <input type="checkbox" name="check" value="@racks[i].RackCode" />
-            @Html.Raw(racks[i].RackCode)
-        }*@
-        <br />
-            <input class="green" type="submit" value="Send Request" />
+    </p>
+    <br />
+        <input class="green" type="submit" value="Send Request" />
     }
 
 
