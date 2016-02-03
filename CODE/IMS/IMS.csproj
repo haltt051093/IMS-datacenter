@@ -206,6 +206,7 @@
     <Content Include="Views\IP\CreateIP.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\ViewProfile.cshtml" />
+    <Content Include="Views\Location\AssignLocation.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

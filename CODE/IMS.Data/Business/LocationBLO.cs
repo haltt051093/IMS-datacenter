@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Configuration;
 using System.Text;
 using System.Threading.Tasks;
 using IMS.Core.Express;
@@ -29,6 +30,68 @@ namespace IMS.Data.Business
         }
 
 
+        public bool UpdateLocation(int? size, string ServerCode, string LocationCode, string request)
+        {
+            if (request.Equals("Change"))
+            {
+                List<Location> existing = dao.Query(x => x.ServerCode == ServerCode).ToList();
+                if (existing.Count > 0)
+                {
+                    for (int i = 0; i < existing.Count; i++)
+                    {
+                        existing[i].StatusCode = "STATUS13";
+                        existing[i].ServerCode = null;
+
+                    }
+
+                    List<Location> locations = dao.GetAll();
+                    int exist = locations.IndexOf(dao.Query(x => x.LocationCode == LocationCode).FirstOrDefault());
+                    for (int i = exist; i < (exist + size); i++)
+                    {
+                        if (locations[i].StatusCode.Equals("STATUS13"))
+                        {
+                            locations[i].ServerCode = ServerCode;
+                            locations[i].StatusCode = "STATUS14";
+                        }
+                        else
+                        {
+                            return false;
+                        }
+
+                    }
+                    dao.UpdateMany(existing);
+                    dao.UpdateMany(locations);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            else
+            {
+                List<Location> locations = dao.GetAll();
+                int exist = locations.IndexOf(dao.Query(x => x.LocationCode == LocationCode).FirstOrDefault());
+                for (int i = exist; i < (exist + size); i++)
+                {
+                    if (locations[i].StatusCode.Equals("STATUS13"))
+                    {
+                        locations[i].ServerCode = ServerCode;
+                        locations[i].StatusCode = "STATUS14";
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+                dao.UpdateMany(locations);
+                return true;
+            }
+
+
+        }
         private LocationBLO()
         {
             baseDao = LocationDAO.Current;
@@ -48,6 +111,140 @@ namespace IMS.Data.Business
         public List<LocationExtendedModel> GetAllLocation()
         {
             return dao.GetAllLocation();
+        }
+
+        public List<LocationExtendedModel> GetChangeLocation(Server server)
+        {
+            var allLocation = new List<LocationExtendedModel>();
+            if (RackOfCustomerDAO.Current.GetRackOfCustomer(server).Count > 0)
+            {
+                allLocation = dao.GetCustomerRackValidPowerForChange(server);
+            }
+            else
+            {
+                allLocation = dao.GetRackValidPowerForChange(server);
+            }
+            allLocation = allLocation.OrderBy(x => x.RackCode)
+                .ThenBy(x => x.RackUnit)
+                .ToList();
+            var allRackCode = allLocation.Select(x => x.RackCode).Distinct().ToList();
+            var rackMaxSize = new Dictionary<string, int>();
+            foreach (var rackCode in allRackCode)
+            {
+                rackMaxSize[rackCode] = 0;
+            }
+            var lastRackCode = string.Empty;
+            var maxRackSize = 0;
+            if (allLocation.Count > 0)
+            {
+                lastRackCode = allLocation[0].RackCode;
+            }
+            foreach (var location in allLocation)
+            {
+                if (lastRackCode != location.RackCode || !string.IsNullOrEmpty(location.ServerCode))
+                {
+                    if (maxRackSize > rackMaxSize[lastRackCode])
+                    {
+                        rackMaxSize[lastRackCode] = maxRackSize;
+                    }
+                    lastRackCode = location.RackCode;
+                    maxRackSize = 0;
+                }
+                if (string.IsNullOrEmpty(location.ServerCode))
+                {
+                    maxRackSize++;
+                }
+            }
+            if (maxRackSize > rackMaxSize[lastRackCode])
+            {
+                rackMaxSize[lastRackCode] = maxRackSize;
+            }
+
+            var result = new List<LocationExtendedModel>();
+            foreach (var rackCode in allRackCode)
+            {
+                var maxSize = rackMaxSize[rackCode];
+                if (maxSize >= server.Size.Value)
+                {
+                    result.AddRange(allLocation.Where(x => x.RackCode == rackCode));
+                }
+            }
+            int r = 0;
+            for (int i = 0; i < result.Count; i++)
+            {
+                if (result[i].RackCode.Equals(dao.GetRackOfServer(server).RackCode))
+                {
+                    r++;
+                }
+            }
+            if (r > 0)
+            {
+                return result;
+            }
+            else
+            {
+                result.Add(dao.GetRackOfServer(server));
+                return result;
+            }
+
+        }
+        public List<LocationExtendedModel> GetNewLocation(Server server)
+        {
+            var allLocation = new List<LocationExtendedModel>();
+            if (RackOfCustomerDAO.Current.GetRackOfCustomer(server).Count > 0)
+            {
+                allLocation = dao.GetCustomerRackValidPowerForNew(server);
+            }
+            else
+            {
+                allLocation = dao.GetRackValidPowerForNew(server);
+            }
+            allLocation = allLocation.OrderBy(x => x.RackCode)
+                .ThenBy(x => x.RackUnit)
+                .ToList();
+            var allRackCode = allLocation.Select(x => x.RackCode).Distinct().ToList();
+            var rackMaxSize = new Dictionary<string, int>();
+            foreach (var rackCode in allRackCode)
+            {
+                rackMaxSize[rackCode] = 0;
+            }
+            var lastRackCode = string.Empty;
+            var maxRackSize = 0;
+            if (allLocation.Count > 0)
+            {
+                lastRackCode = allLocation[0].RackCode;
+            }
+            foreach (var location in allLocation)
+            {
+                if (lastRackCode != location.RackCode || !string.IsNullOrEmpty(location.ServerCode))
+                {
+                    if (maxRackSize > rackMaxSize[lastRackCode])
+                    {
+                        rackMaxSize[lastRackCode] = maxRackSize;
+                    }
+                    lastRackCode = location.RackCode;
+                    maxRackSize = 0;
+                }
+                if (string.IsNullOrEmpty(location.ServerCode))
+                {
+                    maxRackSize++;
+                }
+            }
+            if (maxRackSize > rackMaxSize[lastRackCode])
+            {
+                rackMaxSize[lastRackCode] = maxRackSize;
+            }
+
+            var result = new List<LocationExtendedModel>();
+            foreach (var rackCode in allRackCode)
+            {
+                var maxSize = rackMaxSize[rackCode];
+                if (maxSize >= server.Size.Value)
+                {
+                    result.AddRange(allLocation.Where(x => x.RackCode == rackCode));
+                }
+            }
+            return result;
         }
     }
 }

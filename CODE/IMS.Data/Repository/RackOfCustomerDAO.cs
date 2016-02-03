@@ -65,5 +65,10 @@ namespace IMS.Data.Repository
                         where s.Customer = '" + customer + "')";
             return RawQuery<RackOfCustomerExtendedModel>(query, new object[] { });
         }
+        public List<LocationExtendedModel> GetRackOfCustomer(Server server)
+        {
+            string query = @"select roc.RackCode from RackOfCustomer roc where roc.Customer = '" + server.Customer + @"'";
+            return RawQuery<LocationExtendedModel>(query, new object[] { });
+        }
     }
 }
