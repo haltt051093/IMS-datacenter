@@ -1,0 +1,112 @@
+﻿@using IMS.Data.Models
+@using IMS.Data.ViewModels
+@model IMS.Models.LocationIndexViewModel
+@{
+    ViewBag.Title = "AssignLocation";
+}
+
+<h2>List of Location</h2>
+<div class="form-group">
+    //dropdownlist of suitable Rack
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Request)
+        @Html.HiddenFor(model => model.Server.ServerCode)
+        @Html.HiddenFor(model => model.Server.Size)
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.Raw("LocationCode")
+                </th>
+                <th>
+                    @Html.Raw("RackName")
+                </th>
+                <th>
+                    @Html.Raw("RackUnit")
+                </th>
+                <th>
+                    @Html.Raw("Status")
+                </th>
+                <th>
+                    @Html.Raw("ServerCode")
+                </th>
+                <th>
+
+                </th>
+            </tr>
+
+            @foreach (var item in Model.Locations)
+            {
+                <tr>
+                    @if (item.ServerCode == Model.Server.ServerCode)
+                    {
+                        <td>
+                            <label style="color: red">@Html.DisplayFor(modelItem => item.LocationCode)</label>
+                        </td>
+                        <td>
+                            <label style="color: red">@Html.DisplayFor(modelItem => item.RackName)</label>
+                        </td>
+                        <td>
+                            <label style="color: red">@Html.DisplayFor(modelItem => item.RackUnit)</label>
+                        </td>
+                        <td>
+                            <label style="color: red">@Html.DisplayFor(modelItem => item.Status)</label>
+                        </td>
+                        <td>
+                            @if (item.ServerCode == Model.Server.ServerCode)
+                            {
+                                <label style="color: red">@Html.DisplayFor(modelItem => item.ServerCode)</label>
+
+                            }
+                        </td>
+                        <td>
+                            @if (item.Status == "Free")
+                            {
+                                @Html.RadioButtonFor(model => model.LocationCode, item.LocationCode)
+                            }
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LocationCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RackName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RackUnit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ServerCode)
+                        </td>
+                        <td>
+                            @if (item.Status == "Free")
+                        {
+                                @Html.RadioButtonFor(model => model.LocationCode, item.LocationCode)
+                            }
+
+                        </td>
+                    }
+
+
+                </tr>
+            }
+
+        </table>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

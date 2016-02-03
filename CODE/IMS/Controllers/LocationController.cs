@@ -20,6 +20,52 @@ namespace IMS.Controllers
             data.Locations = LocationBLO.Current.GetAllLocation();
             return View(data);
         }
+        public ActionResult AssignLocation(Server server, string request)
+        {
+            var s = new Server();
+            s.ServerCode = "BJIWEHDHQ";
+            s.Power = 750;
+            s.Size = 2;
+            s.Customer = "manhnh";
+            request = "Change";
+            //request = "New";
+            var data = new LocationIndexViewModel();
+            if (request == "Change")
+            {
+                data.Locations = LocationBLO.Current.GetChangeLocation(s);
+                data.Server = s;
+                data.Request = request;
+                return View(data);
+            }
+            else
+            {
+                data.Locations = LocationBLO.Current.GetNewLocation(s);
+                data.Server = s;
+                data.Request = request;
+                return View(data);
+
+            }
+        }
+
+        [HttpPost]
+        public ActionResult AssignLocation(LocationIndexViewModel livm)
+        {
+            if (livm.LocationCode == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            bool x = LocationBLO.Current.UpdateLocation(livm.Server.Size, livm.Server.ServerCode, livm.LocationCode, livm.Request);
+            if (x)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return RedirectToAction("AssignLocation");
+            }
+
+
+        }
         public ActionResult CreateLocation()
         {
             return View();
