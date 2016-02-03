@@ -21,6 +21,23 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home", null, null)</li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (User.IsInRole("Shift Head") || User.IsInRole("Manager"))
+                        {
+                            <li>@Html.ActionLink("Accounts", "Index", "Account", null, null)</li>
+                            <li>@Html.ActionLink("IPAddress", "Index", "IP", null, null)</li>
+                            <li>@Html.ActionLink("Location", "Index", "Location", null, null)</li>
+                        }
+                        <li>@Html.ActionLink("Servers", "Index", "Server", null, null)</li>
+                        <li>@Html.ActionLink("Logout", "Logout", "Account", null, null)</li>
+                        <li><a href="#">Welcome Ms/Mr: @User.Identity.Name</a></li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Login", "Login", "Account", null, null)</li>
+                    }
                 </ul>
             </div>
         </div>

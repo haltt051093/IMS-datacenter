@@ -152,6 +152,7 @@
     <Compile Include="App_Start\MappingConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IPController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\RequestController.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AccountAuth.cs" />
     <Compile Include="Models\AccountCreateViewModel.cs" />
     <Compile Include="Models\AccountIndexViewModel.cs" />
     <Compile Include="Models\AccountLoginViewModel.cs" />
@@ -172,6 +174,7 @@
     <Compile Include="Models\ServerCreateViewModel.cs" />
     <Compile Include="Models\ServerDetailsViewModel.cs" />
     <Compile Include="Models\ServerIndexViewModel.cs" />
+    <Compile Include="MyRoleProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

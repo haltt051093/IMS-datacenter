@@ -76,5 +76,8 @@ namespace IMS.Controllers
             data.CurrentIPs = servercurrentips;
             return View(data);
         }
+
+        
+        
     }
 }

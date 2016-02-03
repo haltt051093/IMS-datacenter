@@ -8,8 +8,11 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New Staff", "CreateStaff") <br />
-    @Html.ActionLink("Create New Customer", "CreateCustomer")
+    @if (User.IsInRole("Manager"))
+    {
+        @Html.ActionLink("Create New Staff", "CreateStaff") <br />
+        @Html.ActionLink("Create New Customer", "CreateCustomer")
+    }
 </p>
 <table class="table">
     <tr>
@@ -47,12 +50,12 @@
     {
         <tr>
             <td>
-                
+
                 @*@Html.DisplayFor(modelItem => item.Username)*@
                 @Html.ActionLink(item.Username, "ViewProfile", new { id = item.Id })
 
-                 
-            
+
+
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RoleName)
@@ -86,14 +89,14 @@
                 @Html.DisplayFor(modelItem => item.Identification)
             </td>
             <td>
-                @{
+                @if (User.IsInRole("Manager"))
+                {
                     var action = item.RoleName == "Customer" ? "EditCustomer" : "EditStaff";
+                    @Html.ActionLink("Edit", action, new { id = item.Id })
                 }
-                @Html.ActionLink("Edit", action, new { id = item.Id })
-                @*@Html.ActionLink("ViewProfile", "ViewProfile", new { id = item.Id })*@
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+
             </td>
         </tr>
-                    }
+    }
 
 </table>
