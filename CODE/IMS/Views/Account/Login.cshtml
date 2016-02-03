@@ -1,0 +1,35 @@
+﻿@model AccountLoginViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        @using (Html.BeginForm())
+        {
+            <table>
+                <tr>
+                    <td>Username</td>
+                    <td>@Html.TextBoxFor(x => x.Username)</td>
+                </tr>
+                <tr>
+                    <td>Password</td>
+                    <td>@Html.PasswordFor(x => x.Password)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><button type='submit'>Login</button></td>
+                </tr>
+            </table>
+        }
+    </div>
+</body>
+</html>

@@ -49,7 +49,7 @@ namespace IMS.Controllers
                 {
                     RequestReturnIPViewModel viewmodel = new RequestReturnIPViewModel();
                     var ListServers = ServerDAO.Current.Query(x => x.Customer == Constants.Test.CUSTOMER_MANHNH);
-                    viewmodel.Servers = ListServers;
+                    //viewmodel.Servers = ListServers;
                     return View("RequestReturnIP");
                 }
             }

@@ -10,6 +10,12 @@ namespace IMS.Models
     public class RequestReturnIPViewModel
     {
         public List<SelectListItem> ServerIPs { get; set; }
-        public List<Server> Servers { get; set; }
+        public List<ServerExtModel> Servers { get; set; }
+    }
+
+    public class ServerExtModel
+    {
+        public Server Sever { get; set; }
+        public List<IPAddressPool> IPs { get; set; }
     }
 }

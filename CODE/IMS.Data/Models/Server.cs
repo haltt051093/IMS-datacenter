@@ -36,5 +36,8 @@ namespace IMS.Data.Models
         public DateTime? RegisteredDate { get; set; }
 
         public int? Outlet { get; set; }
+
+        [StringLength(50)]
+        public string ObjectCode { get; set; }
     }
 }
