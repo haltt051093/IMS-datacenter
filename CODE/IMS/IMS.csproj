@@ -203,6 +203,7 @@
     <Content Include="Views\Request\RequestUpgradeServer.cshtml" />
     <Content Include="Views\Request\RequestReturnIP.cshtml" />
     <Content Include="Views\IP\CreateIP.cshtml" />
+    <Content Include="Views\Account\ViewProfile.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
