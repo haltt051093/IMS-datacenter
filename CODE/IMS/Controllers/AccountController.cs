@@ -26,19 +26,28 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult Login(Account account)
         {
-
+            // gioi han tg login, ko cho login persistant
+            // expiration = 30 days
+            bool isPersistent = false;
             var o = AccountDAO.Current.Query(x => x.Username == account.Username && x.Password == account.Password).FirstOrDefault();
             if (o != null)
             {
-                //AccountAuth auth = new AccountAuth();
-                //auth.Role = o.Role;
-                //auth.Fullname = o.Fullname;
-                //auth.GroupName = o.GroupName;
-                //auth.Username = o.Username;
-                //auth.IsPersistent = false;
-                //FormsAuthentication.FormsCookiePath;
+                FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1,
+                                                    account.Username,
+                                                    DateTime.Now,
+                                                    DateTime.Now.AddMinutes(30),
+                                                    isPersistent,
+                                                    FormsAuthentication.FormsCookiePath);
+
+                // Encrypt the ticket.
+                string encTicket = FormsAuthentication.Encrypt(ticket);
+                // Create the cookie.
+                Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encTicket));
+                // Redirect back to original URL.
+                Response.Redirect(FormsAuthentication.GetRedirectUrl(account.Username, isPersistent));
+
+
                 FormsAuthentication.SetAuthCookie(account.Username, false);
-                //FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1,);
                 return RedirectToAction("Index", "Account");
             }
             return View();
