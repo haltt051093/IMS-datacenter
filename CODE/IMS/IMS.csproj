@@ -204,11 +204,8 @@
     <Content Include="Views\Request\RequestUpgradeServer.cshtml" />
     <Content Include="Views\Request\RequestReturnIP.cshtml" />
     <Content Include="Views\IP\CreateIP.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Account\Login.cshtml" />
-=======
     <Content Include="Views\Account\ViewProfile.cshtml" />
->>>>>>> origin/master
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
