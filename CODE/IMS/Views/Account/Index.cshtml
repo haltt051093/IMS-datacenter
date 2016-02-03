@@ -1,4 +1,5 @@
-﻿@model IMS.Models.AccountIndexViewModel
+﻿@using System.Web.Mvc.Html
+@model IMS.Models.AccountIndexViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -46,7 +47,12 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Username)
+                
+                @*@Html.DisplayFor(modelItem => item.Username)*@
+                @Html.ActionLink(item.Username, "ViewProfile", new { id = item.Id })
+
+                 
+            
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RoleName)
@@ -84,6 +90,7 @@
                     var action = item.RoleName == "Customer" ? "EditCustomer" : "EditStaff";
                 }
                 @Html.ActionLink("Edit", action, new { id = item.Id })
+                @*@Html.ActionLink("ViewProfile", "ViewProfile", new { id = item.Id })*@
                 @Html.ActionLink("Delete", "Delete", new { id = item.Id })
             </td>
         </tr>

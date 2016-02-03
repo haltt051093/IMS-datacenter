@@ -81,7 +81,7 @@ namespace IMS.Controllers
 
         // GET: Account/Edit/5
         public ActionResult EditCustomer(int? id)
-        {  //nguyen ban chi co dong return 
+        {  
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest); 
@@ -109,11 +109,18 @@ namespace IMS.Controllers
         public ActionResult EditCustomer(AccountCreateViewModel viewmodel)
         {
             Account account = Mapper.Map<AccountCreateViewModel, Account>(viewmodel);
+            account.GroupName = "Customer";
             account.GroupName = "No Group";
             AccountBLO.Current.AddOrUpdate(account);
             
             return RedirectToAction("Index");
         }
+
+
+
+
+
+        //GET: Account/ViewProfile
 
         // GET: Account/Delete/5
         public ActionResult Delete(int id)
@@ -136,6 +143,22 @@ namespace IMS.Controllers
             {
                 return View();
             }
+        }
+
+        public ActionResult ViewProfile(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Account account = AccountBLO.Current.GetById(id);
+            if (account == null)
+            {
+                return HttpNotFound();
+            }
+            var accountviewmodel = Mapper.Map<Account, AccountCreateViewModel>(account);
+            return View(accountviewmodel);
+
         }
     }
 }
