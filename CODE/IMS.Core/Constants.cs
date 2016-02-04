@@ -48,6 +48,15 @@ namespace IMS.Core
         {
             public const string CUSTOMER_MANHNH = "manhnh";
         }
+
+        public class SendMail
+        {
+            public const string FROM_EMAIL_USERNAME = "IMS.DATACENTER.QTSC@gmail.com";
+            public const string FROM_EMAIL_PASSWORD = "imsdatacenter";
+            public const string SMTP_HOST = "smtp.gmail.com";
+            public const int SMTP_PORT = 25;
+            public const string SUBJECT_NEWACCOUNT = "New Account to IMS-datacenter";
+        }
     }
 }
 

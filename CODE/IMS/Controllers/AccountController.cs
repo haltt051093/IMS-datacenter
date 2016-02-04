@@ -6,9 +6,11 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using AutoMapper;
+using IMS.Core;
 using IMS.Data.Business;
 using IMS.Data.Models;
 using IMS.Data.Repository;
+using IMS.Data.ViewModels;
 using IMS.Models;
 
 namespace IMS.Controllers
@@ -32,19 +34,20 @@ namespace IMS.Controllers
             var o = AccountDAO.Current.Query(x => x.Username == account.Username && x.Password == account.Password).FirstOrDefault();
             if (o != null)
             {
-                FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1,
-                                                    account.Username,
-                                                    DateTime.Now,
-                                                    DateTime.Now.AddMinutes(30),
-                                                    isPersistent,
-                                                    FormsAuthentication.FormsCookiePath);
+                //Hoi lai FormAuthenticationTicket la gi
+                //FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1,
+                //                                    account.Username,
+                //                                    DateTime.Now,
+                //                                    DateTime.Now.AddMinutes(30),
+                //                                    isPersistent,
+                //                                    FormsAuthentication.FormsCookiePath);
 
-                // Encrypt the ticket.
-                string encTicket = FormsAuthentication.Encrypt(ticket);
-                // Create the cookie.
-                Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encTicket));
-                // Redirect back to original URL.
-                Response.Redirect(FormsAuthentication.GetRedirectUrl(account.Username, isPersistent));
+                //// Encrypt the ticket.
+                //string encTicket = FormsAuthentication.Encrypt(ticket);
+                //// Create the cookie.
+                //Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encTicket));
+                //// Redirect back to original URL.
+                //Response.Redirect(FormsAuthentication.GetRedirectUrl(account.Username, isPersistent));
 
 
                 FormsAuthentication.SetAuthCookie(account.Username, false);
@@ -83,6 +86,13 @@ namespace IMS.Controllers
             {
                 var account = Mapper.Map<AccountCreateViewModel, Account>(accountCreateViewModel);
                 AccountBLO.Current.Add(account);
+                //send account info to login to the system
+                bool result = AccountBLO.Current.SendAccountInfo(account);
+                if (result)
+                {
+                    //ModelState.AddModelError("", "Send mail successfully");
+                    return RedirectToAction("Index");
+                }
                 return RedirectToAction("Index");
             }
             return View(accountCreateViewModel);
@@ -100,7 +110,13 @@ namespace IMS.Controllers
                 account.Role = "Customer";
                 account.GroupName = "No Group";
                 AccountBLO.Current.Add(account);
-                return RedirectToAction("Index");
+                //send account info to login to the system
+                bool result = AccountBLO.Current.SendAccountInfo(account);
+                if (result)
+                {
+                    //ModelState.AddModelError("", "Send mail successfully");
+                    return RedirectToAction("Index");
+                }
             }
             return View(accountCreateViewModel);
         }

@@ -75,6 +75,7 @@
     <Compile Include="Generic\BaseDAO.cs" />
     <Compile Include="Generic\BaseModel.cs" />
     <Compile Include="IMSContext.cs" />
+    <Compile Include="MailService.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\AssignedShift.cs" />
     <Compile Include="Models\Attribute.cs" />
