@@ -27,23 +27,32 @@ namespace IMS.Data.Business
                 return instance;
             }
         }
-        public void AddRackAndLocation(Rack entry)
+        public bool AddRackAndLocation(Rack entry)
         {
             var rackCode = GenerateCode();
             entry.RackCode = rackCode;
             entry.RegisteredDate = DateTime.Now;
-            dao.Add(entry);
-            var locations = new List<Location>();
-            for (int i = 1; i < 43; i++)
+            var exist = dao.Query(x => x.RackName == entry.RackName).FirstOrDefault();
+            if (exist != null)
             {
-                var item = new Location();
-                item.LocationCode = LocationBLO.Current.GenerateCode();
-                item.RackCode = rackCode;
-                item.RackUnit = i;
-                item.StatusCode = Constants.StatusCode.LOCATION_FREE;
-                locations.Add(item);
+                return false;
             }
-            LocationBLO.Current.AddMany(locations);
+            else
+            {
+                dao.Add(entry);
+                var locations = new List<Location>();
+                for (int i = 1; i < 43; i++)
+                {
+                    var item = new Location();
+                    item.LocationCode = LocationBLO.Current.GenerateCode();
+                    item.RackCode = rackCode;
+                    item.RackUnit = i;
+                    item.StatusCode = Constants.StatusCode.LOCATION_FREE;
+                    locations.Add(item);
+                }
+                LocationBLO.Current.AddMany(locations);
+                return true;
+            }
 
         }
 

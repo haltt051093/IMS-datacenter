@@ -97,8 +97,11 @@ namespace IMS.Controllers
             if (ModelState.IsValid)
             {
                 var rack = Mapper.Map<RackCreateViewModel, Rack>(rcvm);
-                RackBLO.Current.AddRackAndLocation(rack);
-                return RedirectToAction("Index");
+                if (RackBLO.Current.AddRackAndLocation(rack) == true)
+                {
+                    return RedirectToAction("Index");
+                }
+                else return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             return View();
 

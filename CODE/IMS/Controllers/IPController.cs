@@ -5,6 +5,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using IMS.Data.Business;
+using IMS.Data.Repository;
 using IMS.Models;
 
 namespace IMS.Controllers
@@ -50,8 +51,17 @@ namespace IMS.Controllers
             if (ModelState.IsValid)
             {
                 var ips = IPAddressPoolBLO.Current.GenerateIP(icvm.IP, icvm.BitCount);
-                IPAddressPoolBLO.Current.AddIP(ips);
-                return RedirectToAction("Index");
+                var gateway = IPAddressPoolBLO.Current.GenerateIP(icvm.IP, icvm.BitCount).FirstOrDefault().Gateway;
+                var exist = IPAddressPoolDAO.Current.Query(x => x.Gateway == gateway);
+                if (exist.Count > 0)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                else
+                {
+                    IPAddressPoolBLO.Current.AddIP(ips);
+                    return RedirectToAction("Index");
+                }
             }
             return View(icvm);
         }
