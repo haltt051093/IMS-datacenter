@@ -32,6 +32,7 @@ namespace IMS.Data.Business
             var rackCode = GenerateCode();
             entry.RackCode = rackCode;
             entry.RegisteredDate = DateTime.Now;
+            entry.StatusCode = Constants.StatusCode.RACK_AVAILABLE;
             var exist = dao.Query(x => x.RackName == entry.RackName).FirstOrDefault();
             if (exist != null)
             {
