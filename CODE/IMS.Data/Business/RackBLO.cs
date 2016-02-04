@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IMS.Core;
 using IMS.Core.Express;
 using IMS.Data.Generic;
 using IMS.Data.Models;
@@ -39,7 +40,7 @@ namespace IMS.Data.Business
                 item.LocationCode = LocationBLO.Current.GenerateCode();
                 item.RackCode = rackCode;
                 item.RackUnit = i;
-                item.StatusCode = "STATUS13";
+                item.StatusCode = Constants.StatusCode.LOCATION_FREE;
                 locations.Add(item);
             }
             LocationBLO.Current.AddMany(locations);

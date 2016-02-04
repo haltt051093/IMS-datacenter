@@ -188,7 +188,7 @@ namespace IMS.Data.Business
                 item.IPAddress = entry[i].IPAddress;
                 item.Gateway = entry[i].Gateway;
                 item.RegisteredDate = DateTime.Now;
-                item.StatusCode = "STATUS10";
+                item.StatusCode = Constants.StatusCode.IP_AVAILABLE;
                 item.Subnetmask = entry[i].Subnetmask;
                 ip.Add(item);
             }

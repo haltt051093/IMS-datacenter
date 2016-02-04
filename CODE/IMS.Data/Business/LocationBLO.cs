@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Configuration;
 using System.Text;
 using System.Threading.Tasks;
+using IMS.Core;
 using IMS.Core.Express;
 using IMS.Data.Generic;
 using IMS.Data.Models;
@@ -39,7 +40,7 @@ namespace IMS.Data.Business
                 {
                     for (int i = 0; i < existing.Count; i++)
                     {
-                        existing[i].StatusCode = "STATUS13";
+                        existing[i].StatusCode = Constants.StatusCode.LOCATION_FREE;
                         existing[i].ServerCode = null;
 
                     }
@@ -48,10 +49,10 @@ namespace IMS.Data.Business
                     int exist = locations.IndexOf(dao.Query(x => x.LocationCode == LocationCode).FirstOrDefault());
                     for (int i = exist; i < (exist + size); i++)
                     {
-                        if (locations[i].StatusCode.Equals("STATUS13"))
+                        if (locations[i].StatusCode.Equals(Constants.StatusCode.LOCATION_FREE))
                         {
                             locations[i].ServerCode = ServerCode;
-                            locations[i].StatusCode = "STATUS14";
+                            locations[i].StatusCode = Constants.StatusCode.LOCATION_USED;
                         }
                         else
                         {
@@ -75,10 +76,10 @@ namespace IMS.Data.Business
                 int exist = locations.IndexOf(dao.Query(x => x.LocationCode == LocationCode).FirstOrDefault());
                 for (int i = exist; i < (exist + size); i++)
                 {
-                    if (locations[i].StatusCode.Equals("STATUS13"))
+                    if (locations[i].StatusCode.Equals(Constants.StatusCode.LOCATION_FREE))
                     {
                         locations[i].ServerCode = ServerCode;
-                        locations[i].StatusCode = "STATUS14";
+                        locations[i].StatusCode = Constants.StatusCode.LOCATION_USED;
                     }
                     else
                     {
