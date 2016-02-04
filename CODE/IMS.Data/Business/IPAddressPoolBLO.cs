@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IMS.Core;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.Repository;
@@ -196,6 +197,97 @@ namespace IMS.Data.Business
         public List<IPExtendedModel> GetAllIP()
         {
             return dao.GetAllIP();
+        }
+        public string GetGatewayByServerCode(string servercode)
+        {
+            return dao.GetGatewayByServerCode(servercode);
+        }
+        public string GetGatewayByIP(string ip)
+        {
+            return dao.GetGatewayByIP(ip);
+        }
+        public List<IPExtendedModel> GetIPSameGateway(string gateway)
+        {
+            return dao.GetIPSameGateway(gateway);
+        }
+        public List<IPExtendedModel> GetIPAvailable()
+        {
+            return dao.GetIPAvailable();
+        }
+
+        public bool UpdateIP(string ServerCode, string OldIP, string NewIP, List<string> ListNewIP, string Request)
+        {
+            if (Request.Equals("Change"))
+            {
+                IPAddressPool existing = dao.Query(x => x.IPAddress == OldIP).ToList().FirstOrDefault();
+                if (existing.IsDefault == true)
+                {
+                    var server = ServerBLO.Current.GetByDefaultIP(OldIP);
+                    server.DefaultIP = NewIP;
+                    ServerBLO.Current.Update(server);
+                    var serverip = ServerBLO.Current.GetByIP(OldIP);
+                    serverip.CurrentIP = NewIP;
+                    ServerIPBLO.Current.Update(serverip);
+                    var old = dao.Query(x => x.IPAddress == OldIP).FirstOrDefault();
+                    old.IsDefault = false;
+                    old.StatusCode = Constants.StatusCode.IP_AVAILABLE;
+                    dao.Update(old);
+                    var newip = dao.Query(x => x.IPAddress == NewIP).FirstOrDefault();
+                    newip.IsDefault = true;
+                    newip.StatusCode = Constants.StatusCode.IP_USED;
+                    dao.Update(newip);
+                    return true;
+                }
+                else
+                {
+                    var serverip = ServerBLO.Current.GetByIP(OldIP);
+                    serverip.CurrentIP = NewIP;
+                    ServerIPBLO.Current.Update(serverip);
+                    var old = dao.Query(x => x.IPAddress == OldIP).FirstOrDefault();
+                    old.StatusCode = Constants.StatusCode.IP_AVAILABLE;
+                    dao.Update(old);
+                    var newip = dao.Query(x => x.IPAddress == NewIP).FirstOrDefault();
+                    newip.StatusCode = Constants.StatusCode.IP_USED;
+                    dao.Update(newip);
+                    return true;
+                }
+            }
+            else if (Request.Equals("AddIPForNewServer"))
+            {
+                var server = ServerBLO.Current.GetByServerCode(ServerCode);
+                server.DefaultIP = NewIP;
+                ServerBLO.Current.Update(server);
+                ServerIP si = new ServerIP();
+                si.CurrentIP = NewIP;
+                si.ServerCode = ServerCode;
+                ServerIPBLO.Current.Add(si);
+                var ip = dao.Query(x => x.IPAddress == NewIP).FirstOrDefault();
+                ip.IsDefault = true;
+                ip.StatusCode = Constants.StatusCode.IP_USED;
+                dao.Update(ip);
+                return true;
+            }
+            else
+            {
+                List<ServerIP> si = new List<ServerIP>();
+
+                for (int i = 0; i < ListNewIP.Count; i++)
+                {
+                    ServerIP s = new ServerIP();
+                    s.CurrentIP = ListNewIP[i];
+                    s.ServerCode = ServerCode;
+                    si.Add(s);
+                }
+                ServerIPBLO.Current.AddMany(si);
+                foreach (var item in ListNewIP)
+                {
+                    var ip = dao.Query(x => x.IPAddress == item).FirstOrDefault();
+                    ip.StatusCode = Constants.StatusCode.IP_USED;
+                    dao.Update(ip);
+                }
+                return true;
+            }
+            return false;
         }
     }
 }

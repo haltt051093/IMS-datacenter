@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using IMS.Data.Business;
@@ -53,6 +54,105 @@ namespace IMS.Controllers
                 return RedirectToAction("Index");
             }
             return View(icvm);
+        }
+        public ActionResult AssignIP(string request, string IP, string servercode)
+        {
+            IP = "192.168.0.1";
+            //request = "Change";
+            request = "AddIPForNewServer";
+            //request = "AssignMoreIP";
+            servercode = "BJIWEHDHQ";
+            if (request == "Change")
+            {
+                string gateway = IPAddressPoolBLO.Current.GetGatewayByIP(IP);
+                var data = new IPIndexViewModel();
+                data.IPs = IPAddressPoolBLO.Current.GetIPSameGateway(gateway);
+                data.OldIP = IP;
+                data.Request = request;
+                data.ListNewIP = data.IPs.Select(x => new SelectListItem
+                {
+                    Value = x.IPAddress
+                }).ToList();
+                return View(data);
+            }
+            else if (request == "AddIPForNewServer")
+            {
+                var data = new IPIndexViewModel();
+                data.IPs = IPAddressPoolBLO.Current.GetIPAvailable();
+                data.ServerCode = servercode;
+                data.Request = request;
+                data.ListNewIP = data.IPs.Select(x => new SelectListItem
+                {
+                    Value = x.IPAddress
+                }).ToList();
+                return View(data);
+            }
+            else
+            {
+                var data = new IPIndexViewModel();
+                string gateway = IPAddressPoolBLO.Current.GetGatewayByServerCode(servercode);
+                data.IPs = IPAddressPoolBLO.Current.GetIPSameGateway(gateway);
+                data.Request = request;
+                data.ServerCode = servercode;
+                data.ListNewIP = data.IPs.Select(x => new SelectListItem
+                {
+                    Value = x.IPAddress
+                }).ToList();
+                return View(data);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult AssignIP(IPIndexViewModel ivm)
+        {
+            var listNewIP = new List<string>();
+            if (ivm.Request.Equals("Change"))
+            {
+                if (ivm.NewIP == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+            }
+            if (ivm.Request.Equals("AddIPForNewServer"))
+            {
+                if (ivm.NewIP == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+            }
+            if (ivm.Request.Equals("AssignMoreIP"))
+            {
+                for (int i = 0; i < ivm.ListNewIP.Count; i++)
+                {
+                    if (ivm.ListNewIP[i].Selected == true)
+                    {
+                        listNewIP.Add(ivm.ListNewIP[i].Value);
+                    }
+                }
+                int j = 0;
+                for (int i = 0; i < ivm.ListNewIP.Count; i++)
+                {
+                    if (ivm.ListNewIP[i].Selected == true)
+                    {
+                        j++;
+                    }
+                }
+                if (j == 0)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+            }
+
+
+            bool x = IPAddressPoolBLO.Current.UpdateIP(ivm.ServerCode, ivm.OldIP, ivm.NewIP, listNewIP, ivm.Request);
+            if (x)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return RedirectToAction("AssignIP");
+            }
         }
     }
 }

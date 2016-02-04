@@ -37,7 +37,6 @@ namespace IMS.Data.Models
 
         public int? Outlet { get; set; }
 
-        [StringLength(50)]
-        public string ObjectCode { get; set; }
+
     }
 }

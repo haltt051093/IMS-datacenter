@@ -27,5 +27,7 @@ namespace IMS.Data.Models
 
         [StringLength(50)]
         public string StatusCode { get; set; }
+
+        public bool IsDefault { get; set; }
     }
 }
