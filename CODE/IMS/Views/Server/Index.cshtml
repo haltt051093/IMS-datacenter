@@ -1,4 +1,6 @@
-﻿@model ServerIndexViewModel
+﻿@using IMS.Core
+@using IMS.Data.Models
+@model ServerIndexViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -8,12 +10,15 @@
 <p>
     @using (Html.BeginForm("Index", "Server", FormMethod.Get))
     {
+        var account = (Account) Session[Constants.Session.USER_LOGIN];
+        <h3>Hello: @account.Role</h3>
+        <h3>@account.GroupName</h3>
         <b>Search By:</b>
         //@Html.RadioButton("searchBy", "Customer", true)
-        <br/>
+        <br />
         <text>Status</text>
-        @Html.DropDownList("StatusSearch","--Select--")
-        <br/>
+        @Html.DropDownList("StatusSearch", "--Select--")
+        <br />
         <text>Maker</text>
         @Html.DropDownList("MakerSearch", "--Select--")
         <br />
@@ -22,7 +27,7 @@
         <br />
         <text>Customer</text>
         @Html.TextBox("searchString")
-        <input type="submit" value="Search"/>
+        <input type="submit" value="Search" />
     }
 </p>
 <table class="table">
@@ -48,28 +53,29 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model.Servers) {
-    <tr>
-        <td>
-            @Html.ActionLink(@item.CustomerName, "ServerDetails", new { id = item.Id })
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Maker)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Modern)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DefaultIP)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RackCode )U
-            @Html.DisplayFor(modelItem => item.RackUnit)
-        </td>
-    </tr>
-}
+    @foreach (var item in Model.Servers)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(@item.CustomerName, "ServerDetails", new { id = item.Id })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Maker)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Modern)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DefaultIP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RackCode)U
+                @Html.DisplayFor(modelItem => item.RackUnit)
+            </td>
+        </tr>
+    }
 
 </table>

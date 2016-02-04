@@ -30,8 +30,8 @@ namespace IMS.Controllers
         {
             // gioi han tg login, ko cho login persistant
             // expiration = 30 days
-            bool isPersistent = false;
-            var o = AccountDAO.Current.Query(x => x.Username == account.Username && x.Password == account.Password).FirstOrDefault();
+            //bool isPersistent = false;
+            Account o = AccountDAO.Current.Query(x => x.Username == account.Username && x.Password == account.Password).FirstOrDefault();
             if (o != null)
             {
                 //Hoi lai FormAuthenticationTicket la gi
@@ -48,9 +48,16 @@ namespace IMS.Controllers
                 //Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encTicket));
                 //// Redirect back to original URL.
                 //Response.Redirect(FormsAuthentication.GetRedirectUrl(account.Username, isPersistent));
-
-
                 FormsAuthentication.SetAuthCookie(account.Username, false);
+
+                //save account to session
+                //if (Session["account"] == null)
+                //{
+                //    Session["account"] = new Account();
+                //    Session["account"] = o;
+                //}
+
+                Session[Constants.Session.USER_LOGIN] = o;
                 return RedirectToAction("Index", "Account");
             }
             return View();
@@ -201,6 +208,7 @@ namespace IMS.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
+            Session[Constants.Session.USER_LOGIN] = null;
             return RedirectToAction("Index", "Home");
         }
     }

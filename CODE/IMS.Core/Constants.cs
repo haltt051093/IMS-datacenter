@@ -57,6 +57,11 @@ namespace IMS.Core
             public const int SMTP_PORT = 25;
             public const string SUBJECT_NEWACCOUNT = "New Account to IMS-datacenter";
         }
+
+        public class Session
+        {
+            public const string USER_LOGIN = "USER_LOGIN";
+        }
     }
 }
 
