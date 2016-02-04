@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using AutoMapper;
@@ -10,13 +7,12 @@ using IMS.Core;
 using IMS.Data.Business;
 using IMS.Data.Models;
 using IMS.Data.Repository;
-using IMS.Data.ViewModels;
 using IMS.Models;
 
 namespace IMS.Controllers
 {
 
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         [AllowAnonymous]
         public ActionResult Login()
@@ -28,12 +24,12 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult Login(Account account)
         {
-            // gioi han tg login, ko cho login persistant
-            // expiration = 30 days
-            //bool isPersistent = false;
             Account o = AccountDAO.Current.Query(x => x.Username == account.Username && x.Password == account.Password).FirstOrDefault();
             if (o != null)
             {
+                // gioi han tg login, ko cho login persistant
+                // expiration = 30 days
+                //bool isPersistent = false;
                 //Hoi lai FormAuthenticationTicket la gi
                 //FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1,
                 //                                    account.Username,
@@ -41,7 +37,6 @@ namespace IMS.Controllers
                 //                                    DateTime.Now.AddMinutes(30),
                 //                                    isPersistent,
                 //                                    FormsAuthentication.FormsCookiePath);
-
                 //// Encrypt the ticket.
                 //string encTicket = FormsAuthentication.Encrypt(ticket);
                 //// Create the cookie.
@@ -51,13 +46,10 @@ namespace IMS.Controllers
                 FormsAuthentication.SetAuthCookie(account.Username, false);
 
                 //save account to session
-                //if (Session["account"] == null)
-                //{
-                //    Session["account"] = new Account();
-                //    Session["account"] = o;
-                //}
-
-                Session[Constants.Session.USER_LOGIN] = o;
+                if (Session[Constants.Session.USER_LOGIN] == null)
+                {
+                    Session[Constants.Session.USER_LOGIN] = o;
+                }
                 return RedirectToAction("Index", "Account");
             }
             return View();
@@ -98,6 +90,7 @@ namespace IMS.Controllers
                 if (result)
                 {
                     //ModelState.AddModelError("", "Send mail successfully");
+                    SetAlert("Them user thanh cong","success");
                     return RedirectToAction("Index");
                 }
                 return RedirectToAction("Index");
