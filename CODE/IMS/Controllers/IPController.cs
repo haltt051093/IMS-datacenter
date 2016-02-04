@@ -11,10 +11,31 @@ namespace IMS.Controllers
     public class IPController : Controller
     {
         // GET: IP
-        public ActionResult Index()
+        public ActionResult Index(string GatewaySearch, string StatusSearch)
         {
+            var ips = IPAddressPoolBLO.Current.GetAllIP();
             var data = new IPIndexViewModel();
-            data.IPs = IPAddressPoolBLO.Current.GetAllIP();
+
+            var status = new List<string>();
+            var currentstatus = ips.OrderBy(x => x.Status).Select(x => x.Status).ToList();
+            status.AddRange(currentstatus.Distinct());
+            ViewBag.StatusSearch = new SelectList(status);
+
+            var racks = new List<string>();
+            var currentgateway = ips.OrderBy(x => x.Gateway).Select(x => x.Gateway).ToList();
+            racks.AddRange(currentgateway.Distinct());
+            ViewBag.GatewaySearch = new SelectList(racks);
+
+            if (!String.IsNullOrEmpty(StatusSearch))
+            {
+                ips = ips.Where(st => st.Status.Trim() == StatusSearch.Trim()).ToList();
+            }
+
+            if (!String.IsNullOrWhiteSpace(GatewaySearch))
+            {
+                ips = ips.Where(r => r.Gateway.Trim() == GatewaySearch.Trim()).ToList();
+            }
+            data.IPs = ips;
             return View(data);
         }
         public ActionResult CreateIP()

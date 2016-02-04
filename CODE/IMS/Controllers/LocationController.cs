@@ -14,10 +14,31 @@ namespace IMS.Controllers
     public class LocationController : Controller
     {
         // GET: Location
-        public ActionResult Index()
+        public ActionResult Index(string StatusSearch, string RackSearch)
         {
             var data = new LocationIndexViewModel();
-            data.Locations = LocationBLO.Current.GetAllLocation();
+            var locations = LocationBLO.Current.GetAllLocation();
+
+            var status = new List<string>();
+            var currentstatus = locations.OrderBy(x => x.Status).Select(x => x.Status).ToList();
+            status.AddRange(currentstatus.Distinct());
+            ViewBag.StatusSearch = new SelectList(status);
+
+            var racks = new List<string>();
+            var currentrack = locations.OrderBy(x => x.RackName).Select(x => x.RackName).ToList();
+            racks.AddRange(currentrack.Distinct());
+            ViewBag.RackSearch = new SelectList(racks);
+
+            if (!String.IsNullOrEmpty(StatusSearch))
+            {
+                locations = locations.Where(st => st.Status.Trim() == StatusSearch.Trim()).ToList();
+            }
+
+            if (!String.IsNullOrWhiteSpace(RackSearch))
+            {
+                locations = locations.Where(r => r.RackName.Trim() == RackSearch.Trim()).ToList();
+            }
+            data.Locations = locations;
             return View(data);
         }
         public ActionResult AssignLocation(Server server, string request)
