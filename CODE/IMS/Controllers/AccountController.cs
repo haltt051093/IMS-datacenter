@@ -12,7 +12,7 @@ using IMS.Models;
 namespace IMS.Controllers
 {
 
-    public class AccountController : BaseController
+    public class AccountController : Controller
     {
         [AllowAnonymous]
         public ActionResult Login()
@@ -90,7 +90,6 @@ namespace IMS.Controllers
                 if (result)
                 {
                     //ModelState.AddModelError("", "Send mail successfully");
-                    SetAlert("Them user thanh cong","success");
                     return RedirectToAction("Index");
                 }
                 return RedirectToAction("Index");
