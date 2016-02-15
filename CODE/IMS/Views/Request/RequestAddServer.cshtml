@@ -1,37 +1,41 @@
-﻿@model IMS.Data.Models.Server
+﻿@using IMS.Data.Business
+@model RequestAddServerViewModel
 
 @{
     ViewBag.Title = "RequestAddServer";
 }
 
-<h2>RequestAddServer</h2>
+<h2>Request Add Server</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Server</h4>
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        //tai sao ko hien thi duoc
+        @*<div>
+                @Html.EditorFor(model => model.AppointmentTime, new { id = "apTime" })
+            </div>*@
+
+        @*Demo ung dung*@
+        <div>
+            <h2>Add Attributes to Server</h2>
+            <a href="#" id="addAtr">Add</a>
+            <span id="spin"></span>
+        </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.ServerCode, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ServerCode, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ServerCode, "", new { @class = "text-danger" })
+                @{
+                    var allAttributes = AttributeBLO.Current.GetAll();
+                    var myList = new SelectList(allAttributes, "AttributeCode", "AttributeName");
+                }
+                @Html.DropDownListFor(model => model.Attributes, myList, new { @class = "form-control", style = "width:200px" })
             </div>
         </div>
-
         <div class="form-group">
-            @Html.LabelFor(model => model.Customer, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Customer, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Maker, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Maker, htmlAttributes: new { @class = "control-label col-md-2", @id = "test" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Maker, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Maker, "", new { @class = "text-danger" })
@@ -63,38 +67,6 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.StatusCode, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.StatusCode, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.StatusCode, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DefaultIP, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DefaultIP, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DefaultIP, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.LocationCode, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LocationCode, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LocationCode, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RegisteredDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.RegisteredDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RegisteredDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.Outlet, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Outlet, new { htmlAttributes = new { @class = "form-control" } })
@@ -103,13 +75,41 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Send Request" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+<script src="~/scripts/jquery-1.10.2.js"></script>
+<script src="~/scripts/jquery-ui-1.11.4.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#apTime').datepicker({
+            appendText: ' Hello, this is append text.',
+            showOn: 'both', //Co the dung 'button', 'focus'
+            buttonText: 'Calendar',
+            dateFormat: 'mm-dd-yy',
+            numberOfMonths: 2, //Hien bao nhieu cot month
+            changeMonth: true, //Lua chon month duoi dang dropdownlist
+            changeYear: true, //Lua chon month duoi dang dropdownlist
+            minDate: new Date(2005, 1, 1),
+            maxDate: new Date(2019, 12, 1)
+        });
+    });
+    $(function () {
+        //var newContent = '<div class="added">Added</div>';
+        $("#addAtr").click(function () {
+            $('#test').hide();
+        });
+    });
+</script>

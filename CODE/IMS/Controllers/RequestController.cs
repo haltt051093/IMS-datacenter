@@ -48,9 +48,9 @@ namespace IMS.Controllers
                 if (requestcode.Equals(Constants.RequestTypeCode.RETURN_IP))
                 {
                     RequestReturnIPViewModel viewmodel = new RequestReturnIPViewModel();
-                    var ListServers = ServerDAO.Current.Query(x => x.Customer == Constants.Test.CUSTOMER_MANHNH);
+                    var listServers = ServerDAO.Current.Query(x => x.Customer == Constants.Test.CUSTOMER_MANHNH);
                     //viewmodel.Servers = ListServers;
-                    viewmodel.Servers = ListServers.Select(x => new SelectListItem
+                    viewmodel.Servers = listServers.Select(x => new SelectListItem
                     {
                         Value = x.ServerCode,
                         Text = x.Modern
