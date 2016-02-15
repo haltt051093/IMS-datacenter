@@ -20,7 +20,7 @@ namespace IMS.Controllers
             var locations = LocationBLO.Current.GetAllLocation();
 
             var status = new List<string>();
-            var currentstatus = locations.OrderBy(x => x.Status).Select(x => x.Status).ToList();
+            var currentstatus = LocationBLO.Current.GetLocationStatus().ToList();
             status.AddRange(currentstatus.Distinct());
             ViewBag.StatusSearch = new SelectList(status);
 

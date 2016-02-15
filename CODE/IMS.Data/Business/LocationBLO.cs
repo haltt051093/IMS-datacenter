@@ -247,5 +247,9 @@ namespace IMS.Data.Business
             }
             return result;
         }
+        public List<string> GetLocationStatus()
+        {
+            return dao.GetLocationStatus();
+        }
     }
 }

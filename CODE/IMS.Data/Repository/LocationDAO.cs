@@ -133,5 +133,11 @@ namespace IMS.Data.Repository
                 server.ServerCode + @"'";
             return RawQuery<LocationExtendedModel>(query, new object[] { }).FirstOrDefault();
         }
+        public List<string> GetLocationStatus()
+        {
+            string query = @"select s.Status from Status as s
+                           where s.Object = 'Location'";
+            return RawQuery<string>(query, new object[] { });
+        }
     }
 }

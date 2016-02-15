@@ -289,5 +289,9 @@ namespace IMS.Data.Business
             }
             return false;
         }
+        public List<string> GetIPStatus()
+        {
+            return dao.GetIPStatus();
+        }
     }
 }

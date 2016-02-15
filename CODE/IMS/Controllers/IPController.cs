@@ -19,7 +19,7 @@ namespace IMS.Controllers
             var data = new IPIndexViewModel();
 
             var status = new List<string>();
-            var currentstatus = ips.OrderBy(x => x.Status).Select(x => x.Status).ToList();
+            var currentstatus = IPAddressPoolBLO.Current.GetIPStatus().ToList();
             status.AddRange(currentstatus.Distinct());
             ViewBag.StatusSearch = new SelectList(status);
 

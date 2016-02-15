@@ -70,5 +70,11 @@ namespace IMS.Data.Repository
                             and i.StatusCode='STATUS10'";
             return RawQuery<IPExtendedModel>(query, new object[] { });
         }
+        public List<string> GetIPStatus()
+        {
+            string query = @"select s.Status from Status as s
+                           where s.Object = 'IPAddress'";
+            return RawQuery<string>(query, new object[] { });
+        }
     }
 }
