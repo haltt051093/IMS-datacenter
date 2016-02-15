@@ -23,10 +23,10 @@ namespace IMS.Controllers
             status.AddRange(currentstatus.Distinct());
             ViewBag.StatusSearch = new SelectList(status);
 
-            var racks = new List<string>();
+            var gateways = new List<string>();
             var currentgateway = ips.OrderBy(x => x.Gateway).Select(x => x.Gateway).ToList();
-            racks.AddRange(currentgateway.Distinct());
-            ViewBag.GatewaySearch = new SelectList(racks);
+            gateways.AddRange(currentgateway.Distinct());
+            ViewBag.GatewaySearch = new SelectList(gateways);
 
             if (!String.IsNullOrEmpty(StatusSearch))
             {
@@ -65,7 +65,7 @@ namespace IMS.Controllers
             }
             return View(icvm);
         }
-        public ActionResult AssignIP(string request, string IP, string servercode)
+        public ActionResult AssignIP(string request, string IP, string servercode, string GatewaySearch)
         {
             IP = "192.168.0.1";
             //request = "Change";
@@ -88,13 +88,23 @@ namespace IMS.Controllers
             else if (request == "AddIPForNewServer")
             {
                 var data = new IPIndexViewModel();
-                data.IPs = IPAddressPoolBLO.Current.GetIPAvailable();
+                var ips = IPAddressPoolBLO.Current.GetIPAvailable();
                 data.ServerCode = servercode;
                 data.Request = request;
                 data.ListNewIP = data.IPs.Select(x => new SelectListItem
                 {
                     Value = x.IPAddress
                 }).ToList();
+                var gateways = new List<string>();
+                var currentgateway = ips.OrderBy(x => x.Gateway).Select(x => x.Gateway).ToList();
+                gateways.AddRange(currentgateway.Distinct());
+                ViewBag.GatewaySearch = new SelectList(gateways);
+
+                if (!String.IsNullOrWhiteSpace(GatewaySearch))
+                {
+                    ips = ips.Where(r => r.Gateway.Trim() == GatewaySearch.Trim()).ToList();
+                }
+                data.IPs = ips;
                 return View(data);
             }
             else

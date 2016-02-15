@@ -8,6 +8,21 @@
 
 <h2>List of suitable IP Addresses</h2>
 
+@if (Model.Request == "AddIPForNewServer")
+{
+    using (Html.BeginForm("AssignIP", "IP", FormMethod.Get))
+    {
+
+        <b>Search By:</b>
+
+            <br />
+            <text>Gateway</text>
+            @Html.DropDownList("GatewaySearch", "--Select--")
+            <br />
+            <input type="submit" value="Search" />
+    }
+}
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()

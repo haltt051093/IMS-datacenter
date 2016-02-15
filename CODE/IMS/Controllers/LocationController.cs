@@ -41,7 +41,7 @@ namespace IMS.Controllers
             data.Locations = locations;
             return View(data);
         }
-        public ActionResult AssignLocation(Server server, string request)
+        public ActionResult AssignLocation(Server server, string request, string RackSearch)
         {
             var s = new Server();
             s.ServerCode = "BJIWEHDHQ";
@@ -53,16 +53,34 @@ namespace IMS.Controllers
             var data = new LocationIndexViewModel();
             if (request == "Change")
             {
-                data.Locations = LocationBLO.Current.GetChangeLocation(s);
+                var locations = LocationBLO.Current.GetChangeLocation(s);
                 data.Server = s;
                 data.Request = request;
+                var racks = new List<string>();
+                var currentrack = locations.OrderBy(x => x.RackName).Select(x => x.RackName).ToList();
+                racks.AddRange(currentrack.Distinct());
+                ViewBag.RackSearch = new SelectList(racks);
+                if (!String.IsNullOrWhiteSpace(RackSearch))
+                {
+                    locations = locations.Where(r => r.RackName.Trim() == RackSearch.Trim()).ToList();
+                }
+                data.Locations = locations;
                 return View(data);
             }
             else
             {
-                data.Locations = LocationBLO.Current.GetNewLocation(s);
+                var locations = LocationBLO.Current.GetNewLocation(s);
                 data.Server = s;
                 data.Request = request;
+                var racks = new List<string>();
+                var currentrack = locations.OrderBy(x => x.RackName).Select(x => x.RackName).ToList();
+                racks.AddRange(currentrack.Distinct());
+                ViewBag.RackSearch = new SelectList(racks);
+                if (!String.IsNullOrWhiteSpace(RackSearch))
+                {
+                    locations = locations.Where(r => r.RackName.Trim() == RackSearch.Trim()).ToList();
+                }
+                data.Locations = locations;
                 return View(data);
 
             }
