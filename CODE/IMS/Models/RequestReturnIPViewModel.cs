@@ -4,13 +4,15 @@ using System.Linq;
 using System.Web;
 using System.Web.WebPages.Html;
 using IMS.Data.Models;
+using SelectListItem = System.Web.Mvc.SelectListItem;
 
 namespace IMS.Models
 {
     public class RequestReturnIPViewModel
     {
-        public List<SelectListItem> ServerIPs { get; set; }
-        public List<ServerExtModel> Servers { get; set; }
+        public List<SelectListItem> Servers { get; set; }
+        public List<ServerIP> ServerIPs { get; set; }
+        public string SelectedServerCode { get; set; }
     }
 
     public class ServerExtModel

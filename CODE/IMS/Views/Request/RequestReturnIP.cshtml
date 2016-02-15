@@ -4,19 +4,45 @@
 @{
     ViewBag.Title = "RequestReturnIP";
 }
+<script src="~/scripts/jquery-1.10.2.js"></script>
+<script src="~/scripts/jquery.unobtrusive-ajax.js"></script>
 
-<h2>RequestReturnIP</h2>
-
-<h3>Are you sure you want to delete this?</h3>
 <div>
     <h4>Request</h4>
-    <hr />
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
+    <hr/>
+    @using (Ajax.BeginForm("FetchIPs", "Request",
+        new AjaxOptions
+        {
+            HttpMethod = "Get",
+            UpdateTargetId = "div1",
+            InsertionMode = InsertionMode.Replace,
+        }, new { id = "myForm" }))
+    {
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+        @Html.DropDownListFor(m => m.SelectedServerCode, Model.Servers)
+        <input type="submit" value="Show Details"/>
     }
 </div>
+<script type="text/javascript">
+    //function IfSuccess(data) {
+    //    $('#div1').html(data);
+    //}
+
+    //$(document).ready(function () {
+    //    $("#myList").change(function () {
+    //        //$('form#myForm').submit();
+    //        this.form.submit();
+    //    });
+    //});
+    function AdditionalsChanged() {
+        $("#myForm").submit();
+    }
+</script>
+<br />
+@*@Html.Partial("_ListServerIP")*@
+@*@if (Model.ServerIPs != null)
+{
+    @Html.Partial("_ListServerIP")
+}*@
+<div id="div1"></div>
+

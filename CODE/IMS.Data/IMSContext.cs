@@ -56,6 +56,8 @@ namespace IMS.Data
 
         public System.Data.Entity.DbSet<IMS.Data.Models.RequestType> RequestTypes { get; set; }
 
+        public System.Data.Entity.DbSet<IMS.Data.Models.ServerIP> ServerIPs { get; set; }
+
         //public System.Data.Entity.DbSet<IMS.Models.ServerDetailsViewModel> Objects { get; set; }
     }
 }

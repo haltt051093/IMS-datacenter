@@ -176,6 +176,7 @@
     <Compile Include="Models\ServerCreateViewModel.cs" />
     <Compile Include="Models\ServerDetailsViewModel.cs" />
     <Compile Include="Models\ServerIndexViewModel.cs" />
+    <Compile Include="Models\ServerIPViewModel.cs" />
     <Compile Include="MyRoleProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -213,6 +214,7 @@
     <Content Include="Views\Account\ViewProfile.cshtml" />
     <Content Include="Views\Location\AssignLocation.cshtml" />
     <Content Include="Views\IP\AssignIP.cshtml" />
+    <Content Include="Views\Shared\_ListServerIP.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

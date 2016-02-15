@@ -50,7 +50,12 @@ namespace IMS.Controllers
                     RequestReturnIPViewModel viewmodel = new RequestReturnIPViewModel();
                     var ListServers = ServerDAO.Current.Query(x => x.Customer == Constants.Test.CUSTOMER_MANHNH);
                     //viewmodel.Servers = ListServers;
-                    return View("RequestReturnIP");
+                    viewmodel.Servers = ListServers.Select(x => new SelectListItem
+                    {
+                        Value = x.ServerCode,
+                        Text = x.Modern
+                    }).ToList();
+                    return View("RequestReturnIP", viewmodel);
                 }
             }
             return View(requesttype);
@@ -111,6 +116,19 @@ namespace IMS.Controllers
             // Cap nhat lai trang thai IP o bang IPAddressPool
             //Neu tra IP la default IP thi cap nhat lai bang Server
             return RedirectToActionPermanent("Index", "Server");
+        }
+
+        //[HttpPost]
+        public ActionResult FetchIPs(RequestReturnIPViewModel model)
+        {
+            var list = ServerIPDAO.Current.Query(x => x.ServerCode == model.SelectedServerCode).ToList();
+            RequestReturnIPViewModel newmodel = new RequestReturnIPViewModel();
+            newmodel.ServerIPs = list;
+            //ServerIPViewModel newmodel = new ServerIPViewModel();
+            //newmodel.ServerIPs = list;
+            //model.ServerIPs = list;
+            //return View("RequestReturnIP", model);
+            return PartialView("_ListServerIP", newmodel);
         }
 
         [HttpPost]
