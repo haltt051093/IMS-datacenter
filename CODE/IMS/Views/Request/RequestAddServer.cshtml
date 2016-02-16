@@ -3,6 +3,7 @@
 
 @{
     ViewBag.Title = "RequestAddServer";
+
 }
 
 <h2>Request Add Server</h2>
@@ -15,27 +16,21 @@
         <h4>Server</h4>
         <hr />
         //tai sao ko hien thi duoc
-        @*<div>
-                @Html.EditorFor(model => model.AppointmentTime, new { id = "apTime" })
-            </div>*@
-
-        @*Demo ung dung*@
         <div>
             <h2>Add Attributes to Server</h2>
             <a href="#" id="addAtr">Add</a>
-            <span id="spin"></span>
         </div>
-        @for (int i = 0; i < Model.SelectedAttributes.Count; i++)
-        {
-            <div class="form-group">
+        @*@for (int i = 0; i < Model.SelectedAttributes.Count; i++)
+            {*@
+        @*<div class="form-group" id="test">
                 <div class="col-md-10">
                     @Html.DropDownListFor(model => model.SelectedAttributes[i], Model.AttributeList, new {@class = "form-control", style = "width:200px"})
                     @Html.TextBoxFor(model=>  model.AttributeValues[i])
                 </div>
-            </div>
-        }
+            </div>*@
+        <div class="form-group" id="test"></div>
         <div class="form-group">
-            @Html.LabelFor(model => model.Maker, htmlAttributes: new { @class = "control-label col-md-2", @id = "test" })
+            @Html.LabelFor(model => model.Maker, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Maker, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Maker, "", new { @class = "text-danger" })
@@ -92,24 +87,45 @@
 
 <script src="~/scripts/jquery-1.10.2.js"></script>
 <script src="~/scripts/jquery-ui-1.11.4.js"></script>
-<script type="text/javascript">
-    //$(document).ready(function () {
-    //    $('#apTime').datepicker({
-    //        appendText: ' Hello, this is append text.',
-    //        showOn: 'both', //Co the dung 'button', 'focus'
-    //        buttonText: 'Calendar',
-    //        dateFormat: 'mm-dd-yy',
-    //        numberOfMonths: 2, //Hien bao nhieu cot month
-    //        changeMonth: true, //Lua chon month duoi dang dropdownlist
-    //        changeYear: true, //Lua chon month duoi dang dropdownlist
-    //        minDate: new Date(2005, 1, 1),
-    //        maxDate: new Date(2019, 12, 1)
-    //    });
-    //});
+<script id="check" type="text/javascript">
     $(function () {
-        //var newContent = '<div class="added">Added</div>';
+        var inputs = document.getElementById("test1");
+        if (inputs == null) {
+            @{
+                int count = 0;
+                @Html.DropDownListFor(model => model.SelectedAttributes[count], Model.AttributeList, new {@class = "form-control", style = "width:200px", @id = "test1"})
+                ;
+                @Html.EditorFor(model => model.AttributeValues[count])
+                count++;
+            }
+        }
+    });
+
+
+</script>
+<script type="text/javascript">
+    $(function () {
         $("#addAtr").click(function () {
-            $('#test').hide();
+            $('#test').append($('#check').html());
         });
     });
 </script>
+
+
+@*<script type="text/javascript">
+    @*var initial = 0;
+    @{
+        int count = initial;
+            @Html.DropDownListFor(model => model.SelectedAttributes[count], Model.AttributeList, new {@class = "form-control", style = "width:200px"});
+            @Html.EditorFor(model=>model.AttributeValues[count])
+        initial = initial + 1;
+    }*@
+
+@*$(function () {
+            //var newContent = '<div class="added">Added</div>';
+            $("#addAtr").click(function () {
+                var array = @(Html.DropDownListFor(model => model.SelectedAttributes[0], Model.AttributeList, new {@class = "form-control", style = "width:200px"}));
+                $('#test').append($(array).html());
+            });
+        });
+    </script>*@

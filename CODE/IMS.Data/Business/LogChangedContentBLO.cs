@@ -32,5 +32,10 @@ namespace IMS.Data.Business
             baseDao = LogChangedContentDAO.Current;
             dao = LogChangedContentDAO.Current;
         }
+
+        public void AddLog(LogChangedContent viewmodel)
+        {
+            dao.AddLog(viewmodel);
+        }
     }
 }

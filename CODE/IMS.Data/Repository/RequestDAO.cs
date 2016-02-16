@@ -43,7 +43,7 @@ namespace IMS.Data.Repository
             return code;
         }
 
-        public void AddRequestRentRacks(string customer)
+        public string AddRequestRentRacks(string customer)
         {
             Request request = new Request();
             request.Customer = customer.Trim();
@@ -61,6 +61,7 @@ namespace IMS.Data.Repository
                 CopyValues(request, existing);
             }
             IMSContext.Current.SaveChanges();
+            return request.RequestCode;
         }
 
         public void AddRequestAddServer(Request passModel)

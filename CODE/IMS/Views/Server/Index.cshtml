@@ -10,9 +10,9 @@
 <p>
     @using (Html.BeginForm("Index", "Server", FormMethod.Get))
     {
-        var account = (Account) Session[Constants.Session.USER_LOGIN];
+        @*var account = (Account) Session[Constants.Session.USER_LOGIN];
         <h3>Hello: @account.Role</h3>
-        <h3>@account.GroupName</h3>
+        <h3>@account.GroupName</h3>*@
         <b>Search By:</b>
         //@Html.RadioButton("searchBy", "Customer", true)
         <br />

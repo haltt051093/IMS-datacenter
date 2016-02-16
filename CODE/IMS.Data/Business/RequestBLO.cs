@@ -34,9 +34,9 @@ namespace IMS.Data.Business
             dao = RequestDAO.Current;
         }
 
-        public void AddRequestRentRacks(string customer)
+        public string AddRequestRentRacks(string customer)
         {
-            dao.AddRequestRentRacks(customer);
+            return dao.AddRequestRentRacks(customer);
         }
 
         public void AddRequestAddServer(Request passModel)

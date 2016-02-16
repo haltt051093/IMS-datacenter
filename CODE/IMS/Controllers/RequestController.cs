@@ -9,6 +9,7 @@ using IMS.Core;
 using IMS.Data.Business;
 using IMS.Data.Models;
 using IMS.Data.Repository;
+using IMS.Data.ViewModels;
 using IMS.Models;
 
 namespace IMS.Controllers
@@ -41,18 +42,19 @@ namespace IMS.Controllers
                 {
                     var data = new RequestAddServerViewModel();
                     var attrList = AttributeBLO.Current.GetAll();
-                    data.AttributeList = attrList.Select(x => new SelectListItem { Value = x.AttributeCode, Text = x.AttributeName})
-                            .ToList();
-                    data.SelectedAttributes = new List<string>
-                    {
-                        "SAT003",
-                        "SAT007"
-                    };
-                    data.AttributeValues = new List<string>
-                    {
-                        "1",
-                        "2"
-                    };
+                    data.AttributeList = attrList
+                        .Select(x => new SelectListItem { Value = x.AttributeCode, Text = x.AttributeName })
+                        .ToList();
+                    //data.SelectedAttributes = new List<string>
+                    //{
+                    //    "SAT003",
+                    //    "SAT007"
+                    //};
+                    //data.AttributeValues = new List<string>
+                    //{
+                    //    "1",
+                    //    "2"
+                    //};
                     return View("RequestAddServer", data);
                 }
                 if (requestcode.Equals(Constants.RequestTypeCode.UPGRADE_SERVER))
@@ -109,7 +111,16 @@ namespace IMS.Controllers
         public ActionResult RequestRentRack(RequestRentRackViewModel viewmodel)
         {
             //int RackNumber = viewmodel.RackNumbers;
-            RequestBLO.Current.AddRequestRentRacks(Constants.Test.CUSTOMER_MANHNH);
+            string RequestCode = RequestBLO.Current.AddRequestRentRacks(Constants.Test.CUSTOMER_MANHNH);
+            //log lai thoi diem thay doi trang thai request
+            LogChangedContent requestmodel = new LogChangedContent();
+            requestmodel.RequestCode = RequestCode;
+            requestmodel.Staff = Constants.Test.STAFF_NHI;
+            requestmodel.Object = Constants.Object.OBJECT_REQUEST;
+            requestmodel.ChangedValueOfObject = Constants.StatusCode.REQUEST_WAITING;
+            requestmodel.TypeOfLog = Constants.TypeOfLog.LOG_UPDATE_STATUS_REQUEST;
+            requestmodel.LogTime = DateTime.Now;
+            LogChangedContentBLO.Current.AddLog(requestmodel);
             return RedirectToAction("Index");
         }
 

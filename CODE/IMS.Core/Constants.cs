@@ -47,6 +47,7 @@ namespace IMS.Core
         public class Test
         {
             public const string CUSTOMER_MANHNH = "manhnh";
+            public const string STAFF_NHI = "nhink";
         }
 
         public class SendMail
@@ -61,6 +62,32 @@ namespace IMS.Core
         public class Session
         {
             public const string USER_LOGIN = "USER_LOGIN";
+        }
+
+        public class Object
+        {
+            public const string OBJECT_IP = "IPAddress";
+            public const string OBJECT_LOCATION = "Location";
+            public const string OBJECT_REQUEST = "Request";
+            public const string OBJECT_SERVER = "Server";
+            public const string OBJECT_ACCOUNT = "Account";
+            public const string OBJECT_NOTE = "Note";
+            public const string OBJECT_ASSIGNMENT = "StaffAssignment";
+        }
+
+        public class TypeOfLog
+        {
+            public const string LOG_UPDATE_ROLE = "UROLE";
+            public const string LOG_UPDATE_STATUS_ACCOUNT = "UACCOUNTSTATUS";
+            //luu khi chuyen trang thai hoat dong cua IP thanh available, unavailable, or blocked
+            public const string LOG_UPDATE_STATUS_IP = "UIPSTATUS";
+            // luu khi chuyen cac trang thai cua request
+            public const string LOG_UPDATE_STATUS_REQUEST = "UREQUESTSTATUS";
+            //luu khi chuyen trang thai cua server: waiting, running, deactivate
+            public const string LOG_UPDATE_STATUS_SERVER = "USERVERSTATUS";
+            // luu server chuyen tu location nao sang location nao
+            public const string LOG_UPDATE_VALUE_SERVERLOCATION = "UVALSERLOC";
+            //luu ip
         }
     }
 }
