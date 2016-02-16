@@ -39,7 +39,21 @@ namespace IMS.Controllers
                 }
                 if (requestcode.Equals(Constants.RequestTypeCode.ADD_SERVER))
                 {
-                    return View("RequestAddServer");
+                    var data = new RequestAddServerViewModel();
+                    var attrList = AttributeBLO.Current.GetAll();
+                    data.AttributeList = attrList.Select(x => new SelectListItem { Value = x.AttributeCode, Text = x.AttributeName})
+                            .ToList();
+                    data.SelectedAttributes = new List<string>
+                    {
+                        "SAT003",
+                        "SAT007"
+                    };
+                    data.AttributeValues = new List<string>
+                    {
+                        "1",
+                        "2"
+                    };
+                    return View("RequestAddServer", data);
                 }
                 if (requestcode.Equals(Constants.RequestTypeCode.UPGRADE_SERVER))
                 {
@@ -100,11 +114,25 @@ namespace IMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult RequestAddServer()
+        public ActionResult RequestAddServer(RequestAddServerViewModel viewmodel)
         {
             //tu sinh: ServerCode, Customer, status, registereddate
             //nhap vao: maker, modern, power, size, list of attribute --> lam sao cho hien thi them attribute
             //Chi cap nhat bang server, chung nao status chuyen sang trang thai Running thi moi gan vo cho customer
+            //Cap nhat bang server, request, serverAttribute
+            //map ko theo thu tu duoc ko?
+            Request passRequest = new Request();
+            passRequest.Customer = Constants.Test.CUSTOMER_MANHNH;
+            passRequest.AppointmentTime = viewmodel.AppointmentTime;
+            passRequest.Description = viewmodel.Description;
+            RequestBLO.Current.AddRequestAddServer(passRequest);
+            //add server, trang thai server la waiting
+            //tim cach map Server va RequestAddServerViewModel, giong ten, khong can giong thu tu?
+
+
+            //Lam sao tron gia tri trong dropdownlist + valueList 
+
+
             return RedirectToActionPermanent("Index", "Server");
         }
 

@@ -63,5 +63,24 @@ namespace IMS.Data.Repository
             IMSContext.Current.SaveChanges();
         }
 
+        public void AddRequestAddServer(Request passModel)
+        {
+            Request request = passModel;
+            request.RequestType = Constants.RequestTypeCode.ADD_SERVER;
+            request.RequestCode = GenerateCode();
+            request.RequestedTime = DateTime.Now;
+            request.StatusCode = Constants.StatusCode.REQUEST_WAITING;
+            var existing = GetByKeys(request);
+            if (existing == null)
+            {
+                IMSContext.Current.Set<Request>().Add(request);
+            }
+            else
+            {
+                CopyValues(request, existing);
+            }
+            IMSContext.Current.SaveChanges();
+        }
+
     }
 }

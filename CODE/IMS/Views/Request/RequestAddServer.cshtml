@@ -25,15 +25,15 @@
             <a href="#" id="addAtr">Add</a>
             <span id="spin"></span>
         </div>
-        <div class="form-group">
-            <div class="col-md-10">
-                @{
-                    var allAttributes = AttributeBLO.Current.GetAll();
-                    var myList = new SelectList(allAttributes, "AttributeCode", "AttributeName");
-                }
-                @Html.DropDownListFor(model => model.Attributes, myList, new { @class = "form-control", style = "width:200px" })
+        @for (int i = 0; i < Model.SelectedAttributes.Count; i++)
+        {
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.SelectedAttributes[i], Model.AttributeList, new {@class = "form-control", style = "width:200px"})
+                    @Html.TextBoxFor(model=>  model.AttributeValues[i])
+                </div>
             </div>
-        </div>
+        }
         <div class="form-group">
             @Html.LabelFor(model => model.Maker, htmlAttributes: new { @class = "control-label col-md-2", @id = "test" })
             <div class="col-md-10">
@@ -93,19 +93,19 @@
 <script src="~/scripts/jquery-1.10.2.js"></script>
 <script src="~/scripts/jquery-ui-1.11.4.js"></script>
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('#apTime').datepicker({
-            appendText: ' Hello, this is append text.',
-            showOn: 'both', //Co the dung 'button', 'focus'
-            buttonText: 'Calendar',
-            dateFormat: 'mm-dd-yy',
-            numberOfMonths: 2, //Hien bao nhieu cot month
-            changeMonth: true, //Lua chon month duoi dang dropdownlist
-            changeYear: true, //Lua chon month duoi dang dropdownlist
-            minDate: new Date(2005, 1, 1),
-            maxDate: new Date(2019, 12, 1)
-        });
-    });
+    //$(document).ready(function () {
+    //    $('#apTime').datepicker({
+    //        appendText: ' Hello, this is append text.',
+    //        showOn: 'both', //Co the dung 'button', 'focus'
+    //        buttonText: 'Calendar',
+    //        dateFormat: 'mm-dd-yy',
+    //        numberOfMonths: 2, //Hien bao nhieu cot month
+    //        changeMonth: true, //Lua chon month duoi dang dropdownlist
+    //        changeYear: true, //Lua chon month duoi dang dropdownlist
+    //        minDate: new Date(2005, 1, 1),
+    //        maxDate: new Date(2019, 12, 1)
+    //    });
+    //});
     $(function () {
         //var newContent = '<div class="added">Added</div>';
         $("#addAtr").click(function () {
