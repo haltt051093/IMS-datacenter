@@ -201,6 +201,7 @@
     <Compile Include="Models\AccountCreateViewModel.cs" />
     <Compile Include="Models\AccountIndexViewModel.cs" />
     <Compile Include="Models\AccountLoginViewModel.cs" />
+    <Compile Include="Models\IPChangeStatusViewModel.cs" />
     <Compile Include="Models\IPCreateViewModel.cs" />
     <Compile Include="Models\IPIndexViewModel.cs" />
     <Compile Include="Models\LocationIndexViewModel.cs" />
@@ -251,6 +252,7 @@
     <Content Include="Views\IP\AssignIP.cshtml" />
     <Content Include="Views\Shared\_ListServerIP.cshtml" />
     <Content Include="Views\Request\DemAttributes.cshtml" />
+    <Content Include="Views\IP\ChangeStatus.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

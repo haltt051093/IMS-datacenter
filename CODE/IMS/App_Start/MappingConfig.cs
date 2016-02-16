@@ -22,6 +22,9 @@ namespace IMS.App_Start
                 config.CreateMap<ServerDetailsViewModel, Server>();
                 //rack
                 config.CreateMap<RackCreateViewModel, Rack>();
+
+                config.CreateMap<IPAddressPool, IPChangeStatusViewModel>();
+                config.CreateMap<IPChangeStatusViewModel, IPAddressPool>();
             });
         }
     }

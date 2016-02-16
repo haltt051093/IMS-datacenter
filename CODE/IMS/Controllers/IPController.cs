@@ -4,7 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
 using IMS.Data.Business;
+using IMS.Data.Models;
 using IMS.Data.Repository;
 using IMS.Models;
 
@@ -173,6 +175,27 @@ namespace IMS.Controllers
             {
                 return RedirectToAction("AssignIP");
             }
+        }
+        public ActionResult ChangeStatus(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            IPAddressPool ip = IPAddressPoolBLO.Current.GetById(id);
+            if (ip == null)
+            {
+                return HttpNotFound();
+            }
+            var ipviewmodel = Mapper.Map<IPAddressPool, IPChangeStatusViewModel>(ip);
+            return View(ipviewmodel);
+        }
+        [HttpPost]
+        public ActionResult ChangeStatus(IPChangeStatusViewModel viewmodel)
+        {
+            IPAddressPool ip = Mapper.Map<IPChangeStatusViewModel, IPAddressPool>(viewmodel);
+            IPAddressPoolBLO.Current.Update(ip);
+            return RedirectToAction("Index");
         }
     }
 }

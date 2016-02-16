@@ -16,7 +16,7 @@
     <text>Status</text>
     @Html.DropDownList("StatusSearch", "--Select--")
     <br />
-        <input type="submit" value="Search" />
+    <input type="submit" value="Search" />
 }
 <p>
     @Html.ActionLink("Add new IP Addresses", "CreateIP")
@@ -39,6 +39,10 @@
         <th>
             @Html.Raw("Status")
         </th>
+        <th>
+            @Html.Raw("IsDefaultIP")
+        </th>
+        <th></th>
     </tr>
 
     @foreach (var item in Model.IPs)
@@ -59,10 +63,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsDefault)
+            </td>
+            <td>
+                @Html.ActionLink("ChangeStatus", "ChangeStatus", new { id = item.Id })
+            </td>
 
         </tr>
     }
 
 </table>
-
-
