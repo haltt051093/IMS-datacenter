@@ -19,7 +19,7 @@ namespace IMS.Controllers
     public class RequestController : Controller
     {
         private static IHubContext commandHubContext;
-        //DOING
+        
         [HttpGet]
         public ActionResult Index(RequestType requesttype)
         {
@@ -58,11 +58,10 @@ namespace IMS.Controllers
                 {
                     RequestReturnIPViewModel viewmodel = new RequestReturnIPViewModel();
                     var listServers = ServerDAO.Current.Query(x => x.Customer == Constants.Test.CUSTOMER_MANHNH);
-                    //viewmodel.Servers = ListServers;
                     viewmodel.Servers = listServers.Select(x => new SelectListItem
                     {
                         Value = x.ServerCode,
-                        Text = x.Modern
+                        Text = x.Model
                     }).ToList();
                     return View("RequestReturnIP", viewmodel);
                 }
@@ -103,24 +102,28 @@ namespace IMS.Controllers
 
         public ActionResult RequestRentRack(RequestRentRackViewModel viewmodel)
         {
-            //map object
-            var notif = Mapper.Map<RequestRentRackViewModel, NotificationExtendedModel>(viewmodel);
-            notif.TypeOfRequest = Constants.TypeOfLog.LOG_UPDATE_STATUS_REQUEST;
             //Them request
             string result = RequestBLO.Current.AddRequestRentRacks(Constants.Test.CUSTOMER_MANHNH);
+
+            //map object
+            var notif = Mapper.Map<RequestRentRackViewModel, NotificationExtendedModel>(viewmodel);
+            notif.TypeOfRequest = Constants.RequestType.RACK_RENT;
+            notif.Customer = Constants.Test.CUSTOMER_MANHNH;
+            notif.RequestStatus = Constants.StatusName.REQUEST_WAITING;
+            notif.RequestCode = result;
 
             //dang ky ham cho client
             if (commandHubContext == null)
             {
                 commandHubContext = GlobalHost.ConnectionManager.GetHubContext<RemoteControllerHub>();
             }
-            commandHubContext.Clients.All.ExecuteCommand(result,viewmodel.RackNumbers);
+            commandHubContext.Clients.All
+                .ExecuteCommand(result, notif.TypeOfRequest, notif.Customer, notif.Description, notif.AppointmentTime, notif.RequestStatus);
 
             //log lai thoi diem thay doi trang thai request
             LogChangedContent requestmodel = new LogChangedContent
             {
                 RequestCode = result,
-                Staff = Constants.Test.STAFF_NHI,
                 Object = Constants.Object.OBJECT_REQUEST,
                 ChangedValueOfObject = Constants.StatusCode.REQUEST_WAITING,
                 TypeOfLog = Constants.TypeOfLog.LOG_UPDATE_STATUS_REQUEST,
@@ -133,19 +136,69 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult RequestAddServer(RequestAddServerViewModel viewmodel)
         {
+            //get appointment time
+            //DOING
+            string date = viewmodel.AppointmentTime.ToString();
+            string time = viewmodel.Time;
+
+
             //Add request
-            Request passRequest = new Request();
-            passRequest.Customer = Constants.Test.CUSTOMER_MANHNH;
-            passRequest.AppointmentTime = viewmodel.AppointmentTime;
-            passRequest.Description = viewmodel.Description;
-            RequestBLO.Current.AddRequestAddServer(passRequest);
+            Request passRequest = new Request
+            {
+                Customer = Constants.Test.CUSTOMER_MANHNH,
+                AppointmentTime = DateTime.Now,
+                Description = viewmodel.Description,
+            };
+            string result = RequestBLO.Current.AddRequestAddServer(passRequest);
 
             //add server, trang thai server la waiting
-            //tim cach map Server va RequestAddServerViewModel, giong ten, khong can giong thu tu?
+            var server = Mapper.Map<RequestAddServerViewModel, Server>(viewmodel);
+            string serverCode = ServerDAO.Current.AddServer(server);
 
+            //lay thong tin attributes, đã lấy được, giờ tìm cách gộp 2 mảng song song
+            List<string> attributeValues = viewmodel.AttributeValues;
+            List<string> attributeCodes = viewmodel.SelectedAttributes;
+            List<ServerAttribute> serverAttributes = new List<ServerAttribute>();
+            for (int i = 0; i < attributeValues.Count; i++)
+            {
+                ServerAttribute sa = new ServerAttribute();
+                sa.AttributeValue = attributeValues[i];
+                sa.AttributeCode = attributeCodes[i];
+                sa.ServerCode = serverCode;
+                sa.UpdatedVersion = 0;
+                sa.StatusCode = Constants.StatusCode.SERVERATTRIBUTE_UPDATING;
+                serverAttributes.Add(sa);
+            }
             //add server attributes
+            ServerAttributeBLO.Current.AddMany(serverAttributes);
 
-            return RedirectToActionPermanent("Index", "Server");
+            // log request status
+            LogChangedContent logRequest = new LogChangedContent
+            {
+                RequestCode = result,
+                TypeOfLog = Constants.TypeOfLog.LOG_ADD_SERVER,
+                Object = Constants.Object.OBJECT_REQUEST,
+                ChangedValueOfObject = result,
+                ObjectStatus = Constants.StatusCode.REQUEST_WAITING,
+                LogTime = DateTime.Now
+            };
+            LogChangedContentBLO.Current.AddLog(logRequest);
+
+            // log object server
+            LogChangedContent logServer = new LogChangedContent
+            {
+                RequestCode = result,
+                TypeOfLog = Constants.TypeOfLog.LOG_ADD_SERVER,
+                Object = Constants.Object.OBJECT_SERVER,
+                ChangedValueOfObject = serverCode,
+                //object status
+                ObjectStatus = Constants.StatusCode.SERVER_WAITING,
+                LogTime = DateTime.Now,
+                PreviousId = 0
+            };
+            LogChangedContentBLO.Current.AddLog(logServer);
+
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -180,6 +233,13 @@ namespace IMS.Controllers
         public ActionResult Notification()
         {
             return View();
+        }
+
+        public ActionResult ListNotifications()
+        {
+            NotificationViewModel viewmodel = new NotificationViewModel();
+            //doing
+            return View("Notification", viewmodel);
         }
     }
 }

@@ -7,6 +7,7 @@ using IMS.Core;
 using IMS.Core.Express;
 using IMS.Data.Generic;
 using IMS.Data.Models;
+using IMS.Data.ViewModels;
 
 namespace IMS.Data.Repository
 {
@@ -64,7 +65,7 @@ namespace IMS.Data.Repository
             return request.RequestCode;
         }
 
-        public void AddRequestAddServer(Request passModel)
+        public string AddRequestAddServer(Request passModel)
         {
             Request request = passModel;
             request.RequestType = Constants.RequestTypeCode.ADD_SERVER;
@@ -81,7 +82,13 @@ namespace IMS.Data.Repository
                 CopyValues(request, existing);
             }
             IMSContext.Current.SaveChanges();
+            return request.RequestCode;
         }
 
+        //public List<NotificationExtendedModel> ListAllNotification()
+        //{
+            
+
+        //}
     }
 }

@@ -18,5 +18,9 @@ namespace IMS.Data.Models
         public string ServerCode { get; set; }
 
         public string AttributeValue { get; set; }
+
+        public int UpdatedVersion { get; set; }
+
+        public string StatusCode { get; set; }
     }
 }

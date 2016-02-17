@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Schema;
+using IMS.Core;
+using IMS.Core.Express;
 using IMS.Data.Business;
 using IMS.Data.Generic;
 using IMS.Data.Models;
@@ -32,17 +34,9 @@ namespace IMS.Data.Repository
 
         public override Server GetByKeys(Server entry)
         {
-            return Query(x => x.Maker == "DELL").FirstOrDefault();
+            return Query(x => x.ServerCode == entry.ServerCode).FirstOrDefault();
         }
 
-        //doing
-        //public List<Server> Search(string searchBy, string searchValue)
-        //{
-        //    var servers = new List<Server>();
-        //    var queryable = servers.AsQueryable();
-        //    return DynamicWhere<Server>(queryable, searchBy, searchValue).ToList();
-        //}
-        //list servers in Index page
         public List<ServerExtendedModel> GetAllServer()
         {
             var distinct = LocationDAO.Current.Table().GroupBy(item => item.ServerCode)
@@ -65,7 +59,7 @@ namespace IMS.Data.Repository
                             CustomerName = suba.Fullname,
                             Id = s.Id,
                             Maker = s.Maker,
-                            Modern = s.Modern,
+                            Model = s.Model,
                             DefaultIP = s.DefaultIP,
                             Customer = s.Customer
                         };
@@ -77,6 +71,7 @@ namespace IMS.Data.Repository
             //                on s.StatusCode = st.StatusCode";
             //return RawQuery<ServerExtendedModel>(query, new object[] { });
         }
+
         //a server with full fields
         public ServerExtendedModel GetServerById(int id)
         {
@@ -101,7 +96,7 @@ namespace IMS.Data.Repository
                             CustomerName = suba.Fullname,
                             Id = s.Id,
                             Maker = s.Maker,
-                            Modern = s.Modern,
+                            Model = s.Model,
                             DefaultIP = s.DefaultIP,
                             ServerCode = s.ServerCode,
                             Size = s.Size,
@@ -132,6 +127,7 @@ namespace IMS.Data.Repository
             //var query = Table().Include("ServerAttribute").Include("Attribute");
             return query.ToList();
         }
+
         //get current IPs of a server
         public List<ServerIP> GetCurrentIP(int id)
         {
@@ -141,6 +137,39 @@ namespace IMS.Data.Repository
                 where s.Id == id
                 select si;
             return query.ToList();
+        }
+
+        //add new server
+        public string AddServer(Server passServer)
+        {
+            Server server = passServer;
+            server.ServerCode = GenerateCode();
+            server.Customer = Constants.Test.CUSTOMER_MANHNH;
+            server.StatusCode = Constants.StatusCode.SERVER_WAITING;
+            server.RegisteredDate = DateTime.Now;
+            var existing = GetByKeys(server);
+            if (existing == null)
+            {
+                IMSContext.Current.Set<Server>().Add(server);
+            }
+            else
+            {
+                CopyValues(server, existing);
+            }
+            IMSContext.Current.SaveChanges();
+            return server.ServerCode;
+        }
+
+        public string GenerateCode()
+        {
+            var code = "S" + TextExpress.Randomize(9, TextExpress.NUMBER + TextExpress.NUMBER);
+            var existing = Query(x => x.ServerCode == code).FirstOrDefault();
+            while (existing != null)
+            {
+                code = "S" + TextExpress.Randomize(9, TextExpress.NUMBER + TextExpress.NUMBER);
+                existing = Query(x => x.ServerCode == code).FirstOrDefault();
+            }
+            return code;
         }
     }
 }

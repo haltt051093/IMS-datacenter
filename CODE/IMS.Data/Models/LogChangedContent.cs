@@ -35,5 +35,9 @@ namespace IMS.Data.Models
         public string IPAddress { get; set; }
 
         public string Reason { get; set; }
+
+        public int PreviousId { get; set; }
+        
+        public string ObjectStatus { get; set; }
     }
 }

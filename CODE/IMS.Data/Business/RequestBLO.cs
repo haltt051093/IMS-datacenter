@@ -39,9 +39,9 @@ namespace IMS.Data.Business
             return dao.AddRequestRentRacks(customer);
         }
 
-        public void AddRequestAddServer(Request passModel)
+        public string AddRequestAddServer(Request passModel)
         {
-            dao.AddRequestAddServer(passModel);
+            return dao.AddRequestAddServer(passModel);
         }
     }
 }

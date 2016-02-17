@@ -1,5 +1,4 @@
-﻿@using IMS.Data.Business
-@model RequestAddServerViewModel
+﻿@model RequestAddServerViewModel
 
 @{
     ViewBag.Title = "RequestAddServer";
@@ -8,26 +7,17 @@
 
 <h2>Request Add Server</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("RequestAddServer", "Request", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
         <h4>Server</h4>
         <hr />
-        //tai sao ko hien thi duoc
         <div>
             <h2>Add Attributes to Server</h2>
             <a href="#" id="addAtr">Add</a>
         </div>
-        @*@for (int i = 0; i < Model.SelectedAttributes.Count; i++)
-            {*@
-        @*<div class="form-group" id="test">
-                <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.SelectedAttributes[i], Model.AttributeList, new {@class = "form-control", style = "width:200px"})
-                    @Html.TextBoxFor(model=>  model.AttributeValues[i])
-                </div>
-            </div>*@
         <div class="form-group" id="test"></div>
         <div class="form-group">
             @Html.LabelFor(model => model.Maker, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -38,10 +28,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Modern, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Model, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Modern, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Modern, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Model, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Model, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -70,6 +60,24 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Bandwidth, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.RadioButtonFor(model => model.Bandwidth, "100Mbps", new { htmlAttributes = new { @class = "form-control" } }) 100Mbps
+                @Html.RadioButtonFor(model => model.Bandwidth, "1Gbps", new { htmlAttributes = new { @class = "form-control" } }) 1Gbps
+                @Html.ValidationMessageFor(model => model.Outlet, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AppointmentTime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AppointmentTime, new { htmlAttributes = new { @class = "form-control", placeholder = "Date to go to center", @readonly = "true" } })
+                @Html.EditorFor(model => model.Time, new { htmlAttributes = new { @class = "form-control", @id="apTime" } })
+                @Html.ValidationMessageFor(model => model.AppointmentTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
@@ -85,49 +93,47 @@
     </div>
 }
 
-<script src="~/scripts/jquery-1.10.2.js"></script>
-<script src="~/scripts/jquery-ui-1.11.4.js"></script>
+<script src="~/scripts/jquery.timepicker.min.js"></script>
+<link href="~/Content/jquery.timepicker.css" rel="stylesheet" />
 <script id="check" type="text/javascript">
     @{
-        int count = 0;
-        @Html.DropDownListFor(model => model.SelectedAttributes[count], Model.AttributeList, new {@class = "form-control", style = "width:200px", @id = "test1"})
-        ;
-        @Html.EditorFor(model => model.AttributeValues[count])
-        count++;
-    }
+            int count = 0;
+            @Html.DropDownListFor(model => model.SelectedAttributes[count], Model.AttributeList, new {@class = "form-control", style = "width:200px", @id = "test1"})
+            @Html.EditorFor(model => model.AttributeValues[count])
+            count++;
+        }
+
 </script>
 <script type="text/javascript">
     $(function () {
         $("#addAtr").click(function () {
             $('#test').append($('#check').html());
-            $('#test select').each(function(i, e) {
+            $('#test select').each(function (i, e) {
                 $(e).attr('name', 'SelectedAttributes[' + i + ']');
                 $(e).attr('id', 'SelectedAttributes_' + i + '_');
             });
-            $('#test input').each(function(i, e) {
+            $('#test input').each(function (i, e) {
                 $(e).attr('name', 'AttributeValues[' + i + ']');
                 $(e).attr('id', 'AttributeValues_' + i + '_');
             });
             return false;
         });
     });
-</script>
 
-
-@*<script type="text/javascript">
-    @*var initial = 0;
-    @{
-        int count = initial;
-            @Html.DropDownListFor(model => model.SelectedAttributes[count], Model.AttributeList, new {@class = "form-control", style = "width:200px"});
-            @Html.EditorFor(model=>model.AttributeValues[count])
-        initial = initial + 1;
-    }*@
-
-@*$(function () {
-            //var newContent = '<div class="added">Added</div>';
-            $("#addAtr").click(function () {
-                var array = @(Html.DropDownListFor(model => model.SelectedAttributes[0], Model.AttributeList, new {@class = "form-control", style = "width:200px"}));
-                $('#test').append($(array).html());
-            });
+    $(document).ready(function () {
+        $('input[type=datetime]').datepicker({
+            dateFormat: "dd/M/yy",
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-60:+0",
+            gotoCurrent: true
         });
-    </script>*@
+        $('#apTime').timepicker({
+            'showDuration': true,
+            'timeFormat': 'g:ia',
+            'minTime': '8:00am',
+            'maxTime': '8:30pm'
+        });
+
+    });
+</script>

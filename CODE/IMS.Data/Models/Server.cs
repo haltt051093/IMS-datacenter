@@ -21,7 +21,7 @@ namespace IMS.Data.Models
         public string Maker { get; set; }
 
         [StringLength(50)]
-        public string Modern { get; set; }
+        public string Model { get; set; }
 
         public int? Power { get; set; }
 
@@ -37,6 +37,6 @@ namespace IMS.Data.Models
 
         public int? Outlet { get; set; }
 
-
+        public string Bandwidth { get; set; }
     }
 }
