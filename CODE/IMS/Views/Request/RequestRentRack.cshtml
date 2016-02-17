@@ -12,6 +12,9 @@
     <h3>Request return rack</h3>
     <text>Number of rack(s)</text>
     @Html.EditorFor(model => model.RackNumbers)
+    <text>Appointment time</text>
+    @Html.EditorFor(model => model.AppointmentTime)
+
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Send Request" class="btn btn-default" />

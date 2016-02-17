@@ -1,0 +1,29 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Status</title>
+    <script src="@Url.Content("~/Scripts/jquery-1.10.2.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.signalR-2.2.0.js")"></script>
+    <script src="@Url.Content("~/signalr/hubs")"></script>
+    <script>
+        $(document).ready(function() {
+            var commandHub = $.connection.remoteControllerHub;
+            commandHub.client.executeCommand = function (appTime, rackNum) {
+                $('#result').append(appTime + ' | ' + rackNum + '<br/>');
+            };
+            $.connection.hub.start();
+        });
+    </script>
+</head>
+<body>
+    <div id="result">
+    </div>
+</body>
+</html>
+

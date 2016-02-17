@@ -5,17 +5,20 @@ using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
+using AutoMapper;
 using IMS.Core;
 using IMS.Data.Business;
 using IMS.Data.Models;
 using IMS.Data.Repository;
 using IMS.Data.ViewModels;
 using IMS.Models;
+using Microsoft.AspNet.SignalR;
 
 namespace IMS.Controllers
 {
     public class RequestController : Controller
     {
+        private static IHubContext commandHubContext;
         //DOING
         [HttpGet]
         public ActionResult Index(RequestType requesttype)
@@ -45,16 +48,6 @@ namespace IMS.Controllers
                     data.AttributeList = attrList
                         .Select(x => new SelectListItem { Value = x.AttributeCode, Text = x.AttributeName })
                         .ToList();
-                    //data.SelectedAttributes = new List<string>
-                    //{
-                    //    "SAT003",
-                    //    "SAT007"
-                    //};
-                    //data.AttributeValues = new List<string>
-                    //{
-                    //    "1",
-                    //    "2"
-                    //};
                     return View("RequestAddServer", data);
                 }
                 if (requestcode.Equals(Constants.RequestTypeCode.UPGRADE_SERVER))
@@ -110,16 +103,29 @@ namespace IMS.Controllers
 
         public ActionResult RequestRentRack(RequestRentRackViewModel viewmodel)
         {
-            //int RackNumber = viewmodel.RackNumbers;
-            string RequestCode = RequestBLO.Current.AddRequestRentRacks(Constants.Test.CUSTOMER_MANHNH);
+            //map object
+            var notif = Mapper.Map<RequestRentRackViewModel, NotificationExtendedModel>(viewmodel);
+            notif.TypeOfRequest = Constants.TypeOfLog.LOG_UPDATE_STATUS_REQUEST;
+            //Them request
+            string result = RequestBLO.Current.AddRequestRentRacks(Constants.Test.CUSTOMER_MANHNH);
+
+            //dang ky ham cho client
+            if (commandHubContext == null)
+            {
+                commandHubContext = GlobalHost.ConnectionManager.GetHubContext<RemoteControllerHub>();
+            }
+            commandHubContext.Clients.All.ExecuteCommand(result,viewmodel.RackNumbers);
+
             //log lai thoi diem thay doi trang thai request
-            LogChangedContent requestmodel = new LogChangedContent();
-            requestmodel.RequestCode = RequestCode;
-            requestmodel.Staff = Constants.Test.STAFF_NHI;
-            requestmodel.Object = Constants.Object.OBJECT_REQUEST;
-            requestmodel.ChangedValueOfObject = Constants.StatusCode.REQUEST_WAITING;
-            requestmodel.TypeOfLog = Constants.TypeOfLog.LOG_UPDATE_STATUS_REQUEST;
-            requestmodel.LogTime = DateTime.Now;
+            LogChangedContent requestmodel = new LogChangedContent
+            {
+                RequestCode = result,
+                Staff = Constants.Test.STAFF_NHI,
+                Object = Constants.Object.OBJECT_REQUEST,
+                ChangedValueOfObject = Constants.StatusCode.REQUEST_WAITING,
+                TypeOfLog = Constants.TypeOfLog.LOG_UPDATE_STATUS_REQUEST,
+                LogTime = DateTime.Now
+            };
             LogChangedContentBLO.Current.AddLog(requestmodel);
             return RedirectToAction("Index");
         }
@@ -127,22 +133,17 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult RequestAddServer(RequestAddServerViewModel viewmodel)
         {
-            //tu sinh: ServerCode, Customer, status, registereddate
-            //nhap vao: maker, modern, power, size, list of attribute --> lam sao cho hien thi them attribute
-            //Chi cap nhat bang server, chung nao status chuyen sang trang thai Running thi moi gan vo cho customer
-            //Cap nhat bang server, request, serverAttribute
-            //map ko theo thu tu duoc ko?
+            //Add request
             Request passRequest = new Request();
             passRequest.Customer = Constants.Test.CUSTOMER_MANHNH;
             passRequest.AppointmentTime = viewmodel.AppointmentTime;
             passRequest.Description = viewmodel.Description;
             RequestBLO.Current.AddRequestAddServer(passRequest);
+
             //add server, trang thai server la waiting
             //tim cach map Server va RequestAddServerViewModel, giong ten, khong can giong thu tu?
 
-
-            //Lam sao tron gia tri trong dropdownlist + valueList 
-
+            //add server attributes
 
             return RedirectToActionPermanent("Index", "Server");
         }
@@ -174,6 +175,11 @@ namespace IMS.Controllers
         public ActionResult RequestUpgradeServer()
         {
             return RedirectToActionPermanent("Index", "Server");
+        }
+
+        public ActionResult Notification()
+        {
+            return View();
         }
     }
 }

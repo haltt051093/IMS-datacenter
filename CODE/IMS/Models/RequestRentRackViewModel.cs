@@ -10,5 +10,8 @@ namespace IMS.Models
     {
         //public RequestExtendedModel SpecificRequest { get; set; }
         public int RackNumbers { get; set; }
+        public string Customer { get; set; }
+        public string Message { get; set; }
+        public string AppointmentTime { get; set; }
     }
 }

@@ -88,25 +88,27 @@
 <script src="~/scripts/jquery-1.10.2.js"></script>
 <script src="~/scripts/jquery-ui-1.11.4.js"></script>
 <script id="check" type="text/javascript">
-    $(function () {
-        var inputs = document.getElementById("test1");
-        if (inputs == null) {
-            @{
-                int count = 0;
-                @Html.DropDownListFor(model => model.SelectedAttributes[count], Model.AttributeList, new {@class = "form-control", style = "width:200px", @id = "test1"})
-                ;
-                @Html.EditorFor(model => model.AttributeValues[count])
-                count++;
-            }
-        }
-    });
-
-
+    @{
+        int count = 0;
+        @Html.DropDownListFor(model => model.SelectedAttributes[count], Model.AttributeList, new {@class = "form-control", style = "width:200px", @id = "test1"})
+        ;
+        @Html.EditorFor(model => model.AttributeValues[count])
+        count++;
+    }
 </script>
 <script type="text/javascript">
     $(function () {
         $("#addAtr").click(function () {
             $('#test').append($('#check').html());
+            $('#test select').each(function(i, e) {
+                $(e).attr('name', 'SelectedAttributes[' + i + ']');
+                $(e).attr('id', 'SelectedAttributes_' + i + '_');
+            });
+            $('#test input').each(function(i, e) {
+                $(e).attr('name', 'AttributeValues[' + i + ']');
+                $(e).attr('id', 'AttributeValues_' + i + '_');
+            });
+            return false;
         });
     });
 </script>

@@ -33,7 +33,26 @@ namespace IMS.Data.Business
 
         public bool UpdateLocation(int? size, string ServerCode, string LocationCode, string request)
         {
-            if (request.Equals("Change"))
+            if (!request.Equals("Change"))
+            {
+                List<Location> locations = dao.GetAll();
+                int exist = locations.IndexOf(dao.Query(x => x.LocationCode == LocationCode).FirstOrDefault());
+                for (int i = exist; i < (exist + size); i++)
+                {
+                    if (locations[i].StatusCode.Equals(Constants.StatusCode.LOCATION_FREE))
+                    {
+                        locations[i].ServerCode = ServerCode;
+                        locations[i].StatusCode = Constants.StatusCode.LOCATION_USED;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                dao.UpdateMany(locations);
+                return true;
+            }
+            else
             {
                 List<Location> existing = dao.Query(x => x.ServerCode == ServerCode).ToList();
                 if (existing.Count > 0)
@@ -42,7 +61,6 @@ namespace IMS.Data.Business
                     {
                         existing[i].StatusCode = Constants.StatusCode.LOCATION_FREE;
                         existing[i].ServerCode = null;
-
                     }
 
                     List<Location> locations = dao.GetAll();
@@ -58,46 +76,23 @@ namespace IMS.Data.Business
                         {
                             return false;
                         }
-
                     }
                     dao.UpdateMany(existing);
                     dao.UpdateMany(locations);
                     return true;
                 }
-                else
-                {
-                    return false;
-                }
-
+                return false;
             }
-            else
-            {
-                List<Location> locations = dao.GetAll();
-                int exist = locations.IndexOf(dao.Query(x => x.LocationCode == LocationCode).FirstOrDefault());
-                for (int i = exist; i < (exist + size); i++)
-                {
-                    if (locations[i].StatusCode.Equals(Constants.StatusCode.LOCATION_FREE))
-                    {
-                        locations[i].ServerCode = ServerCode;
-                        locations[i].StatusCode = Constants.StatusCode.LOCATION_USED;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-
-                }
-                dao.UpdateMany(locations);
-                return true;
-            }
-
-
         }
+
+
         private LocationBLO()
         {
             baseDao = LocationDAO.Current;
             dao = LocationDAO.Current;
         }
+
+
         public string GenerateCode()
         {
             var code = "L" + TextExpress.Randomize(6, TextExpress.NUMBER + TextExpress.NUMBER);
@@ -113,6 +108,7 @@ namespace IMS.Data.Business
         {
             return dao.GetAllLocation();
         }
+
 
         public List<LocationExtendedModel> GetChangeLocation(Server server)
         {
@@ -189,6 +185,8 @@ namespace IMS.Data.Business
             }
 
         }
+
+
         public List<LocationExtendedModel> GetNewLocation(Server server)
         {
             var allLocation = new List<LocationExtendedModel>();

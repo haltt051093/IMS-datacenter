@@ -44,6 +44,23 @@ namespace IMS.Core
             public const string RACK_USING = "STATUS21";
         }
 
+        public class GroupName
+        {
+            public const string GROUP_1 = "Group 1";
+            public const string GROUP_2 = "Group 2";
+            public const string GROUP_3 = "Group 3";
+            public const string GROUP_4 = "Group 4";
+            public const string NO_GROUP = "No Group";
+        }
+
+        public class Role
+        {
+            public const string CUSTOMER = "Customer";
+            public const string MANAGER = "Manager";
+            public const string SHIFT_HEAD = "Shift Head";
+            public const string STAFF = "Staff";
+        }
+
         public class Test
         {
             public const string CUSTOMER_MANHNH = "manhnh";

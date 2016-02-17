@@ -106,8 +106,8 @@ namespace IMS.Controllers
             {
                 // su dung mapping cho list
                 var account = Mapper.Map<AccountCreateViewModel, Account>(accountCreateViewModel);
-                account.Role = "Customer";
-                account.GroupName = "No Group";
+                account.Role = Constants.Role.CUSTOMER;
+                account.GroupName = Constants.GroupName.NO_GROUP;
                 AccountBLO.Current.Add(account);
                 //send account info to login to the system
                 bool result = AccountBLO.Current.SendAccountInfo(account);
@@ -137,7 +137,7 @@ namespace IMS.Controllers
             return View(accountviewmodel);
         }
 
-        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = Constants.Role.MANAGER)]
         // GET: Account/Edit/5
         public ActionResult EditCustomer(int? id)
         {
@@ -168,8 +168,8 @@ namespace IMS.Controllers
         public ActionResult EditCustomer(AccountCreateViewModel viewmodel)
         {
             Account account = Mapper.Map<AccountCreateViewModel, Account>(viewmodel);
-            account.GroupName = "Customer";
-            account.GroupName = "No Group";
+            account.GroupName = Constants.Role.CUSTOMER;
+            account.GroupName = Constants.GroupName.NO_GROUP;
             AccountBLO.Current.AddOrUpdate(account);
 
             return RedirectToAction("Index");

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿
 using IMS.Data.Models;
+using IMS.Data.ViewModels;
 using IMS.Models;
 
 namespace IMS.App_Start
@@ -22,9 +20,11 @@ namespace IMS.App_Start
                 config.CreateMap<ServerDetailsViewModel, Server>();
                 //rack
                 config.CreateMap<RackCreateViewModel, Rack>();
-
+                //IP Address
                 config.CreateMap<IPAddressPool, IPChangeStatusViewModel>();
                 config.CreateMap<IPChangeStatusViewModel, IPAddressPool>();
+                //Notification
+                config.CreateMap<RequestRentRackViewModel, NotificationExtendedModel>();
             });
         }
     }
