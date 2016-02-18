@@ -237,6 +237,7 @@
     <Compile Include="Controllers\IPController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\RequestController.cs" />
+    <Compile Include="Controllers\ScheduleController.cs" />
     <Compile Include="Controllers\ServerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -255,6 +256,7 @@
     <Compile Include="Models\RequestReturnIPViewModel.cs" />
     <Compile Include="Models\RequestReturnRackViewModel.cs" />
     <Compile Include="Models\RequestAddServerViewModel.cs" />
+    <Compile Include="Models\ScheduleIndexViewModel.cs" />
     <Compile Include="Models\ServerDetailsViewModel.cs" />
     <Compile Include="Models\ServerIndexViewModel.cs" />
     <Compile Include="Models\ServerIPViewModel.cs" />
@@ -300,6 +302,7 @@
     <Content Include="Views\IP\ChangeStatus.cshtml" />
     <Content Include="Views\Request\Notification.cshtml" />
     <Content Include="Views\Shared\_AppointmentTime.cshtml" />
+    <Content Include="Views\Schedule\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

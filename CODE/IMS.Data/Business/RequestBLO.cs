@@ -7,6 +7,7 @@ using IMS.Core.Express;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.Repository;
+using IMS.Data.ViewModels;
 
 namespace IMS.Data.Business
 {
@@ -47,6 +48,19 @@ namespace IMS.Data.Business
         public string AddRequestReturnRack(Request passModel)
         {
             return dao.AddRequestReturnRack(passModel);
+        }
+        public List<ScheduleExtendedModel> GetScheduleToday()
+        {
+            var allschedule = dao.GetSchedule();
+            var scheduletoday = new List<ScheduleExtendedModel>();
+            foreach (var item in allschedule)
+            {
+                if (item.AppointmentTime.Value.Date == DateTime.Now.Date)
+                {
+                    scheduletoday.Add(item);
+                }
+            }
+            return scheduletoday;
         }
     }
 }

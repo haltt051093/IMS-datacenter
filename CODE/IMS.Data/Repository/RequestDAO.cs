@@ -105,9 +105,18 @@ namespace IMS.Data.Repository
             return request.RequestCode;
         }
 
+        public List<ScheduleExtendedModel> GetSchedule()
+        {
+            string query = @"select r.*,rt.RequestTypeName, s.Status from Request as r 
+                            join Status as s 
+                            on s.StatusCode = r.StatusCode
+                            join RequestType as rt
+                            on rt.RequestTypeCode = r.RequestType";
+            return RawQuery<ScheduleExtendedModel>(query, new object[] { });
+        }
         //public List<NotificationExtendedModel> ListAllNotification()
         //{
-            
+
 
         //}
     }

@@ -1,0 +1,73 @@
+﻿@model IMS.Models.ScheduleIndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>List of Appointment Today</h2>
+
+<p>
+    @Html.ActionLink("Add Note for Next Shift", "AddNote")
+    @{
+//chưa có method AddNote
+    }
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.Raw("RequestCode")
+        </th>
+        <th>
+            @Html.Raw("Customer")
+        </th>
+        <th>
+            @Html.Raw("AppointmentTime")
+        </th>
+        <th>
+            @Html.Raw("RequestType")
+        </th>
+        <th>
+            @Html.Raw("Status")
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Schedules)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(@item.RequestCode, "RequestDetail", new { id = item.Id })
+                @{
+//Chưa có method RequestDetail
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Customer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppointmentTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestTypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.ActionLink("Reject Request", "RejectRequest", new { id = item.Id })
+                @{
+//chưa có method RejectRequest
+                }
+            </td>
+            <td>
+                @Html.ActionLink("AssignTask", "AssignTask", new { id = item.Id })
+                @{
+//Chưa có method AssignTask
+                }
+            </td>
+        </tr>
+                    }
+
+</table>
