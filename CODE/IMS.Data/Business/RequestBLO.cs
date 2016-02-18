@@ -43,5 +43,10 @@ namespace IMS.Data.Business
         {
             return dao.AddRequestAddServer(passModel);
         }
+
+        public string AddRequestReturnRack(Request passModel)
+        {
+            return dao.AddRequestReturnRack(passModel);
+        }
     }
 }

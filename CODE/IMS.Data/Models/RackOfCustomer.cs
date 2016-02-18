@@ -19,5 +19,7 @@ namespace IMS.Data.Models
         public string Customer { get; set; }
 
         public DateTime? RegisteredDate { get; set; }
+
+        public bool IsHired { get; set; }
     }
 }

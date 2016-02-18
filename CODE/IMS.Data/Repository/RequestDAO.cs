@@ -85,6 +85,26 @@ namespace IMS.Data.Repository
             return request.RequestCode;
         }
 
+        public string AddRequestReturnRack(Request passModel)
+        {
+            Request request = passModel;
+            request.RequestType = Constants.RequestTypeCode.RENT_RACK;
+            request.RequestCode = GenerateCode();
+            request.RequestedTime = DateTime.Now;
+            request.StatusCode = Constants.StatusCode.REQUEST_WAITING;
+            var existing = GetByKeys(request);
+            if (existing == null)
+            {
+                IMSContext.Current.Set<Request>().Add(request);
+            }
+            else
+            {
+                CopyValues(request, existing);
+            }
+            IMSContext.Current.SaveChanges();
+            return request.RequestCode;
+        }
+
         //public List<NotificationExtendedModel> ListAllNotification()
         //{
             

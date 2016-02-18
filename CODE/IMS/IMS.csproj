@@ -299,6 +299,7 @@
     <Content Include="Views\Shared\_ListServerIP.cshtml" />
     <Content Include="Views\IP\ChangeStatus.cshtml" />
     <Content Include="Views\Request\Notification.cshtml" />
+    <Content Include="Views\Shared\_AppointmentTime.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -334,7 +335,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>61259</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:61259/</IISUrl>
+          <IISUrl>http://localhost:8080/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

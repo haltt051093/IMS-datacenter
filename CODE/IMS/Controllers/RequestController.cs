@@ -19,7 +19,7 @@ namespace IMS.Controllers
     public class RequestController : Controller
     {
         private static IHubContext commandHubContext;
-        
+
         [HttpGet]
         public ActionResult Index(RequestType requesttype)
         {
@@ -70,34 +70,50 @@ namespace IMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult RequestReturnRack(RequestReturnRackViewModel viewModel)
+        public ActionResult RequestReturnRack(RequestReturnRackViewModel viewmodel)
         {
             if (ModelState.IsValid)
             {
-                var number = viewModel.RackOfCustomer.Count();
-                var selected = viewModel.RackOfCustomer.Where(x => x.Selected).Select(x => x.Value).ToArray();
-                //update statuscode o rack
-                //xoa rackId vua nhan duoc, o bang RackOfCustomer
-                //de cho chac, tat ca gia tri o cot ServerCode o bang Location de null
-                //Hien tai chua can luu log
-                if (number != 0)
+                var number = viewmodel.RackOfCustomer.Count();
+                var selected = viewmodel.RackOfCustomer.Where(x => x.Selected).Select(x => x.Value).ToArray();
+
+                //get appointment time
+                string dateOnly = viewmodel.AppointmentTime.ToString("dd/MM/yyyy");
+                string time = DateTime.Parse(viewmodel.Time).ToString("HH:mm:ss");
+                string datetime = dateOnly + ' ' + time;
+                viewmodel.AppointmentTime = DateTime.Parse(datetime);
+
+                //Add request
+                Request passRequest = new Request
                 {
-                    foreach (var item in selected)
-                    {
-                        //update status of a rack
-                        var updateRackStatus = RackDAO.Current.Query(x => x.RackCode == item).FirstOrDefault();
-                        Rack rack = updateRackStatus;
-                        rack.StatusCode = Constants.StatusCode.RACK_AVAILABLE;
-                        RackDAO.Current.Update(rack);
-                        //delete a raw in RackOfCustomer where rack is selected
-                        var rc = RackOfCustomerDAO.Current.Query(x => x.RackCode == item).FirstOrDefault();
-                        RackOfCustomer remove = rc;
-                        RackOfCustomerDAO.Current.Remove(remove);
-                        //
-                    }
-                }
+                    Customer = Constants.Test.CUSTOMER_MANHNH,
+                    AppointmentTime = viewmodel.AppointmentTime,
+                    Description = viewmodel.Description
+                };
+                string result = RequestBLO.Current.AddRequestReturnRack(passRequest);
+
+
+
+
+                //update statuscode o rack --> khi nào staff confirm mới update status
+                //if (number != 0)
+                //{
+                //    foreach (var item in selected)
+                //    {
+                //        //update status of a rack
+                //        var updateRackStatus = RackDAO.Current.Query(x => x.RackCode == item).FirstOrDefault();
+                //        Rack rack = updateRackStatus;
+                //        rack.StatusCode = Constants.StatusCode.RACK_AVAILABLE;
+                //        RackDAO.Current.Update(rack);
+                //        //delete a raw in RackOfCustomer where rack is selected
+                //        var rc = RackOfCustomerDAO.Current.Query(x => x.RackCode == item).FirstOrDefault();
+                //        RackOfCustomer remove = rc;
+                //        RackOfCustomerDAO.Current.Remove(remove);
+                //        //
+                //    }
+                //}
             }
-            return View(viewModel);
+            return RedirectToAction("Index");
         }
 
         public ActionResult RequestRentRack(RequestRentRackViewModel viewmodel)
@@ -137,17 +153,16 @@ namespace IMS.Controllers
         public ActionResult RequestAddServer(RequestAddServerViewModel viewmodel)
         {
             //get appointment time
-            //DOING
-            string date = viewmodel.AppointmentTime.ToString();
-            string time = viewmodel.Time;
-
-
+            string dateOnly = viewmodel.AppointmentTime.ToString("dd/MM/yyyy");
+            string time = DateTime.Parse(viewmodel.Time).ToString("HH:mm:ss");
+            string datetime = dateOnly + ' ' + time;
+            viewmodel.AppointmentTime = DateTime.Parse(datetime);
             //Add request
             Request passRequest = new Request
             {
                 Customer = Constants.Test.CUSTOMER_MANHNH,
-                AppointmentTime = DateTime.Now,
                 Description = viewmodel.Description,
+                AppointmentTime = viewmodel.AppointmentTime
             };
             string result = RequestBLO.Current.AddRequestAddServer(passRequest);
 

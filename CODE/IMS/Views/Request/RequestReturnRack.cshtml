@@ -1,32 +1,45 @@
-﻿@using AutoMapper.Internal
-@using IMS.Data.Repository
-@model RequestReturnRackViewModel
+﻿@model RequestReturnRackViewModel
 
 @{
     ViewBag.Title = "RequestReturnRack";
 }
 
 <h2>RequestReturnRack</h2>
-<p>
+<div>
     @using (Html.BeginForm("RequestReturnRack", "Request", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
         <h3>Request return rack</h3>
-    <p>
-        @for (var i = 0; i < Model.RackOfCustomer.Count; i++)
-        {
-            <div class="checkbox">
-                @Html.HiddenFor(x => x.RackOfCustomer[i].Value)
-                <label>
-                    @Html.CheckBoxFor(x => x.RackOfCustomer[i].Selected)
-                    @Html.DisplayFor(x => x.RackOfCustomer[i].Text)
-                </label>
+        <p>
+            @for (var i = 0; i < Model.RackOfCustomer.Count; i++)
+            {
+                <div class="checkbox">
+                    @Html.HiddenFor(x => x.RackOfCustomer[i].Value)
+                    <label>
+                        @Html.CheckBoxFor(x => x.RackOfCustomer[i].Selected)
+                        @Html.DisplayFor(x => x.RackOfCustomer[i].Text)
+                    </label>
+                </div>
+            }
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.AppointmentTime, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.AppointmentTime, new { htmlAttributes = new { @class = "form-control", placeholder = "Date to go to center", @readonly = "true" } })
+            @Html.EditorFor(model => model.Time, new { htmlAttributes = new { @class = "form-control", @id = "apTime" } })
+            @Html.ValidationMessageFor(model => model.AppointmentTime, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
-        }
-    </p>
-    <br />
+        </div>
+        <br />
         <input class="green" type="submit" value="Send Request" />
     }
 
-
-    </p>
+    @Html.Partial("_AppointmentTime")

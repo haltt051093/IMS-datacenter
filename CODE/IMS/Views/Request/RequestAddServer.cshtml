@@ -92,9 +92,6 @@
         </div>
     </div>
 }
-
-<script src="~/scripts/jquery.timepicker.min.js"></script>
-<link href="~/Content/jquery.timepicker.css" rel="stylesheet" />
 <script id="check" type="text/javascript">
     @{
             int count = 0;
@@ -105,35 +102,19 @@
 
 </script>
 <script type="text/javascript">
-    $(function () {
-        $("#addAtr").click(function () {
+    $(function() {
+        $("#addAtr").click(function() {
             $('#test').append($('#check').html());
-            $('#test select').each(function (i, e) {
+            $('#test select').each(function(i, e) {
                 $(e).attr('name', 'SelectedAttributes[' + i + ']');
                 $(e).attr('id', 'SelectedAttributes_' + i + '_');
             });
-            $('#test input').each(function (i, e) {
+            $('#test input').each(function(i, e) {
                 $(e).attr('name', 'AttributeValues[' + i + ']');
                 $(e).attr('id', 'AttributeValues_' + i + '_');
             });
             return false;
         });
     });
-
-    $(document).ready(function () {
-        $('input[type=datetime]').datepicker({
-            dateFormat: "dd/M/yy",
-            changeMonth: true,
-            changeYear: true,
-            yearRange: "-60:+0",
-            gotoCurrent: true
-        });
-        $('#apTime').timepicker({
-            'showDuration': true,
-            'timeFormat': 'g:ia',
-            'minTime': '8:00am',
-            'maxTime': '8:30pm'
-        });
-
-    });
 </script>
+@Html.Partial("_AppointmentTime")

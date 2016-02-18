@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Web;
 using System.Web.Mvc;
 
@@ -17,14 +18,13 @@ namespace IMS.Models
         public string DefaultIP { get; set; }
         public string LocationCode { get; set; }
         public int? Outlet { get; set; }
-
+        
+        public string Time { get; set; }
         [Required]
         [Display(Name = "Appointment Time")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
-        public DateTime? AppointmentTime { get; set; }
+        public DateTime AppointmentTime { get; set; }
 
-        public string Time { get; set; }
-        
         public string Description { get; set; }
         public string Bandwidth { get; set; }
 
