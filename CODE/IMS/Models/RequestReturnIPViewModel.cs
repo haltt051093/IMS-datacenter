@@ -10,9 +10,11 @@ namespace IMS.Models
 {
     public class RequestReturnIPViewModel
     {
+        public string Action { get; set; }
         public List<SelectListItem> Servers { get; set; }
         public List<ServerIP> ServerIPs { get; set; }
         public string SelectedServerCode { get; set; }
+        public string Description { get; set; }
     }
 
     public class ServerExtModel

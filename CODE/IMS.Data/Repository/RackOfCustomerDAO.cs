@@ -33,30 +33,10 @@ namespace IMS.Data.Repository
 
         public List<RackOfCustomerExtendedModel> EmptyRentedRack(string customer)
         {
-            //var list1 = from rc in RackOfCustomerDAO.Current.Table()
-            //            where rc.Customer == customer
-            //            select rc.RackCode;
-            //var query1 = list1.ToList();
-            //var list2 = from s in ServerDAO.Current.Table()
-            //            join l in LocationDAO.Current.Table()
-            //                on s.LocationCode equals l.LocationCode into sl
-            //            from subsl in sl.DefaultIfEmpty()
-            //            select new { subsl.RackCode };
-            //var query2 = list2.ToList();
-
-            //var query = from rcmain in RackOfCustomerDAO.Current.Table()
-            //            where !(from s in ServerDAO.Current.Table()
-            //                    join l in LocationDAO.Current.Table()
-            //                        on s.LocationCode equals l.LocationCode into sl
-            //                    from subsl in sl.DefaultIfEmpty()
-            //                    select new RackOfCustomer() { RackCode = subsl.RackCode, Customer = s.Customer }).Any()
-            //            select rcmain;
-            //return query.ToList();
-
             var query = @"select DISTINCT rc.RackCode, rc.Customer, r.RackName
                         from RackOfCustomer rc
-						left join Rack as r
-						on r.RackCode = rc.RackCode
+						right join Rack as r
+						on r.RackCode = rc.RackCode AND r.StatusCode ='STATUS20'
                         where rc.Customer ='" + customer + @"' AND rc.RackCode NOT IN (
                         select DISTINCT l.RackCode
                         from Server as s

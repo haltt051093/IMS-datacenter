@@ -50,12 +50,7 @@
     {
         <tr>
             <td>
-
-                @*@Html.DisplayFor(modelItem => item.Username)*@
                 @Html.ActionLink(item.Username, "ViewProfile", new { id = item.Id })
-
-
-
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RoleName)

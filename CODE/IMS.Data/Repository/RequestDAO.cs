@@ -44,10 +44,9 @@ namespace IMS.Data.Repository
             return code;
         }
 
-        public string AddRequestRentRacks(string customer)
+        public string AddRequestRentRacks(Request passModel)
         {
-            Request request = new Request();
-            request.Customer = customer.Trim();
+            Request request = passModel;
             request.RequestType = Constants.RequestTypeCode.RENT_RACK;
             request.RequestCode = GenerateCode();
             request.RequestedTime = DateTime.Now;
@@ -88,7 +87,7 @@ namespace IMS.Data.Repository
         public string AddRequestReturnRack(Request passModel)
         {
             Request request = passModel;
-            request.RequestType = Constants.RequestTypeCode.RENT_RACK;
+            request.RequestType = Constants.RequestTypeCode.RETURN_RACK;
             request.RequestCode = GenerateCode();
             request.RequestedTime = DateTime.Now;
             request.StatusCode = Constants.StatusCode.REQUEST_WAITING;

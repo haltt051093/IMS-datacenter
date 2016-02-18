@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
@@ -12,6 +13,7 @@ using IMS.Data.Models;
 using IMS.Data.Repository;
 using IMS.Data.ViewModels;
 using IMS.Models;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.SignalR;
 
 namespace IMS.Controllers
@@ -50,6 +52,7 @@ namespace IMS.Controllers
                         .ToList();
                     return View("RequestAddServer", data);
                 }
+                //DOING
                 if (requestcode.Equals(Constants.RequestTypeCode.UPGRADE_SERVER))
                 {
                     return View("RequestUpgradeServer");
@@ -65,6 +68,18 @@ namespace IMS.Controllers
                     }).ToList();
                     return View("RequestReturnIP", viewmodel);
                 }
+                //DOING
+                if (requestcode.Equals(Constants.RequestTypeCode.CHANGE_IP))
+                {
+                    RequestReturnIPViewModel viewmodel = new RequestReturnIPViewModel();
+                    return View("RequestReturnIP", viewmodel);
+                }
+                //DOING
+                if (requestcode.Equals(Constants.RequestTypeCode.ASSIGN_IP))
+                {
+                    RequestReturnIPViewModel viewmodel = new RequestReturnIPViewModel();
+                    return View("RequestReturnIP", viewmodel);
+                }
             }
             return View(requesttype);
         }
@@ -76,65 +91,92 @@ namespace IMS.Controllers
             {
                 var number = viewmodel.RackOfCustomer.Count();
                 var selected = viewmodel.RackOfCustomer.Where(x => x.Selected).Select(x => x.Value).ToArray();
-
-                //get appointment time
-                string dateOnly = viewmodel.AppointmentTime.ToString("dd/MM/yyyy");
-                string time = DateTime.Parse(viewmodel.Time).ToString("HH:mm:ss");
-                string datetime = dateOnly + ' ' + time;
-                viewmodel.AppointmentTime = DateTime.Parse(datetime);
-
-                //Add request
-                Request passRequest = new Request
+                if (number != 0)
                 {
-                    Customer = Constants.Test.CUSTOMER_MANHNH,
-                    AppointmentTime = viewmodel.AppointmentTime,
-                    Description = viewmodel.Description
-                };
-                string result = RequestBLO.Current.AddRequestReturnRack(passRequest);
+                    //get appointment time
+                    string dateOnly = viewmodel.AppointmentTime.ToString("dd/MM/yyyy");
+                    string time = DateTime.Parse(viewmodel.Time).ToString("HH:mm:ss");
+                    string datetime = dateOnly + ' ' + time;
+                    viewmodel.AppointmentTime = DateTime.Parse(datetime);
 
+                    //Add request
+                    Request passRequest = new Request
+                    {
+                        Customer = Constants.Test.CUSTOMER_MANHNH,
+                        Description = viewmodel.Description
+                    };
+                    string result = RequestBLO.Current.AddRequestReturnRack(passRequest);
 
+                    //Update rack status
+                    foreach (var item in selected)
+                    {
+                        //update status of a rack
+                        var updateRackStatus = RackDAO.Current.Query(x => x.RackCode == item).FirstOrDefault();
+                        Rack rack = updateRackStatus;
+                        rack.StatusCode = Constants.StatusCode.RACK_RETURNING;
+                        RackDAO.Current.Update(rack);
+                    }
 
+                    //Add Log Request
+                    LogChangedContent logRequest = new LogChangedContent
+                    {
+                        RequestCode = result,
+                        TypeOfLog = Constants.TypeOfLog.LOG_RENT_RACK,
+                        Object = Constants.Object.OBJECT_REQUEST,
+                        ChangedValueOfObject = result,
+                        ObjectStatus = Constants.StatusCode.REQUEST_WAITING,
+                        LogTime = DateTime.Now
+                    };
+                    LogChangedContentBLO.Current.AddLog(logRequest);
 
-                //update statuscode o rack --> khi nào staff confirm mới update status
-                //if (number != 0)
-                //{
-                //    foreach (var item in selected)
-                //    {
-                //        //update status of a rack
-                //        var updateRackStatus = RackDAO.Current.Query(x => x.RackCode == item).FirstOrDefault();
-                //        Rack rack = updateRackStatus;
-                //        rack.StatusCode = Constants.StatusCode.RACK_AVAILABLE;
-                //        RackDAO.Current.Update(rack);
-                //        //delete a raw in RackOfCustomer where rack is selected
-                //        var rc = RackOfCustomerDAO.Current.Query(x => x.RackCode == item).FirstOrDefault();
-                //        RackOfCustomer remove = rc;
-                //        RackOfCustomerDAO.Current.Remove(remove);
-                //        //
-                //    }
-                //}
+                    //Add Log Rack status
+                    foreach (var item in selected)
+                    {
+                        LogChangedContent logServer = new LogChangedContent
+                        {
+                            RequestCode = result,
+                            TypeOfLog = Constants.TypeOfLog.LOG_RETURN_RACK,
+                            Object = Constants.Object.OBJECT_RACK,
+                            ChangedValueOfObject = item,
+                            ObjectStatus = Constants.StatusCode.RACK_RETURNING,
+                            LogTime = DateTime.Now,
+                            PreviousId = 0
+                        };
+                        LogChangedContentBLO.Current.AddLog(logServer);
+                    }
+
+                    //Notification
+                    var notif = Mapper.Map<RequestReturnRackViewModel, NotificationExtendedModel>(viewmodel);
+                    notif.TypeOfRequest = Constants.RequestType.RACK_RETURN;
+                    notif.Customer = Constants.Test.CUSTOMER_MANHNH;
+                    notif.RequestStatus = Constants.StatusName.REQUEST_WAITING;
+                    notif.RequestCode = result;
+                    //dang ky ham cho client
+                    NotifRegister(notif);
+                }
             }
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
         public ActionResult RequestRentRack(RequestRentRackViewModel viewmodel)
         {
-            //Them request
-            string result = RequestBLO.Current.AddRequestRentRacks(Constants.Test.CUSTOMER_MANHNH);
-
-            //map object
-            var notif = Mapper.Map<RequestRentRackViewModel, NotificationExtendedModel>(viewmodel);
-            notif.TypeOfRequest = Constants.RequestType.RACK_RENT;
-            notif.Customer = Constants.Test.CUSTOMER_MANHNH;
-            notif.RequestStatus = Constants.StatusName.REQUEST_WAITING;
-            notif.RequestCode = result;
-
-            //dang ky ham cho client
-            if (commandHubContext == null)
+            //Edit description
+            string description = viewmodel.RackNumbers.ToString();
+            var totalDes = new StringBuilder();
+            if (!viewmodel.Description.IsNullOrWhiteSpace())
             {
-                commandHubContext = GlobalHost.ConnectionManager.GetHubContext<RemoteControllerHub>();
+                //description = description + "\r\n" + viewmodel.Description;
+                totalDes.AppendLine(description);
+                totalDes.AppendLine(viewmodel.Description);
             }
-            commandHubContext.Clients.All
-                .ExecuteCommand(result, notif.TypeOfRequest, notif.Customer, notif.Description, notif.AppointmentTime, notif.RequestStatus);
+            //Add request
+            Request passRequest = new Request
+            {
+                Customer = Constants.Test.CUSTOMER_MANHNH,
+                Description = totalDes.ToString()
+            };
+            string result = RequestBLO.Current.AddRequestRentRacks(passRequest);
 
             //log lai thoi diem thay doi trang thai request
             LogChangedContent requestmodel = new LogChangedContent
@@ -142,10 +184,20 @@ namespace IMS.Controllers
                 RequestCode = result,
                 Object = Constants.Object.OBJECT_REQUEST,
                 ChangedValueOfObject = Constants.StatusCode.REQUEST_WAITING,
-                TypeOfLog = Constants.TypeOfLog.LOG_UPDATE_STATUS_REQUEST,
+                TypeOfLog = Constants.TypeOfLog.LOG_RENT_RACK,
                 LogTime = DateTime.Now
             };
             LogChangedContentBLO.Current.AddLog(requestmodel);
+
+            //Notification
+            var notif = Mapper.Map<RequestRentRackViewModel, NotificationExtendedModel>(viewmodel);
+            notif.TypeOfRequest = Constants.RequestType.RACK_RENT;
+            notif.Customer = Constants.Test.CUSTOMER_MANHNH;
+            notif.RequestStatus = Constants.StatusName.REQUEST_WAITING;
+            notif.RequestCode = result;
+            //dang ky ham cho client
+            NotifRegister(notif);
+
             return RedirectToAction("Index");
         }
 
@@ -216,33 +268,51 @@ namespace IMS.Controllers
             return RedirectToAction("Index");
         }
 
+        //DOING 1
         [HttpPost]
-        public ActionResult RequestReturnIP()
+        public ActionResult RequestReturnIP(RequestReturnIPViewModel viewmodel)
         {
+            var test = viewmodel.ServerIPs;
+            //for (int i = 0; i < test.Count; i++)
+            //{
+            //    var count = i;
+            //    count++;
+            //}
             // lam tuong tu request return rack
             // thay doi bang ServerIP
             // Cap nhat lai trang thai IP o bang IPAddressPool
             //Neu tra IP la default IP thi cap nhat lai bang Server
-            return RedirectToActionPermanent("Index", "Server");
+            return RedirectToAction("Index");
         }
 
-        //[HttpPost]
         public ActionResult FetchIPs(RequestReturnIPViewModel model)
         {
             var list = ServerIPDAO.Current.Query(x => x.ServerCode == model.SelectedServerCode).ToList();
             RequestReturnIPViewModel newmodel = new RequestReturnIPViewModel();
             newmodel.ServerIPs = list;
-            //ServerIPViewModel newmodel = new ServerIPViewModel();
-            //newmodel.ServerIPs = list;
-            //model.ServerIPs = list;
-            //return View("RequestReturnIP", model);
             return PartialView("_ListServerIP", newmodel);
         }
 
+        //DOING
         [HttpPost]
         public ActionResult RequestUpgradeServer()
         {
             return RedirectToActionPermanent("Index", "Server");
+        }
+
+        public void NotifRegister(NotificationExtendedModel model)
+        {
+            if (commandHubContext == null)
+            {
+                commandHubContext = GlobalHost.ConnectionManager.GetHubContext<RemoteControllerHub>();
+            }
+            commandHubContext.Clients.All.ExecuteCommand(
+                model.RequestCode,
+                model.TypeOfRequest,
+                model.Customer,
+                model.Description,
+                model.AppointmentTime,
+                model.RequestStatus);
         }
 
         public ActionResult Notification()

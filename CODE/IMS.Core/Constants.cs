@@ -43,6 +43,7 @@ namespace IMS.Core
             public const string RACK_AVAILABLE = "STATUS19";
             public const string RACK_RENTED = "STATUS20";
             public const string RACK_USING = "STATUS21";
+            public const string RACK_RETURNING = "STATUS25";
 
             public const string SERVERATTRIBUTE_OLD = "STATUS23";
             public const string SERVERATTRIBUTE_UPDATING = "STATUS22";
@@ -133,6 +134,7 @@ namespace IMS.Core
             public const string OBJECT_ACCOUNT = "Account";
             public const string OBJECT_NOTE = "Note";
             public const string OBJECT_ASSIGNMENT = "StaffAssignment";
+            public const string OBJECT_RACK = "Rack";
         }
 
         public class TypeOfLog
@@ -149,6 +151,10 @@ namespace IMS.Core
             public const string LOG_UPDATE_VALUE_SERVERLOCATION = "UVALSERLOC";
             // luu servercode cua request duoc add vao
             public const string LOG_ADD_SERVER = "ASERVER";
+            //Customer rents rack
+            public const string LOG_RENT_RACK = "RENTRACK";
+            //Customer returns rack
+            public const string LOG_RETURN_RACK = "RETURNRACK";
         }
 
         public class BandWidth

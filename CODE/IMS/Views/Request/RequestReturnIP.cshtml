@@ -7,42 +7,48 @@
 <script src="~/scripts/jquery-1.10.2.js"></script>
 <script src="~/scripts/jquery.unobtrusive-ajax.js"></script>
 
-<div>
-    <h4>Request</h4>
-    <hr/>
-    @using (Ajax.BeginForm("FetchIPs", "Request",
-        new AjaxOptions
-        {
-            HttpMethod = "Get",
-            UpdateTargetId = "div1",
-            InsertionMode = InsertionMode.Replace,
-        }, new { id = "myForm" }))
-    {
+@*@using (Html.BeginForm("Index", "Request", FormMethod.Get))
+{
+    <input name="RequestTypeCode" type="hidden" value="RT010" />
+    @Html.DropDownListFor(m => m.SelectedServerCode, Model.Servers)
+    <button type="submit">Show Details</button>
+}*@
 
-        @Html.DropDownListFor(m => m.SelectedServerCode, Model.Servers)
-        <input type="submit" value="Show Details"/>
-    }
-</div>
+
+@using (Html.BeginForm("RequestReturnIP", "Request", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <h3>Request return IP</h3>
+        <div>
+            @using (Ajax.BeginForm("FetchIPs", "Request",
+            new AjaxOptions
+            {
+                HttpMethod = "Get",
+                UpdateTargetId = "div1",
+                InsertionMode = InsertionMode.Replace,
+            }, new { id = "myForm" }))
+            //Bo ajax begin form, dung ajax post
+            {
+
+                @Html.DropDownListFor(m => m.SelectedServerCode, Model.Servers)
+                <button name="Action" type="submit" value="detail">Show Details</button>
+            }
+            <div id="div1"></div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br />
+        <button name="Action" type="submit" value="send">Send Requests</button>
+}
+
 <script type="text/javascript">
-    //function IfSuccess(data) {
-    //    $('#div1').html(data);
-    //}
-
-    //$(document).ready(function () {
-    //    $("#myList").change(function () {
-    //        //$('form#myForm').submit();
-    //        this.form.submit();
-    //    });
-    //});
+    //sua lai script ajax
     function AdditionalsChanged() {
         $("#myForm").submit();
     }
 </script>
-<br />
-@*@Html.Partial("_ListServerIP")*@
-@*@if (Model.ServerIPs != null)
-{
-    @Html.Partial("_ListServerIP")
-}*@
-<div id="div1"></div>
-

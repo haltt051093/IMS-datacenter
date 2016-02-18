@@ -25,9 +25,9 @@ namespace IMS.App_Start
                 config.CreateMap<IPChangeStatusViewModel, IPAddressPool>();
                 //Notification
                 config.CreateMap<RequestRentRackViewModel, NotificationExtendedModel>();
+                config.CreateMap<RequestReturnRackViewModel, NotificationExtendedModel>();
                 //request add server
                 config.CreateMap<RequestAddServerViewModel,Server>();
-                
             });
         }
     }
