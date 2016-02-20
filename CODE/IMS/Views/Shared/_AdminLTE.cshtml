@@ -36,7 +36,7 @@
 <body class="skin-blue">
     <!-- header logo: style can be found in header.less -->
     <header class="header">
-        <a href="Schedule/Index2.cshtml" class="logo">
+        <a href="@Url.Action("Index2", "Schedule")" class="logo">
             <!-- Add the class icon to your logo image or logo icon to add the margining -->
             <img src="@Url.Content("~/img/logoIMS.png")" alt="logo image" class="offline" width="75px" />
         </a>
@@ -197,23 +197,18 @@
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu">
                     <li class="active">
-                        <a href="Server/Index2.cshtml">
+                        <a href="@Url.Action("Index2", "Server")">
                             <i class="fa fa-table"></i> <span>Server</span>
                         </a>
                     </li>
                     <li class="active">
-                        <a href="LocationPage.html">
+                        <a href="@Url.Action("Index2", "Location")">
                             <i class="fa fa-table"></i> <span>Location</span>
                         </a>
                     </li>
                     <li class="active">
-                        <a href="IPAddressPage.html">
+                        <a href="@Url.Action("Index2", "IP")">
                             <i class="fa fa-table"></i> <span>IP Address</span>
-                        </a>
-                    </li>
-                    <li class="active">
-                        <a href="Schedule/Index2.cshtml">
-                            <i class="fa fa-calendar"></i> <span>Schedule</span>
                         </a>
                     </li>
                     <li class="treeview">
