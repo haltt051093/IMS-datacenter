@@ -1,8 +1,16 @@
-﻿@model IMS.Models.ScheduleIndexViewModel
-
+﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "SchedulePage";
 }
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script>
+
+        $(document).ready(function(){
+            $("#addnote").click(function(){
+                $("#paneladdnote").slideToggle("slow");
+            });
+        });
+</script>
 <section class="content-header">
     <h1>
         Schedule

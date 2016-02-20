@@ -13,6 +13,10 @@ namespace IMS.Controllers
 {
     public class LocationController : Controller
     {
+        public ActionResult Index2()
+        {
+            return View();
+        }
         // GET: Location
         public ActionResult Index(string StatusSearch, string RackSearch)
         {

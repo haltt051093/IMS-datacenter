@@ -873,6 +873,7 @@
     <Content Include="scripts\plugins\slimScroll\slimScroll.jquery.json" />
     <Content Include="Views\Schedule\Index2.cshtml" />
     <Content Include="Views\Server\Index2.cshtml" />
+    <Content Include="Views\Location\Index2.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
