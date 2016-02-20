@@ -14,6 +14,10 @@ namespace IMS.Controllers
 {
     public class IPController : Controller
     {
+        public ActionResult Index2()
+        {
+            return View();
+        }
         // GET: IP
         public ActionResult Index(string GatewaySearch, string StatusSearch)
         {

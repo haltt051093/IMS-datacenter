@@ -874,6 +874,7 @@
     <Content Include="Views\Schedule\Index2.cshtml" />
     <Content Include="Views\Server\Index2.cshtml" />
     <Content Include="Views\Location\Index2.cshtml" />
+    <Content Include="Views\IP\Index2.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

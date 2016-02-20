@@ -1,19 +1,19 @@
 ﻿
 @{
-    ViewBag.Title = "LocationPage";
+    ViewBag.Title = "IPAddressPage";
 }
 
 <section class="content-header">
     <h1>
-        List of Location
+        List of IP Address
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Location</li>
+        <li class="active">IP Address</li>
     </ol>
 </section>
-<section class="content">
-    <a class="btn btn-primary pull-left" data-toggle="modal" data-target="#addlocation-modal"><i class="fa fa-plus"></i> Add new rack</a>
+<section class="content" style="height: 60px">
+    <a class="btn btn-primary pull-left" data-toggle="modal" data-target="#addip-modal"><i class="fa fa-plus"></i> Add new IP Address</a>
 </section>
 <!-- Main content -->
 <section class="content">
@@ -22,11 +22,13 @@
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>LocationCode</th>
-                        <th>RackName</th>
-                        <th>RackUnit</th>
+                        <th>IPAddress</th>
+                        <th>Gateway</th>
+                        <th>Subnetmask</th>
+                        <th>RegisteredDate</th>
                         <th>Status</th>
-                        <th>ServerCode</th>
+                        <th>IsDefaultIP</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,7 +40,9 @@
                         </td>
                         <td>Win 95+</td>
                         <td> 4</td>
-                        <td><a href="#">X</a></td>
+                        <td>Used</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
                     </tr>
                     <tr>
                         <td> Trident</td>
@@ -48,7 +52,9 @@
                         </td>
                         <td>Win 95+</td>
                         <td>5</td>
-                        <td><a href="#">C</a></td>
+                        <td>Blocked</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
                     </tr>
                     <tr>
                         <td>Trident</td>
@@ -58,7 +64,9 @@
                         </td>
                         <td>Win 95+</td>
                         <td>5.5</td>
-                        <td><a href="#">A</a></td>
+                        <td>Used</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
                     </tr>
                     <tr>
                         <td> Trident</td>
@@ -68,7 +76,9 @@
                         </td>
                         <td>Win 98+</td>
                         <td>6</td>
-                        <td>A</td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -76,7 +86,9 @@
                         <td>Internet Explorer 7</td>
                         <td>Win XP SP2+</td>
                         <td>7</td>
-                        <td><a href="#">A</a></td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -84,7 +96,9 @@
                         <td>AOL browser (AOL desktop)</td>
                         <td>Win XP</td>
                         <td>6</td>
-                        <td><a href="#">A</a></td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -92,7 +106,9 @@
                         <td>Firefox 1.0</td>
                         <td>Win 98+ / OSX.2+</td>
                         <td>1.7</td>
-                        <td><a href="#">A</a></td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -100,15 +116,18 @@
                         <td>Firefox 1.5</td>
                         <td>Win 98+ / OSX.2+</td>
                         <td>1.8</td>
-                        <td><a href="#">A</a></td>
-
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
                     </tr>
                     <tr>
                         <td>Gecko</td>
                         <td>Firefox 2.0</td>
                         <td>Win 98+ / OSX.2+</td>
                         <td>1.8</td>
-                        <td><a href="#">A</a></td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -116,15 +135,18 @@
                         <td>Firefox 3.0</td>
                         <td>Win 2k+ / OSX.3+</td>
                         <td>1.9</td>
-                        <td><a href="#">A</a></td>
-
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
                     </tr>
                     <tr>
                         <td>Gecko</td>
                         <td>Camino 1.0</td>
                         <td>OSX.2+</td>
                         <td>1.8</td>
-                        <td><a href="#">A</a></td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -132,7 +154,9 @@
                         <td>Camino 1.5</td>
                         <td>OSX.3+</td>
                         <td>1.8</td>
-                        <td><a href="#">A</a></td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -140,7 +164,9 @@
                         <td>Netscape 7.2</td>
                         <td>Win 95+ / Mac OS 8.6-9.2</td>
                         <td>1.7</td>
-                        <td><a href="#">A</a></td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -148,7 +174,9 @@
                         <td>Netscape Browser 8</td>
                         <td>Win 98SE+</td>
                         <td>1.7</td>
-                        <td><a href="#">A</a></td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -156,7 +184,9 @@
                         <td>Netscape Navigator 9</td>
                         <td>Win 98+ / OSX.2+</td>
                         <td>1.8</td>
-                        <td><a href="#">A</a></td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -164,7 +194,9 @@
                         <td>Mozilla 1.0</td>
                         <td>Win 95+ / OSX.1+</td>
                         <td>1</td>
-                        <td><a href="#">A</a></td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -172,7 +204,9 @@
                         <td>Mozilla 1.1</td>
                         <td>Win 95+ / OSX.1+</td>
                         <td>1.1</td>
-                        <td><a href="#">A</a></td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -180,7 +214,9 @@
                         <td>Mozilla 1.2</td>
                         <td>Win 95+ / OSX.1+</td>
                         <td>1.2</td>
-                        <td><a href="#">A</a></td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -188,7 +224,9 @@
                         <td>Mozilla 1.3</td>
                         <td>Win 95+ / OSX.1+</td>
                         <td>1.3</td>
-                        <td><a href="#">A</a></td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -196,7 +234,9 @@
                         <td>Mozilla 1.4</td>
                         <td>Win 95+ / OSX.1+</td>
                         <td>1.4</td>
-                        <td><a href="#">A</a></td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -204,7 +244,9 @@
                         <td>Mozilla 1.5</td>
                         <td>Win 95+ / OSX.1+</td>
                         <td>1.5</td>
-                        <td><a href="#">A</a></td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -212,7 +254,9 @@
                         <td>Mozilla 1.6</td>
                         <td>Win 95+ / OSX.1+</td>
                         <td>1.6</td>
-                        <td><a href="#">A</a></td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -220,7 +264,9 @@
                         <td>Mozilla 1.7</td>
                         <td>Win 98+ / OSX.1+</td>
                         <td>1.7</td>
-                        <td>A</td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -228,7 +274,9 @@
                         <td>Mozilla 1.8</td>
                         <td>Win 98+ / OSX.1+</td>
                         <td>1.8</td>
-                        <td>A</td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -236,7 +284,9 @@
                         <td>Seamonkey 1.1</td>
                         <td>Win 98+ / OSX.2+</td>
                         <td>1.8</td>
-                        <td>A</td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -244,7 +294,9 @@
                         <td>Epiphany 2.20</td>
                         <td>Gnome</td>
                         <td>1.8</td>
-                        <td>A</td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -252,7 +304,9 @@
                         <td>Safari 1.2</td>
                         <td>OSX.3</td>
                         <td>125.5</td>
-                        <td>A</td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -260,7 +314,9 @@
                         <td>Safari 1.3</td>
                         <td>OSX.3</td>
                         <td>312.8</td>
-                        <td>A</td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -268,7 +324,9 @@
                         <td>Safari 2.0</td>
                         <td>OSX.4+</td>
                         <td>419.3</td>
-                        <td>A</td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -276,7 +334,9 @@
                         <td>Safari 3.0</td>
                         <td>OSX.4+</td>
                         <td>522.1</td>
-                        <td>A</td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -284,7 +344,9 @@
                         <td>OmniWeb 5.5</td>
                         <td>OSX.4+</td>
                         <td>420</td>
-                        <td>A</td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -292,7 +354,9 @@
                         <td>iPod Touch / iPhone</td>
                         <td>iPod</td>
                         <td>420.1</td>
-                        <td>A</td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -300,7 +364,9 @@
                         <td>S60</td>
                         <td>S60</td>
                         <td>413</td>
-                        <td>A</td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -308,7 +374,9 @@
                         <td>Opera 7.0</td>
                         <td>Win 95+ / OSX.1+</td>
                         <td>-</td>
-                        <td>A</td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -316,7 +384,9 @@
                         <td>Opera 7.5</td>
                         <td>Win 95+ / OSX.2+</td>
                         <td>-</td>
-                        <td>A</td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -324,7 +394,9 @@
                         <td>Opera 8.0</td>
                         <td>Win 95+ / OSX.2+</td>
                         <td>-</td>
-                        <td>A</td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -332,7 +404,9 @@
                         <td>Opera 8.5</td>
                         <td>Win 95+ / OSX.2+</td>
                         <td>-</td>
-                        <td>A</td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -340,7 +414,9 @@
                         <td>Opera 9.0</td>
                         <td>Win 95+ / OSX.3+</td>
                         <td>-</td>
-                        <td>A</td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -348,7 +424,9 @@
                         <td>Opera 9.2</td>
                         <td>Win 88+ / OSX.3+</td>
                         <td>-</td>
-                        <td>A</td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -356,7 +434,9 @@
                         <td>Opera 9.5</td>
                         <td>Win 88+ / OSX.3+</td>
                         <td>-</td>
-                        <td>A</td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -364,7 +444,9 @@
                         <td>Opera for Wii</td>
                         <td>Wii</td>
                         <td>-</td>
-                        <td>A</td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
                     <tr>
@@ -372,25 +454,31 @@
                         <td>Nokia N800</td>
                         <td>N800</td>
                         <td>-</td>
-                        <td>A</td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
                     </tr>
                     <tr>
                         <td>Presto</td>
                         <td>Nintendo DS browser</td>
                         <td>Nintendo DS</td>
                         <td>8.5</td>
-                        <td>C/A<sup>1</sup></td>
+                        <td>X</td>
+                        <td></td>
+                        <td><a href="#">Change Status</a></td>
 
                     </tr>
 
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th>LocationCode</th>
-                        <th>RackName</th>
-                        <th>RackUnit</th>
+                        <th>IPAddress</th>
+                        <th>Gateway</th>
+                        <th>Subnetmask</th>
+                        <th>RegisteredDate</th>
                         <th>Status</th>
-                        <th>ServerCode</th>
+                        <th>IsDefaultIP</th>
+                        <th></th>
 
                     </tr>
                 </tfoot>
@@ -400,25 +488,31 @@
 
 </section><!-- /.content -->
 
-<!-- ADD LOCATION MODAL -->
-<div class="modal fade" id="addlocation-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- ADD IP MODAL -->
+<div class="modal fade" id="addip-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"><i class="fa fa-plus"></i> Add new rack</h4>
+                <h4 class="modal-title"><i class="fa fa-plus"></i> Add new IP Address Range</h4>
             </div>
             <form action="#" method="post">
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Rack Name</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Rack Name">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Power</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Power of rack">
-                    </div>
 
+
+                    <label for="exampleInputEmail1">IP Address Range/ BitCount</label>
+                    <div class="form-inline">
+                        <div class="form-group">
+
+                            <input type="text" class="form-control" id="exampleInputName2" placeholder="IP Address Range">
+                        </div>
+                        <div class="form-group">
+                            <h3>/</h3>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="exampleInputEmail2" placeholder="BitCount">
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer clearfix">
 
@@ -430,7 +524,8 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-        <!-- page script -->
+
+       <!-- page script -->
 <script type="text/javascript">
             $(function() {
                 $("#example1").dataTable();
