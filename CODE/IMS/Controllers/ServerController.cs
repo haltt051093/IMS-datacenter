@@ -12,6 +12,10 @@ namespace IMS.Controllers
     public class ServerController : Controller
     {
         // GET: Server
+        public ActionResult Index2()
+        {
+            return View();
+        }
         public ActionResult Index(string statusSearch, string makerSearch, string rackSearch, string searchString)
         {
             var server = ServerBLO.Current.GetAllServer();

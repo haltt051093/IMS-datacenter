@@ -18,5 +18,10 @@ namespace IMS.Controllers
             data.Schedules = schedule;
             return View(data);
         }
+
+        public ActionResult Index2()
+        {
+            return View();
+        }
     }
 }
