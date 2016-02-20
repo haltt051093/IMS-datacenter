@@ -1,16 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using IMS.Data.Models;
 
 namespace IMS.Data.ViewModels
 {
     [NotMapped]
-    public class NotificationExtendedModel
+    public class NotificationExtendedModel : Request
     {
-        public string RequestCode { get; set; }
-        public string TypeOfRequest { get; set; }
-        public string Customer { get; set; }
-        public string AppointmentTime { get; set; }
-        public string RequestStatus { get; set; }
-        public string Description { get; set; }
-
+        public string RequestTypeName { get; set; }
+        public string StatusName { get; set; }
     }
 }

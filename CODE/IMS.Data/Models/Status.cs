@@ -13,9 +13,8 @@ namespace IMS.Data.Models
         [StringLength(50)]
         public string StatusCode { get; set; }
 
-        [Column("Status")]
         [StringLength(50)]
-        public string Status1 { get; set; }
+        public string StatusName { get; set; }
 
         [StringLength(50)]
         public string Object { get; set; }

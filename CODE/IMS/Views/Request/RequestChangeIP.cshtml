@@ -8,7 +8,7 @@
 <script src="~/scripts/jquery.unobtrusive-ajax.js"></script>
 
 
-@using (Html.BeginForm("RequestReturnIp", "Request", FormMethod.Post))
+@using (Html.BeginForm("RequestChangeIp", "Request", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     <h3>Request return IP</h3>
@@ -76,11 +76,11 @@
             $("[id*=MyTable] input:checked").each(function () {
                 selectedValues.push($(this).val());
             });
-            if (selectedValues.length > 0) {
-                alert("Selected Value(s): " + selectedValues);
-            } else {
-                alert("No item has been selected.");
-            }
+            //if (selectedValues.length > 0) {
+            //    alert("Selected Value(s): " + selectedValues);
+            //} else {
+            //    alert("No item has been selected.");
+            //}
             $('#ips').val(selectedValues);
         });
     });

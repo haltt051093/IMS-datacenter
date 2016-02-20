@@ -1,46 +1,34 @@
-﻿@{
-    Layout = null;
-}
-@model NotificationViewModel
+﻿@model NotificationViewModel
 
-<!DOCTYPE html>
+<script src="@Url.Content("~/Scripts/jquery-1.10.2.js")"></script>
+<script src="@Url.Content("~/Scripts/jquery.signalR-2.2.0.js")"></script>
+<script src="@Url.Content("~/signalr/hubs")"></script>
+<script>
+    $(document).ready(function () {
+        var table = document.getElementById("myTable");
+        var row = table.insertRow(1);
+        var cellRequestCode = row.insertCell(0);
+        var cellRequestType = row.insertCell(1);
+        var cellCustomer = row.insertCell(2);
+        var cellDescription = row.insertCell(3);
+        var cellAppointmentTime = row.insertCell(4);
+        var cellRequestStatus = row.insertCell(5);
+        //cell1.innerHTML = "NEW CELL1";
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Notification</title>
-    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <script src="@Url.Content("~/Scripts/jquery-1.10.2.js")"></script>
-    <script src="@Url.Content("~/Scripts/jquery.signalR-2.2.0.js")"></script>
-    <script src="@Url.Content("~/signalr/hubs")"></script>
-    <script>
-        $(document).ready(function () {
-            var table = document.getElementById("myTable");
-            var row = table.insertRow(1);
-            var cellRequestCode = row.insertCell(0);
-            var cellRequestType = row.insertCell(1);
-            var cellCustomer = row.insertCell(2);
-            var cellDescription = row.insertCell(3);
-            var cellAppointmentTime = row.insertCell(4);
-            var cellRequestStatus = row.insertCell(5);
-            //cell1.innerHTML = "NEW CELL1";
+        var commandHub = $.connection.remoteControllerHub;
+        commandHub.client.executeCommand = function (requestCode, typeOfRequest, customer, description, appointmentTime, requestStatus) {
+            //$('#result').append(requestCode + ' | ' + typeOfRequest + ' | ' + customer + ' | ' + description + ' | ' + appointmentTime + ' | ' + requestStatus + '<br/>');
+            cellRequestCode.innerHTML = requestCode;
+            cellRequestType.innerHTML = typeOfRequest;
+            cellCustomer.innerHTML = customer;
+            cellDescription.innerHTML = description;
+            cellAppointmentTime.innerHTML = appointmentTime;
+            cellRequestStatus.innerHTML = requestStatus;
+        };
+        $.connection.hub.start();
+    });
 
-            var commandHub = $.connection.remoteControllerHub;
-            commandHub.client.executeCommand = function (requestCode, typeOfRequest, customer, description, appointmentTime, requestStatus) {
-                //$('#result').append(requestCode + ' | ' + typeOfRequest + ' | ' + customer + ' | ' + description + ' | ' + appointmentTime + ' | ' + requestStatus + '<br/>');
-                cellRequestCode.innerHTML = requestCode;
-                cellRequestType.innerHTML = typeOfRequest;
-                cellCustomer.innerHTML = customer;
-                cellDescription.innerHTML = description;
-                cellAppointmentTime.innerHTML = appointmentTime;
-                cellRequestStatus.innerHTML = requestStatus;
-            };
-            $.connection.hub.start();
-        });
-
-    </script>
-</head>
+</script>
 <body>
     <table id="myTable" class="table">
         <tr>
@@ -52,14 +40,14 @@
             <th>Request Status</th>
         </tr>
 
-        @foreach (var item in Model.Notiifcations)
+        @foreach (var item in Model.NotificationList)
         {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.RequestCode)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TypeOfRequest)
+                    @Html.DisplayFor(modelItem => item.RequestTypeName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Customer)
@@ -71,11 +59,10 @@
                     @Html.DisplayFor(modelItem => item.AppointmentTime)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.RequestStatus)
+                    @Html.DisplayFor(modelItem => item.StatusName)
                 </td>
             </tr>
         }
     </table>
     <br>
 </body>
-</html>

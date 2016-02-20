@@ -55,7 +55,7 @@ namespace IMS.Data.Repository
                         {
                             RackCode = subl.RackCode,
                             RackUnit = subl.RackUnit,
-                            Status = subst.Status1,
+                            Status = subst.StatusName,
                             CustomerName = suba.Fullname,
                             Id = s.Id,
                             Maker = s.Maker,
@@ -92,7 +92,7 @@ namespace IMS.Data.Repository
                         {
                             RackCode = subl.RackCode,
                             RackUnit = subl.RackUnit,
-                            Status = subst.Status1,
+                            Status = subst.StatusName,
                             CustomerName = suba.Fullname,
                             Id = s.Id,
                             Maker = s.Maker,

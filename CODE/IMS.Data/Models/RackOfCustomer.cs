@@ -18,7 +18,7 @@ namespace IMS.Data.Models
         [StringLength(50)]
         public string Customer { get; set; }
 
-        public DateTime? RegisteredDate { get; set; }
+        public DateTime? RentedDate { get; set; }
 
         public bool IsHired { get; set; }
     }

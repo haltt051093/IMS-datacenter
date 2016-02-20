@@ -18,5 +18,7 @@ namespace IMS.Data.Models
         [Required]
         [StringLength(50)]
         public string CurrentIP { get; set; }
+
+        public bool IsReturned { get; set; }
     }
 }

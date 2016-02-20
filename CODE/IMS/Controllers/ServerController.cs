@@ -22,7 +22,7 @@ namespace IMS.Controllers
             var data = new ServerIndexViewModel();
 
             //list status
-            var currentstatus = StatusBLO.Current.GetAll().Where(x => x.Object.Trim() == "Request").Select(x => x.Status1);
+            var currentstatus = StatusBLO.Current.GetAll().Where(x => x.Object.Trim() == "Request").Select(x => x.StatusName);
             ViewBag.statusSearch = new SelectList(currentstatus);
             //list maker
             var makers = new List<string>();
@@ -50,7 +50,7 @@ namespace IMS.Controllers
             }
             if (!String.IsNullOrEmpty(statusSearch))
             {
-                var searchedStatus = StatusDAO.Current.Query(x => x.Status1 == statusSearch)
+                var searchedStatus = StatusDAO.Current.Query(x => x.StatusName == statusSearch)
                     .Select(x => x.StatusCode).FirstOrDefault();
                 server = server.Where(st => st.Status.Trim() == searchedStatus).ToList();
             }
@@ -74,8 +74,5 @@ namespace IMS.Controllers
             data.CurrentIPs = servercurrentips;
             return View(data);
         }
-
-
-
     }
 }
