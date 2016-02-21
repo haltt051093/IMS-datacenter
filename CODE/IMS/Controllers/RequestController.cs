@@ -38,6 +38,11 @@ namespace IMS.Controllers
         {
             return View();
         }
+
+        public ActionResult AddServerInfo()
+        {
+            return View();
+        }
        
         private static IHubContext commandHubContext;
 

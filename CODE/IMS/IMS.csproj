@@ -802,13 +802,13 @@
     <Compile Include="App_Start\MappingConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CoreController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IPController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\RequestController.cs" />
     <Compile Include="Controllers\ScheduleController.cs" />
     <Compile Include="Controllers\ServerController.cs" />
-    <Compile Include="Controllers\ShiftController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -903,6 +903,7 @@
     <Content Include="Views\Account\Index2.cshtml" />
     <Content Include="Views\Account\Login2.cshtml" />
     <Content Include="Views\Request\RequestAddServerInfo2.cshtml" />
+    <Content Include="Views\Request\AddServerInfo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
