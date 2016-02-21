@@ -8,9 +8,9 @@ namespace IMS
 {
     public class AppConfig
     {
-        public void Configuration(IAppBuilder app)
+        public void Configuration(IAppBuilder builder)
         {
-            app.MapSignalR("/signalr", new HubConfiguration());
+            builder.MapSignalR("/signalr", new HubConfiguration());
         }
     }
 }
