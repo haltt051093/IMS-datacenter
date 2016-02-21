@@ -111,14 +111,17 @@ namespace IMS.Controllers
         }
         public ActionResult CreateLocation()
         {
+            //check group hien tai co duoc quyen them rack ko 
+            //redirect lai trang view 
+            IsAuthorized();
             return View();
         }
         [HttpPost]
         public ActionResult CreateLocation(RackCreateViewModel rcvm)
         {
             //check group hien tai co duoc quyen them rack ko 
-            bool check = IsAuthorized();
-            if (check)
+            //ViewBag.IsForbidden = !IsAuthorized();
+            if (IsAuthorized())
             {
                 if (ModelState.IsValid)
                 {
