@@ -876,6 +876,12 @@
     <Content Include="Views\IP\Index2.cshtml" />
     <Content Include="Views\Request\RequestAssignIP.cshtml" />
     <Content Include="Views\Request\RequestChangeIP.cshtml" />
+    <Content Include="Views\Request\ProcessRequestAddServer.cshtml" />
+    <Content Include="Views\Request\ProcessRequestRentRack.cshtml" />
+    <Content Include="Views\Request\ProcessRequestAssignIP.cshtml" />
+    <Content Include="Views\Request\ProcessRequestChangeIP.cshtml" />
+    <Content Include="Views\Request\ProcessRequestReturnIP.cshtml" />
+    <Content Include="Views\Request\ProcessRequestReturnRack.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

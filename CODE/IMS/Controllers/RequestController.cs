@@ -490,8 +490,62 @@ namespace IMS.Controllers
         {
             NotificationViewModel viewmodel = new NotificationViewModel();
             viewmodel.NotificationList = RequestBLO.Current.ListAllNotification();
-            //doing
             return View("Notification", viewmodel);
+        }
+
+        [HttpGet]
+        public ActionResult RequestDetais(string rType, string rCode)
+        {
+            //DOING
+            if (rType.Equals(Constants.RequestTypeCode.ADD_SERVER))
+            {
+                return View("ProcessRequestAddServer");
+            }
+            if (rType.Equals(Constants.RequestTypeCode.ASSIGN_IP))
+            {
+                return View("ProcessRequestAssignIP");
+            }
+            if (rType.Equals(Constants.RequestTypeCode.CHANGE_IP))
+            {
+                return View("ProcessRequestChangeIP");
+            }
+            //DOING
+            if (rType.Equals(Constants.RequestTypeCode.RETURN_IP))
+            {
+                return View("ProcessRequestReturnIP");
+            }
+            //DOING
+            if (rType.Equals(Constants.RequestTypeCode.RENT_RACK))
+            {
+                RequestRentRackViewModel viewmodel = new RequestRentRackViewModel();
+                var request = RequestDAO.Current.Query(x => x.RequestCode == rCode).FirstOrDefault();
+                if (request != null)
+                {
+                    viewmodel.RequestRentRack = request;
+                    // trang view cho hien thi: Customer, request time, rack number, description --> yeu cau cua khach hang
+                    // Phan thuc hien cua staff --> dropdownlist nhung rack co san trong he thong --> tim cach hien thi cho dep --> select so luong rack phu hop
+                }
+
+                //Chuyen IsViewed = true
+                return View("ProcessRequestRentRack");
+            }
+            if (rType.Equals(Constants.RequestTypeCode.RETURN_RACK))
+            {
+                return View("ProcessRequestReturnRack");
+            }
+            return RedirectToAction("ListNotifications");
+        }
+
+        [HttpPost]
+        public ActionResult ProcessRequestAddServer()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ProcessRequestRentRack()
+        {
+            return View();
         }
     }
 }

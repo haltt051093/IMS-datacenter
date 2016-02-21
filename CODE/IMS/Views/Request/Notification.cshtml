@@ -44,14 +44,14 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.RequestCode)
+                    @Html.ActionLink(item.RequestCode, "RequestDetais", "Request", new { rType = item.RequestType, rCode = item.RequestCode }, null)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.RequestTypeName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Customer)
-                </td>
+                </td>new
                 <td>
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>

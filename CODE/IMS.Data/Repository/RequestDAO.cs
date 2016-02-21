@@ -90,7 +90,9 @@ namespace IMS.Data.Repository
                             Customer = r.Customer,
                             AppointmentTime = r.AppointmentTime,
                             Description = r.Description,
-                            StatusName = subst.StatusName
+                            StatusName = subst.StatusName,
+                            RequestType = r.RequestType,
+                            StatusCode = subst.StatusCode
                         };
             return query.ToList();
         }
