@@ -53,101 +53,150 @@
             <div class="navbar-right">
                 <ul class="nav navbar-nav">
                     <!-- Messages: style can be found in dropdown.less-->
-                    <li class="dropdown notifications-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-warning"></i>
-                            <span class="label label-warning">10</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">You have 10 notifications</li>
-                            <li>
-                                <!-- inner menu: contains the actual data -->
-                                <ul class="menu">
-                                    <li>
-                                        <a href="#">
-                                            <i class="ion ion-ios7-people info"></i> Request add server
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-warning danger"></i> Request change IP
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-users warning"></i> Request Return IP
-                                        </a>
-                                    </li>
+                    
+                    @if (ViewBag.Role=="Shift Head")
+                    {
+                        <li class="dropdown notifications-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-warning"></i>
+                                <span class="label label-warning">10</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">You have 10 notifications</li>
+                                <li>
+                                    <!-- inner menu: contains the actual data -->
+                                    <ul class="menu">
+                                        <li>
+                                            <a href="#">
+                                                <i class="ion ion-ios7-people info"></i> Request add server
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-warning danger"></i> Request change IP
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-users warning"></i> Request Return IP
+                                            </a>
+                                        </li>
 
-                                    <li>
-                                        <a href="#">
-                                            <i class="ion ion-ios7-cart success"></i> Request upgrade server
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="ion ion-ios7-person danger"></i> Request assign IP
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="footer"><a href="#">View all</a></li>
-                        </ul>
-                    </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="ion ion-ios7-cart success"></i> Request upgrade server
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="ion ion-ios7-person danger"></i> Request assign IP
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="footer"><a href="#">View all</a></li>
+                            </ul>
+                        </li>
                     <!-- Tasks: style can be found in dropdown.less -->
-                    <li class="dropdown tasks-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-tasks"></i>
-                            <span class="label label-danger">9</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">You have 5 tasks</li>
-                            <li>
-                                <!-- inner menu: contains the actual data -->
-                                <ul class="menu">
-                                    <li>
-                                        <!-- Task item -->
-                                        <a href="#">
-                                            <h3>
-                                                Request add server
-                                                <small class="pull-right">Pending</small>
-                                            </h3>
-                                        </a>
-                                    </li><!-- end task item -->
-                                    <li style="color: #d9534f">
-                                        <!-- Task item -->
-                                        <a href="#">
-                                            <h3 style="color: #d9534f">
-                                                Request Assign IP Address
-                                                <small class="pull-right">Waiting</small>
-                                            </h3>
-                                        </a>
-                                    </li><!-- end task item -->
-                                    <li>
-                                        <!-- Task item -->
-                                        <a href="#">
-                                            <h3>
-                                                Request upgrade server
-                                                <small class="pull-right">Pending</small>
-                                            </h3>
-                                        </a>
-                                    </li><!-- end task item -->
-                                    <li>
-                                        <!-- Task item -->
-                                        <a href="#">
-                                            <h3 style="color: #d9534f">
-                                                Request Return IP Address
-                                                <small class="pull-right">Waiting</small>
-                                            </h3>
-                                        </a>
-                                    </li><!-- end task item -->
-                                </ul>
-                            </li>
-                            <li class="footer">
-                                <a href="#">View all tasks</a>
-                            </li>
-                        </ul>
-                    </li>
+                        <li class="dropdown tasks-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-tasks"></i>
+                                <span class="label label-danger">9</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">You have 5 tasks</li>
+                                <li>
+                                    <!-- inner menu: contains the actual data -->
+                                    <ul class="menu">
+                                        <li>
+                                            <!-- Task item -->
+                                            <a href="#">
+                                                <h3>
+                                                    Request add server
+                                                    <small class="pull-right">Pending</small>
+                                                </h3>
+                                            </a>
+                                        </li><!-- end task item -->
+                                        <li style="color: #d9534f">
+                                            <!-- Task item -->
+                                            <a href="#">
+                                                <h3 style="color: #d9534f">
+                                                    Request Assign IP Address
+                                                    <small class="pull-right">Waiting</small>
+                                                </h3>
+                                            </a>
+                                        </li><!-- end task item -->
+                                        <li>
+                                            <!-- Task item -->
+                                            <a href="#">
+                                                <h3>
+                                                    Request upgrade server
+                                                    <small class="pull-right">Pending</small>
+                                                </h3>
+                                            </a>
+                                        </li><!-- end task item -->
+                                        <li>
+                                            <!-- Task item -->
+                                            <a href="#">
+                                                <h3 style="color: #d9534f">
+                                                    Request Return IP Address
+                                                    <small class="pull-right">Waiting</small>
+                                                </h3>
+                                            </a>
+                                        </li><!-- end task item -->
+                                    </ul>
+                                </li>
+                                <li class="footer">
+                                    <a href="#">View all tasks</a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                    else if (ViewBag.Role=="Customer")
+                    {
+                        <li class="dropdown notifications-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-warning"></i>
+                                <span class="label label-warning">10</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">You have 10 notifications</li>
+                                <li>
+                                    <!-- inner menu: contains the actual data -->
+                                    <ul class="menu">
+                                        <li>
+                                            <a href="#">
+                                                <i class="ion ion-ios7-people info"></i> Request add server
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-warning danger"></i> Request change IP
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-users warning"></i> Request Return IP
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="#">
+                                                <i class="ion ion-ios7-cart success"></i> Request upgrade server
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="ion ion-ios7-person danger"></i> Request assign IP
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="footer"><a href="#">View all</a></li>
+                            </ul>
+                        </li>
+                    }
+
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -196,41 +245,89 @@
                     </div>
                 </div>
                 <!-- sidebar menu: : style can be found in sidebar.less -->
-                <ul class="sidebar-menu">
-                    <li class="active">
-                        <a href="@Url.Action("Index2", "Server")">
-                            <i class="fa fa-table"></i> <span>Server</span>
-                        </a>
-                    </li>
-                    <li class="active">
-                        <a href="@Url.Action("Index2", "Location")">
-                            <i class="fa fa-table"></i> <span>Location</span>
-                        </a>
-                    </li>
-                    <li class="active">
-                        <a href="@Url.Action("Index2", "IP")">
-                            <i class="fa fa-table"></i> <span>IP Address</span>
-                        </a>
-                    </li>
-                    <li class="active">
-                        <a href="@Url.Action("Index2", "Account")">
-                            <i class="fa fa-table"></i> <span>Account</span>
-                        </a>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-bar-chart-o"></i>
-                            <span>Report</span>
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-angle-double-right"></i> Server Moving </a></li>
-                            <li><a href="#"><i class="fa fa-angle-double-right"></i> Blocked IP Address</a></li>
-                            <li><a href="#"><i class="fa fa-angle-double-right"></i> Free IP Address</a></li>
-                        </ul>
-                    </li>
+                @if (ViewBag.Role == "Shift Head")
+                {
+                    <ul class="sidebar-menu">
+                        <li class="active">
+                            <a href="@Url.Action("Index2", "Server")">
+                                <i class="fa fa-table"></i> <span>Server</span>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="@Url.Action("Index2", "Location")">
+                                <i class="fa fa-table"></i> <span>Location</span>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="@Url.Action("Index2", "IP")">
+                                <i class="fa fa-table"></i> <span>IP Address</span>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="@Url.Action("Index2", "Account")">
+                                <i class="fa fa-table"></i> <span>Account</span>
+                            </a>
+                        </li>
+                        <li class="treeview ">
+                            <a href="#">
+                                <i class="fa fa-bar-chart-o"></i>
+                                <span>Report</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Server Moving </a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Blocked IP Address</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Free IP Address</a></li>
+                            </ul>
+                        </li>
 
-                </ul>
+                    </ul>
+                }
+                else if (ViewBag.Role == "Customer")
+                {
+                    <ul class="sidebar-menu">
+                        <li class="active">
+                            <a href="@Url.Action("Index2", "Server")">
+                                <i class="fa fa-table"></i> <span>Server</span>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="#">
+                                <i class="fa fa-table"></i> <span>Request History</span>
+                            </a>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-bar-chart-o"></i>
+                                <span>Create request</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Add New Server </a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Upgrade Server</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Change IP Address</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Return IP Address</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Assign IP Address</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Add New Rack</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Return Rack</a></li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-bar-chart-o"></i>
+                                <span>Report</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Server Moving </a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Blocked IP Address</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Free IP Address</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                }
+
             </section>
             <!-- /.sidebar -->
         </aside>
