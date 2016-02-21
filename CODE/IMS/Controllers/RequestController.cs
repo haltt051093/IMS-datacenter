@@ -20,6 +20,20 @@ namespace IMS.Controllers
 {
     public class RequestController : Controller
     {
+        public ActionResult RequestAssignIP2()
+        {
+            return View();
+        }
+        public ActionResult RequestAddServer2()
+        {
+            return View();
+        }
+
+        public ActionResult RequestAssignIPInfo2()
+        {
+            return View();
+        }
+
         private static IHubContext commandHubContext;
 
         [HttpGet]
