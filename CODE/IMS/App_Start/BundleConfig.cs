@@ -45,8 +45,7 @@ namespace IMS
                 "~/Scripts/respond.matchmedia.addListener.js"
             ));
             builder.Add(new ScriptBundle(Constants.ScriptBundle.ADMINLTE).Include(
-                "~/Scripts/AdminLTE/app.js",
-                "~/Scripts/AdminLTE/dashboard.js"
+                "~/Scripts/AdminLTE/app.js"
             ));
 
             builder.Add(new StyleBundle(Constants.StyleBundle.BOOTSTRAP).Include(
