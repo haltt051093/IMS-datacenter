@@ -815,6 +815,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AppConfig.cs" />
+    <Compile Include="Models\HomeSidebarViewModel.cs" />
     <Compile Include="Services\Scheduler.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -916,6 +917,7 @@
     <Content Include="Views\Account\Login2.cshtml" />
     <Content Include="Views\Request\RequestAddServerInfo2.cshtml" />
     <Content Include="Views\Request\AddServerInfo.cshtml" />
+    <Content Include="Views\Home\Sidebar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
