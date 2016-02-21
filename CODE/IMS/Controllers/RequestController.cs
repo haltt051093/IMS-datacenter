@@ -38,7 +38,7 @@ namespace IMS.Controllers
         {
             return View();
         }
-
+       
         private static IHubContext commandHubContext;
 
         [HttpGet]
