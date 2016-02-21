@@ -29,6 +29,11 @@ namespace IMS.Controllers
             return View();
         }
 
+        public ActionResult RequestAddServerInfo2()
+        {
+            return View();
+        }
+
         public ActionResult RequestAssignIPInfo2()
         {
             return View();
