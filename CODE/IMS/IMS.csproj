@@ -809,7 +809,7 @@
     <Compile Include="Models\NotificationViewModel.cs" />
     <Compile Include="Models\RackCreateViewModel.cs" />
     <Compile Include="Models\RequestRentRackViewModel.cs" />
-    <Compile Include="Models\RequestReturnIPViewModel.cs" />
+    <Compile Include="Models\RequestIPViewModel.cs" />
     <Compile Include="Models\RequestReturnRackViewModel.cs" />
     <Compile Include="Models\RequestAddServerViewModel.cs" />
     <Compile Include="Models\ScheduleIndexViewModel.cs" />
@@ -854,7 +854,6 @@
     <Content Include="Views\Account\ViewProfile.cshtml" />
     <Content Include="Views\Location\AssignLocation.cshtml" />
     <Content Include="Views\IP\AssignIP.cshtml" />
-    <Content Include="Views\Shared\_ListServerIP.cshtml" />
     <Content Include="Views\IP\ChangeStatus.cshtml" />
     <Content Include="Views\Request\Notification.cshtml" />
     <Content Include="Views\Shared\_AppointmentTime.cshtml" />
@@ -875,6 +874,8 @@
     <Content Include="Views\Server\Index2.cshtml" />
     <Content Include="Views\Location\Index2.cshtml" />
     <Content Include="Views\IP\Index2.cshtml" />
+    <Content Include="Views\Request\RequestAssignIP.cshtml" />
+    <Content Include="Views\Request\RequestChangeIP.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

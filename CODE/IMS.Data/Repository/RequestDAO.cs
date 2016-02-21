@@ -44,50 +44,10 @@ namespace IMS.Data.Repository
             return code;
         }
 
-        public string AddRequestRentRacks(Request passModel)
+        public string AddRequest(Request passModel, string requestType)
         {
             Request request = passModel;
-            request.RequestType = Constants.RequestTypeCode.RENT_RACK;
-            request.RequestCode = GenerateCode();
-            request.RequestedTime = DateTime.Now;
-            request.StatusCode = Constants.StatusCode.REQUEST_WAITING;
-            var existing = GetByKeys(request);
-            if (existing == null)
-            {
-                IMSContext.Current.Set<Request>().Add(request);
-            }
-            else
-            {
-                CopyValues(request, existing);
-            }
-            IMSContext.Current.SaveChanges();
-            return request.RequestCode;
-        }
-
-        public string AddRequestAddServer(Request passModel)
-        {
-            Request request = passModel;
-            request.RequestType = Constants.RequestTypeCode.ADD_SERVER;
-            request.RequestCode = GenerateCode();
-            request.RequestedTime = DateTime.Now;
-            request.StatusCode = Constants.StatusCode.REQUEST_WAITING;
-            var existing = GetByKeys(request);
-            if (existing == null)
-            {
-                IMSContext.Current.Set<Request>().Add(request);
-            }
-            else
-            {
-                CopyValues(request, existing);
-            }
-            IMSContext.Current.SaveChanges();
-            return request.RequestCode;
-        }
-
-        public string AddRequestReturnRack(Request passModel)
-        {
-            Request request = passModel;
-            request.RequestType = Constants.RequestTypeCode.RETURN_RACK;
+            request.RequestType = requestType;
             request.RequestCode = GenerateCode();
             request.RequestedTime = DateTime.Now;
             request.StatusCode = Constants.StatusCode.REQUEST_WAITING;
@@ -113,10 +73,26 @@ namespace IMS.Data.Repository
                             on rt.RequestTypeCode = r.RequestType";
             return RawQuery<ScheduleExtendedModel>(query, new object[] { });
         }
-        //public List<NotificationExtendedModel> ListAllNotification()
-        //{
 
-
-        //}
+        public List<NotificationExtendedModel> ListAllNotification()
+        {
+            var query = from r in Table()
+                        join rt in RequestTypeDAO.Current.Table()
+                            on r.RequestType equals rt.RequestTypeCode into rrt
+                        from subr in rrt.DefaultIfEmpty()
+                        join st in StatusDAO.Current.Table()
+                            on r.StatusCode equals st.StatusCode into stsl
+                        from subst in stsl.DefaultIfEmpty()
+                        select new NotificationExtendedModel
+                        {
+                            RequestCode = r.RequestCode,
+                            RequestTypeName = subr.RequestTypeName,
+                            Customer = r.Customer,
+                            AppointmentTime = r.AppointmentTime,
+                            Description = r.Description,
+                            StatusName = subst.StatusName
+                        };
+            return query.ToList();
+        }
     }
 }

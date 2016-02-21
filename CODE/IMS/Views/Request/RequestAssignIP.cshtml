@@ -1,0 +1,51 @@
+﻿@model RequestIPViewModel
+
+
+@{
+    ViewBag.Title = "RequestReturnIP";
+}
+<script src="~/scripts/jquery-1.10.2.js"></script>
+<script src="~/scripts/jquery.unobtrusive-ajax.js"></script>
+
+
+@using (Html.BeginForm("RequestAssignIp", "Request", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <h3>Request return IP</h3>
+    <div class="form-group">
+        @Html.Label("ServerCode", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.SelectedServerCode, Model.Servers)
+        </div>
+    </div>
+    <div class="form-group">
+        @{
+            List<SelectListItem> myList = new List<SelectListItem>();
+            for (int i = 0; i < 10; i++)
+            {
+                string num = (i + 1).ToString();
+                SelectListItem item = new SelectListItem()
+                {
+                    Value = num,
+                    Text = num
+                };
+                myList.Add(item);
+            }
+        }
+        @Html.Label("Number of Rack(s)", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.IpNumber, myList, htmlAttributes: new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <br />
+    <button name="Action" type="submit" value="send" id="demo">Send Requests</button>
+}
+

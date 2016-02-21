@@ -26,6 +26,8 @@ namespace IMS.App_Start
                 //Notification
                 config.CreateMap<RequestRentRackViewModel, NotificationExtendedModel>();
                 config.CreateMap<RequestReturnRackViewModel, NotificationExtendedModel>();
+                config.CreateMap<RequestAddServerViewModel, NotificationExtendedModel>();
+                config.CreateMap<RequestIPViewModel, NotificationExtendedModel>();
                 //request add server
                 config.CreateMap<RequestAddServerViewModel,Server>();
             });

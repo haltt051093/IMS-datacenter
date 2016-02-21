@@ -155,6 +155,12 @@ namespace IMS.Core
             public const string LOG_RENT_RACK = "RENTRACK";
             //Customer returns rack
             public const string LOG_RETURN_RACK = "RETURNRACK";
+            //Customer returns Ips
+            public const string LOG_RETURN_IP = "RETURNIP";
+            //Customer change Ips
+            public const string LOG_CHANGE_IP = "CHANGEIP";
+            //Assign Ip to server
+            public const string LOG_ASSIGN_IP = "ASSIGNIP";
         }
 
         public class BandWidth

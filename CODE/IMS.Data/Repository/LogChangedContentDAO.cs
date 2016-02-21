@@ -34,6 +34,7 @@ namespace IMS.Data.Repository
         public void AddLog(LogChangedContent viewmodel)
         {
             LogChangedContent log = viewmodel;
+            log.LogTime = DateTime.Now;
             var existing = GetByKeys(log);
             if (existing == null)
             {

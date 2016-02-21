@@ -35,20 +35,11 @@ namespace IMS.Data.Business
             dao = RequestDAO.Current;
         }
 
-        public string AddRequestRentRacks(Request passModel)
+        public string AddRequest(Request passModel, string requestType)
         {
-            return dao.AddRequestRentRacks(passModel);
+            return dao.AddRequest(passModel, requestType);
         }
 
-        public string AddRequestAddServer(Request passModel)
-        {
-            return dao.AddRequestAddServer(passModel);
-        }
-
-        public string AddRequestReturnRack(Request passModel)
-        {
-            return dao.AddRequestReturnRack(passModel);
-        }
         public List<ScheduleExtendedModel> GetScheduleToday()
         {
             var allschedule = dao.GetSchedule();
@@ -61,6 +52,11 @@ namespace IMS.Data.Business
                 }
             }
             return scheduletoday;
+        }
+
+        public List<NotificationExtendedModel> ListAllNotification()
+        {
+            return dao.ListAllNotification();
         }
     }
 }
