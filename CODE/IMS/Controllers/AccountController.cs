@@ -14,6 +14,15 @@ namespace IMS.Controllers
 
     public class AccountController : Controller
     {
+        public ActionResult Index2()
+        {
+            return View();
+        }
+
+        public ActionResult Login2()
+        {
+            return View();
+        }
         [AllowAnonymous]
         public ActionResult Login()
         {
