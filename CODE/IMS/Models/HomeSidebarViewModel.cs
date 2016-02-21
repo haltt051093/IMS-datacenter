@@ -11,6 +11,9 @@ namespace IMS.Models
 
         public HomeSidebarViewModel(string title, string action, string controller)
         {
+            Title = title;
+            Action = action;
+            Controller = controller;
             SubMenu = new List<HomeSidebarViewModel>();
         }
 

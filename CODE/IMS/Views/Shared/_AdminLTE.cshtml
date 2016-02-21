@@ -8,19 +8,17 @@
 
 @Scripts.Render(Constants.ScriptBundle.MODERNIZR)
 @Scripts.Render(Constants.ScriptBundle.MOMENT)
+@Scripts.Render(Constants.ScriptBundle.RESPOND)
 @Scripts.Render(Constants.ScriptBundle.JQUERY)
 @Scripts.Render(Constants.ScriptBundle.BOOTSTRAP)
 @Scripts.Render(Constants.ScriptBundle.BOOTSTRAP_DATETIMEPICKER)
-@Scripts.Render(Constants.ScriptBundle.RESPOND)
 @Scripts.Render(Constants.ScriptBundle.DATATABLE)
 @Scripts.Render(Constants.ScriptBundle.ADMINLTE)
-@Scripts.Render(Constants.ScriptBundle.BOOTSTRAP_DATETIMEPICKER)
 
 @Styles.Render(Constants.StyleBundle.BOOTSTRAP)
 @Styles.Render(Constants.StyleBundle.BOOTSTRAP_DATETIMEPICKER)
 @Styles.Render(Constants.StyleBundle.DATATABLE)
 @Styles.Render(Constants.StyleBundle.ADMINLTE)
-@Styles.Render(Constants.StyleBundle.BOOTSTRAP_DATETIMEPICKER)
 
 </head>
 <body class="skin-blue">
@@ -234,89 +232,7 @@
                     </div>
                 </div>
                 <!-- sidebar menu: : style can be found in sidebar.less -->
-                @if (ViewBag.Role == "Shift Head")
-                {
-                    <ul class="sidebar-menu">
-                        <li class="active">
-                            <a href="@Url.Action("Index2", "Server")">
-                                <i class="fa fa-table"></i> <span>Server</span>
-                            </a>
-                        </li>
-                        <li class="active">
-                            <a href="@Url.Action("Index2", "Location")">
-                                <i class="fa fa-table"></i> <span>Location</span>
-                            </a>
-                        </li>
-                        <li class="active">
-                            <a href="@Url.Action("Index2", "IP")">
-                                <i class="fa fa-table"></i> <span>IP Address</span>
-                            </a>
-                        </li>
-                        <li class="active">
-                            <a href="@Url.Action("Index2", "Account")">
-                                <i class="fa fa-table"></i> <span>Account</span>
-                            </a>
-                        </li>
-                        <li class="treeview ">
-                            <a href="#">
-                                <i class="fa fa-bar-chart-o"></i>
-                                <span>Report</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Server Moving </a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Blocked IP Address</a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Free IP Address</a></li>
-                            </ul>
-                        </li>
-
-                    </ul>
-                }
-                else if (ViewBag.Role == "Customer")
-                {
-                    <ul class="sidebar-menu">
-                        <li class="active">
-                            <a href="@Url.Action("Index2", "Server")">
-                                <i class="fa fa-table"></i> <span>Server</span>
-                            </a>
-                        </li>
-                        <li class="active">
-                            <a href="#">
-                                <i class="fa fa-table"></i> <span>Request History</span>
-                            </a>
-                        </li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-bar-chart-o"></i>
-                                <span>Create request</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Add New Server </a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Upgrade Server</a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Change IP Address</a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Return IP Address</a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Assign IP Address</a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Add New Rack</a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Return Rack</a></li>
-                            </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-bar-chart-o"></i>
-                                <span>Report</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Server Moving </a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Blocked IP Address</a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Free IP Address</a></li>
-                            </ul>
-                        </li>
-
-                    </ul>
-                }
-
+                @{ Html.RenderAction("Sidebar", "Home"); }
             </section>
             <!-- /.sidebar -->
         </aside>

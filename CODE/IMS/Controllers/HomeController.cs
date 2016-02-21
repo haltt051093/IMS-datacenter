@@ -14,5 +14,11 @@ namespace IMS.Controllers
         {
             return View();
         }
+
+        [ChildActionOnly]
+        public PartialViewResult Sidebar()
+        {
+            return PartialView();
+        }
     }
 }

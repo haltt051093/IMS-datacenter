@@ -1,88 +1,61 @@
 ﻿@{
     var data = new List<HomeSidebarViewModel>();
-    data.Add(new HomeSidebarViewModel("Server", "Index2", "Server")
-    {
-        Roles = new List<string>() { "Shift Head" }
+    data.Add(new HomeSidebarViewModel("Server", "Index2", "Server") { Roles = new List<string>() { "Shift Head", "Customer" }});
+    data.Add(new HomeSidebarViewModel("Request History", "", "") { Roles = new List<string>() { "Customer" } });
+    data.Add(new HomeSidebarViewModel("Location", "Index2", "Location") { Roles = new List<string>() { "Shift Head" } });
+    data.Add(new HomeSidebarViewModel("IP Address", "Index2", "IP") { Roles = new List<string>() { "Shift Head" } });
+    data.Add(new HomeSidebarViewModel("Account", "Index2", "Account") { Roles = new List<string>() { "Shift Head" } });
+    data.Add(new HomeSidebarViewModel("Create request", "", "") { Roles = new List<string>() { "Customer" }, SubMenu = new List<HomeSidebarViewModel>()
+        {
+            new HomeSidebarViewModel("Add New Server", "", "") { Roles = new List<string>() { "Customer" } },
+            new HomeSidebarViewModel("Upgrade Server", "", "") { Roles = new List<string>() { "Customer" } },
+            new HomeSidebarViewModel("Change IP Address", "", "") { Roles = new List<string>() { "Customer" } },
+            new HomeSidebarViewModel("Free IP Address", "", "") { Roles = new List<string>() { "Customer" } },
+            new HomeSidebarViewModel("Return IP Address", "", "") { Roles = new List<string>() { "Customer" } },
+            new HomeSidebarViewModel("Assign IP Address", "", "") { Roles = new List<string>() { "Customer" } },
+            new HomeSidebarViewModel("Add New Rack", "", "") { Roles = new List<string>() { "Customer" } },
+            new HomeSidebarViewModel("Return Rack", "", "") { Roles = new List<string>() { "Customer" } }
+        }
     });
-    data.Add(new HomeSidebarViewModel("Location", "Index2", "Location")
-    {
-        Roles = new List<string>() { "Shift Head" }
+    data.Add(new HomeSidebarViewModel("Report", "", "") { Roles = new List<string>() { "Shift Head", "Customer" }, SubMenu = new List<HomeSidebarViewModel>()
+        {
+            new HomeSidebarViewModel("Server Moving", "", "") { Roles = new List<string>() { "Shift Head", "Customer" } },
+            new HomeSidebarViewModel("Blocked IP Address", "", "") { Roles = new List<string>() { "Shift Head", "Customer" } },
+            new HomeSidebarViewModel("Free IP Address", "", "") { Roles = new List<string>() { "Shift Head", "Customer" } }
+        }
     });
-    data.Add(new HomeSidebarViewModel("Location", "Index2", "Location")
-    {
-        Roles = new List<string>() { "Shift Head" }
-    });
+
+    string role = ViewBag.Role == null ? string.Empty : ViewBag.Role;
 }
 
-@if (ViewBag.Role == "Shift Head")
+<ul class="sidebar-menu">
+@foreach (var menu in data)
 {
-    <ul class="sidebar-menu">
-        <li class="active">
-            <a href="@Url.Action("Index2", "IP")">
-                <i class="fa fa-table"></i> <span>IP Address</span>
-            </a>
+    if (!menu.Roles.Contains(role))
+    {
+        continue;
+    }
+    if (menu.SubMenu.Count == 0)
+    {
+        <li>
+            <a href="@Url.Action(menu.Action, menu.Controller)"><i class="fa fa-table"></i><span>@menu.Title</span></a>
         </li>
-        <li class="active">
-            <a href="@Url.Action("Index2", "Account")">
-                <i class="fa fa-table"></i> <span>Account</span>
-            </a>
-        </li>
+    }
+    else
+    {
         <li class="treeview ">
-            <a href="#">
-                <i class="fa fa-bar-chart-o"></i>
-                <span>Report</span>
-                <i class="fa fa-angle-left pull-right"></i>
-            </a>
+            <a href="#"><i class="fa fa-bar-chart-o"></i><span>@menu.Title</span><i class="fa fa-angle-left pull-right"></i></a>
             <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-angle-double-right"></i> Server Moving </a></li>
-                <li><a href="#"><i class="fa fa-angle-double-right"></i> Blocked IP Address</a></li>
-                <li><a href="#"><i class="fa fa-angle-double-right"></i> Free IP Address</a></li>
+            @foreach (var subMenu in menu.SubMenu)
+            {
+                if (!subMenu.Roles.Contains(role))
+                {
+                    continue;
+                }
+                <li><a href="@Url.Action(subMenu.Action, subMenu.Controller)"><i class="fa fa-angle-double-right"></i>@subMenu.Title</a></li>
+            }
             </ul>
         </li>
-
-    </ul>
+    }
 }
-else if (ViewBag.Role == "Customer")
-{
-    <ul class="sidebar-menu">
-        <li class="active">
-            <a href="@Url.Action("Index2", "Server")">
-                <i class="fa fa-table"></i> <span>Server</span>
-            </a>
-        </li>
-        <li class="active">
-            <a href="#">
-                <i class="fa fa-table"></i> <span>Request History</span>
-            </a>
-        </li>
-        <li class="treeview">
-            <a href="#">
-                <i class="fa fa-bar-chart-o"></i>
-                <span>Create request</span>
-                <i class="fa fa-angle-left pull-right"></i>
-            </a>
-            <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-angle-double-right"></i> Add New Server </a></li>
-                <li><a href="#"><i class="fa fa-angle-double-right"></i> Upgrade Server</a></li>
-                <li><a href="#"><i class="fa fa-angle-double-right"></i> Change IP Address</a></li>
-                <li><a href="#"><i class="fa fa-angle-double-right"></i> Return IP Address</a></li>
-                <li><a href="#"><i class="fa fa-angle-double-right"></i> Assign IP Address</a></li>
-                <li><a href="#"><i class="fa fa-angle-double-right"></i> Add New Rack</a></li>
-                <li><a href="#"><i class="fa fa-angle-double-right"></i> Return Rack</a></li>
-            </ul>
-        </li>
-        <li class="treeview">
-            <a href="#">
-                <i class="fa fa-bar-chart-o"></i>
-                <span>Report</span>
-                <i class="fa fa-angle-left pull-right"></i>
-            </a>
-            <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-angle-double-right"></i> Server Moving </a></li>
-                <li><a href="#"><i class="fa fa-angle-double-right"></i> Blocked IP Address</a></li>
-                <li><a href="#"><i class="fa fa-angle-double-right"></i> Free IP Address</a></li>
-            </ul>
-        </li>
-
-    </ul>
-}
+</ul>
