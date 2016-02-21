@@ -1,4 +1,6 @@
-﻿@using IMS.Data.Business
+﻿@using IMS.Core
+@using IMS.Data.Business
+@using IMS.Data.Models
 @model IMS.Models.AccountCreateViewModel
 
 @{
@@ -18,53 +20,72 @@
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.Username)
         @Html.HiddenFor(model => model.Password)
-        <div class="form-group">
-            @Html.LabelFor(model => model.Role, "Role", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @{
-                    var roles = RoleBLO.Current.GetAll();
-                    SelectList myList = new SelectList(roles, "RoleName", "RoleName");
-                }
-                @Html.DropDownList("Role", myList, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @{
-                    IEnumerable<SelectListItem> tau = new List<SelectListItem>()
+        @if (ViewBag.role != "Manager")
+        {
+            <div class="form-group">
+
+                @Html.LabelFor(model => model.Role, "Role", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @{
+                        var roles = RoleBLO.Current.GetAll().Where(c => c.RoleName != "Customer").Where(c => c.RoleName != "Manager");
+                        var myList = new SelectList(roles, "RoleName", "RoleName");
+                        //var roles = RoleBLO.Current.GetAll();
+                        //SelectList myList = new SelectList(roles, "RoleName", "RoleName");
+                    }
+                    @Html.DropDownList("Role", myList, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+                </div>
+
+
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @{
+                        IEnumerable<SelectListItem> tau = new List<SelectListItem>()
                         {
                             new SelectListItem()
                             {
-                                Text = "Activate",
+                                Text = "Active",
                                 Value = "true"
                             },
                             new SelectListItem()
                             {
-                                Text = "Deactivate",
+                                Text = "Deactive",
                                 Value = "false"
                             }
                         };
-                    SelectList status = new SelectList(tau, "Value", "Text", Model.Status);
-                }
-                @Html.DropDownList("Status", status, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                        SelectList status = new SelectList(tau, "Value", "Text", Model.Status);
+                    }
+                    @Html.DropDownList("Status", status, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.GroupCode, "Group", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @{
-                    var group = GroupBLO.Current.GetAll();
-                    var myList1 = new SelectList(group, "GroupName", "GroupName");
-                }
-                @Html.DropDownList("GroupName", myList1, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.GroupCode, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.GroupCode, "Group", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @{
+                        var group = GroupBLO.Current.GetAll();
+                        var myList1 = new SelectList(group, "GroupName", "GroupName");
+                    }
+                    @Html.DropDownList("GroupName", myList1, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.GroupCode, "", new { @class = "text-danger" })
+                </div>
+
             </div>
-        </div>
+                        }
+                        else
+                        {
+                            @Html.HiddenFor(model => model.Role)
+                            @Html.HiddenFor(model => model.Status)
+                            @Html.HiddenFor(model => model.GroupCode)
+                        }
+
+
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.Fullname, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -112,7 +133,7 @@
             </div>
         </div>
     </div>
-                    }
+                        }
 
 <div>
     @Html.ActionLink("Back to List", "Index")

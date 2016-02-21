@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -7,7 +9,9 @@ using IMS.Core;
 using IMS.Data.Business;
 using IMS.Data.Models;
 using IMS.Data.Repository;
+using IMS.Data.ViewModels;
 using IMS.Models;
+using Microsoft.Ajax.Utilities;
 
 namespace IMS.Controllers
 {
@@ -30,6 +34,8 @@ namespace IMS.Controllers
         }
 
         [AllowAnonymous]
+
+
         [HttpPost]
         public ActionResult Login(Account account)
         {
@@ -59,17 +65,57 @@ namespace IMS.Controllers
                 {
                     Session[Constants.Session.USER_LOGIN] = o;
                 }
-                return RedirectToAction("Index", "Account");
+                string role = o.Role;
+                return RedirectToAction("Index", "Account", new {role = role});
             }
+            //else
             return View();
         }
 
         [Authorize(Roles = "Staff,Shift Head,Manager")]
         // GET: Account
-        public ActionResult Index()
+        public ActionResult Index(string role)
         {
             var data = new AccountIndexViewModel();
-            data.Accounts = AccountBLO.Current.GetAllAccount();
+            //data.Accounts = AccountBLO.Current.GetAllAccount();
+            List<Account> lstall = AccountDAO.Current.GetAll();
+            List<Account> rs = new List<Account>();
+            if (role != null)
+            {
+                if (role.Equals("Manager"))
+                {
+                    rs = lstall;
+                }
+                else if (role.Equals("Shift Head"))
+                {
+                    for (int i = 0; i < lstall.Count; i++)
+                    {
+                        if (!lstall[i].Role.IsNullOrWhiteSpace())
+                        {
+                            if (lstall[i].Role.Equals("Shift Head"))
+                            {
+                                rs.Add(lstall[i]);
+
+                            }
+                        }
+
+                    }
+
+                }
+                else if (role.Equals("Staff"))
+                {
+                    for (int i = 0; i < lstall.Count; i++)
+                    {
+                        if (lstall[i].Role.Equals("Staff"))
+                        {
+                            rs.Add(lstall[i]);
+
+                        }
+
+                    }
+                }
+            }
+            data.ListAccount = rs;
             return View(data);
         }
 
@@ -142,6 +188,7 @@ namespace IMS.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.role = account.Role;
             var accountviewmodel = Mapper.Map<Account, AccountCreateViewModel>(account);
             return View(accountviewmodel);
         }
@@ -169,7 +216,15 @@ namespace IMS.Controllers
         {
             Account account = Mapper.Map<AccountCreateViewModel, Account>(viewmodel);
             AccountBLO.Current.AddOrUpdate(account);
-            return RedirectToAction("Index");
+
+            string role = "";
+            if (Session[Constants.Session.USER_LOGIN] != null)
+            {
+                var obj = Session[Constants.Session.USER_LOGIN];
+                Account a = (Account) obj;
+                role = a.Role;
+            }
+            return RedirectToAction("Index", "Account", new { role = role });
         }
 
         // POST: Account/Edit/5
@@ -181,7 +236,14 @@ namespace IMS.Controllers
             account.GroupCode = Constants.GroupName.NO_GROUP;
             AccountBLO.Current.AddOrUpdate(account);
 
-            return RedirectToAction("Index");
+            string role = "";
+            if (Session[Constants.Session.USER_LOGIN] != null)
+            {
+                var obj = Session[Constants.Session.USER_LOGIN];
+                Account a = (Account)obj;
+                role = a.Role;
+            }
+            return RedirectToAction("Index", "Account", new { role = role });
         }
 
         //// GET: Account/Delete/5
@@ -204,6 +266,66 @@ namespace IMS.Controllers
             }
             var accountviewmodel = Mapper.Map<Account, AccountCreateViewModel>(account);
             return View(accountviewmodel);
+        }
+
+        public ActionResult GetForgotPassword()
+        {
+            return View("ForgotPassword");
+        }
+
+        [HttpPost]
+        public ActionResult PostForgotPassword(Account account)
+        {
+            Account o = AccountDAO.Current.Query(x => x.Email == account.Email).FirstOrDefault();
+            if (o != null)
+            {
+                var newpw = AccountBLO.Current.GeneratePassword();
+                o.Password = newpw;
+                AccountBLO.Current.AddOrUpdate(o);
+                //AccountBLO.Current.SendPasswordInfo(o);
+                ViewBag.FGPW = "Reset password successfully";
+            }
+            else
+            {
+                //email not exist
+                ViewBag.FGPW = "";
+            }
+
+            return View("ForgotPWSuccess");
+        }
+
+        public ActionResult GetChangePW()
+        {
+            return View("ChangePassword");
+        }
+
+        [HttpPost]
+        public ActionResult PostChangePW(string oldpassword, string newpassword, string confirmpassword)
+        {
+            if (newpassword.Equals(confirmpassword))
+            {
+                if (Session[Constants.Session.USER_LOGIN] != null)
+                {
+                    var obj = Session[Constants.Session.USER_LOGIN];
+                    Account a = (Account) obj;
+
+                    if (oldpassword.Equals(a.Password))
+                    {
+                        a.Password = newpassword;
+                        AccountBLO.Current.AddOrUpdate(a);
+                    }
+                    else
+                    {
+                        ViewBag.password = "Old password wrong.";
+                    }
+                }
+            }
+            else
+            {
+                ViewBag.confirm = "Confirm Password not match with new password";
+            }
+            
+            return View("ChangePassword");
         }
 
         public ActionResult Logout()

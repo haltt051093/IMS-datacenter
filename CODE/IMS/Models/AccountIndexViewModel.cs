@@ -15,6 +15,11 @@ namespace IMS.Models
         }
 
         public List<AccountExtendedModel> Accounts { get; set; }
+        public List<Account> ListAccount { get; set; }
+        public static implicit operator List<object>(AccountIndexViewModel v)
+        {
+            throw new NotImplementedException();
+        }
 
     }
 }
