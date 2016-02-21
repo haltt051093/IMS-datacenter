@@ -1,7 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using System.Web.Http;
+using System.Web.Mvc;
+using System.Web.Optimization;
 using System.Web.Routing;
-using IMS.App_Start;
-using IMS.Controllers;
 
 namespace IMS
 {
@@ -11,8 +11,11 @@ namespace IMS
         {
             //GlobalFilters.Filters.Add(new AuthorizeAttribute());
             AreaRegistration.RegisterAllAreas();
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-            MappingConfig.RegisterMaps();
+            BundleConfig.Configure(BundleTable.Bundles);
+            FilterConfig.Configure(GlobalFilters.Filters);
+            GlobalConfiguration.Configure(WebApiConfig.Configure);
+            RouteConfig.Configure(RouteTable.Routes);
+            MapperConfig.Configure();
             Scheduler.JobScheduler.Start();
         }
     }

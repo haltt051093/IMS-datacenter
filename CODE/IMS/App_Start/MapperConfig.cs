@@ -1,13 +1,12 @@
-﻿
-using IMS.Data.Models;
+﻿using IMS.Data.Models;
 using IMS.Data.ViewModels;
 using IMS.Models;
 
-namespace IMS.App_Start
+namespace IMS
 {
-    public static class MappingConfig
+    public static class MapperConfig
     {
-        public static void RegisterMaps()
+        public static void Configure()
         {
             AutoMapper.Mapper.Initialize(config =>
             {

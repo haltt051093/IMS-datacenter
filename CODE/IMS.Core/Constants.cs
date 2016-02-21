@@ -189,6 +189,60 @@ namespace IMS.Core
             public const string TIME = "HH:mm:ss";
         }
 
+        public class ScriptBundle
+        {
+            public const string ALERTIFY = "~/scripts/alertify";
+            public const string ANGULARJS = "~/scripts/agularjs";
+            public const string APPLICATION = "~/scripts/application";
+            public const string BOOTSNIPP = "~/scripts/bootsnipp";
+            public const string BOOTSTRAP = "~/scripts/bootstrap";
+            public const string BOOTSTRAP_COLORPICKER = "~/scripts/bootstrap-colorpicker";
+            public const string BOOTSTRAP_DATETIMEPICKER = "~/scripts/bootstrap-datetimepicker";
+            public const string BOOTSTRAP_SLIDER = "~/scripts/bootstrap-slider";
+            public const string BOOTSTRAP_WYSIWYG = "~/scripts/bootstrap-wysiwyg";
+            public const string CHARTJS = "~/scripts/chartjs";
+            public const string DDLEVELSMENU = "~/scripts/ddlevelsmenu";
+            public const string DATATABLE = "~/scripts/datatable";
+            public const string DATATABLE_EDITOR = "~/scripts/datatable-editor";
+            public const string FLOTCHART = "~/scripts/flotchart";
+            public const string FULLCALENDAR = "~/scripts/fullcalendar";
+            public const string IVECTOR_MAP = "~/scripts/ivector-map";
+            public const string JQUERY = "~/scripts/jquery";
+            public const string JQUERY_FILER = "~/scripts/jquery.filer";
+            public const string JQUERY_KNOB = "~/scripts/jquery-knob";
+            public const string JQUERY_UI = "~/scripts/jquery-ui";
+            public const string JQUERY_VALIDATE = "~/scripts/jquery.validate";
+            public const string KNOCKOUT = "~/scripts/knockout";
+            public const string MODERNIZR = "~/scripts/modernizr";
+            public const string MOMENT = "~/scripts/moment";
+            public const string MORRISJS = "~/scripts/morrisjs";
+            public const string NODEJS = "~/scripts/nodejs";
+            public const string NOTIFICATIONJS = "~/scripts/notificationjs";
+            public const string PACEJS = "~/scripts/pacejs";
+            public const string RESPOND = "~/scripts/respond";
+            public const string SIGNALR = "~/scripts/signalr";
+            public const string SPARKLINE = "~/scripts/sparkline";
+        }
+
+        public class StyleBundle
+        {
+            public const string ALERTIFY = "~/styles/alertify";
+            public const string APPLICATION = "~/styles/application";
+            public const string BOOTSNIPP = "~/styles/bootsnipp";
+            public const string BOOTSTRAP = "~/styles/bootstrap";
+            public const string BOOTSTRAP_COLORPICKER = "~/styles/bootstrap-colorpicker";
+            public const string BOOTSTRAP_DATETIMEPICKER = "~/styles/bootstrap-datetimepicker";
+            public const string BOOTSTRAP_SLIDER = "~/styles/bootstrap-slider";
+            public const string BOOTSTRAP_WYSIWYG = "~/styles/bootstrap-wysiwyg";
+            public const string DATATABLE = "~/styles/datatable";
+            public const string DATATABLE_EDITOR = "~/styles/datatable-editor";
+            public const string DDLEVELSMENU = "~/styles/ddlevelsmenu";
+            public const string JQUERY_FILER = "~/styles/jquery.filer";
+            public const string JQUERY_UI = "~/styles/jquery-ui";
+            public const string JQUERY_VALIDATE = "~/styles/jquery.validate";
+            public const string MORRISJS = "~/styles/morrisjs";
+            public const string PACEJS = "~/styles/pacejs";
+        }
     }
 }
 

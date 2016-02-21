@@ -1,10 +1,10 @@
-﻿
+﻿using IMS;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartup(typeof(IMS.App_Code.AppConfig))]
-namespace IMS.App_Code
+[assembly: OwinStartup(typeof(AppConfig))]
+namespace IMS
 {
     public class AppConfig
     {

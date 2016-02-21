@@ -109,6 +109,11 @@
       <HintPath>..\packages\Quartz.2.3.3\lib\net40\Quartz.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -118,6 +123,14 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
       <Private>True</Private>
@@ -422,6 +435,8 @@
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />
+    <Content Include="scripts\jquery-ui-1.10.3.js" />
+    <Content Include="scripts\jquery-ui-1.10.3.min.js" />
     <Content Include="scripts\jquery-ui-1.11.4.js" />
     <Content Include="scripts\jquery-ui-1.11.4.min.js" />
     <Content Include="scripts\jquery.signalR-2.2.0.js" />
@@ -430,6 +445,11 @@
     <Content Include="scripts\jquery.timepicker.min.js" />
     <Content Include="scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="scripts\jquery.unobtrusive-ajax.min.js" />
+    <None Include="scripts\jquery.validate-vsdoc.js" />
+    <Content Include="scripts\jquery.validate.js" />
+    <Content Include="scripts\jquery.validate.min.js" />
+    <Content Include="scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="scripts\modernizr-2.6.2.js" />
     <Content Include="scripts\moment-with-locales.js" />
     <Content Include="scripts\moment-with-locales.min.js" />
@@ -786,10 +806,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Services\Scheduler.cs" />
+    <Compile Include="App_Code\Scheduler.cs" />
     <Content Include="App_Code\AppConfig.cs" />
-    <Compile Include="App_Start\MappingConfig.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\MapperConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CoreController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -819,9 +842,9 @@
     <Compile Include="Models\ServerDetailsViewModel.cs" />
     <Compile Include="Models\ServerIndexViewModel.cs" />
     <Compile Include="Models\ServerIPViewModel.cs" />
-    <Compile Include="Services\MyRoleProvider.cs" />
+    <Compile Include="App_Code\MyRoleProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\RemoteControllerHub.cs" />
+    <Compile Include="App_Code\RemoteControllerHub.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
