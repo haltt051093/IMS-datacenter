@@ -232,7 +232,7 @@
                     </div>
                 </div>
                 <!-- sidebar menu: : style can be found in sidebar.less -->
-                @{ Html.RenderAction("Sidebar", "Home"); }
+                @{ Html.RenderAction("Sidebar", "Home", new { role = ViewBag.Role }); }
             </section>
             <!-- /.sidebar -->
         </aside>

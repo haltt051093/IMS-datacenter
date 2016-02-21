@@ -16,9 +16,9 @@ namespace IMS.Controllers
         }
 
         [ChildActionOnly]
-        public PartialViewResult Sidebar()
+        public PartialViewResult Sidebar(object role)
         {
-            return PartialView();
+            return PartialView(role);
         }
     }
 }

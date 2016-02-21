@@ -1,4 +1,6 @@
-﻿@{
+﻿@model object
+
+@{
     var data = new List<HomeSidebarViewModel>();
     data.Add(new HomeSidebarViewModel("Server", "Index2", "Server") { Roles = new List<string>() { "Shift Head", "Customer" }});
     data.Add(new HomeSidebarViewModel("Request History", "", "") { Roles = new List<string>() { "Customer" } });
@@ -25,7 +27,7 @@
         }
     });
 
-    string role = ViewBag.Role == null ? string.Empty : ViewBag.Role;
+    string role = Model == null ? string.Empty : Model.ToString();
 }
 
 <ul class="sidebar-menu">
