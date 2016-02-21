@@ -18,6 +18,7 @@ namespace IMS.Core
             public const string ASSIGN_IP = "RT009";
             public const string CHANGE_IP = "RT008";
             public const string RETURN_IP = "RT010";
+            public const string WITHDRAW_SERVER = "RT007";
         }
 
         public class StatusCode
@@ -167,6 +168,13 @@ namespace IMS.Core
         {
             public const string SPEED_TYPE1 = "100Mbps";
             public const string SPEED_TYPE2 = "1GBbps";
+        }
+
+        public class ShiftCode
+        {
+            public const string SHIFT_1 = "Shift 1";
+            public const string SHIFT_2 = "Shift 2";
+            public const string SHIFT_3 = "Shift 3";
         }
     }
 }

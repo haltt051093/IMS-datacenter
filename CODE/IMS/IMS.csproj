@@ -795,6 +795,7 @@
     <Compile Include="Controllers\RequestController.cs" />
     <Compile Include="Controllers\ScheduleController.cs" />
     <Compile Include="Controllers\ServerController.cs" />
+    <Compile Include="Controllers\ShiftController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -882,6 +883,12 @@
     <Content Include="Views\Request\ProcessRequestChangeIP.cshtml" />
     <Content Include="Views\Request\ProcessRequestReturnIP.cshtml" />
     <Content Include="Views\Request\ProcessRequestReturnRack.cshtml" />
+    <Content Include="Views\Request\RequestAddServer2.cshtml" />
+    <Content Include="Views\Request\RequestAssignIP2.cshtml" />
+    <Content Include="Views\Request\RequestAssignIPInfo2.cshtml" />
+    <Content Include="Views\Server\ServerDetails2.cshtml" />
+    <Content Include="Views\Account\Index2.cshtml" />
+    <Content Include="Views\Account\Login2.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -891,6 +898,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Shift\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IMS.Core\IMS.Core.csproj">
