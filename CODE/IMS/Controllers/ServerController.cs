@@ -9,7 +9,7 @@ using IMS.Models;
 
 namespace IMS.Controllers
 {
-    public class ServerController : Controller
+    public class ServerController : CoreController
     {
         // GET: Server
 

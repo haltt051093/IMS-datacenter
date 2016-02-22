@@ -8,7 +8,7 @@ using IMS.Models;
 
 namespace IMS.Controllers
 {
-    public class ScheduleController : Controller
+    public class ScheduleController : CoreController
     {
         // GET: Schedule
         public ActionResult Index()

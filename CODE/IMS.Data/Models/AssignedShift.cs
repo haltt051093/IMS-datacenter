@@ -12,15 +12,13 @@ namespace IMS.Data.Models
     public partial class AssignedShift :  BaseModel
     {
         [StringLength(50)]
-        public string ShiftName { get; set; }
+        public string ShiftCode { get; set; }
 
         [StringLength(50)]
-        public string GroupName { get; set; }
+        public string GroupCode { get; set; }
 
-        public DateTime? Date { get; set; }
+        public DateTime? StartedTime { get; set; }
 
-        public virtual Group Group { get; set; }
-
-        public virtual Shift Shift { get; set; }
+        public DateTime? EndedTime { get; set; }
     }
 }

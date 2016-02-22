@@ -176,6 +176,19 @@ namespace IMS.Core
             public const string SHIFT_2 = "Shift 2";
             public const string SHIFT_3 = "Shift 3";
         }
+
+        public class Date
+        {
+            public const string STARTED_DATE = "2016-01-01";
+            public const string ENDED_DATE = "2016-01-31";
+        }
+
+        public class Format
+        {
+            public const string DATE = "dd/MM/yyyy";
+            public const string TIME = "HH:mm:ss";
+        }
+
     }
 }
 

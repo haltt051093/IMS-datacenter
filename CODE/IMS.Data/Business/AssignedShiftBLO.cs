@@ -32,5 +32,16 @@ namespace IMS.Data.Business
             baseDao = AssignedShiftDAO.Current;
             dao = AssignedShiftDAO.Current;
         }
+
+        public string GetActiveGroup()
+        {
+            var now = DateTime.Now;
+            var activeShift = dao.Query(x => x.StartedTime <= now && now < x.EndedTime).FirstOrDefault();
+            if (activeShift != null)
+            {
+                return activeShift.GroupCode;
+            }
+            return string.Empty;
+        }
     }
 }

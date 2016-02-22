@@ -12,7 +12,7 @@ using IMS.Models;
 
 namespace IMS.Controllers
 {
-    public class IPController : Controller
+    public class IPController : CoreController
     {
         public ActionResult Index2()
         {

@@ -12,10 +12,10 @@ namespace IMS.Data.Models
     public partial class Shift : BaseModel
     {
         [StringLength(50)]
-        public string ShiftName { get; set; }
+        public string ShiftCode { get; set; }
 
-        public TimeSpan? StartedTime { get; set; }
+        public int StartedTime { get; set; }
 
-        public TimeSpan? EndedTime { get; set; }
+        public int EndedTime { get; set; }
     }
 }

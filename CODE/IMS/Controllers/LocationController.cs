@@ -11,7 +11,7 @@ using IMS.Models;
 
 namespace IMS.Controllers
 {
-    public class LocationController : Controller
+    public class LocationController : CoreController
     {
         public ActionResult Index2()
         {
@@ -116,17 +116,21 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult CreateLocation(RackCreateViewModel rcvm)
         {
-            if (ModelState.IsValid)
+            //check group hien tai co duoc quyen them rack ko 
+            bool check = IsAuthorized();
+            if (check)
             {
-                var rack = Mapper.Map<RackCreateViewModel, Rack>(rcvm);
-                if (RackBLO.Current.AddRackAndLocation(rack) == true)
+                if (ModelState.IsValid)
                 {
-                    return RedirectToAction("Index");
+                    var rack = Mapper.Map<RackCreateViewModel, Rack>(rcvm);
+                    if (RackBLO.Current.AddRackAndLocation(rack) == true)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-                else return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             return View();
-
         }
 
     }

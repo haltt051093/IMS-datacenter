@@ -12,7 +12,5 @@ namespace IMS.Data.ViewModels
     public class AccountExtendedModel : Account
     {
         public string RoleName { get; set; }
-        public string GroupName { get; set; }
-        
     }
 }

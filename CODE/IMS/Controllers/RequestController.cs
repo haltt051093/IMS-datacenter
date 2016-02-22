@@ -18,7 +18,7 @@ using Microsoft.AspNet.SignalR;
 
 namespace IMS.Controllers
 {
-    public class RequestController : Controller
+    public class RequestController : CoreController
     {
         public ActionResult RequestAssignIP2()
         {
@@ -126,8 +126,8 @@ namespace IMS.Controllers
                 if (number != 0)
                 {
                     //get appointment time
-                    string dateOnly = viewmodel.AppointmentTime.ToString("dd/MM/yyyy");
-                    string time = DateTime.Parse(viewmodel.Time).ToString("HH:mm:ss");
+                    string dateOnly = viewmodel.AppointmentTime.ToString(Constants.Format.DATE);
+                    string time = DateTime.Parse(viewmodel.Time).ToString(Constants.Format.TIME);
                     string datetime = dateOnly + ' ' + time;
                     viewmodel.AppointmentTime = DateTime.Parse(datetime);
 

@@ -37,7 +37,7 @@ namespace IMS.Data.Models
         public string Identification { get; set; }
 
         [StringLength(50)]
-        public string GroupName { get; set; }
+        public string GroupCode { get; set; }
 
     }
 }

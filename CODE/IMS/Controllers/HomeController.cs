@@ -7,7 +7,7 @@ using System.Web.Mvc;
 namespace IMS.Controllers
 {
     [AllowAnonymous]
-    public class HomeController : Controller
+    public class HomeController : CoreController
     {
         // GET: Home
         public ActionResult Index()

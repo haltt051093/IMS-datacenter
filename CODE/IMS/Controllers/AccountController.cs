@@ -12,7 +12,7 @@ using IMS.Models;
 namespace IMS.Controllers
 {
 
-    public class AccountController : Controller
+    public class AccountController : CoreController
     {
         public ActionResult Index2()
         {
@@ -116,7 +116,7 @@ namespace IMS.Controllers
                 // su dung mapping cho list
                 var account = Mapper.Map<AccountCreateViewModel, Account>(accountCreateViewModel);
                 account.Role = Constants.Role.CUSTOMER;
-                account.GroupName = Constants.GroupName.NO_GROUP;
+                account.GroupCode = Constants.GroupName.NO_GROUP;
                 AccountBLO.Current.Add(account);
                 //send account info to login to the system
                 bool result = AccountBLO.Current.SendAccountInfo(account);
@@ -177,8 +177,8 @@ namespace IMS.Controllers
         public ActionResult EditCustomer(AccountCreateViewModel viewmodel)
         {
             Account account = Mapper.Map<AccountCreateViewModel, Account>(viewmodel);
-            account.GroupName = Constants.Role.CUSTOMER;
-            account.GroupName = Constants.GroupName.NO_GROUP;
+            account.GroupCode = Constants.Role.CUSTOMER;
+            account.GroupCode = Constants.GroupName.NO_GROUP;
             AccountBLO.Current.AddOrUpdate(account);
 
             return RedirectToAction("Index");
