@@ -3,7 +3,7 @@ using System.Linq;
 using System.Web.Security;
 using IMS.Data.Repository;
 
-namespace IMS
+namespace IMS.Services
 {
     public class MyRoleProvider : RoleProvider
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNet.SignalR;
 
-namespace IMS
+namespace IMS.Services
 {
     public class RemoteControllerHub : Hub
     {

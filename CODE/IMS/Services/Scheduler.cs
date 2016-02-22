@@ -5,7 +5,8 @@ using IMS.Data.Business;
 using IMS.Data.Repository;
 using Quartz;
 using Quartz.Impl;
-namespace IMS
+
+namespace IMS.Services
 {
     public class Scheduler
     {

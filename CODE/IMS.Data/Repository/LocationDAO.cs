@@ -28,7 +28,7 @@ namespace IMS.Data.Repository
         }
         public List<LocationExtendedModel> GetAllLocation()
         {
-            string query = @"select l.LocationCode,l.ServerCode, l.RackUnit, s.Status,r.RackName, ser.Id from Location as l
+            string query = @"select l.LocationCode,l.ServerCode, l.RackUnit, s.StatusName,r.RackName, ser.Id from Location as l
                             left join Status as s
                             on s.StatusCode = l.StatusCode
                             join Rack as r
@@ -61,7 +61,7 @@ namespace IMS.Data.Repository
 
         public List<LocationExtendedModel> GetCustomerRackValidPowerForNew(Server server)
         {
-            string query = @"select l.LocationCode, l.RackCode, l.RackUnit, s.Status, l.ServerCode, r.RackName
+            string query = @"select l.LocationCode, l.RackCode, l.RackUnit, s.StatusName, l.ServerCode, r.RackName
                             from rack as r left join
 	                            (select r.RackCode, sum(s.power / s.size) as UsedPower
 	                            from rack as r
@@ -84,7 +84,7 @@ namespace IMS.Data.Repository
 
         public List<LocationExtendedModel> GetRackValidPowerForChange(Server server)
         {
-            string query = @"select l.LocationCode, l.RackCode, l.RackUnit, s.Status,l.ServerCode,r.RackName
+            string query = @"select l.LocationCode, l.RackCode, l.RackUnit, s.StatusName,l.ServerCode,r.RackName
                             from rack as r left join
 	                            (select r.RackCode, sum(s.power / s.size) as UsedPower
 	                            from rack as r
@@ -104,7 +104,7 @@ namespace IMS.Data.Repository
         }
         public List<LocationExtendedModel> GetCustomerRackValidPowerForChange(Server server)
         {
-            string query = @"select l.LocationCode, l.RackCode, l.RackUnit, s.Status, l.ServerCode,r.RackName
+            string query = @"select l.LocationCode, l.RackCode, l.RackUnit, s.StatusName, l.ServerCode,r.RackName
                             from rack as r left join
 	                            (select r.RackCode, sum(s.power / s.size) as UsedPower
 	                            from rack as r
@@ -132,7 +132,7 @@ namespace IMS.Data.Repository
         }
         public List<string> GetLocationStatus()
         {
-            string query = @"select s.Status from Status as s
+            string query = @"select s.StatusName from Status as s
                            where s.Object = 'Location'";
             return RawQuery<string>(query, new object[] { });
         }

@@ -64,7 +64,7 @@ namespace IMS.Data.Repository
 
         public List<ScheduleExtendedModel> GetSchedule()
         {
-            string query = @"select r.*,rt.RequestTypeName, s.Status from Request as r 
+            string query = @"select r.*,rt.RequestTypeName, s.StatusName from Request as r 
                             join Status as s 
                             on s.StatusCode = r.StatusCode
                             join RequestType as rt

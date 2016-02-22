@@ -1,6 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "RequestAssignIPInfo";
+    ViewBag.Role = "Customer";
 }
 
 <section class="content-header">
@@ -32,7 +33,7 @@
                         18-Jan-16 01:19:12
                     </dd>
                     <dt>
-                        Status
+                        Request Status
                     </dt>
 
                     <dd>
@@ -51,6 +52,7 @@
 
                     <dd>
                         S123456
+                        
                     </dd>
 
                     <dt>
@@ -60,7 +62,7 @@
                     <dd>
                         Amount: 3; I want to be assigned as soon as possible
                         <label>---------</label>
-                        <label><a href="#" data-toggle="modal" data-target="#assignIP-modal">AssignIP</a></label>
+                        <label><a href="#" data-toggle="modal" data-target="#assignIP-modal">Assign IP For Server</a></label>
                     </dd>
                     <dt>
                         <h4 style="color: #f56954">Selected IP Address:</h4>
@@ -70,7 +72,7 @@
                         Assigned IP Address(es)
                     </dt>
                     <dd>
-                        <ul class="list-group">
+                        <ul class="list-group col-sm-5">
 
                             <li class="list-group-item">
                                 Assigned IP 1
@@ -83,7 +85,7 @@
                     </dd>
                     <dt></dt>
                     <dd>
-
+                        <button type="submit" class="btn btn-success">Assign</button>
                         <button type="submit" class="btn btn-primary">Approve</button>
                         <button type="submit" class="btn btn-danger">Reject</button>
                     </dd>
@@ -536,7 +538,7 @@
             </section><!-- /.content -->
             </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Assign</button>
+                    <button type="submit" class="btn btn-success">Assign</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
 
 
@@ -545,14 +547,7 @@
             <script type="text/javascript">
                 $(function () {
                     $("#example1").dataTable();
-                    $('#example2').dataTable({
-                        "bPaginate": true,
-                        "bLengthChange": false,
-                        "bFilter": false,
-                        "bSort": true,
-                        "bInfo": true,
-                        "bAutoWidth": false
-                    });
+                   
                 });
             </script>
         </div><!-- /.modal-content -->

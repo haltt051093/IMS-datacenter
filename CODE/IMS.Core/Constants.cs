@@ -191,6 +191,7 @@ namespace IMS.Core
 
         public class ScriptBundle
         {
+            public const string ADMINLTE = "~/scripts/adminlte";
             public const string ALERTIFY = "~/scripts/alertify";
             public const string ANGULARJS = "~/scripts/agularjs";
             public const string APPLICATION = "~/scripts/application";
@@ -226,6 +227,7 @@ namespace IMS.Core
 
         public class StyleBundle
         {
+            public const string ADMINLTE = "~/styles/adminlte";
             public const string ALERTIFY = "~/styles/alertify";
             public const string APPLICATION = "~/styles/application";
             public const string BOOTSNIPP = "~/styles/bootsnipp";

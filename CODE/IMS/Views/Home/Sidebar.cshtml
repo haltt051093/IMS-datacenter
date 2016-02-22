@@ -1,0 +1,72 @@
+﻿@model object
+
+@{
+    var data = new List<HomeSidebarViewModel>();
+    data.Add(new HomeSidebarViewModel("Server", "Index2", "Server") { Roles = new List<string>() { "Shift Head", "Customer" }});
+    data.Add(new HomeSidebarViewModel("Request History", "", "") { Roles = new List<string>() { "Customer" } });
+    data.Add(new HomeSidebarViewModel("Location", "Index2", "Location") { Roles = new List<string>() { "Shift Head" } });
+    data.Add(new HomeSidebarViewModel("IP Address", "Index2", "IP") { Roles = new List<string>() { "Shift Head" } });
+    data.Add(new HomeSidebarViewModel("Account", "Index2", "Account") { Roles = new List<string>() { "Shift Head" } });
+    data.Add(new HomeSidebarViewModel("Create request", "", "") { Roles = new List<string>() { "Customer" }, SubMenu = new List<HomeSidebarViewModel>()
+        {
+            new HomeSidebarViewModel("Add New Server", "RequestAddServer2", "Request") { Roles = new List<string>() { "Customer" } },
+            new HomeSidebarViewModel("Upgrade Server", "", "") { Roles = new List<string>() { "Customer" } },
+            new HomeSidebarViewModel("Change IP Address", "", "") { Roles = new List<string>() { "Customer" } },
+            new HomeSidebarViewModel("Free IP Address", "", "") { Roles = new List<string>() { "Customer" } },
+            new HomeSidebarViewModel("Return IP Address", "", "") { Roles = new List<string>() { "Customer" } },
+            new HomeSidebarViewModel("Assign IP Address", "RequestAssignIP2", "Request") { Roles = new List<string>() { "Customer" } },
+            new HomeSidebarViewModel("Add New Rack", "", "") { Roles = new List<string>() { "Customer" } },
+            new HomeSidebarViewModel("Return Rack", "", "") { Roles = new List<string>() { "Customer" } }
+        }
+    });
+    data.Add(new HomeSidebarViewModel("Report", "", "") { Roles = new List<string>() { "Shift Head", "Customer" }, SubMenu = new List<HomeSidebarViewModel>()
+        {
+            new HomeSidebarViewModel("Server Moving", "", "") { Roles = new List<string>() { "Shift Head", "Customer" } },
+            new HomeSidebarViewModel("Blocked IP Address", "", "") { Roles = new List<string>() { "Shift Head", "Customer" } },
+            new HomeSidebarViewModel("Free IP Address", "", "") { Roles = new List<string>() { "Shift Head", "Customer" } }
+        }
+    });
+
+    string role = Model == null ? string.Empty : Model.ToString();
+}
+
+<ul class="sidebar-menu">
+@foreach (var menu in data)
+{
+    if (!menu.Roles.Contains(role))
+    {
+        continue;
+    }
+    if (menu.SubMenu.Count == 0)
+    {
+        <li>
+            <a href="@Url.Action(menu.Action, menu.Controller)"><i class="fa fa-table"></i><span>@menu.Title</span></a>
+        </li>
+    }
+    else
+    {
+        <li class="treeview ">
+            @{
+                if (menu.Title == "Create request")
+                {
+                    <a href="#"><i class="fa fa-pencil-square-o"></i><span>@menu.Title</span><i class="fa fa-angle-left pull-right"></i></a>
+                }
+                else
+                {
+                    <a href="#"><i class="fa fa-bar-chart-o"></i><span>@menu.Title</span><i class="fa fa-angle-left pull-right"></i></a>
+                }
+            }           
+            <ul class="treeview-menu">
+                @foreach (var subMenu in menu.SubMenu)
+                {
+                    if (!subMenu.Roles.Contains(role))
+                    {
+                        continue;
+                    }
+                    <li><a href="@Url.Action(subMenu.Action, subMenu.Controller)"><i class="fa fa-angle-double-right"></i>@subMenu.Title</a></li>
+                }
+            </ul>
+        </li>
+    }
+}
+</ul>
