@@ -9,10 +9,10 @@
         var row = table.insertRow(1);
         var cellRequestCode = row.insertCell(0);
         var cellRequestType = row.insertCell(1);
-        var cellCustomer = row.insertCell(2);
-        var cellDescription = row.insertCell(3);
-        var cellAppointmentTime = row.insertCell(4);
-        var cellRequestStatus = row.insertCell(5);
+        var cellRequestStatus = row.insertCell(2);
+        //var cellCustomer = row.insertCell(2);
+        //var cellDescription = row.insertCell(3);
+        //var cellAppointmentTime = row.insertCell(4);
         //cell1.innerHTML = "NEW CELL1";
 
         var commandHub = $.connection.remoteControllerHub;
@@ -20,10 +20,10 @@
             //$('#result').append(requestCode + ' | ' + typeOfRequest + ' | ' + customer + ' | ' + description + ' | ' + appointmentTime + ' | ' + requestStatus + '<br/>');
             cellRequestCode.innerHTML = requestCode;
             cellRequestType.innerHTML = typeOfRequest;
-            cellCustomer.innerHTML = customer;
-            cellDescription.innerHTML = description;
-            cellAppointmentTime.innerHTML = appointmentTime;
             cellRequestStatus.innerHTML = requestStatus;
+            //cellCustomer.innerHTML = customer;
+            //cellDescription.innerHTML = description;
+            //cellAppointmentTime.innerHTML = appointmentTime;
         };
         $.connection.hub.start();
     });
@@ -34,9 +34,9 @@
         <tr>
             <th>Request Code</th>
             <th>Type of Request</th>
-            <th>Customer</th>
-            <th>Description</th>
-            <th>Appointment Time</th>
+            @*<th>Customer</th>
+                <th>Description</th>
+                <th>Appointment Time</th>*@
             <th>Request Status</th>
         </tr>
 
@@ -49,15 +49,15 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.RequestTypeName)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Customer)
-                </td>new
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AppointmentTime)
-                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Customer)
+                    </td>*@
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AppointmentTime)
+                    </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.StatusName)
                 </td>

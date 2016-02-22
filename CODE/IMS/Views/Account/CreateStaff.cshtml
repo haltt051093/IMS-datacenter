@@ -43,7 +43,7 @@
             <div class="col-md-10">
                 @{
                     var groups = GroupBLO.Current.GetAll().Where(g => g.GroupCode != "No Group");
-                    var myList1 = new SelectList(groups, "GroupName", "GroupName");
+                    var myList1 = new SelectList(groups, "GroupCode", "GroupCode");
                 }
                 @Html.DropDownListFor(model => model.GroupCode, myList1, new { @class = "form-control", style = "width:200px" })
                 @Html.ValidationMessageFor(model => model.GroupCode, "", new { @class = "text-danger" })

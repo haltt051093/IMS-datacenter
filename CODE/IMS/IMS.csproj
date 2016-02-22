@@ -922,7 +922,9 @@
     <Content Include="Views\Account\ForgotPWSuccess.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Home\Sidebar.cshtml" />
-    <Content Include="Views\Account\ViewProfile2.cshtml" />
+    <Content Include="Views\Request\RequestWithdrawServer.cshtml" />
+    <Content Include="Views\Request\ProcessRequestWithdrawServer.cshtml" />
+    <Content Include="Views\Request\ListNotifications2.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -930,9 +932,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Shift\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\IMS.Core\IMS.Core.csproj">
       <Project>{0128e2b7-087b-43bb-a2cc-82457b18cdfd}</Project>

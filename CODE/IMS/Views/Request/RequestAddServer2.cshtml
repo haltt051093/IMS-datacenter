@@ -68,6 +68,8 @@
                             <th>Size</th>
                             <th>Bandwidth</th>
                             <th>Attribute(s)</th>
+                            <th></th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -79,6 +81,12 @@
                             <td></td>
                             <td></td>
                             <td></td>
+                            <td>
+                                <a href="" data-toggle="modal" data-target="#editserver-modal">Edit</a>
+                            </td>
+                            <td>
+                                <a href="#">Delete</a>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -98,7 +106,120 @@
         </div><!-- /.box-body -->
     </div><!-- /.box -->
 </section>
+<!-- EDIT SERVER MODAL -->
+<div class="modal fade" id="editserver-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 400px">
+        <div class="modal-content">
 
+            <div class="modal-header">
+                <h4 class="modal-title"><i class="fa fa-edit"></i> Edit Server</h4>
+            </div>
+            <form action="#" method="POST">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="" class="control-label">Maker</label>
+                        <div class="form-group" style="width: 300px">
+                            <input type="text" class="form-control" value="DELL" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="control-label">Power</label>
+                        <div class="form-group" style="width: 300px">
+                            <input type="text" class="form-control" value="750GB" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="control-label">Model</label>
+                        <div class="form-group" style="width: 300px">
+                            <input type="text" class="form-control" value="ABCD" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="control-label">Size</label>
+                        <div class="form-group" style="width: 100px">
+                            <select class="form-control">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>4</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Bandwidth</label>
+                        <div class="form-group">
+                            <input type="radio" name="bandwidth" value="100Mbps" checked="true" /><label>100Mbps</label>
+                            <input type="radio" name="bandwidth" value="1Gbps" /><label>1Gbps</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="attribute1" class="control-label">Serial number</label>
+                        <div class="form-group" style="width: 200px">
+                            <input type="text" class="form-control" value="12345" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="attribute1" class="control-label">Memory</label>
+                        <div class="form-group" style="width: 200px">
+                            <input type="text" class="form-control" value="12345" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-default" id="addServer">
+                            <label>Add more Attributes</label>
+                        </button>
+                    </div>
+                    <div id="test">
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer clearfix">
+
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="check" style="display: none">
+    <div class="form-group">
+
+        <div for="" class="control-label">
+
+            <select>
+                <option>Part number</option>
+                <option>Memory</option>
+                <option>Serial number</option>
+                <option>Storage</option>
+                <option>Hard drives</option>
+            </select>
+
+        </div>
+        <div class="form-group" style="width: 200px">
+            <input type="text" class="form-control" placeholder="Value" />
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#addServer").click(function () {
+            $('#test').append($('#check').html());
+            $('#test select').each(function (i, e) {
+                $(e).attr('name', 'SelectedAttributes[' + i + ']');
+                $(e).attr('id', 'SelectedAttributes_' + i + '_');
+            });
+            $('#test input').each(function (i, e) {
+                $(e).attr('name', 'AttributeValues[' + i + ']');
+                $(e).attr('id', 'AttributeValues_' + i + '_');
+            });
+            return false;
+        });
+    });
+</script>
 <script type="text/javascript">
     $(function () {
         $('#datetimepicker1').datetimepicker();
