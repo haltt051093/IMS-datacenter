@@ -16,7 +16,8 @@ namespace IMS.Models
         public DateTime? RequestedTime { get; set; }
         public string StatusCode { get; set; }
         public bool IsViewed { get; set; }
-        public List<SelectListItem> AvailableRacks { get; set; }
-        public List<Rack> SelectedRacks { get; set; } 
+        //public List<SelectListItem> AvailableRacks { get; set; }
+        public MultiSelectList AvailableRacks { get; set; }
+        public List<string> SelectedRacks { get; set; } 
     }
 }

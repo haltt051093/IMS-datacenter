@@ -565,11 +565,12 @@ namespace IMS.Controllers
                     //Tùy vào rack number mà số lượng rack staff được chọn sẽ tương ứng
                     if (listrack.Count > 0)
                     {
-                        viewmodel.AvailableRacks = listrack.Select(x => new SelectListItem
+                        var list = listrack.Select(x => new SelectListItem
                         {
                             Value = x.RackCode,
                             Text = x.RackName
                         }).ToList();
+                        viewmodel.AvailableRacks =  new MultiSelectList(list, "Value", "Text");
                     }
                 }
                 //Chuyen IsViewed = true
