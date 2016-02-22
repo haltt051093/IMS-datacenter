@@ -10,13 +10,13 @@
     data.Add(new HomeSidebarViewModel("Create request", "", "") { Roles = new List<string>() { "Customer" }, SubMenu = new List<HomeSidebarViewModel>()
         {
             new HomeSidebarViewModel("Add New Server", "RequestAddServer2", "Request") { Roles = new List<string>() { "Customer" } },
-            new HomeSidebarViewModel("Upgrade Server", "", "") { Roles = new List<string>() { "Customer" } },
-            new HomeSidebarViewModel("Change IP Address", "", "") { Roles = new List<string>() { "Customer" } },
-            new HomeSidebarViewModel("Free IP Address", "", "") { Roles = new List<string>() { "Customer" } },
-            new HomeSidebarViewModel("Return IP Address", "", "") { Roles = new List<string>() { "Customer" } },
+            new HomeSidebarViewModel("Upgrade Server", "RequestUpgradeServer2", "Request") { Roles = new List<string>() { "Customer" } },
+            new HomeSidebarViewModel("Bring Away Server", "RequestBringAwayServer2", "Request") { Roles = new List<string>() { "Customer" } },
+            new HomeSidebarViewModel("Change IP Address", "RequestChangeIP2", "Request") { Roles = new List<string>() { "Customer" } },
+            new HomeSidebarViewModel("Return IP Address", "RequestReturnIP2", "Request") { Roles = new List<string>() { "Customer" } },
             new HomeSidebarViewModel("Assign IP Address", "RequestAssignIP2", "Request") { Roles = new List<string>() { "Customer" } },
-            new HomeSidebarViewModel("Add New Rack", "", "") { Roles = new List<string>() { "Customer" } },
-            new HomeSidebarViewModel("Return Rack", "", "") { Roles = new List<string>() { "Customer" } }
+            new HomeSidebarViewModel("Rent Rack", "RequestRentRack2", "Request") { Roles = new List<string>() { "Customer" } },
+            new HomeSidebarViewModel("Return Rack", "RequestReturnRack2", "Request") { Roles = new List<string>() { "Customer" } }
         }
     });
     data.Add(new HomeSidebarViewModel("Report", "", "") { Roles = new List<string>() { "Shift Head", "Customer" }, SubMenu = new List<HomeSidebarViewModel>()
