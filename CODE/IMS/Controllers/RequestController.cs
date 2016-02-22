@@ -511,6 +511,7 @@ namespace IMS.Controllers
             return View();
         }
 
+        //Tam thoi cho VIew notification se dan den requestdetail --> thuc te thi view list notification chi dua ra popup thong tin de xem or confirm
         public ActionResult ListNotifications()
         {
             NotificationViewModel viewmodel = new NotificationViewModel();
@@ -542,17 +543,32 @@ namespace IMS.Controllers
             //DOING
             if (rType.Equals(Constants.RequestTypeCode.RENT_RACK))
             {
+                //chưa cắt số lượng rack từ string của description được
                 RequestRentRackViewModel viewmodel = new RequestRentRackViewModel();
                 var request = RequestDAO.Current.Query(x => x.RequestCode == rCode).FirstOrDefault();
+
+                // trang view cho hien thi: Customer, request time, rack number, description --> yeu cau cua khach hang
+                // Phan thuc hien cua staff -->  chọn số lượng rack còn trống
                 if (request != null)
                 {
-                    viewmodel.RequestRentRack = request;
-                    // trang view cho hien thi: Customer, request time, rack number, description --> yeu cau cua khach hang
-                    // Phan thuc hien cua staff --> dropdownlist nhung rack co san trong he thong --> tim cach hien thi cho dep --> select so luong rack phu hop
+                    //Mapping
+                    viewmodel = Mapper.Map<Request, RequestRentRackViewModel>(request);
+                    //Tam thoi fix cung rack numbers
+                    viewmodel.RackNumbers = Constants.Number.NUMBER_1;
+                    //Get available racks
+                    var listrack = RackDAO.Current.Query(x => x.StatusCode == Constants.StatusCode.RACK_AVAILABLE);
+                    //Tùy vào rack number mà số lượng rack staff được chọn sẽ tương ứng
+                    if (listrack.Count > 0)
+                    {
+                        viewmodel.AvailableRacks = listrack.Select(x => new SelectListItem
+                        {
+                            Value = x.RackCode,
+                            Text = x.RackName
+                        }).ToList();
+                    }
                 }
-
                 //Chuyen IsViewed = true
-                return View("ProcessRequestRentRack");
+                return View("ProcessRequestRentRack", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.RETURN_RACK))
             {
@@ -568,8 +584,21 @@ namespace IMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult ProcessRequestRentRack()
+        public ActionResult ProcessRequestRentRack(RequestRentRackViewModel viewmodel)
         {
+            if (ModelState.IsValid)
+            {
+                var selectedRack = viewmodel.SelectedRacks;
+                var count = selectedRack.Count;
+
+            }
+            // change request status
+
+            // add vo bang rack of customer
+
+            // log nhan vien xy ly request, trang thai cua request
+
+            //log thoi diem rack duoc gan cho khach hang
             return View();
         }
     }

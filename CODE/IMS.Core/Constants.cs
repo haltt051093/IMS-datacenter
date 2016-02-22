@@ -245,6 +245,20 @@ namespace IMS.Core
             public const string MORRISJS = "~/styles/morrisjs";
             public const string PACEJS = "~/styles/pacejs";
         }
+
+        public class Number
+        {
+            public const int NUMBER_1 = 1;
+            public const int NUMBER_2 = 2;
+            public const int NUMBER_3 = 3;
+            public const int NUMBER_4 = 4;
+            public const int NUMBER_5 = 5;
+            public const int NUMBER_6 = 6;
+            public const int NUMBER_7 = 7;
+            public const int NUMBER_8 = 8;
+            public const int NUMBER_9 = 9;
+            public const int NUMBER_10 = 10;
+        }
     }
 }
 
