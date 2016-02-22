@@ -48,6 +48,7 @@ namespace IMS.Data
             modelBuilder.Entity<Status>();
             modelBuilder.Entity<TypeOfLog>();
             modelBuilder.Entity<RackOfCustomer>();
+            modelBuilder.Entity<TempRequest>();
         }
 
         public System.Data.Entity.DbSet<IMS.Data.Models.Server> Servers { get; set; }

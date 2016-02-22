@@ -4,27 +4,25 @@ using IMS.Data.Models;
 
 namespace IMS.Data.Repository
 {
-    public class AssignedShiftDAO : BaseDAO<AssignedShift>
+    public class TempRequestDAO : BaseDAO<TempRequest>
     {
-        public static AssignedShiftDAO instance;
+        public static TempRequestDAO instance;
 
-        public static AssignedShiftDAO Current
+        public static TempRequestDAO Current
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new AssignedShiftDAO();
+                    instance = new TempRequestDAO();
                 }
                 return instance;
             }
         }
 
-        public override AssignedShift GetByKeys(AssignedShift entry)
+        public override TempRequest GetByKeys(TempRequest entry)
         {
             return Query(x => x.Id == entry.Id).FirstOrDefault();
         }
-
-         
     }
 }
