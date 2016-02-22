@@ -44,6 +44,11 @@ namespace IMS.Controllers
         {
             return View();
         }
+
+        public ActionResult ListNotifications2()
+        {
+            return View();
+        }
        
         private static IHubContext commandHubContext;
 
