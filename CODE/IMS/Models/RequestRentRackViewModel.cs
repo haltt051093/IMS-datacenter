@@ -10,6 +10,8 @@ namespace IMS.Models
         public int RackNumbers { get; set; }
 
         public string Customer { get; set; }
+        public string StaffName { get; set; }
+        public string StaffCode { get; set; }
         public string RequestCode { get; set; }
         public string RequestType { get; set; }
         public string Description { get; set; }
@@ -18,6 +20,6 @@ namespace IMS.Models
         public bool IsViewed { get; set; }
         //public List<SelectListItem> AvailableRacks { get; set; }
         public MultiSelectList AvailableRacks { get; set; }
-        public List<string> SelectedRacks { get; set; } 
+        public string[] SelectedRacks { get; set; } 
     }
 }

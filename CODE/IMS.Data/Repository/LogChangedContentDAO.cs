@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using IMS.Core;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 
@@ -42,5 +44,12 @@ namespace IMS.Data.Repository
             IMSContext.Current.SaveChanges();
         }
 
+        public List<string> GetIpRequestReturnIp(string requestCode)
+        {
+            var query = from log in Table()
+                where log.RequestCode == requestCode && log.Object == Constants.Object.OBJECT_IP
+                select log.ChangedValueOfObject;
+            return query.ToList();
+        }
     }
 }

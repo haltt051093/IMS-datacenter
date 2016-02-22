@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using System.Security.Policy;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
@@ -49,7 +50,7 @@ namespace IMS.Controllers
         {
             return View();
         }
-       
+
         private static IHubContext commandHubContext;
 
         [HttpGet]
@@ -167,7 +168,7 @@ namespace IMS.Controllers
                         TypeOfLog = Constants.TypeOfLog.LOG_RENT_RACK,
                         Object = Constants.Object.OBJECT_REQUEST,
                         ChangedValueOfObject = result,
-                        ObjectStatus = Constants.StatusCode.REQUEST_WAITING
+                        ObjectStatus = Constants.StatusCode.REQUEST_SENDING
                     };
                     LogChangedContentBLO.Current.AddLog(logRequest);
 
@@ -189,7 +190,7 @@ namespace IMS.Controllers
                     //Notification
                     var notif = Mapper.Map<RequestReturnRackViewModel, NotificationExtendedModel>(viewmodel);
                     notif.RequestTypeName = Constants.RequestType.RACK_RETURN;
-                    notif.StatusName = Constants.StatusName.REQUEST_WAITING;
+                    notif.StatusName = Constants.StatusName.REQUEST_SENDING;
                     notif.RequestCode = result;
                     //dang ky ham cho client
                     NotifRegister(notif);
@@ -224,7 +225,7 @@ namespace IMS.Controllers
             {
                 RequestCode = result,
                 Object = Constants.Object.OBJECT_REQUEST,
-                ChangedValueOfObject = Constants.StatusCode.REQUEST_WAITING,
+                ChangedValueOfObject = Constants.StatusCode.REQUEST_SENDING,
                 TypeOfLog = Constants.TypeOfLog.LOG_RENT_RACK
             };
             LogChangedContentBLO.Current.AddLog(requestmodel);
@@ -232,7 +233,7 @@ namespace IMS.Controllers
             //Notification
             var notif = Mapper.Map<RequestRentRackViewModel, NotificationExtendedModel>(viewmodel);
             notif.RequestTypeName = Constants.RequestType.RACK_RENT;
-            notif.StatusName = Constants.StatusName.REQUEST_WAITING;
+            notif.StatusName = Constants.StatusName.REQUEST_SENDING;
             notif.RequestCode = result;
             //dang ky ham cho client
             NotifRegister(notif);
@@ -286,7 +287,7 @@ namespace IMS.Controllers
                 TypeOfLog = Constants.TypeOfLog.LOG_ADD_SERVER,
                 Object = Constants.Object.OBJECT_REQUEST,
                 ChangedValueOfObject = result,
-                ObjectStatus = Constants.StatusCode.REQUEST_WAITING
+                ObjectStatus = Constants.StatusCode.REQUEST_SENDING
             };
             LogChangedContentBLO.Current.AddLog(logRequest);
 
@@ -306,7 +307,7 @@ namespace IMS.Controllers
             //Notification
             var notif = Mapper.Map<RequestAddServerViewModel, NotificationExtendedModel>(viewmodel);
             notif.RequestTypeName = Constants.RequestType.SERVER_ADD;
-            notif.StatusName = Constants.StatusName.REQUEST_WAITING;
+            notif.StatusName = Constants.StatusName.REQUEST_SENDING;
             notif.RequestCode = result;
             //dang ky ham cho client
             NotifRegister(notif);
@@ -334,7 +335,7 @@ namespace IMS.Controllers
                     RequestCode = result,
                     TypeOfLog = Constants.TypeOfLog.LOG_RETURN_IP,
                     Object = Constants.Object.OBJECT_REQUEST,
-                    ObjectStatus = Constants.StatusCode.REQUEST_WAITING,
+                    ObjectStatus = Constants.StatusCode.REQUEST_SENDING,
                     ChangedValueOfObject = result
                 };
                 LogChangedContentBLO.Current.AddLog(logRequest);
@@ -365,7 +366,7 @@ namespace IMS.Controllers
                 //Notification
                 var notif = Mapper.Map<RequestIPViewModel, NotificationExtendedModel>(viewmodel);
                 notif.RequestTypeName = Constants.RequestType.IP_RETURN;
-                notif.StatusName = Constants.StatusName.REQUEST_WAITING;
+                notif.StatusName = Constants.StatusName.REQUEST_SENDING;
                 notif.RequestCode = result;
                 //dang ky ham cho client
                 NotifRegister(notif);
@@ -413,7 +414,7 @@ namespace IMS.Controllers
                     TypeOfLog = Constants.TypeOfLog.LOG_ASSIGN_IP,
                     Object = Constants.Object.OBJECT_REQUEST,
                     ChangedValueOfObject = result,
-                    ObjectStatus = Constants.StatusCode.REQUEST_WAITING,
+                    ObjectStatus = Constants.StatusCode.REQUEST_SENDING,
                     ServerCode = viewmodel.SelectedServerCode,
 
                 };
@@ -422,7 +423,7 @@ namespace IMS.Controllers
                 //Notification
                 var notif = Mapper.Map<RequestIPViewModel, NotificationExtendedModel>(viewmodel);
                 notif.RequestTypeName = Constants.RequestType.IP_ASSIGN;
-                notif.StatusName = Constants.StatusName.REQUEST_WAITING;
+                notif.StatusName = Constants.StatusName.REQUEST_SENDING;
                 notif.RequestCode = result;
                 //dang ky ham cho client
                 NotifRegister(notif);
@@ -451,7 +452,7 @@ namespace IMS.Controllers
                     RequestCode = result,
                     TypeOfLog = Constants.TypeOfLog.LOG_CHANGE_IP,
                     Object = Constants.Object.OBJECT_REQUEST,
-                    ObjectStatus = Constants.StatusCode.REQUEST_WAITING,
+                    ObjectStatus = Constants.StatusCode.REQUEST_SENDING,
                     ChangedValueOfObject = result
                 };
                 LogChangedContentBLO.Current.AddLog(logRequest);
@@ -482,7 +483,7 @@ namespace IMS.Controllers
                 //Notification
                 var notif = Mapper.Map<RequestIPViewModel, NotificationExtendedModel>(viewmodel);
                 notif.RequestTypeName = Constants.RequestType.IP_CHANGE;
-                notif.StatusName = Constants.StatusName.REQUEST_WAITING;
+                notif.StatusName = Constants.StatusName.REQUEST_SENDING;
                 notif.RequestCode = result;
                 //dang ky ham cho client
                 NotifRegister(notif);
@@ -543,7 +544,15 @@ namespace IMS.Controllers
             //DOING
             if (rType.Equals(Constants.RequestTypeCode.RETURN_IP))
             {
-                return View("ProcessRequestReturnIP");
+                RequestIPViewModel viewmodel = new RequestIPViewModel();
+                var request = RequestDAO.Current.Query(x => x.RequestCode == rCode).FirstOrDefault();
+                if (request != null)
+                {
+                    viewmodel = Mapper.Map<Request, RequestIPViewModel>(request);
+                    //List returning IPs
+                    viewmodel.Ips = LogChangedContentBLO.Current.GetIpRequestReturnIp(rCode);
+                }
+                return View("ProcessRequestReturnIP", viewmodel);
             }
             //DOING
             if (rType.Equals(Constants.RequestTypeCode.RENT_RACK))
@@ -570,7 +579,8 @@ namespace IMS.Controllers
                             Value = x.RackCode,
                             Text = x.RackName
                         }).ToList();
-                        viewmodel.AvailableRacks =  new MultiSelectList(list, "Value", "Text");
+                        //DOING: van chua multi-select duoc
+                        viewmodel.AvailableRacks = new MultiSelectList(list, "Value", "Text", null);
                     }
                 }
                 //Chuyen IsViewed = true
@@ -592,20 +602,60 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult ProcessRequestRentRack(RequestRentRackViewModel viewmodel)
         {
-            if (ModelState.IsValid)
-            {
-                var selectedRack = viewmodel.SelectedRacks;
-                var count = selectedRack.Count;
 
+            var selectedRack = viewmodel.SelectedRacks;
+            var count = selectedRack[0];
+            //Change request status, tu 
+            var request = RequestDAO.Current.Query(x => x.RequestCode == viewmodel.RequestCode).FirstOrDefault();
+            request.StatusCode = Constants.StatusCode.REQUEST_DONE;
+            RequestBLO.Current.Update(request);
+
+            //Add Log Request
+            LogChangedContent logRequest = new LogChangedContent
+            {
+                RequestCode = viewmodel.RequestCode,
+                TypeOfLog = Constants.TypeOfLog.LOG_RENT_RACK,
+                Object = Constants.Object.OBJECT_REQUEST,
+                ChangedValueOfObject = viewmodel.RequestCode,
+                ObjectStatus = Constants.StatusCode.REQUEST_DONE,
+                Staff = viewmodel.StaffCode
+            };
+            LogChangedContentBLO.Current.AddLog(logRequest);
+
+            //Add log Khach hang rent rack
+            foreach (var item in viewmodel.SelectedRacks)
+            {
+                LogChangedContent logRack = new LogChangedContent
+                {
+                    RequestCode = viewmodel.RequestCode,
+                    TypeOfLog = Constants.TypeOfLog.LOG_RENT_RACK,
+                    Object = Constants.Object.OBJECT_RACK,
+                    ChangedValueOfObject = item,
+                    ObjectStatus = Constants.StatusCode.RACK_RENTED,
+                    Staff = viewmodel.StatusCode
+                };
+                LogChangedContentBLO.Current.AddLog(logRack);
             }
-            // change request status
 
             // add vo bang rack of customer
+            foreach (var item in viewmodel.SelectedRacks)
+            {
+                var rackOfCustomer = new RackOfCustomer
+                {
+                    RackCode = item,
+                    Customer = viewmodel.Customer,
+                    RentedDate = DateTime.Now,
+                    IsHired = true
+                };
+                RackOfCustomerBLO.Current.Add(rackOfCustomer);
+            }
+            return RedirectToAction("Index","Home");
+        }
 
-            // log nhan vien xy ly request, trang thai cua request
-
-            //log thoi diem rack duoc gan cho khach hang
-            return View();
+        [HttpPost]
+        public ActionResult ProcessRequesReturnIp(RequestIPViewModel viewmodel)
+        {
+            return RedirectToAction("Index", "Home");
         }
     }
 }

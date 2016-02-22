@@ -1,4 +1,5 @@
-﻿using IMS.Data.Generic;
+﻿using System.Collections.Generic;
+using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.Repository;
 
@@ -31,6 +32,11 @@ namespace IMS.Data.Business
         public void AddLog(LogChangedContent viewmodel)
         {
             dao.AddLog(viewmodel);
+        }
+
+        public List<string> GetIpRequestReturnIp(string requestCode)
+        {
+            return dao.GetIpRequestReturnIp(requestCode);
         }
     }
 }
