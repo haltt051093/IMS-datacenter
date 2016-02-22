@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "RequestAssignIPInfo";
-    ViewBag.Role = "Customer";
+    ViewBag.Role = "Shift Head";
 }
 
 <section class="content-header">
@@ -107,7 +107,7 @@
                             </dt>
 
                             <dd>
-                                <input disabled="true" />
+                                <input disabled="true"/>
                                 <label>-----</label>
                                 <label><a href="#" data-toggle="modal" data-target="#assignip-modal">Assign Default IP</a></label>
                             </dd>
@@ -117,7 +117,7 @@
                             </dt>
 
                             <dd>
-                                <input disabled="true" />
+                                <input disabled="true"/>
                                 <label>-----</label>
                                 <label><a href="#" data-toggle="modal" data-target="#assignlocation-modal">Assign Location</a></label>
                             </dd>
@@ -139,16 +139,18 @@
                             </dd>
                         </div>
                     </div>
-                    <dt>
-                        Description:
-                    </dt>
+                    <div class="form-group">
+                        <dt>
+                            Description:
+                        </dt>
 
-                    <dd>
-                        Amount: 3; I want to be assigned as soon as possible
-                    </dd>
+                        <dd>
+                            Amount: 3; I want to be assigned as soon as possible
+                        </dd>
+                    </div>
+                   
                     <dt></dt>
                     <dd>
-                        <button type="submit" class="btn btn-success">Assign</button>
                         <button type="submit" class="btn btn-primary">Approve</button>
                         <button type="submit" class="btn btn-danger">Reject</button>
                     </dd>

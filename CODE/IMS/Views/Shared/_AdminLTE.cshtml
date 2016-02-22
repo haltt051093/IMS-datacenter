@@ -81,7 +81,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="footer"><a href="#">View all</a></li>
+                            <li class="footer"><a href="@Url.Action("ListNotifications2","Request")">View all</a></li>
                         </ul>
                     </li>
                     <!-- Tasks: style can be found in dropdown.less -->
@@ -97,7 +97,7 @@
                                 <ul class="menu">
                                     <li>
                                         <!-- Task item -->
-                                        <a href="#">
+                                        <a href="@Url.Action("RequestAddServerInfo2","Request")">
                                             <h3>
                                                 Request add server
                                                 <small class="pull-right">Pending</small>
@@ -107,7 +107,7 @@
                                     <li style="color: #d9534f">
                                         <!-- Task item -->
                                         <a href="#">
-                                            <h3 style="color: #d9534f">
+                                            <h3>
                                                 Request Assign IP Address
                                                 <small class="pull-right">Waiting</small>
                                             </h3>
@@ -125,7 +125,7 @@
                                     <li>
                                         <!-- Task item -->
                                         <a href="#">
-                                            <h3 style="color: #d9534f">
+                                            <h3>
                                                 Request Return IP Address
                                                 <small class="pull-right">Waiting</small>
                                             </h3>
@@ -133,9 +133,7 @@
                                     </li><!-- end task item -->
                                 </ul>
                             </li>
-                            <li class="footer">
-                                <a href="#">View all tasks</a>
-                            </li>
+
                         </ul>
                     </li>
                 }
@@ -264,7 +262,7 @@
 
                         <dl class="dl-horizontal">
                             <dt>Request Code</dt>
-                            <dd><a href="@Url.Action("RequestAddServer2","Request")">R123456</a></dd>
+                            <dd><a href="@Url.Action("RequestAddServerInfo2","Request")">R123456</a></dd>
                             <dt>Customer Name</dt>
                             <dd>Lê Thị Thu Hà</dd>
                             <dt>Request Type Name</dt>
