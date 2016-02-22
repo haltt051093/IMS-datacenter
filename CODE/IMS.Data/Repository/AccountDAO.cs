@@ -65,11 +65,11 @@ namespace IMS.Data.Repository
 
         public List<AccountExtendedModel> GetAllAccount()
         {
-            string query = @"select a.*,r.RoleName, g.GroupName from Account as a
+            string query = @"select a.*,r.RoleName, g.GroupCode from Account as a
                             left join Role as r
                             on a.Role = r.RoleName
                             join [Group] g
-                            on a.GroupName = g.GroupName";
+                            on a.GroupCode = g.GroupCode";
             return RawQuery<AccountExtendedModel>(query, new object[] { });
         }
     }
