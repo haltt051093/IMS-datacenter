@@ -9,12 +9,12 @@
     data.Add(new HomeSidebarViewModel("Account", "Index2", "Account") { Roles = new List<string>() { "Shift Head" } });
     data.Add(new HomeSidebarViewModel("Create request", "", "") { Roles = new List<string>() { "Customer" }, SubMenu = new List<HomeSidebarViewModel>()
         {
-            new HomeSidebarViewModel("Add New Server", "", "") { Roles = new List<string>() { "Customer" } },
+            new HomeSidebarViewModel("Add New Server", "RequestAddServer2", "Request") { Roles = new List<string>() { "Customer" } },
             new HomeSidebarViewModel("Upgrade Server", "", "") { Roles = new List<string>() { "Customer" } },
             new HomeSidebarViewModel("Change IP Address", "", "") { Roles = new List<string>() { "Customer" } },
             new HomeSidebarViewModel("Free IP Address", "", "") { Roles = new List<string>() { "Customer" } },
             new HomeSidebarViewModel("Return IP Address", "", "") { Roles = new List<string>() { "Customer" } },
-            new HomeSidebarViewModel("Assign IP Address", "", "") { Roles = new List<string>() { "Customer" } },
+            new HomeSidebarViewModel("Assign IP Address", "RequestAssignIP2", "Request") { Roles = new List<string>() { "Customer" } },
             new HomeSidebarViewModel("Add New Rack", "", "") { Roles = new List<string>() { "Customer" } },
             new HomeSidebarViewModel("Return Rack", "", "") { Roles = new List<string>() { "Customer" } }
         }
@@ -46,16 +46,25 @@
     else
     {
         <li class="treeview ">
-            <a href="#"><i class="fa fa-bar-chart-o"></i><span>@menu.Title</span><i class="fa fa-angle-left pull-right"></i></a>
-            <ul class="treeview-menu">
-            @foreach (var subMenu in menu.SubMenu)
-            {
-                if (!subMenu.Roles.Contains(role))
+            @{
+                if (menu.Title == "Create request")
                 {
-                    continue;
+                    <a href="#"><i class="fa fa-pencil-square-o"></i><span>@menu.Title</span><i class="fa fa-angle-left pull-right"></i></a>
                 }
-                <li><a href="@Url.Action(subMenu.Action, subMenu.Controller)"><i class="fa fa-angle-double-right"></i>@subMenu.Title</a></li>
-            }
+                else
+                {
+                    <a href="#"><i class="fa fa-bar-chart-o"></i><span>@menu.Title</span><i class="fa fa-angle-left pull-right"></i></a>
+                }
+            }           
+            <ul class="treeview-menu">
+                @foreach (var subMenu in menu.SubMenu)
+                {
+                    if (!subMenu.Roles.Contains(role))
+                    {
+                        continue;
+                    }
+                    <li><a href="@Url.Action(subMenu.Action, subMenu.Controller)"><i class="fa fa-angle-double-right"></i>@subMenu.Title</a></li>
+                }
             </ul>
         </li>
     }

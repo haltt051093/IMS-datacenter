@@ -69,21 +69,21 @@
                     <td>
                         @if (Model.Request.Equals("Change"))
                         {
-                            if (Model.IPs[i].Status.Equals("Available"))
+                            if (Model.IPs[i].StatusName.Equals("Available"))
                             {
                                 @Html.RadioButtonFor(x => x.NewIP, Model.IPs[i].IPAddress)
                             }
                         }
                         else if (Model.Request.Equals("AddIPForNewServer"))
                         {
-                            if (Model.IPs[i].Status.Equals("Available"))
+                            if (Model.IPs[i].StatusName.Equals("Available"))
                             {
                                 @Html.RadioButtonFor(x => x.NewIP, Model.IPs[i].IPAddress)
                             }
                         }
                         else
                         {
-                            if (Model.IPs[i].Status.Equals("Available"))
+                            if (Model.IPs[i].StatusName.Equals("Available"))
                             {
                                 @Html.HiddenFor(x => x.ListNewIP[i].Value)
                                 @Html.CheckBoxFor(x => x.ListNewIP[i].Selected);

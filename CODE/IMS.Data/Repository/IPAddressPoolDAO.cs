@@ -28,14 +28,14 @@ namespace IMS.Data.Repository
         }
         public List<IPExtendedModel> GetAllIP()
         {
-            string query = @"select i.*,s.Status from IPAddressPool as i
+            string query = @"select i.*,s.StatusName from IPAddressPool as i
                             left join Status as s
                             on s.StatusCode = i.StatusCode";
             return RawQuery<IPExtendedModel>(query, new object[] { });
         }
         public string GetGatewayByServerCode(string servercode)
         {
-            string query = @"select i.*, st.Status from Server as s join IPAddressPool as i on i.IPAddress= s.DefaultIP and s.ServerCode='" + servercode + @"'
+            string query = @"select i.*, st.StatusName from Server as s join IPAddressPool as i on i.IPAddress= s.DefaultIP and s.ServerCode='" + servercode + @"'
                             left join Status as st
                             on st.StatusCode = i.StatusCode ";
             var IP = RawQuery<IPExtendedModel>(query, new object[] { }).FirstOrDefault();
@@ -52,7 +52,7 @@ namespace IMS.Data.Repository
 
         public List<IPExtendedModel> GetIPSameGateway(string gateway)
         {
-            string query = @"select i.*, s.Status from IPAddressPool as i 
+            string query = @"select i.*, s.StatusName from IPAddressPool as i 
                             join Status as s
                             on s.StatusCode = i.StatusCode
                             and i.Gateway='" + gateway + @"'and i.StatusCode='STATUS10'";
@@ -61,7 +61,7 @@ namespace IMS.Data.Repository
 
         public List<IPExtendedModel> GetIPAvailable()
         {
-            string query = @"select i.*,s.Status from IPAddressPool as i 
+            string query = @"select i.*,s.StatusName from IPAddressPool as i 
                             join Status as s
                             on s.StatusCode = i.StatusCode
                             and i.StatusCode='STATUS10'";
@@ -69,7 +69,7 @@ namespace IMS.Data.Repository
         }
         public List<string> GetIPStatus()
         {
-            string query = @"select s.Status from Status as s
+            string query = @"select s.StatusName from Status as s
                            where s.Object = 'IPAddress'";
             return RawQuery<string>(query, new object[] { });
         }

@@ -64,7 +64,7 @@
                             <label style="color: red">@Html.DisplayFor(modelItem => item.RackUnit)</label>
                         </td>
                         <td>
-                            <label style="color: red">@Html.DisplayFor(modelItem => item.Status)</label>
+                            <label style="color: red">@Html.DisplayFor(modelItem => item.StatusName)</label>
                         </td>
                         <td>
                             @if (item.ServerCode == Model.Server.ServerCode)
@@ -74,7 +74,7 @@
                             }
                         </td>
                         <td>
-                            @if (item.Status == "Free")
+                            @if (item.StatusName == "Free")
                             {
                                 @Html.RadioButtonFor(model => model.LocationCode, item.LocationCode)
                             }
@@ -92,13 +92,13 @@
                             @Html.DisplayFor(modelItem => item.RackUnit)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Status)
+                            @Html.DisplayFor(modelItem => item.StatusName)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.ServerCode)
                         </td>
                         <td>
-                            @if (item.Status == "Free")
+                            @if (item.StatusName == "Free")
                         {
                                 @Html.RadioButtonFor(model => model.LocationCode, item.LocationCode)
                             }

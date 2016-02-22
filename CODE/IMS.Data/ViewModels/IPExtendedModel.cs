@@ -11,6 +11,6 @@ namespace IMS.Data.ViewModels
     [NotMapped]
     public class IPExtendedModel : IPAddressPool
     {
-        public string Status { get; set; }
+        public string StatusName { get; set; }
     }
 }

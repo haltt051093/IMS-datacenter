@@ -35,7 +35,7 @@ namespace IMS.Controllers
 
             if (!String.IsNullOrEmpty(StatusSearch))
             {
-                locations = locations.Where(st => st.Status.Trim() == StatusSearch.Trim()).ToList();
+                locations = locations.Where(st => st.StatusName.Trim() == StatusSearch.Trim()).ToList();
             }
 
             if (!String.IsNullOrWhiteSpace(RackSearch))
