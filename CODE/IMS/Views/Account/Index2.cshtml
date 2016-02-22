@@ -33,7 +33,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><a href="" data-toggle="modal" data-target="#serverdetail-modal"> Trident</a></td>
+                        <td><a href=""> Trident</a></td>
                         <td>
                             Internet
                             Explorer 4.0
@@ -45,7 +45,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td><a href="">Edit</a></td>
+                        <td><a href="" data-toggle="modal" data-target="#editcustomer-modal">Edit</a></td>
                     </tr>
                     <tr>
                         <td><a href="#"> Trident</a></td>
@@ -581,6 +581,58 @@
     </div><!-- /.box -->
 </section>
 
+<!-- EDIT CUSTOMER MODAL -->
+<div class="modal fade" id="editcustomer-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width: 500px;height: 500px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><i class="fa fa-edit"></i> Edit account of Customer</h4>
+            </div>
+            <form action="#" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Username</label>
+                        <input type="text" class="form-control" id="exampleInputEmail1" value="haltt" disabled="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Status</label>
+                        <select>
+                            <option>Activate</option>
+                            <option>Deactivate</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Fullname</label>
+                        <input type="text" class="form-control" id="exampleInputPassword1" value="Lê Thị Thu Hà">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Phone</label>
+                        <input type="text" class="form-control" id="exampleInputPassword1" value="091234567">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Email</label>
+                        <input type="text" checked="true" class="form-control" id="" value="haltt@gmail.com" >
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Address</label>
+                        <input type="text" checked="true" class="form-control" id="exampleInputPassword1" value="19 Quang Trung" >
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Identification</label>
+                        <input type="text" checked="true" class="form-control" id="exampleInputPassword1" value="1234567890" >
+                    </div>
+                </div>
+                <div class="modal-footer clearfix">
+
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+
+                    <button type="submit" class="btn btn-primary pull-left"> Change</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <!-- page script -->
 <script type="text/javascript">
     $(function () {

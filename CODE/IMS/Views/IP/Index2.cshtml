@@ -43,7 +43,7 @@
                         <td> 4</td>
                         <td>Used</td>
                         <td></td>
-                        <td><a href="#">Change Status</a></td>
+                        <td><a href="#" data-toggle="modal" data-target="#changestatus-modal">Change Status</a></td>
                     </tr>
                     <tr>
                         <td> Trident</td>
@@ -525,7 +525,55 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<!-- CHANGE STATUS MODAL -->
+<div class="modal fade" id="changestatus-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width: 500px;height: 500px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><i class="fa fa-edit"></i> Change status of IP Address</h4>
+            </div>
+            <form action="#" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">IP Address</label>
+                        <input type="text" class="form-control" id="exampleInputEmail1" value="192.168.1.10" disabled="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Gateway</label>
+                        <input type="text" class="form-control" id="exampleInputPassword1" value="192.168.1.1" disabled="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Subnetmask</label>
+                        <input type="text" class="form-control" id="exampleInputPassword1" value="255.255.0.0" disabled="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">RegisteredDate</label>
+                        <input type="text" class="form-control" id="exampleInputPassword1" value="16-Jan-16 23:22:00" disabled="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">isDefault</label>
+                        <input type="checkbox" checked="true" class="form-control" id="exampleInputPassword1" placeholder="Power of rack" disabled="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Status</label>
+                        <select>
+                            <option>Available</option>
+                            <option>Used</option>
+                            <option>Blocked</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer clearfix">
 
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+
+                    <button type="submit" class="btn btn-primary pull-left"> Change</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
        <!-- page script -->
 <script type="text/javascript">
             $(function() {
