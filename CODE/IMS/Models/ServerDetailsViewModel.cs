@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using AutoMapper;
+﻿using System.Collections.Generic;
 using IMS.Data.Models;
 using IMS.Data.ViewModels;
 

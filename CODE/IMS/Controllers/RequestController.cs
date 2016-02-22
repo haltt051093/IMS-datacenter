@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Security.Policy;
 using System.Text;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
 using AutoMapper;
 using IMS.Core;
 using IMS.Data.Business;
@@ -50,9 +46,6 @@ namespace IMS.Controllers
         {
             return View();
         }
-
-<<<<<<< HEAD
-=======
         public ActionResult RequestChangeIP2()
         {
             return View();
@@ -112,8 +105,6 @@ namespace IMS.Controllers
         {
             return View();
         }
-
->>>>>>> 18e83e1298e1d3acabcd690e1605db3966f8d99e
         private static IHubContext commandHubContext;
 
         [HttpGet]
@@ -712,7 +703,7 @@ namespace IMS.Controllers
                 };
                 RackOfCustomerBLO.Current.Add(rackOfCustomer);
             }
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]

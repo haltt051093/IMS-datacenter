@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Web.Mvc;
-using IMS.Data.Models;
 
 namespace IMS.Models
 {
