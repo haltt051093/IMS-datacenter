@@ -27,6 +27,11 @@ namespace IMS.Controllers
         {
             return View();
         }
+
+        public ActionResult ViewProfile2()
+        {
+            return View();
+        }
         [AllowAnonymous]
         public ActionResult Login()
         {
