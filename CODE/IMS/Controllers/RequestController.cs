@@ -51,6 +51,69 @@ namespace IMS.Controllers
             return View();
         }
 
+<<<<<<< HEAD
+=======
+        public ActionResult RequestChangeIP2()
+        {
+            return View();
+        }
+
+        public ActionResult RequestChangeIPInfo2()
+        {
+            return View();
+        }
+
+        public ActionResult RequestRentRack2()
+        {
+            return View();
+        }
+
+        public ActionResult RequestRentRackInfo2()
+        {
+            return View();
+        }
+
+        public ActionResult RequestReturnRack2()
+        {
+            return View();
+        }
+
+        public ActionResult RequestReturnRackInfo2()
+        {
+            return View();
+        }
+
+        public ActionResult RequestReturnIP2()
+        {
+            return View();
+        }
+
+        public ActionResult RequestReturnIPInfo2()
+        {
+            return View();
+        }
+
+        public ActionResult RequestUpgradeServer2()
+        {
+            return View();
+        }
+
+        public ActionResult RequestUpgradeServerInfo2()
+        {
+            return View();
+        }
+
+        public ActionResult RequestBringAwayServer2()
+        {
+            return View();
+        }
+
+        public ActionResult RequestBringAwayServerInfo2()
+        {
+            return View();
+        }
+
+>>>>>>> 18e83e1298e1d3acabcd690e1605db3966f8d99e
         private static IHubContext commandHubContext;
 
         [HttpGet]

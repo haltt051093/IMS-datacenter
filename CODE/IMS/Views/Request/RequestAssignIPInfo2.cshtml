@@ -6,12 +6,10 @@
 
 <section class="content-header">
     <h1>
-        Request Assign IP Address Info Page
+        Detail Request Assign IP Address
     </h1>
     <ol class="breadcrumb">
         <li><a href="@Url.Action("Index2", "Schedule")"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="@Url.Action("Index2", "Server")"><i class="fa fa-dashboard"></i> Server</a></li>
-        <li class="active">RequestAssignIP</li>
     </ol>
 </section>
 <section class="content">
@@ -38,16 +36,10 @@
 
                     <dd>
                         Waiting
-                    </dd>
-                    <dt> </dt>
-                    <dd></dd>
-                    <dt>
-                        <h4 style="color: #f56954">Request Content:</h4>
-                    </dt>
-                    <dd></dd>
+                    </dd>                
 
                     <dt>
-                        Selected server:
+                        Selected server
                     </dt>
 
                     <dd>
@@ -56,7 +48,7 @@
                     </dd>
 
                     <dt>
-                        Description:
+                        Description
                     </dt>
 
                     <dd>
@@ -64,28 +56,24 @@
                         <label>---------</label>
                         <label><a href="#" data-toggle="modal" data-target="#assignIP-modal">Assign IP For Server</a></label>
                     </dd>
-                    <dt>
-                        <h4 style="color: #f56954">Selected IP Address:</h4>
+                    <dt  style="color: #f56954">
+                        Assigned IP Address
                     </dt>
-                    <dd></dd>
-                    <dt>
-                        Assigned IP Address(es)
-                    </dt>
+
                     <dd>
-                        <ul class="list-group col-sm-5">
+                        <ul class="list-group col-sm-3">
 
                             <li class="list-group-item">
-                                Assigned IP 1
+                                192.168.1.1
                             </li>
                             <li class="list-group-item">
-                                Assigned IP 2
+                               192.168.1.2
                             </li>
 
                         </ul>
                     </dd>
                     <dt></dt>
                     <dd>
-                        <button type="submit" class="btn btn-success">Assign</button>
                         <button type="submit" class="btn btn-primary">Approve</button>
                         <button type="submit" class="btn btn-danger">Reject</button>
                     </dd>
@@ -95,7 +83,7 @@
         </div><!-- /.box-body -->
     </div><!-- /.box -->
 </section>
-<!-- CHANGE LOCATION MODAL -->
+<!-- ASSIGN IP MODAL -->
 <div class="modal fade" id="assignIP-modal" tabindex="-1" role="dialog" >
     <div class="modal-dialog" style="width: 1000px;height: 2000px">
         <div class="modal-content">
