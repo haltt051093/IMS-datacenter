@@ -925,6 +925,7 @@
     <Content Include="Views\Request\RequestWithdrawServer.cshtml" />
     <Content Include="Views\Request\ProcessRequestWithdrawServer.cshtml" />
     <Content Include="Views\Request\ListNotifications2.cshtml" />
+    <Content Include="Views\Account\ViewProfile2.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

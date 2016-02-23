@@ -81,6 +81,16 @@ namespace IMS.Controllers
         // GET: Account
         public ActionResult Index(string role)
         {
+            if (role == null)
+            {
+                if (Session[Constants.Session.USER_LOGIN] != null)
+                {
+                    var obj = Session[Constants.Session.USER_LOGIN];
+                    Account a = (Account)obj;
+                    role = a.Role;
+                }
+            }
+            
             var data = new AccountIndexViewModel();
             //data.Accounts = AccountBLO.Current.GetAllAccount();
             List<Account> lstall = AccountDAO.Current.GetAll();
