@@ -10,6 +10,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="@Url.Action("Index2", "Schedule")"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Detail Request Add New Server</li>
     </ol>
 </section>
 <section class="content">
@@ -149,14 +150,24 @@
                             </dd>
                         </div>
                     </div>
-                  
-                   
+
+
                     <dt></dt>
-                    <dd>
-                        <button type="submit" class="btn btn-info"><i class="fa fa-external-link"></i> Export Procedure</button>
-                        <button type="submit" class="btn btn-primary">Approve</button>
-                        <button type="submit" class="btn btn-danger">Reject</button>
-                    </dd>
+                    @{
+                        if (Request.Url.ToString().Contains("act=Finish"))
+                        {
+
+                        }
+                        else
+                        {
+                            <dd>
+                                <button type="submit" class="btn btn-info"><i class="fa fa-external-link"></i> Export Procedure</button>
+                                <button type="submit" class="btn btn-primary">Approve</button>
+                                <button type="submit" class="btn btn-danger">Reject</button>
+                            </dd>
+                        }
+                    }
+                   
 
                 </dl>
             </form>

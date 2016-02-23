@@ -1,7 +1,64 @@
 ﻿
 @{
     ViewBag.Title = "RequestHistory2";
+    ViewBag.Role = "Customer";
 }
+<section class="content-header">
+    <h1>
+        List of Notification
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("RequestHistory2", "Request")"><i class="fa fa-dashboard"></i> Home</a></li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="box">
+        <div class="box-body table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>RequestCode</th>
+                        <th>RequestType</th>
+                        <th>RequestedTime</th>
+                        <th>Status</th>
+                       
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="@Url.Action("RequestAddServer2","Request",new {act = "Update"})">R123456</a></td>
+                        <td>Add New Server</td>
+                        <td>22-Feb-16 00:03:00</td>
+                        <td>Sending</td>
+                        
+                    </tr>
+                    <tr>
+                        <td><a href="@Url.Action("RequestAddServerInfo2","Request", new{act = "Finish"})">R098765</a></td>
+                        <td>Add New Server</td>
+                        <td>22-Feb-16 00:03:00</td>
+                        <td>Done</td>
 
-<h2>RequestHistory2</h2>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>RequestCode</th>
+                        <th>RequestType</th>
+                        <th>RequestedTime</th>
+                        <th>Status</th>
+                       
+                    </tr>
+                </tfoot>
+            </table>
+        </div><!-- /.box-body -->
+    </div><!-- /.box -->
 
+</section><!-- /.content -->
+
+<script type="text/javascript">
+            $(function() {
+                $("#example1").dataTable();
+
+            });
+</script>
