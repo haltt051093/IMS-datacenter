@@ -86,8 +86,12 @@ namespace IMS.Controllers
                 if (Session[Constants.Session.USER_LOGIN] != null)
                 {
                     var obj = Session[Constants.Session.USER_LOGIN];
-                    Account a = (Account)obj;
+                    Account a = (Account) obj;
                     role = a.Role;
+                }
+                else
+                {
+                    return View("Login");
                 }
             }
             
