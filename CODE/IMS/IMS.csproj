@@ -926,6 +926,19 @@
     <Content Include="Views\Request\ProcessRequestWithdrawServer.cshtml" />
     <Content Include="Views\Request\ListNotifications2.cshtml" />
     <Content Include="Views\Account\ViewProfile2.cshtml" />
+    <Content Include="Views\Request\RequestBringAwayServer2.cshtml" />
+    <Content Include="Views\Request\RequestBringAwayServerInfo2.cshtml" />
+    <Content Include="Views\Request\RequestChangeIP2.cshtml" />
+    <Content Include="Views\Request\RequestChangeIPInfo2.cshtml" />
+    <Content Include="Views\Request\RequestHistory2.cshtml" />
+    <Content Include="Views\Request\RequestRentRack2.cshtml" />
+    <Content Include="Views\Request\RequestRentRackInfo2.cshtml" />
+    <Content Include="Views\Request\RequestReturnIP2.cshtml" />
+    <Content Include="Views\Request\RequestReturnIPInfo2.cshtml" />
+    <Content Include="Views\Request\RequestReturnRackInfo2.cshtml" />
+    <Content Include="Views\Request\RequestReturnRack2.cshtml" />
+    <Content Include="Views\Request\RequestUpgradeServer2.cshtml" />
+    <Content Include="Views\Request\RequestUpgradeServerInfo2.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
