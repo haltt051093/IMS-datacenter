@@ -70,7 +70,7 @@ namespace IMS.Controllers
                 {
                     Session[Constants.Session.USER_LOGIN] = o;
                 }
-                string role = o.Role;
+                string role = o.Role;       
                 return RedirectToAction("Index", "Account", new {role = role});
             }
             //else
