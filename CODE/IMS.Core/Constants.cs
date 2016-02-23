@@ -48,6 +48,14 @@ namespace IMS.Core
             public const string SERVERATTRIBUTE_OLD = "STATUS23";
             public const string SERVERATTRIBUTE_UPDATING = "STATUS22";
             public const string SERVERATTRIBUTE_NEW = "STATUS24";
+
+            public const string SERVERIP_CURRENT = "STATUS29";
+            public const string SERVERIP_RETURNING = "STATUS30";
+            public const string SERVERIP_OLD = "STATUS31";
+
+            public const string RACKOFCUSTOMER_CURRENT = "STATUS26";
+            public const string RACKOFCUSTOMER_RETURNING = "STATUS27";
+            public const string RACKOFCUSTOMER_OLD = "STATUS28";
         }
 
         public class GroupName

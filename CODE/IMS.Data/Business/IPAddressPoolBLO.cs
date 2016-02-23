@@ -291,5 +291,10 @@ namespace IMS.Data.Business
         {
             return dao.GetIPStatus();
         }
+
+        public void UpdateStatusIp(string status, string ip)
+        {
+            dao.UpdateStatusIp(status, ip);
+        }
     }
 }

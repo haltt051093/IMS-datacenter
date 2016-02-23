@@ -10,10 +10,13 @@ namespace IMS.Data.Models
     public partial class StaffAssignment : BaseModel
     {
         [StringLength(50)]
-        public string Staff { get; set; }
+        public string AssignedStaff { get; set; }
 
         [StringLength(50)]
         public string ShiftHead { get; set; }
+
+        [StringLength(50)]
+        public string PreAssignedStaff { get; set; }
 
         [StringLength(50)]
         public string RequestCode { get; set; }

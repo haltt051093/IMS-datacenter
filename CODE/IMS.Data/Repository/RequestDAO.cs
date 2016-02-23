@@ -94,5 +94,13 @@ namespace IMS.Data.Repository
                         };
             return query.ToList();
         }
+
+        public void LogUpdateRequestStatus(string status, string requestCode)
+        {
+            //Change request status --> chuyen vo DAO
+            var request = RequestDAO.Current.Query(x => x.RequestCode == requestCode).FirstOrDefault();
+            request.StatusCode = status;
+            Update(request);
+        }
     }
 }
