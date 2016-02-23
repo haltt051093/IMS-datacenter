@@ -8,11 +8,14 @@
 
     <div class="form-horizontal">
         <h4>Customer request</h4>
+        @Html.HiddenFor(x => x.RequestCode)
+        @Html.HiddenFor(x => x.Customer)
+        @Html.HiddenFor(x => x.RequestType)
         <div class="form-group">
             @Html.LabelFor(model => model.Customer, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
 
-                @Html.EditorFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextBoxFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Customer, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -21,7 +24,7 @@
             @Html.LabelFor(model => model.RequestedTime, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
 
-                @Html.EditorFor(model => model.RequestedTime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextBoxFor(model => model.RequestedTime, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.RequestedTime, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -30,7 +33,7 @@
             @Html.LabelFor(model => model.RackNumbers, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
 
-                @Html.EditorFor(model => model.RackNumbers, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextBoxFor(model => model.RackNumbers, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.RackNumbers, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -39,7 +42,7 @@
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
 
-                @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextBoxFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -49,7 +52,7 @@
         <div class="form-group">
             @Html.Label("Available Racks", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.ListBoxFor(x => x.SelectedRacks,Model.AvailableRacks)
+                @Html.ListBoxFor(x => x.SelectedRacks, Model.AvailableRacks, new { style = "width:500px;height:250px" })
             </div>
         </div>
 

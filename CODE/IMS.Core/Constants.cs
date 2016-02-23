@@ -23,8 +23,8 @@ namespace IMS.Core
 
         public class StatusCode
         {
-            public const string REQUEST_WAITING = "STATUS04";
-            public const string REQUEST_PENDING = "STATUS05";
+            public const string REQUEST_SENDING = "STATUS04";
+            public const string REQUEST_WAITING = "STATUS05";
             public const string REQUEST_PROCESSING = "STATUS06";
             public const string REQUEST_DONE = "STATUS07";
             public const string REQUEST_CANCELLED = "STATUS08";
@@ -43,7 +43,6 @@ namespace IMS.Core
 
             public const string RACK_AVAILABLE = "STATUS19";
             public const string RACK_RENTED = "STATUS20";
-            public const string RACK_USING = "STATUS21";
             public const string RACK_RETURNING = "STATUS25";
 
             public const string SERVERATTRIBUTE_OLD = "STATUS23";
@@ -78,8 +77,8 @@ namespace IMS.Core
             public const string SERVER_WAITING = "Waiting";
             public const string SERVER_RUNNING = "Running";
             public const string SERVER_DEACTIVATE = "Deactivate";
+            public const string REQUEST_SENDING = "Sending";
             public const string REQUEST_WAITING = "Waiting";
-            public const string REQUEST_PENDING = "Pending";
             public const string REQUEST_PROCESSING = "Processing";
             public const string REQUEST_DONE = "Done";
             public const string REQUEST_CANCELLED = "Cancelled";

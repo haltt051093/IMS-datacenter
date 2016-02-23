@@ -2,6 +2,90 @@
 @{
     ViewBag.Title = "ListNotifications";
 }
+<section class="content-header">
+    <h1>
+        List of Notification
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="box">
+        <div class="box-body table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>RequestCode</th>
+                        <th>Customer</th>
+                        <th>RequestType</th>
+                        <th>RequestedTime</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="@Url.Action("RequestAddServerInfo2","Request")">R123456</a></td>
+                        <td>
+                           Lê Thị Thu Hà
+                        </td>
+                        <td>Add New Server</td>
+                        <td>22-Feb-16 00:03:00</td>
+                        <td>Sending</td>
+                        <td><a href="#" data-toggle="modal" data-target="#acceptrequest-modal">Accept Request</a></td>
+                    </tr>
 
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>RequestCode</th>
+                        <th>Customer</th>
+                        <th>RequestType</th>
+                        <th>RequestedTime</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div><!-- /.box-body -->
+    </div><!-- /.box -->
+
+</section><!-- /.content -->
+
+<!-- ACCEPT REQUEST MODAL -->
+<div class="modal fade" id="acceptrequest-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width: 500px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><i class="fa fa-check"></i> Accept Request</h4>
+            </div>
+            <form action="#" method="post">
+                <div class="modal-body">
+                   
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Assign Name</label>
+                        <select>
+                            <option>You</option>
+                            <option>tienhlh</option>
+                            <option>namch</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer clearfix">
+
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+
+                    <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Accept</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script type="text/javascript">
+            $(function() {
+                $("#example1").dataTable();
+
+            });
+</script>
 
 

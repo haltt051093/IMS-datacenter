@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Web.WebPages.Html;
-
 namespace IMS.Models
 {
     public class IPChangeStatusViewModel
