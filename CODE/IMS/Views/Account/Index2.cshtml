@@ -13,6 +13,12 @@
         <li class="active">Account</li>
     </ol>
 </section>
+<section class="content">   
+    <a class="btn btn-primary" data-toggle="modal" data-target="#addstaff-modal"><i class="fa fa-plus"></i> Add new staff</a>
+    <a class="btn btn-primary" data-toggle="modal" data-target="#addcustomer-modal"><i class="fa fa-plus"></i> Add new customer</a>
+</section>
+
+<!-- Main content -->
 <section class="content">
     <div class="box">
         <div class="box-body table-responsive">
@@ -698,6 +704,125 @@
                     <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
 
                     <button type="submit" class="btn btn-primary pull-left"> Change</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- ADD STAFF MODAL -->
+<div class="modal fade" id="addstaff-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width: 500px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><i class="fa fa-plus"></i> Add new staff</h4>
+            </div>
+            <form action="#" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Username</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Username" style="width: 300px">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Role</label>
+                        <select class="form-control" style="width: 150px">
+                            <option>Shift Head</option>
+                            <option>Staff</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Group</label>
+                        <select class="form-control" style="width: 150px">
+                            <option>Group 1</option>
+                            <option>Group 2</option>
+                            <option>Group 3</option>
+                            <option>Group 4</option>                          
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Full Name</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Full Name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Address</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Address">
+
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Phone</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Phone" style="width: 300px">
+
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Identification</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Identification" style="width: 300px">
+
+                    </div>
+                </div>
+                <div class="modal-footer clearfix">
+
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+
+                    <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- ADD CUSTOMER MODAL -->
+<div class="modal fade" id="addcustomer-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width: 500px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><i class="fa fa-plus"></i> Add new customer</h4>
+            </div>
+            <form action="#" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Username</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Username" style="width: 300px">
+                    </div>
+                  
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Full Name</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Full Name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Address</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Address">
+
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Phone</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Phone" style="width: 300px">
+
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Identification</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Identification" style="width: 300px">
+
+                    </div>
+                </div>
+                <div class="modal-footer clearfix">
+
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+
+                    <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
