@@ -1,3 +1,4 @@
+using System;
 using IMS.Data.Generic;
 
 namespace IMS.Data.Models
@@ -11,6 +12,12 @@ namespace IMS.Data.Models
         [Required]
         [StringLength(50)]
         public string ServerCode { get; set; }
+
+        [StringLength(50)]
+        public string StatusCode { get; set; }
+
+        [StringLength(50)]
+        public DateTime? AssignedDate { get; set; }
 
         [Required]
         [StringLength(50)]

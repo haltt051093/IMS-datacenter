@@ -592,15 +592,17 @@ namespace IMS.Controllers
             {
                 return View("ProcessRequestAddServer");
             }
+            //DOING
             if (rType.Equals(Constants.RequestTypeCode.ASSIGN_IP))
             {
                 return View("ProcessRequestAssignIP");
             }
+            //DOING
             if (rType.Equals(Constants.RequestTypeCode.CHANGE_IP))
             {
                 return View("ProcessRequestChangeIP");
             }
-            //DOING
+            
             if (rType.Equals(Constants.RequestTypeCode.RETURN_IP))
             {
                 RequestIPViewModel viewmodel = new RequestIPViewModel();
@@ -613,7 +615,7 @@ namespace IMS.Controllers
                 }
                 return View("ProcessRequestReturnIP", viewmodel);
             }
-            //DOING
+
             if (rType.Equals(Constants.RequestTypeCode.RENT_RACK))
             {
                 //chưa cắt số lượng rack từ string của description được
@@ -662,12 +664,8 @@ namespace IMS.Controllers
         public ActionResult ProcessRequestRentRack(RequestRentRackViewModel viewmodel)
         {
 
-            var selectedRack = viewmodel.SelectedRacks;
-            var count = selectedRack[0];
             //Change request status, tu 
-            var request = RequestDAO.Current.Query(x => x.RequestCode == viewmodel.RequestCode).FirstOrDefault();
-            request.StatusCode = Constants.StatusCode.REQUEST_DONE;
-            RequestBLO.Current.Update(request);
+            RequestBLO.Current.LogUpdateRequestStatus(Constants.StatusCode.REQUEST_DONE, viewmodel.RequestCode);
 
             //Add Log Request
             LogChangedContent logRequest = new LogChangedContent
@@ -714,6 +712,45 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult ProcessRequesReturnIp(RequestIPViewModel viewmodel)
         {
+            //Change request status 
+            RequestBLO.Current.LogUpdateRequestStatus(Constants.StatusCode.REQUEST_DONE, viewmodel.RequestCode);
+
+            //change status cua IP o IPAddresspool
+            foreach (var item in viewmodel.Ips)
+            {
+                IPAddressPoolBLO.Current.UpdateStatusIp(Constants.StatusCode.IP_AVAILABLE, item);
+                // update statuscode cua bang serverIP
+                ServerIPBLO.Current.UpdateStatusServerIp(Constants.StatusCode.SERVERIP_RETURNING,
+                    Constants.StatusCode.SERVERIP_OLD, item);
+            }
+
+            //Add Log Request
+            LogChangedContent logRequest = new LogChangedContent
+            {
+                RequestCode = viewmodel.RequestCode,
+                TypeOfLog = Constants.TypeOfLog.LOG_RETURN_IP,
+                Object = Constants.Object.OBJECT_REQUEST,
+                ChangedValueOfObject = viewmodel.RequestCode,
+                ObjectStatus = Constants.StatusCode.REQUEST_DONE,
+                Staff = viewmodel.StaffCode
+            };
+            LogChangedContentBLO.Current.AddLog(logRequest);
+
+            //Add log trang thai IP
+            foreach (var item in viewmodel.Ips)
+            {
+                LogChangedContent logIp = new LogChangedContent
+                {
+                    RequestCode = viewmodel.RequestCode,
+                    TypeOfLog = Constants.TypeOfLog.LOG_RETURN_IP,
+                    Object = Constants.Object.OBJECT_IP,
+                    ChangedValueOfObject = item,
+                    ObjectStatus = Constants.StatusCode.IP_AVAILABLE,
+                    Staff = viewmodel.StatusCode
+                };
+                LogChangedContentBLO.Current.AddLog(logIp);
+            }
+
             return RedirectToAction("Index", "Home");
         }
     }

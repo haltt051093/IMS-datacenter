@@ -73,5 +73,15 @@ namespace IMS.Data.Repository
                            where s.Object = 'IPAddress'";
             return RawQuery<string>(query, new object[] { });
         }
+
+        public void UpdateStatusIp(string status, string ip)
+        {
+            var update = Table().FirstOrDefault(x => x.IPAddress == ip);
+            if (update != null)
+            {
+                update.StatusCode = status;
+                Update(update);
+            }
+        }
     }
 }

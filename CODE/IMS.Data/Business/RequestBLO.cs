@@ -54,5 +54,10 @@ namespace IMS.Data.Business
         {
             return dao.ListAllNotification();
         }
+
+        public void LogUpdateRequestStatus(string status, string requestCode)
+        {
+            dao.LogUpdateRequestStatus(status,requestCode);
+        }
     }
 }

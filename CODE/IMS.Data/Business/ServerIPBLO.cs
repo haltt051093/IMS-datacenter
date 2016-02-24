@@ -27,5 +27,10 @@ namespace IMS.Data.Business
             baseDao = ServerIPDAO.Current;
             dao = ServerIPDAO.Current;
         }
+
+        public void UpdateStatusServerIp(string currentStatus, string updatedStatus, string ip)
+        {
+            dao.UpdateStatusServerIp(currentStatus, updatedStatus, ip);
+        }
     }
 }
