@@ -3990,7 +3990,7 @@ function AgendaEventRenderer() {
 			">" +
 			"<div class='fc-event-inner'>" +
 			"<div class='fc-event-time'>" +
-			htmlEscape(formatDates(event.start, event.end, opt('timeFormat'))) +
+			htmlEscape(formatDates(event.start, event.end, opt('timeFormat'))) +           
 			"</div>" +
 			"<div class='fc-event-title'>" +
 			htmlEscape(event.title || '') +
