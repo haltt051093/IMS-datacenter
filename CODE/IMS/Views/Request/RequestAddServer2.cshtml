@@ -52,6 +52,12 @@
                                 <input type="text" class="form-control"/>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="" class="col-sm-4 control-label">Identification</label>
+                            <div class="form-group col-sm-4">
+                                <input type="text" class="form-control" />
+                            </div>
+                        </div>
                     }
                     else
                     {
@@ -62,32 +68,26 @@
                         </div>
                     }
                 }
-
-                <div class="form-group" id="formAssign">
-                    <label for="" class="col-sm-4 control-label">Assign Name</label>
-                    <div class="form-group col-sm-4">
-                        <input type="text" class="form-control" placeholder="Assign Name"/>
+                <div id="formAssign">
+                    <div class="form-group">
+                        <label for="" class="col-sm-4 control-label">Assign Name</label>
+                        <div class="form-group col-sm-4">
+                            <input type="text" class="form-control" placeholder="Assign Name" />
+                        </div>
+                    </div>
+                    <div class="form-group" id="formAssign">
+                        <label for="" class="col-sm-4 control-label">Identification</label>
+                        <div class="form-group col-sm-4">
+                            <input type="text" class="form-control" placeholder="Identification" />
+                        </div>
                     </div>
                 </div>
-                @{
-                    if (Request.Url.ToString().Contains("act=Update"))
-                    {
-                        <div class="form-group">
-                            <button class="col-sm-2 col-xs-offset-4 btn btn-default">
-                                <a href="@Url.Action("AddServerInfo", "Request")"><label>Add Server Information</label></a>
-                            </button>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="form-group">
-                            <button class="col-sm-2 col-xs-offset-4 btn btn-default">
-                                <a href="@Url.Action("AddServerInfo", "Request")"><label>Add Server Information</label></a>
-                            </button>
-                        </div>
-                    }
-                }
-                
+                <div class="form-group">
+                    <button class="col-sm-2 col-xs-offset-4 btn btn-default" data-toggle="modal" data-target="#addserver-modal">
+
+                        <label>Add Server Information</label>
+                    </button>
+                </div>
                 <div class="form-group" style="width: 1000px">
                     <table id="" class="table table-bordered table-striped  col-xs-offset-1">
                         <thead>
@@ -157,35 +157,35 @@
 </section>
 <!-- EDIT SERVER MODAL -->
 <div class="modal fade" id="editserver-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" style="width: 400px">
+    <div class="modal-dialog" style="width: 500px">
         <div class="modal-content">
 
             <div class="modal-header">
                 <h4 class="modal-title"><i class="fa fa-edit"></i> Edit Server</h4>
             </div>
             <form action="#" method="POST">
-                <div class="modal-body">
+                <div class="modal-body form-horizontal">
                     <div class="form-group">
-                        <label for="" class="control-label">Maker</label>
-                        <div class="form-group" style="width: 300px">
-                            <input type="text" class="form-control" value="DELL" />
+                        <label for="inputEmail3" class="col-sm-3 control-label">Maker</label>
+                        <div class="col-sm-9">
+                            <input type="email" class="form-control" id="inputEmail3" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="" class="control-label">Power</label>
-                        <div class="form-group" style="width: 300px">
-                            <input type="text" class="form-control" value="750GB" />
+                        <label for="inputEmail3" class="col-sm-3 control-label">Power</label>
+                        <div class="col-sm-9">
+                            <input type="email" class="form-control" id="inputEmail3" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="" class="control-label">Model</label>
-                        <div class="form-group" style="width: 300px">
-                            <input type="text" class="form-control" value="ABCD" />
+                        <label for="inputEmail3" class="col-sm-3 control-label">Model</label>
+                        <div class="col-sm-9">
+                            <input type="email" class="form-control" id="inputEmail3">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="" class="control-label">Size</label>
-                        <div class="form-group" style="width: 100px">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Size</label>
+                        <div class="col-sm-3">
                             <select class="form-control">
                                 <option>1</option>
                                 <option>2</option>
@@ -194,34 +194,24 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label">Bandwidth</label>
-                        <div class="form-group">
-                            <input type="radio" name="bandwidth" value="100Mbps" checked="true" /><label>100Mbps</label>
-                            <input type="radio" name="bandwidth" value="1Gbps" /><label>1Gbps</label>
+                        <label for="inputEmail3" class="col-sm-3 control-label">Bandwidth</label>
+                        <div class="col-sm-9">
+                            <label> <input type="radio" name="bandwidth" value="100Mbps" checked="true" />100Mbps</label>
+                            <label><input type="radio" name="bandwidth" value="1Gbps" />1Gbps</label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="attribute1" class="control-label">Serial number</label>
-                        <div class="form-group" style="width: 200px">
-                            <input type="text" class="form-control" value="12345" />
+                        <label for="inputEmail3" class="col-sm-3 control-label">Serial number</label>
+                        <div class="col-sm-9">
+                            <input type="email" class="form-control" id="inputEmail3" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="attribute1" class="control-label">Memory</label>
-                        <div class="form-group" style="width: 200px">
-                            <input type="text" class="form-control" value="12345" />
+                        <label for="inputEmail3" class="col-sm-3 control-label">Memory</label>
+                        <div class="col-sm-9">
+                            <input type="email" class="form-control" id="inputEmail3" >
                         </div>
                     </div>
-                    <div class="form-group">
-                        <button class="btn btn-default" id="addServer">
-                            <label>Add more Attributes</label>
-                        </button>
-                    </div>
-                    <div id="test">
-
-                    </div>
-
-
                 </div>
                 <div class="modal-footer clearfix">
 
@@ -234,41 +224,75 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div id="check" style="display: none">
-    <div class="form-group">
+<!-- ADD SERVER MODAL -->
+<div class="modal fade" id="addserver-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 500px">
+        <div class="modal-content">
 
-        <div for="" class="control-label">
-            <b>
-                <select>
-                    <option>Part number</option>
-                    <option>Memory</option>
-                    <option>Serial number</option>
-                    <option>Storage</option>
-                    <option>Hard drives</option>
-                </select>
-            </b>
-        </div>
-        <div class="form-group" style="width: 200px">
-            <input type="text" class="form-control" placeholder="Value" />
-        </div>
-    </div>
-</div>
-<script type="text/javascript">
-    $(function () {
-        $("#addServer").click(function () {
-            $('#test').append($('#check').html());
-            $('#test select').each(function (i, e) {
-                $(e).attr('name', 'SelectedAttributes[' + i + ']');
-                $(e).attr('id', 'SelectedAttributes_' + i + '_');
-            });
-            $('#test input').each(function (i, e) {
-                $(e).attr('name', 'AttributeValues[' + i + ']');
-                $(e).attr('id', 'AttributeValues_' + i + '_');
-            });
-            return false;
-        });
-    });
-</script>
+            <div class="modal-header">
+                <h4 class="modal-title"><i class="fa fa-plus"></i> Add Server Information</h4>
+            </div>
+            <form action="#" method="POST">
+                <div class="modal-body form-horizontal">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Maker</label>
+                        <div class="col-sm-9">
+                            <input type="email" class="form-control" id="inputEmail3" placeholder="Maker">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Power</label>
+                        <div class="col-sm-9">
+                            <input type="email" class="form-control" id="inputEmail3" placeholder="Power">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Model</label>
+                        <div class="col-sm-9">
+                            <input type="email" class="form-control" id="inputEmail3" placeholder="Model">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Size</label>
+                        <div class="col-sm-3">
+                            <select class="form-control">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>4</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Bandwidth</label>
+                        <div class="col-sm-9">
+                            <label> <input type="radio" name="bandwidth" value="100Mbps" checked="true" />100Mbps</label>
+                            <label><input type="radio" name="bandwidth" value="1Gbps" />1Gbps</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Serial number</label>
+                        <div class="col-sm-9">
+                            <input type="email" class="form-control" id="inputEmail3" placeholder="Serial number">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Memory</label>
+                        <div class="col-sm-9">
+                            <input type="email" class="form-control" id="inputEmail3" placeholder="Memory">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer clearfix">
+
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-plus"> Add</i></button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <script type="text/javascript">
     $(function () {
         $('#datetimepicker1').datetimepicker(
