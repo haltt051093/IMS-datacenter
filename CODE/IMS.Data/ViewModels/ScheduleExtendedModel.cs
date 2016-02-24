@@ -11,7 +11,7 @@ namespace IMS.Data.ViewModels
     [NotMapped]
     public class ScheduleExtendedModel : Request
     {
-        public string Status { get; set; }
+        public string StatusName { get; set; }
         public string RequestTypeName { get; set; }
     }
 }

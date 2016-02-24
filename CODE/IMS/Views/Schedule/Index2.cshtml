@@ -1,4 +1,4 @@
-﻿
+﻿@model IMS.Models.ScheduleIndexViewModel
 @{
     ViewBag.Title = "SchedulePage";
     ViewBag.Role = "Shift Head";
@@ -38,9 +38,11 @@
                     <div class="box-body" id="paneladdnote" style="display: none;">
                         <div class="panel panel-default">
                             <div class="panel-body">
+                               @foreach (var item in Model.Schedules)
+                               {
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <a href="">Request R123456 Processing</a>
+                                        <a href="">@item.RequestCode--@item.RequestTypeName--@item.StatusName</a>
                                     </div>
                                     <div class="panel-body">
                                         <div class="form-inline">
@@ -53,22 +55,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <a href="">Request R456789 Pending</a>
-                                    </div>
-                                    <div class="panel-body">
-                                        <div class="form-inline">
-                                            <div class="form-group">
-                                                <label>Note:</label>
-                                            </div>
-                                            <div class="form-group">
-                                                <textarea style="width: 200px"></textarea>
-                                            </div>
-                                        </div>
-                                         
-                                    </div>
-                                </div>
+                               }
                                 <button type="submit" class="btn btn-primary pull-right">Send</button>
                             </div>
 

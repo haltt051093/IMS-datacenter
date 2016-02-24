@@ -21,7 +21,10 @@ namespace IMS.Controllers
 
         public ActionResult Index2()
         {
-            return View();
+            var note = RequestBLO.Current.GetNoteOfShift();
+            var data = new ScheduleIndexViewModel();
+            data.Schedules = note;
+            return View(data);
         }
     }
 }

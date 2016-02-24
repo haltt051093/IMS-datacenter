@@ -61,7 +61,7 @@ namespace IMS.Data.Repository
             IMSContext.Current.SaveChanges();
             return request.RequestCode;
         }
-
+        //Tien
         public List<ScheduleExtendedModel> GetSchedule()
         {
             string query = @"select r.*,rt.RequestTypeName, s.StatusName from Request as r 
@@ -69,6 +69,23 @@ namespace IMS.Data.Repository
                             on s.StatusCode = r.StatusCode
                             join RequestType as rt
                             on rt.RequestTypeCode = r.RequestType";
+            return RawQuery<ScheduleExtendedModel>(query, new object[] { });
+        }
+        //Tien
+        public List<ScheduleExtendedModel> GetNoteOfShift()
+        {
+            string query = @"select r.*,rt.RequestTypeName,s.StatusName from Request as r
+                            join Status as s on s.StatusCode=r.StatusCode
+                            join RequestType as rt on rt.RequestTypeCode = r.RequestType
+                            join
+                            (
+                            select a.* from AssignedShift as a
+                            where  
+                            a.StartedTime<CURRENT_TIMESTAMP and  CURRENT_TIMESTAMP <a.EndedTime
+                            ) as k
+                            on CAST(r.AppointmentTime as date)=CAST(k.StartedTime AS DATE)
+                            and CAST(r.AppointmentTime as time) < CAST(k.EndedTime AS TIME)
+                            and r.StatusCode='STATUS05' or r.StatusCode='STATUS06'";
             return RawQuery<ScheduleExtendedModel>(query, new object[] { });
         }
 

@@ -35,7 +35,7 @@ namespace IMS.Data.Business
         {
             return dao.AddRequest(passModel, requestType);
         }
-
+        //Tien
         public List<ScheduleExtendedModel> GetScheduleToday()
         {
             var allschedule = dao.GetSchedule();
@@ -48,6 +48,11 @@ namespace IMS.Data.Business
                 }
             }
             return scheduletoday;
+        }
+        //Tien
+        public List<ScheduleExtendedModel> GetNoteOfShift()
+        {
+            return dao.GetNoteOfShift();
         }
 
         public List<NotificationExtendedModel> ListAllNotification()
