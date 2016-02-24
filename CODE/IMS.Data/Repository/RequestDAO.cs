@@ -84,7 +84,7 @@ namespace IMS.Data.Repository
                             a.StartedTime<CURRENT_TIMESTAMP and  CURRENT_TIMESTAMP <a.EndedTime
                             ) as k
                             on CAST(r.AppointmentTime as date)=CAST(k.StartedTime AS DATE)
-                            and CAST(r.AppointmentTime as time) < CAST(k.EndedTime AS TIME)
+                            and r.AppointmentTime < k.EndedTime
                             and r.StatusCode='STATUS05' or r.StatusCode='STATUS06'";
             return RawQuery<ScheduleExtendedModel>(query, new object[] { });
         }
