@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "RequestHistory2";
     ViewBag.Role = "Customer";
 }
@@ -26,20 +25,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><a href="@Url.Action("RequestAddServer2","Request",new {act = "Update"})">R123456</a></td>
-                        <td>Add New Server</td>
-                        <td>22-Feb-16 00:03:00</td>
-                        <td>Sending</td>
-                        
-                    </tr>
-                    <tr>
-                        <td><a href="@Url.Action("RequestAddServerInfo2","Request", new{act = "Finish"})">R098765</a></td>
-                        <td>Add New Server</td>
-                        <td>22-Feb-16 00:03:00</td>
-                        <td>Done</td>
+                
+                <tr>
+                    <td><a href="@Url.Action("RequestAddServer2", "Request", new {act = "Update"})">R123456</a></td>
+                    <td>Add New Server</td>
+                    <td>22-Feb-16 00:03:00</td>
+                    <td>Sending</td>
 
-                    </tr>
+                </tr>
+                <tr>
+                    <td><a href="@Url.Action("RequestAddServerInfo2", "Request", new {act = "Finish"})">R098765</a></td>
+                    <td>Add New Server</td>
+                    <td>22-Feb-16 00:03:00</td>
+                    <td>Done</td>
+
+                </tr>
                 </tbody>
                 <tfoot>
                     <tr>
