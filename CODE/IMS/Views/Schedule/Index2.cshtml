@@ -9,9 +9,18 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script>
 
+    $(document).ready(function() {
+        $("#addnote").click(function() {
+            $("#paneladdnote").slideToggle("slow");
+        });
+    });
+</script>
+
+<script>
+
         $(document).ready(function(){
-            $("#addnote").click(function(){
-                $("#paneladdnote").slideToggle("slow");
+            $("#addnotedetail").click(function(){
+                $("#paneladdnotedetail").slideToggle("slow");
             });
         });
 </script>
@@ -41,16 +50,24 @@
                                @foreach (var item in Model.Schedules)
                                {
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <a href="">@item.RequestCode--@item.RequestTypeName--@item.StatusName</a>
+                                    <div class="panel-heading" id="">
+                                        @item.RequestCode--@item.RequestTypeName--@item.StatusName
                                     </div>
-                                    <div class="panel-body">
+                                    <div class="panel-body" id="">
+                                        <div class="form-inline">
+                                            <div class="form-group">
+                                                <label>PreNote:</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>abc</label>
+                                            </div>
+                                        </div>
                                         <div class="form-inline">
                                             <div class="form-group">
                                                 <label>Note:</label>
                                             </div>
                                             <div class="form-group">
-                                                <textarea style="width: 200px"></textarea>
+                                                <textarea style="width: 200px; height: 30px"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -75,13 +92,7 @@
                                     <label>Note:</label> Not yet finished. Please check!!!
                                 </div>
                             </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading"><a href="">Request R456789 Pending</a></div>
-                                <div class="panel-body">
-                                    <label>Note:</label> Pending. Please check!!!
-                                </div>
-                            </div>
-
+                            
                 </div>
             </div>
         </div><!-- /.col -->
