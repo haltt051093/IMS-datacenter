@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using IMS.Core;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.ViewModels;
@@ -45,6 +46,26 @@ namespace IMS.Data.Repository
         {
             string query = @"select roc.RackCode from RackOfCustomer roc where roc.Customer = '" + server.Customer + @"'";
             return RawQuery<LocationExtendedModel>(query, new object[] { });
+        }
+
+        public List<string> GetReturningRacks(string customer)
+        {
+            var query =
+                Current.Query(
+                    x => x.Customer == customer && x.StatusCode == Constants.StatusCode.RACKOFCUSTOMER_RETURNING)
+                    .Select(x => x.RackCode);
+            return query.ToList();
+        }
+
+        public void UpdateStatusRackOfCustomer(string rackCode, string customer)
+        {
+            var rackOfCustomer =
+                Current.Query(
+                    x =>
+                        x.RackCode == rackCode && x.Customer == customer &&
+                        x.StatusCode == Constants.StatusCode.RACKOFCUSTOMER_RETURNING).FirstOrDefault();
+            rackOfCustomer.StatusCode = Constants.StatusCode.RACKOFCUSTOMER_OLD;
+            Update(rackOfCustomer);
         }
     }
 }

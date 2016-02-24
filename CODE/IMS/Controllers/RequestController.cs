@@ -196,12 +196,6 @@ namespace IMS.Controllers
                 var selected = viewmodel.RackOfCustomer.Where(x => x.Selected).Select(x => x.Value).ToArray();
                 if (number != 0)
                 {
-                    //get appointment time
-                    string dateOnly = viewmodel.AppointmentTime.ToString(Constants.Format.DATE);
-                    string time = DateTime.Parse(viewmodel.Time).ToString(Constants.Format.TIME);
-                    string datetime = dateOnly + ' ' + time;
-                    viewmodel.AppointmentTime = DateTime.Parse(datetime);
-
                     //Add request
                     Request passRequest = new Request
                     {
@@ -218,6 +212,16 @@ namespace IMS.Controllers
                         Rack rack = updateRackStatus;
                         rack.StatusCode = Constants.StatusCode.RACK_RETURNING;
                         RackDAO.Current.Update(rack);
+                        //Add log rack
+                        LogChangedContent logServer = new LogChangedContent
+                        {
+                            RequestCode = result,
+                            TypeOfLog = Constants.TypeOfLog.LOG_RETURN_RACK,
+                            Object = Constants.Object.OBJECT_RACK,
+                            ChangedValueOfObject = item,
+                            ObjectStatus = Constants.StatusCode.RACK_RETURNING,
+                        };
+                        LogChangedContentBLO.Current.AddLog(logServer);
                     }
 
                     //Add Log Request
@@ -230,20 +234,6 @@ namespace IMS.Controllers
                         ObjectStatus = Constants.StatusCode.REQUEST_SENDING
                     };
                     LogChangedContentBLO.Current.AddLog(logRequest);
-
-                    //Add Log Rack status
-                    foreach (var item in selected)
-                    {
-                        LogChangedContent logServer = new LogChangedContent
-                        {
-                            RequestCode = result,
-                            TypeOfLog = Constants.TypeOfLog.LOG_RETURN_RACK,
-                            Object = Constants.Object.OBJECT_RACK,
-                            ChangedValueOfObject = item,
-                            ObjectStatus = Constants.StatusCode.RACK_RETURNING,
-                        };
-                        LogChangedContentBLO.Current.AddLog(logServer);
-                    }
 
                     //Notification
                     var notif = Mapper.Map<RequestReturnRackViewModel, NotificationExtendedModel>(viewmodel);
@@ -607,13 +597,30 @@ namespace IMS.Controllers
                     {
                         //selected values
                         var randomList = IPAddressPoolBLO.Current.SelectRandomIps(listAvailableIps, 3);
+                        viewmodel.SelectedIps = randomList.Select(x => new SelectListItem
+                        {
+                            Value = x,
+                            Text = x
+                        }).ToList();
                         viewmodel.Ips = randomList;
-                        //cho hien thi multiple list
+                        //cho hien thi multiple list, ko bao gom randomList
+                        for (int i = 0; i < listAvailableIps.Count; i++)
+                        {
+                            for (int j = 0; j < randomList.Count; j++)
+                            {
+                                var item = listAvailableIps[i];
+                                if (item.IPAddress.Equals(randomList[j]))
+                                {
+                                    listAvailableIps.Remove(item);
+                                }
+                            }
+                        }
                         viewmodel.IpSelectListItems = listAvailableIps.Select(x => new SelectListItem
                         {
                             Value = x.IPAddress,
                             Text = x.IPAddress
                         }).ToList();
+
                     }
                     else
                     {
@@ -675,7 +682,23 @@ namespace IMS.Controllers
             }
             if (rType.Equals(Constants.RequestTypeCode.RETURN_RACK))
             {
-                return View("ProcessRequestReturnRack");
+                RequestReturnRackViewModel viewmodel = new RequestReturnRackViewModel();
+                //tu requestcode se lay duoc khach hang
+                var customer = RequestBLO.Current.GetCustomerOfRequest(rCode);
+                //lay rack dang o trang thai returning cua khach hang cu the
+                var rackOfCustomer = RackOfCustomerBLO.Current.GetReturningRacks(customer);
+                var request = RequestDAO.Current.Query(x => x.RequestCode == rCode).FirstOrDefault();
+                if (request != null)
+                {
+                    viewmodel = Mapper.Map<Request, RequestReturnRackViewModel>(request);
+                    viewmodel.RackOfCustomer = rackOfCustomer.Select(x => new SelectListItem
+                    {
+                        Value = x,
+                        Text = x
+                    }).ToList(); ;
+                }
+
+                return View("ProcessRequestReturnRack",viewmodel);
             }
             return RedirectToAction("ListNotifications");
         }
@@ -735,6 +758,44 @@ namespace IMS.Controllers
         }
 
         [HttpPost]
+        public ActionResult ProcessRequestReturnRack(RequestReturnRackViewModel viewmodel)
+        {
+            //Change request status 
+            RequestBLO.Current.LogUpdateRequestStatus(Constants.StatusCode.REQUEST_DONE, viewmodel.RequestCode);
+
+            //update status rackofcustomer
+            foreach (var item in viewmodel.RackOfCustomer)
+            {
+                RackOfCustomerBLO.Current.UpdateStatusRackOfCustomer(item.Value, viewmodel.Customer);
+                // update statuscode cua bang rack
+                RackBLO.Current.UpdateRackStatus(item.Value, Constants.StatusCode.RACK_AVAILABLE);
+                //Add log trang thai rack
+                LogChangedContent logIp = new LogChangedContent
+                {
+                    RequestCode = viewmodel.RequestCode,
+                    TypeOfLog = Constants.TypeOfLog.LOG_RETURN_RACK,
+                    Object = Constants.Object.OBJECT_RACK,
+                    ChangedValueOfObject = item.Value,
+                    ObjectStatus = Constants.StatusCode.RACK_AVAILABLE,
+                    Staff = viewmodel.StaffCode
+                };
+                LogChangedContentBLO.Current.AddLog(logIp);
+            }
+            //Add Log Request
+            LogChangedContent logRequest = new LogChangedContent
+            {
+                RequestCode = viewmodel.RequestCode,
+                TypeOfLog = Constants.TypeOfLog.LOG_RETURN_RACK,
+                Object = Constants.Object.OBJECT_REQUEST,
+                ChangedValueOfObject = viewmodel.RequestCode,
+                ObjectStatus = Constants.StatusCode.REQUEST_DONE,
+                Staff = viewmodel.StaffCode
+            };
+            LogChangedContentBLO.Current.AddLog(logRequest);
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
         public ActionResult ProcessRequesReturnIp(RequestIPViewModel viewmodel)
         {
             //Change request status 
@@ -780,15 +841,15 @@ namespace IMS.Controllers
             RequestBLO.Current.LogUpdateRequestStatus(Constants.StatusCode.REQUEST_DONE, viewmodel.RequestCode);
 
             //add ip vo serverip
-            foreach (var item in viewmodel.Ips)
+            foreach (var item in viewmodel.Ips.ToList())
             {
                 var serverIp = new ServerIP
                 {
                     StatusCode = Constants.StatusCode.SERVERIP_CURRENT,
+                    ServerCode = viewmodel.SelectedServer,
                     AssignedDate = DateTime.Now,
                     CurrentIP = item,
-                    PreviousId = 0,
-                    ServerCode = viewmodel.SelectedServer
+                    PreviousId = 0
                 };
                 ServerIPBLO.Current.Add(serverIp);
                 //change status cua IP o IPAddresspool
@@ -824,5 +885,7 @@ namespace IMS.Controllers
         {
             return View();
         }
+
+
     }
 }

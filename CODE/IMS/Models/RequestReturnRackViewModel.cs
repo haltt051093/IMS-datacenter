@@ -19,5 +19,6 @@ namespace IMS.Models
         public string Description { get; set; }
         public DateTime? RequestedTime { get; set; }
         public string StatusCode { get; set; }
+        public string StaffCode { get; set; }
     }
 }

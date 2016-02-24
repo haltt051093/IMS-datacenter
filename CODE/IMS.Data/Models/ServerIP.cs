@@ -9,17 +9,12 @@ namespace IMS.Data.Models
     [Table("ServerIP")]
     public partial class ServerIP : BaseModel
     {
-        [Required]
-        [StringLength(50)]
         public string ServerCode { get; set; }
 
-        [StringLength(50)]
         public string StatusCode { get; set; }
 
         public DateTime? AssignedDate { get; set; }
 
-        [Required]
-        [StringLength(50)]
         public string CurrentIP { get; set; }
 
         public int PreviousId { get; set; }

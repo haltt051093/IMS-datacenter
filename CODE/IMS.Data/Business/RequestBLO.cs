@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.Repository;
@@ -68,6 +69,11 @@ namespace IMS.Data.Business
         public Request GetRequestByRequestCode(string requestCode)
         {
             return dao.GetRequestByRequestCode(requestCode);
+        }
+
+        public string GetCustomerOfRequest(string requestCode)
+        {
+            return RequestDAO.Current.Query(x => x.RequestCode == requestCode).Select(x => x.Customer).FirstOrDefault();
         }
     }
 }

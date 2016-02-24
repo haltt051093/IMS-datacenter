@@ -19,5 +19,7 @@ namespace IMS.Data.Models
         public DateTime? RentedDate { get; set; }
 
         public int PreviousId { get; set; }
+
+        public string StatusCode { get; set; }
     }
 }

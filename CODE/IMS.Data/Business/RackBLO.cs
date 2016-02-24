@@ -77,5 +77,10 @@ namespace IMS.Data.Business
             baseDao = RackDAO.Current;
             dao = RackDAO.Current;
         }
+
+        public void UpdateRackStatus(string rackCode, string status)
+        {
+            dao.UpdateRackStatus(rackCode,status);
+        }
     }
 }
