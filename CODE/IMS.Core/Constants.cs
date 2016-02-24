@@ -43,7 +43,6 @@ namespace IMS.Core
 
             public const string RACK_AVAILABLE = "STATUS19";
             public const string RACK_RENTED = "STATUS20";
-            public const string RACK_RETURNING = "STATUS25";
 
             public const string SERVERATTRIBUTE_OLD = "STATUS23";
             public const string SERVERATTRIBUTE_UPDATING = "STATUS22";
@@ -143,6 +142,8 @@ namespace IMS.Core
             public const string OBJECT_NOTE = "Note";
             public const string OBJECT_ASSIGNMENT = "StaffAssignment";
             public const string OBJECT_RACK = "Rack";
+            public const string OBJECT_RACKOFCUSTOMER = "RackOfCustomer";
+            public const string OBJECT_SERVERIP = "ServerIP";
         }
 
         public class TypeOfLog

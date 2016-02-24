@@ -12,6 +12,7 @@
         @Html.HiddenFor(x => x.RequestCode)
         @Html.HiddenFor(x => x.Customer)
         @Html.HiddenFor(x => x.RequestType)
+        @Html.HiddenFor(x=>x.RackOfCustomer)
         <div class="form-group">
             @Html.LabelFor(model => model.Customer, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -31,12 +32,12 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Returned IPs", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Rack of Customer", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
 
                 @foreach (var item in Model.RackOfCustomer)
                 {
-                    @Html.TextBox(item.Text, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.TextBox(item.Value, item.Value)
 
                     <br />
                 }

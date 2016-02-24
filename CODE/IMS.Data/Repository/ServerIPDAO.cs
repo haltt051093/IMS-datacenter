@@ -1,5 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using IMS.Core;
 using IMS.Data.Business;
 using IMS.Data.Generic;
 using IMS.Data.Models;
@@ -35,6 +38,37 @@ namespace IMS.Data.Repository
                 update.StatusCode = updatedStatus;
                 Update(update);
             }
+        }
+
+        public List<string> GetReturningIps(string serverCode)
+        {
+            var query =
+                Current.Query(x => x.ServerCode == serverCode && x.StatusCode == Constants.StatusCode.SERVERIP_RETURNING)
+                .Select(x=>x.CurrentIP);
+            return query.ToList();
+        }
+
+        public void AddServerIp(string serverCode, string ip, int preId)
+        {
+            var serverip = new ServerIP
+            {
+                CurrentIP = ip,
+                ServerCode = serverCode,
+                StatusCode = Constants.StatusCode.SERVERIP_CURRENT,
+                AssignedDate = DateTime.Now,
+                PreviousId = preId
+            };
+            Add(serverip);
+        }
+
+        public int GetPreviousIp(string serverCode, string ip)
+        {
+            var query =
+                Current.Query(
+                    x =>
+                        x.CurrentIP == ip && x.ServerCode == serverCode &&
+                        x.StatusCode == Constants.StatusCode.SERVERIP_RETURNING).Select(x => x.Id).FirstOrDefault();
+            return query;
         }
     }
 }

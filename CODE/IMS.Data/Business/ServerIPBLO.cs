@@ -1,4 +1,5 @@
-﻿using IMS.Data.Generic;
+﻿using System.Collections.Generic;
+using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.Repository;
 
@@ -31,6 +32,21 @@ namespace IMS.Data.Business
         public void UpdateStatusServerIp(string currentStatus, string updatedStatus, string ip)
         {
             dao.UpdateStatusServerIp(currentStatus, updatedStatus, ip);
+        }
+
+        public List<string> GetReturningIps(string serverCode)
+        {
+            return dao.GetReturningIps(serverCode);
+        }
+
+        public void AddServerIp(string serverCode, string ip, int preId)
+        {
+            dao.AddServerIp(serverCode, ip, preId);
+        }
+
+        public int GetPreviousIp(string serverCode, string ip)
+        {
+            return dao.GetPreviousIp(serverCode, ip);
         }
     }
 }

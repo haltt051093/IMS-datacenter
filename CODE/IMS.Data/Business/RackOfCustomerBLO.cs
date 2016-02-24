@@ -40,9 +40,9 @@ namespace IMS.Data.Business
             return dao.GetReturningRacks(customer);
         }
 
-        public void UpdateStatusRackOfCustomer(string rackCode, string customer)
+        public void UpdateStatusRackOfCustomer(string rackCode, string customer, string preStatus, string updateStatus)
         {
-            dao.UpdateStatusRackOfCustomer(rackCode, customer);
+            dao.UpdateStatusRackOfCustomer(rackCode, customer, preStatus, updateStatus);
         }
     }
 }

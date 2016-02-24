@@ -33,7 +33,7 @@ namespace IMS.Data.Repository
             var query = @"select DISTINCT rc.RackCode, rc.Customer, r.RackName
                         from RackOfCustomer rc
 						right join Rack as r
-						on r.RackCode = rc.RackCode AND r.StatusCode ='STATUS20'
+						on r.RackCode = rc.RackCode AND rc.StatusCode ='STATUS26'
                         where rc.Customer ='" + customer + @"' AND rc.RackCode NOT IN (
                         select DISTINCT l.RackCode
                         from Server as s
@@ -57,14 +57,14 @@ namespace IMS.Data.Repository
             return query.ToList();
         }
 
-        public void UpdateStatusRackOfCustomer(string rackCode, string customer)
+        public void UpdateStatusRackOfCustomer(string rackCode, string customer, string PreStatus, string updateStatus)
         {
             var rackOfCustomer =
                 Current.Query(
                     x =>
                         x.RackCode == rackCode && x.Customer == customer &&
-                        x.StatusCode == Constants.StatusCode.RACKOFCUSTOMER_RETURNING).FirstOrDefault();
-            rackOfCustomer.StatusCode = Constants.StatusCode.RACKOFCUSTOMER_OLD;
+                        x.StatusCode == PreStatus).FirstOrDefault();
+            rackOfCustomer.StatusCode = updateStatus;
             Update(rackOfCustomer);
         }
     }
