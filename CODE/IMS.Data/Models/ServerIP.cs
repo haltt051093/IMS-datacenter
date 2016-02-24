@@ -16,13 +16,12 @@ namespace IMS.Data.Models
         [StringLength(50)]
         public string StatusCode { get; set; }
 
-        [StringLength(50)]
         public DateTime? AssignedDate { get; set; }
 
         [Required]
         [StringLength(50)]
         public string CurrentIP { get; set; }
 
-        public bool IsReturned { get; set; }
+        public int PreviousId { get; set; }
     }
 }

@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using IMS.Core;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.ViewModels;
@@ -82,6 +84,32 @@ namespace IMS.Data.Repository
                 update.StatusCode = status;
                 Update(update);
             }
+        }
+
+        public List<IPExtendedModel> GetAvailableIpsSameGateway(string serverCode)
+        {
+            //get default IP
+            var defaultIp = ServerDAO.Current.Query(x => x.ServerCode == serverCode).Select(x => x.DefaultIP).FirstOrDefault();
+            //select available IPs in the same range with default IP
+            var gateway = GetGatewayByIP(defaultIp);
+            var listAvailableIps = from ips in Table()
+                                   where ips.Gateway == gateway && ips.StatusCode == Constants.StatusCode.IP_AVAILABLE
+                                   select new IPExtendedModel
+                                   {
+                                       IPAddress = ips.IPAddress
+                                   };
+            return listAvailableIps.ToList();
+        }
+
+        public List<string> SelectRandomIps(List<IPExtendedModel> list, int number)
+        {
+            var random = new Random();
+            //var count = random.Next(list.Count);
+            var query = from item in list
+                        orderby random.Next()
+                        select item.IPAddress;
+            var items = query.Take(number);
+            return items.ToList();
         }
     }
 }

@@ -296,5 +296,15 @@ namespace IMS.Data.Business
         {
             dao.UpdateStatusIp(status, ip);
         }
+
+        public List<IPExtendedModel> GetAvailableIpsSameGateway(string serverCode)
+        {
+            return dao.GetAvailableIpsSameGateway(serverCode);
+        }
+
+        public List<string> SelectRandomIps(List<IPExtendedModel> list, int number)
+        {
+            return dao.SelectRandomIps(list, number);
+        }
     }
 }

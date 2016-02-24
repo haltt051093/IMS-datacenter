@@ -25,7 +25,7 @@ namespace IMS.Data.Models
 
         [StringLength(50)]
         public string ChangedValueOfObject { get; set; }
-
+        public string ObjectStatus { get; set; }
         [StringLength(50)]
         public string ServerCode { get; set; }
 
@@ -34,8 +34,6 @@ namespace IMS.Data.Models
 
         public string Description { get; set; }
 
-        public int PreviousId { get; set; }
-        
-        public string ObjectStatus { get; set; }
+
     }
 }

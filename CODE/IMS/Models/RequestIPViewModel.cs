@@ -14,9 +14,10 @@ namespace IMS.Models
         public string SelectedServerCode { get; set; }
         public string Description { get; set; }
         public List<string> Ips { get; set; }
+        public string SelectedServer { get; set; }
         public int IpNumber { get; set; }
         public string Customer { get; set; }
-
+        public List<SelectListItem> IpSelectListItems { get; set; } 
         public string StaffName { get; set; }
         public string StaffCode { get; set; }
         public string RequestCode { get; set; }

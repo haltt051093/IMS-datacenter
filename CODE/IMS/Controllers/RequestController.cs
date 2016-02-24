@@ -241,7 +241,6 @@ namespace IMS.Controllers
                             Object = Constants.Object.OBJECT_RACK,
                             ChangedValueOfObject = item,
                             ObjectStatus = Constants.StatusCode.RACK_RETURNING,
-                            PreviousId = 0
                         };
                         LogChangedContentBLO.Current.AddLog(logServer);
                     }
@@ -359,7 +358,6 @@ namespace IMS.Controllers
                 ChangedValueOfObject = serverCode,
                 //object status
                 ObjectStatus = Constants.StatusCode.SERVER_WAITING,
-                PreviousId = 0
             };
             LogChangedContentBLO.Current.AddLog(logServer);
 
@@ -414,12 +412,10 @@ namespace IMS.Controllers
                         //object status
                         ObjectStatus = Constants.StatusCode.IP_USED,
                         ServerCode = viewmodel.SelectedServerCode,
-                        PreviousId = 0
                     };
                     LogChangedContentBLO.Current.AddLog(logIps);
                     //update serverIP IsReturned
                     var statusObject = ServerIPDAO.Current.Query(x => x.CurrentIP == item).FirstOrDefault();
-                    statusObject.IsReturned = true;
                     ServerIPDAO.Current.Update(statusObject);
                 }
                 //Notification
@@ -436,7 +432,8 @@ namespace IMS.Controllers
         [HttpGet]
         public ActionResult FetchIPs(RequestIPViewModel model)
         {
-            var list = ServerIPDAO.Current.Query(x => x.ServerCode == model.SelectedServerCode && x.IsReturned == false).ToList();
+            var list = ServerIPDAO.Current.Query(x => x.ServerCode == model.SelectedServerCode
+                            && x.StatusCode == Constants.StatusCode.SERVERIP_CURRENT).ToList();
             RequestIPViewModel newmodel = model;
             newmodel.ServerIPs = list;
             return Json(newmodel, JsonRequestBehavior.AllowGet);
@@ -531,12 +528,10 @@ namespace IMS.Controllers
                         //object status
                         ObjectStatus = Constants.StatusCode.IP_USED,
                         ServerCode = viewmodel.SelectedServerCode,
-                        PreviousId = 0
                     };
                     LogChangedContentBLO.Current.AddLog(logIps);
                     //update serverIP IsReturned
                     var statusObject = ServerIPDAO.Current.Query(x => x.CurrentIP == item).FirstOrDefault();
-                    statusObject.IsReturned = true;
                     ServerIPDAO.Current.Update(statusObject);
                 }
                 //Notification
@@ -595,14 +590,45 @@ namespace IMS.Controllers
             //DOING
             if (rType.Equals(Constants.RequestTypeCode.ASSIGN_IP))
             {
-                return View("ProcessRequestAssignIP");
+                RequestIPViewModel viewmodel = new RequestIPViewModel();
+                var request = RequestBLO.Current.GetRequestByRequestCode(rCode);
+                if (request != null)
+                {
+                    viewmodel = Mapper.Map<Request, RequestIPViewModel>(request);
+                    //Lay so luong IP muon assign, tam thoi fix cung
+                    var ipNumber = Constants.Number.NUMBER_5;
+                    viewmodel.IpNumber = ipNumber;
+                    //lay servercode, roi lay ip cua server do, tim nhung ip cung vung con lai
+                    var serverCode = LogChangedContentBLO.Current.GetServerCodeByRequestCode(rCode);
+                    viewmodel.SelectedServer = serverCode;
+                    //Lay list available ip cung vung
+                    var listAvailableIps = IPAddressPoolBLO.Current.GetAvailableIpsSameGateway(serverCode);
+                    if (listAvailableIps.Count > ipNumber)
+                    {
+                        //selected values
+                        var randomList = IPAddressPoolBLO.Current.SelectRandomIps(listAvailableIps, 3);
+                        viewmodel.Ips = randomList;
+                        //cho hien thi multiple list
+                        viewmodel.IpSelectListItems = listAvailableIps.Select(x => new SelectListItem
+                        {
+                            Value = x.IPAddress,
+                            Text = x.IPAddress
+                        }).ToList();
+                    }
+                    else
+                    {
+                        ViewBag.Message = "Khong du so luong IP cap phat. Chi con" + listAvailableIps.Count + "Ips";
+                    }
+                    //select randomly from ipNumber,
+                }
+                return View("ProcessRequestAssignIP", viewmodel);
             }
             //DOING
             if (rType.Equals(Constants.RequestTypeCode.CHANGE_IP))
             {
                 return View("ProcessRequestChangeIP");
             }
-            
+
             if (rType.Equals(Constants.RequestTypeCode.RETURN_IP))
             {
                 RequestIPViewModel viewmodel = new RequestIPViewModel();
@@ -702,7 +728,6 @@ namespace IMS.Controllers
                     RackCode = item,
                     Customer = viewmodel.Customer,
                     RentedDate = DateTime.Now,
-                    IsHired = true
                 };
                 RackOfCustomerBLO.Current.Add(rackOfCustomer);
             }
@@ -722,8 +747,18 @@ namespace IMS.Controllers
                 // update statuscode cua bang serverIP
                 ServerIPBLO.Current.UpdateStatusServerIp(Constants.StatusCode.SERVERIP_RETURNING,
                     Constants.StatusCode.SERVERIP_OLD, item);
+                //Add log trang thai IP
+                LogChangedContent logIp = new LogChangedContent
+                {
+                    RequestCode = viewmodel.RequestCode,
+                    TypeOfLog = Constants.TypeOfLog.LOG_RETURN_IP,
+                    Object = Constants.Object.OBJECT_IP,
+                    ChangedValueOfObject = item,
+                    ObjectStatus = Constants.StatusCode.IP_AVAILABLE,
+                    Staff = viewmodel.StaffCode
+                };
+                LogChangedContentBLO.Current.AddLog(logIp);
             }
-
             //Add Log Request
             LogChangedContent logRequest = new LogChangedContent
             {
@@ -735,23 +770,59 @@ namespace IMS.Controllers
                 Staff = viewmodel.StaffCode
             };
             LogChangedContentBLO.Current.AddLog(logRequest);
+            return RedirectToAction("Index", "Home");
+        }
 
-            //Add log trang thai IP
+        [HttpPost]
+        public ActionResult ProcessRequestAssignIp(RequestIPViewModel viewmodel)
+        {
+            //Change request status 
+            RequestBLO.Current.LogUpdateRequestStatus(Constants.StatusCode.REQUEST_DONE, viewmodel.RequestCode);
+
+            //add ip vo serverip
             foreach (var item in viewmodel.Ips)
             {
+                var serverIp = new ServerIP
+                {
+                    StatusCode = Constants.StatusCode.SERVERIP_CURRENT,
+                    AssignedDate = DateTime.Now,
+                    CurrentIP = item,
+                    PreviousId = 0,
+                    ServerCode = viewmodel.SelectedServer
+                };
+                ServerIPBLO.Current.Add(serverIp);
+                //change status cua IP o IPAddresspool
+                IPAddressPoolBLO.Current.UpdateStatusIp(Constants.StatusCode.IP_USED, item);
+                //Add log trang thai IP
                 LogChangedContent logIp = new LogChangedContent
                 {
                     RequestCode = viewmodel.RequestCode,
-                    TypeOfLog = Constants.TypeOfLog.LOG_RETURN_IP,
+                    TypeOfLog = Constants.TypeOfLog.LOG_ASSIGN_IP,
                     Object = Constants.Object.OBJECT_IP,
                     ChangedValueOfObject = item,
-                    ObjectStatus = Constants.StatusCode.IP_AVAILABLE,
-                    Staff = viewmodel.StatusCode
+                    ObjectStatus = Constants.StatusCode.IP_USED,
+                    Staff = viewmodel.StaffCode
                 };
                 LogChangedContentBLO.Current.AddLog(logIp);
             }
-
+            //Add Log Request
+            LogChangedContent logRequest = new LogChangedContent
+            {
+                RequestCode = viewmodel.RequestCode,
+                TypeOfLog = Constants.TypeOfLog.LOG_ASSIGN_IP,
+                Object = Constants.Object.OBJECT_REQUEST,
+                ChangedValueOfObject = viewmodel.RequestCode,
+                ObjectStatus = Constants.StatusCode.REQUEST_DONE,
+                Staff = viewmodel.StaffCode
+            };
+            LogChangedContentBLO.Current.AddLog(logRequest);
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult ProcessRequestChangeIp(RequestIPViewModel viewmodel)
+        {
+            return View();
         }
     }
 }

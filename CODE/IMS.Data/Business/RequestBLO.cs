@@ -59,5 +59,10 @@ namespace IMS.Data.Business
         {
             dao.LogUpdateRequestStatus(status,requestCode);
         }
+
+        public Request GetRequestByRequestCode(string requestCode)
+        {
+            return dao.GetRequestByRequestCode(requestCode);
+        }
     }
 }

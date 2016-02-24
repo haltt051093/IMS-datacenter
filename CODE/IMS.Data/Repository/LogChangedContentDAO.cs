@@ -47,9 +47,17 @@ namespace IMS.Data.Repository
         public List<string> GetIpRequestReturnIp(string requestCode)
         {
             var query = from log in Table()
-                where log.RequestCode == requestCode && log.Object == Constants.Object.OBJECT_IP
-                select log.ChangedValueOfObject;
+                        where log.RequestCode == requestCode && log.Object == Constants.Object.OBJECT_IP
+                        select log.ChangedValueOfObject;
             return query.ToList();
+        }
+
+        public string GetServerCodeByRequestCode(string requestCode)
+        {
+            //request assign IP chi luu 1 hang trong bang Log
+            var serverCode = Current.Query(x => x.RequestCode == requestCode && x.ServerCode != null)
+                .Select(x => x.ServerCode).FirstOrDefault();
+            return serverCode;
         }
     }
 }

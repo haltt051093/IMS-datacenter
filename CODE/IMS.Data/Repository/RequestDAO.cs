@@ -102,5 +102,10 @@ namespace IMS.Data.Repository
             request.StatusCode = status;
             Update(request);
         }
+
+        public Request GetRequestByRequestCode(string requestCode)
+        {
+           return Current.Query(x => x.RequestCode == requestCode).FirstOrDefault();
+        }
     }
 }
