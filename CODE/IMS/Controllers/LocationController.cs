@@ -15,7 +15,10 @@ namespace IMS.Controllers
     {
         public ActionResult Index2()
         {
-            return View();
+            var data = new LocationIndexViewModel();
+            var locations = LocationBLO.Current.GetAllLocation();
+            data.Locations = locations;
+            return View(data);
         }
         // GET: Location
         public ActionResult Index(string StatusSearch, string RackSearch)

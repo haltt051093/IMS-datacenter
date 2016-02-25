@@ -1,4 +1,4 @@
-﻿
+﻿@model IMS.Models.IPIndexViewModel
 @{
     ViewBag.Title = "IPAddressPage";
     ViewBag.Role = "Shift Head";
@@ -31,27 +31,67 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Trident</td>
-                        <td>
-                            Internet
-                            Explorer 4.0
-                        </td>
-                        <td>Win 95+</td>
-                        <td> 4</td>
-                        <td><a href="#" data-toggle="modal" data-target="#blockIP-modal">Block IP</a></td>
-                    </tr>
-                    <tr>
-                        <td> Trident</td>
-                        <td>
-                            Internet
-                            Explorer 5.0
-                        </td>
-                        <td>Win 95+</td>
-                        <td>5</td>
-                        <td><a href="#" data-toggle="modal" data-target="#unblockIP-modal">Unblock IP</a></td>
-                    </tr>
- 
+                    @foreach (var item in Model.IPs)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IPAddress)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Gateway)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Subnetmask)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StatusName)
+                            </td>
+                            <td>
+                                @if (item.StatusName == "Blocked")
+                                {
+
+                                    <a href="#" data-toggle="modal" data-target="#unblockIP-modal">Unblock IP</a>
+                                }
+                                else if (item.StatusName == "Available")
+                                {
+                                    <a href="#" data-toggle="modal" data-target="#blockIP-modal">Block IP</a>
+                                }
+                            </td>
+                            <div class="modal fade" id="blockIP-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog" style="width: 500px;height: 500px">
+                                    <div class="modal-content">
+                                        <form action="#" method="post">
+                                            <div class="modal-body">
+                                                <h4>Are you sure to block this IP Address?</h4>
+                                            </div>
+                                            <div class="modal-footer clearfix">
+                                                <a href="@Url.Action("ChangeIPStatus", "IP", new {ipid = @item.Id})" type="button" class="btn btn-primary"><i class="fa fa-check"></i> Yes</a>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+
+                                            </div>
+                                        </form>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+                            <div class="modal fade" id="unblockIP-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog" style="width: 500px;height: 500px">
+                                    <div class="modal-content">
+                                        <form action="#" method="post">
+                                            <div class="modal-body">
+                                                <h4>Are you sure to unblock this IP Address?</h4>
+                                            </div>
+                                            <div class="modal-footer clearfix">
+                                                <a href="@Url.Action("ChangeIPStatus", "IP", new {ipid = @item.Id})" type="button" class="btn btn-primary"><i class="fa fa-check"></i> Yes</a>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+
+                                            </div>
+                                        </form>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+                        </tr>
+                    }
+
                 </tbody>
                 <tfoot>
                     <tr>
@@ -68,8 +108,7 @@
     </div><!-- /.box -->
 
 </section><!-- /.content -->
-
-  <!-- ADD IP MODAL -->
+<!-- ADD IP MODAL -->
 <div class="modal fade" id="addip-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" style="width: 400px">
         <div class="modal-content">
@@ -78,7 +117,7 @@
                 <h4 class="modal-title"><i class="fa fa-plus"></i> Add new IP Address Range</h4>
             </div>
             <form action="#" method="post">
-                <div class="modal-body no-border" >
+                <div class="modal-body no-border">
                     <table>
                         <tr>
                             <th>Network Address</th>
@@ -87,9 +126,9 @@
                         <tr>
                             <td>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Nerwork Address"/>
+                                    <input class="form-control" placeholder="Nerwork Address" />
                                 </div>
-                                
+
                             </td>
                             <td>
                                 <div class="form-group">
@@ -101,7 +140,7 @@
                                         <option>28</option>
                                     </select>
                                 </div>
-                                
+
                             </td>
                         </tr>
                     </table>
@@ -116,48 +155,11 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<!-- BLOCK IP MODAL -->
-<div class="modal fade" id="blockIP-modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" style="width: 500px;height: 500px">
-        <div class="modal-content">
-            <form action="#" method="post">
-                <div class="modal-body">
-<h4>Are you sure to block this IP Address?</h4>
-                </div>
-                <div class="modal-footer clearfix">
-
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-
-                    <button type="submit" class="btn btn-primary pull-left"> Yes</button>
-                </div>
-            </form>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- UNBLOCK IP MODAL -->
-<div class="modal fade" id="unblockIP-modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" style="width: 500px;height: 500px">
-        <div class="modal-content">
-            <form action="#" method="post">
-                <div class="modal-body">
-                    <h4>Are you sure to unblock this IP Address?</h4>
-                </div>
-                <div class="modal-footer clearfix">
-
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-
-                    <button type="submit" class="btn btn-primary pull-left"> Yes</button>
-                </div>
-            </form>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 <!-- page script -->
 <script type="text/javascript">
             $(function() {
                 $("#example1").dataTable();
-               
+
             });
 </script>
 

@@ -5,6 +5,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
+using IMS.Core;
 using IMS.Data.Business;
 using IMS.Data.Models;
 using IMS.Data.Repository;
@@ -16,7 +17,10 @@ namespace IMS.Controllers
     {
         public ActionResult Index2()
         {
-            return View();
+            var ips = IPAddressPoolBLO.Current.GetAllIP();
+            var data = new IPIndexViewModel();
+            data.IPs = ips;
+            return View(data);
         }
         // GET: IP
         public ActionResult Index(string GatewaySearch, string StatusSearch)
@@ -180,26 +184,51 @@ namespace IMS.Controllers
                 return RedirectToAction("AssignIP");
             }
         }
-        public ActionResult ChangeStatus(int? id)
+        //public ActionResult ChangeStatus(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    IPAddressPool ip = IPAddressPoolBLO.Current.GetById(id);
+        //    if (ip == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    var ipviewmodel = Mapper.Map<IPAddressPool, IPChangeStatusViewModel>(ip);
+        //    return View(ipviewmodel);
+        //}
+        //[HttpPost]
+        public ActionResult ChangeIPStatus(int ipid)
         {
-            if (id == null)
+            IPAddressPool ip = new IPAddressPool();
+            ip = IPAddressPoolBLO.Current.GetById(ipid);
+            if (ip.StatusCode == Constants.StatusCode.IP_AVAILABLE)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                ip.StatusCode = Constants.StatusCode.IP_BLOCKED;
+                IPAddressPoolDAO.Current.Update(ip);
+                LogChangedContent log = new LogChangedContent();
+                log.TypeOfLog = "BLOCKIP";
+                log.Object = Constants.Object.OBJECT_IP;
+                log.ChangedValueOfObject = ip.IPAddress;
+                log.ObjectStatus = Constants.StatusCode.IP_BLOCKED;
+                log.LogTime = DateTime.Now;
+                LogChangedContentDAO.Current.Add(log);
             }
-            IPAddressPool ip = IPAddressPoolBLO.Current.GetById(id);
-            if (ip == null)
+            else
+            if (ip.StatusCode == Constants.StatusCode.IP_BLOCKED)
             {
-                return HttpNotFound();
+                ip.StatusCode = Constants.StatusCode.IP_AVAILABLE;
+                IPAddressPoolDAO.Current.Update(ip);
+                LogChangedContent log = new LogChangedContent();
+                log.TypeOfLog = "UNBLOCKIP";
+                log.Object = Constants.Object.OBJECT_IP;
+                log.ChangedValueOfObject = ip.IPAddress;
+                log.ObjectStatus = Constants.StatusCode.IP_AVAILABLE;
+                log.LogTime = DateTime.Now;
+                LogChangedContentDAO.Current.Add(log);
             }
-            var ipviewmodel = Mapper.Map<IPAddressPool, IPChangeStatusViewModel>(ip);
-            return View(ipviewmodel);
-        }
-        [HttpPost]
-        public ActionResult ChangeStatus(IPChangeStatusViewModel viewmodel)
-        {
-            IPAddressPool ip = Mapper.Map<IPChangeStatusViewModel, IPAddressPool>(viewmodel);
-            IPAddressPoolBLO.Current.Update(ip);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index2");
         }
     }
 }
