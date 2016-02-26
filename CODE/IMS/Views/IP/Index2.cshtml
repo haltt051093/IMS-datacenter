@@ -31,9 +31,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @for (int i=0;i<Model.IPs.Count;i++)
+                    @foreach (var item in Model.IPs)
                     {
-                        var item = Model.IPs[i];
                         <tr>
                             <td>
                                 @Html.DisplayFor(modelItem => item.IPAddress)
@@ -48,62 +47,40 @@
                                 @Html.DisplayFor(modelItem => item.StatusName)
                             </td>
                             <td>
-                                @if (item.StatusName == "Blocked")
-                                {
 
-                                    <a href="#" data-toggle="modal" data-target="#unblockIP-modal">Unblock IP</a>
+
+                                <a type="button" data-toggle="modal" class="open-blockIP-modal" href="#blockIP-modal" data-id="@item.Id">
+                                    @{
+                                    if (item.StatusName == "Blocked")
+                                    {<label>Unblock IP</label>}
+                                    else if (item.StatusName == "Available")
+                                    { <label>Block IP</label>}
                                 }
-                                @if (item.StatusName == "Available")
-                                {
-                                  
-                                    <a href="#" data-toggle="modal" data-target="#blockIP-modal">Block IP</a>
-                                }
-                               
-                                <div class="modal fade" id="blockIP-modal" tabindex="-1" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog" style="width: 500px;height: 500px">
-                                        <div class="modal-content">
+                            </a>
+                            <div class="modal fade" id="blockIP-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                                <div class="modal-dialog" style="width: 400px">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <h4>Are you sure to change status of this IP Address?</h4>
+                                        </div>
+                                        <div class="modal-footer clearfix">
+                                            @using (Html.BeginForm("ChangeIPStatus", "IP"))
+                                            {
+                                                <input type="hidden" name="ipid" id="ipid" value="" />
+                                                    <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Yes</button>
+                                            }
 
-                                            <div class="modal-body">
-                                                <h4>Are you sure to block this IP Address?</h4>
-                                            </div>
-                                            <div class="modal-footer clearfix">
-                                                @using (Html.BeginForm("Index2", "IP", FormMethod.Post))
-                                                {
-                                                 @Html.HiddenFor(model => Model.IPs[i].Id)
-                                                <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Yes</button>
-                                                }
-                                                
-                                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                                        </div>
 
-                                            </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+                        </td>
 
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal-dialog -->
-                                </div><!-- /.modal -->
-                                <div class="modal fade" id="unblockIP-modal" tabindex="-1" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog" style="width: 500px;height: 500px">
-                                        <div class="modal-content">
 
-                                            <div class="modal-body">
-                                                <h4>Are you sure to unblock this IP Address?</h4>
-                                            </div>
-                                            <div class="modal-footer clearfix">
-                                                @using (Html.BeginForm("Index2", "IP", FormMethod.Post))
-                                                {
-                                                    @Html.HiddenFor(model => Model.IPs[i].Id)
-                                                <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Yes</button>
-                                                }
-                                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-
-                                            </div>
-
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal-dialog -->
-                                </div><!-- /.modal -->
-                            </td>
-
-                        </tr>
-                    }
+                    </tr>
+                                    }
 
                 </tbody>
                 <tfoot>
@@ -170,9 +147,15 @@
 </div><!-- /.modal -->
 <!-- page script -->
 <script type="text/javascript">
-            $(function() {
-                $("#example1").dataTable();
+    $(function() {
+        $("#example1").dataTable();
 
-            });
+    });
 </script>
+<script>
+    $(document).on("click", ".open-blockIP-modal", function () {
+     var myId = $(this).data('id');
+     $(".modal-footer #ipid").val( myId );
 
+});
+</script>
