@@ -53,11 +53,12 @@
 
                                     <a href="#" data-toggle="modal" data-target="#unblockIP-modal">Unblock IP</a>
                                 }
-                                else if (item.StatusName == "Available")
+                                @if (item.StatusName == "Available")
                                 {
+                                  
                                     <a href="#" data-toggle="modal" data-target="#blockIP-modal">Block IP</a>
                                 }
-                                
+                               
                                 <div class="modal fade" id="blockIP-modal" tabindex="-1" role="dialog" aria-hidden="true">
                                     <div class="modal-dialog" style="width: 500px;height: 500px">
                                         <div class="modal-content">
@@ -68,8 +69,8 @@
                                             <div class="modal-footer clearfix">
                                                 @using (Html.BeginForm("Index2", "IP", FormMethod.Post))
                                                 {
-                                                    @Html.HiddenFor(model => Model.IPs[i].Id)
-                                                <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Yes</button>
+                                                 @Html.HiddenFor(model => Model.IPs[i].Id)
+                                                <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Yes</button>
                                                 }
                                                 
                                                 <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
@@ -90,7 +91,7 @@
                                                 @using (Html.BeginForm("Index2", "IP", FormMethod.Post))
                                                 {
                                                     @Html.HiddenFor(model => Model.IPs[i].Id)
-                                                <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Yes</button>
+                                                <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Yes</button>
                                                 }
                                                 <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
 
