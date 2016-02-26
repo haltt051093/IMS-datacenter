@@ -55,6 +55,11 @@ namespace IMS.Data.Business
         {
             return dao.GetNoteOfShift();
         }
+        //Tien
+        public List<ScheduleExtendedModel> GetNoteOfPreviousShift()
+        {
+            return dao.GetNoteOfPreviousShift();
+        }
 
         public List<NotificationExtendedModel> ListAllNotification()
         {

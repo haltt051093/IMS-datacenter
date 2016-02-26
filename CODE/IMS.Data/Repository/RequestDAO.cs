@@ -74,14 +74,41 @@ namespace IMS.Data.Repository
         //Tien
         public List<ScheduleExtendedModel> GetNoteOfShift()
         {
-            string query = @"select r.*,rt.RequestTypeName,s.StatusName from Request as r
+            string query = @"select distinct r.*,rt.RequestTypeName,s.StatusName,note.NoteContent from Request as r
                             join Status as s on s.StatusCode=r.StatusCode
                             join RequestType as rt on rt.RequestTypeCode = r.RequestType
+                            left join(select * from Note as n 
+                            join
+                            (select MAX(n.AddedTime)as mt from Note as n 
+                            group by n.RequestCode)as m
+                            on m.mt=n.AddedTime) as note on note.RequestCode=r.RequestCode
                             join
                             (
                             select a.* from AssignedShift as a
                             where  
                             a.StartedTime<CURRENT_TIMESTAMP and  CURRENT_TIMESTAMP <a.EndedTime
+                            ) as k
+                            on CAST(r.AppointmentTime as date)=CAST(k.StartedTime AS DATE)
+                            and r.AppointmentTime < k.EndedTime
+                            and r.StatusCode='STATUS05' or r.StatusCode='STATUS06'";
+            return RawQuery<ScheduleExtendedModel>(query, new object[] { });
+        }
+        //Tien
+        public List<ScheduleExtendedModel> GetNoteOfPreviousShift()
+        {
+            string query = @"select distinct r.*,rt.RequestTypeName,s.StatusName,note.NoteContent from Request as r
+                            join Status as s on s.StatusCode=r.StatusCode
+                            join RequestType as rt on rt.RequestTypeCode = r.RequestType
+                            left join(select * from Note as n 
+                            join
+                            (select MAX(n.AddedTime)as mt from Note as n 
+                            group by n.RequestCode)as m
+                            on m.mt=n.AddedTime) as note on note.RequestCode=r.RequestCode
+                            join
+                            (select a.* from AssignedShift as a join
+                            (select a.* from AssignedShift as a
+                            where  
+                            a.StartedTime<CURRENT_TIMESTAMP and  CURRENT_TIMESTAMP <a.EndedTime)as h on a.Id=h.Id-1
                             ) as k
                             on CAST(r.AppointmentTime as date)=CAST(k.StartedTime AS DATE)
                             and r.AppointmentTime < k.EndedTime

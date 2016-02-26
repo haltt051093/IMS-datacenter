@@ -198,7 +198,11 @@ namespace IMS.Controllers
         //    var ipviewmodel = Mapper.Map<IPAddressPool, IPChangeStatusViewModel>(ip);
         //    return View(ipviewmodel);
         //}
-        //[HttpPost]
+        [HttpPost]
+        public ActionResult Index2(IPIndexViewModel iivm)
+        {
+            return RedirectToAction("Index2");
+        }
         public ActionResult ChangeIPStatus(int ipid)
         {
             IPAddressPool ip = new IPAddressPool();
