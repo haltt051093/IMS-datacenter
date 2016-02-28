@@ -13,5 +13,6 @@ namespace IMS.Data.ViewModels
     {
         public string StatusName { get; set; }
         public string RequestTypeName { get; set; }
+        public string NoteContent { get; set; }
     }
 }

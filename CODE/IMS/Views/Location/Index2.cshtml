@@ -31,32 +31,35 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.Locations)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.LocationCode)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.RackName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.RackUnit)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.StatusName)
-                            </td>
-                            <td>
-                                @if (item.ServerCode != null)
-                {
-                                    @Html.ActionLink(item.ServerCode, "ServerDetails", "Server", new { id = item.Id }, null)
-                                }
+                    @{
 
-                            </td>
+                        for (int i = 0; i < Model.Locations.Count; i++)
+                        {
+                            var item = Model.Locations[i];
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.LocationCode)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RackName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RackUnit)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StatusName)
+                                </td>
+                                <td>
+                                    @if (item.ServerCode != null)
+                                    {
+                                        @Html.ActionLink(item.ServerCode, "ServerDetails", "Server", new { id = item.Id }, null)
+                                    }
 
-                        </tr>
+                                </td>
+
+                            </tr>
+                        }
                     }
-
                 </tbody>
                 <tfoot>
                     <tr>
@@ -84,22 +87,65 @@
             <form action="#" method="post">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Rack Name</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Rack Name">
+                        @Html.Label("Rack Name", htmlAttributes: new { @class = "control-label" })
+
+
+                        @Html.EditorFor(model => model.RackName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Ex: A1, B1,...", @id = "rackname" } })
+                        @Html.ValidationMessageFor(model => model.RackName, "", new { @class = "text-danger" })
+
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Power(KW)</label>
+                        @Html.Label("Power(KW)", htmlAttributes: new { @class = "control-label" })
                         <div class="form-group" style="width: 100px">
-                            <select class="form-control">
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                                <option>6</option>
-                                <option>7</option>
-                                <option>8</option>
-                                <option>9</option>
-                                <option>10</option>
-                            </select>
+                            @{
+                                IEnumerable<SelectListItem> power = new List<SelectListItem>()
+                        {
+                            new SelectListItem()
+                            {
+                                Text = "3",
+                                Value = "3"
+                            },
+                            new SelectListItem()
+                            {
+                                Text = "4",
+                                Value = "4"
+                            },
+                            new SelectListItem()
+                            {
+                                Text = "5",
+                                Value = "5"
+                            },
+                            new SelectListItem()
+                            {
+                                Text = "6",
+                                Value = "6"
+                            },
+                            new SelectListItem()
+                            {
+                                Text = "7",
+                                Value = "7"
+                            },
+                            new SelectListItem()
+                            {
+                                Text = "8",
+                                Value = "8"
+                            },
+                            new SelectListItem()
+                            {
+                                Text = "9",
+                                Value = "9"
+                            },
+                            new SelectListItem()
+                            {
+                                Text = "10",
+                                Value = "10"
+                            }
+                        };
+                                SelectList power1 = new SelectList(power, "Value", "Text", Model.MaximumPower);
+                            }
+
+                            @Html.DropDownList("MaximumPower", power1, htmlAttributes: new { @class = "form-control", @id = "power" })
+                            @Html.ValidationMessageFor(model => model.MaximumPower, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
@@ -116,9 +162,23 @@
 </div><!-- /.modal -->
 <!-- page script -->
 <script type="text/javascript">
-    $(function () {
+    $(function() {
         $("#example1").dataTable();
 
+    });
+</script>
+<script type="text/javascript">
+    $('#submit').on('click', function () {
+        valid = true;
+        if ($('#rackname').val() == '') {
+            alert("please enter Rack Name");
+            valid = false;
+        }
+
+        if ($('#rackname').val() != /^([A-Z]+[1-9])/) {
+            alert("please enter follow Ex");
+            valid = false;
+        }
     });
 </script>
 

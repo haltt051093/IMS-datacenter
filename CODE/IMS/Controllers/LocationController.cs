@@ -20,6 +20,26 @@ namespace IMS.Controllers
             data.Locations = locations;
             return View(data);
         }
+        [HttpPost]
+        public ActionResult Index2(LocationIndexViewModel livm)
+        {
+            //if (IsAuthorized())
+            //{
+            if (ModelState.IsValid)
+            {
+                var rack = new Rack();
+                rack.RackName = livm.RackName;
+                rack.MaximumPower = livm.MaximumPower;
+                if (RackBLO.Current.AddRackAndLocation(rack) == true)
+                {
+                    return RedirectToAction("Index2");
+                }
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            //}
+
+            return RedirectToAction("Index2");
+        }
         // GET: Location
         public ActionResult Index(string StatusSearch, string RackSearch)
         {

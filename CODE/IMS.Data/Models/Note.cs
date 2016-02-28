@@ -16,7 +16,7 @@ namespace IMS.Data.Models
 
         public string StaffCode { get; set; }
 
-        public string Description { get; set; }
+        public string NoteContent { get; set; }
 
         public DateTime? AddedTime { get; set; }
     }

@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using IMS.Core;
+using IMS.Core.Extensions;
 using IMS.Data.Business;
 using IMS.Data.Models;
 using IMS.Data.Repository;
@@ -198,11 +199,12 @@ namespace IMS.Controllers
         //    var ipviewmodel = Mapper.Map<IPAddressPool, IPChangeStatusViewModel>(ip);
         //    return View(ipviewmodel);
         //}
-        //[HttpPost]
-        public ActionResult ChangeIPStatus(int ipid)
+
+        public ActionResult ChangeIPStatus(string ipid)
         {
+            int? id = ipid.ToInt();
             IPAddressPool ip = new IPAddressPool();
-            ip = IPAddressPoolBLO.Current.GetById(ipid);
+            ip = IPAddressPoolBLO.Current.GetById(id);
             if (ip.StatusCode == Constants.StatusCode.IP_AVAILABLE)
             {
                 ip.StatusCode = Constants.StatusCode.IP_BLOCKED;
