@@ -120,6 +120,14 @@ namespace IMS.Data.Repository
             Update(request);
         }
 
+        public List<RequestExtendedModel> GetAllRequest()
+        {
+            string query = @"select i.*,s.StatusName from Request as i
+                            left join Status as s
+                            on s.StatusCode = i.StatusCode";
+            return RawQuery<RequestExtendedModel>(query, new object[] { });
+        }
+
         public Request GetRequestByRequestCode(string requestCode)
         {
            return Current.Query(x => x.RequestCode == requestCode).FirstOrDefault();

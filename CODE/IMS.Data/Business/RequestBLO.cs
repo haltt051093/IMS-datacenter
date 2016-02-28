@@ -31,6 +31,10 @@ namespace IMS.Data.Business
             baseDao = RequestDAO.Current;
             dao = RequestDAO.Current;
         }
+        public List<RequestExtendedModel> GetAllRequest()
+        {
+            return dao.GetAllRequest();
+        }
 
         public string AddRequest(Request passModel, string requestType)
         {

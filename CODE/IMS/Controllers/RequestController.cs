@@ -108,7 +108,11 @@ namespace IMS.Controllers
 
         public ActionResult RequestHistory2()
         {
-            return View();
+            //var data = RequestDAO.Current.GetAll();
+            var request = RequestBLO.Current.GetAllRequest();
+            var data = new RequestIndexViewModel();
+            data.Request = request;
+            return View(data);
         }
         private static IHubContext commandHubContext;
 

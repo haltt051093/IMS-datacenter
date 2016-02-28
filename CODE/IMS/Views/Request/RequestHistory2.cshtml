@@ -1,4 +1,6 @@
-﻿@{
+﻿@using IMS.Data.Business
+@model IMS.Models.RequestIndexViewModel
+@{
     ViewBag.Title = "RequestHistory2";
     ViewBag.Role = "Customer";
 }
@@ -17,37 +19,58 @@
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>RequestCode</th>
-                        <th>RequestType</th>
-                        <th>RequestedTime</th>
-                        <th>Status</th>
-                       
+                        <th>
+                            @Html.Raw("RequestCode")
+                        </th>
+                        <th>
+                            @Html.Raw("RequestType")
+                        </th>
+                        <th>
+                            @Html.Raw("RequestedTime")
+                        </th>
+                        <th>
+                            @Html.Raw("Status")
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
-                
-                <tr>
-                    <td><a href="@Url.Action("RequestAddServer2", "Request", new {act = "Update"})">R123456</a></td>
-                    <td>Add New Server</td>
-                    <td>22-Feb-16 00:03:00</td>
-                    <td>Sending</td>
+                    @foreach (var item in Model.Request)
+                    {
+                        <tr>
+                            <td>
 
-                </tr>
-                <tr>
-                    <td><a href="@Url.Action("RequestAddServerInfo2", "Request", new {act = "Finish"})">R098765</a></td>
-                    <td>Add New Server</td>
-                    <td>22-Feb-16 00:03:00</td>
-                    <td>Done</td>
+                                @*<td>
+                                    <a href="@Url.Action("RequestAddServer2", "Request", new {act = "Update"})">R123456</a>
+                                </td>*@
 
-                </tr>
+                                @Html.DisplayFor(modelItem => item.RequestCode)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RequestType)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RequestedTime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StatusName)
+                            </td>
+                        </tr>
+                    }
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th>RequestCode</th>
-                        <th>RequestType</th>
-                        <th>RequestedTime</th>
-                        <th>Status</th>
-                       
+                        <th>
+                            @Html.Raw("RequestCode")
+                        </th>
+                        <th>
+                            @Html.Raw("RequestType")
+                        </th>
+                        <th>
+                            @Html.Raw("RequestedTime")
+                        </th>
+                        <th>
+                            @Html.Raw("Status")
+                        </th>
                     </tr>
                 </tfoot>
             </table>
