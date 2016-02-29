@@ -57,12 +57,12 @@ namespace IMS.Controllers
         //}
 
         [HttpPost]
-        public ActionResult CreateIP(IPCreateViewModel icvm)
+        public ActionResult Index2(IPIndexViewModel iivm)
         {
             if (ModelState.IsValid)
             {
-                var ips = IPAddressPoolBLO.Current.GenerateIP(icvm.IP, icvm.BitCount);
-                var gateway = IPAddressPoolBLO.Current.GenerateIP(icvm.IP, icvm.BitCount).FirstOrDefault().Gateway;
+                var ips = IPAddressPoolBLO.Current.GenerateIP(iivm.Address, iivm.Netmask);
+                var gateway = IPAddressPoolBLO.Current.GenerateIP(iivm.Address, iivm.Netmask).FirstOrDefault().Gateway;
                 var exist = IPAddressPoolDAO.Current.Query(x => x.Gateway == gateway);
                 if (exist.Count > 0)
                 {
@@ -71,10 +71,10 @@ namespace IMS.Controllers
                 else
                 {
                     IPAddressPoolBLO.Current.AddIP(ips);
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index2");
                 }
             }
-            return View(icvm);
+            return RedirectToAction("Index2");
         }
         public ActionResult AssignIP(string request, string IP, string servercode, string GatewaySearch)
         {
