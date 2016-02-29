@@ -37,10 +37,6 @@ namespace IMS.Controllers
             return View();
         }
 
-        public ActionResult AddServerInfo()
-        {
-            return View();
-        }
 
         public ActionResult ListNotifications2()
         {

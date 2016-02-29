@@ -24,37 +24,37 @@ namespace IMS.Controllers
             return View(data);
         }
         // GET: IP
-        public ActionResult Index(string GatewaySearch, string StatusSearch)
-        {
-            var ips = IPAddressPoolBLO.Current.GetAllIP();
-            var data = new IPIndexViewModel();
+        //public ActionResult Index(string GatewaySearch, string StatusSearch)
+        //{
+        //    var ips = IPAddressPoolBLO.Current.GetAllIP();
+        //    var data = new IPIndexViewModel();
 
-            var status = new List<string>();
-            var currentstatus = IPAddressPoolBLO.Current.GetIPStatus().ToList();
-            status.AddRange(currentstatus.Distinct());
-            ViewBag.StatusSearch = new SelectList(status);
+        //    var status = new List<string>();
+        //    var currentstatus = IPAddressPoolBLO.Current.GetIPStatus().ToList();
+        //    status.AddRange(currentstatus.Distinct());
+        //    ViewBag.StatusSearch = new SelectList(status);
 
-            var gateways = new List<string>();
-            var currentgateway = ips.OrderBy(x => x.Gateway).Select(x => x.Gateway).ToList();
-            gateways.AddRange(currentgateway.Distinct());
-            ViewBag.GatewaySearch = new SelectList(gateways);
+        //    var gateways = new List<string>();
+        //    var currentgateway = ips.OrderBy(x => x.Gateway).Select(x => x.Gateway).ToList();
+        //    gateways.AddRange(currentgateway.Distinct());
+        //    ViewBag.GatewaySearch = new SelectList(gateways);
 
-            if (!String.IsNullOrEmpty(StatusSearch))
-            {
-                ips = ips.Where(st => st.StatusName.Trim() == StatusSearch.Trim()).ToList();
-            }
+        //    if (!String.IsNullOrEmpty(StatusSearch))
+        //    {
+        //        ips = ips.Where(st => st.StatusName.Trim() == StatusSearch.Trim()).ToList();
+        //    }
 
-            if (!String.IsNullOrWhiteSpace(GatewaySearch))
-            {
-                ips = ips.Where(r => r.Gateway.Trim() == GatewaySearch.Trim()).ToList();
-            }
-            data.IPs = ips;
-            return View(data);
-        }
-        public ActionResult CreateIP()
-        {
-            return View();
-        }
+        //    if (!String.IsNullOrWhiteSpace(GatewaySearch))
+        //    {
+        //        ips = ips.Where(r => r.Gateway.Trim() == GatewaySearch.Trim()).ToList();
+        //    }
+        //    data.IPs = ips;
+        //    return View(data);
+        //}
+        //public ActionResult CreateIP()
+        //{
+        //    return View();
+        //}
 
         [HttpPost]
         public ActionResult CreateIP(IPCreateViewModel icvm)
