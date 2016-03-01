@@ -76,32 +76,31 @@ namespace IMS.Controllers
             }
             return RedirectToAction("Index2");
         }
-        public ActionResult AssignIP(string request, string IP, string servercode, string GatewaySearch)
+        public ActionResult AssignIP(string servercode, string GatewaySearch)
         {
-            IP = "192.168.0.1";
+            //IP = "192.168.0.1";
             //request = "Change";
-            request = "AddIPForNewServer";
+            //request = "AddIPForNewServer";
             //request = "AssignMoreIP";
             servercode = "BJIWEHDHQ";
-            if (request == "Change")
-            {
-                string gateway = IPAddressPoolBLO.Current.GetGatewayByIP(IP);
-                var data = new IPIndexViewModel();
-                data.IPs = IPAddressPoolBLO.Current.GetIPSameGateway(gateway);
-                data.OldIP = IP;
-                data.Request = request;
-                data.ListNewIP = data.IPs.Select(x => new SelectListItem
-                {
-                    Value = x.IPAddress
-                }).ToList();
-                return View(data);
-            }
-            else if (request == "AddIPForNewServer")
-            {
+            //if (request == "Change")
+            //{
+            //    string gateway = IPAddressPoolBLO.Current.GetGatewayByIP(IP);
+            //    var data = new IPIndexViewModel();
+            //    data.IPs = IPAddressPoolBLO.Current.GetIPSameGateway(gateway);
+            //    data.OldIP = IP;
+            //    data.Request = request;
+            //    data.ListNewIP = data.IPs.Select(x => new SelectListItem
+            //    {
+            //        Value = x.IPAddress
+            //    }).ToList();
+            //    return View(data);
+            //}
+            //else if (request == "AddIPForNewServer")
+            //{
                 var data = new IPIndexViewModel();
                 var ips = IPAddressPoolBLO.Current.GetIPAvailable();
                 data.ServerCode = servercode;
-                data.Request = request;
                 data.ListNewIP = data.IPs.Select(x => new SelectListItem
                 {
                     Value = x.IPAddress
@@ -117,20 +116,20 @@ namespace IMS.Controllers
                 }
                 data.IPs = ips;
                 return View(data);
-            }
-            else
-            {
-                var data = new IPIndexViewModel();
-                string gateway = IPAddressPoolBLO.Current.GetGatewayByServerCode(servercode);
-                data.IPs = IPAddressPoolBLO.Current.GetIPSameGateway(gateway);
-                data.Request = request;
-                data.ServerCode = servercode;
-                data.ListNewIP = data.IPs.Select(x => new SelectListItem
-                {
-                    Value = x.IPAddress
-                }).ToList();
-                return View(data);
-            }
+            //}
+            //else
+            //{
+            //    var data = new IPIndexViewModel();
+            //    string gateway = IPAddressPoolBLO.Current.GetGatewayByServerCode(servercode);
+            //    data.IPs = IPAddressPoolBLO.Current.GetIPSameGateway(gateway);
+            //    data.Request = request;
+            //    data.ServerCode = servercode;
+            //    data.ListNewIP = data.IPs.Select(x => new SelectListItem
+            //    {
+            //        Value = x.IPAddress
+            //    }).ToList();
+            //    return View(data);
+            //}
         }
 
         [HttpPost]
