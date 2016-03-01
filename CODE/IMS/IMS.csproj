@@ -947,24 +947,18 @@
     <Content Include="Views\Server\ServerDetails.cshtml" />
     <Content Include="Views\Request\RequestRentRack.cshtml" />
     <Content Include="Views\Request\RequestReturnRack.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Location\Index.cshtml" />
     <Content Include="Views\Location\CreateLocation.cshtml" />
     <Content Include="Views\IP\Index.cshtml" />
-=======
     <Content Include="Views\Request\Index.cshtml" />
->>>>>>> fc7352b67c1b9989a5fc6f98897453e5028c14ab
     <Content Include="Views\Request\RequestUpgradeServer.cshtml" />
     <Content Include="Views\Request\RequestReturnIP.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\ViewProfile.cshtml" />
     <Content Include="Views\Location\AssignLocation.cshtml" />
     <Content Include="Views\IP\AssignIP.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\IP\ChangeStatus.cshtml" />
-=======
     <Content Include="Views\Request\Notification.cshtml" />
->>>>>>> fc7352b67c1b9989a5fc6f98897453e5028c14ab
     <Content Include="Views\Schedule\_AppointmentTime.cshtml" />
     <Content Include="Views\Schedule\Index.cshtml" />
     <Content Include="Views\Shared\_AdminLTE.cshtml" />
