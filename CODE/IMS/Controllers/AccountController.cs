@@ -18,9 +18,63 @@ namespace IMS.Controllers
 
     public class AccountController : CoreController
     {
-        public ActionResult Index2()
+        public ActionResult Index2(string role)
         {
-            return View();
+            if (role == null)
+            {
+                if (Session[Constants.Session.USER_LOGIN] != null)
+                {
+                    var obj = Session[Constants.Session.USER_LOGIN];
+                    Account a = (Account)obj;
+                    role = a.Role;
+                }
+                else
+                {
+                    return View("Login");
+                }
+            }
+
+            var data = new AccountIndexViewModel();
+            //data.Accounts = AccountBLO.Current.GetAllAccount();
+            List<Account> lstall = AccountDAO.Current.GetAll();
+            List<Account> rs = new List<Account>();
+            if (role != null)
+            {
+                if (role.Equals("Manager"))
+                {
+                    rs = lstall;
+                }
+                else if (role.Equals("Shift Head"))
+                {
+                    for (int i = 0; i < lstall.Count; i++)
+                    {
+                        if (!lstall[i].Role.IsNullOrWhiteSpace())
+                        {
+                            if (lstall[i].Role.Equals("Shift Head"))
+                            {
+                                rs.Add(lstall[i]);
+
+                            }
+                        }
+
+                    }
+
+                }
+                else if (role.Equals("Staff"))
+                {
+                    for (int i = 0; i < lstall.Count; i++)
+                    {
+                        if (lstall[i].Role.Equals("Staff"))
+                        {
+                            rs.Add(lstall[i]);
+
+                        }
+
+                    }
+                }
+            }
+            data.ListAccount = rs;
+            return View(data);
         }
 
         public ActionResult Login2()
@@ -71,7 +125,7 @@ namespace IMS.Controllers
                     Session[Constants.Session.USER_LOGIN] = o;
                 }
                 string role = o.Role;       
-                return RedirectToAction("Index", "Account", new {role = role});
+                return RedirectToAction("Index2", "Account", new {role = role});
             }
             //else
             return View();
@@ -81,61 +135,7 @@ namespace IMS.Controllers
         // GET: Account
         public ActionResult Index(string role)
         {
-            if (role == null)
-            {
-                if (Session[Constants.Session.USER_LOGIN] != null)
-                {
-                    var obj = Session[Constants.Session.USER_LOGIN];
-                    Account a = (Account) obj;
-                    role = a.Role;
-                }
-                else
-                {
-                    return View("Login");
-                }
-            }
-            
-            var data = new AccountIndexViewModel();
-            //data.Accounts = AccountBLO.Current.GetAllAccount();
-            List<Account> lstall = AccountDAO.Current.GetAll();
-            List<Account> rs = new List<Account>();
-            if (role != null)
-            {
-                if (role.Equals("Manager"))
-                {
-                    rs = lstall;
-                }
-                else if (role.Equals("Shift Head"))
-                {
-                    for (int i = 0; i < lstall.Count; i++)
-                    {
-                        if (!lstall[i].Role.IsNullOrWhiteSpace())
-                        {
-                            if (lstall[i].Role.Equals("Shift Head"))
-                            {
-                                rs.Add(lstall[i]);
-
-                            }
-                        }
-
-                    }
-
-                }
-                else if (role.Equals("Staff"))
-                {
-                    for (int i = 0; i < lstall.Count; i++)
-                    {
-                        if (lstall[i].Role.Equals("Staff"))
-                        {
-                            rs.Add(lstall[i]);
-
-                        }
-
-                    }
-                }
-            }
-            data.ListAccount = rs;
-            return View(data);
+            return RedirectToAction("Index2", "Account");
         }
 
         [Authorize(Roles = "Manager")]
@@ -164,9 +164,9 @@ namespace IMS.Controllers
                 if (result)
                 {
                     //ModelState.AddModelError("", "Send mail successfully");
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index2");
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("Index2");
             }
             return View(accountCreateViewModel);
         }
@@ -188,7 +188,7 @@ namespace IMS.Controllers
                 if (result)
                 {
                     //ModelState.AddModelError("", "Send mail successfully");
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index2");
                 }
             }
             return View(accountCreateViewModel);
@@ -243,7 +243,7 @@ namespace IMS.Controllers
                 Account a = (Account) obj;
                 role = a.Role;
             }
-            return RedirectToAction("Index", "Account", new { role = role });
+            return RedirectToAction("Index2", "Account", new { role = role });
         }
 
         // POST: Account/Edit/5
@@ -262,7 +262,7 @@ namespace IMS.Controllers
                 Account a = (Account)obj;
                 role = a.Role;
             }
-            return RedirectToAction("Index", "Account", new { role = role });
+            return RedirectToAction("Index2", "Account", new { role = role });
         }
 
         //// GET: Account/Delete/5
