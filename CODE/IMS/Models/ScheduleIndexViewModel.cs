@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using IMS.Data.ViewModels;
 
 namespace IMS.Models
