@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using IMS.Data.ViewModels;
 
 namespace IMS.Models
@@ -13,5 +14,6 @@ namespace IMS.Models
             Racks = new List<RackOfCustomerExtendedModel>();
         }
         public List<RackOfCustomerExtendedModel> Racks { get; set; }
+       
     }
 }
