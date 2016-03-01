@@ -34,7 +34,7 @@ namespace IMS.Controllers
                 {
                     return RedirectToAction("Index2");
                 }
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                Alert("The Rack Name was existed. Please try again!");
             }
             //}
 

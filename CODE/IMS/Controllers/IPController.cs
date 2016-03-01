@@ -66,7 +66,7 @@ namespace IMS.Controllers
                 var exist = IPAddressPoolDAO.Current.Query(x => x.Gateway == gateway);
                 if (exist.Count > 0)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    Alert("The Network Address was existed. Please try again!");
                 }
                 else
                 {
