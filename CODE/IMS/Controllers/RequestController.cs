@@ -29,7 +29,12 @@ namespace IMS.Controllers
             return View();
         }
 
+<<<<<<< HEAD
         public ActionResult AddServerInfo()
+=======
+
+        public ActionResult ListNotifications2()
+>>>>>>> fc7352b67c1b9989a5fc6f98897453e5028c14ab
         {
             return View();
         }

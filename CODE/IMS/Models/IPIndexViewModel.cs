@@ -16,5 +16,7 @@ namespace IMS.Models
         public string NewIP { get; set; }
         public string ServerCode { get; set; }
         public List<SelectListItem> ListNewIP { get; set; }
+        public string Address { get; set; }
+        public int Netmask { get; set; }
     }
 }

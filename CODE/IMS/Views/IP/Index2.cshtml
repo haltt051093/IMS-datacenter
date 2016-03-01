@@ -51,36 +51,36 @@
 
                                 <a type="button" data-toggle="modal" class="open-blockIP-modal" href="#blockIP-modal" data-id="@item.Id">
                                     @{
-                                    if (item.StatusName == "Blocked")
-                                    {<label>Unblock IP</label>}
-                                    else if (item.StatusName == "Available")
-                                    { <label>Block IP</label>}
-                                }
-                            </a>
-                            <div class="modal fade" id="blockIP-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-                                <div class="modal-dialog" style="width: 400px">
-                                    <div class="modal-content">
-                                        <div class="modal-body">
-                                            <h4>Are you sure to change status of this IP Address?</h4>
-                                        </div>
-                                        <div class="modal-footer clearfix">
-                                            @using (Html.BeginForm("ChangeIPStatus", "IP"))
-                                            {
-                                                <input type="hidden" name="ipid" id="ipid" value="" />
-                                                    <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Yes</button>
-                                            }
-
-                                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-                                        </div>
-
-                                    </div><!-- /.modal-content -->
-                                </div><!-- /.modal-dialog -->
-                            </div><!-- /.modal -->
-                        </td>
-
-
-                    </tr>
+                                        if (item.StatusName == "Blocked")
+                                        {<label>Unblock IP</label>}
+                                        else if (item.StatusName == "Available")
+                                        { <label>Block IP</label>}
                                     }
+                                </a>
+                                <div class="modal fade" id="blockIP-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                                    <div class="modal-dialog" style="width: 400px">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <h4>Are you sure to change status of this IP Address?</h4>
+                                            </div>
+                                            <div class="modal-footer clearfix">
+                                                @using (Html.BeginForm("ChangeIPStatus", "IP"))
+                                                {
+                                                    <input type="hidden" name="ipid" id="ipid" value="" />
+                                                    <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Yes</button>
+                                                }
+
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                                            </div>
+
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
+                            </td>
+
+
+                        </tr>
+                                        }
 
                 </tbody>
                 <tfoot>
@@ -110,25 +110,54 @@
                 <div class="modal-body no-border">
                     <table>
                         <tr>
-                            <th>Network Address</th>
-                            <th>Netmask</th>
+                            <th>@Html.Label("Network Address", htmlAttributes: new { @class = "control-label" })</th>
+                            <th>@Html.Label("Netmask", htmlAttributes: new { @class = "control-label" })</th>
                         </tr>
                         <tr>
                             <td>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Nerwork Address" />
+                                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @placeholder = "Network Address", @id = "address" } })
+                                    @Html.ValidationMessageFor(model => model.Netmask, "", new { @class = "text-danger" })
                                 </div>
 
                             </td>
                             <td>
-                                <div class="form-group">
-                                    <select class="form-control">
-                                        <option>24</option>
-                                        <option>25</option>
-                                        <option>26</option>
-                                        <option>27</option>
-                                        <option>28</option>
-                                    </select>
+                                <div class="form-group" style="width: 100px">
+                                    @{
+                                        IEnumerable<SelectListItem> netmask = new List<SelectListItem>()
+                        {
+                            new SelectListItem()
+                            {
+                                Text = "24",
+                                Value = "24"
+                            },
+                            new SelectListItem()
+                            {
+                                Text = "25",
+                                Value = "25"
+                            },
+                            new SelectListItem()
+                            {
+                                Text = "26",
+                                Value = "26"
+                            },
+                            new SelectListItem()
+                            {
+                                Text = "27",
+                                Value = "27"
+                            },
+                            new SelectListItem()
+                            {
+                                Text = "28",
+                                Value = "28"
+                            }
+
+                        };
+                                        SelectList netmask1 = new SelectList(netmask, "Value", "Text", Model.Netmask);
+                                    }
+
+                                    @Html.DropDownList("Netmask", netmask1, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Netmask, "", new { @class = "text-danger" })
                                 </div>
 
                             </td>
