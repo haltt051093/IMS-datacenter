@@ -170,6 +170,10 @@ namespace IMS.Core
             public const string LOG_CHANGE_IP = "CHANGEIP";
             //Assign Ip to server
             public const string LOG_ASSIGN_IP = "ASSIGNIP";
+            //Block IP
+            public const string LOG_BLOCK_IP = "BLOCKIP";
+            //Unblock IP
+            public const string LOG_UNBLOCK_IP = "UNBLOCKIP";
         }
 
         public class BandWidth

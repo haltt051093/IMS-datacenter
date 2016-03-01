@@ -24,5 +24,11 @@ namespace IMS.Data.Repository
         {
             return Query(x => x.Id == entry.Id).FirstOrDefault();
         }
+
+        public string GetStatusName(string statusCode)
+        {
+            var statusName = Current.Query(x => x.StatusCode == statusCode).Select(x => x.StatusName).FirstOrDefault();
+            return statusName;
+        }
     }
 }

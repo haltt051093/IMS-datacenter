@@ -70,11 +70,6 @@ namespace IMS.Data.Business
             return dao.ListAllNotification();
         }
 
-        public void LogUpdateRequestStatus(string status, string requestCode)
-        {
-            dao.LogUpdateRequestStatus(status,requestCode);
-        }
-
         public Request GetRequestByRequestCode(string requestCode)
         {
             return dao.GetRequestByRequestCode(requestCode);
@@ -83,6 +78,11 @@ namespace IMS.Data.Business
         public string GetCustomerOfRequest(string requestCode)
         {
             return RequestDAO.Current.Query(x => x.RequestCode == requestCode).Select(x => x.Customer).FirstOrDefault();
+        }
+
+        public void UpdateRequestStatus(string requestCode, string newStatus)
+        {
+            dao.UpdateRequestStatus(requestCode, newStatus);
         }
     }
 }

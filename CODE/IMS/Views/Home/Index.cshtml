@@ -1,7 +1,35 @@
-﻿
+﻿@using System.Collections.Generic
+@using System.Linq
+@using IMS.Data.Repository
+@model IMS.Data.Models.RequestType
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-<h3>Hihihihihi</h3>
+<h2>Welcome to IMS datacenter</h2>
+<a class="btn btn-primary pull-left" data-toggle="modal"
+   data-target="#displayrequesttype-modal"><i class="fa fa-plus"></i>Create Request</a>
+
+<!-- ADD LOCATION MODAL -->
+<div class="modal fade" id="displayrequesttype-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width: 600px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><i class="fa fa-plus"></i> Select request type</h4>
+            </div>
+            <div class="modal-content">
+                @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+                {
+                    <b>Search By:</b>
+                    var requesttypes = RequestTypeDAO.Current.GetAll().ToList();
+                    var myList = new SelectList(requesttypes, "RequestTypeCode", "RequestTypeName");
+                    @Html.DropDownListFor(model => model.RequestTypeCode, myList, new { @class = "form-control", style = "width:200px" })
+                    <br />
+                        <input type="submit" value="Select request" class="btn btn-default" />
+                }
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- page script -->

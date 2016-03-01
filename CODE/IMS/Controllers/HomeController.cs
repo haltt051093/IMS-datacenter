@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using IMS.Core;
+using IMS.Data.Business;
+using IMS.Data.Models;
+using IMS.Data.Repository;
+using IMS.Models;
 
 namespace IMS.Controllers
 {
@@ -10,9 +15,77 @@ namespace IMS.Controllers
     public class HomeController : CoreController
     {
         // GET: Home
-        public ActionResult Index()
+        [HttpGet]
+        public ActionResult Index(RequestType requesttype)
         {
-            return View();
+            string requestcode = requesttype.RequestTypeCode;
+            if (!string.IsNullOrEmpty(requestcode))
+            {
+                if (requestcode.Equals(Constants.RequestTypeCode.RETURN_RACK))
+                {
+                    RequestReturnRackViewModel viewmodel = new RequestReturnRackViewModel();
+                    var result = RackOfCustomerDAO.Current.EmptyRentedRack(Constants.Test.CUSTOMER_MANHNH);
+                    viewmodel.RackOfCustomer = result.Select(x => new SelectListItem
+                    {
+                        Value = x.RackCode,
+                        Text = x.RackName
+                    }).ToList();
+                    return View("../Request/RequestReturnRack", viewmodel);
+                }
+                //DOING
+                if (requestcode.Equals(Constants.RequestTypeCode.RENT_RACK))
+                {
+                    return View("../Request/RequestRentRack");
+                }
+                if (requestcode.Equals(Constants.RequestTypeCode.ADD_SERVER))
+                {
+                    var viewmodel = new RequestAddServerViewModel();
+                    var attrList = AttributeBLO.Current.GetAll();
+                    viewmodel.AttributeList = attrList
+                        .Select(x => new SelectListItem { Value = x.AttributeCode, Text = x.AttributeName })
+                        .ToList();
+                    return View("../Request/RequestAddServer", viewmodel);
+
+                }
+                if (requestcode.Equals(Constants.RequestTypeCode.RETURN_IP))
+                {
+                    RequestIPViewModel viewmodel = new RequestIPViewModel();
+                    var listServers = ServerDAO.Current.Query(x => x.Customer == Constants.Test.CUSTOMER_MANHNH);
+                    viewmodel.Servers = listServers.Select(x => new SelectListItem
+                    {
+                        Value = x.ServerCode,
+                        Text = x.Model
+                    }).ToList();
+                    return View("../Request/RequestReturnIP", viewmodel);
+                }
+                //DOING
+                if (requestcode.Equals(Constants.RequestTypeCode.CHANGE_IP))
+                {
+                    {
+                        //co the change duoc nhieu IP--> bo sung t
+                        RequestIPViewModel viewmodel = new RequestIPViewModel();
+                        var listServers = ServerDAO.Current.Query(x => x.Customer == Constants.Test.CUSTOMER_MANHNH);
+                        viewmodel.Servers = listServers.Select(x => new SelectListItem
+                        {
+                            Value = x.ServerCode,
+                            Text = x.Model
+                        }).ToList();
+                        return View("../Request/RequestChangeIP", viewmodel);
+                    }
+                }
+                if (requestcode.Equals(Constants.RequestTypeCode.ASSIGN_IP))
+                {
+                    RequestIPViewModel viewmodel = new RequestIPViewModel();
+                    var listServers = ServerDAO.Current.Query(x => x.Customer == Constants.Test.CUSTOMER_MANHNH);
+                    viewmodel.Servers = listServers.Select(x => new SelectListItem
+                    {
+                        Value = x.ServerCode,
+                        Text = x.Model
+                    }).ToList();
+                    return View("../Request/RequestAssignIP", viewmodel);
+                }
+            }
+            return View(requesttype);
         }
 
         [ChildActionOnly]

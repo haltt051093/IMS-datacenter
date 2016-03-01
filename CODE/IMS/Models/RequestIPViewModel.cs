@@ -11,7 +11,6 @@ namespace IMS.Models
         public string Action { get; set; }
         public List<SelectListItem> Servers { get; set; }
         public List<ServerIP> ServerIPs { get; set; }
-        public string SelectedServerCode { get; set; }
         public string Description { get; set; }
         public List<string> Ips { get; set; }
         public List<SelectListItem> SelectedIps { get; set; } 
@@ -26,6 +25,7 @@ namespace IMS.Models
         public string RequestType { get; set; }
         public DateTime? RequestedTime { get; set; }
         public string StatusCode { get; set; }
+        public string StatusName { get; set; }
         public bool IsViewed { get; set; }
     }
 }

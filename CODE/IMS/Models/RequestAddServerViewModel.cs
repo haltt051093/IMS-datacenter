@@ -15,6 +15,8 @@ namespace IMS.Models
         public string DefaultIP { get; set; }
         public string LocationCode { get; set; }
         public int? Outlet { get; set; }
+        public string AssignedName { get; set; }
+        public string Identification { get; set; }
         
         public string Time { get; set; }
         [Required]
@@ -24,6 +26,9 @@ namespace IMS.Models
 
         public string Description { get; set; }
         public string Bandwidth { get; set; }
+        public string PartNumber { get; set; }
+        public string SerialNumber { get; set; }
+        public string Memory { get; set; }
 
         public List<SelectListItem> AttributeList { get; set; }
         public List<string> SelectedAttributes { get; set; }

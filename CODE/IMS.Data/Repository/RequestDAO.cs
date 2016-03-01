@@ -48,7 +48,7 @@ namespace IMS.Data.Repository
             request.RequestType = requestType;
             request.RequestCode = GenerateCode();
             request.RequestedTime = DateTime.Now;
-            request.StatusCode = Constants.StatusCode.REQUEST_WAITING;
+            request.StatusCode = Constants.StatusCode.REQUEST_SENDING;
             var existing = GetByKeys(request);
             if (existing == null)
             {
@@ -134,17 +134,10 @@ namespace IMS.Data.Repository
                             Description = r.Description,
                             StatusName = subst.StatusName,
                             RequestType = r.RequestType,
-                            StatusCode = subst.StatusCode
+                            StatusCode = subst.StatusCode,
+                            RequestedTime = r.RequestedTime
                         };
-            return query.ToList();
-        }
-
-        public void LogUpdateRequestStatus(string status, string requestCode)
-        {
-            //Change request status --> chuyen vo DAO
-            var request = RequestDAO.Current.Query(x => x.RequestCode == requestCode).FirstOrDefault();
-            request.StatusCode = status;
-            Update(request);
+            return query.OrderByDescending(x => x.RequestedTime).ToList();
         }
 
         public List<RequestExtendedModel> GetAllRequest()
@@ -157,7 +150,14 @@ namespace IMS.Data.Repository
 
         public Request GetRequestByRequestCode(string requestCode)
         {
-           return Current.Query(x => x.RequestCode == requestCode).FirstOrDefault();
+            return Current.Query(x => x.RequestCode == requestCode).FirstOrDefault();
+        }
+
+        public void UpdateRequestStatus(string requestCode, string newStatus)
+        {
+            var request = GetRequestByRequestCode(requestCode);
+            request.StatusCode = newStatus;
+            Update(request);
         }
     }
 }

@@ -1,0 +1,121 @@
+﻿@model RequestIPViewModel
+@{
+    ViewBag.Title = "RequestAssignIPInfo";
+    ViewBag.Role = "Shift Head";
+}
+
+<section class="content-header">
+    <h1>
+        Detail Request Assign IP Address
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index2", "Schedule")"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Detail Request Assign IP Address</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="box">
+        <div class="box-body table-responsive">
+            @using (Html.BeginForm("ProcessRequestAssignIp", "Request", FormMethod.Post))
+            {
+                <dl class="dl-horizontal">
+                    <dt>
+                        From customer
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control" } })
+                    </dd>
+                    <dt>
+                        Requested Time
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.RequestedTime, new { htmlAttributes = new { @class = "form-control" } })
+                    </dd>
+                    <dt>
+                        Request Status
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.StatusName, new { htmlAttributes = new { @class = "form-control" } })
+                    </dd>
+
+                    <dt>
+                        Selected server
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.SelectedServer, new { htmlAttributes = new { @class = "form-control" } })
+
+                    </dd>
+
+                    <dt>
+                        Number of IPs
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.IpNumber, new { htmlAttributes = new { @class = "form-control" } })
+
+                    </dd>
+
+                    <dt>
+                        Note
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+
+                    </dd>
+
+                    <dt style="color: #f56954">
+                        IP Address Pool
+                    </dt>
+
+                    <dd>
+                        @Html.ListBoxFor(model => model.SelectedIps, new MultiSelectList(Model.IpSelectListItems, "Value", "Text"),
+                            new { SelectionMode = "multiple", @id = "availableIps", rows = 30 })
+                    </dd>
+
+                    <dt style="color: #f20054">
+                        Assigned IP Address
+                    </dt>
+                    <dd>
+                        @Html.ListBoxFor(model => model.Ips, Model.SelectedIps,
+                            new { @id = "selectedIps", rows = 30 })
+                    </dd>
+                    <dt></dt>
+                    <dd>
+                        <button type="submit" class="btn btn-primary">Approve</button>
+                        <button type="submit" class="btn btn-danger">Reject</button>
+                    </dd>
+
+                </dl>
+            }
+        </div><!-- /.box-body -->
+    </div><!-- /.box -->
+</section>
+<script type="text/javascript">
+    $(function () {
+        $('#availableIps').change(function () {
+            var pass = $('#availableIps').val();
+            $('#selectedIps').append('<option value="' + pass + '">' + pass + '</option>');
+            $("[id*=availableIps] option:selected").remove();
+            return false;
+            //document.getElementById("selectedIps").value = pass;
+        });
+
+        $('#selectedIps').change(function () {
+            var pass = $('#selectedIps').val();
+            var ipNumber = $('#IpNumber').val();
+            $('#availableIps').append('<option value="' + pass + '">' + pass + '</option>');
+            $("[id*=selectedIps] option:selected").remove();
+            // Check if the parent has reached the limit of selected items.
+            if ($(this).parent().val().length >= ipNumber) {
+                // Removed the selected attribute from this option.
+                $(this).removeAttr("selected");
+                //remove gia tri duoc chon khoi list
+            }
+        });
+    });
+
+</script>
