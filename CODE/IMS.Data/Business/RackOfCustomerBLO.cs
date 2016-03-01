@@ -44,5 +44,10 @@ namespace IMS.Data.Business
         {
             dao.UpdateStatusRackOfCustomer(rackCode, customer, preStatus, updateStatus);
         }
+        //Tien
+        public List<RackOfCustomerExtendedModel> GetAllRackOfCustomer()
+        {
+            return dao.GetAllRackOfCustomer();
+        } 
     }
 }

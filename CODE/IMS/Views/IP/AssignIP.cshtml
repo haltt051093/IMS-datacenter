@@ -31,6 +31,10 @@
         @Html.HiddenFor(model => model.Request)
         @Html.HiddenFor(model => model.ServerCode)
         @Html.HiddenFor(model => model.OldIP)
+        <div class="form-group">
+            <label>Amount of Available IP Address:</label>
+            @Model.IPs.Count
+        </div>
         <table class="table">
             <tr>
                 <th>
