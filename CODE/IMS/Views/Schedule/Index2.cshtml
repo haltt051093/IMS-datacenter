@@ -61,16 +61,17 @@
 
                                             </div>
                                             <div class="panel-body" id="">
-                                                @if (item.NoteContent != null)
-                                                {
-                                                    <div class="form-inline">
-                                                        <div class="form-group">
-                                                            <label>PreNote:</label>
+                                                @if (!String.IsNullOrEmpty(item.NoteContent))
+                                                {                                                 
+                                                        <div class="form-inline">
+                                                            <div class="form-group">
+                                                                <label>PreNote:</label>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>@item.NoteContent</label>
+                                                            </div>
                                                         </div>
-                                                        <div class="form-group">
-                                                            <label>@item.NoteContent</label>
-                                                        </div>
-                                                    </div>
+                                                    
                                                 }
 
                                                 <div class="form-inline">
@@ -80,9 +81,11 @@
                                                     <div class="form-group">
                                                         @Html.HiddenFor(model => Model.Schedules[i].RequestCode)
                                                         @Html.EditorFor(content => Model.NewNote[i])
+                                                        @Html.ValidationMessageFor(model => Model.NewNote[i], "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </div>
 
                                     }
@@ -110,21 +113,32 @@
                             <div class="panel-heading" id="">
                                 @item.RequestCode--@item.RequestTypeName--@item.StatusName
                             </div>
-                            <div class="panel-body" id="">
-                                @if (item.NoteContent != null)
-                                {
-                                    <div class="form-inline">
-                                        <div class="form-group">
-                                            <label>PreNote:</label>
+                            
+                             
+                                    @if (String.IsNullOrEmpty(item.NoteContent))
+                                    {
+                                        <div class="panel-body">
+                                            <label> Do not have note from previous shift</label>
                                         </div>
-                                        <div class="form-group">
-                                            <label>@item.NoteContent</label>
+
+                                    }
+                                    else
+                                    {
+                                        <div class="panel-body">
+                                            <div class="form-inline">
+                                                <div class="form-group">
+                                                    <label>PreNote:</label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>@item.NoteContent</label>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                    }
+                                    }
+
+
+                                        </div>
+                                    }
                 </div>
             </div>
         }

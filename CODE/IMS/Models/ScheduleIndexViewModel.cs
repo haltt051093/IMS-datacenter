@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using IMS.Data.ViewModels;
 
 namespace IMS.Models
@@ -12,6 +13,8 @@ namespace IMS.Models
         }
         public List<ScheduleExtendedModel> Schedules1 { get; set; }
         public List<ScheduleExtendedModel> Schedules { get; set; }
+
+        [Required(ErrorMessage = "Please input note for requests!")]
         public List<string> NewNote { get; set; }
         public string StaffCode { get; set; }
     }
