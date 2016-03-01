@@ -7,29 +7,29 @@
 <script src="@Url.Content("~/Scripts/jquery.signalR-2.2.0.js")"></script>
 <script src="@Url.Content("~/signalr/hubs")"></script>
 <script>
-    $(document).ready(function () {
-        var table = document.getElementById("myTable");
-        var row = table.insertRow(1);
-        var cellRequestCode = row.insertCell(0);
-        var cellRequestType = row.insertCell(1);
-        var cellRequestStatus = row.insertCell(2);
-        //var cellCustomer = row.insertCell(2);
-        //var cellDescription = row.insertCell(3);
-        //var cellAppointmentTime = row.insertCell(4);
-        //cell1.innerHTML = "NEW CELL1";
+    //$(document).ready(function () {
+    //    var table = document.getElementById("myTable");
+    //    var row = table.insertRow(1);
+    //    var cellRequestCode = row.insertCell(0);
+    //    var cellRequestType = row.insertCell(1);
+    //    var cellRequestStatus = row.insertCell(2);
+    //    //var cellCustomer = row.insertCell(2);
+    //    //var cellDescription = row.insertCell(3);
+    //    //var cellAppointmentTime = row.insertCell(4);
+    //    //cell1.innerHTML = "NEW CELL1";
 
-        var commandHub = $.connection.remoteControllerHub;
-        commandHub.client.executeCommand = function (requestCode, typeOfRequest, customer, description, appointmentTime, requestStatus) {
-            //$('#result').append(requestCode + ' | ' + typeOfRequest + ' | ' + customer + ' | ' + description + ' | ' + appointmentTime + ' | ' + requestStatus + '<br/>');
-            cellRequestCode.innerHTML = requestCode;
-            cellRequestType.innerHTML = typeOfRequest;
-            cellRequestStatus.innerHTML = requestStatus;
-            //cellCustomer.innerHTML = customer;
-            //cellDescription.innerHTML = description;
-            //cellAppointmentTime.innerHTML = appointmentTime;
-        };
-        $.connection.hub.start();
-    });
+    //    var commandHub = $.connection.remoteControllerHub;
+    //    commandHub.client.executeCommand = function (requestCode, typeOfRequest, customer, description, appointmentTime, requestStatus) {
+    //        //$('#result').append(requestCode + ' | ' + typeOfRequest + ' | ' + customer + ' | ' + description + ' | ' + appointmentTime + ' | ' + requestStatus + '<br/>');
+    //        cellRequestCode.innerHTML = requestCode;
+    //        cellRequestType.innerHTML = typeOfRequest;
+    //        cellRequestStatus.innerHTML = requestStatus;
+    //        //cellCustomer.innerHTML = customer;
+    //        //cellDescription.innerHTML = description;
+    //        //cellAppointmentTime.innerHTML = appointmentTime;
+    //    };
+    //    $.connection.hub.start();
+    //});
 
 </script>
 <section class="content-header">
@@ -56,7 +56,7 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tableBody">
                     @foreach (var item in Model.NotificationList)
                     {
                         <tr>
@@ -75,7 +75,7 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.StatusName)
                         </td>
-                        <td><a href="#" data-toggle="modal" data-target="#acceptrequest-modal">Accept Request</a></td>
+                        <td><a href="#" data-toggle="modal" class="btnRequestCode" data-target="#acceptrequest-modal" data-requestCode="@item.RequestCode">Accept Request</a></td>
                     </tr>
                     }
                 </tbody>
@@ -92,7 +92,6 @@
             </table>
         </div><!-- /.box-body -->
     </div><!-- /.box -->
-
 </section><!-- /.content -->
 <!-- ACCEPT REQUEST MODAL -->
 <div class="modal fade" id="acceptrequest-modal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -114,6 +113,7 @@
                         </select>
                     </div>
                 </div>
+                <input type="hidden" id="requestCode" name="requestCode" value=""/>
                 <div class="modal-footer clearfix">
                     <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
                     <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Accept</button>
@@ -125,7 +125,10 @@
 <script type="text/javascript">
     $(function () {
         $("#example1").dataTable();
-
+        $('#tableBody').on('click', '.btnRequestCode', function() {
+            var result = $(this).attr('data-requestCode');
+            $('#requestCode').val(result);
+        });
     });
 </script>
 

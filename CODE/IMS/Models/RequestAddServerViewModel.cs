@@ -2,21 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using IMS.Data.ViewModels;
 
 namespace IMS.Models
 {
     public class RequestAddServerViewModel
     {
-        public string Customer { get; set; }
-        public string Maker { get; set; }
-        public string Model { get; set; }
-        public int? Power { get; set; }
-        public int? Size { get; set; }
-        public string DefaultIP { get; set; }
-        public string LocationCode { get; set; }
-        public int? Outlet { get; set; }
-        public string AssignedName { get; set; }
-        public string Identification { get; set; }
+        public ServerDetailModel Server { get; set; }
+        public List<ServerDetailModel> Servers { get; set; }
         
         public string Time { get; set; }
         [Required]
@@ -25,10 +18,6 @@ namespace IMS.Models
         public DateTime AppointmentTime { get; set; }
 
         public string Description { get; set; }
-        public string Bandwidth { get; set; }
-        public string PartNumber { get; set; }
-        public string SerialNumber { get; set; }
-        public string Memory { get; set; }
 
         public List<SelectListItem> AttributeList { get; set; }
         public List<string> SelectedAttributes { get; set; }

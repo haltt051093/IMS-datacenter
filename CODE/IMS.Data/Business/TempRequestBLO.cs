@@ -1,4 +1,5 @@
-﻿using IMS.Data.Generic;
+﻿using System.Collections.Generic;
+using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.Repository;
 
@@ -26,6 +27,11 @@ namespace IMS.Data.Business
         {
             baseDao = TempRequestDAO.Current;
             dao = TempRequestDAO.Current;
+        }
+
+        public List<string> GetByCode(string requestCode)
+        {
+            return dao.GetByCode(requestCode);
         }
     }
 }

@@ -130,6 +130,7 @@ namespace IMS.Core
         public class Session
         {
             public const string USER_LOGIN = "USER_LOGIN";
+            public const string REQUEST_CODE = "REQUEST_CODE";
         }
 
         public class Object

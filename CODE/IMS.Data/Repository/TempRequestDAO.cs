@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 
@@ -23,6 +24,12 @@ namespace IMS.Data.Repository
         public override TempRequest GetByKeys(TempRequest entry)
         {
             return Query(x => x.Id == entry.Id).FirstOrDefault();
+        }
+
+        public List<string> GetByCode(string requestCode)
+        {
+            return Query(x => x.RequestCode == requestCode)
+                .Select(x => x.Data).ToList();
         }
     }
 }

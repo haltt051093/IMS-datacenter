@@ -23,21 +23,21 @@
                         From customer
                     </dt>
                     <dd>
-                        @Html.DisplayFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.DisplayFor(model => model.Customer, new {htmlAttributes = new {@class = "form-control"}})
                     </dd>
                     <dt>
                         Requested Time
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.RequestedTime, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.DisplayFor(model => model.RequestedTime, new {htmlAttributes = new {@class = "form-control"}})
                     </dd>
                     <dt>
                         Request Status
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.StatusName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.DisplayFor(model => model.StatusName, new {htmlAttributes = new {@class = "form-control"}})
                     </dd>
 
                     <dt>
@@ -45,7 +45,7 @@
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.SelectedServer, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.DisplayFor(model => model.SelectedServer, new {htmlAttributes = new {@class = "form-control"}})
 
                     </dd>
 
@@ -54,7 +54,7 @@
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.IpNumber, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.DisplayFor(model => model.IpNumber, new {htmlAttributes = new {@class = "form-control"}})
 
                     </dd>
 
@@ -63,7 +63,7 @@
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.DisplayFor(model => model.Description, new {htmlAttributes = new {@class = "form-control"}})
 
                     </dd>
 
@@ -73,7 +73,7 @@
 
                     <dd>
                         @Html.ListBoxFor(model => model.SelectedIps, new MultiSelectList(Model.IpSelectListItems, "Value", "Text"),
-                            new { SelectionMode = "multiple", @id = "availableIps", rows = 30 })
+                            new {SelectionMode = "multiple", @id = "availableIps", rows = 30})
                     </dd>
 
                     <dt style="color: #f20054">
@@ -81,12 +81,12 @@
                     </dt>
                     <dd>
                         @Html.ListBoxFor(model => model.Ips, Model.SelectedIps,
-                            new { @id = "selectedIps", rows = 30 })
+                            new {@id = "selectedIps", rows = 30})
                     </dd>
                     <dt></dt>
                     <dd>
-                        <button type="submit" class="btn btn-primary">Approve</button>
-                        <button type="submit" class="btn btn-danger">Reject</button>
+                        <button type="submit" id="btnApprove" class="btn btn-primary" name="Approve" value="Approve">Approve</button>
+                        <button type="submit" class="btn btn-danger" name="Reject" value="Reject">Reject</button>
                     </dd>
 
                 </dl>
@@ -96,15 +96,21 @@
 </section>
 <script type="text/javascript">
     $(function () {
-        $('#availableIps').change(function () {
+        $('#btnApprove').on('click', function () {
+            $('#selectedIps').find('option').attr('selected', true);
+        });
+        $('#availableIps').dblclick(function () {
             var pass = $('#availableIps').val();
             $('#selectedIps').append('<option value="' + pass + '">' + pass + '</option>');
             $("[id*=availableIps] option:selected").remove();
             return false;
             //document.getElementById("selectedIps").value = pass;
         });
+        
+        $('#selectedIps').dblclick(function () {
+            var count = $('#selectedIps option:selected').length;
+            args.IsValid = count > 0 && count <= 5;
 
-        $('#selectedIps').change(function () {
             var pass = $('#selectedIps').val();
             var ipNumber = $('#IpNumber').val();
             $('#availableIps').append('<option value="' + pass + '">' + pass + '</option>');
@@ -112,7 +118,7 @@
             // Check if the parent has reached the limit of selected items.
             if ($(this).parent().val().length >= ipNumber) {
                 // Removed the selected attribute from this option.
-                $(this).removeAttr("selected");
+                $(this).remdaoveAttr("selected");
                 //remove gia tri duoc chon khoi list
             }
         });

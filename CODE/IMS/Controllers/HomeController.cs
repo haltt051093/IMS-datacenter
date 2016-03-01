@@ -7,7 +7,9 @@ using IMS.Core;
 using IMS.Data.Business;
 using IMS.Data.Models;
 using IMS.Data.Repository;
+using IMS.Data.ViewModels;
 using IMS.Models;
+using Newtonsoft.Json;
 
 namespace IMS.Controllers
 {
@@ -40,10 +42,25 @@ namespace IMS.Controllers
                 if (requestcode.Equals(Constants.RequestTypeCode.ADD_SERVER))
                 {
                     var viewmodel = new RequestAddServerViewModel();
+                    viewmodel.Servers = new List<ServerDetailModel>();
+                    var requestCode = RequestBLO.Current.GenerateCode();
+
+                    if (Session[Constants.Session.REQUEST_CODE] == null)
+                    {
+                        Session[Constants.Session.REQUEST_CODE] = requestCode;
+                    }
+                    var rCode = Session[Constants.Session.REQUEST_CODE].ToString();
+                    var tempDatas = TempRequestBLO.Current.GetByCode(rCode);
+                    foreach (var tempData in tempDatas)
+                    {
+                        var server = JsonConvert.DeserializeObject<ServerDetailModel>(tempData);
+                        viewmodel.Servers.Add(server);
+                    }
                     var attrList = AttributeBLO.Current.GetAll();
                     viewmodel.AttributeList = attrList
                         .Select(x => new SelectListItem { Value = x.AttributeCode, Text = x.AttributeName })
                         .ToList();
+
                     return View("../Request/RequestAddServer", viewmodel);
 
                 }
@@ -56,7 +73,7 @@ namespace IMS.Controllers
                         Value = x.ServerCode,
                         Text = x.Model
                     }).ToList();
-                    return View("../Request/RequestReturnIP", viewmodel);
+                    return View("../Request/RequestReturnIP2", viewmodel);
                 }
                 //DOING
                 if (requestcode.Equals(Constants.RequestTypeCode.CHANGE_IP))
@@ -76,6 +93,7 @@ namespace IMS.Controllers
                 if (requestcode.Equals(Constants.RequestTypeCode.ASSIGN_IP))
                 {
                     RequestIPViewModel viewmodel = new RequestIPViewModel();
+
                     var listServers = ServerDAO.Current.Query(x => x.Customer == Constants.Test.CUSTOMER_MANHNH);
                     viewmodel.Servers = listServers.Select(x => new SelectListItem
                     {

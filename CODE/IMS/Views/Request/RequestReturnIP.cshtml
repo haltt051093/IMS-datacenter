@@ -14,7 +14,7 @@
     <div class="form-group">
         @Html.Label("ServerCode", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(m => m.SelectedServerCode, Model.Servers, new { @id = "servercode" })
+            @Html.DropDownListFor(m => m.SelectedServer, Model.Servers, new { @id = "servercode" })
         </div>
     </div>
     <div id="divPartialView" class="hidden">
@@ -33,7 +33,7 @@
             <tbody></tbody>
         </table>
         @Html.HiddenFor(model => model.Ips, new { id = "ips" })
-        @Html.HiddenFor(model => model.SelectedServerCode)
+        @Html.HiddenFor(model => model.SelectedServer   )
     </div>
 
     <div class="form-group">
