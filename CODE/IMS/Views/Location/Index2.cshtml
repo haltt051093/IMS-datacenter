@@ -90,7 +90,7 @@
                         @Html.Label("Rack Name", htmlAttributes: new { @class = "control-label" })
 
 
-                        @Html.EditorFor(model => model.RackName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Ex: A1, B1,...", @id = "rackname" } })
+                        @Html.EditorFor(model => model.RackName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Ex: A1, B1,..." } })
                         @Html.ValidationMessageFor(model => model.RackName, "", new { @class = "text-danger" })
 
                     </div>
@@ -167,18 +167,5 @@
 
     });
 </script>
-<script type="text/javascript">
-    $('#submit').on('click', function () {
-        valid = true;
-        if ($('#rackname').val() == '') {
-            alert("please enter Rack Name");
-            valid = false;
-        }
 
-        if ($('#rackname').val() != /^([A-Z]+[1-9])/) {
-            alert("please enter follow Ex");
-            valid = false;
-        }
-    });
-</script>
 
