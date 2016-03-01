@@ -1,8 +1,37 @@
-﻿
+﻿@model NotificationViewModel
 @{
     ViewBag.Title = "ListNotifications";
     ViewBag.Role = "Shift Head";
 }
+
+<script src="@Url.Content("~/Scripts/jquery.signalR-2.2.0.js")"></script>
+<script src="@Url.Content("~/signalr/hubs")"></script>
+<script>
+    $(document).ready(function () {
+        var table = document.getElementById("myTable");
+        var row = table.insertRow(1);
+        var cellRequestCode = row.insertCell(0);
+        var cellRequestType = row.insertCell(1);
+        var cellRequestStatus = row.insertCell(2);
+        //var cellCustomer = row.insertCell(2);
+        //var cellDescription = row.insertCell(3);
+        //var cellAppointmentTime = row.insertCell(4);
+        //cell1.innerHTML = "NEW CELL1";
+
+        var commandHub = $.connection.remoteControllerHub;
+        commandHub.client.executeCommand = function (requestCode, typeOfRequest, customer, description, appointmentTime, requestStatus) {
+            //$('#result').append(requestCode + ' | ' + typeOfRequest + ' | ' + customer + ' | ' + description + ' | ' + appointmentTime + ' | ' + requestStatus + '<br/>');
+            cellRequestCode.innerHTML = requestCode;
+            cellRequestType.innerHTML = typeOfRequest;
+            cellRequestStatus.innerHTML = requestStatus;
+            //cellCustomer.innerHTML = customer;
+            //cellDescription.innerHTML = description;
+            //cellAppointmentTime.innerHTML = appointmentTime;
+        };
+        $.connection.hub.start();
+    });
+
+</script>
 <section class="content-header">
     <h1>
         List of Notification
@@ -28,17 +57,27 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><a href="@Url.Action("RequestAddServerInfo2","Request")">R123456</a></td>
-                        <td>
-                           Lê Thị Thu Hà
+                    @foreach (var item in Model.NotificationList)
+                    {
+                        <tr>
+                            <td>
+                                @Html.ActionLink(item.RequestCode, "RequestDetais", "Request", new { rType = item.RequestType, rCode = item.RequestCode }, null)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Customer)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RequestTypeName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RequestedTime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StatusName)
                         </td>
-                        <td>Add New Server</td>
-                        <td>22-Feb-16 00:03:00</td>
-                        <td>Sending</td>
                         <td><a href="#" data-toggle="modal" data-target="#acceptrequest-modal">Accept Request</a></td>
                     </tr>
-
+                    }
                 </tbody>
                 <tfoot>
                     <tr>
@@ -55,7 +94,6 @@
     </div><!-- /.box -->
 
 </section><!-- /.content -->
-
 <!-- ACCEPT REQUEST MODAL -->
 <div class="modal fade" id="acceptrequest-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" style="width: 500px">
@@ -64,11 +102,11 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title"><i class="fa fa-check"></i> Accept Request</h4>
             </div>
-            <form action="#" method="post">
+            @using (Html.BeginForm("AcceptRequest", "Request", FormMethod.Post))
+            {
                 <div class="modal-body">
-                   
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Assign Name</label>
+                        <label>Assign Name</label>
                         <select>
                             <option>You</option>
                             <option>tienhlh</option>
@@ -77,20 +115,18 @@
                     </div>
                 </div>
                 <div class="modal-footer clearfix">
-
                     <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-
                     <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Accept</button>
                 </div>
-            </form>
+            }
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <script type="text/javascript">
-            $(function() {
-                $("#example1").dataTable();
+    $(function () {
+        $("#example1").dataTable();
 
-            });
+    });
 </script>
 
 

@@ -18,14 +18,6 @@ namespace IMS.Controllers
 {
     public class RequestController : CoreController
     {
-        public ActionResult RequestAssignIP2()
-        {
-            return View();
-        }
-        public ActionResult RequestAddServer2()
-        {
-            return View();
-        }
 
         public ActionResult RequestAddServerInfo2()
         {
@@ -38,11 +30,6 @@ namespace IMS.Controllers
         }
 
         public ActionResult AddServerInfo()
-        {
-            return View();
-        }
-
-        public ActionResult ListNotifications2()
         {
             return View();
         }
@@ -116,82 +103,6 @@ namespace IMS.Controllers
         }
         private static IHubContext commandHubContext;
 
-        [HttpGet]
-        public ActionResult Index(RequestType requesttype)
-        {
-            string requestcode = requesttype.RequestTypeCode;
-            if (!string.IsNullOrEmpty(requestcode))
-            {
-                if (requestcode.Equals(Constants.RequestTypeCode.RETURN_RACK))
-                {
-                    RequestReturnRackViewModel viewmodel = new RequestReturnRackViewModel();
-                    var result = RackOfCustomerDAO.Current.EmptyRentedRack(Constants.Test.CUSTOMER_MANHNH);
-                    viewmodel.RackOfCustomer = result.Select(x => new SelectListItem
-                    {
-                        Value = x.RackCode,
-                        Text = x.RackName
-                    }).ToList();
-                    return View("RequestReturnRack", viewmodel);
-                }
-                if (requestcode.Equals(Constants.RequestTypeCode.RENT_RACK))
-                {
-                    return View("RequestRentRack");
-                }
-                if (requestcode.Equals(Constants.RequestTypeCode.ADD_SERVER))
-                {
-                    var data = new RequestAddServerViewModel();
-                    var attrList = AttributeBLO.Current.GetAll();
-                    data.AttributeList = attrList
-                        .Select(x => new SelectListItem { Value = x.AttributeCode, Text = x.AttributeName })
-                        .ToList();
-                    return View("RequestAddServer", data);
-                }
-                //DOING
-                if (requestcode.Equals(Constants.RequestTypeCode.UPGRADE_SERVER))
-                {
-                    return View("RequestUpgradeServer");
-                }
-                if (requestcode.Equals(Constants.RequestTypeCode.RETURN_IP))
-                {
-                    RequestIPViewModel viewmodel = new RequestIPViewModel();
-                    var listServers = ServerDAO.Current.Query(x => x.Customer == Constants.Test.CUSTOMER_MANHNH);
-                    viewmodel.Servers = listServers.Select(x => new SelectListItem
-                    {
-                        Value = x.ServerCode,
-                        Text = x.Model
-                    }).ToList();
-                    return View("RequestReturnIP", viewmodel);
-                }
-                //DOING
-                if (requestcode.Equals(Constants.RequestTypeCode.CHANGE_IP))
-                {
-                    {
-                        //co the change duoc nhieu IP--> bo sung t
-                        RequestIPViewModel viewmodel = new RequestIPViewModel();
-                        var listServers = ServerDAO.Current.Query(x => x.Customer == Constants.Test.CUSTOMER_MANHNH);
-                        viewmodel.Servers = listServers.Select(x => new SelectListItem
-                        {
-                            Value = x.ServerCode,
-                            Text = x.Model
-                        }).ToList();
-                        return View("RequestChangeIP", viewmodel);
-                    }
-                }
-                if (requestcode.Equals(Constants.RequestTypeCode.ASSIGN_IP))
-                {
-                    RequestIPViewModel viewmodel = new RequestIPViewModel();
-                    var listServers = ServerDAO.Current.Query(x => x.Customer == Constants.Test.CUSTOMER_MANHNH);
-                    viewmodel.Servers = listServers.Select(x => new SelectListItem
-                    {
-                        Value = x.ServerCode,
-                        Text = x.Model
-                    }).ToList();
-                    return View("RequestAssignIP", viewmodel);
-                }
-            }
-            return View(requesttype);
-        }
-
         [HttpPost]
         public ActionResult RequestReturnRack(RequestReturnRackViewModel viewmodel)
         {
@@ -248,7 +159,7 @@ namespace IMS.Controllers
                     NotifRegister(notif);
                 }
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -290,18 +201,26 @@ namespace IMS.Controllers
             //dang ky ham cho client
             NotifRegister(notif);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Home");
         }
+        //DOING
+        [HttpPost]
+        public ActionResult SaveTempData(RequestAddServerViewModel viewmodel)
+        {
 
+
+            return RedirectToAction("Index", "Home");
+        }
+        //UPDATEING
         [HttpPost]
         public ActionResult RequestAddServer(RequestAddServerViewModel viewmodel)
         {
             viewmodel.Customer = Constants.Test.CUSTOMER_MANHNH;
             //get appointment time
-            string dateOnly = viewmodel.AppointmentTime.ToString("dd/MM/yyyy");
-            string time = DateTime.Parse(viewmodel.Time).ToString("HH:mm:ss");
-            string datetime = dateOnly + ' ' + time;
-            viewmodel.AppointmentTime = DateTime.Parse(datetime);
+            //string dateOnly = viewmodel.AppointmentTime.ToString("dd/MM/yyyy");
+            //string time = DateTime.Parse(viewmodel.Time).ToString("HH:mm:ss");
+            //string datetime = dateOnly + ' ' + time;
+            //viewmodel.AppointmentTime = DateTime.Parse(datetime);
             //Add request
             Request passRequest = new Request
             {
@@ -362,7 +281,7 @@ namespace IMS.Controllers
             notif.RequestCode = result;
             //dang ky ham cho client
             NotifRegister(notif);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -405,7 +324,7 @@ namespace IMS.Controllers
                         ChangedValueOfObject = item,
                         //object status
                         ObjectStatus = Constants.StatusCode.IP_USED,
-                        ServerCode = viewmodel.SelectedServerCode,
+                        ServerCode = viewmodel.SelectedServer,
                     };
                     LogChangedContentBLO.Current.AddLog(logIps);
                     //update serverIP IsReturned
@@ -420,13 +339,13 @@ namespace IMS.Controllers
                 //dang ky ham cho client
                 NotifRegister(notif);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
         public ActionResult FetchIPs(RequestIPViewModel model)
         {
-            var list = ServerIPDAO.Current.Query(x => x.ServerCode == model.SelectedServerCode
+            var list = ServerIPDAO.Current.Query(x => x.ServerCode == model.SelectedServer
                             && x.StatusCode == Constants.StatusCode.SERVERIP_CURRENT).ToList();
             RequestIPViewModel newmodel = model;
             newmodel.ServerIPs = list;
@@ -465,7 +384,7 @@ namespace IMS.Controllers
                     Object = Constants.Object.OBJECT_REQUEST,
                     ChangedValueOfObject = result,
                     ObjectStatus = Constants.StatusCode.REQUEST_SENDING,
-                    ServerCode = viewmodel.SelectedServerCode,
+                    ServerCode = viewmodel.SelectedServer,
 
                 };
                 LogChangedContentBLO.Current.AddLog(logRequest);
@@ -478,7 +397,7 @@ namespace IMS.Controllers
                 //dang ky ham cho client
                 NotifRegister(notif);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -527,7 +446,7 @@ namespace IMS.Controllers
                         ChangedValueOfObject = item,
                         //object status
                         ObjectStatus = Constants.StatusCode.IP_USED,
-                        ServerCode = viewmodel.SelectedServerCode,
+                        ServerCode = viewmodel.SelectedServer,
                     };
                     LogChangedContentBLO.Current.AddLog(logIps);
                 }
@@ -539,13 +458,7 @@ namespace IMS.Controllers
                 //dang ky ham cho client
                 NotifRegister(notif);
             }
-            return RedirectToAction("Index");
-        }
-        //DOING
-        [HttpPost]
-        public ActionResult RequestUpgradeServer()
-        {
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Home");
         }
 
         public void NotifRegister(NotificationExtendedModel model)
@@ -563,17 +476,21 @@ namespace IMS.Controllers
                 model.StatusName);
         }
 
-        public ActionResult Notification()
-        {
-            return View();
-        }
-
         //Tam thoi cho VIew notification se dan den requestdetail --> thuc te thi view list notification chi dua ra popup thong tin de xem or confirm
         public ActionResult ListNotifications()
         {
             NotificationViewModel viewmodel = new NotificationViewModel();
             viewmodel.NotificationList = RequestBLO.Current.ListAllNotification();
-            return View("Notification", viewmodel);
+            return View("ListNotifications", viewmodel);
+        }
+
+        //Accept request
+        public ActionResult AcceptRequest(string requestCode)
+        {
+            //doi trang thai cua request
+            RequestBLO.Current.UpdateRequestStatus(requestCode, Constants.StatusName.REQUEST_WAITING);
+            //redirect lai list notif
+            return RedirectToAction("ListNotifications");
         }
 
         [HttpGet]
@@ -592,6 +509,7 @@ namespace IMS.Controllers
                 if (request != null)
                 {
                     viewmodel = Mapper.Map<Request, RequestIPViewModel>(request);
+                    viewmodel.StatusName = StatusBLO.Current.GetStatusName(viewmodel.StatusCode);
                     //Lay so luong IP muon assign, tam thoi fix cung
                     var ipNumber = Constants.Number.NUMBER_5;
                     viewmodel.IpNumber = ipNumber;
@@ -635,7 +553,7 @@ namespace IMS.Controllers
                     }
                     //select randomly from ipNumber,
                 }
-                return View("ProcessRequestAssignIP", viewmodel);
+                return View("RequestAssignIPInfo", viewmodel);
             }
 
             if (rType.Equals(Constants.RequestTypeCode.CHANGE_IP))
@@ -763,7 +681,7 @@ namespace IMS.Controllers
         {
 
             //Change request status, tu 
-            RequestBLO.Current.LogUpdateRequestStatus(Constants.StatusCode.REQUEST_DONE, viewmodel.RequestCode);
+            RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);
 
             //Add Log Request
             LogChangedContent logRequest = new LogChangedContent
@@ -810,7 +728,8 @@ namespace IMS.Controllers
         public ActionResult ProcessRequestReturnRack(RequestReturnRackViewModel viewmodel)
         {
             //Change request status 
-            RequestBLO.Current.LogUpdateRequestStatus(Constants.StatusCode.REQUEST_DONE, viewmodel.RequestCode);
+            RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);
+
 
             //update status rackofcustomer
             foreach (var item in viewmodel.RackOfCustomer)
@@ -861,7 +780,7 @@ namespace IMS.Controllers
         public ActionResult ProcessRequesReturnIp(RequestIPViewModel viewmodel)
         {
             //Change request status 
-            RequestBLO.Current.LogUpdateRequestStatus(Constants.StatusCode.REQUEST_DONE, viewmodel.RequestCode);
+            RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);
 
             //change status cua IP o IPAddresspool
             foreach (var item in viewmodel.Ips)
@@ -900,7 +819,7 @@ namespace IMS.Controllers
         public ActionResult ProcessRequestAssignIp(RequestIPViewModel viewmodel)
         {
             //Change request status 
-            RequestBLO.Current.LogUpdateRequestStatus(Constants.StatusCode.REQUEST_DONE, viewmodel.RequestCode);
+            RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);
 
             //add ip vo serverip
             foreach (var item in viewmodel.Ips.ToList())
@@ -939,7 +858,7 @@ namespace IMS.Controllers
         {
             //Lam cach nao de luu gia tri cua moi dropdownlist, trong do co nhieu dropdownlist, ko ro so luong???
             //Change request status 
-            RequestBLO.Current.LogUpdateRequestStatus(Constants.StatusCode.REQUEST_DONE, viewmodel.RequestCode);
+            RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);
 
             //update ServerIP
             foreach (var item in viewmodel.SelectedIps)
@@ -996,7 +915,5 @@ namespace IMS.Controllers
             LogChangedContentBLO.Current.AddLog(logRequest);
             return RedirectToAction("Index", "Home");
         }
-
-
     }
 }

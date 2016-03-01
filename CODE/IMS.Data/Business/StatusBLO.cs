@@ -27,5 +27,10 @@ namespace IMS.Data.Business
             baseDao = StatusDAO.Current;
             dao = StatusDAO.Current;
         }
-    }
+
+        public string GetStatusName(string statusCode)
+        {
+            return dao.GetStatusName(statusCode);
+        }
+}
 }
