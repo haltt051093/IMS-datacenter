@@ -48,6 +48,14 @@ namespace IMS.Data.Repository
             return RawQuery<LocationExtendedModel>(query, new object[] { });
         }
 
+        public List<RackOfCustomerExtendedModel> GetAllRackOfCustomer()
+        {
+            string query = @"select roc.*,l.LocationCode,l.RackUnit,l.ServerCode,s.StatusName,r.RackName
+                            from Location as l, RackOfCustomer as roc, Status as s, Rack as r
+                            where l.RackCode = roc.RackCode and l.StatusCode = s.StatusCode and r.RackCode=l.RackCode";
+            return RawQuery<RackOfCustomerExtendedModel>(query, new object[] {});
+        } 
+
         public List<string> GetReturningRacks(string customer)
         {
             var query =
