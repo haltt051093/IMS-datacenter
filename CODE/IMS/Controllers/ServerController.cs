@@ -1,4 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 using IMS.Data.Business;
 using IMS.Models;
 
@@ -21,7 +24,7 @@ namespace IMS.Controllers
         }
 
         // GET: Server/Details
-        public ActionResult ServerDetails(int id)
+        public ActionResult ServerDetails(int id, string RackSearch)
         {
             var server = ServerBLO.Current.GetServerById(id);
             var serverattributes = ServerBLO.Current.GetServerAttributes(id);
@@ -36,6 +39,18 @@ namespace IMS.Controllers
             data.Attributes = serverattributes;
             data.Server = server;
             data.CurrentIPs = servercurrentips;
+
+            var locations = LocationBLO.Current.GetChangeLocation(server);
+         
+            var racks = new List<string>();
+            var currentrack = locations.OrderBy(x => x.RackName).Select(x => x.RackName).ToList();
+            racks.AddRange(currentrack.Distinct());
+            ViewBag.RackSearch = new SelectList(racks);
+            if (!String.IsNullOrWhiteSpace(RackSearch))
+            {
+                locations = locations.Where(r => r.RackName.Trim() == RackSearch.Trim()).ToList();
+            }
+            data.Locations1 = locations;
             return View(data);
         }
     }
