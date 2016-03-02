@@ -71,6 +71,7 @@ namespace IMS.Controllers
                 else
                 {
                     IPAddressPoolBLO.Current.AddIP(ips);
+                    Alert("New IP Addresses added successfully!");
                     return RedirectToAction("Index2");
                 }
             }
