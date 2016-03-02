@@ -4,6 +4,7 @@ using System.Linq;
 using IMS.Core;
 using IMS.Data.Generic;
 using IMS.Data.Models;
+using IMS.Data.ViewModels;
 
 namespace IMS.Data.Repository
 {
@@ -58,6 +59,33 @@ namespace IMS.Data.Repository
             var serverCode = Current.Query(x => x.RequestCode == requestCode && x.ServerCode != null)
                 .Select(x => x.ServerCode).FirstOrDefault();
             return serverCode;
+        }
+
+        public List<RequestExtendedModel> ListWaitingRequestOfServer(string serverCode)
+        {
+            //list tat ca hang co serverCode, lay ra list requestcode
+            var query =
+                Current.Query(x => x.ServerCode == serverCode && x.Object == Constants.Object.OBJECT_REQUEST 
+                && (x.ObjectStatus == Constants.StatusCode.REQUEST_SENDING
+                || x.ObjectStatus == Constants.StatusCode.REQUEST_WAITING
+                || x.ObjectStatus == Constants.StatusCode.REQUEST_PROCESSING)).Select(x => x.RequestCode);
+            List<RequestExtendedModel> requests = new List<RequestExtendedModel>();
+            //item la requestCode
+            foreach (var item in query)
+            {
+                var query1 = from re in RequestDAO.Current.Table()
+                    join rt in RequestTypeDAO.Current.Table()
+                        on re.RequestType equals rt.RequestTypeCode
+                    where re.RequestCode == item
+                    select new RequestExtendedModel()
+                    {
+                        RequestType =  re.RequestType,
+                        RequestTypeName = rt.RequestTypeName,
+                        RequestCode = re.RequestCode
+                    };
+                requests.Add(query1.FirstOrDefault());
+            }
+            return requests;
         }
     }
 }

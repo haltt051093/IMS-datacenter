@@ -35,8 +35,19 @@ namespace IMS.Data.Repository
         {
             var distinct = LocationDAO.Current.Table().GroupBy(item => item.ServerCode)
                 .Select(e => e.FirstOrDefault());
-            var query = from s in Table()
-                        join l in distinct
+            var rackDis = from r in RackDAO.Current.Table()
+                join l in distinct
+                    on r.RackCode equals l.RackCode
+                select new RackOfCustomerExtendedModel
+                {
+                    LocationCode = l.LocationCode,
+                    ServerCode = l.ServerCode,
+                    RackUnit = l.RackUnit,
+                    RackCode = l.RackCode,
+                    RackName = r.RackName
+                };
+           var query = from s in Table()
+                        join l in rackDis
                             on s.ServerCode equals l.ServerCode into sl
                         from subl in sl.DefaultIfEmpty()
                         join st in StatusDAO.Current.Table()
@@ -55,7 +66,10 @@ namespace IMS.Data.Repository
                             Maker = s.Maker,
                             Model = s.Model,
                             DefaultIP = s.DefaultIP,
-                            Customer = s.Customer
+                            Customer = s.Customer,
+                            ServerCode = s.ServerCode,
+                            RackName = subl.RackName
+
                         };
             return query.ToList();
             //string query = @"select s.*,l.RackCode,l.RackUnit, st.Status from Server as s
@@ -71,8 +85,19 @@ namespace IMS.Data.Repository
         {
             var distinct = LocationDAO.Current.Table().GroupBy(item => item.ServerCode)
                 .Select(e => e.FirstOrDefault());
+            var rackDis = from r in RackDAO.Current.Table()
+                          join l in distinct
+                              on r.RackCode equals l.RackCode
+                          select new RackOfCustomerExtendedModel
+                          {
+                              LocationCode = l.LocationCode,
+                              ServerCode = l.ServerCode,
+                              RackUnit = l.RackUnit,
+                              RackCode = l.RackCode,
+                              RackName = r.RackName
+                          };
             var query = from s in Table()
-                        join l in distinct
+                        join l in rackDis
                             on s.ServerCode equals l.ServerCode into sl
                         from subl in sl.DefaultIfEmpty()
                         join st in StatusDAO.Current.Table()
@@ -85,6 +110,7 @@ namespace IMS.Data.Repository
                         select new ServerExtendedModel
                         {
                             RackCode = subl.RackCode,
+                            RackName = subl.RackName,
                             RackUnit = subl.RackUnit,
                             Status = subst.StatusName,
                             CustomerName = suba.Fullname,
@@ -126,10 +152,10 @@ namespace IMS.Data.Repository
         public List<ServerIP> GetCurrentIP(int id)
         {
             var query = from s in Table()
-                join si in ServerIPDAO.Current.Table()
-                    on s.ServerCode equals si.ServerCode
-                where s.Id == id
-                select si;
+                        join si in ServerIPDAO.Current.Table()
+                            on s.ServerCode equals si.ServerCode
+                        where s.Id == id
+                        select si;
             return query.ToList();
         }
 

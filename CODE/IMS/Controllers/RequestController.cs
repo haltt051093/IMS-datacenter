@@ -194,7 +194,7 @@ namespace IMS.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-        //DOING
+
         [HttpPost]
         public ActionResult SaveTempData(RequestAddServerViewModel viewmodel)
         {
@@ -302,7 +302,8 @@ namespace IMS.Controllers
                     TypeOfLog = Constants.TypeOfLog.LOG_RETURN_IP,
                     Object = Constants.Object.OBJECT_REQUEST,
                     ObjectStatus = Constants.StatusCode.REQUEST_SENDING,
-                    ChangedValueOfObject = result
+                    ChangedValueOfObject = result,
+                    ServerCode = viewmodel.SelectedServer,
                 };
                 LogChangedContentBLO.Current.AddLog(logRequest);
 
@@ -419,7 +420,8 @@ namespace IMS.Controllers
                     TypeOfLog = Constants.TypeOfLog.LOG_CHANGE_IP,
                     Object = Constants.Object.OBJECT_REQUEST,
                     ObjectStatus = Constants.StatusCode.REQUEST_SENDING,
-                    ChangedValueOfObject = result
+                    ChangedValueOfObject = result,
+                    ServerCode = viewmodel.SelectedServer,
                 };
                 LogChangedContentBLO.Current.AddLog(logRequest);
 
@@ -483,7 +485,7 @@ namespace IMS.Controllers
         public ActionResult AcceptRequest(string requestCode)
         {
             //doi trang thai cua request
-            RequestBLO.Current.UpdateRequestStatus(requestCode, Constants.StatusName.REQUEST_WAITING);
+            RequestBLO.Current.UpdateRequestStatus(requestCode, Constants.StatusCode.REQUEST_WAITING);
             //redirect lai list notif
             return RedirectToAction("ListNotifications");
         }

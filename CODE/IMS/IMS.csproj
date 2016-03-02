@@ -945,11 +945,8 @@
     <Content Include="Views\Account\CreateStaff.cshtml" />
     <Content Include="Views\Account\EditCustomer.cshtml" />
     <Content Include="Views\Account\EditStaff.cshtml" />
-    <Content Include="Views\Server\Index.cshtml" />
-    <Content Include="Views\Server\ServerDetails.cshtml" />
     <Content Include="Views\Request\RequestRentRack.cshtml" />
     <Content Include="Views\Request\RequestReturnRack.cshtml" />
-    <Content Include="Views\Request\Index.cshtml" />
     <Content Include="Views\Request\RequestUpgradeServer.cshtml" />
     <Content Include="Views\Request\RequestReturnIP.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
@@ -972,7 +969,7 @@
     <Content Include="Scripts\plugins\input-mask\phone-codes\phone-codes.json" />
     <Content Include="Scripts\plugins\slimScroll\slimScroll.jquery.json" />
     <Content Include="Views\Schedule\Index2.cshtml" />
-    <Content Include="Views\Server\Index2.cshtml" />
+    <Content Include="Views\Server\Index.cshtml" />
     <Content Include="Views\Location\Index2.cshtml" />
     <Content Include="Views\IP\Index2.cshtml" />
     <Content Include="Views\Request\RequestChangeIP.cshtml" />
@@ -984,7 +981,7 @@
     <Content Include="Views\Request\RequestAddServer.cshtml" />
     <Content Include="Views\Request\RequestAssignIP.cshtml" />
     <Content Include="Views\Request\RequestAssignIPInfo.cshtml" />
-    <Content Include="Views\Server\ServerDetails2.cshtml" />
+    <Content Include="Views\Server\ServerDetails.cshtml" />
     <Content Include="Views\Account\Index2.cshtml" />
     <Content Include="Views\Account\Login2.cshtml" />
     <Content Include="Views\Request\RequestAddServerInfo2.cshtml" />

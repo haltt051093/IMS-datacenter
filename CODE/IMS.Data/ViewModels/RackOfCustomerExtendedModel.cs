@@ -13,7 +13,7 @@ namespace IMS.Data.ViewModels
     {
         public string RackName { get; set; }
         public string LocationCode { get; set; }
-        public int RackUnit { get; set; }
+        public int? RackUnit { get; set; }
         public string ServerCode { get; set; }
         public string StatusName { get; set; }
     }

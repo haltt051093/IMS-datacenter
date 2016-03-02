@@ -11,57 +11,17 @@ namespace IMS.Controllers
 {
     public class ServerController : CoreController
     {
-        // GET: Server
-
-        public ActionResult Index2()
+        public ActionResult Index()
         {
-            return View();
-        }
-
-        public ActionResult ServerDetails2()
-        {
-            return View();
-        }
-
-        public ActionResult Index(string statusSearch, string makerSearch, string rackSearch, string searchString)
-        {
-            var server = ServerBLO.Current.GetAllServer();
+            var servers = ServerBLO.Current.GetAllServer();
+            //get requests cua server
             var data = new ServerIndexViewModel();
-
-            //list status
-            var currentstatus = StatusBLO.Current.GetAll().Where(x => x.Object.Trim() == "Request").Select(x => x.StatusName);
-            ViewBag.statusSearch = new SelectList(currentstatus);
-            //list maker
-            var makers = new List<string>();
-            var currentmaker = server.OrderBy(x => x.Maker).Select(x => x.Maker.Trim()).ToList();
-            makers.AddRange(currentmaker.Distinct());
-            ViewBag.makerSearch = new SelectList(makers);
-            //list rack
-            var currentrack = RackBLO.Current.GetAll().OrderBy(x => x.RackCode).Select(x => x.RackName);
-            ViewBag.rackSearch = new SelectList(currentrack);
-
-            if (!String.IsNullOrEmpty(searchString))
+            foreach (var item in servers)
             {
-                server = server.Where(s => s.Customer.Contains(searchString.Trim())).ToList();
+                var requestOfServer = LogChangedContentBLO.Current.ListWaitingRequestOfServer(item.ServerCode);
+                item.Requests = requestOfServer;
             }
-            if (!String.IsNullOrWhiteSpace(rackSearch))
-            {
-                Rack result = new Rack();
-                result.RackName = rackSearch;
-                var rackcode = RackBLO.Current.GetByName(result).RackCode;
-                server = server.Where(r => r.RackCode.Trim() == rackcode.Trim()).ToList();
-            }
-            if (!String.IsNullOrEmpty(makerSearch))
-            {
-                server = server.Where(m => m.Maker.Trim() == makerSearch.Trim()).ToList();
-            }
-            if (!String.IsNullOrEmpty(statusSearch))
-            {
-                var searchedStatus = StatusDAO.Current.Query(x => x.StatusName == statusSearch)
-                    .Select(x => x.StatusCode).FirstOrDefault();
-                server = server.Where(st => st.Status.Trim() == searchedStatus).ToList();
-            }
-            data.Servers = server;
+            data.Servers = servers;
             return View(data);
         }
 

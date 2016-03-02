@@ -12,8 +12,10 @@ namespace IMS.Data.Models
         public string RequestCode { get; set; }
 
         [StringLength(50)]
-        public string ObjectCode { get; set; }
+        public string ObjectType { get; set; }
 
         public string Data { get; set; }
+
+        public string TempCode { get; set; }
     }
 }
