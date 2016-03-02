@@ -37,6 +37,7 @@ namespace IMS.Data.Repository
 
             return RawQuery<LocationExtendedModel>(query, new object[] { });
         }
+
         public List<LocationExtendedModel> GetRackValidPowerForNew(Server server)
         {
             string query = @"select l.LocationCode, l.RackCode, l.RackUnit, s.Status,l.ServerCode, r.RackName
@@ -102,6 +103,7 @@ namespace IMS.Data.Repository
             ;
             return RawQuery<LocationExtendedModel>(query, new object[] { });
         }
+
         public List<LocationExtendedModel> GetCustomerRackValidPowerForChange(Server server)
         {
             string query = @"select l.LocationCode, l.RackCode, l.RackUnit, s.StatusName, l.ServerCode,r.RackName
@@ -123,6 +125,7 @@ namespace IMS.Data.Repository
                             where r.MaximumPower - ISNULL(ri.UsedPower,0) >'" + server.Power + @"'or l.ServerCode = '" + server.ServerCode + @"'";
             return RawQuery<LocationExtendedModel>(query, new object[] { });
         }
+
         public LocationExtendedModel GetRackOfServer(Server server)
         {
             string query =
@@ -130,11 +133,30 @@ namespace IMS.Data.Repository
                 server.ServerCode + @"'";
             return RawQuery<LocationExtendedModel>(query, new object[] { }).FirstOrDefault();
         }
+
         public List<string> GetLocationStatus()
         {
             string query = @"select s.StatusName from Status as s
                            where s.Object = 'Location'";
             return RawQuery<string>(query, new object[] { });
+        }
+
+        public List<RackOfCustomerExtendedModel> GetLocationsOfServer(string serverCode)
+        {
+            var locations = from r in RackDAO.Current.Table()
+                            join l in Table()
+                                on r.RackCode equals l.RackCode into lr
+                            from subl in lr.DefaultIfEmpty()
+                            where subl.ServerCode == serverCode
+                            select new RackOfCustomerExtendedModel
+                            {
+                                LocationCode = subl.LocationCode,
+                                ServerCode = subl.ServerCode,
+                                RackUnit = subl.RackUnit,
+                                RackCode = subl.RackCode,
+                                RackName = r.RackName
+                            };
+            return locations.ToList();
         }
     }
 }

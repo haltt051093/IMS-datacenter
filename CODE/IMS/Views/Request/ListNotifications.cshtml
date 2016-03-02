@@ -53,7 +53,6 @@
                         <th>RequestType</th>
                         <th>RequestedTime</th>
                         <th>Status</th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody id="tableBody">
@@ -61,7 +60,16 @@
                     {
                         <tr>
                             <td>
-                                @Html.ActionLink(item.RequestCode, "RequestDetais", "Request", new { rType = item.RequestType, rCode = item.RequestCode }, null)
+                                @if (item.StatusCode == Constants.StatusCode.REQUEST_SENDING)
+                                {
+                                    <a href="#" data-toggle="modal" class="btnRequestCode" data-target="#acceptrequest-modal"
+                                        data-requestCode="@item.RequestCode" data-requestType="@item.RequestType">@item.RequestCode</a>
+                                }
+                                else
+                                {
+                                    @Html.ActionLink(item.RequestCode, "RequestDetais", "Request", new { rType = item.RequestType, rCode = item.RequestCode }, null)
+                                }
+
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Customer)
@@ -74,9 +82,8 @@
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.StatusName)
-                        </td>
-                        <td><a href="#" data-toggle="modal" class="btnRequestCode" data-target="#acceptrequest-modal" data-requestCode="@item.RequestCode">Accept Request</a></td>
-                    </tr>
+                            </td>
+                        </tr>
                     }
                 </tbody>
                 <tfoot>
@@ -86,7 +93,6 @@
                         <th>RequestType</th>
                         <th>RequestedTime</th>
                         <th>Status</th>
-                        <th></th>
                     </tr>
                 </tfoot>
             </table>
@@ -105,6 +111,12 @@
             {
                 <div class="modal-body">
                     <div class="form-group">
+                        <div class="form-group">
+                            <a href="#">View Request Details</a>
+                            @*@Html.ActionLink("View Details", "RequestDetais", "Request", new { rType = item.RequestType, rCode = item.RequestCode }, null)*@
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label>Assign Name</label>
                         <select>
                             <option>You</option>
@@ -114,6 +126,7 @@
                     </div>
                 </div>
                 <input type="hidden" id="requestCode" name="requestCode" value=""/>
+                <input type="hidden" id="requestType" name="requestType" value="" />
                 <div class="modal-footer clearfix">
                     <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
                     <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Accept</button>
@@ -125,9 +138,11 @@
 <script type="text/javascript">
     $(function () {
         $("#example1").dataTable();
-        $('#tableBody').on('click', '.btnRequestCode', function() {
+        $('#tableBody').on('click', '.btnRequestCode', function () {
             var result = $(this).attr('data-requestCode');
             $('#requestCode').val(result);
+            var requestType = $(this).attr('data-requestType');
+            $('#requestType').val(requestType);
         });
     });
 </script>

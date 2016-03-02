@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using IMS.Data.Business;
-using IMS.Data.Models;
-using IMS.Data.Repository;
 using IMS.Models;
 
 namespace IMS.Controllers
@@ -36,6 +31,8 @@ namespace IMS.Controllers
                 return HttpNotFound();
             }
             var data = new ServerDetailsViewModel();
+            //them list location
+            data.Locations = LocationBLO.Current.GetLocationsOfServer(server.ServerCode);
             data.Attributes = serverattributes;
             data.Server = server;
             data.CurrentIPs = servercurrentips;

@@ -482,7 +482,7 @@ namespace IMS.Controllers
         }
 
         //Accept request
-        public ActionResult AcceptRequest(string requestCode)
+        public ActionResult AcceptRequest(string requestCode, string requestType)
         {
             //doi trang thai cua request
             RequestBLO.Current.UpdateRequestStatus(requestCode, Constants.StatusCode.REQUEST_WAITING);

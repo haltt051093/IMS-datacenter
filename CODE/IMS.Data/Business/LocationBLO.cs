@@ -105,7 +105,6 @@ namespace IMS.Data.Business
             return dao.GetAllLocation();
         }
 
-
         public List<LocationExtendedModel> GetChangeLocation(Server server)
         {
             var allLocation = new List<LocationExtendedModel>();
@@ -182,7 +181,6 @@ namespace IMS.Data.Business
 
         }
 
-
         public List<LocationExtendedModel> GetNewLocation(Server server)
         {
             var allLocation = new List<LocationExtendedModel>();
@@ -241,9 +239,15 @@ namespace IMS.Data.Business
             }
             return result;
         }
+
         public List<string> GetLocationStatus()
         {
             return dao.GetLocationStatus();
+        }
+
+        public List<RackOfCustomerExtendedModel> GetLocationsOfServer(string serverCode)
+        {
+            return dao.GetLocationsOfServer(serverCode);
         }
     }
 }

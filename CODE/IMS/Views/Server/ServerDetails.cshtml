@@ -10,7 +10,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="@Url.Action("Index2", "Schedule")"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="@Url.Action("Index2", "Server")"><i class="fa fa-dashboard"></i> Server</a></li>
+        <li><a href="@Url.Action("Index", "Server")"><i class="fa fa-dashboard"></i> Server</a></li>
         <li class="active">ServerDetails</li>
     </ol>
 </section>
@@ -54,15 +54,15 @@
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.Server.Power)
+                    @Html.DisplayFor(model => model.Server.Power)W
                 </dd>
 
                 <dt>
-                    Size
+                    Rack
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.Server.Size)
+                    @Html.DisplayFor(model => model.Server.Size)U
                 </dd>
 
                 <dt>
@@ -74,20 +74,16 @@
                 </dd>
 
                 <dt>
-                    Default IP
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Server.DefaultIP)
-                </dd>
-
-                <dt>
                     Location
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.Server.RackName)U
-                    @Html.DisplayFor(model => model.Server.RackUnit)
+                    @foreach (var item in Model.Locations)
+                    {
+                        <div>
+                            @item.RackName U @item.RackUnit
+                        </div>
+                    }
                     <label>-----</label>
                     <label><a href="#" data-toggle="modal" data-target="#changelocation-modal">Change Location?</a></label>
                 </dd>
@@ -110,31 +106,44 @@
                     Other Attributes
                 </dt>
                 <dd>
-                    <ul class="list-group">
-                        @foreach (var item in Model.Attributes)
-                        {
-                            <li class="list-group-item">
-                                @item.AttributeName
-                                :
-                                @item.AttributeValue
-                            </li>
-                        }
-                    </ul>
+                    @if (Model.Attributes.Count == 0)
+                    {
+                        @Html.Raw("No other attributes")
+                    }
+                    else
+                    {
+                        <ul class="list-group" id="currentIps">
+                            @foreach (var item in Model.Attributes)
+                            {
+                                <li class="list-group-item">
+                                    @item.AttributeName
+                                    :
+                                    @item.AttributeValue
+                                </li>
+                            }
+                        </ul>
+                    }
                 </dd>
                 <dt>
                     Current IP Address
                 </dt>
                 <dd>
-                    <ul class="list-group">
-                        @foreach (var item in Model.CurrentIPs)
-                        {
-                            <li class="list-group-item">
-                                @item.CurrentIP
-                            </li>
-                        }
-                    </ul>
+                    @if (Model.CurrentIPs.Count == 0)
+                    {
+                        @Html.Raw("No IP")
+                    }
+                    else
+                    {
+                        <ul class="list-group">
+                            @foreach (var item in Model.CurrentIPs)
+                            {
+                                <li class="list-group-item">
+                                    @item.CurrentIP
+                                </li>
+                            }
+                        </ul>
+                    }
                 </dd>
-
             </dl>
         </div><!-- /.box-body -->
     </div><!-- /.box -->
@@ -636,7 +645,13 @@
             <script type="text/javascript">
                 $(function () {
                     $("#example1").dataTable();
-
+                    //DOING
+                    var defaultIp = @Model.Server.DefaultIP;
+                    $('#currentIps li').each(function() {
+                        if (this.value == defaultIp) {
+                            $(this).css( "background-color:blue;" );
+                        }
+                    });
                 });
             </script>
         </div><!-- /.modal-content -->
