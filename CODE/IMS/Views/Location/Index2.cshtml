@@ -25,7 +25,6 @@
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>Location Code</th>
                         <th>Rack Name</th>
                         <th>Rack Unit</th>
                         <th>Status</th>
@@ -39,9 +38,7 @@
                         {
                             var item = Model.Locations[i];
                             <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.LocationCode)
-                                </td>
+
                                 <td>
                                     @Html.DisplayFor(modelItem => item.RackName)
                                 </td>
@@ -65,7 +62,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th>Location Code</th>
+                    
                         <th>Rack Name</th>
                         <th>Rack Unit</th>
                         <th>Status</th>
@@ -165,7 +162,10 @@
 <!-- page script -->
 <script type="text/javascript">
     $(function() {
-        $("#example1").dataTable();
+        $("#example1").dataTable({
+            "iDisplayLength": 42,
+            "aLengthMenu": [[42, 84, 126], [42, 84, 126]]
+        });
 
     });
 </script>
