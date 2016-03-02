@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IMS.Core.Express;
 
 namespace IMS.Data.Generic
 {
@@ -72,6 +73,7 @@ namespace IMS.Data.Generic
         {
             baseDao.RemoveMany(entries);
         }
+
 
     }
 }

@@ -29,6 +29,7 @@ namespace IMS
                 config.CreateMap<RequestIPViewModel, NotificationExtendedModel>();
                 //request add server
                 config.CreateMap<RequestAddServerViewModel,Server>();
+                config.CreateMap<ServerDetailModel, Server>();
                 //process rent rack
                 config.CreateMap<Request, RequestRentRackViewModel>();
                 //process add server

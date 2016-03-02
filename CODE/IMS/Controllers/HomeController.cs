@@ -43,17 +43,17 @@ namespace IMS.Controllers
                 {
                     var viewmodel = new RequestAddServerViewModel();
                     viewmodel.Servers = new List<ServerDetailModel>();
-                    var requestCode = RequestBLO.Current.GenerateCode();
-
                     if (Session[Constants.Session.REQUEST_CODE] == null)
                     {
+                        var requestCode = RequestBLO.Current.GenerateCode();
                         Session[Constants.Session.REQUEST_CODE] = requestCode;
                     }
                     var rCode = Session[Constants.Session.REQUEST_CODE].ToString();
-                    var tempDatas = TempRequestBLO.Current.GetByCode(rCode);
+                    var tempDatas = TempRequestBLO.Current.GetByRequestCode(rCode);
                     foreach (var tempData in tempDatas)
                     {
-                        var server = JsonConvert.DeserializeObject<ServerDetailModel>(tempData);
+                        var server = JsonConvert.DeserializeObject<ServerDetailModel>(tempData.Data);
+                        server.TempCode = tempData.TempCode;
                         viewmodel.Servers.Add(server);
                     }
                     var attrList = AttributeBLO.Current.GetAll();

@@ -8,6 +8,7 @@ namespace IMS.Data.ViewModels
 {
     public class ServerDetailModel
     {
+        public string TempCode { get; set; }
         public string Customer { get; set; }
         public string Maker { get; set; }
         public string Model { get; set; }

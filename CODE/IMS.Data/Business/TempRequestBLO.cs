@@ -29,9 +29,19 @@ namespace IMS.Data.Business
             dao = TempRequestDAO.Current;
         }
 
-        public List<string> GetByCode(string requestCode)
+        public List<TempRequest> GetByRequestCode(string requestCode)
         {
-            return dao.GetByCode(requestCode);
+            return dao.GetByRequestCode(requestCode);
+        }
+
+        public string GenerateCode()
+        {
+            return dao.GenerateCode();
+        }
+
+        public TempRequest GetByCode(string tempCode)
+        {
+            return dao.GetByCode(tempCode);
         }
     }
 }

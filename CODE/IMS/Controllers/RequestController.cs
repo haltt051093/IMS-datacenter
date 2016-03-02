@@ -201,74 +201,93 @@ namespace IMS.Controllers
             var temp = new TempRequest();
             temp.RequestCode = Session[Constants.Session.REQUEST_CODE].ToString();
             temp.Data = JsonConvert.SerializeObject(viewmodel.Server);
-            RequestType rt = new RequestType();
-            rt.RequestTypeCode = Constants.RequestTypeCode.ADD_SERVER;
+            temp.TempCode = TempRequestBLO.Current.GenerateCode();
             TempRequestBLO.Current.Add(temp);
 
+            RequestType rt = new RequestType();
+            rt.RequestTypeCode = Constants.RequestTypeCode.ADD_SERVER;
             return RedirectToAction("Index", "Home", rt);
         }
-        //UPDATEING
+
+        public ActionResult DeleteTempServer(string tempCode)
+        {
+            //delete temp server
+            var temp = TempRequestBLO.Current.GetByCode(tempCode);
+            TempRequestBLO.Current.Remove(temp);
+            //quay lai trang cu
+            RequestType rt = new RequestType();
+            rt.RequestTypeCode = Constants.RequestTypeCode.ADD_SERVER;
+            return RedirectToAction("Index", "Home", rt);
+        }
+
         [HttpPost]
         public ActionResult RequestAddServer(RequestAddServerViewModel viewmodel)
-        {            
-            //viewmodel.Server.Customer = Constants.Test.CUSTOMER_MANHNH;
+        {
+
             //get appointment time
             //string dateOnly = viewmodel.AppointmentTime.ToString("dd/MM/yyyy");
             //string time = DateTime.Parse(viewmodel.Time).ToString("HH:mm:ss");
             //string datetime = dateOnly + ' ' + time;
             //viewmodel.AppointmentTime = DateTime.Parse(datetime);
+
             //Add request
             Request passRequest = new Request
             {
-                Customer = viewmodel.Server.Customer,
+                Customer = Constants.Test.CUSTOMER_MANHNH,
                 Description = viewmodel.Description,
-                AppointmentTime = viewmodel.AppointmentTime
+                AppointmentTime = viewmodel.AppointmentTime,
             };
             string result = RequestBLO.Current.AddRequest(passRequest, Constants.RequestTypeCode.ADD_SERVER);
 
             //add server, trang thai server la waiting
-            var server = Mapper.Map<RequestAddServerViewModel, Server>(viewmodel);
-            string serverCode = ServerDAO.Current.AddServer(server);
-
-            //lay thong tin attributes, đã lấy được, giờ tìm cách gộp 2 mảng song song
-            List<string> attributeValues = viewmodel.AttributeValues;
-            List<string> attributeCodes = viewmodel.SelectedAttributes;
-            List<ServerAttribute> serverAttributes = new List<ServerAttribute>();
-            for (int i = 0; i < attributeValues.Count; i++)
+            foreach (var item in viewmodel.Servers)
             {
-                ServerAttribute sa = new ServerAttribute();
-                sa.AttributeValue = attributeValues[i];
-                sa.AttributeCode = attributeCodes[i];
-                sa.ServerCode = serverCode;
-                sa.UpdatedVersion = 0;
-                sa.StatusCode = Constants.StatusCode.SERVERATTRIBUTE_UPDATING;
-                serverAttributes.Add(sa);
+                var server = Mapper.Map<ServerDetailModel, Server>(item);
+                server.Customer = Constants.Test.CUSTOMER_MANHNH;
+                string serverCode = ServerDAO.Current.AddServer(server);
+
+                // log request status
+                LogChangedContent logRequest = new LogChangedContent
+                {
+                    RequestCode = result,
+                    TypeOfLog = Constants.TypeOfLog.LOG_ADD_SERVER,
+                    Object = Constants.Object.OBJECT_REQUEST,
+                    ChangedValueOfObject = result,
+                    ObjectStatus = Constants.StatusCode.REQUEST_SENDING,
+                    ServerCode = serverCode
+                };
+                LogChangedContentBLO.Current.AddLog(logRequest);
+
+                // log object server
+                LogChangedContent logServer = new LogChangedContent
+                {
+                    RequestCode = result,
+                    TypeOfLog = Constants.TypeOfLog.LOG_ADD_SERVER,
+                    Object = Constants.Object.OBJECT_SERVER,
+                    ChangedValueOfObject = serverCode,
+                    //object status
+                    ObjectStatus = Constants.StatusCode.SERVER_WAITING,
+                    ServerCode = serverCode
+                };
+                LogChangedContentBLO.Current.AddLog(logServer);
             }
-            //add server attributes
-            ServerAttributeBLO.Current.AddMany(serverAttributes);
 
-            // log request status
-            LogChangedContent logRequest = new LogChangedContent
-            {
-                RequestCode = result,
-                TypeOfLog = Constants.TypeOfLog.LOG_ADD_SERVER,
-                Object = Constants.Object.OBJECT_REQUEST,
-                ChangedValueOfObject = result,
-                ObjectStatus = Constants.StatusCode.REQUEST_SENDING
-            };
-            LogChangedContentBLO.Current.AddLog(logRequest);
-
-            // log object server
-            LogChangedContent logServer = new LogChangedContent
-            {
-                RequestCode = result,
-                TypeOfLog = Constants.TypeOfLog.LOG_ADD_SERVER,
-                Object = Constants.Object.OBJECT_SERVER,
-                ChangedValueOfObject = serverCode,
-                //object status
-                ObjectStatus = Constants.StatusCode.SERVER_WAITING,
-            };
-            LogChangedContentBLO.Current.AddLog(logServer);
+            ////lay thong tin attributes, đã lấy được, giờ tìm cách gộp 2 mảng song song
+            //List<string> attributeValues = viewmodel.AttributeValues;
+            //List<string> attributeCodes = viewmodel.SelectedAttributes;
+            //List<ServerAttribute> serverAttributes = new List<ServerAttribute>();
+            //for (int i = 0; i < attributeValues.Count; i++)
+            //{
+            //    ServerAttribute sa = new ServerAttribute();
+            //    sa.AttributeValue = attributeValues[i];
+            //    sa.AttributeCode = attributeCodes[i];
+            //    sa.ServerCode = serverCode;
+            //    sa.UpdatedVersion = 0;
+            //    sa.StatusCode = Constants.StatusCode.SERVERATTRIBUTE_UPDATING;
+            //    serverAttributes.Add(sa);
+            //}
+            ////add server attributes
+            //ServerAttributeBLO.Current.AddMany(serverAttributes);
 
             //Notification
             var notif = Mapper.Map<RequestAddServerViewModel, NotificationExtendedModel>(viewmodel);
