@@ -10,5 +10,8 @@ namespace IMS.Models
         public List<AttributeExtendedModel> Attributes { get; set; }
         public List<ServerIP> CurrentIPs { get; set; } 
         public List<RackOfCustomerExtendedModel> Locations { get; set; }
+
+        public List<LocationExtendedModel> Locations1 { get; set; }
+        public string LocationCode { get; set; }
     }
 }

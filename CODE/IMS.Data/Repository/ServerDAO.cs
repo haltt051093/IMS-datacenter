@@ -114,6 +114,7 @@ namespace IMS.Data.Repository
                             RackUnit = subl.RackUnit,
                             Status = subst.StatusName,
                             CustomerName = suba.Fullname,
+                            Customer = s.Customer,
                             Id = s.Id,
                             Maker = s.Maker,
                             Model = s.Model,
