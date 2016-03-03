@@ -1,0 +1,28 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Web.WebPages.Html;
+
+namespace IMS.Models
+{
+    public class RequestCreateViewModel
+    {
+        public int Id { get; set; }
+
+        public string RequestCode { get; set; }
+
+        public string RequestType { get; set; }
+
+        public string Customer { get; set; }
+
+        public DateTime? AppointmentTime { get; set; }
+
+        public string Description { get; set; }
+
+        public DateTime? RequestedTime { get; set; }
+
+        public string StatusCode { get; set; }
+
+        public bool IsViewed { get; set; }
+    }
+}
