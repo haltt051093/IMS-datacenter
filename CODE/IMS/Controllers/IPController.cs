@@ -211,11 +211,12 @@ namespace IMS.Controllers
                 ip.StatusCode = Constants.StatusCode.IP_BLOCKED;
                 IPAddressPoolDAO.Current.Update(ip);
                 LogChangedContent log = new LogChangedContent();
-                log.TypeOfLog = "BLOCKIP";
+                log.TypeOfLog = Constants.TypeOfLog.LOG_BLOCK_IP;
                 log.Object = Constants.Object.OBJECT_IP;
                 log.ChangedValueOfObject = ip.IPAddress;
                 log.ObjectStatus = Constants.StatusCode.IP_BLOCKED;
                 log.LogTime = DateTime.Now;
+                log.Description = iivm.Description;
                 LogChangedContentDAO.Current.Add(log);
             }
             else
@@ -224,7 +225,7 @@ namespace IMS.Controllers
                 ip.StatusCode = Constants.StatusCode.IP_AVAILABLE;
                 IPAddressPoolDAO.Current.Update(ip);
                 LogChangedContent log = new LogChangedContent();
-                log.TypeOfLog = "UNBLOCKIP";
+                log.TypeOfLog = Constants.TypeOfLog.LOG_UNBLOCK_IP;
                 log.Object = Constants.Object.OBJECT_IP;
                 log.ChangedValueOfObject = ip.IPAddress;
                 log.ObjectStatus = Constants.StatusCode.IP_AVAILABLE;

@@ -31,9 +31,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @for(int i=0;i<Model.IPs.Count;i++)
+                    @for (int i = 0; i < Model.IPs.Count; i++)
                     {
                         var item = Model.IPs[i];
+                        
                         <tr>
                             <td>
                                 @Html.DisplayFor(modelItem => item.IPAddress)
@@ -50,7 +51,7 @@
                             <td>
 
 
-                                <a type="button" data-toggle="modal" class="open-blockIP-modal" href="#blockIP-modal">
+                                <a type="button" data-toggle="modal" class="open-blockIP-modal" data-target="#modal-@i">
                                     @{
                                         if (item.StatusName == "Blocked")
                                         {<label>Unblock IP</label>}
@@ -58,7 +59,7 @@
                                         { <label>Block IP</label>}
                                     }
                                 </a>
-                                <div class="modal fade" id="blockIP-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                                <div class="modal fade" id="modal-@i" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
                                     <div class="modal-dialog" style="width: 400px">
                                         <div class="modal-content">
                                             <form action="ChangeIPStatus" method="post">
@@ -67,8 +68,10 @@
                                                     {
                                                         <h4>Are you sure to block this IP Address?</h4>
                                                         <div class="form-group">
+
                                                             <label>Description:</label>
-                                                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @placeholder = "Description", @id = "address" } })
+                                                            @Html.HiddenFor(model => Model.IPs[i].Id)
+                                                            @Html.EditorFor(model => model.Description, new {htmlAttributes = new {@class = "form-control", @placeholder = "Description", @id = "address"}})
                                                         </div>
 
                                                     }
@@ -78,14 +81,14 @@
                                                     }
 
                                                 </div>
-
+                                                
                                                 <div class="modal-footer clearfix">
                                                     @*@using (Html.BeginForm("ChangeIPStatus", "IP"))
                 {
                     <input type="hidden" name="ipid" id="ipid" value="" />
                     <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Yes</button>
                 }*@
-                                                    @Html.HiddenFor(model => Model.IPs[i].Id)
+                                                    
                                                     <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Yes</button>
                                                     <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
                                                 </div>

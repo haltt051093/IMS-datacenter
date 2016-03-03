@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Mime;
 using System.Web.Mvc;
 using IMS.Data.Business;
@@ -53,6 +54,25 @@ namespace IMS.Controllers
             
             data.Locations1 = locations;
             return View(data);
+        }
+
+        [HttpPost]
+        public ActionResult ServerDetails(ServerDetailsViewModel sdvm)
+        {
+            if (sdvm.LocationCode == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            bool x = LocationBLO.Current.UpdateLocation(sdvm.Server.Size, sdvm.Server.ServerCode, sdvm.LocationCode, "Change");
+            if (x)
+            {
+                return RedirectToAction("ServerDetails");
+            }
+            else
+            {
+                return RedirectToAction("ServerDetails");
+            }
+
         }
 
         [HttpGet]
