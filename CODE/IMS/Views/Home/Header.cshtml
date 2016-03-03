@@ -1,0 +1,238 @@
+﻿@model object
+
+@{
+    string role = Model == null ? string.Empty : Model.ToString();
+}
+
+<a href="@Url.Action("Index2", "Schedule")" class="logo">
+    <!-- Add the class icon to your logo image or logo icon to add the margining -->
+    <img src="@Url.Content("~/img/logoIMS.png")" alt="logo image" class="offline" width="75px"/>
+</a>
+
+<!-- Header Navbar: style can be found in header.less -->
+<nav class="navbar navbar-static-top" role="navigation">
+    <!-- Sidebar toggle button-->
+    <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </a>
+    <div class="navbar-right">
+        <ul class="nav navbar-nav">
+            <!-- Messages: style can be found in dropdown.less-->
+
+            @if (role == "Shift Head")
+            {
+                <li class="dropdown notifications-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-warning"></i>
+                        <span class="label label-warning">10</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header">You have 10 notifications</li>
+                        <li>
+                            <!-- inner menu: contains the actual data -->
+                            <ul class="menu">
+                                <li>
+                                    <a href="#" data-toggle="modal" data-target="#requestinfo-modal">
+                                        <i class="ion ion-ios7-people info"></i> Request add server
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-warning danger"></i> Request change IP
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-users warning"></i> Request Return IP
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="ion ion-ios7-cart success"></i> Request upgrade server
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="ion ion-ios7-person danger"></i> Request assign IP
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="footer"><a href="@Url.Action("ListNotifications", "Request")">View all</a></li>
+                    </ul>
+                </li>
+                <!-- Tasks: style can be found in dropdown.less -->
+                <li class="dropdown tasks-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-tasks"></i>
+                        <span class="label label-danger">9</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header">You have 5 tasks</li>
+                        <li>
+                            <!-- inner menu: contains the actual data -->
+                            <ul class="menu">
+                                <li>
+                                    <!-- Task item -->
+                                    <a href="@Url.Action("RequestAddServerInfo2", "Request")">
+                                        <h3>
+                                            Request add server
+                                            <small class="pull-right">Pending</small>
+                                        </h3>
+                                    </a>
+                                </li><!-- end task item -->
+                                <li style="color: #d9534f">
+                                    <!-- Task item -->
+                                    <a href="#">
+                                        <h3>
+                                            Request Assign IP Address
+                                            <small class="pull-right">Waiting</small>
+                                        </h3>
+                                    </a>
+                                </li><!-- end task item -->
+                                <li>
+                                    <!-- Task item -->
+                                    <a href="#">
+                                        <h3>
+                                            Request upgrade server
+                                            <small class="pull-right">Pending</small>
+                                        </h3>
+                                    </a>
+                                </li><!-- end task item -->
+                                <li>
+                                    <!-- Task item -->
+                                    <a href="#">
+                                        <h3>
+                                            Request Return IP Address
+                                            <small class="pull-right">Waiting</small>
+                                        </h3>
+                                    </a>
+                                </li><!-- end task item -->
+                            </ul>
+                        </li>
+
+                    </ul>
+                </li>
+            }
+            else if (role == "Customer")
+            {
+                <li class="dropdown notifications-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-warning"></i>
+                        <span class="label label-warning">10</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header">You have 10 notifications</li>
+                        <li>
+                            <!-- inner menu: contains the actual data -->
+                            <ul class="menu">
+                                <li>
+                                    <a href="@Url.Action("RequestAddServerInfo2", "Request", new {act = "Finish"})">
+                                        <i class="ion ion-ios7-people info"></i> Request add server finish
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-warning danger"></i> Request change IP finish
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-users warning"></i> Request Return IP finish
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="ion ion-ios7-cart success"></i> Request upgrade server finish
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="ion ion-ios7-person danger"></i> Request assign IP finish
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="footer"><a href="#">View all</a></li>
+                    </ul>
+                </li>
+            }
+
+            <!-- User Account: style can be found in dropdown.less -->
+            <li class="dropdown user user-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="glyphicon glyphicon-user"></i>
+                    <span>Thu Ha<i class="caret"></i></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <!-- User image -->
+                    <li class="user-header bg-light-blue">
+                        <img src="@Url.Content("~/img/avatar3.png")" class="img-circle" alt="User Image"/>
+                        <p>
+                            Thu Ha - Shift Head
+                            <small>Member since Nov. 2012</small>
+                        </p>
+                    </li>
+
+                    <!-- Menu Footer-->
+                    <li class="user-footer">
+                        <div class="pull-left">
+                            <a href="@Url.Action("ViewProfile2", "Account")" class="btn btn-default btn-flat">Profile</a>
+                        </div>
+                        <div class="pull-right">
+                            <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- REQUEST INFO MODAL -->
+<div class="modal fade" id="requestinfo-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width: 400px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><i class="fa fa-info"></i> Request Information</h4>
+            </div>
+            <form action="#" method="post">
+                <div class="modal-body">
+
+                    <dl class="dl-horizontal">
+                        <dt>Request Code</dt>
+                        <dd><a href="@Url.Action("RequestAddServerInfo2","Request")">R123456</a></dd>
+                        <dt>Customer Name</dt>
+                        <dd>Lê Thị Thu Hà</dd>
+                        <dt>Request Type Name</dt>
+                        <dd>Rent rack</dd>
+                        <dt>Requested Time</dt>
+                        <dd>22-Feb-16 00:03:00</dd>
+                        <dt>Status</dt>
+                        <dd>Sending</dd>
+                        <dt>Assign Name</dt>
+                        <dd>
+                            <select>
+                                <option>You</option>
+                                <option>tienhlh</option>
+                                <option>namch</option>
+                            </select>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="modal-footer clearfix">
+
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+
+                    <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Accept</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
