@@ -64,13 +64,14 @@
                                         <div class="modal-content">
                                             <form action="ChangeIPStatus" method="post">
                                                 <div class="modal-body">
+                                                 
                                                     @if (item.StatusName == "Available")
                                                     {
                                                         <h4>Are you sure to block this IP Address?</h4>
                                                         <div class="form-group">
 
                                                             <label>Description:</label>
-                                                            @Html.HiddenFor(model => Model.IPs[i].Id)
+
                                                             @Html.EditorFor(model => model.Description, new {htmlAttributes = new {@class = "form-control", @placeholder = "Description", @id = "address"}})
                                                         </div>
 
@@ -88,7 +89,7 @@
                     <input type="hidden" name="ipid" id="ipid" value="" />
                     <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Yes</button>
                 }*@
-                                                    
+                                                    @Html.HiddenFor(model => Model.IPs[i].Id)
                                                     <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Yes</button>
                                                     <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
                                                 </div>
