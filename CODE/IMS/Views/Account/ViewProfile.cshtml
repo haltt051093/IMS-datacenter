@@ -1,5 +1,6 @@
 ﻿@model AccountCreateViewModel
 @using IMS.Data.Business
+@using IMS.Data.Models
 @{
     ViewBag.Title = "ViewProfile";
 }
@@ -97,5 +98,20 @@
 
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @if(!User.IsInRole("Staff")){
+        @Html.ActionLink("Back to List", "Index")
+    }
+    
 </div>
+@{
+    var session = Session[Constants.Session.USER_LOGIN];
+    var action = "";
+    var ID = 0;
+    if (session != null)
+    {
+        Account obj = (Account)session;
+        action = obj.Role == "Customer" ? "EditCustomer" : "EditStaff";
+        ID = obj.Id;
+    }
+    @Html.ActionLink("Edit", @action, new { id = @ID })
+}

@@ -1,4 +1,5 @@
-﻿@model AccountIndexViewModel
+﻿@using IMS.Data.Business
+@model AccountIndexViewModel
 @{
     ViewBag.Title = "AccountPage";
     ViewBag.Role = "Shift Head";
@@ -13,11 +14,10 @@
         <li class="active">Account</li>
     </ol>
 </section>
-<section class="content">   
+<section class="content">
     <a class="btn btn-primary" data-toggle="modal" data-target="#addstaff-modal"><i class="fa fa-plus"></i> Add new staff</a>
     <a class="btn btn-primary" data-toggle="modal" data-target="#addcustomer-modal"><i class="fa fa-plus"></i> Add new customer</a>
 </section>
-
 <!-- Main content -->
 <section class="content">
     <div class="box">
@@ -26,23 +26,40 @@
                 <thead>
                     <tr>
                         <th>Username</th>
-                        <th>Role</th>
-                        <th>Group</th>
-                        <th>Status</th>
+                        <th>Identification</th>
                         <th>Full Name</th>
                         <th>Phone</th>
                         <th>Email</th>
                         <th>Address</th>
-                        <th>Identification</th>
-                        <th></th>
+                        <th>Role</th>
+                        <th>Group</th>
+                        <th>Status</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
 
-                   @foreach (var item in Model.ListAccount)
+                    @foreach (var item in Model.ListAccount)
                     {
                         <tr>
-                           
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Username)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Identification)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Fullname)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Phone)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Address)
+                            </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Role)
                             </td>
@@ -58,21 +75,6 @@
                                 {
                                     @Html.Raw("Deactivate")
                                 }
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Fullname)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Phone)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Email)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Address)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Identification)
                             </td>
                             <td>
                                 @if (User.IsInRole("Manager"))
@@ -121,7 +123,7 @@
                         <label for="exampleInputPassword1">Status</label>
                         <select>
                             <option>Activate</option>
-                            <option>Deactivate</option>
+                            <option>Deactivate</option>h
                         </select>
                     </div>
                     <div class="form-group">
@@ -134,15 +136,15 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Email</label>
-                        <input type="text" checked="true" class="form-control" id="" value="haltt@gmail.com" >
+                        <input type="text" checked="true" class="form-control" id="" value="haltt@gmail.com">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Address</label>
-                        <input type="text" checked="true" class="form-control" id="exampleInputPassword1" value="19 Quang Trung" >
+                        <input type="text" checked="true" class="form-control" id="exampleInputPassword1" value="19 Quang Trung">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Identification</label>
-                        <input type="text" checked="true" class="form-control" id="exampleInputPassword1" value="1234567890" >
+                        <input type="text" checked="true" class="form-control" id="exampleInputPassword1" value="1234567890">
                     </div>
                 </div>
                 <div class="modal-footer clearfix">
@@ -155,7 +157,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
 <!-- EDIT STAFF MODAL -->
 <div class="modal fade" id="editstaff-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" style="width: 500px;height: 500px">
@@ -186,7 +187,7 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Group</label>
-                        <select> 
+                        <select>
                             <option>Group 1</option>
                             <option>Group 2</option>
                             <option>Group 3</option>
@@ -225,7 +226,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
 <!-- ADD STAFF MODAL -->
 <div class="modal fade" id="addstaff-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" style="width: 500px">
@@ -234,65 +234,69 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title"><i class="fa fa-plus"></i> Add new staff</h4>
             </div>
-            <form action="#" method="post">
-                <div class="modal-body">
+            <div class="modal-body">
+                @using (Html.BeginForm("CreateStaff", "Account", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Username</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Username" style="width: 300px">
+                        @Html.LabelFor(model => model.Username, htmlAttributes: new {@class = "control-label col-md-2"})
+                        @Html.EditorFor(model => model.Username, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.Username, "", new {@class = "text-danger"})
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Role</label>
-                        <select class="form-control" style="width: 150px">
-                            <option>Shift Head</option>
-                            <option>Staff</option>
-                        </select>
+                        @Html.LabelFor(model => model.Role, "Role", htmlAttributes: new {@class = "control-label col-md-2"})
+                        @{
+                            var roles = RoleBLO.Current.GetAll().Where(c => c.RoleName != "Customer").Where(c => c.RoleName != "Manager");
+                            var myList = new SelectList(roles, "RoleName", "RoleName");
+                        }
+                        @Html.DropDownListFor(model => model.Role, myList, new {@class = "form-control", style = "width:200px"})
+                        @Html.ValidationMessageFor(model => model.Role, "", new {@class = "text-danger"})
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Group</label>
-                        <select class="form-control" style="width: 150px">
-                            <option>Group 1</option>
-                            <option>Group 2</option>
-                            <option>Group 3</option>
-                            <option>Group 4</option>                          
-                        </select>
+                        @Html.LabelFor(model => model.GroupCode, "Group", htmlAttributes: new {@class = "control-label col-md-2"})
+                        @{
+                            var groups = GroupBLO.Current.GetAll().Where(g => g.GroupCode != "No Group");
+                            var myList1 = new SelectList(groups, "GroupCode", "GroupCode");
+                        }
+                        @Html.DropDownListFor(model => model.GroupCode, myList1, new {@class = "form-control", style = "width:200px"})
+                        @Html.ValidationMessageFor(model => model.GroupCode, "", new {@class = "text-danger"})
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Full Name</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Full Name">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Email</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                        @Html.LabelFor(model => model.Fullname, htmlAttributes: new {@class = "control-label col-md-2"})
 
+                        @Html.EditorFor(model => model.Fullname, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.Fullname, "", new {@class = "text-danger"})
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Address">
-
+                        @Html.LabelFor(model => model.Phone, htmlAttributes: new {@class = "control-label col-md-2"})
+                        @Html.EditorFor(model => model.Phone, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.Phone, "", new {@class = "text-danger"})
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Phone</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Phone" style="width: 300px">
-
+                        @Html.LabelFor(model => model.Email, htmlAttributes: new {@class = "control-label col-md-2"})
+                        @Html.EditorFor(model => model.Email, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.Email, "", new {@class = "text-danger"})
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Identification</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Identification" style="width: 300px">
-
+                        @Html.LabelFor(model => model.Address, htmlAttributes: new {@class = "control-label col-md-2"})
+                        @Html.EditorFor(model => model.Address, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.Address, "", new {@class = "text-danger"})
                     </div>
-                </div>
-                <div class="modal-footer clearfix">
-
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-
-                    <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
-                </div>
-            </form>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Identification, htmlAttributes: new {@class = "control-label col-md-2"})
+                        @Html.EditorFor(model => model.Identification, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.Identification, "", new {@class = "text-danger"})
+                    </div>
+                    <div class="modal-footer clearfix">
+                        <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                    </div>
+                            }
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
 <!-- ADD CUSTOMER MODAL -->
 <div class="modal fade" id="addcustomer-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" style="width: 500px">
@@ -301,54 +305,51 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title"><i class="fa fa-plus"></i> Add new customer</h4>
             </div>
-            <form action="#" method="post">
-                <div class="modal-body">
+            <div class="modal-body">
+                @using (Html.BeginForm("CreateCustomer", "Account", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Username</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Username" style="width: 300px">
-                    </div>
-                  
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Full Name</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Full Name">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Email</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
-
+                        @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Address">
-
+                        @Html.LabelFor(model => model.Fullname, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.EditorFor(model => model.Fullname, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Fullname, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Phone</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Phone" style="width: 300px">
-
+                        @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Identification</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Identification" style="width: 300px">
-
+                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                     </div>
-                </div>
-                <div class="modal-footer clearfix">
-
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-
-                    <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
-                </div>
-            </form>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Identification, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.EditorFor(model => model.Identification, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Identification, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="modal-footer clearfix">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                        <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                    </div>
+                }
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- page script -->
-<script type="text/javascript">
-    $(function () {
-        $("#example1").dataTable();
-        
-    });
-</script>
-
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

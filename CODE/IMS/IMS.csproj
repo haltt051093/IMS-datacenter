@@ -895,6 +895,7 @@
     <Compile Include="Models\BreadcrumbModel.cs" />
     <Compile Include="Models\HomeSidebarViewModel.cs" />
     <Compile Include="Models\RackOfCustomerIndexViewModel.cs" />
+    <Compile Include="Models\RequestCreateViewModel.cs" />
     <Compile Include="Models\RequestIndexViewModel.cs" />
     <Compile Include="Models\TempServerViewModel.cs" />
     <Compile Include="Services\Scheduler.cs" />
@@ -994,7 +995,7 @@
     <Content Include="Views\Request\RequestBringAwayServerInfo2.cshtml" />
     <Content Include="Views\Request\RequestChangeIP2.cshtml" />
     <Content Include="Views\Request\RequestChangeIPInfo2.cshtml" />
-    <Content Include="Views\Request\RequestHistory2.cshtml" />
+    <Content Include="Views\Request\RequestHistory.cshtml" />
     <Content Include="Views\Request\RequestRentRack2.cshtml" />
     <Content Include="Views\Request\RequestRentRackInfo2.cshtml" />
     <Content Include="Views\Request\RequestReturnIP.cshtml" />
@@ -1006,6 +1007,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Rack\Index.cshtml" />
     <Content Include="Views\Home\Header.cshtml" />
+    <Content Include="Views\Request\EditRequestHistory.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

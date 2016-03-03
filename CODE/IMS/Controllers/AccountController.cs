@@ -50,7 +50,7 @@ namespace IMS.Controllers
                     {
                         if (!lstall[i].Role.IsNullOrWhiteSpace())
                         {
-                            if (lstall[i].Role.Equals("Shift Head"))
+                            if (lstall[i].Role.Equals("Customer"))
                             {
                                 rs.Add(lstall[i]);
 
@@ -62,15 +62,16 @@ namespace IMS.Controllers
                 }
                 else if (role.Equals("Staff"))
                 {
-                    for (int i = 0; i < lstall.Count; i++)
-                    {
-                        if (lstall[i].Role.Equals("Staff"))
-                        {
-                            rs.Add(lstall[i]);
+                    //for (int i = 0; i < lstall.Count; i++)
+                    //{
+                    //    if (lstall[i].Role.Equals("Staff"))
+                    //    {
+                    //        rs.Add(lstall[i]);
 
-                        }
+                    //    }
 
-                    }
+                    //}
+
                 }
             }
             data.ListAccount = rs;
@@ -124,7 +125,11 @@ namespace IMS.Controllers
                 {
                     Session[Constants.Session.USER_LOGIN] = o;
                 }
-                string role = o.Role;       
+                string role = o.Role;
+                if (role == "Staff")
+                {
+                    return RedirectToAction("ViewProfile", "Account", new { id = o.Id });
+                }
                 return RedirectToAction("Index2", "Account", new {role = role});
             }
             //else
@@ -142,13 +147,13 @@ namespace IMS.Controllers
         // GET: Account/Create
         public ActionResult CreateCustomer()
         {
-            return View("CreateCustomer");
+            return View("Index2");
         }
 
         [Authorize(Roles = "Manager")]
         public ActionResult CreateStaff()
         {
-            return View("CreateStaff");
+            return View("Index2");
         }
 
         // POST: Account/CreateStaff
@@ -190,6 +195,7 @@ namespace IMS.Controllers
                     //ModelState.AddModelError("", "Send mail successfully");
                     return RedirectToAction("Index2");
                 }
+                return RedirectToAction("Index2");
             }
             return View(accountCreateViewModel);
         }

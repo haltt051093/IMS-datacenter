@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Web.Mvc;
 using AutoMapper;
@@ -80,7 +79,7 @@ namespace IMS.Controllers
             return View();
         }
 
-        public ActionResult RequestHistory2()
+        public ActionResult RequestHistory()
         {
             //var data = RequestDAO.Current.GetAll();
             var request = RequestBLO.Current.GetAllRequest();
@@ -88,6 +87,33 @@ namespace IMS.Controllers
             data.Request = request;
             return View(data);
         }
+
+        public ActionResult EditRequestHistory(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Request request = RequestBLO.Current.GetById(id);
+            if (request == null)
+            {
+                return HttpNotFound();
+            }
+            Mapper.CreateMap<Request, RequestCreateViewModel>();
+            var requestViewmodel = Mapper.Map<Request, RequestCreateViewModel>(request);
+            return View(requestViewmodel);
+        }
+
+        [HttpPost]
+        public ActionResult EditRequestHistory(RequestCreateViewModel requestViewmodel)
+        {
+            Mapper.CreateMap<RequestCreateViewModel, Request>();
+            Request request = Mapper.Map<RequestCreateViewModel, Request>(requestViewmodel);
+
+            RequestBLO.Current.AddOrUpdate(request);
+            return RedirectToAction("RequestHistory", "Request");
+        }
+
         private static IHubContext commandHubContext;
 
         [HttpPost]

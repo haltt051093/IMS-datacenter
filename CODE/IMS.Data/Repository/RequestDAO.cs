@@ -142,11 +142,14 @@ namespace IMS.Data.Repository
 
         public List<RequestExtendedModel> GetAllRequest()
         {
-            string query = @"select i.*,s.StatusName from Request as i
+            string query = @"select i.*,s.StatusName, r.RequestTypeName from Request as i
                             left join Status as s
-                            on s.StatusCode = i.StatusCode";
+                            on s.StatusCode = i.StatusCode
+                            left join RequestType as r
+                            on r.RequestTypeCode = i.RequestType";
             return RawQuery<RequestExtendedModel>(query, new object[] { });
         }
+
 
         public Request GetRequestByRequestCode(string requestCode)
         {
