@@ -66,7 +66,7 @@
 
 
                                                 @if (item.StatusName == "Available")
-                                                {
+                                                { 
                                                     <div class="modal-body">
                                                         <h4>Please make sure to block this IP Address</h4>
                                                         <div class="form-inline">
@@ -78,11 +78,12 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                            <div class="modal-footer clearfix">
-                                                                @Html.HiddenFor(model => model.IPs[i].Id)
-                                                                <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Block</button>
-                                                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-                                                            </div>
+                                                    <div class="modal-footer clearfix">
+                                                        
+                                                        @Html.HiddenFor(model => Model.IPs[i].Id)
+                                                        <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Block</button>
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                                                    </div>
                                                        
                                                     
 
