@@ -16,7 +16,6 @@ namespace IMS.Controllers
     [AllowAnonymous]
     public class HomeController : CoreController
     {
-        // GET: Home
         [HttpGet]
         public ActionResult Index(RequestType requesttype)
         {

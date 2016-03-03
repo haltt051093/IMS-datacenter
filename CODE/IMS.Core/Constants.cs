@@ -273,6 +273,17 @@ namespace IMS.Core
             public const int NUMBER_10 = 10;
         }
 
+        public class HtmlClass
+        {
+            public const string DEFAULT_BUTTON = "btn btn-default";
+            public const string PRIMARY_BUTTON = "btn btn-primary";
+            public const string SECONDARY_BUTTON = "btn btn-info";
+            public const string DANGER_BUTTON = "btn btn-danger";
+
+            public const string FORM_LABEL = "";
+            public const string FORM_CONTROL = "";
+        }
+
         public class ServerAttributeCode
         {
             public const string PART_NUMBER = "SAT001";
