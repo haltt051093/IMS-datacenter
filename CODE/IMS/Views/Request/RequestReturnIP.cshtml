@@ -1,6 +1,6 @@
 ﻿@model RequestIPViewModel
 @{
-    ViewBag.Title = "RequestReturnIP2";
+    ViewBag.Title = "RequestReturnIP";
     ViewBag.Role = "Customer";
 }
 
@@ -25,41 +25,35 @@
                             @Html.DropDownListFor(m => m.SelectedServer, Model.Servers, new { @id = "servercode" })
                         </div>
                     </div>
-                    <div class="form-group hidden" id="divPartialView">
-                        @*<div id="divPartialView" class="hidden">*@
-                        <label class="col-sm-4 control-label">Which IP do you want to return?</label>
-                        <div class="col-sm-6 col-sm-offset-4">
-                            <table id="MyTable" class="table">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <input type="checkbox" id="selecctall"/>
-                                            @*<input type="checkbox"/>*@
-                                        </th>
-                                        <th>
-                                            @Html.Raw("Using IP Addresses")
-                                        </th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
-                            @Html.HiddenFor(model => model.Ips, new { id = "ips" })
-                            @Html.HiddenFor(model => model.SelectedServer)
-                        </div>
+                    <div id="divPartialView" class="hidden">
+                        <table id="MyTable" class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <input type="checkbox" id="checkAll" />check all
+                                    </th>
+                                    <th>
+                                        @Html.Raw("Select IPs")
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        @Html.HiddenFor(model => model.Ips, new { id = "ips" })
+                        @Html.HiddenFor(model => model.SelectedServer)
                     </div>
-                    @*</div>*@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Note</label>
                         <div class="col-sm-2">
                             @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", style = "width: 500px; height: 100px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;", placeholder = "Some description here" } })
                         </div>
                     </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-4 col-sm-2">
-                                <button type="submit" class="btn btn-primary">Send</button>
-                            </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-2">
+                            <button type="submit" class="btn btn-primary" id="demo">Send</button>
                         </div>
+                    </div>
                 }
             </div>
 
@@ -81,12 +75,9 @@
                     $('#divPartialView').removeClass('hidden');
                     $(data.ServerIPs).each(function (index, item) {
                         //myTable.append($('tr', { value: item.ServerCode, text: item.ServerCode }));
-                        myTable.append('<tr><td><input type="checkbox" class="checkbox1" id="CheckBoxList"'
-                           + index + ' name="chk" value="' + item.CurrentIP + '" /></td><td>' + item.CurrentIP + '</td></tr>');
-                        //myTable.append('<tr><td>' + item.CurrentIP + '</td><td>' + '<input type="checkbox" id="CheckBoxList"'
-                        //    + index + ' name="chk" value="' + item.CurrentIP + '" /></td></tr>');
+                        myTable.append('<tr><td>' + item.CurrentIP + '</td><td>' + '<input type="checkbox" id="CheckBoxList"'
+                            + index + ' name="chk" value="' + item.CurrentIP + '" /></td></tr>');
                     });
-                    $('#MyTable').html();
                 }
             });
         });
@@ -97,34 +88,50 @@
             $("[id*=MyTable] input:checked").each(function () {
                 selectedValues.push($(this).val());
             });
-            if (selectedValues.length > 0) {
-                alert("Selected Value(s): " + selectedValues);
-            } else {
-                alert("No item has been selected.");
-            }
+            //if (selectedValues.length > 0) {
+            //    alert("Selected Value(s): " + selectedValues);
+            //} else {
+            //    alert("No item has been selected.");
+            //}
             $('#ips').val(selectedValues);
         });
 
-        //Lam sao de lay id or class cua may thang IP
-        //$("#selecctall").change(function () {
-        //    $(".checkbox1").prop('checked', $(this).prop("checked"));
-        //});
-
-        //$(".checkbox1").change(function() {
-        //    alert("OMGGGG");
-        //});
-
-        //$('#selecctall').click(function (event) {  //on click 
-        //    if (this.checked) { // check select status
-        //        $('.checkbox1').each(function () { //loop through each checkbox
-        //            this.checked = true;  //select all checkboxes with class "checkbox1"               
-        //        });
-        //    } else {
-        //        $('.checkbox1').each(function () { //loop through each checkbox
-        //            this.checked = false; //deselect all checkboxes with class "checkbox1"                       
-        //        });
-        //    }
-        //});
+        $("[id*=MyTable] > thead [id*=checkAll]").change(function () {  //on click
+            //if (this.checked) { // check select status
+            //$('.test123').each(function () { //loop through each checkbox
+            //    this.checked = true;  //select all checkboxes with class "checkbox1"
+            //});
+            alert("No item has been selected.");
+            //} else {
+            //$('.test123').each(function () { //loop through each checkbox
+            //    this.checked = false; //deselect all checkboxes with class "checkbox1"
+            //});
+            //}
+        });
     });
+    //Lam sao de lay id or class cua may thang IP
+    //$("#checkAll").change(function () {
+    //    $("[id*=MyTable] input:checkbox").prop('checked', $(this).prop("checked"));
+    //    //$(".checkbox1").prop('checked', $(this).prop("checked"));
+    //});
 
+    //$("#checkAll").change(function () {
+    //    $(".test123").prop('checked', $(this).prop("checked"));
+    //});
+
+    //$(".checkbox1").change(function() {
+    //    alert("OMGGGG");
+    //});
+
+    //$('#selecctall').click(function (event) {  //on click
+    //    if (this.checked) { // check select status
+    //        $('.checkbox1').each(function () { //loop through each checkbox
+    //            this.checked = true;  //select all checkboxes with class "checkbox1"
+    //        });
+    //    } else {
+    //        $('.checkbox1').each(function () { //loop through each checkbox
+    //            this.checked = false; //deselect all checkboxes with class "checkbox1"
+    //        });
+    //    }
+    //});
 </script>

@@ -25,12 +25,13 @@ namespace IMS.Controllers
                 if (requestcode.Equals(Constants.RequestTypeCode.RETURN_RACK))
                 {
                     RequestReturnRackViewModel viewmodel = new RequestReturnRackViewModel();
-                    var result = RackOfCustomerDAO.Current.EmptyRentedRack(Constants.Test.CUSTOMER_MANHNH);
-                    viewmodel.RackOfCustomer = result.Select(x => new SelectListItem
-                    {
-                        Value = x.RackCode,
-                        Text = x.RackName
-                    }).ToList();
+                    //var result = RackOfCustomerDAO.Current.EmptyRentedRack(Constants.Test.CUSTOMER_MANHNH);
+                    viewmodel.AllRacks = RackOfCustomerBLO.Current.CountServerPerRack(Constants.Test.CUSTOMER_MANHNH);
+                    //viewmodel.RackOfCustomer = result.Select(x => new SelectListItem
+                    //{
+                    //    Value = x.RackCode,
+                    //    Text = x.RackName
+                    //}).ToList();
                     return View("../Request/RequestReturnRack", viewmodel);
                 }
                 //DOING

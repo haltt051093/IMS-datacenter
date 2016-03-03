@@ -359,13 +359,18 @@ namespace IMS.Controllers
                         Object = Constants.Object.OBJECT_IP,
                         ChangedValueOfObject = item,
                         //object status
-                        ObjectStatus = Constants.StatusCode.IP_USED,
+                        ObjectStatus = Constants.StatusCode.SERVERIP_RETURNING,
                         ServerCode = viewmodel.SelectedServer,
                     };
                     LogChangedContentBLO.Current.AddLog(logIps);
                     //update serverIP IsReturned
-                    var statusObject = ServerIPDAO.Current.Query(x => x.CurrentIP == item).FirstOrDefault();
-                    ServerIPDAO.Current.Update(statusObject);
+                    var serverip = ServerIPDAO.Current.Query(x => x.CurrentIP == item).FirstOrDefault();
+                    if (serverip != null)
+                    {
+                        serverip.StatusCode = Constants.StatusCode.SERVERIP_RETURNING;
+                        ServerIPDAO.Current.Update(serverip);
+                    }
+
                 }
                 //Notification
                 var notif = Mapper.Map<RequestIPViewModel, NotificationExtendedModel>(viewmodel);
@@ -517,7 +522,6 @@ namespace IMS.Controllers
         {
             NotificationViewModel viewmodel = new NotificationViewModel();
             viewmodel.NotificationList = RequestBLO.Current.ListAllNotification();
-            //.NotificationList.OrderByDescending(x=>x.RequestedTime);
             return View("ListNotifications", viewmodel);
         }
 
@@ -533,7 +537,6 @@ namespace IMS.Controllers
         [HttpGet]
         public ActionResult RequestDetais(string rType, string rCode)
         {
-            //DOING
             if (rType.Equals(Constants.RequestTypeCode.ADD_SERVER))
             {
                 //Get request
@@ -688,10 +691,16 @@ namespace IMS.Controllers
                 if (request != null)
                 {
                     viewmodel = Mapper.Map<Request, RequestIPViewModel>(request);
+                    //get servercode = requestcode
+                    var servercode = LogChangedContentBLO.Current.GetServerCodeByRequestCode(request.RequestCode).FirstOrDefault();
+                    viewmodel.SelectedServer = servercode;
+                    viewmodel.StatusName = StatusBLO.Current.GetStatusName(viewmodel.StatusCode);
+                    var customer = AccountBLO.Current.GetAccountByCode(viewmodel.Customer);
+                    viewmodel.CustomerName = customer.Fullname;
                     //List returning IPs
                     viewmodel.Ips = LogChangedContentBLO.Current.GetIpRequestReturnIp(rCode);
                 }
-                return View("ProcessRequestReturnIP", viewmodel);
+                return View("RequestReturnIPInfo", viewmodel);
             }
 
             if (rType.Equals(Constants.RequestTypeCode.RENT_RACK))

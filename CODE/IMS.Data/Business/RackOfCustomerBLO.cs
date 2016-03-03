@@ -48,6 +48,11 @@ namespace IMS.Data.Business
         public List<RackOfCustomerExtendedModel> GetAllRackOfCustomer()
         {
             return dao.GetAllRackOfCustomer();
-        } 
+        }
+
+        public List<RackOfCustomerExtendedModel> CountServerPerRack(string customer)
+        {
+            return dao.CountServerPerRack(customer);
+        }
     }
 }

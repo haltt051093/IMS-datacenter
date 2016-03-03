@@ -42,6 +42,24 @@ namespace IMS.Data.Repository
                         where s.Customer = '" + customer + "')";
             return RawQuery<RackOfCustomerExtendedModel>(query, new object[] { });
         }
+
+        public List<RackOfCustomerExtendedModel> CountServerPerRack(string customer)
+        {
+            var query = @"select r.RackCode, ra.RackName, COUNT(rc.ServerCode) as serverNum
+                        from [dbo].[RackOfCustomer] as r
+                         join [dbo].[Location] as rc
+                        on r.RackCode = rc.RackCode
+                         join [dbo].[Rack] as ra
+                        on ra.RackCode = rc.RackCode
+                        where r.Customer = '" + customer + @"'
+                        group by r.RackCode, ra.RackName
+                        ";
+            //DOING
+            //sua lai thanh kieu linq
+            return RawQuery<RackOfCustomerExtendedModel>(query, new object[] { });
+        }
+
+
         public List<LocationExtendedModel> GetRackOfCustomer(Server server)
         {
             string query = @"select roc.RackCode from RackOfCustomer roc where roc.Customer = '" + server.Customer + @"'";
@@ -53,8 +71,8 @@ namespace IMS.Data.Repository
             string query = @"select roc.*,l.LocationCode,l.RackUnit,l.ServerCode,s.StatusName,r.RackName
                             from Location as l, RackOfCustomer as roc, Status as s, Rack as r
                             where l.RackCode = roc.RackCode and l.StatusCode = s.StatusCode and r.RackCode=l.RackCode";
-            return RawQuery<RackOfCustomerExtendedModel>(query, new object[] {});
-        } 
+            return RawQuery<RackOfCustomerExtendedModel>(query, new object[] { });
+        }
 
         public List<string> GetReturningRacks(string customer)
         {
