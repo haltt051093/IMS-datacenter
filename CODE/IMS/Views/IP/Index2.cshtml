@@ -34,7 +34,7 @@
                     @for (int i = 0; i < Model.IPs.Count; i++)
                     {
                         var item = Model.IPs[i];
-                        
+
                         <tr>
                             <td>
                                 @Html.DisplayFor(modelItem => item.IPAddress)
@@ -63,38 +63,52 @@
                                     <div class="modal-dialog" style="width: 400px">
                                         <div class="modal-content">
                                             <form action="ChangeIPStatus" method="post">
-                                                <div class="modal-body">
-                                                 
-                                                    @if (item.StatusName == "Available")
-                                                    {
-                                                        <h4>Are you sure to block this IP Address?</h4>
-                                                        <div class="form-group">
 
-                                                            <label>Description:</label>
 
-                                                            @Html.EditorFor(model => model.Description, new {htmlAttributes = new {@class = "form-control", @placeholder = "Description", @id = "address"}})
+                                                @if (item.StatusName == "Available")
+                                                {
+                                                    <div class="modal-body">
+                                                        <h4>Please make sure to block this IP Address</h4>
+                                                        <div class="form-inline">
+                                                            <div class="form-group">
+                                                                <label>Reason:</label>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Some reasons here", style = "width: 250px" })
+                                                            </div>
                                                         </div>
+                                                    </div>
+                                                            <div class="modal-footer clearfix">
+                                                                @Html.HiddenFor(model => model.IPs[i].Id)
+                                                                <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Block</button>
+                                                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                                                            </div>
+                                                       
+                                                    
 
-                                                    }
-                                                    else
-                                                    {
+                                                }
+                                                else
+                                                {
+                                                    <div class="modal-body">
                                                         <h4>Are you sure to unblock this IP Address?</h4>
-                                                    }
+                                                    </div>
+                                                        <div class="modal-footer clearfix">
+                                                            @*@using (Html.BeginForm("ChangeIPStatus", "IP"))
+                                                                {
+                                                                    <input type="hidden" name="ipid" id="ipid" value="" />
+                                                                    <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Yes</button>
+                                                                }*@
+                                                            @Html.HiddenFor(model => model.IPs[i].Id)
+                                                            <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Yes</button>
+                                                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                                                        </div>
+                                                    
+                                                }
 
-                                                </div>
-                                                
-                                                <div class="modal-footer clearfix">
-                                                    @*@using (Html.BeginForm("ChangeIPStatus", "IP"))
-                {
-                    <input type="hidden" name="ipid" id="ipid" value="" />
-                    <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Yes</button>
-                }*@
-                                                    @Html.HiddenFor(model => Model.IPs[i].Id)
-                                                    <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Yes</button>
-                                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-                                                </div>
+
+
                                             </form>
-</div><!-- /.modal-content -->
+                                        </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
                                 </div><!-- /.modal -->
                             </td>
@@ -131,13 +145,13 @@
                 <div class="modal-body no-border">
                     <table>
                         <tr>
-                            <th>@Html.Label("Network Address", htmlAttributes: new {@class = "control-label"})</th>
-                            <th>@Html.Label("Netmask", htmlAttributes: new {@class = "control-label"})</th>
+                            <th>@Html.Label("Network Address", htmlAttributes: new { @class = "control-label" })</th>
+                            <th>@Html.Label("Netmask", htmlAttributes: new { @class = "control-label" })</th>
                         </tr>
                         <tr>
                             <td>
                                 <div class="form-group">
-                                    @Html.EditorFor(model => model.Address, new {htmlAttributes = new {@class = "form-control", @placeholder = "Network Address", @id = "address"}})
+                                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @placeholder = "Network Address", @id = "address" } })
 
                                 </div>
 
@@ -177,13 +191,13 @@
                                         SelectList netmask1 = new SelectList(netmask, "Value", "Text", Model.Netmask);
                                     }
 
-                                    @Html.DropDownList("Netmask", netmask1, htmlAttributes: new {@class = "form-control"})
-                                    @Html.ValidationMessageFor(model => model.Netmask, "", new {@class = "text-danger"})
+                                    @Html.DropDownList("Netmask", netmask1, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Netmask, "", new { @class = "text-danger" })
                                 </div>
 
                             </td>
                         </tr>
-                     
+
                     </table>
                     <div>
                         @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
@@ -201,15 +215,15 @@
 </div><!-- /.modal -->
 <!-- page script -->
 <script type="text/javascript">
-    $(function() {
+    $(function () {
         $("#example1").dataTable();
 
     });
 </script>
 @*<script>
-    $(document).on("click", ".open-blockIP-modal", function () {
-     var myId = $(this).data('id');
-     $(".modal-footer #ipid").val( myId );
+        $(document).on("click", ".open-blockIP-modal", function () {
+         var myId = $(this).data('id');
+         $(".modal-footer #ipid").val( myId );
 
-});
-</script>*@
+    });
+    </script>*@
