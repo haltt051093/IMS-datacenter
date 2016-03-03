@@ -61,15 +61,28 @@
                                     <div class="modal-dialog" style="width: 400px">
                                         <div class="modal-content">
                                             <div class="modal-body">
-                                                <h4>Are you sure to change status of this IP Address?</h4>
+                                                @if (item.StatusName == "Available")
+                                                {
+                                                    <h4>Are you sure to block this IP Address?</h4>
+                                                    <div class="form-group">
+                                                        <label>Description:</label>
+                                                        <textarea class="form-control" style="width: 200px"></textarea>
+                                                    </div>
+                                                    
+                                                }
+                                                else
+                                                {
+                                                    <h4>Are you sure to unblock this IP Address?</h4>
+                                                }
+
                                             </div>
                                             <div class="modal-footer clearfix">
-                                                @using (Html.BeginForm("ChangeIPStatus", "IP"))
+                                                @*@using (Html.BeginForm("ChangeIPStatus", "IP"))
                                                 {
                                                     <input type="hidden" name="ipid" id="ipid" value="" />
                                                     <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Yes</button>
-                                                }
-
+                                                }*@
+                                                <a href="@Url.Action("ChangeIPStatus","IP", new {id = item.Id})" class="btn btn-primary pull-left"><i class="fa fa-check"></i>Yes</a>
                                                 <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
                                             </div>
 
@@ -185,10 +198,10 @@
 
     });
 </script>
-<script>
+@*<script>
     $(document).on("click", ".open-blockIP-modal", function () {
      var myId = $(this).data('id');
      $(".modal-footer #ipid").val( myId );
 
 });
-</script>
+</script>*@

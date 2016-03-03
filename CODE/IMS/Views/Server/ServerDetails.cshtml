@@ -22,6 +22,9 @@
                     Server Code
                 </dt>
                 <dd>
+                    @Html.HiddenFor(model => model.Server.Customer, htmlAttributes: new {@id = "customer"})
+                    @Html.HiddenFor(model => model.Server.ServerCode, htmlAttributes: new { @id = "servercode" })
+                    @Html.HiddenFor(model => model.Server.Power, htmlAttributes: new { @id = "power" }) 
                     @Html.DisplayFor(model => model.Server.ServerCode)
                 </dd>
 
@@ -168,106 +171,112 @@
 
                             <h4>Search By</h4>
                             <div class="form-inline">
-                                <div class="form-group"><label>Rack Name: </label></div>
-                                <div class="form-group">
-                                    @Html.DropDownList("RackSearch", "--Select--")
+                                <div class="form-group"><label>Rack Name: </label>
                                 </div>
                                 <div class="form-group">
-                                    <input href="#" type="button" id="SearchRack" class="btn btn-primary pull-left" value="Search" />
+                                    @Html.DropDownList("RackSearch",Model.Racks, "--Select--", htmlAttributes: new {@class = "form-control", @id = "racksearch"})
                                 </div>
+                                @*<div class="form-group">
+                                    <input href="#" type="button" id="SearchRack" class="btn btn-primary pull-left" value="Search"/>
+                                </div>*@
                             </div>
 
                         }
 
                     </section>
-                    <section class="content">
-                        <div class="box">
-                            <div class="box-body table-responsive">
-                                <table id="example1" class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                       
-                                            <th>RackName</th>
-                                            <th>RackUnit</th>
-                                            <th>Status</th>
-                                            <th>ServerCode</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var item in Model.Locations1)
-            {
-                                            <tr>
-                                                @if (item.ServerCode == Model.Server.ServerCode)
-                                                {
+                    
+                        <section class="content">
+                            <div class="box">
+                                <div class="box-body table-responsive">
 
-                                                    <td>
-                                                        <label style="color: red">@Html.DisplayFor(modelItem => item.RackName)</label>
-                                                    </td>
-                                                    <td>
-                                                        <label style="color: red">@Html.DisplayFor(modelItem => item.RackUnit)</label>
-                                                    </td>
-                                                    <td>
-                                                        <label style="color: red">@Html.DisplayFor(modelItem => item.StatusName)</label>
-                                                    </td>
-                                                    <td>
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+
+                                                <th>RackName</th>
+                                                <th>RackUnit</th>
+                                                <th>Status</th>
+                                                <th>ServerCode</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <div id="divPartialView" class="">
+                                                @foreach (var item in Model.Locations1)
+                                                {
+                                                    <tr>
                                                         @if (item.ServerCode == Model.Server.ServerCode)
                                                         {
-                                                            <label style="color: red">@Html.DisplayFor(modelItem => item.ServerCode)</label>
 
+                                                            <td>
+                                                                <label style="color: red">@Html.DisplayFor(modelItem => item.RackName)</label>
+                                                            </td>
+                                                            <td>
+                                                                <label style="color: red">@Html.DisplayFor(modelItem => item.RackUnit)</label>
+                                                            </td>
+                                                            <td>
+                                                                <label style="color: red">@Html.DisplayFor(modelItem => item.StatusName)</label>
+                                                            </td>
+                                                            <td>
+                                                                @if (item.ServerCode == Model.Server.ServerCode)
+                                                                {
+                                                                    <label style="color: red">@Html.DisplayFor(modelItem => item.ServerCode)</label>
+
+                                                                }
+                                                            </td>
+                                                            <td>
+                                                                @if (item.StatusName == "Free")
+                                                                {
+                                                                    @Html.RadioButtonFor(model => model.LocationCode, item.LocationCode)
+                                                                }
+                                                            </td>
                                                         }
-                                                    </td>
-                                                    <td>
-                                                        @if (item.StatusName == "Free")
+                                                        else
                                                         {
-                                                            @Html.RadioButtonFor(model => model.LocationCode, item.LocationCode)
-                                                        }
-                                                    </td>
-                                                }
-                                                else
-                                                {
 
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.RackName)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.RackUnit)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.StatusName)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.ServerCode)
-                                                    </td>
-                                                    <td>
-                                                        @if (item.StatusName == "Free")
-                                                        {
-                                                            @Html.RadioButtonFor(model => model.LocationCode, item.LocationCode)
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.RackName)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.RackUnit)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.StatusName)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.ServerCode)
+                                                            </td>
+                                                            <td>
+                                                                @if (item.StatusName == "Free")
+                                                                {
+                                                                    @Html.RadioButtonFor(model => model.LocationCode, item.LocationCode)
+                                                                }
+
+                                                            </td>
                                                         }
 
-                                                    </td>
+
+                                                    </tr>
                                                 }
+                                            </div>
+</tbody>
+                                        <tfoot>
+                                            <tr>
 
-
+                                                <th>RackName</th>
+                                                <th>RackUnit</th>
+                                                <th>Status</th>
+                                                <th>ServerCode</th>
+                                                <th></th>
                                             </tr>
-                                        }
+                                        </tfoot>
+                                    </table>
 
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box -->
 
-                                            <th>RackName</th>
-                                            <th>RackUnit</th>
-                                            <th>Status</th>
-                                            <th>ServerCode</th>
-                                            <th></th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div><!-- /.box-body -->
-                        </div><!-- /.box -->
-
-                    </section><!-- /.content -->
+                        </section><!-- /.content -->
+                   
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Save Change</button>
@@ -276,8 +285,32 @@
 
                 </div>
             </form>
+
             <script type="text/javascript">
                 $(function () {
+                    $('#racksearch').change(function () {
+                        var pass = $('#racksearch').val();
+                        var pass1 = $('#customer').val();
+                        var pass2 = $('#servercode').val();
+                        var pass3 = $('#power').val();
+
+                        var myTable = $('#example1 > tbody');
+                        $.ajax({
+                            cache: false,
+                            type: "GET",
+                            url: "@(Url.Action("GetLocationByRackName", "Server"))",
+                            data: { "SelectedRack": pass, "Customer":pass1,"ServerCode":pass2,"Power":pass3 },
+                        dataType: "json",
+                        success: function (data) {
+                            $('#divPartialView').class("hidden");
+                            $(data.Locations1).each(function (index, item) {
+                                //myTable.append($('tr', { value: item.ServerCode, text: item.ServerCode }));
+                                myTable.append('<tr><td>' + item.RackName + '</td><td>' +item.RackUnit+ '</td><td>'+item.StatusName+'</td><td>'+item.ServerCode+'<input type="radio" id="radio"'
+                                    + index + ' name="chk"/></td></tr>');
+                            });
+                        }
+                    });
+                });
                     $("#example1").dataTable(
                     {
                         "bPaginate": true,

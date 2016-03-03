@@ -200,9 +200,9 @@ namespace IMS.Controllers
         //    return View(ipviewmodel);
         //}
 
-        public ActionResult ChangeIPStatus(string ipid)
+        public ActionResult ChangeIPStatus(int id)
         {
-            int? id = ipid.ToInt();
+            //int? id = ipid.ToInt();
             IPAddressPool ip = new IPAddressPool();
             ip = IPAddressPoolBLO.Current.GetById(id);
             if (ip.StatusCode == Constants.StatusCode.IP_AVAILABLE)
