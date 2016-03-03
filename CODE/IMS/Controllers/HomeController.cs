@@ -42,7 +42,7 @@ namespace IMS.Controllers
                 if (requestcode.Equals(Constants.RequestTypeCode.ADD_SERVER))
                 {
                     var viewmodel = new RequestAddServerViewModel();
-                    viewmodel.Servers = new List<ServerDetailModel>();
+                    viewmodel.Servers = new List<ServerExtendedModel>();
                     if (Session[Constants.Session.REQUEST_CODE] == null)
                     {
                         var requestCode = RequestBLO.Current.GenerateCode();
@@ -52,7 +52,7 @@ namespace IMS.Controllers
                     var tempDatas = TempRequestBLO.Current.GetByRequestCode(rCode);
                     foreach (var tempData in tempDatas)
                     {
-                        var server = JsonConvert.DeserializeObject<ServerDetailModel>(tempData.Data);
+                        var server = JsonConvert.DeserializeObject<ServerExtendedModel>(tempData.Data);
                         server.TempCode = tempData.TempCode;
                         viewmodel.Servers.Add(server);
                     }

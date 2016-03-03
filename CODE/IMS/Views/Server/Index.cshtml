@@ -33,7 +33,7 @@
                         {
                             <tr>
                                 <td>
-                                    <a href="@Url.Action("ServerDetails", "Server", new { id = @item.Id })">@item.ServerCode</a>
+                                    <a href="@Url.Action("ServerDetails", "Server", new { serverCode = @item.ServerCode })">@item.ServerCode</a>
                                 </td>
                                 <td>
                                     @Html.DisplayFor(model => item.CustomerName)

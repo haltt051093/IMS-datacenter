@@ -24,11 +24,11 @@ namespace IMS.Controllers
         }
 
         // GET: Server/Details
-        public ActionResult ServerDetails(int id, string RackSearch)
+        public ActionResult ServerDetails(string serverCode, string RackSearch)
         {
-            var server = ServerBLO.Current.GetServerById(id);
-            var serverattributes = ServerBLO.Current.GetServerAttributes(id);
-            var servercurrentips = ServerBLO.Current.GetCurrentIP(id);
+            var server = ServerBLO.Current.GetServerByCode(serverCode);
+            //var serverattributes = ServerBLO.Current.GetServerAttributes(serverCode);
+            var servercurrentips = ServerBLO.Current.GetCurrentIP(serverCode);
             if (server == null)
             {
                 return HttpNotFound();
@@ -36,7 +36,7 @@ namespace IMS.Controllers
             var data = new ServerDetailsViewModel();
             //them list location
             data.Locations = LocationBLO.Current.GetLocationsOfServer(server.ServerCode);
-            data.Attributes = serverattributes;
+            //data.Attributes = serverattributes;
             data.Server = server;
             data.CurrentIPs = servercurrentips;
 

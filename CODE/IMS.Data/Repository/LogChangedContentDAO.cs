@@ -53,19 +53,20 @@ namespace IMS.Data.Repository
             return query.ToList();
         }
 
-        public string GetServerCodeByRequestCode(string requestCode)
+        public List<string> GetServerCodeByRequestCode(string requestCode)
         {
             //request assign IP chi luu 1 hang trong bang Log
-            var serverCode = Current.Query(x => x.RequestCode == requestCode && x.ServerCode != null)
-                .Select(x => x.ServerCode).FirstOrDefault();
-            return serverCode;
+            var serverCodes = Current.Query(x => x.RequestCode == requestCode && x.ServerCode != null
+            && x.Object == Constants.Object.OBJECT_REQUEST)
+                .Select(x => x.ServerCode);
+            return serverCodes.ToList();
         }
 
         public List<RequestExtendedModel> ListWaitingRequestOfServer(string serverCode)
         {
             //list tat ca hang co serverCode, lay ra list requestcode
             var query =
-                Current.Query(x => x.ServerCode == serverCode && x.Object == Constants.Object.OBJECT_REQUEST 
+                Current.Query(x => x.ServerCode == serverCode && x.Object == Constants.Object.OBJECT_REQUEST
                 && (x.ObjectStatus == Constants.StatusCode.REQUEST_SENDING
                 || x.ObjectStatus == Constants.StatusCode.REQUEST_WAITING
                 || x.ObjectStatus == Constants.StatusCode.REQUEST_PROCESSING)).Select(x => x.RequestCode);
@@ -74,19 +75,21 @@ namespace IMS.Data.Repository
             foreach (var item in query)
             {
                 var query1 = from re in RequestDAO.Current.Table()
-                    join rt in RequestTypeDAO.Current.Table()
-                        on re.RequestType equals rt.RequestTypeCode
-                    where re.RequestCode == item
-                    select new RequestExtendedModel()
-                    {
-                        RequestType =  re.RequestType,
-                        RequestTypeName = rt.RequestTypeName,
-                        RequestCode = re.RequestCode
-                    };
+                             join rt in RequestTypeDAO.Current.Table()
+                                 on re.RequestType equals rt.RequestTypeCode
+                             where re.RequestCode == item
+                             select new RequestExtendedModel()
+                             {
+                                 RequestType = re.RequestType,
+                                 RequestTypeName = rt.RequestTypeName,
+                                 RequestCode = re.RequestCode
+                             };
                 requests.Add(query1.FirstOrDefault());
             }
             //requests.OrderByDescending(x => x.RequestedTime);
             return requests;
         }
+
+
     }
 }

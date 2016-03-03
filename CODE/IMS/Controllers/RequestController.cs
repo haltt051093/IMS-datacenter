@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Web.Mvc;
 using AutoMapper;
@@ -19,11 +20,6 @@ namespace IMS.Controllers
 {
     public class RequestController : CoreController
     {
-
-        public ActionResult RequestAddServerInfo2()
-        {
-            return View();
-        }
         public ActionResult RequestChangeIP2()
         {
             return View();
@@ -242,7 +238,7 @@ namespace IMS.Controllers
             //add server, trang thai server la waiting
             foreach (var item in viewmodel.Servers)
             {
-                var server = Mapper.Map<ServerDetailModel, Server>(item);
+                var server = Mapper.Map<ServerExtendedModel, Server>(item);
                 server.Customer = Constants.Test.CUSTOMER_MANHNH;
                 string serverCode = ServerDAO.Current.AddServer(server);
 
@@ -497,6 +493,7 @@ namespace IMS.Controllers
         {
             NotificationViewModel viewmodel = new NotificationViewModel();
             viewmodel.NotificationList = RequestBLO.Current.ListAllNotification();
+            //.NotificationList.OrderByDescending(x=>x.RequestedTime);
             return View("ListNotifications", viewmodel);
         }
 
@@ -515,7 +512,24 @@ namespace IMS.Controllers
             //DOING
             if (rType.Equals(Constants.RequestTypeCode.ADD_SERVER))
             {
-                return View("ProcessRequestAddServer");
+                //Get request
+                RequestAddServerViewModel viewmodel = new RequestAddServerViewModel();
+                var request = RequestBLO.Current.GetRequestByRequestCode(rCode);
+                if (request != null)
+                {
+                    viewmodel = Mapper.Map<Request, RequestAddServerViewModel>(request);
+                    viewmodel.StatusName = StatusBLO.Current.GetStatusName(viewmodel.StatusCode);
+                    //lay list servers
+                    var serverCodes = LogChangedContentBLO.Current.GetServerCodeByRequestCode(rCode);
+                    foreach (var servercode in serverCodes)
+                    {
+                        var server = ServerBLO.Current.GetServerByCode(servercode);
+                        //BUG
+                        viewmodel.Servers.Add(server);
+                    }
+                }
+
+                return View("RequestAddServerInfo", viewmodel);
             }
 
             if (rType.Equals(Constants.RequestTypeCode.ASSIGN_IP))
@@ -531,7 +545,7 @@ namespace IMS.Controllers
                     viewmodel.IpNumber = reqDetail.NumberOfIp;
                     viewmodel.Description = reqDetail.Description;
                     //lay servercode, roi lay ip cua server do, tim nhung ip cung vung con lai
-                    var serverCode = LogChangedContentBLO.Current.GetServerCodeByRequestCode(rCode);
+                    var serverCode = LogChangedContentBLO.Current.GetServerCodeByRequestCode(rCode).FirstOrDefault();
                     viewmodel.SelectedServer = serverCode;
                     //Lay list available ip cung vung
                     var listAvailableIps = IPAddressPoolBLO.Current.GetAvailableIpsSameGateway(serverCode);
@@ -581,7 +595,7 @@ namespace IMS.Controllers
                 {
                     viewmodel = Mapper.Map<Request, RequestIPViewModel>(request);
                     //lay servercode, roi lay ip cua server do, tim nhung ip cung vung con lai
-                    var serverCode = LogChangedContentBLO.Current.GetServerCodeByRequestCode(rCode);
+                    var serverCode = LogChangedContentBLO.Current.GetServerCodeByRequestCode(rCode).FirstOrDefault();
                     viewmodel.SelectedServer = serverCode;
                     //lay list ips muon change
                     var returningIps = ServerIPBLO.Current.GetReturningIps(serverCode);
@@ -685,12 +699,6 @@ namespace IMS.Controllers
                 return View("ProcessRequestReturnRack", viewmodel);
             }
             return RedirectToAction("ListNotifications");
-        }
-        //DOING
-        [HttpPost]
-        public ActionResult ProcessRequestAddServer()
-        {
-            return View();
         }
 
         [HttpPost]
@@ -829,6 +837,13 @@ namespace IMS.Controllers
                 Staff = viewmodel.StaffCode
             };
             LogChangedContentBLO.Current.AddLog(logRequest);
+            return RedirectToAction("Index", "Home");
+        }
+
+        //DOING
+        [HttpPost]
+        public ActionResult ProcessRequestAddServer(RequestAddServerViewModel viewmodel)
+        {
             return RedirectToAction("Index", "Home");
         }
 

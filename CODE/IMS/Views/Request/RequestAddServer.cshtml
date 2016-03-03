@@ -108,47 +108,53 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @Html.HiddenFor(model => model.Servers)
-                            @foreach (var item in Model.Servers)
-                            {
-                                int idx = 1;
-                                <tr>
-                                    <td>
-                                        @Html.Raw(idx)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => item.Maker, new { htmlAttributes = new { @class = "form-control" } })
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => item.Power, new { htmlAttributes = new { @class = "form-control" } })W
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => item.Model, new { htmlAttributes = new { @class = "form-control" } })
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => item.Size, new { htmlAttributes = new { @class = "form-control" } })U
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => item.Bandwidth, new { htmlAttributes = new { @class = "form-control" } })
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => item.SerialNumber, new { htmlAttributes = new { @class = "form-control" } })
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => item.PartNumber, new { htmlAttributes = new { @class = "form-control" } })
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => item.Memory, new { htmlAttributes = new { @class = "form-control" } })
-                                    </td>
-                                    <td>
-                                        <a href="" data-toggle="modal" data-target="#editserver-modal">Edit</a>
-                                    </td>
-                                    <td>
-                                        @Html.ActionLink("Delete", "DeleteTempServer", "Request", new { tempCode = item.TempCode }, null)
-                                    </td>
-                                </tr>
-                                idx++;
-                            }
+                            
+                        @for (int i = 0; i < Model.Servers.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    i
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].Maker, new {htmlAttributes = new {@class = "form-control"}})
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Maker)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].Power, new {htmlAttributes = new {@class = "form-control"}})W
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Power)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].Model, new {htmlAttributes = new {@class = "form-control"}})
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Model)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].Size, new {htmlAttributes = new {@class = "form-control"}})U
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Size)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].Bandwidth, new {htmlAttributes = new {@class = "form-control"}})
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Bandwidth)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].SerialNumber, new {htmlAttributes = new {@class = "form-control"}})
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].SerialNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].PartNumber, new {htmlAttributes = new {@class = "form-control"}})
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].PartNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].Memory, new {htmlAttributes = new {@class = "form-control"}})
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Memory)
+                                </td>
+                                <td>
+                                    <a href="" data-toggle="modal" data-target="#editserver-modal">Edit</a>
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Delete", "DeleteTempServer", "Request", new {tempCode = Model.Servers[i].TempCode}, null)
+                                </td>
+                            </tr>
+                        }
                         </tbody>
                     </table>
                 </div>
@@ -159,6 +165,9 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <div style="display: none;">
+                        @Html.EditorFor(model => model.Servers)
+                    </div>
                     <button type="submit" class="btn btn-primary col-xs-offset-4">Send</button>
                 </div>
             </div>

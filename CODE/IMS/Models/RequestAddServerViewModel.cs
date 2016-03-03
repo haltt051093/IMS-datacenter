@@ -9,14 +9,21 @@ namespace IMS.Models
     public class RequestAddServerViewModel
     {
         public ServerDetailModel Server { get; set; }
-        public List<ServerDetailModel> Servers { get; set; }
-        
-        public string Time { get; set; }
-        [Required]
-        [Display(Name = "Appointment Time")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
+        public List<ServerExtendedModel> Servers { get; set; }
+
+        //public string Time { get; set; }
+        //[Required]
+        //[Display(Name = "Appointment Time")]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
         public DateTime AppointmentTime { get; set; }
 
+        //Customer
+        public string Customer { get; set; }
+        public string Identification { get; set; }
+        //Request
+        public string RequestedTime { get; set; }
+        public string StatusName { get; set; }
+        public string StatusCode { get; set; }
         public string Description { get; set; }
 
         public List<SelectListItem> AttributeList { get; set; }

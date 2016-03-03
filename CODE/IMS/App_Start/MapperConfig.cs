@@ -38,6 +38,7 @@ namespace IMS
                 config.CreateMap<Request, RequestReturnRackViewModel>();
                 //process assign, change, return ip
                 config.CreateMap<Request, RequestIPViewModel>();
+                config.CreateMap<ServerExtendedModel, Server>();
             });
         }
     }

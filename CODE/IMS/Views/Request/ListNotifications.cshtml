@@ -137,7 +137,11 @@
 </div><!-- /.modal -->
 <script type="text/javascript">
     $(function () {
-        $("#example1").dataTable();
+        $("#example1").dataTable({
+            "iDisplayLength": -1,
+            "aaSorting": [[3, "desc"]] // Sort by first column descending
+        });
+        //
         $('#tableBody').on('click', '.btnRequestCode', function () {
             var result = $(this).attr('data-requestCode');
             $('#requestCode').val(result);

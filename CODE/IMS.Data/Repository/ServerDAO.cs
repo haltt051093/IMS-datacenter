@@ -36,17 +36,17 @@ namespace IMS.Data.Repository
             var distinct = LocationDAO.Current.Table().GroupBy(item => item.ServerCode)
                 .Select(e => e.FirstOrDefault());
             var rackDis = from r in RackDAO.Current.Table()
-                join l in distinct
-                    on r.RackCode equals l.RackCode
-                select new RackOfCustomerExtendedModel
-                {
-                    LocationCode = l.LocationCode,
-                    ServerCode = l.ServerCode,
-                    RackUnit = l.RackUnit,
-                    RackCode = l.RackCode,
-                    RackName = r.RackName
-                };
-           var query = from s in Table()
+                          join l in distinct
+                              on r.RackCode equals l.RackCode
+                          select new RackOfCustomerExtendedModel
+                          {
+                              LocationCode = l.LocationCode,
+                              ServerCode = l.ServerCode,
+                              RackUnit = l.RackUnit,
+                              RackCode = l.RackCode,
+                              RackName = r.RackName
+                          };
+            var query = from s in Table()
                         join l in rackDis
                             on s.ServerCode equals l.ServerCode into sl
                         from subl in sl.DefaultIfEmpty()
@@ -81,7 +81,7 @@ namespace IMS.Data.Repository
         }
 
         //a server with full fields
-        public ServerExtendedModel GetServerById(int id)
+        public ServerExtendedModel GetServerByCode(string serverCode)
         {
             var distinct = LocationDAO.Current.Table().GroupBy(item => item.ServerCode)
                 .Select(e => e.FirstOrDefault());
@@ -106,7 +106,7 @@ namespace IMS.Data.Repository
                         join a in AccountDAO.Current.Table()
                             on s.Customer equals a.Username into astsl
                         from suba in astsl.DefaultIfEmpty()
-                        where s.Id == id
+                        where s.ServerCode == serverCode
                         select new ServerExtendedModel
                         {
                             RackCode = subl.RackCode,
@@ -150,12 +150,12 @@ namespace IMS.Data.Repository
         }
 
         //get current IPs of a server
-        public List<ServerIP> GetCurrentIP(int id)
+        public List<ServerIP> GetCurrentIP(string serverCode)
         {
             var query = from s in Table()
                         join si in ServerIPDAO.Current.Table()
                             on s.ServerCode equals si.ServerCode
-                        where s.Id == id
+                        where s.ServerCode == serverCode
                         select si;
             return query.ToList();
         }

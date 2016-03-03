@@ -1,4 +1,4 @@
-﻿
+﻿@model RequestAddServerViewModel
 @{
     ViewBag.Title = "RequestAssignIPInfo";
     ViewBag.Role = "Shift Head";
@@ -16,168 +16,146 @@
 <section class="content">
     <div class="box">
         <div class="box-body table-responsive">
-            <form action="#">
-                <dl class="dl-horizontal">
-                    <dt>
-                        From customer
-                    </dt>
-                    <dd>
-                        Lê Văn Lương
-                    </dd>
-                    <dt>
-                        Requested Time
-                    </dt>
+           @using (Html.BeginForm("ProcessRequestAddServer", "Request", FormMethod.Post))
+           {
+               <dl class="dl-horizontal">
+                   <dt>
+                       From customer
+                   </dt>
+                   <dd>
+                       @Html.DisplayFor(model => model.Customer, new {htmlAttributes = new {@class = "form-control"}})
+                   </dd>
+                   <dt>
+                       Requested Time
+                   </dt>
 
-                    <dd>
-                        18-Jan-16 01:19:12
-                    </dd>
-                    <dt>
-                        Status
-                    </dt>
+                   <dd>
+                       @Html.DisplayFor(model => model.RequestedTime, new {htmlAttributes = new {@class = "form-control"}})
+                   </dd>
+                   <dt>
+                       Status
+                   </dt>
 
-                    <dd>
-                        Waiting
-                    </dd>
-                    <dt>
-                        Assigned Person Name
-                    </dt>
+                   <dd>
+                       @Html.DisplayFor(model => model.StatusName, new {htmlAttributes = new {@class = "form-control"}})
+                   </dd>
+                   <dt>
+                       Assigned Person Name
+                   </dt>
 
-                    <dd>
-                        Nguyễn Văn Thy
-                    </dd>
-                    <dt>
-                        Identification
-                    </dt>
+                   <dd>
+                   </dd>
+                   <dt>
+                       Identification
+                   </dt>
 
-                    <dd>
-                        34567890987
-                    </dd>
-                    <dt>
-                        Appointment Time
-                    </dt>
+                   <dd>
+                       @Html.DisplayFor(model => model.Identification, new {htmlAttributes = new {@class = "form-control"}})
+                   </dd>
+                   <dt>
+                       Appointment Time
+                   </dt>
 
-                    <dd>
-                        21-Jan-16 01:19:12
-                    </dd>
-                    <dt>
-                        Description
-                    </dt>
+                   <dd>
+                       @Html.DisplayFor(model => model.AppointmentTime, new {htmlAttributes = new {@class = "form-control"}})
+                   </dd>
+                   <dt>
+                       Description
+                   </dt>
 
-                    <dd>
-                        Amount: 3; I want to be assigned as soon as possible
-                    </dd>
-                    <dt style="color: #f56954">
-                        <h4>Server Content</h4>
-                    </dt>
-                    <dd></dd>
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <dt>
-                                Server Code
-                            </dt>
-                            <dd>
-                                GHJHKRN
-                            </dd>
+                   <dd>
+                       @Html.DisplayFor(model => model.Description, new {htmlAttributes = new {@class = "form-control"}})
+                   </dd>
+                   <dt style="color: #f56954">
+                       <h4>Server Content</h4>
+                   </dt>
+                   <dd></dd>
+               </dl>
+               <div class="form-group" style="width: 1000px">
+                   <table id="" class="table table-bordered table-striped  col-xs-offset-1">
+                       <thead>
+                       <tr>
+                           <th>No</th>
+                           <th>Maker</th>
+                           <th>Power</th>
+                           <th>Model</th>
+                           <th>Size</th>
+                           <th>Bandwidth</th>
+                           <th>Serial Number</th>
+                           <th>Part Number</th>
+                           <th>Memory</th>
+                           <th></th>
+                           <th></th>
+                       </tr>
+                       </thead>
+                       <tbody>
 
-                            <dt>
-                                Maker
-                            </dt>
+                       @for (int i = 0; i < Model.Servers.Count; i++)
+                       {
+                           <tr>
+                               <td>
+                                   i
+                               </td>
+                               <td>
+                                   @Html.DisplayFor(model => Model.Servers[i].Maker, new {htmlAttributes = new {@class = "form-control"}})
+                                   @Html.HiddenFor(modelItem => modelItem.Servers[i].Maker)
+                               </td>
+                               <td>
+                                   @Html.DisplayFor(model => Model.Servers[i].Power, new {htmlAttributes = new {@class = "form-control"}})W
+                                   @Html.HiddenFor(modelItem => modelItem.Servers[i].Power)
+                               </td>
+                               <td>
+                                   @Html.DisplayFor(model => Model.Servers[i].Model, new {htmlAttributes = new {@class = "form-control"}})
+                                   @Html.HiddenFor(modelItem => modelItem.Servers[i].Model)
+                               </td>
+                               <td>
+                                   @Html.DisplayFor(model => Model.Servers[i].Size, new {htmlAttributes = new {@class = "form-control"}})U
+                                   @Html.HiddenFor(modelItem => modelItem.Servers[i].Size)
+                               </td>
+                               <td>
+                                   @Html.DisplayFor(model => Model.Servers[i].Bandwidth, new {htmlAttributes = new {@class = "form-control"}})
+                                   @Html.HiddenFor(modelItem => modelItem.Servers[i].Bandwidth)
+                               </td>
+                               <td>
+                                   @Html.DisplayFor(model => Model.Servers[i].SerialNumber, new {htmlAttributes = new {@class = "form-control"}})
+                                   @Html.HiddenFor(modelItem => modelItem.Servers[i].SerialNumber)
+                               </td>
+                               <td>
+                                   @Html.DisplayFor(model => Model.Servers[i].PartNumber, new {htmlAttributes = new {@class = "form-control"}})
+                                   @Html.HiddenFor(modelItem => modelItem.Servers[i].PartNumber)
+                               </td>
+                               <td>
+                                   @Html.DisplayFor(model => Model.Servers[i].Memory, new {htmlAttributes = new {@class = "form-control"}})
+                                   @Html.HiddenFor(modelItem => modelItem.Servers[i].Memory)
+                               </td>
+                               <td>
+                                   <a href="" data-toggle="modal" data-target="#editserver-modal">Edit</a>
+                               </td>
+                               <td>
+                                   @Html.ActionLink("Delete", "DeleteTempServer", "Request", new {tempCode = Model.Servers[i].TempCode}, null)
+                               </td>
+                           </tr>
+                       }
+                       </tbody>
+                   </table>
+               </div>
+                @*<dt></dt>
+                        @{
+                            if (Request.Url.ToString().Contains("act=Finish"))
+                            {
 
-                            <dd>
-                                SUPERMICRO
-                            </dd>
-
-                            <dt>
-                                Model
-                            </dt>
-
-                            <dd>
-                                X8 DTI
-                            </dd>
-
-                            <dt>
-                                Power
-                            </dt>
-
-                            <dd>
-                                750W
-                            </dd>
-
-                            <dt>
-                                Size
-                            </dt>
-
-                            <dd>
-                                2
-                            </dd>
-
-                            <dt>
-                                Bandwidth
-                            </dt>
-
-                            <dd>
-                                100Mbps
-                            </dd>
-                            
-                            
-
-                            <dt>
-                                Other Attributes
-                            </dt>
-                            <dd>
-                                <ul class="list-group col-sm-5">
-
-                                    <li class="list-group-item">
-                                        Storage : 750GB
-                                    </li>
-                                    <li class="list-group-item">
-                                        Memory : 6GB
-                                    </li>
-
-                                </ul>
-                            </dd>
-                            <dt>
-                                Default IP
-                            </dt>
-
-                            <dd>
-                                <input disabled="true" />
-                                <label>-----</label>
-                                <label><a href="#" data-toggle="modal" data-target="#assignip-modal">Assign Default IP</a></label>
-                            </dd>
-
-                            <dt>
-                                Location
-                            </dt>
-
-                            <dd>
-                                <input disabled="true" />
-                                <label>-----</label>
-                                <label><a href="#" data-toggle="modal" data-target="#assignlocation-modal">Assign Location</a></label>
-                            </dd>
-                        </div>
-                    </div>
-
-
-                    <dt></dt>
-                    @{
-                        if (Request.Url.ToString().Contains("act=Finish"))
-                        {
-
+                            }
+                            else
+                            {
+                                <dd>
+                                    <button type="submit" class="btn btn-info"><i class="fa fa-external-link"></i> Export Procedure</button>
+                                    <button type="submit" class="btn btn-primary">Approve</button>
+                                    <button type="submit" class="btn btn-danger">Reject</button>
+                                </dd>
+                            }
                         }
-                        else
-                        {
-                            <dd>
-                                <button type="submit" class="btn btn-info"><i class="fa fa-external-link"></i> Export Procedure</button>
-                                <button type="submit" class="btn btn-primary">Approve</button>
-                                <button type="submit" class="btn btn-danger">Reject</button>
-                            </dd>
-                        }
-                    }
-                   
-
-                </dl>
-            </form>
+                    </dl>*@
+           }
         </div><!-- /.box-body -->
     </div><!-- /.box -->
 </section>
@@ -633,13 +611,12 @@
             <script type="text/javascript">
                 $(function () {
                     $("#example1").dataTable();
-                   
+
                 });
             </script>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
 <!-- ASSIGN LOCATION MODAL -->
 <div class="modal fade" id="assignlocation-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" style="width: 1000px;height: 2000px">

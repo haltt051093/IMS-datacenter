@@ -40,7 +40,7 @@ namespace IMS.Data.Business
             return dao.GetIpRequestReturnIp(requestCode);
         }
 
-        public string GetServerCodeByRequestCode(string requestCode)
+        public List<string> GetServerCodeByRequestCode(string requestCode)
         {
             return dao.GetServerCodeByRequestCode(requestCode);
         }
