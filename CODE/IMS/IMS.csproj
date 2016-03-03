@@ -891,7 +891,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AppConfig.cs" />
+    <Compile Include="Controllers\RackController.cs" />
+    <Compile Include="Models\BreadcrumbModel.cs" />
     <Compile Include="Models\HomeSidebarViewModel.cs" />
+    <Compile Include="Models\RackOfCustomerIndexViewModel.cs" />
     <Compile Include="Models\RequestIndexViewModel.cs" />
     <Compile Include="Models\TempServerViewModel.cs" />
     <Compile Include="Services\Scheduler.cs" />
@@ -943,18 +946,12 @@
     <Content Include="Views\Account\CreateStaff.cshtml" />
     <Content Include="Views\Account\EditCustomer.cshtml" />
     <Content Include="Views\Account\EditStaff.cshtml" />
-    <Content Include="Views\Server\Index.cshtml" />
-    <Content Include="Views\Server\ServerDetails.cshtml" />
     <Content Include="Views\Request\RequestRentRack.cshtml" />
-    <Content Include="Views\Request\RequestReturnRack.cshtml" />
-    <Content Include="Views\Request\Index.cshtml" />
     <Content Include="Views\Request\RequestUpgradeServer.cshtml" />
-    <Content Include="Views\Request\RequestReturnIP.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\ViewProfile.cshtml" />
     <Content Include="Views\Location\AssignLocation.cshtml" />
     <Content Include="Views\IP\AssignIP.cshtml" />
-    <Content Include="Views\Request\Notification.cshtml" />
     <Content Include="Views\Schedule\_AppointmentTime.cshtml" />
     <Content Include="Views\Schedule\Index.cshtml" />
     <Content Include="Views\Shared\_AdminLTE.cshtml" />
@@ -970,22 +967,20 @@
     <Content Include="Scripts\plugins\input-mask\phone-codes\phone-codes.json" />
     <Content Include="Scripts\plugins\slimScroll\slimScroll.jquery.json" />
     <Content Include="Views\Schedule\Index2.cshtml" />
-    <Content Include="Views\Server\Index2.cshtml" />
+    <Content Include="Views\Server\Index.cshtml" />
     <Content Include="Views\Location\Index2.cshtml" />
     <Content Include="Views\IP\Index2.cshtml" />
     <Content Include="Views\Request\RequestChangeIP.cshtml" />
-    <Content Include="Views\Request\ProcessRequestAddServer.cshtml" />
     <Content Include="Views\Request\ProcessRequestRentRack.cshtml" />
     <Content Include="Views\Request\ProcessRequestChangeIP.cshtml" />
-    <Content Include="Views\Request\ProcessRequestReturnIP.cshtml" />
     <Content Include="Views\Request\ProcessRequestReturnRack.cshtml" />
     <Content Include="Views\Request\RequestAddServer.cshtml" />
     <Content Include="Views\Request\RequestAssignIP.cshtml" />
     <Content Include="Views\Request\RequestAssignIPInfo.cshtml" />
-    <Content Include="Views\Server\ServerDetails2.cshtml" />
+    <Content Include="Views\Server\ServerDetails.cshtml" />
     <Content Include="Views\Account\Index2.cshtml" />
     <Content Include="Views\Account\Login2.cshtml" />
-    <Content Include="Views\Request\RequestAddServerInfo2.cshtml" />
+    <Content Include="Views\Request\RequestAddServerInfo.cshtml" />
     <Content Include="Views\Account\ViewAccount.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ForgotPWSuccess.cshtml" />
@@ -1002,13 +997,15 @@
     <Content Include="Views\Request\RequestHistory2.cshtml" />
     <Content Include="Views\Request\RequestRentRack2.cshtml" />
     <Content Include="Views\Request\RequestRentRackInfo2.cshtml" />
-    <Content Include="Views\Request\RequestReturnIP2.cshtml" />
-    <Content Include="Views\Request\RequestReturnIPInfo2.cshtml" />
+    <Content Include="Views\Request\RequestReturnIP.cshtml" />
+    <Content Include="Views\Request\RequestReturnIPInfo.cshtml" />
     <Content Include="Views\Request\RequestReturnRackInfo2.cshtml" />
-    <Content Include="Views\Request\RequestReturnRack2.cshtml" />
+    <Content Include="Views\Request\RequestReturnRack.cshtml" />
     <Content Include="Views\Request\RequestUpgradeServer2.cshtml" />
     <Content Include="Views\Request\RequestUpgradeServerInfo2.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Rack\Index.cshtml" />
+    <Content Include="Views\Home\Header.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

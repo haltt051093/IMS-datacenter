@@ -2,7 +2,7 @@
 
 @{
     var data = new List<HomeSidebarViewModel>();
-    data.Add(new HomeSidebarViewModel("Server", "Index2", "Server") { Roles = new List<string>() { "Shift Head", "Customer" }});
+    data.Add(new HomeSidebarViewModel("Server", "Index", "Server") { Roles = new List<string>() { "Shift Head", "Customer" }});
     data.Add(new HomeSidebarViewModel("Request History", "RequestHistory2", "Request") { Roles = new List<string>() { "Customer" } });
     data.Add(new HomeSidebarViewModel("Location", "Index2", "Location") { Roles = new List<string>() { "Shift Head" } });
     data.Add(new HomeSidebarViewModel("IP Address", "Index2", "IP") { Roles = new List<string>() { "Shift Head" } });
@@ -30,6 +30,19 @@
     string role = Model == null ? string.Empty : Model.ToString();
 }
 
+<!-- Sidebar user panel -->
+<div class="user-panel">
+    <div class="pull-left image">
+        <img src="@Url.Content("~/img/avatar3.png")" class="img-circle" alt="User Image" />
+    </div>
+    <div class="pull-left info">
+        <p>Hello, Ha</p>
+
+        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+    </div>
+</div>
+
+<!-- Sidebar navigation panel -->
 <ul class="sidebar-menu">
 @foreach (var menu in data)
 {

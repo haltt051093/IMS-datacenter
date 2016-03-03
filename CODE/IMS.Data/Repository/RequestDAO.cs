@@ -137,7 +137,7 @@ namespace IMS.Data.Repository
                             StatusCode = subst.StatusCode,
                             RequestedTime = r.RequestedTime
                         };
-            return query.OrderByDescending(x => x.RequestedTime).ToList();
+            return query.ToList();
         }
 
         public List<RequestExtendedModel> GetAllRequest()

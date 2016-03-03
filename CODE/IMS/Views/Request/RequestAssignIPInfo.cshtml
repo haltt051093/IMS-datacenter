@@ -85,8 +85,12 @@
                     </dd>
                     <dt></dt>
                     <dd>
-                        <button type="submit" class="btn btn-primary">Approve</button>
-                        <button type="submit" class="btn btn-danger">Reject</button>
+                        @Html.HiddenFor(model => model.RequestCode)
+                        @if (Model.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                        {
+                        <button type="submit" id="btnApprove" class="btn btn-primary" name="Approve" value="Approve">Approve</button>
+                        <button type="submit" class="btn btn-danger" name="Reject" value="Reject">Reject</button>
+                        }
                     </dd>
 
                 </dl>
@@ -96,7 +100,10 @@
 </section>
 <script type="text/javascript">
     $(function () {
-        $('#availableIps').change(function () {
+        $('#btnApprove').on('click', function () {
+            $('#selectedIps').find('option').attr('selected', true);
+        });
+        $('#availableIps').dblclick(function () {
             var pass = $('#availableIps').val();
             $('#selectedIps').append('<option value="' + pass + '">' + pass + '</option>');
             $("[id*=availableIps] option:selected").remove();
@@ -104,7 +111,10 @@
             //document.getElementById("selectedIps").value = pass;
         });
 
-        $('#selectedIps').change(function () {
+        $('#selectedIps').dblclick(function () {
+            var count = $('#selectedIps option:selected').length;
+            args.IsValid = count > 0 && count <= 5;
+
             var pass = $('#selectedIps').val();
             var ipNumber = $('#IpNumber').val();
             $('#availableIps').append('<option value="' + pass + '">' + pass + '</option>');
@@ -112,7 +122,7 @@
             // Check if the parent has reached the limit of selected items.
             if ($(this).parent().val().length >= ipNumber) {
                 // Removed the selected attribute from this option.
-                $(this).removeAttr("selected");
+                $(this).remdaoveAttr("selected");
                 //remove gia tri duoc chon khoi list
             }
         });

@@ -1,85 +1,96 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mime;
 using System.Web.Mvc;
 using IMS.Data.Business;
 using IMS.Data.Models;
-using IMS.Data.Repository;
 using IMS.Models;
 
 namespace IMS.Controllers
 {
     public class ServerController : CoreController
     {
-        // GET: Server
-
-        public ActionResult Index2()
+        public ActionResult Index()
         {
-            return View();
-        }
-
-        public ActionResult ServerDetails2()
-        {
-            return View();
-        }
-
-        public ActionResult Index(string statusSearch, string makerSearch, string rackSearch, string searchString)
-        {
-            var server = ServerBLO.Current.GetAllServer();
+            var servers = ServerBLO.Current.GetAllServer();
+            //get requests cua server
             var data = new ServerIndexViewModel();
-
-            //list status
-            var currentstatus = StatusBLO.Current.GetAll().Where(x => x.Object.Trim() == "Request").Select(x => x.StatusName);
-            ViewBag.statusSearch = new SelectList(currentstatus);
-            //list maker
-            var makers = new List<string>();
-            var currentmaker = server.OrderBy(x => x.Maker).Select(x => x.Maker.Trim()).ToList();
-            makers.AddRange(currentmaker.Distinct());
-            ViewBag.makerSearch = new SelectList(makers);
-            //list rack
-            var currentrack = RackBLO.Current.GetAll().OrderBy(x => x.RackCode).Select(x => x.RackName);
-            ViewBag.rackSearch = new SelectList(currentrack);
-
-            if (!String.IsNullOrEmpty(searchString))
+            foreach (var item in servers)
             {
-                server = server.Where(s => s.Customer.Contains(searchString.Trim())).ToList();
+                var requestOfServer = LogChangedContentBLO.Current.ListWaitingRequestOfServer(item.ServerCode);
+                item.Requests = requestOfServer;
             }
-            if (!String.IsNullOrWhiteSpace(rackSearch))
-            {
-                Rack result = new Rack();
-                result.RackName = rackSearch;
-                var rackcode = RackBLO.Current.GetByName(result).RackCode;
-                server = server.Where(r => r.RackCode.Trim() == rackcode.Trim()).ToList();
-            }
-            if (!String.IsNullOrEmpty(makerSearch))
-            {
-                server = server.Where(m => m.Maker.Trim() == makerSearch.Trim()).ToList();
-            }
-            if (!String.IsNullOrEmpty(statusSearch))
-            {
-                var searchedStatus = StatusDAO.Current.Query(x => x.StatusName == statusSearch)
-                    .Select(x => x.StatusCode).FirstOrDefault();
-                server = server.Where(st => st.Status.Trim() == searchedStatus).ToList();
-            }
-            data.Servers = server;
+            data.Servers = servers;
             return View(data);
         }
 
         // GET: Server/Details
-        public ActionResult ServerDetails(int id)
+        public ActionResult ServerDetails(string serverCode)
         {
-            var server = ServerBLO.Current.GetServerById(id);
-            var serverattributes = ServerBLO.Current.GetServerAttributes(id);
-            var servercurrentips = ServerBLO.Current.GetCurrentIP(id);
+            var server = ServerBLO.Current.GetServerByCode(serverCode);
+            //var serverattributes = ServerBLO.Current.GetServerAttributes(serverCode);
+            var servercurrentips = ServerBLO.Current.GetCurrentIP(serverCode);
             if (server == null)
             {
                 return HttpNotFound();
             }
             var data = new ServerDetailsViewModel();
-            data.Attributes = serverattributes;
+            //them list location
+            data.Locations = LocationBLO.Current.GetLocationsOfServer(server.ServerCode);
+            //data.Attributes = serverattributes;
             data.Server = server;
             data.CurrentIPs = servercurrentips;
+
+            var locations = LocationBLO.Current.GetChangeLocation(server);
+         
+            var listrack = locations.OrderBy(x => x.RackName).GroupBy(x=>x.RackName).Select(x=>x.FirstOrDefault());
+            data.Racks = listrack.Select(x => new SelectListItem
+            {
+                Value = x.RackCode,
+                Text = x.RackName
+            }).ToList();           
+            
+            data.Locations1 = locations;
             return View(data);
+        }
+
+        [HttpPost]
+        public ActionResult ServerDetails(ServerDetailsViewModel sdvm)
+        {
+            if (sdvm.LocationCode == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            bool x = LocationBLO.Current.UpdateLocation(sdvm.Server.Size, sdvm.Server.ServerCode, sdvm.LocationCode, "Change");
+            if (x)
+            {
+                return RedirectToAction("ServerDetails");
+            }
+            else
+            {
+                return RedirectToAction("ServerDetails");
+            }
+
+        }
+
+        [HttpGet]
+        public ActionResult GetLocationByRackName(ServerDetailsViewModel model)
+        {
+            Server s = new Server();
+            s.ServerCode = model.ServerCode;
+            s.Power = model.Power;
+            s.Customer = model.Customer;
+            var locations = LocationBLO.Current.GetChangeLocation(s);
+            var data = new ServerDetailsViewModel();
+            if (!String.IsNullOrWhiteSpace(model.SelectedRack))
+            {
+                locations = locations.Where(r => r.RackName.Trim() == model.SelectedRack.Trim()).ToList();
+            }
+            data.Locations1 = locations;
+
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }

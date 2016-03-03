@@ -2,33 +2,32 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using IMS.Data.ViewModels;
 
 namespace IMS.Models
 {
     public class RequestAddServerViewModel
     {
-        public string Customer { get; set; }
-        public string Maker { get; set; }
-        public string Model { get; set; }
-        public int? Power { get; set; }
-        public int? Size { get; set; }
-        public string DefaultIP { get; set; }
-        public string LocationCode { get; set; }
-        public int? Outlet { get; set; }
-        public string AssignedName { get; set; }
-        public string Identification { get; set; }
-        
-        public string Time { get; set; }
-        [Required]
-        [Display(Name = "Appointment Time")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
+        public ServerExtendedModel Server { get; set; }
+        public List<ServerExtendedModel> Servers { get; set; }
+
+        //public string Time { get; set; }
+        //[Required]
+        //[Display(Name = "Appointment Time")]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
         public DateTime AppointmentTime { get; set; }
 
+        //Customer
+        public string Customer { get; set; }
+        public string CustomerName { get; set; }
+        public string Identification { get; set; }
+        public string AssignedPerson { get; set; }
+        //Request
+        public string RequestCode { get; set; }
+        public string RequestedTime { get; set; }
+        public string StatusName { get; set; }
+        public string StatusCode { get; set; }
         public string Description { get; set; }
-        public string Bandwidth { get; set; }
-        public string PartNumber { get; set; }
-        public string SerialNumber { get; set; }
-        public string Memory { get; set; }
 
         public List<SelectListItem> AttributeList { get; set; }
         public List<string> SelectedAttributes { get; set; }

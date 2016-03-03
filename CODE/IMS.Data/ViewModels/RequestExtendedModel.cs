@@ -7,5 +7,6 @@ namespace IMS.Data.ViewModels
     public class RequestExtendedModel : Request
     {
         public string StatusName { get; set; }
+        public string RequestTypeName { get; set; }
     }
 }

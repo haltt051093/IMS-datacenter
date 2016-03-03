@@ -41,9 +41,9 @@ namespace IMS.Data.Business
             return dao.GetServerAttributes(id);
         }
 
-        public ServerExtendedModel GetServerById(int id)
+        public ServerExtendedModel GetServerByCode(string serverCode)
         {
-            return dao.GetServerById(id);
+            return dao.GetServerByCode(serverCode);
         }
 
         //public List<Server> Search(string searchBy, string searchValue)
@@ -51,9 +51,9 @@ namespace IMS.Data.Business
         //    return dao.Search(searchBy, searchValue).ToList();
         //}
 
-        public List<ServerIP> GetCurrentIP(int id)
+        public List<ServerIP> GetCurrentIP(string serverCode)
         {
-            return dao.GetCurrentIP(id);
+            return dao.GetCurrentIP(serverCode);
         }
 
         public ServerIP GetByIP(string ip)
@@ -85,6 +85,11 @@ namespace IMS.Data.Business
         public string AddServer(Server passServer)
         {
             return dao.AddServer(passServer);
+        }
+
+        public void UpdateServerStatus(string serverCode, string status)
+        {
+            dao.UpdateServerStatus(serverCode, status);
         }
     }
 }

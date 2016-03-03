@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
@@ -32,9 +33,10 @@ namespace IMS.Controllers
                 rack.MaximumPower = livm.MaximumPower;
                 if (RackBLO.Current.AddRackAndLocation(rack) == true)
                 {
+                    Alert("New Rack added successfully!");
                     return RedirectToAction("Index2");
                 }
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                Alert("The Rack Name was existed. Please try again!");
             }
             //}
 

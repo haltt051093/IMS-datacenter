@@ -14,7 +14,13 @@ namespace IMS.Data.ViewModels
     {
         public string CustomerName { get; set; }
         public string RackCode { get; set; }
+        public string RackName { get; set; }
         public int? RackUnit { get; set; }
         public string Status { get; set; }
+        public string PartNumber { get; set; }
+        public string SerialNumber { get; set; }
+        public string Memory { get; set; }
+        public string TempCode { get; set; }
+        public List<RequestExtendedModel> Requests { get; set; }
     }
 }

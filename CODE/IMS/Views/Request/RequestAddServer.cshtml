@@ -45,46 +45,46 @@
                         </div>
                     </div>
                 </div>
-                @{
-                    if (Request.Url.ToString().Contains("act=Update"))
-                    {
+                @*@{
+                        if (Request.Url.ToString().Contains("act=Update"))
+                        {
+                            <div class="form-group">
+                                <label for="" class="col-sm-4 control-label">Assign Name</label>
+                                <div class="form-group col-sm-4">
+                                    @Html.EditorFor(model => model.AssignedName, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="col-sm-4 control-label">Identification</label>
+                                <div class="form-group col-sm-4">
+                                    @Html.EditorFor(model => model.Identification, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="form-group">
+                                <button class="col-sm-2 col-xs-offset-4 btn btn-default" id="isAssign">
+                                    <label>Assign Different Person?</label>
+                                </button>
+                            </div>
+                        }
+                    }*@
+                @*<div id="formAssign">
                         <div class="form-group">
                             <label for="" class="col-sm-4 control-label">Assign Name</label>
                             <div class="form-group col-sm-4">
                                 @Html.EditorFor(model => model.AssignedName, new { htmlAttributes = new { @class = "form-control" } })
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="formAssign">
                             <label for="" class="col-sm-4 control-label">Identification</label>
                             <div class="form-group col-sm-4">
                                 @Html.EditorFor(model => model.Identification, new { htmlAttributes = new { @class = "form-control" } })
                             </div>
                         </div>
-                    }
-                    else
-                    {
-                        <div class="form-group">
-                            <button class="col-sm-2 col-xs-offset-4 btn btn-default" id="isAssign">
-                                <label>Assign Different Person?</label>
-                            </button>
-                        </div>
-                    }
-                }
-                <div id="formAssign">
-                    <div class="form-group">
-                        <label for="" class="col-sm-4 control-label">Assign Name</label>
-                        <div class="form-group col-sm-4">
-                            @Html.EditorFor(model => model.AssignedName, new { htmlAttributes = new { @class = "form-control" } })
-                        </div>
                     </div>
-                    <div class="form-group" id="formAssign">
-                        <label for="" class="col-sm-4 control-label">Identification</label>
-                        <div class="form-group col-sm-4">
-                            @Html.EditorFor(model => model.Identification, new { htmlAttributes = new { @class = "form-control" } })
-                        </div>
-                    </div>
-                </div>
-                <br />
+                    <br />*@
                 <div class="form-group">
                     <button class="col-sm-2 col-xs-offset-4 btn btn-default" data-toggle="modal" data-target="#addserver-modal">
                         <label>Add Server Information</label>
@@ -100,39 +100,61 @@
                                 <th>Model</th>
                                 <th>Size</th>
                                 <th>Bandwidth</th>
-                                <th>Attribute(s)</th>
+                                <th>Serial Number</th>
+                                <th>Part Number</th>
+                                <th>Memory</th>
                                 <th></th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
+                            
+                        @for (int i = 0; i < Model.Servers.Count; i++)
+                        {
                             <tr>
-                                <td></td>
                                 <td>
-                                    @Html.EditorFor(model => model.Maker, new { htmlAttributes = new { @class = "form-control" } })
+                                    i
                                 </td>
                                 <td>
-                                    @Html.EditorFor(model => model.Power, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.DisplayFor(model => Model.Servers[i].Maker, new {htmlAttributes = new {@class = "form-control"}})
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Maker)
                                 </td>
                                 <td>
-                                    @Html.EditorFor(model => model.Model, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.DisplayFor(model => Model.Servers[i].Power, new {htmlAttributes = new {@class = "form-control"}})W
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Power)
                                 </td>
                                 <td>
-                                    @Html.EditorFor(model => model.Size, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.DisplayFor(model => Model.Servers[i].Model, new {htmlAttributes = new {@class = "form-control"}})
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Model)
                                 </td>
                                 <td>
-                                    @Html.EditorFor(model => model.Bandwidth, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.DisplayFor(model => Model.Servers[i].Size, new {htmlAttributes = new {@class = "form-control"}})U
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Size)
                                 </td>
                                 <td>
-                                    @Html.EditorFor(model => model.Identification, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.DisplayFor(model => Model.Servers[i].Bandwidth, new {htmlAttributes = new {@class = "form-control"}})
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Bandwidth)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].SerialNumber, new {htmlAttributes = new {@class = "form-control"}})
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].SerialNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].PartNumber, new {htmlAttributes = new {@class = "form-control"}})
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].PartNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].Memory, new {htmlAttributes = new {@class = "form-control"}})
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Memory)
                                 </td>
                                 <td>
                                     <a href="" data-toggle="modal" data-target="#editserver-modal">Edit</a>
                                 </td>
                                 <td>
-                                    <a href="#">Delete</a>
+                                    @Html.ActionLink("Delete", "DeleteTempServer", "Request", new {tempCode = Model.Servers[i].TempCode}, null)
                                 </td>
                             </tr>
+                        }
                         </tbody>
                     </table>
                 </div>
@@ -142,119 +164,16 @@
                         @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                     </div>
                 </div>
-                @{
-                    if (Request.Url.ToString().Contains("act=Update"))
-                    {
-                        <div class="form-group">
-
-                            <button type="submit" class="btn btn-primary col-xs-offset-4">Update Request</button>
-                            <button type="submit" class="btn btn-danger"><i class="fa fa-times">Cancel Request</i></button>
-                        </div>
-                    }
-                    else if (Request.Url.ToString().Contains("act=Finish"))
-                    {
-
-                    }
-                    else
-                    {
-                        <div class="form-group">
-
-                            <button type="submit" class="btn btn-primary col-xs-offset-4">Send</button>
-
-                        </div>
-                    }
-                }
+                <div class="form-group">
+                    <div style="display: none;">
+                        @Html.EditorFor(model => model.Servers)
+                    </div>
+                    <button type="submit" class="btn btn-primary col-xs-offset-4">Send</button>
+                </div>
             </div>
         </div><!-- /.box-body -->
     </section>
-                    }
-<!-- EDIT SERVER MODAL -->
-<div class="modal fade" id="editserver-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" style="width: 500px">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title"><i class="fa fa-edit"></i> Edit Server</h4>
-            </div>
-            @using (Html.BeginForm("SaveTempData", "Request", FormMethod.Post))
-            {
-                <div class="modal-body form-horizontal">
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Maker</label>
-                        <div class="col-sm-9">
-                            @Html.EditorFor(model => model.Maker, new { htmlAttributes = new { @class = "form-control" } })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Power</label>
-                        <div class="col-sm-9">
-                            @Html.EditorFor(model => model.Power, new { htmlAttributes = new { @class = "form-control" } })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Model</label>
-                        <div class="col-sm-9">
-                            @Html.EditorFor(model => model.Model, new { htmlAttributes = new { @class = "form-control" } })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Size</label>
-                        <div class="col-sm-3">
-                            @{
-                                List<SelectListItem> myList = new List<SelectListItem>();
-                                int[] list = new int[] { 1, 2, 4 };
-                                foreach (var i in list)
-                                {
-                                    string num = (i).ToString();
-                                    SelectListItem item = new SelectListItem()
-                                    {
-                                        Value = num,
-                                        Text = num
-                                    };
-                                    myList.Add(item);
-                                }
-                            }
-                            <div class="col-md-10">
-                                @Html.DropDownListFor(model => model.Size, myList, new { htmlAttributes = new { @class = "form-control" } })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Bandwidth</label>
-                        <div class="col-sm-9">
-                            <div class="col-md-10">
-                                @Html.RadioButtonFor(model => model.Bandwidth, "100Mbps", new { htmlAttributes = new { @class = "form-control" } }) 100Mbps
-                                @Html.RadioButtonFor(model => model.Bandwidth, "1Gbps", new { htmlAttributes = new { @class = "form-control" } }) 1Gbps
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Serial number</label>
-                        <div class="col-sm-9">
-                            @Html.EditorFor(model => model.SerialNumber, new { htmlAttributes = new { @class = "form-control" } })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Part number</label>
-                        <div class="col-sm-9">
-                            @Html.EditorFor(model => model.PartNumber, new { htmlAttributes = new { @class = "form-control" } })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Memory</label>
-                        <div class="col-sm-9">
-                            @Html.EditorFor(model => model.Memory, new { htmlAttributes = new { @class = "form-control" } })
-                        </div>
-                    </div>
-                </div>
-                    <div class="modal-footer clearfix">
-
-                        <button type="submit" class="btn btn-primary">Save change</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-                    </div>
-                                }
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+}
 <!-- ADD SERVER MODAL -->
 <div class="modal fade" id="addserver-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" style="width: 500px">
@@ -268,19 +187,19 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Maker</label>
                         <div class="col-sm-9">
-                            @Html.EditorFor(model => model.Maker, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.Server.Maker, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Power</label>
                         <div class="col-sm-9">
-                            @Html.EditorFor(model => model.Power, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.Server.Power, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Model</label>
                         <div class="col-sm-9">
-                            @Html.EditorFor(model => model.Model, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.Server.Model, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
                     <div class="form-group">
@@ -301,7 +220,7 @@
                                 }
                             }
                             <div class="col-md-10">
-                                @Html.DropDownListFor(model => model.Size, myList, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.DropDownListFor(model => model.Server.Size, myList, new { htmlAttributes = new { @class = "form-control" } })
                             </div>
                         </div>
                     </div>
@@ -309,34 +228,34 @@
                         <label class="col-sm-3 control-label">Bandwidth</label>
                         <div class="col-sm-9">
                             <div class="col-md-10">
-                                @Html.RadioButtonFor(model => model.Bandwidth, "100Mbps", new { htmlAttributes = new { @class = "form-control" } }) 100Mbps
-                                @Html.RadioButtonFor(model => model.Bandwidth, "1Gbps", new { htmlAttributes = new { @class = "form-control" } }) 1Gbps
+                                @Html.RadioButtonFor(model => model.Server.Bandwidth, "100Mbps", new { htmlAttributes = new { @class = "form-control" } }) 100Mbps
+                                @Html.RadioButtonFor(model => model.Server.Bandwidth, "1Gbps", new { htmlAttributes = new { @class = "form-control" } }) 1Gbps
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Serial number</label>
                         <div class="col-sm-9">
-                            @Html.EditorFor(model => model.SerialNumber, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.Server.SerialNumber, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Part number</label>
                         <div class="col-sm-9">
-                            @Html.EditorFor(model => model.PartNumber, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.Server.PartNumber, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Memory</label>
                         <div class="col-sm-9">
-                            @Html.EditorFor(model => model.Memory, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.Server.Memory, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
                 </div>
-                    <div class="modal-footer clearfix">
-                        <button type="submit" class="btn btn-primary"><i class="fa fa-plus"> Add</i></button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-                    </div>
+                <div class="modal-footer clearfix">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-plus"> Add</i></button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                </div>
                                 }
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

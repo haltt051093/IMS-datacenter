@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Linq.Expressions;
+using IMS.Core.Express;
 
 namespace IMS.Data.Generic
 {

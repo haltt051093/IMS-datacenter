@@ -60,48 +60,48 @@ namespace IMS.Controllers
         public ActionResult Index2(IPIndexViewModel iivm)
         {
             if (ModelState.IsValid)
-            {
+            { 
                 var ips = IPAddressPoolBLO.Current.GenerateIP(iivm.Address, iivm.Netmask);
                 var gateway = IPAddressPoolBLO.Current.GenerateIP(iivm.Address, iivm.Netmask).FirstOrDefault().Gateway;
                 var exist = IPAddressPoolDAO.Current.Query(x => x.Gateway == gateway);
                 if (exist.Count > 0)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    Alert("The Network Address was existed. Please try again!");
                 }
                 else
                 {
                     IPAddressPoolBLO.Current.AddIP(ips);
+                    Alert("New IP Addresses added successfully!");
                     return RedirectToAction("Index2");
                 }
             }
             return RedirectToAction("Index2");
         }
-        public ActionResult AssignIP(string request, string IP, string servercode, string GatewaySearch)
+        public ActionResult AssignIP(string servercode, string GatewaySearch)
         {
-            IP = "192.168.0.1";
+            //IP = "192.168.0.1";
             //request = "Change";
-            request = "AddIPForNewServer";
+            //request = "AddIPForNewServer";
             //request = "AssignMoreIP";
             servercode = "BJIWEHDHQ";
-            if (request == "Change")
-            {
-                string gateway = IPAddressPoolBLO.Current.GetGatewayByIP(IP);
-                var data = new IPIndexViewModel();
-                data.IPs = IPAddressPoolBLO.Current.GetIPSameGateway(gateway);
-                data.OldIP = IP;
-                data.Request = request;
-                data.ListNewIP = data.IPs.Select(x => new SelectListItem
-                {
-                    Value = x.IPAddress
-                }).ToList();
-                return View(data);
-            }
-            else if (request == "AddIPForNewServer")
-            {
+            //if (request == "Change")
+            //{
+            //    string gateway = IPAddressPoolBLO.Current.GetGatewayByIP(IP);
+            //    var data = new IPIndexViewModel();
+            //    data.IPs = IPAddressPoolBLO.Current.GetIPSameGateway(gateway);
+            //    data.OldIP = IP;
+            //    data.Request = request;
+            //    data.ListNewIP = data.IPs.Select(x => new SelectListItem
+            //    {
+            //        Value = x.IPAddress
+            //    }).ToList();
+            //    return View(data);
+            //}
+            //else if (request == "AddIPForNewServer")
+            //{
                 var data = new IPIndexViewModel();
                 var ips = IPAddressPoolBLO.Current.GetIPAvailable();
                 data.ServerCode = servercode;
-                data.Request = request;
                 data.ListNewIP = data.IPs.Select(x => new SelectListItem
                 {
                     Value = x.IPAddress
@@ -117,20 +117,20 @@ namespace IMS.Controllers
                 }
                 data.IPs = ips;
                 return View(data);
-            }
-            else
-            {
-                var data = new IPIndexViewModel();
-                string gateway = IPAddressPoolBLO.Current.GetGatewayByServerCode(servercode);
-                data.IPs = IPAddressPoolBLO.Current.GetIPSameGateway(gateway);
-                data.Request = request;
-                data.ServerCode = servercode;
-                data.ListNewIP = data.IPs.Select(x => new SelectListItem
-                {
-                    Value = x.IPAddress
-                }).ToList();
-                return View(data);
-            }
+            //}
+            //else
+            //{
+            //    var data = new IPIndexViewModel();
+            //    string gateway = IPAddressPoolBLO.Current.GetGatewayByServerCode(servercode);
+            //    data.IPs = IPAddressPoolBLO.Current.GetIPSameGateway(gateway);
+            //    data.Request = request;
+            //    data.ServerCode = servercode;
+            //    data.ListNewIP = data.IPs.Select(x => new SelectListItem
+            //    {
+            //        Value = x.IPAddress
+            //    }).ToList();
+            //    return View(data);
+            //}
         }
 
         [HttpPost]
@@ -199,10 +199,11 @@ namespace IMS.Controllers
         //    var ipviewmodel = Mapper.Map<IPAddressPool, IPChangeStatusViewModel>(ip);
         //    return View(ipviewmodel);
         //}
-
-        public ActionResult ChangeIPStatus(string ipid)
+        [HttpPost]
+        public ActionResult ChangeIPStatus(IPIndexViewModel iivm)
         {
-            int? id = ipid.ToInt();
+            //int? id = ipid.ToInt();
+            int id = iivm.IPs.FirstOrDefault().Id;
             IPAddressPool ip = new IPAddressPool();
             ip = IPAddressPoolBLO.Current.GetById(id);
             if (ip.StatusCode == Constants.StatusCode.IP_AVAILABLE)
@@ -210,11 +211,12 @@ namespace IMS.Controllers
                 ip.StatusCode = Constants.StatusCode.IP_BLOCKED;
                 IPAddressPoolDAO.Current.Update(ip);
                 LogChangedContent log = new LogChangedContent();
-                log.TypeOfLog = "BLOCKIP";
+                log.TypeOfLog = Constants.TypeOfLog.LOG_BLOCK_IP;
                 log.Object = Constants.Object.OBJECT_IP;
                 log.ChangedValueOfObject = ip.IPAddress;
                 log.ObjectStatus = Constants.StatusCode.IP_BLOCKED;
                 log.LogTime = DateTime.Now;
+                log.Description = iivm.Description;
                 LogChangedContentDAO.Current.Add(log);
             }
             else
@@ -223,7 +225,7 @@ namespace IMS.Controllers
                 ip.StatusCode = Constants.StatusCode.IP_AVAILABLE;
                 IPAddressPoolDAO.Current.Update(ip);
                 LogChangedContent log = new LogChangedContent();
-                log.TypeOfLog = "UNBLOCKIP";
+                log.TypeOfLog = Constants.TypeOfLog.LOG_UNBLOCK_IP;
                 log.Object = Constants.Object.OBJECT_IP;
                 log.ChangedValueOfObject = ip.IPAddress;
                 log.ObjectStatus = Constants.StatusCode.IP_AVAILABLE;

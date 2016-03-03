@@ -2,6 +2,7 @@
 using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.Repository;
+using IMS.Data.ViewModels;
 
 namespace IMS.Data.Business
 {
@@ -39,9 +40,14 @@ namespace IMS.Data.Business
             return dao.GetIpRequestReturnIp(requestCode);
         }
 
-        public string GetServerCodeByRequestCode(string requestCode)
+        public List<string> GetServerCodeByRequestCode(string requestCode)
         {
             return dao.GetServerCodeByRequestCode(requestCode);
+        }
+
+        public List<RequestExtendedModel> ListWaitingRequestOfServer(string serverCode)
+        {
+            return dao.ListWaitingRequestOfServer(serverCode);
         }
     }
 }

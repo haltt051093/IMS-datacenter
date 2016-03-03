@@ -84,5 +84,10 @@ namespace IMS.Data.Business
         {
             dao.UpdateRequestStatus(requestCode, newStatus);
         }
+
+        public string GenerateCode()
+        {
+            return dao.GenerateCode();
+        }
     }
 }

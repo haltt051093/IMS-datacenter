@@ -1,52 +1,65 @@
 ﻿@model RequestIPViewModel
-
-
 @{
     ViewBag.Title = "RequestReturnIP";
-}
-<script src="~/Scripts/jquery-2.2.0.min.js"></script>
-<script src="~/scripts/jquery.unobtrusive-ajax.js"></script>
-
-@using (Html.BeginForm("RequestReturnIp", "Request", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-    <h3>Request return IP</h3>
-    <div class="form-group">
-        @Html.Label("ServerCode", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(m => m.SelectedServerCode, Model.Servers, new { @id = "servercode" })
-        </div>
-    </div>
-    <div id="divPartialView" class="hidden">
-        <table id="MyTable" class="table">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.Raw("IP")
-                    </th>
-                    <th>
-                        @Html.Raw("Select IPs")
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-        @Html.HiddenFor(model => model.Ips, new { id = "ips" })
-        @Html.HiddenFor(model => model.SelectedServerCode)
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <br />
-    <button name="Action" type="submit" value="send" id="demo">Send Requests</button>
+    ViewBag.Role = "Customer";
 }
 
+<section class="content-header">
+    <h1>
+        Request Return IP Address
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("RequestHistory2", "Request")"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Request Return IP Address</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="box">
+        <div class="box-body table-responsive">
+            <div class="form-horizontal">
+                @using (Html.BeginForm("RequestReturnIp", "Request", FormMethod.Post))
+                {
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Which server do you want return IP?</label>
+                        <div class="col-sm-2">
+                            @Html.DropDownListFor(m => m.SelectedServer, Model.Servers, new { @id = "servercode" })
+                        </div>
+                    </div>
+                    <div id="divPartialView" class="hidden">
+                        <table id="MyTable" class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <input type="checkbox" id="checkAll" />check all
+                                    </th>
+                                    <th>
+                                        @Html.Raw("Select IPs")
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        @Html.HiddenFor(model => model.Ips, new { id = "ips" })
+                        @Html.HiddenFor(model => model.SelectedServer)
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Note</label>
+                        <div class="col-sm-2">
+                            @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", style = "width: 500px; height: 100px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;", placeholder = "Some description here" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-2">
+                            <button type="submit" class="btn btn-primary" id="demo">Send</button>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div><!-- /.box-body -->
+    </div><!-- /.box -->
+</section>
 <script type="text/javascript">
     $(function () {
         $('#servercode').change(function () {
@@ -56,7 +69,7 @@
                 cache: false,
                 type: "GET",
                 url: "@(Url.Action("FetchIPs", "Request"))",
-                data: { "SelectedServerCode": pass },
+                data: { "SelectedServer": pass },
                 dataType: "json",
                 success: function (data) {
                     $('#divPartialView').removeClass('hidden');
@@ -75,13 +88,50 @@
             $("[id*=MyTable] input:checked").each(function () {
                 selectedValues.push($(this).val());
             });
-            if (selectedValues.length > 0) {
-                alert("Selected Value(s): " + selectedValues);
-            } else {
-                alert("No item has been selected.");
-            }
+            //if (selectedValues.length > 0) {
+            //    alert("Selected Value(s): " + selectedValues);
+            //} else {
+            //    alert("No item has been selected.");
+            //}
             $('#ips').val(selectedValues);
         });
-    });
 
+        $("[id*=MyTable] > thead [id*=checkAll]").change(function () {  //on click
+            //if (this.checked) { // check select status
+            //$('.test123').each(function () { //loop through each checkbox
+            //    this.checked = true;  //select all checkboxes with class "checkbox1"
+            //});
+            alert("No item has been selected.");
+            //} else {
+            //$('.test123').each(function () { //loop through each checkbox
+            //    this.checked = false; //deselect all checkboxes with class "checkbox1"
+            //});
+            //}
+        });
+    });
+    //Lam sao de lay id or class cua may thang IP
+    //$("#checkAll").change(function () {
+    //    $("[id*=MyTable] input:checkbox").prop('checked', $(this).prop("checked"));
+    //    //$(".checkbox1").prop('checked', $(this).prop("checked"));
+    //});
+
+    //$("#checkAll").change(function () {
+    //    $(".test123").prop('checked', $(this).prop("checked"));
+    //});
+
+    //$(".checkbox1").change(function() {
+    //    alert("OMGGGG");
+    //});
+
+    //$('#selecctall').click(function (event) {  //on click
+    //    if (this.checked) { // check select status
+    //        $('.checkbox1').each(function () { //loop through each checkbox
+    //            this.checked = true;  //select all checkboxes with class "checkbox1"
+    //        });
+    //    } else {
+    //        $('.checkbox1').each(function () { //loop through each checkbox
+    //            this.checked = false; //deselect all checkboxes with class "checkbox1"
+    //        });
+    //    }
+    //});
 </script>

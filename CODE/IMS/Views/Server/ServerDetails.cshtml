@@ -1,131 +1,349 @@
 ﻿@model ServerDetailsViewModel
-
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "ServerDetails2";
+    ViewBag.Role = "Shift Head";
 }
 
-<h2>Details</h2>
+<section class="content-header">
+    <h1>
+        Server Details
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index2", "Schedule")"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="@Url.Action("Index", "Server")"><i class="fa fa-dashboard"></i> Server</a></li>
+        <li class="active">ServerDetails</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="box">
+        <div class="box-body table-responsive">
+            <dl class="dl-horizontal">
+                <dt>
+                    Server Code
+                </dt>
+                <dd>
+                    @Html.HiddenFor(model => model.Server.Customer, htmlAttributes: new {@id = "customer"})
+                    @Html.HiddenFor(model => model.Server.ServerCode, htmlAttributes: new { @id = "servercode" })
+                    @Html.HiddenFor(model => model.Server.Power, htmlAttributes: new {@id = "power"})
+                    @Html.HiddenFor(model => model.Server.Size)
+                    @Html.DisplayFor(model => model.Server.ServerCode)
+                </dd>
 
-<div>
-    <h4>Server</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.Raw("Server Code")
-        </dt>
+                <dt>
+                    Customer
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Server.ServerCode)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Server.CustomerName)
+                </dd>
 
-        <dt>
-            @Html.Raw("Customer")
-        </dt>
+                <dt>
+                    Maker
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Server.CustomerName)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Server.Maker)
+                </dd>
 
-        <dt>
-            @Html.Raw("Maker")
-        </dt>
+                <dt>
+                    Model
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Server.Maker)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Server.Model)
+                </dd>
 
-        <dt>
-            @Html.Raw("Modern")
-        </dt>
+                <dt>
+                    Power
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Server.Model)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Server.Power)W
+                </dd>
 
-        <dt>
-            @Html.Raw("Power")
-        </dt>
+                <dt>
+                    Rack
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Server.Power)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Server.Size)U
+                </dd>
 
-        <dt>
-            @Html.Raw("Size")
-        </dt>
+                <dt>
+                    Status
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Server.Size)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Server.Status)
+                </dd>
 
-        <dt>
-            @Html.Raw("Status")
-        </dt>
+                <dt>
+                    Location
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Server.Status)
-        </dd>
+                <dd>
+                    @foreach (var item in Model.Locations)
+                    {
+                        <div>
+                            @item.RackName U @item.RackUnit
+                        </div>
+                    }
+                    <label>-----</label>
+                    <label><a href="#" data-toggle="modal" data-target="#changelocation-modal">Change Location?</a></label>
+                </dd>
+                <dt>
+                    Registered Date
+                </dt>
 
-        <dt>
-            @Html.Raw("Default IP")
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Server.RegisteredDate)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Server.DefaultIP)
-        </dd>
+                <dt>
+                    Outlet
+                </dt>
 
-        <dt>
-            @Html.Raw("Location")
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Server.Outlet)
+                </dd>
+                <dt>
+                    Other Attributes
+                </dt>
+                <dd>
+                    @*@if (Model.Attributes.Count == 0)
+                    {
+                        @Html.Raw("No other attributes")
+                    }
+                    else
+                    {
+                        <ul class="list-group" id="currentIps">
+                            @foreach (var item in Model.Attributes)
+                            {
+                                <li class="list-group-item">
+                                    @item.AttributeName
+                                    :
+                                    @item.AttributeValue
+                                </li>
+                            }
+                        </ul>
+                    }*@
+                </dd>
+                <dt>
+                    Current IP Address
+                </dt>
+                <dd>
+                    @if (Model.CurrentIPs.Count == 0)
+                    {
+                        @Html.Raw("No IP")
+                    }
+                    else
+                    {
+                        <ul class="list-group">
+                            @foreach (var item in Model.CurrentIPs)
+                            {
+                                <li class="list-group-item">
+                                    @item.CurrentIP
+                                </li>
+                            }
+                        </ul>
+                    }
+                </dd>
+            </dl>
+        </div><!-- /.box-body -->
+    </div><!-- /.box -->
+</section>
+<!-- CHANGE LOCATION MODAL -->
+<div class="modal fade" id="changelocation-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 1000px">
+        <div class="modal-content">
+            <form action="#" method="POST">
+                <div class="modal-body">
 
-        <dd>
-            @Html.DisplayFor(model => model.Server.RackCode)U
-            @Html.DisplayFor(model => model.Server.RackUnit)
-        </dd>
+                    <section class="content-header">
+                        <h1>
+                            List of Location Available
+                        </h1>
+                    </section>
+                    <section class="content">
 
-        <dt>
-            @Html.Raw("Registered Date")
-        </dt>
+                        @using (Html.BeginForm("ServerDetails", "Server", FormMethod.Get))
+                        {
 
-        <dd>
-            @Html.DisplayFor(model => model.Server.RegisteredDate)
-        </dd>
 
-        <dt>
-            @Html.Raw("Outlet")
-        </dt>
+                            <h4>Search By</h4>
+                            <div class="form-inline">
+                                <div class="form-group"><label>Rack Name: </label>
+                                </div>
+                                <div class="form-group">
+                                    @Html.DropDownList("RackSearch",Model.Racks, "--Select--", htmlAttributes: new {@class = "form-control", @id = "racksearch"})
+                                </div>
+                                @*<div class="form-group">
+                                    <input href="#" type="button" id="SearchRack" class="btn btn-primary pull-left" value="Search"/>
+                                </div>*@
+                            </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Server.Outlet)
-        </dd>
-        <dt>
-            @Html.Raw("Other Attributes")
-        </dt>
-        <dd>
-            <ul class="list-group">
-                @foreach (var item in Model.Attributes)
-                {
-                    <li class="list-group-item">
-                        @item.AttributeName
-                        :
-                        @item.AttributeValue
-                    </li>
-                }
-            </ul>
-        </dd>
-        <dt>
-            @Html.Raw("Current IP Addresses")
-        </dt>
-        <dd>
-            <ul class="list-group">
-                @foreach (var item in Model.CurrentIPs)
-                {
-                    <li class="list-group-item">
-                        @item.CurrentIP
-                    </li>
-                }
-            </ul>
-        </dd>
+                        }
 
-    </dl>
-</div>
+                    </section>
+                    
+                        <section class="content">
+                            <div class="box">
+                                <div class="box-body table-responsive">
+                                   
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+
+                                                    <th>RackName</th>
+                                                    <th>RackUnit</th>
+                                                    <th>Status</th>
+                                                    <th>ServerCode</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <div id="divPartialView" class="">
+                                                    @foreach (var item in Model.Locations1)
+                                                    {
+                                                        <tr>
+                                                            @if (item.ServerCode == Model.Server.ServerCode)
+                                                            {
+
+                                                                <td>
+                                                                    <label style="color: red">@Html.DisplayFor(modelItem => item.RackName)</label>
+                                                                </td>
+                                                                <td>
+                                                                    <label style="color: red">@Html.DisplayFor(modelItem => item.RackUnit)</label>
+                                                                </td>
+                                                                <td>
+                                                                    <label style="color: red">@Html.DisplayFor(modelItem => item.StatusName)</label>
+                                                                </td>
+                                                                <td>
+                                                                    @if (item.ServerCode == Model.Server.ServerCode)
+                                                                    {
+                                                                        <label style="color: red">@Html.DisplayFor(modelItem => item.ServerCode)</label>
+
+                                                                    }
+                                                                </td>
+                                                                <td>
+                                                                    @if (item.StatusName == "Free")
+                                                                    {
+                                                                        @Html.RadioButtonFor(model => model.LocationCode, item.LocationCode)
+                                                                    }
+                                                                </td>
+                                                            }
+                                                            else
+                                                            {
+
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.RackName)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.RackUnit)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.StatusName)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.ServerCode)
+                                                                </td>
+                                                                <td>
+                                                                    @if (item.StatusName == "Free")
+                                                                    {
+                                                                        @Html.RadioButtonFor(model => model.LocationCode, item.LocationCode)
+                                                                    }
+
+                                                                </td>
+                                                            }
+
+
+                                                        </tr>
+                                                    }
+                                                </div>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+
+                                                    <th>RackName</th>
+                                                    <th>RackUnit</th>
+                                                    <th>Status</th>
+                                                    <th>ServerCode</th>
+                                                    <th></th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                               
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box -->
+
+                        </section><!-- /.content -->
+                   
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save Change</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+
+
+                </div>
+            </form>
+
+            <script type="text/javascript">
+                $(function () {
+                    $('#racksearch').change(function () {
+                        var pass = $('#racksearch').val();
+                        var pass1 = $('#customer').val();
+                        var pass2 = $('#servercode').val();
+                        var pass3 = $('#power').val();
+
+                        var myTable = $('#example1 > tbody');
+                        $.ajax({
+                            cache: false,
+                            type: "GET",
+                            url: "@(Url.Action("GetLocationByRackName", "Server"))",
+                            data: { "SelectedRack": pass, "Customer":pass1,"ServerCode":pass2,"Power":pass3 },
+                        dataType: "json",
+                        success: function (data) {
+                            $('#divPartialView').class("hidden");
+                            $(data.Locations1).each(function (index, item) {
+                                //myTable.append($('tr', { value: item.ServerCode, text: item.ServerCode }));
+                                myTable.append('<tr><td>' + item.RackName + '</td><td>' +item.RackUnit+ '</td><td>'+item.StatusName+'</td><td>'+item.ServerCode+'<input type="radio" id="radio"'
+                                    + index + ' name="chk"/></td></tr>');
+                            });
+                        }
+                    });
+                });
+                    $("#example1").dataTable(
+                    {
+                        "bPaginate": true,
+                        "bFilter": false,
+                        "bSort": true,
+                        "bInfo": true,
+                    });
+                    //DOING
+                    var defaultIp = @Model.Server.DefaultIP;
+                    $('#currentIps li').each(function() {
+                        if (this.value == defaultIp) {
+                            $(this).css( "background-color:blue;" );
+                        }
+                    });
+                    $("#SearchRack").on("click", function() {
+                        $.ajax(
+                        {
+                            type: "GET",
+                            page: 1,
+                            rp: 6,
+                            url: '@Url.Action("ServerDetails", "Server")',
+                            dataType: "json",
+                            success: function(result) {
+
+                            },
+                            error: function(x, e) {
+
+                            }
+                        });
+                    });
+                });
+            </script>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

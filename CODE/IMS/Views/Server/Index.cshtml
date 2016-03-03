@@ -1,81 +1,223 @@
-﻿@using IMS.Core
-@using IMS.Data.Models
-@model ServerIndexViewModel
+﻿@model ServerIndexViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "ServerPage";
+    ViewBag.Role = "Shift Head";
 }
+<section class="content-header">
+    <h1>
+        List of Server
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index2", "Schedule")"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Server</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="box">
+        <div class="box-body table-responsive">
+            <div class="box-body table-responsive">
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Server Code</th>
+                            <th>Customer</th>
+                            <th>Status</th>
+                            <th>Default IP</th>
+                            <th>Location</th>
+                            <th>Current Request</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Servers)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="@Url.Action("ServerDetails", "Server", new { serverCode = @item.ServerCode })">@item.ServerCode</a>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.CustomerName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Status)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DefaultIP)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RackName)U
+                                    @Html.DisplayFor(modelItem => item.RackUnit)
+                                </td>
+                                <td class="sidebar-menu">
+                                    @if (item.Requests.Count > 0)
+                                    {
+                                        foreach (var request in item.Requests)
+                                        {
+                                            <ul><a href="#"><i class="fa fa-angle-double-right"></i> @request.RequestTypeName</a></ul>
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Server Code</th>
+                            <th>Customer</th>
+                            <th>Status</th>
+                            <th>Default IP</th>
+                            <th>Location</th>
+                            <th>Current Request</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div>
+</section>
+<!-- SERVER DETAIL MODAL -->
+<div class="modal fade" id="serverdetail-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><i class="fa fa-search"></i> Server Detail</h4>
+            </div>
+            <form action="#" method="post">
+                <div class="modal-body">
 
-<h2>Index</h2>
-<p>
-    @using (Html.BeginForm("Index", "Server", FormMethod.Get))
-    {
-        @*var account = (Account) Session[Constants.Session.USER_LOGIN];
-        <h3>Hello: @account.Role</h3>
-        <h3>@account.GroupName</h3>*@
-        <b>Search By:</b>
-        //@Html.RadioButton("searchBy", "Customer", true)
-        <br />
-        <text>Status</text>
-        @Html.DropDownList("StatusSearch", "--Select--")
-        <br />
-        <text>Maker</text>
-        @Html.DropDownList("MakerSearch", "--Select--")
-        <br />
-        <text>Rack</text>
-        @Html.DropDownList("RackSearch", "--Select--")
-        <br />
-        <text>Customer</text>
-        @Html.TextBox("searchString")
-        <input type="submit" value="Search" />
-    }
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.Raw("Customer")
-        </th>
-        <th>
-            @Html.Raw("Status")
-        </th>
-        <th>
-            @Html.Raw("Maker")
-        </th>
-        <th>
-            @Html.Raw("Modern")
-        </th>
-        <th>
-            @Html.Raw("Default IP")
-        </th>
-        <th>
-            @Html.Raw("Location")
-        </th>
-        <th></th>
-    </tr>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            Server Code
+                        </dt>
+                        <dd>
+                            GHJHKRN
+                        </dd>
 
-    @foreach (var item in Model.Servers)
-    {
-        <tr>
-            <td>
-                @Html.ActionLink(@item.CustomerName, "ServerDetails", new { id = item.Id })
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Maker)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Model)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DefaultIP)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RackCode)
-                @Html.DisplayFor(modelItem => item.RackUnit)
-            </td>
-        </tr>
-    }
+                        <dt>
+                            Customer
+                        </dt>
 
-</table>
+                        <dd>
+                            Nguyễn Hùng Mạnh
+                        </dd>
+
+                        <dt>
+                            Maker
+                        </dt>
+
+                        <dd>
+                            SUPERMICRO
+                        </dd>
+
+                        <dt>
+                            Model
+                        </dt>
+
+                        <dd>
+                            X8 DTI
+                        </dd>
+
+                        <dt>
+                            Power
+                        </dt>
+
+                        <dd>
+                            750W
+                        </dd>
+
+                        <dt>
+                            Size
+                        </dt>
+
+                        <dd>
+                            2
+                        </dd>
+
+                        <dt>
+                            Status
+                        </dt>
+
+                        <dd>
+                            Running
+                        </dd>
+
+                        <dt>
+                            Default IP
+                        </dt>
+
+                        <dd>
+                            192.168.0.11
+                        </dd>
+
+                        <dt>
+                            Location
+                        </dt>
+
+                        <dd>
+                            L123456 U2
+                        </dd>
+
+                        <dt>
+                            Registered Date
+                        </dt>
+
+                        <dd>
+                            18-Jan-16 01:19:12
+                        </dd>
+
+                        <dt>
+                            Outlet
+                        </dt>
+
+                        <dd>
+                            2
+                        </dd>
+                        <dt>
+                            Other Attributes
+                        </dt>
+                        <dd>
+                            <ul class="list-group">
+
+                                <li class="list-group-item">
+                                    Storage : 750GB
+                                </li>
+                                <li class="list-group-item">
+                                    Memory : 6GB
+                                </li>
+
+                            </ul>
+                        </dd>
+                        <dt>
+                            Current IP Address
+                        </dt>
+                        <dd>
+                            <ul class="list-group">
+
+                                <li class="list-group-item">
+                                    192.168.0.11
+                                </li>
+                                <li class="list-group-item">
+                                    192.168.0.11
+                                </li>
+
+                            </ul>
+                        </dd>
+
+                    </dl>
+                </div>
+                <div class="modal-footer clearfix">
+
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- page script -->
+<script type="text/javascript">
+    $(function () {
+        $("#example1").dataTable();
+
+    });
+</script>

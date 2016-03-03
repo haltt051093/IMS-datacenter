@@ -8,9 +8,8 @@
 
 <h2>List of suitable IP Addresses</h2>
 
-@if (Model.Request == "AddIPForNewServer")
-{
-    using (Html.BeginForm("AssignIP", "IP", FormMethod.Get))
+
+    @using (Html.BeginForm("AssignIP", "IP", FormMethod.Get))
     {
 
         <b>Search By:</b>
@@ -21,7 +20,7 @@
             <br />
             <input type="submit" value="Search" />
     }
-}
+
 
 @using (Html.BeginForm())
 {
@@ -32,6 +31,10 @@
         @Html.HiddenFor(model => model.Request)
         @Html.HiddenFor(model => model.ServerCode)
         @Html.HiddenFor(model => model.OldIP)
+        <div class="form-group">
+            <label>Amount of Available IP Address:</label>
+            @Model.IPs.Count
+        </div>
         <table class="table">
             <tr>
                 <th>
@@ -67,7 +70,8 @@
                         @Html.DisplayFor(x => x.IPs[i].RegisteredDate)
                     </td>
                     <td>
-                        @if (Model.Request.Equals("Change"))
+                        @Html.RadioButtonFor(x => x.NewIP, Model.IPs[i].IPAddress)
+                        @*@if (Model.Request.Equals("Change"))
                         {
                             if (Model.IPs[i].StatusName.Equals("Available"))
                             {
@@ -86,9 +90,10 @@
                             if (Model.IPs[i].StatusName.Equals("Available"))
                             {
                                 @Html.HiddenFor(x => x.ListNewIP[i].Value)
-                                @Html.CheckBoxFor(x => x.ListNewIP[i].Selected);
+                                @Html.CheckBoxFor(x => x.ListNewIP[i].Selected)
+                                ;
                             }
-                        }
+                        }*@
 
 
                     </td>

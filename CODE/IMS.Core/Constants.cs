@@ -130,6 +130,7 @@ namespace IMS.Core
         public class Session
         {
             public const string USER_LOGIN = "USER_LOGIN";
+            public const string REQUEST_CODE = "REQUEST_CODE";
         }
 
         public class Object
@@ -270,6 +271,24 @@ namespace IMS.Core
             public const int NUMBER_8 = 8;
             public const int NUMBER_9 = 9;
             public const int NUMBER_10 = 10;
+        }
+
+        public class HtmlClass
+        {
+            public const string DEFAULT_BUTTON = "btn btn-default";
+            public const string PRIMARY_BUTTON = "btn btn-primary";
+            public const string SECONDARY_BUTTON = "btn btn-info";
+            public const string DANGER_BUTTON = "btn btn-danger";
+
+            public const string FORM_LABEL = "";
+            public const string FORM_CONTROL = "";
+        }
+
+        public class ServerAttributeCode
+        {
+            public const string PART_NUMBER = "SAT001";
+            public const string SERIAL_NUMBER = "SAT002";
+            public const string MEMORY = "SAT004";
         }
     }
 }
