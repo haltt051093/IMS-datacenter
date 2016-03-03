@@ -242,6 +242,30 @@ namespace IMS.Controllers
                 server.Customer = Constants.Test.CUSTOMER_MANHNH;
                 string serverCode = ServerDAO.Current.AddServer(server);
 
+                //add server attribute serial number, part number, memory
+
+                List<ServerAttribute> serverAttributes = new List<ServerAttribute>();
+                List<string> attributeCodes = new List<string>();
+                attributeCodes.Add(Constants.ServerAttributeCode.PART_NUMBER);
+                attributeCodes.Add(Constants.ServerAttributeCode.SERIAL_NUMBER);
+                attributeCodes.Add(Constants.ServerAttributeCode.MEMORY);
+                List<string> attributeValues = new List<string>();
+                attributeValues.Add(item.PartNumber);
+                attributeValues.Add(item.SerialNumber);
+                attributeValues.Add(item.Memory);
+                for (int i = 0; i < attributeValues.Count; i++)
+                {
+                    ServerAttribute sa = new ServerAttribute();
+                    sa.AttributeValue = attributeValues[i];
+                    sa.AttributeCode = attributeCodes[i];
+                    sa.ServerCode = serverCode;
+                    sa.UpdatedVersion = 0;
+                    sa.StatusCode = Constants.StatusCode.SERVERATTRIBUTE_UPDATING;
+                    serverAttributes.Add(sa);
+                }
+                //add server attributes
+                ServerAttributeBLO.Current.AddMany(serverAttributes);
+
                 // log request status
                 LogChangedContent logRequest = new LogChangedContent
                 {
@@ -515,18 +539,41 @@ namespace IMS.Controllers
                 //Get request
                 RequestAddServerViewModel viewmodel = new RequestAddServerViewModel();
                 var request = RequestBLO.Current.GetRequestByRequestCode(rCode);
+                viewmodel.RequestCode = rCode;
                 if (request != null)
                 {
                     viewmodel = Mapper.Map<Request, RequestAddServerViewModel>(request);
                     viewmodel.StatusName = StatusBLO.Current.GetStatusName(viewmodel.StatusCode);
+                    var customer = AccountBLO.Current.GetAccountByCode(viewmodel.Customer);
+                    viewmodel.CustomerName = customer.Fullname;
+                    viewmodel.Identification = customer.Identification;
                     //lay list servers
                     var serverCodes = LogChangedContentBLO.Current.GetServerCodeByRequestCode(rCode);
+                    List<ServerExtendedModel> list = new List<ServerExtendedModel>();
                     foreach (var servercode in serverCodes)
                     {
                         var server = ServerBLO.Current.GetServerByCode(servercode);
-                        //BUG
-                        viewmodel.Servers.Add(server);
+                        //lay serverattribute
+                        var listAttributes = ServerAttributeBLO.Current
+                            .GetServerAttributes(servercode, Constants.StatusCode.SERVERATTRIBUTE_UPDATING);
+                        foreach (var attribute in listAttributes)
+                        {
+                            if (attribute.AttributeCode == Constants.ServerAttributeCode.PART_NUMBER)
+                            {
+                                server.PartNumber = attribute.AttributeValue;
+                            }
+                            else if (attribute.AttributeCode == Constants.ServerAttributeCode.SERIAL_NUMBER)
+                            {
+                                server.SerialNumber = attribute.AttributeValue;
+                            }
+                            else if (attribute.AttributeCode == Constants.ServerAttributeCode.MEMORY)
+                            {
+                                server.Memory = attribute.AttributeValue;
+                            }
+                        }
+                        list.Add(server);
                     }
+                    viewmodel.Servers = list;
                 }
 
                 return View("RequestAddServerInfo", viewmodel);
@@ -844,6 +891,40 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult ProcessRequestAddServer(RequestAddServerViewModel viewmodel)
         {
+            var listServer = viewmodel.Servers;
+            foreach (var server in listServer)
+            {
+                ServerBLO.Current.UpdateServerStatus(server.ServerCode, Constants.StatusCode.SERVER_RUNNING);
+                ServerAttributeBLO.Current.UpdateServerAttributeStatus(server.ServerCode, Constants.StatusCode.SERVERATTRIBUTE_NEW);
+                //luu IP address
+                //Luu location
+
+                //log server status
+                LogChangedContent logServer = new LogChangedContent
+                {
+                    RequestCode = viewmodel.RequestCode,
+                    TypeOfLog = Constants.TypeOfLog.LOG_ADD_SERVER,
+                    Object = Constants.Object.OBJECT_SERVER,
+                    ChangedValueOfObject = viewmodel.RequestCode,
+                    ObjectStatus = Constants.StatusCode.SERVER_RUNNING,
+                    ServerCode = server.ServerCode
+                    //Staff = viewmodel.StaffCode
+                };
+                LogChangedContentBLO.Current.AddLog(logServer);
+
+                //log request status
+                LogChangedContent logRequest = new LogChangedContent
+                {
+                    RequestCode = viewmodel.RequestCode,
+                    TypeOfLog = Constants.TypeOfLog.LOG_ADD_SERVER,
+                    Object = Constants.Object.OBJECT_REQUEST,
+                    ChangedValueOfObject = viewmodel.RequestCode,
+                    ObjectStatus = Constants.StatusCode.REQUEST_DONE,
+                    ServerCode = server.ServerCode
+                    //Staff = viewmodel.StaffCode
+                };
+                LogChangedContentBLO.Current.AddLog(logRequest);
+            }
             return RedirectToAction("Index", "Home");
         }
 

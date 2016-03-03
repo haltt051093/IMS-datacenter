@@ -57,5 +57,10 @@ namespace IMS.Data.Business
             bool kq = service.Send(smtpUsername, smtpPassword, smtpHost, smtpPort, emailTo, subject, body);
             return kq;
         }
+
+        public Account GetAccountByCode(string username)
+        {
+            return dao.GetAccountByCode(username);
+        }
     }
 }

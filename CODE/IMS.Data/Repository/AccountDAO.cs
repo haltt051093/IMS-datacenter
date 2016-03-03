@@ -51,8 +51,6 @@ namespace IMS.Data.Repository
             return Query(x => x.Id == entry.Id).FirstOrDefault();
         }
 
-        
-
         //public List<AccountExtendedModel> GetAllAccount()
         //{
         //    var query = from a in Table()
@@ -71,6 +69,11 @@ namespace IMS.Data.Repository
                             join [Group] g
                             on a.GroupCode = g.GroupCode";
             return RawQuery<AccountExtendedModel>(query, new object[] { });
+        }
+
+        public Account GetAccountByCode(string username)
+        {
+            return Query(x => x.Username == username).FirstOrDefault();
         }
     }
 }

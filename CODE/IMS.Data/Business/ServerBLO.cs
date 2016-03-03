@@ -86,5 +86,10 @@ namespace IMS.Data.Business
         {
             return dao.AddServer(passServer);
         }
+
+        public void UpdateServerStatus(string serverCode, string status)
+        {
+            dao.UpdateServerStatus(serverCode, status);
+        }
     }
 }

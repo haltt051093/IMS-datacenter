@@ -135,7 +135,6 @@
     <Compile Include="ViewModels\RequestDetailModel.cs" />
     <Compile Include="ViewModels\RequestExtendedModel.cs" />
     <Compile Include="ViewModels\ScheduleExtendedModel.cs" />
-    <Compile Include="ViewModels\ServerDetailModel.cs" />
     <Compile Include="ViewModels\ServerExtendedModel.cs" />
   </ItemGroup>
   <ItemGroup>

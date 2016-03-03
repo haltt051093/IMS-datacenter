@@ -272,6 +272,13 @@ namespace IMS.Core
             public const int NUMBER_9 = 9;
             public const int NUMBER_10 = 10;
         }
+
+        public class ServerAttributeCode
+        {
+            public const string PART_NUMBER = "SAT001";
+            public const string SERIAL_NUMBER = "SAT002";
+            public const string MEMORY = "SAT004";
+        }
     }
 }
 

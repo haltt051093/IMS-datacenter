@@ -94,7 +94,7 @@ namespace IMS.Data.Repository
                               ServerCode = l.ServerCode,
                               RackUnit = l.RackUnit,
                               RackCode = l.RackCode,
-                              RackName = r.RackName
+                              RackName = r.RackName,
                           };
             var query = from s in Table()
                         join l in rackDis
@@ -123,7 +123,8 @@ namespace IMS.Data.Repository
                             Size = s.Size,
                             Power = s.Power,
                             RegisteredDate = s.RegisteredDate,
-                            Outlet = s.Outlet
+                            Outlet = s.Outlet,
+                            Bandwidth = s.Bandwidth
                         };
             return query.FirstOrDefault();
         }
@@ -191,6 +192,17 @@ namespace IMS.Data.Repository
                 existing = Query(x => x.ServerCode == code).FirstOrDefault();
             }
             return code;
+        }
+
+        //change server status
+        public void UpdateServerStatus(string serverCode, string status)
+        {
+            Server server = Query(x => x.ServerCode == serverCode).FirstOrDefault();
+            if (server != null)
+            {
+                server.StatusCode = status;
+                Update(server);
+            }
         }
     }
 }

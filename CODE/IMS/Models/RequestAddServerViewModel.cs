@@ -8,7 +8,7 @@ namespace IMS.Models
 {
     public class RequestAddServerViewModel
     {
-        public ServerDetailModel Server { get; set; }
+        public ServerExtendedModel Server { get; set; }
         public List<ServerExtendedModel> Servers { get; set; }
 
         //public string Time { get; set; }
@@ -19,8 +19,11 @@ namespace IMS.Models
 
         //Customer
         public string Customer { get; set; }
+        public string CustomerName { get; set; }
         public string Identification { get; set; }
+        public string AssignedPerson { get; set; }
         //Request
+        public string RequestCode { get; set; }
         public string RequestedTime { get; set; }
         public string StatusName { get; set; }
         public string StatusCode { get; set; }
