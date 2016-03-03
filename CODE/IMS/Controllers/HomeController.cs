@@ -73,7 +73,7 @@ namespace IMS.Controllers
                         Value = x.ServerCode,
                         Text = x.Model
                     }).ToList();
-                    return View("../Request/RequestReturnIP2", viewmodel);
+                    return View("../Request/RequestReturnIP", viewmodel);
                 }
                 //DOING
                 if (requestcode.Equals(Constants.RequestTypeCode.CHANGE_IP))

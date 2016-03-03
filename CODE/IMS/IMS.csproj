@@ -948,7 +948,6 @@
     <Content Include="Views\Request\RequestRentRack.cshtml" />
     <Content Include="Views\Request\RequestReturnRack.cshtml" />
     <Content Include="Views\Request\RequestUpgradeServer.cshtml" />
-    <Content Include="Views\Request\RequestReturnIP.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\ViewProfile.cshtml" />
     <Content Include="Views\Location\AssignLocation.cshtml" />
@@ -999,7 +998,7 @@
     <Content Include="Views\Request\RequestHistory2.cshtml" />
     <Content Include="Views\Request\RequestRentRack2.cshtml" />
     <Content Include="Views\Request\RequestRentRackInfo2.cshtml" />
-    <Content Include="Views\Request\RequestReturnIP2.cshtml" />
+    <Content Include="Views\Request\RequestReturnIP.cshtml" />
     <Content Include="Views\Request\RequestReturnIPInfo2.cshtml" />
     <Content Include="Views\Request\RequestReturnRackInfo2.cshtml" />
     <Content Include="Views\Request\RequestReturnRack2.cshtml" />

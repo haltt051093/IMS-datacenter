@@ -47,12 +47,12 @@
                     </dd>
                     @if (Model.AssignedPerson != null)
                     {
-                        <dt>
-                            Assigned Person Name
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.AssignedPerson, new { htmlAttributes = new { @class = "form-control" } })
-                        </dd>
+                    <dt>
+                        Assigned Person Name
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.AssignedPerson, new { htmlAttributes = new { @class = "form-control" } })
+                    </dd>
                     }
                     <dt>
                         Identification
@@ -100,78 +100,65 @@
                         <tbody>
                             @for (int i = 0; i < Model.Servers.Count; i++)
                             {
-                                <tr>
-                                    <td>
-                                        @Html.Raw(i + 1)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => Model.Servers[i].Maker, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Maker)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => Model.Servers[i].Power, new { htmlAttributes = new { @class = "form-control" } })W
-                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Power)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => Model.Servers[i].Model, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Model)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => Model.Servers[i].Size, new { htmlAttributes = new { @class = "form-control" } })U
-                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Size)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => Model.Servers[i].Bandwidth, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Bandwidth)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => Model.Servers[i].SerialNumber, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].SerialNumber)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => Model.Servers[i].PartNumber, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].PartNumber)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => Model.Servers[i].Memory, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Memory)
-                                    </td>
-                                    <td>
-                                        <input type="hidden" value="true" name="defaultIp" />
-                                        <label><a href="#" data-toggle="modal" data-target="#assignip-modal">Assign Default IP</a></label>
-                                    </td>
-                                    <td>
-                                        <input type="hidden" value="true" name="location" />
-                                        <label><a href="#" data-toggle="modal" data-target="#assignlocation-modal">Assign Location</a></label>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td>
+                                    @Html.Raw(i + 1)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].Maker, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Maker)
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].ServerCode)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].Power, new { htmlAttributes = new { @class = "form-control" } })W
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Power)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].Model, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Model)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].Size, new { htmlAttributes = new { @class = "form-control" } })U
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Size)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].Bandwidth, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Bandwidth)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].SerialNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].SerialNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].PartNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].PartNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].Memory, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Memory)
+                                </td>
+                                <td>
+                                    <input type="hidden" value="true" name="defaultIp" />
+                                    <label><a href="#" data-toggle="modal" data-target="#assignip-modal">Assign Default IP</a></label>
+                                </td>
+                                <td>
+                                    <input type="hidden" value="true" name="location" />
+                                    <label><a href="#" data-toggle="modal" data-target="#assignlocation-modal">Assign Location</a></label>
+                                </td>
+                            </tr>
                             }
                         </tbody>
                     </table>
                 </div>
-                @*<dt></dt>
-                    @{
-                    if (Request.Url.ToString().Contains("act=Finish"))
-                    {
 
-                    }
-                    else
-                    {
-                    <dd>
-                        <button type="submit" class="btn btn-info"><i class="fa fa-external-link"></i> Export Procedure</button>
-                        <button type="submit" class="btn btn-primary">Approve</button>
-                        <button type="submit" class="btn btn-danger">Reject</button>
-                    </dd>
-                    }
-                    }
-                    </dl>*@
-            }
-            @Html.HiddenFor(model => model.RequestCode)
-            @if (Model.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
-            {
-                <button type="submit" class="btn btn-info"><i class="fa fa-external-link"></i> Export Procedure</button>
-                <button type="submit" class="btn btn-primary">Approve</button>
-                <button type="submit" class="btn btn-danger">Reject</button>
+
+                @Html.HiddenFor(model => model.RequestCode)
+                if (Model.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                {
+                    <button type="submit" class="btn btn-info"><i class="fa fa-external-link"></i> Export Procedure</button>
+                    <button type="submit" class="btn btn-primary">Approve</button>
+                    <button type="submit" class="btn btn-danger">Reject</button>
+                }
             }
         </div><!-- /.box-body -->
     </div><!-- /.box -->
