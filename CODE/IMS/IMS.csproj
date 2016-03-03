@@ -892,6 +892,7 @@
   <ItemGroup>
     <Compile Include="App_Start\AppConfig.cs" />
     <Compile Include="Controllers\RackController.cs" />
+    <Compile Include="Models\BreadcrumbModel.cs" />
     <Compile Include="Models\HomeSidebarViewModel.cs" />
     <Compile Include="Models\RackOfCustomerIndexViewModel.cs" />
     <Compile Include="Models\RequestIndexViewModel.cs" />
@@ -1006,6 +1007,7 @@
     <Content Include="Views\Request\RequestUpgradeServerInfo2.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Rack\Index.cshtml" />
+    <Content Include="Views\Home\Header.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

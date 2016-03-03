@@ -16,7 +16,6 @@ namespace IMS.Controllers
     [AllowAnonymous]
     public class HomeController : CoreController
     {
-        // GET: Home
         [HttpGet]
         public ActionResult Index(RequestType requesttype)
         {
@@ -104,6 +103,12 @@ namespace IMS.Controllers
                 }
             }
             return View(requesttype);
+        }
+
+        [ChildActionOnly]
+        public PartialViewResult Header(object role)
+        {
+            return PartialView(role);
         }
 
         [ChildActionOnly]

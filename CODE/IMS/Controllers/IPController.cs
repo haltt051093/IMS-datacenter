@@ -60,7 +60,7 @@ namespace IMS.Controllers
         public ActionResult Index2(IPIndexViewModel iivm)
         {
             if (ModelState.IsValid)
-            {
+            { 
                 var ips = IPAddressPoolBLO.Current.GenerateIP(iivm.Address, iivm.Netmask);
                 var gateway = IPAddressPoolBLO.Current.GenerateIP(iivm.Address, iivm.Netmask).FirstOrDefault().Gateway;
                 var exist = IPAddressPoolDAO.Current.Query(x => x.Gateway == gateway);
@@ -199,10 +199,11 @@ namespace IMS.Controllers
         //    var ipviewmodel = Mapper.Map<IPAddressPool, IPChangeStatusViewModel>(ip);
         //    return View(ipviewmodel);
         //}
-
-        public ActionResult ChangeIPStatus(int id)
+        [HttpPost]
+        public ActionResult ChangeIPStatus(IPIndexViewModel iivm)
         {
             //int? id = ipid.ToInt();
+            int id = iivm.IPs.FirstOrDefault().Id;
             IPAddressPool ip = new IPAddressPool();
             ip = IPAddressPoolBLO.Current.GetById(id);
             if (ip.StatusCode == Constants.StatusCode.IP_AVAILABLE)
