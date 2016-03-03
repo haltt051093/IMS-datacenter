@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using System.Web.Mvc;
 using IMS.Data.Business;
+using IMS.Data.Models;
 using IMS.Models;
 
 namespace IMS.Controllers
@@ -24,7 +26,7 @@ namespace IMS.Controllers
         }
 
         // GET: Server/Details
-        public ActionResult ServerDetails(string serverCode, string RackSearch)
+        public ActionResult ServerDetails(string serverCode)
         {
             var server = ServerBLO.Current.GetServerByCode(serverCode);
             //var serverattributes = ServerBLO.Current.GetServerAttributes(serverCode);
@@ -42,16 +44,33 @@ namespace IMS.Controllers
 
             var locations = LocationBLO.Current.GetChangeLocation(server);
          
-            var racks = new List<string>();
-            var currentrack = locations.OrderBy(x => x.RackName).Select(x => x.RackName).ToList();
-            racks.AddRange(currentrack.Distinct());
-            ViewBag.RackSearch = new SelectList(racks);
-            if (!String.IsNullOrWhiteSpace(RackSearch))
+            var listrack = locations.OrderBy(x => x.RackName).GroupBy(x=>x.RackName).Select(x=>x.FirstOrDefault());
+            data.Racks = listrack.Select(x => new SelectListItem
             {
-                locations = locations.Where(r => r.RackName.Trim() == RackSearch.Trim()).ToList();
-            }
+                Value = x.RackCode,
+                Text = x.RackName
+            }).ToList();           
+            
             data.Locations1 = locations;
             return View(data);
+        }
+
+        [HttpGet]
+        public ActionResult GetLocationByRackName(ServerDetailsViewModel model)
+        {
+            Server s = new Server();
+            s.ServerCode = model.ServerCode;
+            s.Power = model.Power;
+            s.Customer = model.Customer;
+            var locations = LocationBLO.Current.GetChangeLocation(s);
+            var data = new ServerDetailsViewModel();
+            if (!String.IsNullOrWhiteSpace(model.SelectedRack))
+            {
+                locations = locations.Where(r => r.RackName.Trim() == model.SelectedRack.Trim()).ToList();
+            }
+            data.Locations1 = locations;
+
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }
