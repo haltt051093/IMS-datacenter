@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 using IMS.Data.Models;
 using IMS.Data.ViewModels;
 
@@ -17,6 +18,7 @@ namespace IMS.Models
         public string Request { get; set; }
         public Server Server { get; set; }
         public string LocationCode { get; set; }
+        public List<SelectListItem> Racks { get; set; }
 
         [Required(ErrorMessage = "Please input Rack Name!")]
         [RegularExpression("^[A-Z][1-9]$", ErrorMessage = "Wrong format of Rack Name! Try again!")]

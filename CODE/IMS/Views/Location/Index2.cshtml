@@ -18,26 +18,47 @@
 <section class="content">
     <a class="btn btn-primary pull-left" data-toggle="modal" data-target="#addlocation-modal"><i class="fa fa-plus"></i> Add new rack</a>
 </section>
+<section class="content">
+
+    @using (Html.BeginForm("Index2", "Location", FormMethod.Get))
+    {
+
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <label>Filter by Rack Name: </label>
+                                </div>
+                                <div class="form-group">
+                                    @Html.DropDownListFor(model => model.Racks, Model.Racks, "--Select--", htmlAttributes: new { @class = "form-control", @id = "racksearch" })
+                                </div>
+
+                            </div>
+
+    }
+
+</section>
+
 <!-- Main content -->
 <section class="content">
     <div class="box">
         <div class="box-body table-responsive">
-            <table id="example1" class="table table-bordered table-striped">
+            <table id="example1" class="table table-bordered table-hover" style="border-collapse: collapse">
+                
                 <thead>
-                    <tr>
-                        <th>Rack Name</th>
-                        <th>Rack Unit</th>
-                        <th>Status</th>
-                        <th>Server Code</th>
-                    </tr>
+                <tr style="background-color: #404040">
+                    <th><h4 style="color: ghostwhite">Rack Name</h4>
+                    <th><h4 style="color: ghostwhite">Rack Unit</h4></th>
+                    <th><h4 style="color: ghostwhite">IP Address</h4></th>
+                </tr>
                 </thead>
                 <tbody>
-                    @{
+                @{
 
-                        for (int i = 0; i < Model.Locations.Count; i++)
+                    for (int i = 0; i < Model.Locations.Count; i++)
+                    {
+                        var item = Model.Locations[i];
+                        if (item.StatusName == "Used")
                         {
-                            var item = Model.Locations[i];
-                            <tr>
+                            <tr style="background-color: #ffcccc">
 
                                 <td>
                                     @Html.DisplayFor(modelItem => item.RackName)
@@ -46,29 +67,48 @@
                                     @Html.DisplayFor(modelItem => item.RackUnit)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.StatusName)
-                                </td>
-                                <td>
-                                    @if (item.ServerCode != null)
+                                    @if (item.DefaultIP != null)
                                     {
-                                        @Html.ActionLink(item.ServerCode, "ServerDetails", "Server", new { id = item.Id }, null)
+                                        @Html.ActionLink(item.DefaultIP, "ServerDetails", "Server", new {serverCode = @item.ServerCode}, null)
                                     }
 
                                 </td>
 
                             </tr>
                         }
+                        else
+                        {
+                            <tr style="background-color: #FFFFFF">
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RackName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RackUnit)
+                                </td>
+
+                                <td>
+                                    @if (item.DefaultIP != null)
+                                    {
+                                        @Html.ActionLink(item.DefaultIP, "ServerDetails", "Server", new {serverCode = @item.ServerCode}, null)
+                                    }
+
+                                </td>
+
+                            </tr>
+                        }
+
                     }
+                }
                 </tbody>
                 <tfoot>
-                    <tr>
-                    
-                        <th>Rack Name</th>
-                        <th>Rack Unit</th>
-                        <th>Status</th>
-                        <th>Server Code</th>
 
-                    </tr>
+                <tr style="background-color: #404040">
+                    <th><h4 style="color: ghostwhite">Rack Name</h4></th>
+                    <th><h4 style="color: ghostwhite">Rack Unit</h4></th>
+                    <th><h4 style="color: ghostwhite">IP Address</h4></th>
+                </tr>
+
                 </tfoot>
             </table>
         </div><!-- /.box-body -->
