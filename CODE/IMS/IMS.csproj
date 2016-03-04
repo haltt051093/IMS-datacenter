@@ -896,6 +896,7 @@
     <Compile Include="Models\HomeIndexViewModel.cs" />
     <Compile Include="Models\HomeSidebarViewModel.cs" />
     <Compile Include="Models\RackOfCustomerIndexViewModel.cs" />
+    <Compile Include="Models\RequestBringServerAwayViewModel.cs" />
     <Compile Include="Models\RequestCreateViewModel.cs" />
     <Compile Include="Models\RequestIndexViewModel.cs" />
     <Compile Include="Models\TempServerViewModel.cs" />
@@ -989,8 +990,8 @@
     <Content Include="Views\Request\ProcessRequestWithdrawServer.cshtml" />
     <Content Include="Views\Request\ListNotifications.cshtml" />
     <Content Include="Views\Account\ViewProfile2.cshtml" />
-    <Content Include="Views\Request\RequestBringAwayServer2.cshtml" />
-    <Content Include="Views\Request\RequestBringAwayServerInfo2.cshtml" />
+    <Content Include="Views\Request\RequestBringServerAway.cshtml" />
+    <Content Include="Views\Request\RequestBringServerAwayInfo.cshtml" />
     <Content Include="Views\Request\RequestChangeIP2.cshtml" />
     <Content Include="Views\Request\RequestChangeIPInfo2.cshtml" />
     <Content Include="Views\Request\RequestHistory.cshtml" />

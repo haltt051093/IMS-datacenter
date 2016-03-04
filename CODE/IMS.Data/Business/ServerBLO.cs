@@ -35,6 +35,11 @@ namespace IMS.Data.Business
         {
             return dao.GetAllServer();
         }
+        
+        public List<Server> GetServerOfCustomer(string customer)
+        {
+            return dao.GetServerOfCustomer(customer);
+        }
 
         public List<AttributeExtendedModel> GetServerAttributes(int id)
         {

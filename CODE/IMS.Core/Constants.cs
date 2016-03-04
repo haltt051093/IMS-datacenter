@@ -18,7 +18,7 @@ namespace IMS.Core
             public const string ASSIGN_IP = "RT009";
             public const string CHANGE_IP = "RT008";
             public const string RETURN_IP = "RT010";
-            public const string WITHDRAW_SERVER = "RT007";
+            public const string BRING_SERVER_AWAY = "RT007";
         }
 
         public class StatusCode

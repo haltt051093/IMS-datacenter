@@ -72,7 +72,13 @@ namespace IMS.Controllers
                     return View("RequestAddServer", data);
 
                 }
-                if (requestTypeCode == Constants.RequestTypeCode.RETURN_IP)
+                else if (requestTypeCode == Constants.RequestTypeCode.BRING_SERVER_AWAY)
+                {
+                    var data = new RequestBringServerAwayViewModel();
+                    data.ServerOfCustomer = ServerBLO.Current.GetServerOfCustomer(Constants.Test.CUSTOMER_MANHNH);
+                    return View("RequestBringServerAway", data);
+                }
+                    if (requestTypeCode == Constants.RequestTypeCode.RETURN_IP)
                 {
                     var data = new RequestIPViewModel();
                     var listServers = ServerDAO.Current.Query(x => x.Customer == Constants.Test.CUSTOMER_MANHNH);
@@ -117,32 +123,12 @@ namespace IMS.Controllers
             return View();
         }
 
-        public ActionResult RequestRentRack2()
-        {
-            return View();
-        }
-
-        public ActionResult RequestRentRackInfo2()
-        {
-            return View();
-        }
-
         public ActionResult RequestUpgradeServer2()
         {
             return View();
         }
 
         public ActionResult RequestUpgradeServerInfo2()
-        {
-            return View();
-        }
-
-        public ActionResult RequestBringAwayServer2()
-        {
-            return View();
-        }
-
-        public ActionResult RequestBringAwayServerInfo2()
         {
             return View();
         }
@@ -393,6 +379,13 @@ namespace IMS.Controllers
             notif.RequestCode = result;
             //dang ky ham cho client
             NotifRegister(notif);
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult RequestBringServerAway(RequestBringServerAwayViewModel viewmodel)
+        {
+
             return RedirectToAction("Index", "Home");
         }
 
