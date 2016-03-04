@@ -59,5 +59,23 @@ namespace IMS.Resources {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select request type.
+        /// </summary>
+        public static string SelectRequestType {
+            get {
+                return ResourceManager.GetString("SelectRequestType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome to IMS Data Center.
+        /// </summary>
+        public static string Welcome {
+            get {
+                return ResourceManager.GetString("Welcome", resourceCulture);
+            }
+        }
     }
 }

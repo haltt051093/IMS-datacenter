@@ -1,48 +1,52 @@
-﻿@using System.Collections.Generic
-@using System.Linq
-@using IMS.Data.Repository
-@model IMS.Data.Models.RequestType
+﻿@model HomeIndexViewModel
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = Pages.HomeIndex;
+    ViewBag.PageTitle = Pages.HomeIndex;
     ViewBag.Role = "Shift Head";
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home)
+    };
 }
 
-<h2>Welcome to IMS datacenter</h2>
-<a class="btn btn-primary pull-left" data-toggle="modal"
-   data-target="#displayrequesttype-modal"><i class="fa fa-plus"></i>&nbsp;Create Request</a>
+<div class="main-content">
+    <h2>@Messages.Welcome</h2>
+    <a class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS pull-left"
+       data-toggle="modal" data-target="#displayrequesttype-modal">
+        <i class="fa fa-plus"></i> @Labels.CreateRequest
+    </a>
+</div>
+
 
 <!-- ADD LOCATION MODAL -->
-<div class="modal fade" id="displayrequesttype-modal" tabindex="-1" role="dialog" aria-hidden="true">
+<div id="displayrequesttype-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" style="width: 600px">
         <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title"><i class="fa fa-plus"></i> Select request type</h4>
-            </div>
-            <div class="modal-content">
-                @using (Html.BeginForm("Index", "Home", FormMethod.Get))
-                {
-                    <div class="modal-body">
-                        <p>
+            @using (Html.BeginForm("CreateRequest", "Request", FormMethod.Get))
+            {
+                <div class="modal-header">
+                    <h4 class="modal-title"><i class="fa fa-plus"></i> @Messages.SelectRequestType</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Type):
+                            @Html.DropDownListFor(model => model.Type, Model.RequestTypes, new {@class = "form-control"})
+                        </div>
 
-                            <div class="form-group">
-                                <label>Search By:</label>
-                                @{
-                                    var requesttypes = RequestTypeDAO.Current.GetAll().ToList();
-                                    var myList = new SelectList(requesttypes, "RequestTypeCode", "RequestTypeName");
-                                    @Html.DropDownListFor(model => model.RequestTypeCode, myList, new { @class = "form-control" })
-
-                                }
-                            </div>
-
-                        </p>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="submit" value="Select request" class="btn btn-default" />
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                                    }
-            </div>
-        </div><!-- /.modal-content -->
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
+                            data-dismiss="modal">
+                        @Labels.Cancel
+                    </button>
+                    <button type="submit" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        @Labels.CreateRequest
+                    </button>
+                </div>
+            }
+        </div>
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- page script -->

@@ -20,6 +20,92 @@ namespace IMS.Controllers
 {
     public class RequestController : CoreController
     {
+        private static IHubContext commandHubContext;
+
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        #region Create Request
+        public ActionResult CreateRequest(RequestCreateViewModel q)
+        {
+            var requestTypeCode = q.Type;
+            if (!string.IsNullOrEmpty(requestTypeCode))
+            {
+                if (requestTypeCode == Constants.RequestTypeCode.RETURN_RACK)
+                {
+                    var data = new RequestReturnRackViewModel();
+                    var racksOfCustomer = RackOfCustomerBLO.Current.EmptyRentedRack(Constants.Test.CUSTOMER_MANHNH);
+                    data.RackOfCustomer = racksOfCustomer
+                        .Select(x => new SelectListItem { Value = x.RackCode, Text = x.RackName })
+                        .ToList();
+                    return View("RequestReturnRack", data);
+                }
+                else if (requestTypeCode == Constants.RequestTypeCode.RENT_RACK)
+                {
+                    return View("RequestRentRack");
+                }
+                else if (requestTypeCode == Constants.RequestTypeCode.ADD_SERVER)
+                {
+                    var data = new RequestAddServerViewModel();
+                    data.Servers = new List<ServerExtendedModel>();
+                    if (Session[Constants.Session.REQUEST_CODE] == null)
+                    {
+                        var requestCode = RequestBLO.Current.GenerateCode();
+                        Session[Constants.Session.REQUEST_CODE] = requestCode;
+                    }
+                    var rCode = Session[Constants.Session.REQUEST_CODE].ToString();
+                    var serverInfos = TempRequestBLO.Current.GetByRequestCode(rCode);
+                    foreach (var serverInfo in serverInfos)
+                    {
+                        var server = JsonConvert.DeserializeObject<ServerExtendedModel>(serverInfo.Data);
+                        server.TempCode = serverInfo.TempCode;
+                        data.Servers.Add(server);
+                    }
+                    var attrList = AttributeBLO.Current.GetAll();
+                    data.AttributeList = attrList
+                        .Select(x => new SelectListItem { Value = x.AttributeCode, Text = x.AttributeName })
+                        .ToList();
+
+                    return View("RequestAddServer", data);
+
+                }
+                if (requestTypeCode == Constants.RequestTypeCode.RETURN_IP)
+                {
+                    var data = new RequestIPViewModel();
+                    var listServers = ServerDAO.Current.Query(x => x.Customer == Constants.Test.CUSTOMER_MANHNH);
+                    data.Servers = listServers
+                        .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.Model })
+                        .ToList();
+                    return View("RequestReturnIP", data);
+                }
+                if (requestTypeCode == Constants.RequestTypeCode.CHANGE_IP)
+                {
+                    //co the change duoc nhieu IP--> bo sung t
+                    var data = new RequestIPViewModel();
+                    var listServers = ServerDAO.Current.Query(x => x.Customer == Constants.Test.CUSTOMER_MANHNH);
+                    data.Servers = listServers
+                        .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.Model })
+                        .ToList();
+                    return View("RequestChangeIP", data);
+                }
+                if (requestTypeCode == Constants.RequestTypeCode.ASSIGN_IP)
+                {
+                    var data = new RequestIPViewModel();
+
+                    var listServers = ServerDAO.Current.Query(x => x.Customer == Constants.Test.CUSTOMER_MANHNH);
+                    data.Servers = listServers
+                        .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.Model })
+                        .ToList();
+                    return View("RequestAssignIP", data);
+                }
+            }
+            return View();
+        }
+        #endregion
+
+        #region New View
         public ActionResult RequestChangeIP2()
         {
             return View();
@@ -99,9 +185,9 @@ namespace IMS.Controllers
             RequestBLO.Current.AddOrUpdate(request);
             return RedirectToAction("RequestHistory", "Request");
         }
+        #endregion
 
-        private static IHubContext commandHubContext;
-
+        #region Process Request
         [HttpPost]
         public ActionResult RequestReturnRack(RequestReturnRackViewModel viewmodel)
         {
@@ -112,10 +198,14 @@ namespace IMS.Controllers
                 if (selected.Count > 0)
                 {
                     //Add request
+<<<<<<< HEAD
                     string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.RETURN_RACK,
                         viewmodel.Customer, viewmodel.Description, null);
                     //Add Log Request, ko lien quan den servercode
                     LogChangedContent logRequest = new LogChangedContent
+=======
+                    var passRequest = new Request
+>>>>>>> a17a0cdcd41c91ff5aa690472149fe571d8068a5
                     {
                         RequestCode = result,
                         TypeOfLog = Constants.TypeOfLog.LOG_RETURN_RACK,
@@ -1052,5 +1142,6 @@ namespace IMS.Controllers
             LogChangedContentBLO.Current.AddLog(logRequest);
             return RedirectToAction("Index", "Home");
         }
+        #endregion
     }
 }

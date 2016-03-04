@@ -59,5 +59,68 @@ namespace IMS.Resources {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IMS.
+        /// </summary>
+        public static string Home {
+            get {
+                return ResourceManager.GetString("Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        public static string HomeIndex {
+            get {
+                return ResourceManager.GetString("HomeIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Locations.
+        /// </summary>
+        public static string Location {
+            get {
+                return ResourceManager.GetString("Location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of Locations.
+        /// </summary>
+        public static string LocationIndex {
+            get {
+                return ResourceManager.GetString("LocationIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Servers.
+        /// </summary>
+        public static string Server {
+            get {
+                return ResourceManager.GetString("Server", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server Detail.
+        /// </summary>
+        public static string ServerDetail {
+            get {
+                return ResourceManager.GetString("ServerDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of Server.
+        /// </summary>
+        public static string ServerIndex {
+            get {
+                return ResourceManager.GetString("ServerIndex", resourceCulture);
+            }
+        }
     }
 }

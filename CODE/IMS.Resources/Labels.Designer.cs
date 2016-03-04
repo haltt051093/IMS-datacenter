@@ -59,5 +59,185 @@ namespace IMS.Resources {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Request.
+        /// </summary>
+        public static string CreateRequest {
+            get {
+                return ResourceManager.GetString("CreateRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current IP.
+        /// </summary>
+        public static string CurrentIP {
+            get {
+                return ResourceManager.GetString("CurrentIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Request.
+        /// </summary>
+        public static string CurrentRequest {
+            get {
+                return ResourceManager.GetString("CurrentRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer.
+        /// </summary>
+        public static string Customer {
+            get {
+                return ResourceManager.GetString("Customer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default IP.
+        /// </summary>
+        public static string DefaultIP {
+            get {
+                return ResourceManager.GetString("DefaultIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location.
+        /// </summary>
+        public static string Location {
+            get {
+                return ResourceManager.GetString("Location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maker.
+        /// </summary>
+        public static string Maker {
+            get {
+                return ResourceManager.GetString("Maker", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Model.
+        /// </summary>
+        public static string Model {
+            get {
+                return ResourceManager.GetString("Model", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of Outlets.
+        /// </summary>
+        public static string NoOfOutlets {
+            get {
+                return ResourceManager.GetString("NoOfOutlets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other Attributes.
+        /// </summary>
+        public static string OtherAttributes {
+            get {
+                return ResourceManager.GetString("OtherAttributes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Power.
+        /// </summary>
+        public static string Power {
+            get {
+                return ResourceManager.GetString("Power", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rack.
+        /// </summary>
+        public static string Rack {
+            get {
+                return ResourceManager.GetString("Rack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rack Name.
+        /// </summary>
+        public static string RackName {
+            get {
+                return ResourceManager.GetString("RackName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rack Unit.
+        /// </summary>
+        public static string RackUnit {
+            get {
+                return ResourceManager.GetString("RackUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registered Date.
+        /// </summary>
+        public static string RegisteredDate {
+            get {
+                return ResourceManager.GetString("RegisteredDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search By.
+        /// </summary>
+        public static string SearchBy {
+            get {
+                return ResourceManager.GetString("SearchBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server Code.
+        /// </summary>
+        public static string ServerCode {
+            get {
+                return ResourceManager.GetString("ServerCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Size.
+        /// </summary>
+        public static string Size {
+            get {
+                return ResourceManager.GetString("Size", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string Status {
+            get {
+                return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
     }
 }

@@ -7,6 +7,8 @@ namespace IMS.Models
 {
     public class RequestCreateViewModel
     {
+        public string Type { get; set; }
+
         public int Id { get; set; }
 
         public string RequestCode { get; set; }
