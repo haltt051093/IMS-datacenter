@@ -273,15 +273,22 @@ namespace IMS.Core
             public const int NUMBER_10 = 10;
         }
 
-        public class HtmlClass
+        public class HtmlFormat
         {
-            public const string DEFAULT_BUTTON = "btn btn-default";
-            public const string PRIMARY_BUTTON = "btn btn-primary";
-            public const string SECONDARY_BUTTON = "btn btn-info";
-            public const string DANGER_BUTTON = "btn btn-danger";
+            public const string DEFAULT_BUTTON_CLASS = "btn btn-default";
+            public const string PRIMARY_BUTTON_CLASS = "btn btn-primary";
+            public const string SECONDARY_BUTTON_CLASS = "btn btn-info";
+            public const string DANGER_BUTTON_CLASS = "btn btn-danger";
 
-            public const string FORM_LABEL = "";
-            public const string FORM_CONTROL = "";
+            public const string FORM_LABEL_CLASS = "";
+            public const string FORM_CONTROL_CLASS = "";
+        }
+
+        public class FormAction
+        {
+            public const string ACTION_NAME = "Action";
+            public const string OK_ACTION = "OK";
+            public const string CANCEL_ACTION = "Cancel";
         }
 
         public class ServerAttributeCode

@@ -6,6 +6,7 @@ using System.Net.Mime;
 using System.Web.Mvc;
 using IMS.Data.Business;
 using IMS.Data.Models;
+using IMS.Data.ViewModels;
 using IMS.Models;
 
 namespace IMS.Controllers
@@ -23,6 +24,7 @@ namespace IMS.Controllers
                 item.Requests = requestOfServer;
             }
             data.Servers = servers;
+            data.Server = new ServerExtendedModel();
             return View(data);
         }
 

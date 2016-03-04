@@ -1,157 +1,105 @@
 ﻿@model ServerDetailsViewModel
 @{
-    ViewBag.Title = "ServerDetails2";
+    ViewBag.Title = Pages.ServerDetail;
+    ViewBag.PageTitle = Pages.ServerDetail;
     ViewBag.Role = "Shift Head";
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("Server", "Index", Pages.Server),
+        new BreadcrumbModel("Server", "ServerDetails", Pages.ServerDetail)
+    };
 }
 
-<section class="content-header">
-    <h1>
-        Server Details
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="@Url.Action("Index2", "Schedule")"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="@Url.Action("Index", "Server")"><i class="fa fa-dashboard"></i> Server</a></li>
-        <li class="active">ServerDetails</li>
-    </ol>
+<section class="main-content">
+    <dl class="dl-horizontal">
+        <dt>@Labels.ServerCode</dt>
+        <dd>
+            @Html.HiddenFor(model => model.Server.Customer, htmlAttributes: new {@id = "customer"})
+            @Html.HiddenFor(model => model.Server.ServerCode, htmlAttributes: new {@id = "servercode"})
+            @Html.HiddenFor(model => model.Server.Power, htmlAttributes: new {@id = "power"})
+            @Html.DisplayFor(model => model.Server.ServerCode)
+        </dd>
+
+        <dt>@Labels.Customer</dt>
+        <dd>@Html.DisplayFor(model => model.Server.CustomerName)</dd>
+
+        <dt>@Labels.Maker</dt>
+        <dd>@Html.DisplayFor(model => model.Server.Maker)</dd>
+
+        <dt>@Labels.Model</dt>
+        <dd>@Html.DisplayFor(model => model.Server.Model)</dd>
+
+        <dt>@Labels.Power</dt>
+        <dd>@Html.DisplayFor(model => model.Server.Power)W</dd>
+
+        <dt>@Labels.Rack</dt>
+        <dd>@Html.DisplayFor(model => model.Server.Size)U</dd>
+
+        <dt>@Labels.Status</dt>
+
+        <dd>@Html.DisplayFor(model => model.Server.Status)</dd>
+
+        <dt>@Labels.Location</dt>
+
+        <dd>
+            @foreach (var item in Model.Locations)
+            {
+                <div>
+                    @item.RackName U @item.RackUnit
+                </div>
+            }
+            <label><a href="#" data-toggle="modal" data-target="#changelocation-modal">Change Location?</a></label>
+        </dd>
+
+        <dt>@Labels.RegisteredDate</dt>
+        <dd>@Html.DisplayFor(model => model.Server.RegisteredDate)</dd>
+
+        <dt>@Labels.NoOfOutlets</dt>
+        <dd>@Html.DisplayFor(model => model.Server.Outlet)</dd>
+
+        <dt>@Labels.OtherAttributes</dt>
+        <dd>
+            @*@if (Model.Attributes.Count == 0)
+            {
+                @Html.Raw("No other attributes")
+            }
+            else
+            {
+                <ul class="list-group" id="currentIps">
+                    @foreach (var item in Model.Attributes)
+                    {
+                        <li class="list-group-item">
+                            @item.AttributeName
+                            :
+                            @item.AttributeValue
+                        </li>
+                    }
+                </ul>
+            }*@
+        </dd>
+
+        <dt>@Labels.CurrentIP</dt>
+        <dd>
+            @if (Model.CurrentIPs.Count == 0)
+            {
+                @Html.Raw("No IP")
+            }
+            else
+            {
+                <ul class="list-group">
+                    @foreach (var item in Model.CurrentIPs)
+                    {
+                        <li class="list-group-item">
+                            @item.CurrentIP
+                        </li>
+                    }
+                </ul>
+            }
+        </dd>
+    </dl>
 </section>
-<section class="content">
-    <div class="box">
-        <div class="box-body table-responsive">
-            <dl class="dl-horizontal">
-                <dt>
-                    Server Code
-                </dt>
-                <dd>
-                    @Html.HiddenFor(model => model.Server.Customer, htmlAttributes: new {@id = "customer"})
-                    @Html.HiddenFor(model => model.Server.ServerCode, htmlAttributes: new { @id = "servercode" })
-                    @Html.HiddenFor(model => model.Server.Power, htmlAttributes: new {@id = "power"})
-                    @Html.HiddenFor(model => model.Server.Size)
-                    @Html.DisplayFor(model => model.Server.ServerCode)
-                </dd>
 
-                <dt>
-                    Customer
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Server.CustomerName)
-                </dd>
-
-                <dt>
-                    Maker
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Server.Maker)
-                </dd>
-
-                <dt>
-                    Model
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Server.Model)
-                </dd>
-
-                <dt>
-                    Power
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Server.Power)W
-                </dd>
-
-                <dt>
-                    Rack
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Server.Size)U
-                </dd>
-
-                <dt>
-                    Status
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Server.Status)
-                </dd>
-
-                <dt>
-                    Location
-                </dt>
-
-                <dd>
-                    @foreach (var item in Model.Locations)
-                    {
-                        <div>
-                            @item.RackName U @item.RackUnit
-                        </div>
-                    }
-                    <label>-----</label>
-                    <label><a href="#" data-toggle="modal" data-target="#changelocation-modal">Change Location?</a></label>
-                </dd>
-                <dt>
-                    Registered Date
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Server.RegisteredDate)
-                </dd>
-
-                <dt>
-                    Outlet
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Server.Outlet)
-                </dd>
-                <dt>
-                    Other Attributes
-                </dt>
-                <dd>
-                    @*@if (Model.Attributes.Count == 0)
-                    {
-                        @Html.Raw("No other attributes")
-                    }
-                    else
-                    {
-                        <ul class="list-group" id="currentIps">
-                            @foreach (var item in Model.Attributes)
-                            {
-                                <li class="list-group-item">
-                                    @item.AttributeName
-                                    :
-                                    @item.AttributeValue
-                                </li>
-                            }
-                        </ul>
-                    }*@
-                </dd>
-                <dt>
-                    Current IP Address
-                </dt>
-                <dd>
-                    @if (Model.CurrentIPs.Count == 0)
-                    {
-                        @Html.Raw("No IP")
-                    }
-                    else
-                    {
-                        <ul class="list-group">
-                            @foreach (var item in Model.CurrentIPs)
-                            {
-                                <li class="list-group-item">
-                                    @item.CurrentIP
-                                </li>
-                            }
-                        </ul>
-                    }
-                </dd>
-            </dl>
-        </div><!-- /.box-body -->
-    </div><!-- /.box -->
-</section>
 <!-- CHANGE LOCATION MODAL -->
 <div class="modal fade" id="changelocation-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" style="width: 1000px">
@@ -264,15 +212,22 @@
                                             <tfoot>
                                                 <tr>
 
-                                                    <th>RackName</th>
-                                                    <th>RackUnit</th>
-                                                    <th>Status</th>
-                                                    <th>ServerCode</th>
-                                                    <th></th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                               
+                                                    </tr>
+                                                }
+                                            </div>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+
+                                                <th>RackName</th>
+                                                <th>RackUnit</th>
+                                                <th>Status</th>
+                                                <th>ServerCode</th>
+                                                <th></th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+
                                 </div><!-- /.box-body -->
                             </div><!-- /.box -->
 

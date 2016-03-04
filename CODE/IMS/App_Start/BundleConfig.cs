@@ -70,6 +70,9 @@ namespace IMS
                 "~/Content/font-awesome.css",
                 "~/Content/ionicons.css"
             ));
+            builder.Add(new StyleBundle(Constants.StyleBundle.APPLICATION).Include(
+                "~/Content/Site.css"
+            ));
         }
     }
 }

@@ -9,6 +9,9 @@ namespace IMS.Models
         {
             Servers = new List<ServerExtendedModel>();
         }
+
+        public ServerExtendedModel Server { get; set; }
+
         public List<ServerExtendedModel> Servers { get; set; } 
     }
 }

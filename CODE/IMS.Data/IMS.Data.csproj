@@ -146,6 +146,10 @@
       <Project>{0128e2b7-087b-43bb-a2cc-82457b18cdfd}</Project>
       <Name>IMS.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\IMS.Resources\IMS.Resources.csproj">
+      <Project>{0f9de93b-a0f7-49a0-8162-1a8bb2776fca}</Project>
+      <Name>IMS.Resources</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Queries\" />

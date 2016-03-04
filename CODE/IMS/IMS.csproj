@@ -893,6 +893,7 @@
     <Compile Include="App_Start\AppConfig.cs" />
     <Compile Include="Controllers\RackController.cs" />
     <Compile Include="Models\BreadcrumbModel.cs" />
+    <Compile Include="Models\HomeIndexViewModel.cs" />
     <Compile Include="Models\HomeSidebarViewModel.cs" />
     <Compile Include="Models\RackOfCustomerIndexViewModel.cs" />
     <Compile Include="Models\RequestCreateViewModel.cs" />
@@ -1007,8 +1008,9 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Rack\Index.cshtml" />
     <Content Include="Views\Home\Header.cshtml" />
-    <Content Include="Views\Request\EditRequestHistory.cshtml" />
-    <None Include="Web.Debug.config">
+    <Content Include="Views\Request\Index.cshtml" />
+    <Content Include="Views\Request\CreateRequest.cshtml" />
+    <Content Include="Views\Request\EditRequestHistory.cshtml" />    <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
@@ -1027,6 +1029,10 @@
     <ProjectReference Include="..\IMS.Data\IMS.Data.csproj">
       <Project>{e9439358-ea28-4874-8b27-72987a3b1761}</Project>
       <Name>IMS.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IMS.Resources\IMS.Resources.csproj">
+      <Project>{0f9de93b-a0f7-49a0-8162-1a8bb2776fca}</Project>
+      <Name>IMS.Resources</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
