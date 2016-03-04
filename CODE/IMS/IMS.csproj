@@ -987,7 +987,6 @@
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Home\Sidebar.cshtml" />
     <Content Include="Views\Request\RequestWithdrawServer.cshtml" />
-    <Content Include="Views\Request\ProcessRequestWithdrawServer.cshtml" />
     <Content Include="Views\Request\ListNotifications.cshtml" />
     <Content Include="Views\Account\ViewProfile2.cshtml" />
     <Content Include="Views\Request\RequestBringServerAway.cshtml" />

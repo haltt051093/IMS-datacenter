@@ -74,7 +74,6 @@ namespace IMS.Data.Repository
             return RawQuery<RackOfCustomerExtendedModel>(query, new object[] { });
         }
 
-
         public List<LocationExtendedModel> GetRackOfCustomer(Server server)
         {
             string query = @"select roc.RackCode from RackOfCustomer roc where roc.Customer = '" + server.Customer + @"'";
@@ -89,13 +88,13 @@ namespace IMS.Data.Repository
             return RawQuery<RackOfCustomerExtendedModel>(query, new object[] { });
         }
 
-        public List<RackOfCustomerExtendedModel> GetReturningRacks(string customer)
+        public List<RackOfCustomerExtendedModel> GetRacksOfCustomer(string customer, string status)
         {
             var query = from rc in Table()
                 join r in RackDAO.Current.Table()
                     on rc.RackCode equals r.RackCode into rrc
                 from subr in rrc.DefaultIfEmpty()
-                where rc.Customer == customer && rc.StatusCode == Constants.StatusCode.RACKOFCUSTOMER_RETURNING
+                where rc.Customer == customer && rc.StatusCode == status
                 select new RackOfCustomerExtendedModel()
                 {
                     RackName = subr.RackName,
@@ -105,11 +104,11 @@ namespace IMS.Data.Repository
             return query.ToList();
         }
 
-        public void UpdateStatusRackOfCustomer(string rackCode, string customer, string PreStatus, string updateStatus)
+        public void UpdateStatusRackOfCustomer(string rackCode, string customer, string preStatus, string updateStatus)
         {
             var rackOfCustomer = Current.Query(x =>
                        x.RackCode == rackCode && x.Customer == customer &&
-                       x.StatusCode == PreStatus).FirstOrDefault();
+                       x.StatusCode == preStatus).FirstOrDefault();
             if (rackOfCustomer != null)
             {
                 rackOfCustomer.StatusCode = updateStatus;

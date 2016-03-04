@@ -1,6 +1,6 @@
 ﻿@model RequestBringServerAwayViewModel
 @{
-    ViewBag.Title = "RequestBringAwayServer2";
+    ViewBag.Title = "RequestBringAwayServer";
     ViewBag.Role = "Customer";
 }
 
@@ -16,29 +16,31 @@
 <section class="content">
     <div class="box">
         <div class="box-body table-responsive">
-
             <div class="form-horizontal">
                 @using (Html.BeginForm("RequestAssignIp", "Request", FormMethod.Post))
                 {
                     <div class="form-group">
                         <label class="col-sm-4 control-label">The number of your server in data center</label>
                         <div class="col-sm-1">
-
+                            @Html.DisplayFor(modelItem => modelItem.ServerNumber)
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Select by rented rack</label>
-                        <div class="col-sm-1">
-
+                    if (Model.RackOfCustomer.Count > 0)
+                    {
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Select by rented rack</label>
+                            <div class="col-sm-2">
+                                @Html.DropDownListFor(m => m.SelectedRack, Model.RackOfCustomer, "Select all", new { @id = "rackcode", @class="form-group" })
+                            </div>
                         </div>
-                    </div>
+                    }
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Which server do you want to bring away?</label>
                         <div class="col-sm-1">
-                            <div>
-                                <table id="masterTable" class="table">
+                            <div id="divPartialView">
+                                <table id="masterTable" class="table" style="width:600px">
                                     <thead>
-                                        <tr>
+                                        <tr class="check">
                                             <th>
                                                 <input type="checkbox" id="checkAll" />Check all
                                             </th>
@@ -51,33 +53,65 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach (var item in Model.ServerOfCustomer)
+                                        {
+                                            <tr class="check">
+                                                <td>
+                                                    <input type="checkbox" id="@item.ServerCode" />
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.ServerCode)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.DefaultIP)
+                                                </td>
+                                            </tr>
+                                        }
                                     </tbody>
                                 </table>
                             </div>
-                            <div>
-                                <table id="detailTable" class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                <input type="checkbox" id="checkAll" />check all
-                                            </th>
-                                            <th>
-                                                @Html.Raw("Select IPs")
-                                            </th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
-                            </div>
-                            <input type="checkbox" name="192.168.1.1" /><text>S232432</text>
-
+                            @if (Model.SelectedServers != null)
+                            {
+                                <div id="divPartialView2">
+                                    <table id="detailTable" class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <input type="checkbox" id="checkAll2" />Check all
+                                                </th>
+                                                <th>
+                                                    ServerCode
+                                                </th>
+                                                <th>
+                                                    Default IP
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.SelectedServers)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <input type="checkbox" id="@item.ServerCode" />
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.ServerCode)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.DefaultIP)
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            }
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Description</label>
                         <div class="col-sm-2">
-                            @Html.TextAreaFor(model => model.Description, new { @class = "form-control", style = "width: 500px; height: 100px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" ,placeholder = "Some description here", rows = "6" })
+                            @Html.TextAreaFor(model => model.Description, new { @class = "form-control", style = "width: 600px; height: 100px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;", placeholder = "Some description here", rows = "6" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -90,3 +124,29 @@
         </div><!-- /.box-body -->
     </div><!-- /.box -->
 </section>
+<script type="text/javascript">
+    $(function () {
+        $("#checkAll").click(function () {
+            alert("choi oiiiii");
+            //$('#masterTable').find('input[type="checkbox"]').prop('checked', this.checked);
+            //var table = $(e.target).closest('table');
+            //$('td input:checkbox', table).prop('checked', this.checked);
+            //$("input:checkbox").prop('checked', $(this).prop("checked"));
+        });
+
+        $('#masterTable tr').click(function (event) {
+            if (event.target.type !== 'checkbox') {
+                $(':checkbox', this).trigger('click');
+            }
+        });
+        $("input[type='checkbox']").change(function (e) {
+            if ($(this).is(":checked")) { //If the checkbox is checked
+                $(this).closest('tr').addClass("highlight_row");
+                //Add class on checkbox checked
+            } else {
+                $(this).closest('tr').removeClass("highlight_row");
+                //Remove class on checkbox uncheck
+            }
+        });
+    });
+</script>

@@ -8,7 +8,9 @@ namespace IMS.Models
     public class RequestBringServerAwayViewModel
     {
         public List<Server> ServerOfCustomer { get; set; }
+        public List<Server> SelectedServers { get; set; } 
         public List<SelectListItem> RackOfCustomer { get; set; } 
+        public string SelectedRack { get; set; }
 
         public int ServerNumber { get; set; }
 

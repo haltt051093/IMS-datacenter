@@ -80,10 +80,9 @@ namespace IMS.Data.Repository
             //return RawQuery<ServerExtendedModel>(query, new object[] { });
         }
 
-
         public List<Server> GetServerOfCustomer(string customer)
         {
-            var query = Query(x => x.Customer == customer);
+            var query = Query(x => x.Customer == customer && x.StatusCode == Constants.StatusCode.SERVER_RUNNING);
             return query.ToList();
         }
 

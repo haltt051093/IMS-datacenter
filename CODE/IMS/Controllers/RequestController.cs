@@ -75,7 +75,21 @@ namespace IMS.Controllers
                 else if (requestTypeCode == Constants.RequestTypeCode.BRING_SERVER_AWAY)
                 {
                     var data = new RequestBringServerAwayViewModel();
+                    //lay server cua customer
                     data.ServerOfCustomer = ServerBLO.Current.GetServerOfCustomer(Constants.Test.CUSTOMER_MANHNH);
+                    //Muon hien thi number of server trong rack tuy theo viec lua chon dropdownlist
+                    data.ServerNumber = data.ServerOfCustomer.Count();
+                    //rack cua server, select all va list cua rack, neu ko co thi ko hien
+                    var rackOfCustomer = RackOfCustomerBLO.Current.GetRacksOfCustomer(Constants.Test.CUSTOMER_MANHNH,
+                        Constants.StatusCode.RACKOFCUSTOMER_CURRENT);
+                    
+                    if (rackOfCustomer.Count > 0)
+                    {
+                        data.RackOfCustomer = rackOfCustomer
+                        .Select(x => new SelectListItem { Value = x.RackCode, Text = x.RackName})
+                        .ToList();
+                    }
+
                     return View("RequestBringServerAway", data);
                 }
                     if (requestTypeCode == Constants.RequestTypeCode.RETURN_IP)
@@ -788,7 +802,7 @@ namespace IMS.Controllers
                     }
                 }
                 //Chuyen IsViewed = true
-                return View("ProcessRequestRentRack", viewmodel);
+                return View("RequestRentRackInfo", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.RETURN_RACK))
             {
@@ -796,7 +810,7 @@ namespace IMS.Controllers
                 //get request
                 var request = RequestBLO.Current.GetRequestByRequestCode(rCode);
                 //lay rack dang o trang thai returning cua khach hang cu the
-                var rackOfCustomer = RackOfCustomerBLO.Current.GetReturningRacks(request.Customer);
+                var rackOfCustomer = RackOfCustomerBLO.Current.GetRacksOfCustomer(request.Customer, Constants.StatusCode.RACKOFCUSTOMER_RETURNING);
                 viewmodel = Mapper.Map<Request, RequestReturnRackViewModel>(request);
                 viewmodel.RackOfCustomer = rackOfCustomer.Select(x => new SelectListItem
                 {

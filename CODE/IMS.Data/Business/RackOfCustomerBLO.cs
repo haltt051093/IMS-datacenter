@@ -35,9 +35,9 @@ namespace IMS.Data.Business
             return dao.EmptyRentedRack(customer);
         }
 
-        public List<RackOfCustomerExtendedModel> GetReturningRacks(string customer)
+        public List<RackOfCustomerExtendedModel> GetRacksOfCustomer(string customer, string status)
         {
-            return dao.GetReturningRacks(customer);
+            return dao.GetRacksOfCustomer(customer,status);
         }
 
         public void UpdateStatusRackOfCustomer(string rackCode, string customer, string preStatus, string updateStatus)
