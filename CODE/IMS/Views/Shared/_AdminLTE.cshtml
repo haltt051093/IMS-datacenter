@@ -29,7 +29,7 @@
 <body class="skin-blue">
 <!-- header logo: style can be found in header.less -->
 <header class="header">
-    @{ Html.RenderAction("Header", "Home", new { role = ViewBag.Role }); }
+    @*@{ Html.RenderAction("Header", "Home", new { role = ViewBag.Role }); }*@
     <a href="@Url.Action("Index2", "Schedule")" class="logo">
         <!-- Add the class icon to your logo image or logo icon to add the margining -->
         <img src="@Url.Content("~/img/logoIMS.png")" alt="logo image" class="offline" width="75px"/>
@@ -47,7 +47,7 @@
             <ul class="nav navbar-nav">
                 <!-- Messages: style can be found in dropdown.less-->
 
-                @if (ViewBag.Role == "Shift Head")
+                @*@if (ViewBag.Role == "Shift Head")
                 {
                     <li class="dropdown notifications-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -186,7 +186,7 @@
                             <li class="footer"><a href="#">View all</a></li>
                         </ul>
                     </li>
-                }
+                }*@
                 @{
                     var name = "Thu Ha";
                     var role = "Head Stiff";
@@ -199,8 +199,6 @@
                          role = obj.Role;
                          ID = obj.Id;
                     }
-
-
                 }
                 @if (@session != null)
                 {

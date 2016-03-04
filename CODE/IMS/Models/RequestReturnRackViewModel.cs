@@ -10,6 +10,7 @@ namespace IMS.Models
     {
         public List<SelectListItem> RackOfCustomer { get; set; }
         public List<RackOfCustomerExtendedModel> AllRacks { get; set; } 
+        public List<string> SelectedRacks { get; set; } 
         public string RequestCode { get; set; }
         public string RequestType { get; set; }
         public string Customer { get; set; }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Web.Mvc;
 using AutoMapper;
@@ -125,22 +126,7 @@ namespace IMS.Controllers
             return View();
         }
 
-        public ActionResult RequestReturnRack2()
-        {
-            return View();
-        }
-
         public ActionResult RequestReturnRackInfo2()
-        {
-            return View();
-        }
-
-        public ActionResult RequestReturnIP2()
-        {
-            return View();
-        }
-
-        public ActionResult RequestReturnIPInfo2()
         {
             return View();
         }

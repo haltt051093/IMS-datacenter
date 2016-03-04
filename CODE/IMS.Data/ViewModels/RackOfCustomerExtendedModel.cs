@@ -16,6 +16,6 @@ namespace IMS.Data.ViewModels
         public int? RackUnit { get; set; }
         public string ServerCode { get; set; }
         public string StatusName { get; set; }
-        public string ServerNum { get; set; }
+        public int ServerNum { get; set; }
     }
 }
