@@ -71,6 +71,7 @@ namespace IMS.Data.Business
             var result = new List<IPAddressPool>();
             var subnetMask = GenerateSubnetMask(bitCount);
             var gateway = string.Empty;
+            var networkIP = string.Empty;
             var loopCount = 0;
             var startIndex = 0;
 
@@ -91,16 +92,30 @@ namespace IMS.Data.Business
             {
                 if (heads.Contains(i))
                 {
-                    // first IP - skip
-               
-                        loopCount++;
-                    
+                    // first IP 
+                    loopCount++;
+                    if (loopCount < 2)
+                    {
+                        ipTemplate.Fourth = i;
+                        networkIP = ipTemplate.ToString();
+                    }
+
                 }
                 else if (heads.Contains(i - 1))
                 {
                     // gateway
+                    loopCount++;
                     ipTemplate.Fourth = i;
                     gateway = ipTemplate.ToString();
+                }
+
+            }
+            int count = 0;
+            for (int i = startIndex; i < 256 && count < 2; i++)
+            {
+                if (heads.Contains(i))
+                {
+                    count++;
                 }
                 else
                 {
@@ -108,13 +123,27 @@ namespace IMS.Data.Business
                     var ip = new IPAddressPool
                     {
                         IPAddress = ipTemplate.ToString(),
+                        NetworkIP = networkIP,
                         Gateway = gateway,
                         Subnetmask = subnetMask
                     };
                     result.Add(ip);
                 }
+                if (heads.Contains(i)&& count<2)
+                {
+                    ipTemplate.Fourth = i;
+                    var ip = new IPAddressPool
+                    {
+                        IPAddress = ipTemplate.ToString(),
+                        NetworkIP = networkIP,
+                        Gateway = gateway,
+                        Subnetmask = subnetMask
+                    };
+                    result.Add(ip);
+                }
+                    
+             }
           
-        }
             return result;
         }
         private IPAddressPoolBLO()
@@ -132,8 +161,9 @@ namespace IMS.Data.Business
                 item.IPAddress = entry[i].IPAddress;
                 item.Gateway = entry[i].Gateway;
                 item.RegisteredDate = DateTime.Now;
-                item.StatusCode = Constants.StatusCode.IP_AVAILABLE;
+                item.StatusCode = entry[i].StatusCode;
                 item.Subnetmask = entry[i].Subnetmask;
+                item.NetworkIP = entry[i].NetworkIP;
                 ip.Add(item);
             }
             IPAddressPoolBLO.Current.AddMany(ip);
