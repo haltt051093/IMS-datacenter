@@ -46,15 +46,15 @@ namespace IMS.Data.Repository
 
         public List<RackOfCustomerExtendedModel> CountServerPerRack(string customer)
         {
-            var query = @"select r.RackCode, ra.RackName, COUNT(rc.ServerCode) as serverNum
+            var query = @"select r.RackCode, ra.RackName, COUNT(rc.ServerCode) as serverNum, r.StatusCode
                         from [dbo].[RackOfCustomer] as r
-                         join [dbo].[Location] as rc
+                         left join [dbo].[Location] as rc
                         on r.RackCode = rc.RackCode
-                         join [dbo].[Rack] as ra
+                         left join [dbo].[Rack] as ra
                         on ra.RackCode = rc.RackCode
-                        where r.Customer = '" + customer + @"'
-                        group by r.RackCode, ra.RackName
-                        ";
+                        where r.Customer = '" + customer + 
+                        @"' AND r.StatusCode='" + Constants.StatusCode.RACKOFCUSTOMER_CURRENT + @"'
+                        group by r.RackCode, ra.RackName, r.StatusCode";
 
             //var query1 = from rc in Table()
             //             join r in RackDAO.Current.Table()
@@ -100,13 +100,14 @@ namespace IMS.Data.Repository
 
         public void UpdateStatusRackOfCustomer(string rackCode, string customer, string PreStatus, string updateStatus)
         {
-            var rackOfCustomer =
-                Current.Query(
-                    x =>
-                        x.RackCode == rackCode && x.Customer == customer &&
-                        x.StatusCode == PreStatus).FirstOrDefault();
-            rackOfCustomer.StatusCode = updateStatus;
-            Update(rackOfCustomer);
+            var rackOfCustomer = Current.Query(x =>
+                       x.RackCode == rackCode && x.Customer == customer &&
+                       x.StatusCode == PreStatus).FirstOrDefault();
+            if (rackOfCustomer != null)
+            {
+                rackOfCustomer.StatusCode = updateStatus;
+                Update(rackOfCustomer);
+            }
         }
     }
 }

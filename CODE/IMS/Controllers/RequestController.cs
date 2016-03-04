@@ -36,10 +36,11 @@ namespace IMS.Controllers
                 if (requestTypeCode == Constants.RequestTypeCode.RETURN_RACK)
                 {
                     var data = new RequestReturnRackViewModel();
-                    var racksOfCustomer = RackOfCustomerBLO.Current.EmptyRentedRack(Constants.Test.CUSTOMER_MANHNH);
-                    data.RackOfCustomer = racksOfCustomer
-                        .Select(x => new SelectListItem { Value = x.RackCode, Text = x.RackName })
-                        .ToList();
+                    data.AllRacks = RackOfCustomerBLO.Current.CountServerPerRack(Constants.Test.CUSTOMER_MANHNH);
+                    //var racksOfCustomer = RackOfCustomerBLO.Current.EmptyRentedRack(Constants.Test.CUSTOMER_MANHNH);
+                    //data.RackOfCustomer = racksOfCustomer
+                    //    .Select(x => new SelectListItem { Value = x.RackCode, Text = x.RackName })
+                    //    .ToList();
                     return View("RequestReturnRack", data);
                 }
                 else if (requestTypeCode == Constants.RequestTypeCode.RENT_RACK)
@@ -198,14 +199,10 @@ namespace IMS.Controllers
                 if (selected.Count > 0)
                 {
                     //Add request
-<<<<<<< HEAD
                     string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.RETURN_RACK,
                         viewmodel.Customer, viewmodel.Description, null);
                     //Add Log Request, ko lien quan den servercode
                     LogChangedContent logRequest = new LogChangedContent
-=======
-                    var passRequest = new Request
->>>>>>> a17a0cdcd41c91ff5aa690472149fe571d8068a5
                     {
                         RequestCode = result,
                         TypeOfLog = Constants.TypeOfLog.LOG_RETURN_RACK,
@@ -811,22 +808,18 @@ namespace IMS.Controllers
             if (rType.Equals(Constants.RequestTypeCode.RETURN_RACK))
             {
                 RequestReturnRackViewModel viewmodel = new RequestReturnRackViewModel();
-                //tu requestcode se lay duoc khach hang
-                var customer = RequestBLO.Current.GetCustomerOfRequest(rCode);
+                //get request
+                var request = RequestBLO.Current.GetRequestByRequestCode(rCode);
                 //lay rack dang o trang thai returning cua khach hang cu the
-                var rackOfCustomer = RackOfCustomerBLO.Current.GetReturningRacks(customer);
-                var request = RequestDAO.Current.Query(x => x.RequestCode == rCode).FirstOrDefault();
-                if (request != null)
+                var rackOfCustomer = RackOfCustomerBLO.Current.GetReturningRacks(request.Customer);
+                viewmodel = Mapper.Map<Request, RequestReturnRackViewModel>(request);
+                viewmodel.RackOfCustomer = rackOfCustomer.Select(x => new SelectListItem
                 {
-                    viewmodel = Mapper.Map<Request, RequestReturnRackViewModel>(request);
-                    viewmodel.RackOfCustomer = rackOfCustomer.Select(x => new SelectListItem
-                    {
-                        Value = x,
-                        Text = x
-                    }).ToList(); ;
-                }
+                    Value = x,
+                    Text = x
+                }).ToList();
 
-                return View("ProcessRequestReturnRack", viewmodel);
+                return View("RequestReturnRackInfo", viewmodel);
             }
             return RedirectToAction("ListNotifications");
         }

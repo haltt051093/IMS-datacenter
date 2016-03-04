@@ -14,58 +14,60 @@
 <div class="main-content">
     <table id="example1" class="table table-bordered table-striped">
         <thead>
-        <tr>
-            <th>@Labels.ServerCode</th>
-            <th>@Labels.Customer</th>
-            <th>@Labels.Status</th>
-            <th>@Labels.DefaultIP</th>
-            <th>@Labels.Location</th>
-            <th>@Labels.CurrentRequest</th>
-        </tr>
+            <tr>
+                <th>@Labels.ServerCode</th>
+                <th>@Labels.Customer</th>
+                <th>@Labels.Status</th>
+                <th>@Labels.DefaultIP</th>
+                <th>@Labels.Location</th>
+                <th>@Labels.CurrentRequest</th>
+            </tr>
         </thead>
         <tbody>
-        @foreach (var item in Model.Servers)
-        {
-            <tr>
-                <td>
-                    @Html.ActionLink(item.ServerCode, "ServerDetails", "Server", new {serverCode = @item.ServerCode}, null)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => item.CustomerName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DefaultIP)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RackName)U
-                    @Html.DisplayFor(modelItem => item.RackUnit)
-                </td>
-                <td class="sidebar-menu">
-                    @if (item.Requests.Count > 0)
-                    {
-                        <ul>
-                            @foreach (var request in item.Requests)
-                            {
-                                <a href="#"><i class="fa fa-angle-double-right"></i> @request.RequestTypeName</a>
-                            }
-                        </ul>
-                    }
-                </td>
-            </tr>
-        }
+            @foreach (var item in Model.Servers)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(item.ServerCode, "ServerDetails", "Server", new { serverCode = @item.ServerCode }, null)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.CustomerName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DefaultIP)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RackName)U
+                        @Html.DisplayFor(modelItem => item.RackUnit)
+                    </td>
+                    <td class="sidebar-menu">
+                        @if (item.Requests.Count > 0)
+                        {
+                            <dl>
+                                @foreach (var request in item.Requests)
+                                {
+                                    <dt>
+                                        <a href="#"><i class="fa fa-angle-double-right"></i> @request.RequestTypeName</a>
+                                    </dt>
+                                }
+                            </dl>
+                        }
+                    </td>
+                </tr>
+            }
         </tbody>
         <tfoot>
-        <tr>
-            <th>@Labels.ServerCode</th>
-            <th>@Labels.Customer</th>
-            <th>@Labels.Status</th>
-            <th>@Labels.DefaultIP</th>
-            <th>@Labels.Location</th>
-            <th>@Labels.CurrentRequest</th>
-        </tr>
+            <tr>
+                <th>@Labels.ServerCode</th>
+                <th>@Labels.Customer</th>
+                <th>@Labels.Status</th>
+                <th>@Labels.DefaultIP</th>
+                <th>@Labels.Location</th>
+                <th>@Labels.CurrentRequest</th>
+            </tr>
         </tfoot>
     </table>
 </div>
@@ -121,7 +123,7 @@
 
                     <dt>@Labels.NoOfOutlets</dt>
                     <dd>2</dd>
-                        
+
                     <dt>@Labels.OtherAttributes</dt>
                     <dd>
                         <ul class="list-group">
@@ -152,7 +154,8 @@
             <div class="modal-footer clearfix">
 
                 <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
-                        data-dismiss="modal"><i class="fa fa-times"></i> @Labels.Cancel
+                        data-dismiss="modal">
+                    <i class="fa fa-times"></i> @Labels.Cancel
                 </button>
             </div>
         </div><!-- /.modal-content -->

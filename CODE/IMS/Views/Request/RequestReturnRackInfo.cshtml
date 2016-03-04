@@ -1,0 +1,83 @@
+﻿@model RequestReturnRackViewModel
+@{
+    ViewBag.Title = "RequestReturnRackInfo";
+    ViewBag.Role = "Shift Head";
+}
+
+<section class="content-header">
+    <h1>
+        Detail Request Return Rack
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index2", "Schedule")"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Detail Request Return Rack</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="box">
+        <div class="box-body table-responsive">
+            @using (Html.BeginForm("ProcessRequestReturnRack", "Request", FormMethod.Post))
+            {
+                <dl class="dl-horizontal">
+                    <dt>
+                        From customer
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Customer, new {htmlAttributes = new {@class = "form-control"}})
+                    </dd>
+                    <dt>
+                        Full Name
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control" } })
+                    </dd>
+                    <dt>
+                        Requested Time
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.RequestedTime, new { htmlAttributes = new { @class = "form-control" } })
+                    </dd>
+                    <dt>
+                        Status
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.StatusName, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <dt>
+                        Selected Rack
+                    </dt>
+
+                    <dd>
+                        @foreach (var item in Model.RackOfCustomer)
+                {
+                            @Html.DisplayFor(model => item.Value, new { htmlAttributes = new { @class = "form-control" } })
+                            <br />
+                        }
+                    </dd>
+                    <div class="form-group">
+                        <dt>
+                            Description:
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                        </dd>
+                    </div>
+                    <dt></dt>
+                    <dd>
+                        @Html.HiddenFor(x => x.RequestCode)
+                        @Html.HiddenFor(x => x.Customer)
+                        @Html.HiddenFor(x => x.RequestType)
+                        @Html.HiddenFor(x => x.RackOfCustomer)
+                        @if (Model.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                        {
+                            <button type="submit" id="btnApprove" class="btn btn-primary" name="Approve" value="Approve">Approve</button>
+                            <button type="submit" class="btn btn-danger">Reject</button>
+                        }
+                    </dd>
+                </dl>
+            }
+        </div><!-- /.box-body -->
+    </div><!-- /.box -->
+</section>
