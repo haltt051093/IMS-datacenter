@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
@@ -64,6 +65,22 @@ namespace IMS.Controllers
                 var ips = IPAddressPoolBLO.Current.GenerateIP(iivm.Address, iivm.Netmask);
                 var gateway = IPAddressPoolBLO.Current.GenerateIP(iivm.Address, iivm.Netmask).FirstOrDefault().Gateway;
                 var exist = IPAddressPoolDAO.Current.Query(x => x.Gateway == gateway);
+                int k = ips.Count - 1;
+                ips[k].StatusCode = Constants.StatusCode.IP_RESERVE;
+            
+            for (int i = 0; i < ips.Count-1; i++)
+                {
+                    if (ips[i].IPAddress == ips[i].NetworkIP || ips[i].IPAddress == ips[i].Gateway)
+                    {
+                        ips[i].StatusCode = Constants.StatusCode.IP_RESERVE;
+                    }
+                    else
+                    {
+                        ips[i].StatusCode = Constants.StatusCode.IP_AVAILABLE;
+                    }
+                    
+                    
+                }
                 if (exist.Count > 0)
                 {
                     Alert("The Network Address was existed. Please try again!");
