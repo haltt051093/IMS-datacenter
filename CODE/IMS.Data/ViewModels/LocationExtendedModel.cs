@@ -21,5 +21,6 @@ namespace IMS.Data.ViewModels
         public string Request { get; set; }
         public int Size { get; set; }
         public string DefaultIP { get; set; }
+        public string RackStatus { get; set; }
     }
 }

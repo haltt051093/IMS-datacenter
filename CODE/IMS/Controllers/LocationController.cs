@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
+using IMS.Core;
 using IMS.Data.Business;
 using IMS.Data.Models;
 using IMS.Models;
@@ -18,12 +19,16 @@ namespace IMS.Controllers
         {
             var data = new LocationIndexViewModel();
             var locations = LocationBLO.Current.GetAllLocation();
+            var list = locations.Where(x => x.RackStatus == Constants.StatusCode.RACK_AVAILABLE);
+            var listavailablerack = list.OrderBy(x => x.RackName).GroupBy(x => x.RackName).Select(x => x.FirstOrDefault());
+            data.RackAvailableCount = listavailablerack.Count();
             var listrack = locations.OrderBy(x => x.RackName).GroupBy(x => x.RackName).Select(x => x.FirstOrDefault());
             data.Racks = listrack.Select(x => new SelectListItem
             {
                 Value = x.RackCode,
                 Text = "Rack "+x.RackName
             }).ToList();
+            
             data.Locations = locations;
             return View(data);
         }

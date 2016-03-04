@@ -15,22 +15,30 @@
         <li class="active">Location</li>
     </ol>
 </section>
+
+
 <section class="content">
-    <a class="btn btn-primary pull-right" data-toggle="modal" data-target="#addlocation-modal"><i class="fa fa-plus"></i> Add new rack</a>
+
+        <a class="btn btn-primary pull-right" data-toggle="modal" data-target="#addlocation-modal"><i class="fa fa-plus"></i> Add new rack</a>
+   
+   
     @using (Html.BeginForm("Index2", "Location", FormMethod.Get))
     {
-
+      
+            <label style="color: coral">Amount of Available Rack: @Model.RackAvailableCount</label>
+       
         <div class="form-inline">
             <div class="form-group">
                 <label>Filter: </label>
             </div>
             <div class="form-group">
-                @Html.DropDownListFor(model => model.Racks, Model.Racks, "All Locations", htmlAttributes: new { @class = "form-control", @id = "racksearch" })
+                @Html.DropDownListFor(model => model.Racks, Model.Racks, "All Locations", htmlAttributes: new {@class = "form-control", @id = "racksearch"})
             </div>
 
         </div>
 
     }
+
 </section>
 
 <!-- Main content -->
