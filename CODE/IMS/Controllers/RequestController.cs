@@ -107,23 +107,30 @@ namespace IMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                var number = viewmodel.RackOfCustomer.Count;
+                var selected = viewmodel.SelectedRacks;
                 viewmodel.Customer = Constants.Test.CUSTOMER_MANHNH;
-                var selected = viewmodel.RackOfCustomer.Where(x => x.Selected).Select(x => x.Value).ToArray();
-                if (number != 0)
+                if (selected.Count > 0)
                 {
                     //Add request
-                    Request passRequest = new Request
+                    string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.RETURN_RACK,
+                        viewmodel.Customer, viewmodel.Description, null);
+                    //Add Log Request, ko lien quan den servercode
+                    LogChangedContent logRequest = new LogChangedContent
                     {
-                        Customer = viewmodel.Customer,
-                        Description = viewmodel.Description
+                        RequestCode = result,
+                        TypeOfLog = Constants.TypeOfLog.LOG_RETURN_RACK,
+                        Object = Constants.Object.OBJECT_REQUEST,
+                        ChangedValueOfObject = result,
+                        ObjectStatus = Constants.StatusCode.REQUEST_SENDING
                     };
-                    string result = RequestBLO.Current.AddRequest(passRequest, Constants.RequestTypeCode.RETURN_RACK);
-
-                    //Update rack status
-                    foreach (var item in selected)
+                    LogChangedContentBLO.Current.AddLog(logRequest);
+                    //lay ra rackcode
+                    string last = selected[0];
+                    List<string> racks = last.Split(',').ToList<string>();
+                    racks.Reverse();
+                    foreach (var item in racks)
                     {
-                        //update status of a rackOfCustomer
+                        //ko update status cua bang Rack, chi update rackOfCustomer
                         RackOfCustomerBLO.Current.UpdateStatusRackOfCustomer(item, viewmodel.Customer
                             , Constants.StatusCode.RACKOFCUSTOMER_CURRENT, Constants.StatusCode.RACKOFCUSTOMER_RETURNING);
                         //Add log rack
@@ -137,18 +144,6 @@ namespace IMS.Controllers
                         };
                         LogChangedContentBLO.Current.AddLog(logServer);
                     }
-
-                    //Add Log Request
-                    LogChangedContent logRequest = new LogChangedContent
-                    {
-                        RequestCode = result,
-                        TypeOfLog = Constants.TypeOfLog.LOG_RETURN_RACK,
-                        Object = Constants.Object.OBJECT_REQUEST,
-                        ChangedValueOfObject = result,
-                        ObjectStatus = Constants.StatusCode.REQUEST_SENDING
-                    };
-                    LogChangedContentBLO.Current.AddLog(logRequest);
-
                     //Notification
                     var notif = Mapper.Map<RequestReturnRackViewModel, NotificationExtendedModel>(viewmodel);
                     notif.RequestTypeName = Constants.RequestType.RACK_RETURN;
@@ -175,12 +170,8 @@ namespace IMS.Controllers
                 totalDes.AppendLine(viewmodel.Description);
             }
             //Add request
-            Request passRequest = new Request
-            {
-                Customer = viewmodel.Customer,
-                Description = totalDes.ToString()
-            };
-            string result = RequestBLO.Current.AddRequest(passRequest, Constants.RequestTypeCode.RENT_RACK);
+            string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.RENT_RACK,
+                viewmodel.Customer, totalDes.ToString(), null);
 
             //log lai thoi diem thay doi trang thai request
             LogChangedContent requestmodel = new LogChangedContent
@@ -231,7 +222,7 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult RequestAddServer(RequestAddServerViewModel viewmodel)
         {
-
+            viewmodel.Customer = Constants.Test.CUSTOMER_MANHNH;
             //get appointment time
             //string dateOnly = viewmodel.AppointmentTime.ToString("dd/MM/yyyy");
             //string time = DateTime.Parse(viewmodel.Time).ToString("HH:mm:ss");
@@ -239,13 +230,8 @@ namespace IMS.Controllers
             //viewmodel.AppointmentTime = DateTime.Parse(datetime);
 
             //Add request
-            Request passRequest = new Request
-            {
-                Customer = Constants.Test.CUSTOMER_MANHNH,
-                Description = viewmodel.Description,
-                AppointmentTime = viewmodel.AppointmentTime,
-            };
-            string result = RequestBLO.Current.AddRequest(passRequest, Constants.RequestTypeCode.ADD_SERVER);
+            string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.ADD_SERVER, viewmodel.Customer,
+                viewmodel.Description, viewmodel.AppointmentTime);
 
             //add server, trang thai server la waiting
             foreach (var item in viewmodel.Servers)
@@ -339,12 +325,8 @@ namespace IMS.Controllers
             if (selected.Count > 0)
             {
                 //luu vo bang request 
-                Request passRequest = new Request
-                {
-                    Customer = viewmodel.Customer,
-                    Description = viewmodel.Description
-                };
-                string result = RequestBLO.Current.AddRequest(passRequest, Constants.RequestTypeCode.RETURN_IP);
+                string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.RETURN_IP,
+                    viewmodel.Customer, viewmodel.Description, null);
 
                 // log request status
                 LogChangedContent logRequest = new LogChangedContent
@@ -412,20 +394,16 @@ namespace IMS.Controllers
             if (ModelState.IsValid)
             {
                 //Edit description
-                var totalDes = new StringBuilder();
                 var requestDetail = new RequestDetailModel();
                 if (!viewmodel.Description.IsNullOrWhiteSpace())
                 {
                     requestDetail.NumberOfIp = viewmodel.IpNumber;
                     requestDetail.Description = viewmodel.Description;
                 }
+                viewmodel.Description = JsonConvert.SerializeObject(requestDetail);
                 //Add request
-                Request passRequest = new Request
-                {
-                    Customer = viewmodel.Customer,
-                    Description = JsonConvert.SerializeObject(requestDetail)
-                };
-                string result = RequestBLO.Current.AddRequest(passRequest, Constants.RequestTypeCode.ASSIGN_IP);
+                string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.ASSIGN_IP, viewmodel.Customer,
+                    viewmodel.Description, null);
 
                 //Add Log Request
                 //ko luu servercode o request duoc, vi moi request co the co nhieu servercode. Luc load len se lay tu bang log
@@ -460,14 +438,8 @@ namespace IMS.Controllers
             if (selected.Count > 0)
             {
                 //luu vo bang request 
-                Request passRequest = new Request
-                {
-                    Customer = viewmodel.Customer,
-                    Description = viewmodel.Description
-                };
-                string result = RequestBLO.Current.AddRequest(passRequest, Constants.RequestTypeCode.CHANGE_IP);
-
-
+                string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.CHANGE_IP, viewmodel.Customer,
+                    viewmodel.Description, null);
 
                 // log request status
                 LogChangedContent logRequest = new LogChangedContent

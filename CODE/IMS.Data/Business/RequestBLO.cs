@@ -36,9 +36,9 @@ namespace IMS.Data.Business
             return dao.GetAllRequest();
         }
 
-        public string AddRequest(Request passModel, string requestType)
+        public string AddRequest(string requestType, string customer, string description, DateTime? appointmenTime)
         {
-            return dao.AddRequest(passModel, requestType);
+            return dao.AddRequest(requestType, customer, description, appointmenTime);
         }
         //Tien
         public List<ScheduleExtendedModel> GetScheduleToday()

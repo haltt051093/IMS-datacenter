@@ -42,13 +42,16 @@ namespace IMS.Data.Repository
             return code;
         }
 
-        public string AddRequest(Request passModel, string requestType)
+        public string AddRequest(string requestType, string customer, string description, DateTime? appointmenTime)
         {
-            Request request = passModel;
+            Request request = new Request();
             request.RequestType = requestType;
             request.RequestCode = GenerateCode();
             request.RequestedTime = DateTime.Now;
             request.StatusCode = Constants.StatusCode.REQUEST_SENDING;
+            request.Customer = customer;
+            request.Description = description;
+            request.AppointmentTime = appointmenTime;
             var existing = GetByKeys(request);
             if (existing == null)
             {
