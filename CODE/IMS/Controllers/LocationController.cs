@@ -18,6 +18,12 @@ namespace IMS.Controllers
         {
             var data = new LocationIndexViewModel();
             var locations = LocationBLO.Current.GetAllLocation();
+            var listrack = locations.OrderBy(x => x.RackName).GroupBy(x => x.RackName).Select(x => x.FirstOrDefault());
+            data.Racks = listrack.Select(x => new SelectListItem
+            {
+                Value = x.RackCode,
+                Text = x.RackName
+            }).ToList();
             data.Locations = locations;
             return View(data);
         }
