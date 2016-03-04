@@ -28,7 +28,7 @@ namespace IMS.Controllers
         }
 
         #region Create Request
-        public ActionResult CreateRequest(RequestCreateRequestViewModel q)
+        public ActionResult CreateRequest(RequestCreateViewModel q)
         {
             var requestTypeCode = q.Type;
             if (!string.IsNullOrEmpty(requestTypeCode))
@@ -185,8 +185,6 @@ namespace IMS.Controllers
             RequestBLO.Current.AddOrUpdate(request);
             return RedirectToAction("RequestHistory", "Request");
         }
-
-        private static IHubContext commandHubContext;
         #endregion
 
         #region Process Request
