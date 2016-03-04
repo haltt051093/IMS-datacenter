@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using IMS.Core;
 using IMS.Data.Generic;
@@ -54,8 +55,22 @@ namespace IMS.Data.Repository
                         where r.Customer = '" + customer + @"'
                         group by r.RackCode, ra.RackName
                         ";
-            //DOING
-            //sua lai thanh kieu linq
+
+            //var query1 = from rc in Table()
+            //             join r in RackDAO.Current.Table()
+            //                 on rc.RackCode equals r.RackCode into rrc
+            //             from subr in rrc.DefaultIfEmpty()
+            //             join l in LocationDAO.Current.Table()
+            //                 on rc.RackCode equals l.RackCode into lrc
+            //             from subl in lrc.DefaultIfEmpty()
+            //             where rc.Customer == customer
+            //             group subl by subl.RackCode into newGroup
+            //             select new RackOfCustomerExtendedModel
+            //             {
+            //                 ServerNum = newGroup.Count(),
+            //                 RackCode = rrc.
+            //             };
+
             return RawQuery<RackOfCustomerExtendedModel>(query, new object[] { });
         }
 
