@@ -44,6 +44,7 @@ namespace IMS.Core
 
             public const string RACK_AVAILABLE = "STATUS19";
             public const string RACK_RENTED = "STATUS20";
+            public const string RACK_USED = "STATUS33";
 
             public const string SERVERATTRIBUTE_OLD = "STATUS23";
             public const string SERVERATTRIBUTE_UPDATING = "STATUS22";
