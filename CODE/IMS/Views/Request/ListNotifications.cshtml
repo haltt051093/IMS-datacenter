@@ -63,7 +63,7 @@
                                 @if (item.StatusCode == Constants.StatusCode.REQUEST_SENDING)
                                 {
                                     <a href="#" data-toggle="modal" class="btnRequestCode" data-target="#acceptrequest-modal"
-                                        data-requestCode="@item.RequestCode" data-requestType="@item.RequestType">@item.RequestCode</a>
+                                       data-requestCode="@item.RequestCode" data-requestType="@item.RequestType">@item.RequestCode</a>
                                 }
                                 else
                                 {
@@ -125,7 +125,7 @@
                         </select>
                     </div>
                 </div>
-                <input type="hidden" id="requestCode" name="requestCode" value=""/>
+                <input type="hidden" id="requestCode" name="requestCode" value="" />
                 <input type="hidden" id="requestType" name="requestType" value="" />
                 <div class="modal-footer clearfix">
                     <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
@@ -150,5 +150,4 @@
         });
     });
 </script>
-
 

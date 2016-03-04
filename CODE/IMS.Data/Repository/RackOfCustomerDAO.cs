@@ -52,7 +52,7 @@ namespace IMS.Data.Repository
                         on r.RackCode = rc.RackCode
                          left join [dbo].[Rack] as ra
                         on ra.RackCode = rc.RackCode
-                        where r.Customer = '" + customer + 
+                        where r.Customer = '" + customer +
                         @"' AND r.StatusCode='" + Constants.StatusCode.RACKOFCUSTOMER_CURRENT + @"'
                         group by r.RackCode, ra.RackName, r.StatusCode";
 
@@ -89,12 +89,19 @@ namespace IMS.Data.Repository
             return RawQuery<RackOfCustomerExtendedModel>(query, new object[] { });
         }
 
-        public List<string> GetReturningRacks(string customer)
+        public List<RackOfCustomerExtendedModel> GetReturningRacks(string customer)
         {
-            var query =
-                Current.Query(
-                    x => x.Customer == customer && x.StatusCode == Constants.StatusCode.RACKOFCUSTOMER_RETURNING)
-                    .Select(x => x.RackCode);
+            var query = from rc in Table()
+                join r in RackDAO.Current.Table()
+                    on rc.RackCode equals r.RackCode into rrc
+                from subr in rrc.DefaultIfEmpty()
+                where rc.Customer == customer && rc.StatusCode == Constants.StatusCode.RACKOFCUSTOMER_RETURNING
+                select new RackOfCustomerExtendedModel()
+                {
+                    RackName = subr.RackName,
+                    RackCode = subr.RackCode,
+                };
+
             return query.ToList();
         }
 

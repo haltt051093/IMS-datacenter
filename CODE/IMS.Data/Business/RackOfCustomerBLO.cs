@@ -35,7 +35,7 @@ namespace IMS.Data.Business
             return dao.EmptyRentedRack(customer);
         }
 
-        public List<string> GetReturningRacks(string customer)
+        public List<RackOfCustomerExtendedModel> GetReturningRacks(string customer)
         {
             return dao.GetReturningRacks(customer);
         }

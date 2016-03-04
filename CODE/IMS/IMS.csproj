@@ -948,7 +948,6 @@
     <Content Include="Views\Account\CreateStaff.cshtml" />
     <Content Include="Views\Account\EditCustomer.cshtml" />
     <Content Include="Views\Account\EditStaff.cshtml" />
-    <Content Include="Views\Request\RequestRentRack.cshtml" />
     <Content Include="Views\Request\RequestUpgradeServer.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\ViewProfile.cshtml" />
@@ -973,7 +972,6 @@
     <Content Include="Views\Location\Index2.cshtml" />
     <Content Include="Views\IP\Index2.cshtml" />
     <Content Include="Views\Request\RequestChangeIP.cshtml" />
-    <Content Include="Views\Request\ProcessRequestRentRack.cshtml" />
     <Content Include="Views\Request\ProcessRequestChangeIP.cshtml" />
     <Content Include="Views\Request\RequestAddServer.cshtml" />
     <Content Include="Views\Request\RequestAssignIP.cshtml" />
@@ -996,8 +994,8 @@
     <Content Include="Views\Request\RequestChangeIP2.cshtml" />
     <Content Include="Views\Request\RequestChangeIPInfo2.cshtml" />
     <Content Include="Views\Request\RequestHistory.cshtml" />
-    <Content Include="Views\Request\RequestRentRack2.cshtml" />
-    <Content Include="Views\Request\RequestRentRackInfo2.cshtml" />
+    <Content Include="Views\Request\RequestRentRack.cshtml" />
+    <Content Include="Views\Request\RequestRentRackInfo.cshtml" />
     <Content Include="Views\Request\RequestReturnIP.cshtml" />
     <Content Include="Views\Request\RequestReturnIPInfo.cshtml" />
     <Content Include="Views\Request\RequestReturnRackInfo.cshtml" />

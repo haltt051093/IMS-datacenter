@@ -127,11 +127,6 @@ namespace IMS.Controllers
             return View();
         }
 
-        public ActionResult RequestReturnRackInfo2()
-        {
-            return View();
-        }
-
         public ActionResult RequestUpgradeServer2()
         {
             return View();
@@ -248,17 +243,14 @@ namespace IMS.Controllers
         {
             viewmodel.Customer = Constants.Test.CUSTOMER_MANHNH;
             //Edit description
-            string description = viewmodel.RackNumbers.ToString();
-            var totalDes = new StringBuilder();
-            if (!viewmodel.Description.IsNullOrWhiteSpace())
-            {
-                //description = description + "\r\n" + viewmodel.Description;
-                totalDes.AppendLine(description);
-                totalDes.AppendLine(viewmodel.Description);
-            }
+            var requestDetail = new RequestDetailModel();
+            requestDetail.NumberOfRack = viewmodel.RackNumbers;
+            requestDetail.Description = viewmodel.Description;
+            viewmodel.Description = JsonConvert.SerializeObject(requestDetail);
+
             //Add request
             string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.RENT_RACK,
-                viewmodel.Customer, totalDes.ToString(), null);
+                viewmodel.Customer,viewmodel.Description, null);
 
             //log lai thoi diem thay doi trang thai request
             LogChangedContent requestmodel = new LogChangedContent
@@ -815,15 +807,17 @@ namespace IMS.Controllers
                 viewmodel = Mapper.Map<Request, RequestReturnRackViewModel>(request);
                 viewmodel.RackOfCustomer = rackOfCustomer.Select(x => new SelectListItem
                 {
-                    Value = x,
-                    Text = x
+                    Value = x.RackName,
+                    Text = x.RackCode
                 }).ToList();
-
+                viewmodel.StatusName = StatusBLO.Current.GetStatusName(viewmodel.StatusCode);
+                var customer = AccountBLO.Current.GetAccountByCode(viewmodel.Customer);
+                viewmodel.CustomerName = customer.Fullname;
                 return View("RequestReturnRackInfo", viewmodel);
             }
             return RedirectToAction("ListNotifications");
         }
-
+        //DOING
         [HttpPost]
         public ActionResult ProcessRequestRentRack(RequestRentRackViewModel viewmodel)
         {
@@ -877,7 +871,6 @@ namespace IMS.Controllers
         {
             //Change request status 
             RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);
-
 
             //update status rackofcustomer
             foreach (var item in viewmodel.RackOfCustomer)
@@ -963,7 +956,6 @@ namespace IMS.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        //DOING
         [HttpPost]
         public ActionResult ProcessRequestAddServer(RequestAddServerViewModel viewmodel)
         {
