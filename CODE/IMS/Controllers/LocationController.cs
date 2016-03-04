@@ -22,7 +22,7 @@ namespace IMS.Controllers
             data.Racks = listrack.Select(x => new SelectListItem
             {
                 Value = x.RackCode,
-                Text = x.RackName
+                Text = "Rack "+x.RackName
             }).ToList();
             data.Locations = locations;
             return View(data);
