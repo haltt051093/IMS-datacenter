@@ -980,7 +980,7 @@
     <Content Include="Views\Request\RequestAddServer.cshtml" />
     <Content Include="Views\Request\RequestAssignIP.cshtml" />
     <Content Include="Views\Request\RequestAssignIPInfo.cshtml" />
-    <Content Include="Views\Server\ServerDetails.cshtml" />
+    <Content Include="Views\Server\Detail.cshtml" />
     <Content Include="Views\Account\Index2.cshtml" />
     <Content Include="Views\Account\Login2.cshtml" />
     <Content Include="Views\Request\RequestAddServerInfo.cshtml" />
