@@ -129,6 +129,9 @@
   <data name="LocationIndex" xml:space="preserve">
     <value>List of Locations</value>
   </data>
+  <data name="RackIndex" xml:space="preserve">
+    <value>List of Racks</value>
+  </data>
   <data name="Server" xml:space="preserve">
     <value>Servers</value>
   </data>

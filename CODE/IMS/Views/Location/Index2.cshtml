@@ -1,17 +1,18 @@
 ﻿@model IMS.Models.LocationIndexViewModel
 @{
-    ViewBag.Title = Pages.LocationIndex;
-    ViewBag.PageTitle = Pages.LocationIndex;
+    ViewBag.Title = Pages.RackIndex;
+    ViewBag.PageTitle = Pages.RackIndex;
     ViewBag.Role = "Shift Head";
     ViewBag.Breadcrumbs = new List<BreadcrumbModel>
     {
         new BreadcrumbModel("Home", "Index", Pages.Home),
-        new BreadcrumbModel("Location", "Index2", Pages.LocationIndex)
+        new BreadcrumbModel("Location", "Index2", Pages.RackIndex)
     };
 }
 
 <!-- Main content -->
 <section class="main-content">
+    <label style="color: #3c8dbc">Amount of Rack Available: @Model.RackAvailableCount</label>
     <div>
         <a class="btn btn-primary pull-left" data-toggle="modal" data-target="#addlocation-modal"><i class="fa fa-plus"></i> Add new rack</a>
     </div>
@@ -19,7 +20,7 @@
     <div style="height: 10px"></div>
     <div class="row hide">
         <div id="dropdown-template" class="col-xs-3">
-            <label>Location: @Html.DropDownListFor(model => model.RackCode, Model.Racks, "All Locations", new { @class = "form-control input-sm", style = "width: 150px"}) </label>
+            <label>Location: @Html.DropDownListFor(model => model.RackCode, Model.Racks, "All Locations", new {@class = "form-control input-sm", style = "width: 150px"}) </label>
         </div>
     </div>
 
