@@ -14,6 +14,7 @@ namespace IMS.Models
         public string SelectedRack { get; set; }
 
         public int ServerNumber { get; set; }
+        public int SelectedServerNumber { get; set; }
 
         public string Customer { get; set; }
         public string CustomerName { get; set; }

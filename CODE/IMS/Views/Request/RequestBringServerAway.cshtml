@@ -17,30 +17,37 @@
     <div class="box">
         <div class="box-body table-responsive">
             <div class="form-horizontal">
-                @using (Html.BeginForm("RequestAssignIp", "Request", FormMethod.Post))
+                @using (Html.BeginForm("RequestBringServerAway", "Request", FormMethod.Post))
                 {
+
+                    if (Model.RackOfCustomer.Count > 0)
+                    {
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Select by rented racks</label>
+                            <div class="col-sm-2">
+                                @Html.DropDownListFor(m => m.SelectedRack, Model.RackOfCustomer, "Select all", new { @id = "selectedRack", @class = "form-group" })
+                            </div>
+                        </div>
+                    }
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">The number of your server in data center</label>
+                        <label class="col-sm-4 control-label">The number of your servers in data center</label>
                         <div class="col-sm-1">
                             @Html.DisplayFor(modelItem => modelItem.ServerNumber)
                         </div>
                     </div>
-                    if (Model.RackOfCustomer.Count > 0)
-                    {
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Select by rented rack</label>
-                            <div class="col-sm-2">
-                                @Html.DropDownListFor(m => m.SelectedRack, Model.RackOfCustomer, "Select all", new { @id = "rackcode", @class="form-group" })
-                            </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">The number of selected servers</label>
+                        <div class="col-sm-1">
+                            <span id="selectedNumber">@Html.DisplayFor(modelItem => modelItem.SelectedServerNumber, new { })</span>
                         </div>
-                    }
+                    </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Which server do you want to bring away?</label>
                         <div class="col-sm-1">
                             <div id="divPartialView">
                                 <table id="masterTable" class="table" style="width:600px">
                                     <thead>
-                                        <tr class="check">
+                                        <tr>
                                             <th>
                                                 <input type="checkbox" id="checkAll" />Check all
                                             </th>
@@ -53,59 +60,25 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var item in Model.ServerOfCustomer)
+                                        @for (var i = 0; i < Model.ServerOfCustomer.Count; i++)
                                         {
-                                            <tr class="check" server-code="@item.RackCode">
+                                            <tr class="check" rack-code="@Model.ServerOfCustomer[i].RackCode">
                                                 <td>
-                                                    <input type="checkbox" id="@item.ServerCode" />
+                                                    @Html.CheckBoxFor(modelItem => Model.ServerOfCustomer[i].Checked)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.ServerCode)
+                                                    @Html.DisplayFor(modelItem => Model.ServerOfCustomer[i].ServerCode)
+                                                    @Html.HiddenFor(modelItem => Model.ServerOfCustomer[i].ServerCode)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.DefaultIP)
+                                                    @Html.DisplayFor(modelItem => Model.ServerOfCustomer[i].DefaultIP)
+                                                    @Html.HiddenFor(modelItem => Model.ServerOfCustomer[i].DefaultIP)
                                                 </td>
                                             </tr>
                                         }
                                     </tbody>
                                 </table>
                             </div>
-                            @if (Model.SelectedServers != null)
-                            {
-                                <div id="divPartialView2">
-                                    <table id="detailTable" class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    <input type="checkbox" id="checkAll2" />Check all
-                                                </th>
-                                                <th>
-                                                    ServerCode
-                                                </th>
-                                                <th>
-                                                    Default IP
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var item in Model.SelectedServers)
-                                            {
-                                                <tr>
-                                                    <td>
-                                                        <input type="checkbox" id="@item.ServerCode" />
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.ServerCode)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.DefaultIP)
-                                                    </td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
-                            }
                         </div>
                     </div>
                     <div class="form-group">
@@ -125,29 +98,34 @@
     </div><!-- /.box -->
 </section>
 <script type="text/javascript">
-    $("#checkAll").change(function () {
-        alert("choi oiiiii");
-        //$('#masterTable').find('input[type="checkbox"]').prop('checked', this.checked);
-        //var table = $(e.target).closest('table');
-        //$('td input:checkbox', table).prop('checked', this.checked);
-        //$("input:checkbox").prop('checked', $(this).prop("checked"));
-    });
-    //$(function () {
-        
+    function countSelected() {
+        var count = 0;
+        $('tr.check input[type="checkbox"]').each(function (i, e) {
+            var state = $(e).is(':checked');
+            if (state) {
+                count++;
+            }
+        });
+        $("#selectedNumber").text(count);
+    }
 
-    //    //$('#masterTable tr').click(function (event) {
-    //    //    if (event.target.type !== 'checkbox') {
-    //    //        $(':checkbox', this).trigger('click');
-    //    //    }
-    //    //});
-    //    $("input[type='checkbox']").change(function (e) {
-    //        if ($(this).is(":checked")) { //If the checkbox is checked
-    //            $(this).closest('tr').addClass("highlight_row");
-    //            //Add class on checkbox checked
-    //        } else {
-    //            $(this).closest('tr').removeClass("highlight_row");
-    //            //Remove class on checkbox uncheck
-    //        }
-    //    });
-    //});
+    $("#checkAll").change(function () {
+        var state = $('#checkAll').is(':checked');
+        $('tr.check input[type="checkbox"]').prop('checked', state);
+        countSelected();
+    });
+
+    $('tr.check input[type="checkbox"]').change(function () {
+        countSelected();
+    });
+
+    $("#selectedRack").change(function () {
+        var rackCode = $("#selectedRack").val();
+        if (rackCode == null || rackCode == '') {
+            $('#masterTable tbody tr').show();
+        } else {
+            $('#masterTable tbody tr').hide();
+            $('#masterTable tbody tr[rack-code="' + rackCode + '"]').show();
+        }
+    });
 </script>

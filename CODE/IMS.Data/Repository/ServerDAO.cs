@@ -104,7 +104,7 @@ namespace IMS.Data.Repository
                         //join a in AccountDAO.Current.Table()
                         //    on s.Customer equals a.Username into astsl
                         //from suba in astsl.DefaultIfEmpty()
-                        where s.Customer == customer
+                        where s.Customer == customer && s.StatusCode == Constants.StatusCode.SERVER_RUNNING
                         select new ServerExtendedModel
                         {
                             RackCode = subl.RackCode,
