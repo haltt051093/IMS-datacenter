@@ -21,6 +21,12 @@ namespace IMS.Controllers
         {
             var ips = IPAddressPoolBLO.Current.GetAllIP();
             var data = new IPIndexViewModel();
+            var listNetworkIP = ips.OrderBy(x => x.NetworkIP).GroupBy(x => x.NetworkIP).Select(x => x.FirstOrDefault());
+            data.NetworkIPs = listNetworkIP.Select(x => new SelectListItem
+            {
+                Value = x.NetworkIP,
+                Text = "Network " + x.NetworkIP
+            }).ToList();
             data.IPs = ips;
             return View(data);
         }
