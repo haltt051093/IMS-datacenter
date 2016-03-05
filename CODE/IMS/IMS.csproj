@@ -402,6 +402,7 @@
     <Content Include="Content\ionslider\ion.rangeSlider.skinNice.css" />
     <Content Include="Content\jquer.validate.css" />
     <Content Include="Content\jquery-ui.css" />
+    <Content Include="Content\jquery-ui.tfpatch.css" />
     <Content Include="Content\jquery.timepicker.css" />
     <Content Include="Content\jQueryUI\images\animated-overlay.gif" />
     <Content Include="Content\jQueryUI\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -891,6 +892,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiControllers\LocationController.cs" />
+    <Compile Include="ApiControllers\RackController.cs" />
     <Compile Include="ApiModels\DataTableModel.cs" />
     <Compile Include="App_Start\AppConfig.cs" />
     <Compile Include="BrowserJsonFormatter.cs" />

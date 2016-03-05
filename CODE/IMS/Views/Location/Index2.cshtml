@@ -17,12 +17,9 @@
     </div>
     <div class="clearfix"></div>
     <div style="height: 10px"></div>
-    <div class="row" style="display: none">
+    <div class="row hide">
         <div id="dropdown-template" class="col-xs-3">
             <label>Location: @Html.DropDownListFor(model => model.RackCode, Model.Racks, "All Locations", new { @class = "form-control input-sm", style = "width: 150px"}) </label>
-        </div>
-        <div class="col-xs-3">
-            @Html.TextBoxFor(model => model.SearchTerm, new {@class = "form-control"})
         </div>
     </div>
 
@@ -193,7 +190,9 @@
         table.draw();
     });
 
-    
+    $('#RackName').autocomplete({
+        source: '@Url.Action("GetAvailableName", "Rack", new { httproute = "" })'
+    });
 
 </script>
 

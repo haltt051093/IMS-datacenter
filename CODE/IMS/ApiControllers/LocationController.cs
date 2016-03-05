@@ -13,6 +13,6 @@ namespace IMS.ApiControllers
             var result = new DataTableModel<LocationExtendedModel>();
             result.Data = locations;
             return result;
-        } 
+        }
     }
 }
