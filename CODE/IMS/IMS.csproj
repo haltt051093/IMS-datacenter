@@ -890,7 +890,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiControllers\LocationController.cs" />
+    <Compile Include="ApiModels\DataTableModel.cs" />
     <Compile Include="App_Start\AppConfig.cs" />
+    <Compile Include="BrowserJsonFormatter.cs" />
     <Compile Include="Controllers\RackController.cs" />
     <Compile Include="Models\BreadcrumbModel.cs" />
     <Compile Include="Models\HomeIndexViewModel.cs" />

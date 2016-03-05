@@ -42,83 +42,28 @@
 </section>
 
 <!-- Main content -->
-<section class="content">
-    <div class="box">
-        <div class="box-body table-responsive">
-            <table id="example1" class="table table-bordered table-hover" style="border-collapse: collapse">
+<section class="main-content">
+    <table id="example1" class="table table-bordered table-hover" style="border-collapse: collapse">
                 
-                <thead>
-                <tr style="background-color: #404040">
-                    <th><h4 style="color: ghostwhite">Rack Name</h4>
-                    <th><h4 style="color: ghostwhite">Rack Unit</h4></th>
-                    <th><h4 style="color: ghostwhite">IP Address</h4></th>
-                </tr>
-                </thead>
-                <tbody>
-                @{
+        <thead>
+        <tr style="background-color: #404040">
+            <th><h4 style="color: ghostwhite">Rack Name</h4>
+            <th><h4 style="color: ghostwhite">Rack Unit</h4></th>
+            <th><h4 style="color: ghostwhite">IP Address</h4></th>
+        </tr>
+        </thead>                
+        <tfoot>
 
-                    for (int i = 0; i < Model.Locations.Count; i++)
-                    {
-                        var item = Model.Locations[i];
-                        if (item.StatusName == "Used")
-                        {
-                            <tr style="background-color: #ffcccc">
+        <tr style="background-color: #404040">
+            <th><h4 style="color: ghostwhite">Rack Name</h4></th>
+            <th><h4 style="color: ghostwhite">Rack Unit</h4></th>
+            <th><h4 style="color: ghostwhite">IP Address</h4></th>
+        </tr>
 
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.RackName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.RackUnit)
-                                </td>
-                                <td>
-                                    @if (item.DefaultIP != null)
-                                    {
-                                        @Html.ActionLink(item.DefaultIP, "ServerDetails", "Server", new {serverCode = @item.ServerCode}, null)
-                                    }
-
-                                </td>
-
-                            </tr>
-                        }
-                        else
-                        {
-                            <tr style="background-color: #FFFFFF">
-
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.RackName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.RackUnit)
-                                </td>
-
-                                <td>
-                                    @if (item.DefaultIP != null)
-                                    {
-                                        @Html.ActionLink(item.DefaultIP, "ServerDetails", "Server", new {serverCode = @item.ServerCode}, null)
-                                    }
-
-                                </td>
-
-                            </tr>
-                        }
-
-                    }
-                }
-                </tbody>
-                <tfoot>
-
-                <tr style="background-color: #404040">
-                    <th><h4 style="color: ghostwhite">Rack Name</h4></th>
-                    <th><h4 style="color: ghostwhite">Rack Unit</h4></th>
-                    <th><h4 style="color: ghostwhite">IP Address</h4></th>
-                </tr>
-
-                </tfoot>
-            </table>
-        </div><!-- /.box-body -->
-    </div><!-- /.box -->
-
+        </tfoot>
+    </table>
 </section><!-- /.content -->
+
 <!-- ADD LOCATION MODAL -->
 <div class="modal fade" id="addlocation-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" style="width: 300px">
@@ -205,12 +150,16 @@
 </div><!-- /.modal -->
 <!-- page script -->
 <script type="text/javascript">
-    $(function() {
-        $("#example1").dataTable({
-            "iDisplayLength": 42,
-            "aLengthMenu": [[42, 84, 126], [42, 84, 126]]
-        });
-
+    $('#example1').DataTable({
+        "processing": true,
+        "ajax": "@Url.Action("GetAll", "Location", new { httproute = "" })",
+        "columns": [
+            { "data": "RackName" },
+            { "data": "RackUnit" },
+            { "data": "DefaultIP" }
+        ],
+        "iDisplayLength": 42,
+        "aLengthMenu": [[42, 84, 126], [42, 84, 126]]
     });
 </script>
 
