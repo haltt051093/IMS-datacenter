@@ -97,6 +97,15 @@ namespace IMS.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to List of Racks.
+        /// </summary>
+        public static string RackIndex {
+            get {
+                return ResourceManager.GetString("RackIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Servers.
         /// </summary>
         public static string Server {
