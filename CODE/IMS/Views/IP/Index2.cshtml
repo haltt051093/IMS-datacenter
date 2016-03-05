@@ -1,44 +1,40 @@
 ﻿@model IMS.Models.IPIndexViewModel
 @{
-    ViewBag.Title = "IPAddressPage";
+    ViewBag.Title = Pages.IPIndex;
+    ViewBag.PageTitle = Pages.IPIndex;
     ViewBag.Role = "Shift Head";
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("IP", "Index2", Pages.IPIndex)
+    };
 }
 
-<section class="content-header">
-    <h1>
-        List of IP Address
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="@Url.Action("Index2", "Schedule")"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">IP Address</li>
-    </ol>
-</section>
-<section class="content">
-    <a class="btn btn-primary pull-left" data-toggle="modal" data-target="#addip-modal"><i class="fa fa-plus"></i> Add new IP Address</a>
-</section>
-<section class="content">
-    <div class="">
+<!-- Main content -->
+<section class="main-content">
+    <div>
+        <a class="btn btn-primary pull-left" data-toggle="modal" data-target="#addip-modal"><i class="fa fa-plus"></i> Add new IP Address</a>
+    </div>
+    <div class="clearfix"></div>
+    <div style="height: 10px"></div>
+    <div class="row hide">
         <div id="dropdown-template" class="col-xs-3">
             <label>IP Address: @Html.DropDownListFor(model => model.NetworkIP, Model.NetworkIPs, "All IP Addresses", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
         </div>
     </div>
-</section>
-
-<!-- Main content -->
-<section class="content">
-
-            <table id="example1" class="table table-bordered table-striped">
+            <table id="example1" class="table table-bordered table-hover">
                 <thead>
-                <tr>
-                    <th>No</th>
-                    <th>IP Address</th>
-                    <th>Gateway</th>
-                    <th>Subnet mask</th>
-                    <th>Status</th>
+                <tr style="background-color: #404040">
+                    <th><h4 style="color: ghostwhite">Id</h4>
+                    <th><h4 style="color: ghostwhite">NetworkIP</h4>
+                    <th><h4 style="color: ghostwhite">IP Address</h4>
+                    <th><h4 style="color: ghostwhite">Gateway</h4>
+                    <th><h4 style="color: ghostwhite">Subnet mask</h4>
+                    <th><h4 style="color: ghostwhite">Status</h4>
                     <th></th>
                 </tr>
                 </thead>
-                <tbody>
+                @*<tbody>
                     @for (int i = 0; i < Model.IPs.Count; i++)
                     {
                         var item = Model.IPs[i];
@@ -105,11 +101,7 @@
                                                         <h4>Are you sure to unblock this IP Address?</h4>
                                                     </div>
                                                     <div class="modal-footer clearfix">
-                                                        @*@using (Html.BeginForm("ChangeIPStatus", "IP"))
-                                                                {
-                                                                    <input type="hidden" name="ipid" id="ipid" value="" />
-                                                                    <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Yes</button>
-                                                                }*@
+                                                 
                                                        
                                                         <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Yes</button>
                                                         <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
@@ -129,14 +121,15 @@
                         </tr>
                                         }
 
-                </tbody>
+                </tbody>*@
                 <tfoot>
-                <tr>
-                    <th>No</th>
-                    <th>IP Address</th>
-                    <th>Gateway</th>
-                    <th>Subnet mask</th>
-                    <th>Status</th>
+                <tr style="background-color: #404040">
+                    <th><h4 style="color: ghostwhite">Id</h4>
+                    <th><h4 style="color: ghostwhite">NetworkIP</h4>
+                    <th><h4 style="color: ghostwhite">IP Address</h4>
+                    <th><h4 style="color: ghostwhite">Gateway</h4>
+                    <th><h4 style="color: ghostwhite">Subnet mask</h4>
+                    <th><h4 style="color: ghostwhite">Status</h4>
                     <th></th>
 
                 </tr>
@@ -226,16 +219,76 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- page script -->
-<script type="text/javascript">
-    $(function () {
-        $("#example1").dataTable({
-            "iDisplayLength": 32,
-            "aLengthMenu": [[32, 64, 128, 255], [32, 64, 128, 255]],
-            "bSort": true
-        });
 
-    });
+
+<script>
+    $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            var networkIP = $('#NetworkIP').val();
+            if (networkIP == '') {
+                return true;
+            }
+            if (networkIP == data[1]) {
+                return true;
+            }
+            return false;
+        }
+    );
 </script>
+
+<script type="text/javascript">
+    var table = $('#example1').DataTable({
+        dom: '<lf<t>ip>',
+        processing: true,
+        ajax: "@Url.Action("GetAll", "IP", new {httproute = ""})",
+        columns: [
+            { data: "Id" },
+            { data: "NetworkIP"},
+            { data: "IPAddress" },
+            { data: "Gateway" },
+            { data: "Subnetmask" },
+            { data: "StatusName" },
+            {}
+        ],
+        iDisplayLength: 32,
+        aLengthMenu: [[32, 64, 128, 255], [32, 64, 128, 255]],
+        fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+
+            switch (aData.StatusName) {
+                case 'Reserve':
+                $(nRow).css('background-color', '#ffe6e6');
+                break;
+            }
+        },
+        order: [[1, "asc"]] ,
+        columnDefs: [
+            {
+                targets: [0],
+                visible: false,
+                searchable: true
+            },
+            {
+                targets: [1],
+                visible: false,
+                searchable: true
+            }
+        ]
+    });
+
+    $("#example1_filter").append($('#dropdown-template').html());
+    $('#dropdown-template').html('');
+
+    $('#NetworkIP').change(function() {
+        table.draw();
+    });
+
+
+</script>
+
+@section Styles {
+    <style>
+    </style>
+}
 @*<script>
         $(document).on("click", ".open-blockIP-modal", function () {
          var myId = $(this).data('id');

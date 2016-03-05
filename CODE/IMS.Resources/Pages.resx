@@ -123,14 +123,17 @@
   <data name="HomeIndex" xml:space="preserve">
     <value>Home</value>
   </data>
+  <data name="IPIndex" xml:space="preserve">
+    <value>List of IP Address</value>
+  </data>
   <data name="Location" xml:space="preserve">
     <value>Locations</value>
   </data>
   <data name="LocationIndex" xml:space="preserve">
-    <value>List of Locations</value>
+    <value>List of Location</value>
   </data>
   <data name="RackIndex" xml:space="preserve">
-    <value>List of Racks</value>
+    <value>List of Rack</value>
   </data>
   <data name="Server" xml:space="preserve">
     <value>Servers</value>

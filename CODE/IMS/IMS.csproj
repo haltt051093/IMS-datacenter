@@ -891,6 +891,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiControllers\IPController.cs" />
     <Compile Include="ApiControllers\LocationController.cs" />
     <Compile Include="ApiControllers\RackController.cs" />
     <Compile Include="ApiModels\DataTableModel.cs" />

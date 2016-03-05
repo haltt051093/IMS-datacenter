@@ -79,6 +79,15 @@ namespace IMS.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to List of IP Address.
+        /// </summary>
+        public static string IPIndex {
+            get {
+                return ResourceManager.GetString("IPIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Locations.
         /// </summary>
         public static string Location {
@@ -88,7 +97,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to List of Locations.
+        ///   Looks up a localized string similar to List of Location.
         /// </summary>
         public static string LocationIndex {
             get {
@@ -97,7 +106,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to List of Racks.
+        ///   Looks up a localized string similar to List of Rack.
         /// </summary>
         public static string RackIndex {
             get {
