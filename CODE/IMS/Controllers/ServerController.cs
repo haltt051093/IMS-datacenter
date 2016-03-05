@@ -29,11 +29,11 @@ namespace IMS.Controllers
         }
 
         // GET: Server/Details
-        public ActionResult ServerDetails(string serverCode)
+        public ActionResult Detail(string code)
         {
-            var server = ServerBLO.Current.GetServerByCode(serverCode);
+            var server = ServerBLO.Current.GetServerByCode(code);
             //var serverattributes = ServerBLO.Current.GetServerAttributes(serverCode);
-            var servercurrentips = ServerBLO.Current.GetCurrentIP(serverCode);
+            var servercurrentips = ServerBLO.Current.GetCurrentIP(code);
             if (server == null)
             {
                 return HttpNotFound();

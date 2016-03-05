@@ -7,11 +7,17 @@
     <title>@ViewBag.Title - IMS DataCenter</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
+    <script>
+        var CONSTANT = {
+            authority: window.location.protocol + "//" + window.location.host
+        }
+    </script>
+
     @Scripts.Render(Constants.ScriptBundle.MODERNIZR)
     @Scripts.Render(Constants.ScriptBundle.MOMENT)
     @Scripts.Render(Constants.ScriptBundle.RESPOND)
     @Scripts.Render(Constants.ScriptBundle.JQUERY)
-    @Scripts.Render(Constants.ScriptBundle.JQUERY)
+    @Scripts.Render(Constants.ScriptBundle.JQUERY_UI)
     @Scripts.Render(Constants.ScriptBundle.JQUERY_VALIDATE)
     @Scripts.Render(Constants.ScriptBundle.BOOTSTRAP)
     @Scripts.Render(Constants.ScriptBundle.BOOTSTRAP_DATETIMEPICKER)
@@ -20,6 +26,7 @@
     @RenderSection("Scripts", false)
     @Styles.Render(Constants.StyleBundle.BOOTSTRAP)
     @Styles.Render(Constants.StyleBundle.BOOTSTRAP_DATETIMEPICKER)
+    @Styles.Render(Constants.StyleBundle.JQUERY_UI)
     @Styles.Render(Constants.StyleBundle.DATATABLE)
     @Styles.Render(Constants.StyleBundle.ADMINLTE)
     @Styles.Render(Constants.StyleBundle.APPLICATION)

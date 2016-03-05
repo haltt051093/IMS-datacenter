@@ -60,7 +60,8 @@ namespace IMS
             ));
             builder.Add(new StyleBundle(Constants.StyleBundle.JQUERY_UI).Include(
                 "~/Content/jquery-ui.css",
-                "~/Content/jquery-ui.structure.css"
+                "~/Content/jquery-ui.structure.css",
+                "~/Content/jquery-ui.tfpatch.css"
             ));
             builder.Add(new StyleBundle(Constants.StyleBundle.JQUERY_VALIDATE).Include(
                 "~/Content/jquery.validate.css"

@@ -28,7 +28,7 @@ namespace IMS.Data.Repository
         }
         public List<LocationExtendedModel> GetAllLocation()
         {
-            string query = @"select l.LocationCode,ser.ServerCode,ser.DefaultIP, l.RackUnit, s.StatusName,r.RackName, ser.Id,r.StatusCode as RackStatus from Location as l
+            string query = @"select l.LocationCode,ser.ServerCode,ser.DefaultIP, l.RackUnit, s.StatusName,r.RackName,r.RackCode, ser.Id,r.StatusCode as RackStatus from Location as l
                             left join Status as s
                             on s.StatusCode = l.StatusCode
                             join Rack as r
