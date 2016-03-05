@@ -113,14 +113,14 @@
                         </h1>
                     </section>
 
-
+                    <div class="form-group">
+                        <div id="dropdown-template" class="col-xs-3">
+                            <label>Location: @Html.DropDownListFor(model => model.RackCode, Model.Racks, "All Locations", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
+                        </div>
+                    </div>
                     
                         <section class="content">
-                            <div class="row hide">
-                                <div id="dropdown-template" class="col-xs-3">
-                                    <label>Location: @Html.DropDownListFor(model => model.RackCode, Model.Racks, "All Locations", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
-                                </div>
-                            </div>
+                           
                                    
                                         <table id="example1" class="table table-bordered table-striped">
                                             <thead>
@@ -132,7 +132,7 @@
                                                     <th></th>
                                                 </tr>
                                             </thead>
-                                            @*<tbody>
+                                            <tbody>
                                                 <div id="divPartialView" class="">
                                                     @foreach (var item in Model.Locations1)
                                                     {
@@ -191,7 +191,7 @@
                                                         </tr>
                                                     }
                                                 </div>
-                                            </tbody>*@
+                                            </tbody>
                                       
                                             <tfoot>
 
@@ -246,64 +246,6 @@
                 });
             </script>
 
-            <script>
-    $.fn.dataTable.ext.search.push(
-        function (settings, data, dataIndex) {
-            var rackCode = $('#RackCode').val();
-            if (rackCode == '') {
-                return true;
-            }
-            if (rackCode == data[0]) {
-                return true;
-            }
-            return false;
-        }
-    );
-            </script>
-
-            <script type="text/javascript">
-    var table = $('#example1').DataTable({
-        dom: '<lf<t>ip>',
-        processing: true,
-        ajax: "@Url.Action("GetLocationForChange", "Location", new {httproute = "", code = Model.ServerCode } )",
-        columns: [
-            { data: "RackCode" },
-            { data: "RackName" },
-            { data: "RackUnit" },
-            { data: "ServerCode" }
-        ],
-        iDisplayLength: 42,
-        aLengthMenu: [[42, 84, 126], [42, 84, 126]],
-        fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-           
-            switch (aData.StatusName) {
-            case 'Used':
-                $(nRow).css('background-color', '#ffe6e6');
-                break;
-            }
-        },
-        order: [[1, "asc"] ,[ 2, "desc" ]],
-        columnDefs: [
-            {
-                targets: [0],
-                visible: false,
-                searchable: true
-            }
-        ]
-    });
-
-    $("#example1_filter").append($('#dropdown-template').html());
-    $('#dropdown-template').html('');
-
-    $('#RackCode').change(function() {
-        table.draw();
-    });
-
-    $('#RackName').autocomplete({
-        source: '@Url.Action("GetAvailableName", "Rack", new { httproute = "" })'
-    });
-
-            </script>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
