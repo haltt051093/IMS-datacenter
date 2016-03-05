@@ -67,7 +67,8 @@
                                         <div class="modal-content">
                                             <form action="ChangeIPStatus" method="post">
 
-
+                                               
+                                                <input class="hidden" name="Id" value="@Model.IPs[i].Id" />
                                                 @if (item.StatusName == "Available")
                                                 {
                                                     <div class="modal-body">
@@ -83,7 +84,7 @@
                                                     </div>
                                                     <div class="modal-footer clearfix">
 
-                                                        @Html.HiddenFor(model => Model.IPs[i].Id)
+                                                       
                                                         <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Block</button>
                                                         <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
                                                     </div>
@@ -102,7 +103,7 @@
                                                                     <input type="hidden" name="ipid" id="ipid" value="" />
                                                                     <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Yes</button>
                                                                 }*@
-                                                        @Html.HiddenFor(model => model.IPs[i].Id)
+                                                       
                                                         <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Yes</button>
                                                         <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
                                                     </div>

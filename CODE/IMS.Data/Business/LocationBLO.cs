@@ -108,11 +108,14 @@ namespace IMS.Data.Business
         public List<LocationExtendedModel> GetChangeLocation(Server server)
         {
             var allLocation = new List<LocationExtendedModel>();
+
+            //Case: customer rent rack
             if (RackOfCustomerDAO.Current.GetRackOfCustomer(server).Count > 0)
             {
                 allLocation = dao.GetCustomerRackValidPowerForChange(server);
             }
             else
+            //Case: customer don't rent rack
             {
                 allLocation = dao.GetRackValidPowerForChange(server);
             }

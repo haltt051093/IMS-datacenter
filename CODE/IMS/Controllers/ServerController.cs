@@ -55,6 +55,7 @@ namespace IMS.Controllers
             }).ToList();           
             
             data.Locations1 = locations;
+            data.ServerCode = code;
             return View(data);
         }
 
