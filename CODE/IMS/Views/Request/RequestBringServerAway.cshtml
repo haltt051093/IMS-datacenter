@@ -125,28 +125,29 @@
     </div><!-- /.box -->
 </section>
 <script type="text/javascript">
-    $(function () {
-        $("#checkAll").click(function () {
-            alert("choi oiiiii");
-            //$('#masterTable').find('input[type="checkbox"]').prop('checked', this.checked);
-            //var table = $(e.target).closest('table');
-            //$('td input:checkbox', table).prop('checked', this.checked);
-            //$("input:checkbox").prop('checked', $(this).prop("checked"));
-        });
-
-        $('#masterTable tr').click(function (event) {
-            if (event.target.type !== 'checkbox') {
-                $(':checkbox', this).trigger('click');
-            }
-        });
-        $("input[type='checkbox']").change(function (e) {
-            if ($(this).is(":checked")) { //If the checkbox is checked
-                $(this).closest('tr').addClass("highlight_row");
-                //Add class on checkbox checked
-            } else {
-                $(this).closest('tr').removeClass("highlight_row");
-                //Remove class on checkbox uncheck
-            }
-        });
+    $("#checkAll").change(function () {
+        alert("choi oiiiii");
+        //$('#masterTable').find('input[type="checkbox"]').prop('checked', this.checked);
+        //var table = $(e.target).closest('table');
+        //$('td input:checkbox', table).prop('checked', this.checked);
+        //$("input:checkbox").prop('checked', $(this).prop("checked"));
     });
+    //$(function () {
+        
+
+    //    //$('#masterTable tr').click(function (event) {
+    //    //    if (event.target.type !== 'checkbox') {
+    //    //        $(':checkbox', this).trigger('click');
+    //    //    }
+    //    //});
+    //    $("input[type='checkbox']").change(function (e) {
+    //        if ($(this).is(":checked")) { //If the checkbox is checked
+    //            $(this).closest('tr').addClass("highlight_row");
+    //            //Add class on checkbox checked
+    //        } else {
+    //            $(this).closest('tr').removeClass("highlight_row");
+    //            //Remove class on checkbox uncheck
+    //        }
+    //    });
+    //});
 </script>
