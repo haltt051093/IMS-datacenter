@@ -55,7 +55,7 @@
                                     <tbody>
                                         @foreach (var item in Model.ServerOfCustomer)
                                         {
-                                            <tr class="check">
+                                            <tr class="check" server-code="@item.RackCode">
                                                 <td>
                                                     <input type="checkbox" id="@item.ServerCode" />
                                                 </td>

@@ -80,9 +80,38 @@ namespace IMS.Data.Repository
             //return RawQuery<ServerExtendedModel>(query, new object[] { });
         }
 
-        public List<Server> GetServerOfCustomer(string customer)
+        public List<ServerExtendedModel> GetServerOfCustomer(string customer)
         {
-            var query = Query(x => x.Customer == customer && x.StatusCode == Constants.StatusCode.SERVER_RUNNING);
+            var distinct = LocationDAO.Current.Table().GroupBy(item => item.ServerCode)
+                .Select(e => e.FirstOrDefault());
+            var rackDis = from r in RackDAO.Current.Table()
+                          join l in distinct
+                              on r.RackCode equals l.RackCode
+                          select new RackOfCustomerExtendedModel
+                          {
+                              LocationCode = l.LocationCode,
+                              ServerCode = l.ServerCode,
+                              RackCode = l.RackCode,
+                              RackName = r.RackName,
+                          };
+            var query = from s in Table()
+                        join l in rackDis
+                            on s.ServerCode equals l.ServerCode into sl
+                        from subl in sl.DefaultIfEmpty()
+                        //join st in StatusDAO.Current.Table()
+                        //    on s.StatusCode equals st.StatusCode into stsl
+                        //from subst in stsl.DefaultIfEmpty()
+                        //join a in AccountDAO.Current.Table()
+                        //    on s.Customer equals a.Username into astsl
+                        //from suba in astsl.DefaultIfEmpty()
+                        where s.Customer == customer
+                        select new ServerExtendedModel
+                        {
+                            RackCode = subl.RackCode,
+                            RackName = subl.RackName,
+                            DefaultIP = s.DefaultIP,
+                            ServerCode = s.ServerCode,
+                        };
             return query.ToList();
         }
 
@@ -112,7 +141,7 @@ namespace IMS.Data.Repository
                         join a in AccountDAO.Current.Table()
                             on s.Customer equals a.Username into astsl
                         from suba in astsl.DefaultIfEmpty()
-                        where s.ServerCode == serverCode
+                        where s.ServerCode == serverCode && s.StatusCode == Constants.StatusCode.SERVER_RUNNING
                         select new ServerExtendedModel
                         {
                             RackCode = subl.RackCode,

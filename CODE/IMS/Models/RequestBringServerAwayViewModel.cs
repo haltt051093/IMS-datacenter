@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 using IMS.Data.Models;
+using IMS.Data.ViewModels;
 
 namespace IMS.Models
 {
     public class RequestBringServerAwayViewModel
     {
-        public List<Server> ServerOfCustomer { get; set; }
+        public List<ServerExtendedModel> ServerOfCustomer { get; set; }
         public List<Server> SelectedServers { get; set; } 
         public List<SelectListItem> RackOfCustomer { get; set; } 
         public string SelectedRack { get; set; }
