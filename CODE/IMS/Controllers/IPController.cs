@@ -220,9 +220,9 @@ namespace IMS.Controllers
         public ActionResult ChangeIPStatus(IPIndexViewModel iivm)
         {
             //int? id = ipid.ToInt();
-            int id = iivm.IPs.FirstOrDefault().Id;
+           
             IPAddressPool ip = new IPAddressPool();
-            ip = IPAddressPoolBLO.Current.GetById(id);
+            ip = IPAddressPoolBLO.Current.GetById(iivm.Id);
             if (ip.StatusCode == Constants.StatusCode.IP_AVAILABLE)
             {
                 ip.StatusCode = Constants.StatusCode.IP_BLOCKED;

@@ -112,40 +112,23 @@
                             List of Location Available
                         </h1>
                     </section>
-                    <section class="content">
 
-                        @using (Html.BeginForm("ServerDetails", "Server", FormMethod.Get))
-                        {
-
-
-                            <h4>Search By</h4>
-                            <div class="form-inline">
-                                <div class="form-group"><label>Rack Name: </label>
-                                </div>
-                                <div class="form-group">
-                                    @Html.DropDownList("RackSearch",Model.Racks, "--Select--", htmlAttributes: new {@class = "form-control", @id = "racksearch"})
-                                </div>
-                                @*<div class="form-group">
-                                    <input href="#" type="button" id="SearchRack" class="btn btn-primary pull-left" value="Search"/>
-                                </div>*@
-                            </div>
-
-                        }
-
-                    </section>
+                    <div class="form-group">
+                        <div id="dropdown-template" class="col-xs-3">
+                            <label>Location: @Html.DropDownListFor(model => model.RackCode, Model.Racks, "All Locations", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
+                        </div>
+                    </div>
                     
                         <section class="content">
-                            <div class="box">
-                                <div class="box-body table-responsive">
+                           
                                    
                                         <table id="example1" class="table table-bordered table-striped">
                                             <thead>
-                                                <tr>
-
-                                                    <th>RackName</th>
-                                                    <th>RackUnit</th>
-                                                    <th>Status</th>
-                                                    <th>ServerCode</th>
+                                                <tr style="background-color: #404040">
+                                                    <th><h4 style="color: ghostwhite">Rack Code</h4>
+                                                    <th><h4 style="color: ghostwhite">Rack Name</h4>
+                                                    <th><h4 style="color: ghostwhite">Rack Unit</h4></th>
+                                                    <th><h4 style="color: ghostwhite">Server Code</h4></th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -210,20 +193,18 @@
                                                 </div>
                                             </tbody>
                                       
-                                <tfoot>
-                                    <tr>
+                                            <tfoot>
 
-                                        <th>RackName</th>
-                                        <th>RackUnit</th>
-                                        <th>Status</th>
-                                        <th>ServerCode</th>
-                                        <th></th>
-                                    </tr>
-                                </tfoot>
-                                    </table>
+                                                <tr style="background-color: #404040">
+                                                    <th><h4 style="color: ghostwhite">Rack Code</h4></th>
+                                                    <th><h4 style="color: ghostwhite">Rack Name</h4></th>
+                                                    <th><h4 style="color: ghostwhite">Rack Unit</h4></th>
+                                                    <th><h4 style="color: ghostwhite">Server Code</h4></th>
+                                                    <th></th>
+                                                </tr>
 
-                                </div><!-- /.box-body -->
-                            </div><!-- /.box -->
+                                            </tfoot>
+                                    </table>                 
 
                         </section><!-- /.content -->
                    
@@ -237,42 +218,13 @@
             </form>
 
             <script type="text/javascript">
-                $(function () {
-                    $('#racksearch').change(function () {
-                        var pass = $('#racksearch').val();
-                        var pass1 = $('#customer').val();
-                        var pass2 = $('#servercode').val();
-                        var pass3 = $('#power').val();
+                $(function() {
 
-                        var myTable = $('#example1 > tbody');
-                        $.ajax({
-                            cache: false,
-                            type: "GET",
-                            url: "@(Url.Action("GetLocationByRackName", "Server"))",
-                            data: { "SelectedRack": pass, "Customer":pass1,"ServerCode":pass2,"Power":pass3 },
-                        dataType: "json",
-                        success: function (data) {
-                            $('#divPartialView').class("hidden");
-                            $(data.Locations1).each(function (index, item) {
-                                //myTable.append($('tr', { value: item.ServerCode, text: item.ServerCode }));
-                                myTable.append('<tr><td>' + item.RackName + '</td><td>' +item.RackUnit+ '</td><td>'+item.StatusName+'</td><td>'+item.ServerCode+'<input type="radio" id="radio"'
-                                    + index + ' name="chk"/></td></tr>');
-                            });
-                        }
-                    });
-                });
-                    $("#example1").dataTable(
-                    {
-                        "bPaginate": true,
-                        "bFilter": false,
-                        "bSort": true,
-                        "bInfo": true,
-                    });
                     //DOING
                     var defaultIp = @Model.Server.DefaultIP;
                     $('#currentIps li').each(function() {
                         if (this.value == defaultIp) {
-                            $(this).css( "background-color:blue;" );
+                            $(this).css("background-color:blue;");
                         }
                     });
                     $("#SearchRack").on("click", function() {
@@ -293,6 +245,7 @@
                     });
                 });
             </script>
+
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

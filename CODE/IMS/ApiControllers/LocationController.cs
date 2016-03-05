@@ -14,5 +14,14 @@ namespace IMS.ApiControllers
             result.Data = locations;
             return result;
         }
+
+        public DataTableModel<LocationExtendedModel> GetLocationForChange(string code)
+        {
+            var server = ServerBLO.Current.GetServerByCode(code);
+            var locations = LocationBLO.Current.GetChangeLocation(server);
+            var result = new DataTableModel<LocationExtendedModel>();
+            result.Data = locations;
+            return result;
+        } 
     }
 }

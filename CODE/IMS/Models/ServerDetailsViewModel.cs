@@ -19,5 +19,6 @@ namespace IMS.Models
         public string ServerCode { get; set; }
         public string Customer { get; set; }
         public int Power { get; set; }
+        public string RackCode { get; set; }
     }
 }

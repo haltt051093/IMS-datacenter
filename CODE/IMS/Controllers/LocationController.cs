@@ -91,6 +91,7 @@ namespace IMS.Controllers
             request = "Change";
             //request = "New";
             var data = new LocationIndexViewModel();
+            //Get locations available for change
             if (request == "Change")
             {
                 var locations = LocationBLO.Current.GetChangeLocation(s);
@@ -107,6 +108,7 @@ namespace IMS.Controllers
                 data.Locations = locations;
                 return View(data);
             }
+            //Get locations available for new server
             else
             {
                 var locations = LocationBLO.Current.GetNewLocation(s);
