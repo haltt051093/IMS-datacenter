@@ -33,6 +33,7 @@ namespace IMS.Core
             public const string SERVER_WAITING = "STATUS01";
             public const string SERVER_RUNNING = "STATUS02";
             public const string SERVER_DEACTIVATE = "STATUS03";
+            public const string SERVER_BRINGING_AWAY = "STATUS34";
 
             public const string IP_AVAILABLE = "STATUS10";
             public const string IP_USED = "STATUS11";
@@ -177,6 +178,8 @@ namespace IMS.Core
             public const string LOG_BLOCK_IP = "BLOCKIP";
             //Unblock IP
             public const string LOG_UNBLOCK_IP = "UNBLOCKIP";
+            //bring server away
+            public const string LOG_BRING_SERVER_AWAY = "BASERVER";
         }
 
         public class BandWidth

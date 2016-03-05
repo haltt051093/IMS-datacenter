@@ -82,17 +82,17 @@ namespace IMS.Controllers
                     //rack cua server, select all va list cua rack, neu ko co thi ko hien
                     var rackOfCustomer = RackOfCustomerBLO.Current.GetRacksOfCustomer(Constants.Test.CUSTOMER_MANHNH,
                         Constants.StatusCode.RACKOFCUSTOMER_CURRENT);
-                    
+
                     if (rackOfCustomer.Count > 0)
                     {
                         data.RackOfCustomer = rackOfCustomer
-                        .Select(x => new SelectListItem { Value = x.RackCode, Text = x.RackName})
+                        .Select(x => new SelectListItem { Value = x.RackCode, Text = x.RackName })
                         .ToList();
                     }
 
                     return View("RequestBringServerAway", data);
                 }
-                    if (requestTypeCode == Constants.RequestTypeCode.RETURN_IP)
+                if (requestTypeCode == Constants.RequestTypeCode.RETURN_IP)
                 {
                     var data = new RequestIPViewModel();
                     var listServers = ServerDAO.Current.Query(x => x.Customer == Constants.Test.CUSTOMER_MANHNH);
@@ -250,7 +250,7 @@ namespace IMS.Controllers
 
             //Add request
             string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.RENT_RACK,
-                viewmodel.Customer,viewmodel.Description, null);
+                viewmodel.Customer, viewmodel.Description, null);
 
             //log lai thoi diem thay doi trang thai request
             LogChangedContent requestmodel = new LogChangedContent
@@ -302,12 +302,6 @@ namespace IMS.Controllers
         public ActionResult RequestAddServer(RequestAddServerViewModel viewmodel)
         {
             viewmodel.Customer = Constants.Test.CUSTOMER_MANHNH;
-            //get appointment time
-            //string dateOnly = viewmodel.AppointmentTime.ToString("dd/MM/yyyy");
-            //string time = DateTime.Parse(viewmodel.Time).ToString("HH:mm:ss");
-            //string datetime = dateOnly + ' ' + time;
-            //viewmodel.AppointmentTime = DateTime.Parse(datetime);
-
             //Add request
             string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.ADD_SERVER, viewmodel.Customer,
                 viewmodel.Description, viewmodel.AppointmentTime);
@@ -399,7 +393,39 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult RequestBringServerAway(RequestBringServerAwayViewModel viewmodel)
         {
+            //lay servercode, serverIP (gồm cả defaultIP và current IP
+            //update lai trang thai server, trang thai serverIP
+            var listServer = viewmodel.ServerOfCustomer;
+            //luu vo bang request 
+            string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.BRING_SERVER_AWAY,
+                viewmodel.Customer, viewmodel.Description, null);
 
+            foreach (var item in listServer)
+            {
+                if (item.Checked)
+                {
+                    //update serverstatus
+                    ServerBLO.Current.UpdateServerStatus(item.ServerCode, Constants.StatusCode.SERVER_BRINGING_AWAY);
+                    //update serverip status
+                    var currentIps = ServerIPBLO.Current.GetIpByServer(item.ServerCode);
+                    foreach (var ip in currentIps)
+                    {
+                        ServerIPBLO.Current.UpdateStatusServerIp(Constants.StatusCode.SERVERIP_CURRENT,
+                        Constants.StatusCode.SERVERIP_RETURNING, ip);
+                    }
+                    // log request status
+                    LogChangedContent logRequest = new LogChangedContent
+                    {
+                        RequestCode = result,
+                        TypeOfLog = Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
+                        Object = Constants.Object.OBJECT_REQUEST,
+                        ObjectStatus = Constants.StatusCode.REQUEST_SENDING,
+                        ChangedValueOfObject = result,
+                        ServerCode = item.ServerCode,
+                    };
+                    LogChangedContentBLO.Current.AddLog(logRequest);
+                }
+            }
             return RedirectToAction("Index", "Home");
         }
 
@@ -651,7 +677,33 @@ namespace IMS.Controllers
 
                 return View("RequestAddServerInfo", viewmodel);
             }
+            if (rType.Equals(Constants.RequestTypeCode.BRING_SERVER_AWAY))
+            {
+                //Get request
+                RequestBringServerAwayViewModel viewmodel = new RequestBringServerAwayViewModel();
+                var request = RequestBLO.Current.GetRequestByRequestCode(rCode);
+                viewmodel.RequestCode = rCode;
+                if (request != null)
+                {
+                    viewmodel = Mapper.Map<Request, RequestBringServerAwayViewModel>(request);
+                    viewmodel.StatusName = StatusBLO.Current.GetStatusName(viewmodel.StatusCode);
+                    var customer = AccountBLO.Current.GetAccountByCode(viewmodel.Customer);
+                    viewmodel.CustomerName = customer.Fullname;
+                    viewmodel.Identification = customer.Identification;
+                    //lay list servers
+                    var serverCodes = LogChangedContentBLO.Current.GetServerCodeByRequestCode(rCode);
+                    List<ServerExtendedModel> list = new List<ServerExtendedModel>();
+                    foreach (var servercode in serverCodes)
+                    {
+                        var server = ServerBLO.Current.GetServerByCode(servercode);
+                        list.Add(server);
+                    }
+                    viewmodel.ServerOfCustomer = list;
+                    viewmodel.SelectedServerNumber = list.Count;
+                }
 
+                return View("RequestBringServerAwayInfo", viewmodel);
+            }
             if (rType.Equals(Constants.RequestTypeCode.ASSIGN_IP))
             {
                 RequestIPViewModel viewmodel = new RequestIPViewModel();
@@ -1001,6 +1053,48 @@ namespace IMS.Controllers
                     //Staff = viewmodel.StaffCode
                 };
                 LogChangedContentBLO.Current.AddLog(logRequest);
+            }
+            return RedirectToAction("Index", "Home");
+        }
+        //DOING
+        [HttpPost]
+        public ActionResult ProcessRequestBringServerAway(RequestBringServerAwayViewModel viewmodel)
+        {
+            var listServer = viewmodel.ServerOfCustomer;
+            foreach (var server in listServer)
+            {
+                ServerBLO.Current.UpdateServerStatus(server.ServerCode, Constants.StatusCode.SERVER_RUNNING);
+                ServerAttributeBLO.Current.UpdateServerAttributeStatus(server.ServerCode,
+                    Constants.StatusCode.SERVERATTRIBUTE_NEW);
+                //doi trang thai cua request
+                RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);
+                //luu IP address
+                //Luu location
+
+                //log server status
+                LogChangedContent logServer = new LogChangedContent
+                {
+                    RequestCode = viewmodel.RequestCode,
+                    TypeOfLog = Constants.TypeOfLog.LOG_ADD_SERVER,
+                    Object = Constants.Object.OBJECT_SERVER,
+                    ChangedValueOfObject = viewmodel.RequestCode,
+                    ObjectStatus = Constants.StatusCode.SERVER_RUNNING,
+                    ServerCode = server.ServerCode
+                    //Staff = viewmodel.StaffCode
+                };
+                LogChangedContentBLO.Current.AddLog(logServer);
+
+                //log request status
+                LogChangedContent logRequest = new LogChangedContent
+                {
+                    RequestCode = viewmodel.RequestCode,
+                    TypeOfLog = Constants.TypeOfLog.LOG_ADD_SERVER,
+                    Object = Constants.Object.OBJECT_REQUEST,
+                    ChangedValueOfObject = viewmodel.RequestCode,
+                    ObjectStatus = Constants.StatusCode.REQUEST_DONE,
+                    ServerCode = server.ServerCode
+                    //Staff = viewmodel.StaffCode
+                };
             }
             return RedirectToAction("Index", "Home");
         }

@@ -16,56 +16,70 @@
 <section class="content">
     <div class="box">
         <div class="box-body table-responsive">
-            <form action="#">
+            @using (Html.BeginForm("ProcessRequestBringServerAway", "Request", FormMethod.Post))
+            {
                 <dl class="dl-horizontal">
                     <dt>
                         From customer
                     </dt>
                     <dd>
-                        Lê Văn Lương
+                        @Html.DisplayFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control" } })
+
+
                     </dd>
                     <dt>
                         Requested Time
                     </dt>
 
                     <dd>
-                        18-Jan-16 01:19:12
+                        @Html.DisplayFor(model => model.RequestedTime, new { htmlAttributes = new { @class = "form-control" } })
                     </dd>
                     <dt>
                         Status
                     </dt>
 
                     <dd>
-                        Waiting
+                        @Html.DisplayFor(model => model.StatusName, new { htmlAttributes = new { @class = "form-control" } })
+                    </dd>
+
+                    <dt>
+                        Number of servers
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.SelectedServerNumber, new { htmlAttributes = new { @class = "form-control" } })
                     </dd>
 
                     <dt>
                         Selected Server
                     </dt>
-
-                    <dd>
-                        S123456
-                    </dd>
-                    <dd>S456789</dd>
-                    <dd>S456789</dd>
+                    @foreach (var item in Model.ServerOfCustomer)
+                    {
+                        <dd>
+                            @Html.DisplayFor(model => item.ServerCode, new { htmlAttributes = new { @class = "form-control" } })
+                        </dd>
+                    }
                     <div class="form-group">
                         <dt>
                             Description:
                         </dt>
-
                         <dd>
-                            I want to be assigned as soon as possible
+                            @Html.DisplayFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                         </dd>
                     </div>
 
                     <dt></dt>
                     <dd>
-                        <button type="submit" class="btn btn-primary">Approve</button>
-                        <button type="submit" class="btn btn-danger">Reject</button>
+                        @Html.HiddenFor(model => model.RequestCode)
+                        @if (Model.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                        {
+                            <button type="submit" class="btn btn-primary">Approve</button>
+                            <button type="submit" class="btn btn-danger">Reject</button>
+                        }
                     </dd>
 
                 </dl>
-            </form>
+            }
         </div><!-- /.box-body -->
     </div><!-- /.box -->
 </section>

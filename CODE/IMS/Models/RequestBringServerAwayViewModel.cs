@@ -18,6 +18,7 @@ namespace IMS.Models
 
         public string Customer { get; set; }
         public string CustomerName { get; set; }
+        public string Identification { get; set; }
 
         public string StaffName { get; set; }
         public string StaffCode { get; set; }

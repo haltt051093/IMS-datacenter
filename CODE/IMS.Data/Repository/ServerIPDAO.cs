@@ -44,7 +44,15 @@ namespace IMS.Data.Repository
         {
             var query =
                 Current.Query(x => x.ServerCode == serverCode && x.StatusCode == Constants.StatusCode.SERVERIP_RETURNING)
-                .Select(x=>x.CurrentIP);
+                .Select(x => x.CurrentIP);
+            return query.ToList();
+        }
+
+        public List<string> GetIpByServer(string serverCode)
+        {
+            var query =
+                Current.Query(x => x.ServerCode == serverCode && x.StatusCode == Constants.StatusCode.SERVERIP_CURRENT)
+                .Select(x => x.CurrentIP);
             return query.ToList();
         }
 
