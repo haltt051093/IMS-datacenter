@@ -421,7 +421,7 @@
     <Content Include="Content\jQueryUI\jquery-ui-1.10.3.custom.min.css" />
     <Content Include="Content\jvectormap\jquery-jvectormap-1.2.2.css" />
     <Content Include="Content\morris\morris.css" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\site.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -1008,7 +1008,6 @@
     <Content Include="Views\Request\RequestReturnRack.cshtml" />
     <Content Include="Views\Request\RequestUpgradeServer2.cshtml" />
     <Content Include="Views\Request\RequestUpgradeServerInfo2.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Rack\Index.cshtml" />
     <Content Include="Views\Home\Header.cshtml" />
     <Content Include="Views\Request\Index.cshtml" />

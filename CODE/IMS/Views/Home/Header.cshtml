@@ -4,7 +4,7 @@
     string role = Model == null ? string.Empty : Model.ToString();
 }
 
-<a href="@Url.Action("Index2", "Schedule")" class="logo">
+<a href="@Url.Action("Index", "Home")" class="logo">
     <!-- Add the class icon to your logo image or logo icon to add the margining -->
     <img src="@Url.Content("~/img/logoIMS.png")" alt="logo image" class="offline" width="75px"/>
 </a>
@@ -22,7 +22,7 @@
         <ul class="nav navbar-nav">
             <!-- Messages: style can be found in dropdown.less-->
 
-            @if (role == "Shift Head")
+            @if (role == @Constants.Role.SHIFT_HEAD)
             {
                 <li class="dropdown notifications-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
