@@ -234,6 +234,7 @@ namespace IMS.Controllers
                     NotifRegister(notif);
                 }
             }
+            Alert(Constants.AlertType.SUCCESS, "RequestReturnRack", null, true);
             return RedirectToAction("Index", "Home");
         }
 
@@ -268,7 +269,7 @@ namespace IMS.Controllers
             notif.RequestCode = result;
             //dang ky ham cho client
             NotifRegister(notif);
-
+            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("Index", "Home");
         }
 
@@ -285,12 +286,12 @@ namespace IMS.Controllers
             }
             else if (viewmodel.Action == Constants.FormAction.EDIT_ACTION)
             {
+                //DOING
                 TempRequestBLO.Current.Update(temp);
             }
-
-            RequestType rt = new RequestType();
-            rt.RequestTypeCode = Constants.RequestTypeCode.ADD_SERVER;
-            return RedirectToAction("Index", "Home", rt);
+            RequestCreateViewModel rt = new RequestCreateViewModel();
+            rt.Type = Constants.RequestTypeCode.ADD_SERVER;
+            return RedirectToAction("CreateRequest", rt);
         }
 
         public ActionResult DeleteTempServer(string tempCode)
@@ -393,6 +394,7 @@ namespace IMS.Controllers
             notif.RequestCode = result;
             //dang ky ham cho client
             NotifRegister(notif);
+            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("Index", "Home");
         }
 
@@ -432,6 +434,7 @@ namespace IMS.Controllers
                     LogChangedContentBLO.Current.AddLog(logRequest);
                 }
             }
+            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("Index", "Home");
         }
 
@@ -492,6 +495,7 @@ namespace IMS.Controllers
                 //dang ky ham cho client
                 NotifRegister(notif);
             }
+            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("Index", "Home");
         }
 
@@ -659,6 +663,7 @@ namespace IMS.Controllers
                     {
                         var server = ServerBLO.Current.GetServerByCode(servercode, Constants.StatusCode.SERVER_RUNNING);
                         //lay serverattribute
+                        //doing loi
                         var listAttributes = ServerAttributeBLO.Current
                             .GetServerAttributes(servercode, Constants.StatusCode.SERVERATTRIBUTE_UPDATING);
                         foreach (var attribute in listAttributes)
@@ -683,6 +688,7 @@ namespace IMS.Controllers
 
                 return View("RequestAddServerInfo", viewmodel);
             }
+            //DOING, truong hop request thanh trang thai Done
             if (rType.Equals(Constants.RequestTypeCode.BRING_SERVER_AWAY))
             {
                 //Get request
@@ -701,13 +707,15 @@ namespace IMS.Controllers
                     List<ServerExtendedModel> list = new List<ServerExtendedModel>();
                     foreach (var servercode in serverCodes)
                     {
-                        var server = ServerBLO.Current.GetServerByCode(servercode, Constants.StatusCode.SERVER_BRINGING_AWAY);
+                        var server = ServerBLO.Current.GetAllServerInfo(servercode);
+                        viewmodel.ReturnIpNumber = viewmodel.ReturnIpNumber + server.ServerIps.Count;
+                        viewmodel.ReturnLocationNumber = viewmodel.ReturnLocationNumber + server.ServerLocation.Count;
                         list.Add(server);
                     }
                     viewmodel.ServerOfCustomer = list;
                     viewmodel.SelectedServerNumber = list.Count;
                 }
-
+                Alert("Success");
                 return View("RequestBringServerAwayInfo", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.ASSIGN_IP))
@@ -928,6 +936,7 @@ namespace IMS.Controllers
                 };
                 RackOfCustomerBLO.Current.Add(rackOfCustomer);
             }
+            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("Index", "Home");
         }
 
@@ -979,6 +988,7 @@ namespace IMS.Controllers
                 Staff = viewmodel.StaffCode
             };
             LogChangedContentBLO.Current.AddLog(logRequest);
+            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("Index", "Home");
         }
 
@@ -1018,6 +1028,7 @@ namespace IMS.Controllers
                 Staff = viewmodel.StaffCode
             };
             LogChangedContentBLO.Current.AddLog(logRequest);
+            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("Index", "Home");
         }
 
@@ -1060,29 +1071,36 @@ namespace IMS.Controllers
                 };
                 LogChangedContentBLO.Current.AddLog(logRequest);
             }
+            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("Index", "Home");
         }
-        //DOING
+        
         [HttpPost]
         public ActionResult ProcessRequestBringServerAway(RequestBringServerAwayViewModel viewmodel)
         {
             var listServer = viewmodel.ServerOfCustomer;
             foreach (var server in listServer)
             {
+                //log ip status
+                var serverips = ServerIPBLO.Current.GetReturningIps(server.ServerCode);
+                foreach (var ip in serverips)
+                {
+                    LogChangedContent logIp = new LogChangedContent
+                    {
+                        RequestCode = viewmodel.RequestCode,
+                        TypeOfLog = Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
+                        Object = Constants.Object.OBJECT_IP,
+                        ChangedValueOfObject = ip,
+                        ObjectStatus = Constants.StatusCode.IP_AVAILABLE,
+                        ServerCode = server.ServerCode
+                    };
+                    LogChangedContentBLO.Current.AddLog(logIp);
+                }
+
                 //doi trang thai server
                 ServerBLO.Current.UpdateServerStatus(server.ServerCode, Constants.StatusCode.SERVER_DEACTIVATE);
                 ServerAttributeBLO.Current.UpdateServerAttributeStatus(server.ServerCode,
                     Constants.StatusCode.SERVERATTRIBUTE_OLD);
-                //doi trang thai cua request
-                RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);
-                //giai phong location
-
-
-                //change serverip status
-                ServerIPBLO.Current.ReturnAllIpOfServer(server.ServerCode);
-                //giai phong ip
-                IPAddressPoolBLO.Current.SetIpAvailable(server.ServerCode);
-                //DOING
                 //log server status
                 LogChangedContent logServer = new LogChangedContent
                 {
@@ -1095,7 +1113,8 @@ namespace IMS.Controllers
                     //Staff = viewmodel.StaffCode
                 };
                 LogChangedContentBLO.Current.AddLog(logServer);
-
+                //doi trang thai cua request
+                RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);
                 //log request status
                 LogChangedContent logRequest = new LogChangedContent
                 {
@@ -1108,10 +1127,14 @@ namespace IMS.Controllers
                     //Staff = viewmodel.StaffCode
                 };
                 LogChangedContentBLO.Current.AddLog(logRequest);
-                //log Ip
-
-                //log location?
+                //giai phong location
+                LocationBLO.Current.SetLocationAvailable(server.ServerCode);
+                //change serverip status
+                ServerIPBLO.Current.ReturnAllIpOfServer(server.ServerCode);
+                //giai phong ip
+                IPAddressPoolBLO.Current.SetIpAvailable(server.ServerCode);
             }
+            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("Index", "Home");
         }
 
@@ -1179,6 +1202,7 @@ namespace IMS.Controllers
 
                 return RedirectToAction("Index", "Home");
             }
+            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("Index", "Home");
         }
         //DOING
@@ -1242,6 +1266,7 @@ namespace IMS.Controllers
                 Staff = viewmodel.StaffCode
             };
             LogChangedContentBLO.Current.AddLog(logRequest);
+            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("Index", "Home");
         }
         #endregion

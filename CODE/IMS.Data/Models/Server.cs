@@ -39,5 +39,6 @@ namespace IMS.Data.Models
         public int? Outlet { get; set; }
 
         public string Bandwidth { get; set; }
+
     }
 }

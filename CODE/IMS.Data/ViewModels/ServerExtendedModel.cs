@@ -31,6 +31,11 @@ namespace IMS.Data.ViewModels
         public string TempCode { get; set; }
 
         public List<RequestExtendedModel> Requests { get; set; }
+
         public bool Checked { get; set; }
+
+        public List<ServerIP> ServerIps { get; set; }
+
+        public List<LocationExtendedModel> ServerLocation { get; set; }
     }
 }

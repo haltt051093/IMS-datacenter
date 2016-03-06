@@ -76,6 +76,7 @@
     <Compile Include="Generic\BaseBLO.cs" />
     <Compile Include="Generic\BaseDAO.cs" />
     <Compile Include="Generic\BaseModel.cs" />
+    <Compile Include="Generic\DataEnum.cs" />
     <Compile Include="IMSContext.cs" />
     <Compile Include="MailService.cs" />
     <Compile Include="Models\Note.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="Repository\TypeOfLogDAO.cs" />
     <Compile Include="ViewModels\AccountExtendedModel.cs" />
     <Compile Include="ViewModels\AttributeExtendedModel.cs" />
+    <Compile Include="ViewModels\ExtendedResultModel.cs" />
     <Compile Include="ViewModels\IPAddressModel.cs" />
     <Compile Include="ViewModels\IPExtendedModel.cs" />
     <Compile Include="ViewModels\LocationExtendedModel.cs" />
@@ -151,9 +153,7 @@
       <Name>IMS.Resources</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Queries\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -143,7 +143,8 @@ namespace IMS.Data.Repository
                             StatusName = subst.StatusName,
                             RequestType = r.RequestType,
                             StatusCode = subst.StatusCode,
-                            RequestedTime = r.RequestedTime
+                            RequestedTime = r.RequestedTime,
+                            Priority = subst.Priority
                         };
             return query.ToList();
         }

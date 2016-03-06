@@ -1,7 +1,9 @@
 ﻿using System.Web.Mvc;
 using IMS.Core;
 using IMS.Data.Business;
+using IMS.Data.Generic;
 using IMS.Data.Models;
+using IMS.Data.ViewModels;
 
 namespace IMS.Controllers
 {
@@ -23,6 +25,31 @@ namespace IMS.Controllers
         protected void Alert(string message)
         {
             TempData["Message"] = message;
+        }
+
+        protected void Alert(ExtendedResultModel q)
+        {
+            Alert(QueryResultToAlertType(q.Status), q.StatusText, q.Code, true);
+        }
+
+        protected void Alert(string type, string line1, string line2, bool dismissable = false)
+        {
+            TempData["AlertType"] = type;
+            TempData["AlertLine1"] = line1;
+            TempData["AlertLine2"] = line2;
+            TempData["AlertDismiss"] = dismissable;
+        }
+
+        protected string QueryResultToAlertType(DataEnum.QueryResult q)
+        {
+            switch (q)
+            {
+                case DataEnum.QueryResult.Success:
+                    return Constants.AlertType.SUCCESS;
+                case DataEnum.QueryResult.Duplicate:
+                    return Constants.AlertType.WARNING;
+            }
+            return Constants.AlertType.DANGER;
         }
     }
 }

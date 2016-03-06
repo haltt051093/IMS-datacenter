@@ -146,12 +146,14 @@ namespace IMS.Data.Business
           
             return result;
         }
+
         private IPAddressPoolBLO()
         {
             baseDao = IPAddressPoolDAO.Current;
             dao = IPAddressPoolDAO.Current;
 
         }
+
         public void AddIP(List<IPAddressPool> entry)
         {
             var ip = new List<IPAddressPool>();
@@ -168,22 +170,27 @@ namespace IMS.Data.Business
             }
             IPAddressPoolBLO.Current.AddMany(ip);
         }
+
         public List<IPExtendedModel> GetAllIP()
         {
             return dao.GetAllIP();
         }
+
         public string GetGatewayByServerCode(string servercode)
         {
             return dao.GetGatewayByServerCode(servercode);
         }
+
         public string GetGatewayByIP(string ip)
         {
             return dao.GetGatewayByIP(ip);
         }
+
         public List<IPExtendedModel> GetIPSameGateway(string gateway)
         {
             return dao.GetIPSameGateway(gateway);
         }
+
         public List<IPExtendedModel> GetIPAvailable()
         {
             return dao.GetIPAvailable();
@@ -263,6 +270,7 @@ namespace IMS.Data.Business
             }
             return false;
         }
+
         public List<string> GetIPStatus()
         {
             return dao.GetIPStatus();

@@ -96,5 +96,10 @@ namespace IMS.Data.Business
         {
             dao.UpdateServerStatus(serverCode, status);
         }
+
+        public ServerExtendedModel GetAllServerInfo(string serverCode)
+        {
+            return dao.GetAllServerInfo(serverCode);
+        }
     }
 }

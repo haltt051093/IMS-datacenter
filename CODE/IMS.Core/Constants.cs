@@ -314,6 +314,14 @@ namespace IMS.Core
             public const string SERIAL_NUMBER = "SAT002";
             public const string MEMORY = "SAT004";
         }
+
+        public class AlertType
+        {
+            public const string SUCCESS = "success";
+            public const string INFO = "info";
+            public const string WARNING = "warning";
+            public const string DANGER = "danger";
+        }
     }
 }
 

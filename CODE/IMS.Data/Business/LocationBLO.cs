@@ -252,5 +252,10 @@ namespace IMS.Data.Business
         {
             return dao.GetLocationsOfServer(serverCode);
         }
+
+        public void SetLocationAvailable(string serverCode)
+        {
+            dao.SetLocationAvailable(serverCode);
+        }
     }
 }

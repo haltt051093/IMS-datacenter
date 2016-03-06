@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using IMS.Core;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.ViewModels;
@@ -31,6 +32,7 @@ namespace IMS.Data.Repository
             }
             return existing;
         }
+
         public List<LocationExtendedModel> GetAllLocation()
         {
             string query = @"select l.LocationCode,ser.ServerCode,ser.DefaultIP, l.RackUnit, s.StatusName,r.RackName,r.RackCode, ser.Id,r.StatusCode as RackStatus from Location as l
@@ -162,6 +164,18 @@ namespace IMS.Data.Repository
                                 RackName = r.RackName
                             };
             return locations.ToList();
+        }
+
+        public void SetLocationAvailable(string serverCode)
+        {
+            var query = Query(x => x.ServerCode == serverCode);
+            foreach (var item in query)
+            {
+                Location location = item;
+                location.ServerCode = null;
+                location.StatusCode = Constants.StatusCode.LOCATION_FREE;
+                Update(location);
+            }
         }
     }
 }

@@ -8,5 +8,6 @@ namespace IMS.Data.ViewModels
     {
         public string RequestTypeName { get; set; }
         public string StatusName { get; set; }
+        public int Priority { get; set; }
     }
 }
