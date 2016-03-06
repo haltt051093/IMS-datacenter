@@ -82,9 +82,10 @@ namespace IMS.Data.Repository
 
         public List<RackOfCustomerExtendedModel> GetAllRackOfCustomer()
         {
-            string query = @"select roc.*,l.LocationCode,l.RackUnit,l.ServerCode,s.StatusName,r.RackName
-                            from Location as l, RackOfCustomer as roc, Status as s, Rack as r
-                            where l.RackCode = roc.RackCode and l.StatusCode = s.StatusCode and r.RackCode=l.RackCode";
+            string query = @"select roc.*,l.RackUnit,l.ServerCode,s.StatusName,r.RackName,k.StatusName as RackStatus, ser.DefaultIP
+                            from  RackOfCustomer as roc, Status as s, Status as k, Rack as r,Location as l
+							left join Server as ser on ser.ServerCode = l.ServerCode
+                            where l.RackCode = roc.RackCode and l.StatusCode = s.StatusCode and r.RackCode=l.RackCode and k.StatusCode = roc.StatusCode";
             return RawQuery<RackOfCustomerExtendedModel>(query, new object[] { });
         }
 

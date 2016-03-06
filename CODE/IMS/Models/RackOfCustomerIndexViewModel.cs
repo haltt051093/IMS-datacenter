@@ -15,5 +15,7 @@ namespace IMS.Models
         }
         public List<RackOfCustomerExtendedModel> Racks { get; set; }
        public List<SelectList> Customer { get; set; }
+        public string RackCode { get; set; }
+        public List<SelectListItem> listRacks { get; set; } 
     }
 }

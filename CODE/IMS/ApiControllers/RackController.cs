@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using IMS.ApiModels;
 using IMS.Core.Extensions;
 using IMS.Data.Business;
+using IMS.Data.ViewModels;
 
 namespace IMS.ApiControllers
 {
@@ -36,6 +38,18 @@ namespace IMS.ApiControllers
             }
             else return null;
 
+        }
+
+        public DataTableModel<RackOfCustomerExtendedModel> GetRackOfCustomer(string customer)
+        {
+            var racks = RackOfCustomerBLO.Current.GetAllRackOfCustomer();
+            if (!String.IsNullOrWhiteSpace(customer))
+            {
+                racks = racks.Where(r => r.Customer.Trim() == customer.Trim()).ToList();
+            }
+            var result = new DataTableModel<RackOfCustomerExtendedModel>();
+            result.Data = racks;
+            return result;
         }
 
         public string CheckDuplicate(string rack)

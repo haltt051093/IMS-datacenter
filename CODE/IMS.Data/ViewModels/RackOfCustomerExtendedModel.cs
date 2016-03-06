@@ -12,10 +12,12 @@ namespace IMS.Data.ViewModels
     public class RackOfCustomerExtendedModel : RackOfCustomer
     {
         public string RackName { get; set; }
-        public string LocationCode { get; set; }
         public int? RackUnit { get; set; }
         public string ServerCode { get; set; }
         public string StatusName { get; set; }
         public int ServerNum { get; set; }
+        public string DefaultIP { get; set; }
+        public string RackStatus { get; set; }
+        public string LocationCode { get; set; }
     }
 }
