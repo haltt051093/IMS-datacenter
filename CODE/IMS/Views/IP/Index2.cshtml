@@ -72,7 +72,7 @@
                             @Html.LabelFor(model => model.Netmask)
                         </div>
                         <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                            @Html.TextBoxFor(model => model.Netmask, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                            @Html.DropDownListFor(model => model.Netmask, Model.ListNetmask, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                         </div>
                     </div>
                 </div>
@@ -111,7 +111,8 @@
                         <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
                             @Html.TextBoxFor(model => model.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                         </div>
-                    </div>                    
+                    </div>
+                    <input class="hidden" name="Id" id="idblock"/>
                 </div>
                 <div class="modal-footer">
                     <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
@@ -130,7 +131,7 @@
 <div id="unblockip-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            @using (Html.BeginForm())
+            @using (Html.BeginForm("ChangeIPStatus","IP"))
             {
                 <div class="modal-header">
                     <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i> @Labels.UnblockIP</div>
@@ -146,9 +147,10 @@
                             @Html.LabelFor(model => model.Description)
                         </div>
                         <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                            @Html.TextBoxFor(model => model.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                            @Html.TextBoxFor(model => model.Description, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
                         </div>
                     </div>
+                    <input name  ="Id" Id="idunblock" class="hidden"/>
                 </div>
                 <div class="modal-footer">
                     <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
@@ -204,6 +206,7 @@
                     actionCell.html('<a href="#">Block IP</a>');
                     actionCell.find('a').click(function () {
                         $('#blockip-modal').modal('show');
+                        $('#idblock').val(aData.Id);
                         return false;
                     });
                     break;
@@ -211,11 +214,13 @@
                     actionCell.html('<a href="#">Unblock IP</a>');
                     actionCell.find('a').click(function () {
                         $('#unblockip-modal').modal('show');
+                        $('#idunblock').val(aData.Id);
                         return false;
                     });
                     break;
                 case '@Constants.StatusCode.IP_RESERVE':
                     row.css('background-color', '#ffe6e6');
+                    actionCell.html('');
                     break;
                 case '@Constants.StatusCode.IP_USED':
                     actionCell.html('');

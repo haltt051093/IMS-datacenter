@@ -27,6 +27,19 @@ namespace IMS.Controllers
                 Value = x.NetworkIP,
                 Text = "Network " + x.NetworkIP
             }).ToList();
+            var listnet = new List<SelectListItem>();
+            int[] list = new int[] { 24, 25, 26, 27, 28 };
+            foreach (var i in list)
+            {
+                string num = (i).ToString();
+                SelectListItem item = new SelectListItem()
+                {
+                    Value = num,
+                    Text = num
+                };
+                listnet.Add(item);
+            }
+            data.ListNetmask = listnet;
             data.IPs = ips;
             return View(data);
         }
@@ -241,6 +254,7 @@ namespace IMS.Controllers
                 log.LogTime = DateTime.Now;
                 log.Description = iivm.Description;
                 LogChangedContentDAO.Current.Add(log);
+                Alert("Block IP successfully");
             }
             else
             if (ip.StatusCode == Constants.StatusCode.IP_BLOCKED)
@@ -252,8 +266,10 @@ namespace IMS.Controllers
                 log.Object = Constants.Object.OBJECT_IP;
                 log.ChangedValueOfObject = ip.IPAddress;
                 log.ObjectStatus = Constants.StatusCode.IP_AVAILABLE;
+                log.Description = iivm.Description;
                 log.LogTime = DateTime.Now;
                 LogChangedContentDAO.Current.Add(log);
+                Alert("Unblock IP successfully");
             }
             return RedirectToAction("Index2");
         }

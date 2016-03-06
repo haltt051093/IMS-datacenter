@@ -23,7 +23,7 @@ namespace IMS.Models
         public string RackCode { get; set; }
 
         [Required(ErrorMessage = "Please input Rack Name!")]
-        [RegularExpression("^[A-Z][1-9]$", ErrorMessage = "Wrong format of Rack Name! Try again!")]
+        [RegularExpression("^[A-Z][1-9][0-9]+$", ErrorMessage = "Wrong format of Rack Name! Try again!")]
         public string RackName { get; set; }
         public int? MaximumPower { get; set; }
         public int RackAvailableCount { get; set; }
