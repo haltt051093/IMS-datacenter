@@ -282,5 +282,10 @@ namespace IMS.Data.Business
         {
             return dao.SelectRandomIps(list, number);
         }
+
+        public void SetIpAvailable(string serverCode)
+        {
+            dao.SetIpAvailable(serverCode);
+        }
     }
 }

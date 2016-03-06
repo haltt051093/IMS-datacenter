@@ -62,7 +62,7 @@
                             <td>
                                 @if (item.StatusCode == Constants.StatusCode.REQUEST_SENDING)
                                 {
-                                    <a href="#" data-toggle="modal" class="btnRequestCode" id="btnViewDetail" data-target="#acceptrequest-modal"
+                                    <a href="#" data-toggle="modal" class="btnRequestCode" data-target="#acceptrequest-modal"
                                        data-requestCode="@item.RequestCode" data-requestType="@item.RequestType">@item.RequestCode</a>
                                 }
                                 else
@@ -116,7 +116,7 @@
                             @*@Html.ActionLink("View Details", "RequestDetais", "Request", new { rType = item.RequestType, rCode = item.RequestCode }, null)*@
                         </div>
                     </div>
-                    <div class="form-group hidden" id="assignbox">
+                    <div class="form-group hidden assignbox">
                         <label>Assign Name</label>
                         <select>
                             <option>You</option>
@@ -150,13 +150,11 @@
         });
         
         //khong chay duoc, why?
-        $('#btnViewDetail').click(function () {
+        $('.btnRequestCode').click(function () {
             var requestType = $(this).attr('data-requestType');
-            alert("omg" + requestType);
-            //$('#requestType').val(requestType);
-            //if (requestType !== "RT003") {
-            //    $('#assignbox').removeClass('hidden');
-        //}
+            if (requestType !== "RT003") {
+                $('.assignbox').removeClass('hidden');
+        }
         });
     });
 </script>

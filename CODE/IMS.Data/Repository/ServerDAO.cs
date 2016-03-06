@@ -98,12 +98,6 @@ namespace IMS.Data.Repository
                         join l in rackDis
                             on s.ServerCode equals l.ServerCode into sl
                         from subl in sl.DefaultIfEmpty()
-                        //join st in StatusDAO.Current.Table()
-                        //    on s.StatusCode equals st.StatusCode into stsl
-                        //from subst in stsl.DefaultIfEmpty()
-                        //join a in AccountDAO.Current.Table()
-                        //    on s.Customer equals a.Username into astsl
-                        //from suba in astsl.DefaultIfEmpty()
                         where s.Customer == customer && s.StatusCode == Constants.StatusCode.SERVER_RUNNING
                         select new ServerExtendedModel
                         {
@@ -111,12 +105,13 @@ namespace IMS.Data.Repository
                             RackName = subl.RackName,
                             DefaultIP = s.DefaultIP,
                             ServerCode = s.ServerCode,
+                            Customer = s.Customer
                         };
             return query.ToList();
         }
 
         //a server with full fields
-        public ServerExtendedModel GetServerByCode(string serverCode)
+        public ServerExtendedModel GetServerByCode(string serverCode, string status)
         {
             var distinct = LocationDAO.Current.Table().GroupBy(item => item.ServerCode)
                 .Select(e => e.FirstOrDefault());
@@ -141,7 +136,7 @@ namespace IMS.Data.Repository
                         join a in AccountDAO.Current.Table()
                             on s.Customer equals a.Username into astsl
                         from suba in astsl.DefaultIfEmpty()
-                        where s.ServerCode == serverCode && s.StatusCode == Constants.StatusCode.SERVER_RUNNING
+                        where s.ServerCode == serverCode && s.StatusCode == status
                         select new ServerExtendedModel
                         {
                             RackCode = subl.RackCode,

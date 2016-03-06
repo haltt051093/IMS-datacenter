@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using IMS.ApiModels;
+using IMS.Core;
 using IMS.Data.Business;
 using IMS.Data.ViewModels;
 
@@ -17,7 +18,7 @@ namespace IMS.ApiControllers
 
         public DataTableModel<LocationExtendedModel> GetLocationForChange(string code)
         {
-            var server = ServerBLO.Current.GetServerByCode(code);
+            var server = ServerBLO.Current.GetServerByCode(code, Constants.StatusCode.SERVER_RUNNING);
             var locations = LocationBLO.Current.GetChangeLocation(server);
             var result = new DataTableModel<LocationExtendedModel>();
             result.Data = locations;

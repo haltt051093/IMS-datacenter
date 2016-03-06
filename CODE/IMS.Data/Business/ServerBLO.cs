@@ -46,9 +46,9 @@ namespace IMS.Data.Business
             return dao.GetServerAttributes(id);
         }
 
-        public ServerExtendedModel GetServerByCode(string serverCode)
+        public ServerExtendedModel GetServerByCode(string serverCode, string status)
         {
-            return dao.GetServerByCode(serverCode);
+            return dao.GetServerByCode(serverCode, status);
         }
 
         //public List<Server> Search(string searchBy, string searchValue)

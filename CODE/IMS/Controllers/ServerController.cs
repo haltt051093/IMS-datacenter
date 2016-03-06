@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mime;
 using System.Web.Mvc;
+using IMS.Core;
 using IMS.Data.Business;
 using IMS.Data.Models;
 using IMS.Data.ViewModels;
@@ -31,7 +32,7 @@ namespace IMS.Controllers
         // GET: Server/Details
         public ActionResult Detail(string code)
         {
-            var server = ServerBLO.Current.GetServerByCode(code);
+            var server = ServerBLO.Current.GetServerByCode(code, Constants.StatusCode.SERVER_RUNNING);
             //var serverattributes = ServerBLO.Current.GetServerAttributes(serverCode);
             var servercurrentips = ServerBLO.Current.GetCurrentIP(code);
             if (server == null)

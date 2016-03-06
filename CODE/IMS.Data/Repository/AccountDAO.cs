@@ -73,7 +73,14 @@ namespace IMS.Data.Repository
 
         public Account GetAccountByCode(string username)
         {
-            return Query(x => x.Username == username).FirstOrDefault();
+            if (username != null)
+            {
+                return Query(x => x.Username == username).FirstOrDefault();
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

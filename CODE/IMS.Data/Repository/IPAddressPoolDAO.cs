@@ -35,6 +35,7 @@ namespace IMS.Data.Repository
                             on s.StatusCode = i.StatusCode";
             return RawQuery<IPExtendedModel>(query, new object[] { });
         }
+
         public string GetGatewayByServerCode(string servercode)
         {
             string query = @"select i.*, st.StatusName from Server as s join IPAddressPool as i on i.IPAddress= s.DefaultIP and s.ServerCode='" + servercode + @"'
@@ -69,6 +70,7 @@ namespace IMS.Data.Repository
                             and i.StatusCode='STATUS10'";
             return RawQuery<IPExtendedModel>(query, new object[] { });
         }
+
         public List<string> GetIPStatus()
         {
             string query = @"select s.StatusName from Status as s
@@ -110,6 +112,17 @@ namespace IMS.Data.Repository
                         select item.IPAddress;
             var items = query.Take(number);
             return items.ToList();
+        }
+
+        public void SetIpAvailable(string serverCode)
+        {
+            var serverips = ServerIPDAO.Current.Query(x => x.ServerCode == serverCode);
+            foreach (var item in serverips)
+            {
+                var ip = Query(x => x.IPAddress == item.CurrentIP).FirstOrDefault();
+                ip.StatusCode = Constants.StatusCode.IP_AVAILABLE;
+                Update(ip);
+            }
         }
     }
 }

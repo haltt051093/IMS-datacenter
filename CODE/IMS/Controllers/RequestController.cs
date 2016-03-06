@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Web.Mvc;
 using AutoMapper;
 using IMS.Core;
@@ -398,7 +397,7 @@ namespace IMS.Controllers
             var listServer = viewmodel.ServerOfCustomer;
             //luu vo bang request 
             string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.BRING_SERVER_AWAY,
-                viewmodel.Customer, viewmodel.Description, null);
+                Constants.Test.CUSTOMER_MANHNH, viewmodel.Description, null);
 
             foreach (var item in listServer)
             {
@@ -651,7 +650,7 @@ namespace IMS.Controllers
                     List<ServerExtendedModel> list = new List<ServerExtendedModel>();
                     foreach (var servercode in serverCodes)
                     {
-                        var server = ServerBLO.Current.GetServerByCode(servercode);
+                        var server = ServerBLO.Current.GetServerByCode(servercode, Constants.StatusCode.SERVER_RUNNING);
                         //lay serverattribute
                         var listAttributes = ServerAttributeBLO.Current
                             .GetServerAttributes(servercode, Constants.StatusCode.SERVERATTRIBUTE_UPDATING);
@@ -695,7 +694,7 @@ namespace IMS.Controllers
                     List<ServerExtendedModel> list = new List<ServerExtendedModel>();
                     foreach (var servercode in serverCodes)
                     {
-                        var server = ServerBLO.Current.GetServerByCode(servercode);
+                        var server = ServerBLO.Current.GetServerByCode(servercode, Constants.StatusCode.SERVER_BRINGING_AWAY);
                         list.Add(server);
                     }
                     viewmodel.ServerOfCustomer = list;
@@ -1063,22 +1062,28 @@ namespace IMS.Controllers
             var listServer = viewmodel.ServerOfCustomer;
             foreach (var server in listServer)
             {
-                ServerBLO.Current.UpdateServerStatus(server.ServerCode, Constants.StatusCode.SERVER_RUNNING);
+                //doi trang thai server
+                ServerBLO.Current.UpdateServerStatus(server.ServerCode, Constants.StatusCode.SERVER_DEACTIVATE);
                 ServerAttributeBLO.Current.UpdateServerAttributeStatus(server.ServerCode,
-                    Constants.StatusCode.SERVERATTRIBUTE_NEW);
+                    Constants.StatusCode.SERVERATTRIBUTE_OLD);
                 //doi trang thai cua request
                 RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);
-                //luu IP address
-                //Luu location
+                //giai phong location
 
+
+                //change serverip status
+                ServerIPBLO.Current.ReturnAllIpOfServer(server.ServerCode);
+                //giai phong ip
+                IPAddressPoolBLO.Current.SetIpAvailable(server.ServerCode);
+                //DOING
                 //log server status
                 LogChangedContent logServer = new LogChangedContent
                 {
                     RequestCode = viewmodel.RequestCode,
-                    TypeOfLog = Constants.TypeOfLog.LOG_ADD_SERVER,
+                    TypeOfLog = Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
                     Object = Constants.Object.OBJECT_SERVER,
-                    ChangedValueOfObject = viewmodel.RequestCode,
-                    ObjectStatus = Constants.StatusCode.SERVER_RUNNING,
+                    ChangedValueOfObject = server.ServerCode,
+                    ObjectStatus = Constants.StatusCode.SERVER_DEACTIVATE,
                     ServerCode = server.ServerCode
                     //Staff = viewmodel.StaffCode
                 };
@@ -1088,13 +1093,17 @@ namespace IMS.Controllers
                 LogChangedContent logRequest = new LogChangedContent
                 {
                     RequestCode = viewmodel.RequestCode,
-                    TypeOfLog = Constants.TypeOfLog.LOG_ADD_SERVER,
+                    TypeOfLog = Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
                     Object = Constants.Object.OBJECT_REQUEST,
                     ChangedValueOfObject = viewmodel.RequestCode,
                     ObjectStatus = Constants.StatusCode.REQUEST_DONE,
                     ServerCode = server.ServerCode
                     //Staff = viewmodel.StaffCode
                 };
+                LogChangedContentBLO.Current.AddLog(logRequest);
+                //log Ip
+
+                //log location?
             }
             return RedirectToAction("Index", "Home");
         }

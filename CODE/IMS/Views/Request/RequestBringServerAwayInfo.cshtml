@@ -71,6 +71,7 @@
                     <dt></dt>
                     <dd>
                         @Html.HiddenFor(model => model.RequestCode)
+                        @Html.HiddenFor(model => model.Customer)
                         @if (Model.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                         {
                             <button type="submit" class="btn btn-primary">Approve</button>
