@@ -86,8 +86,8 @@
                     </div>
                     <br />*@
                 <div class="form-group">
-                    <button class="col-sm-2 col-xs-offset-4 btn btn-default" data-toggle="modal" data-target="#addserver-modal">
-                        <label>Add Server Information</label>
+                    <button id="addserver" type="button" class="col-sm-2 col-xs-offset-4 btn btn-default">
+                        Add Server Information
                     </button>
                 </div>
                 <div class="form-group" style="width: 1000px">
@@ -148,7 +148,7 @@
                                     @Html.HiddenFor(modelItem => modelItem.Servers[i].Memory)
                                 </td>
                                 <td>
-                                    <a href="" data-toggle="modal" data-target="#editserver-modal">Edit</a>
+                                    <a href="#" x-code="@Model.Servers[i].TempCode">Edit</a>
                                 </td>
                                 <td>
                                     @Html.ActionLink("Delete", "DeleteTempServer", "Request", new {tempCode = Model.Servers[i].TempCode}, null)
@@ -175,39 +175,53 @@
     </section>
 }
 <!-- ADD SERVER MODAL -->
-<div class="modal fade" id="addserver-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" style="width: 500px">
+<div id="serverinfo-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title"><i class="fa fa-edit"></i> Add Server</h4>
-            </div>
             @using (Html.BeginForm("SaveTempData", "Request", FormMethod.Post))
             {
+                <div class="modal-header">
+                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i> @Labels.AddServer</div>
+                </div>
                 <div class="modal-body form-horizontal">
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Maker</label>
-                        <div class="col-sm-9">
-                            @Html.EditorFor(model => model.Server.Maker, new { htmlAttributes = new { @class = "form-control" } })
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                            @Html.LabelFor(model => model.Server.Maker)
+                        </div>
+                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                            @Html.TextBoxFor(model => model.Server.Maker, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                            @Html.ValidationMessageFor(model => model.Server.Maker)
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Power</label>
-                        <div class="col-sm-9">
-                            @Html.EditorFor(model => model.Server.Power, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                            @Html.LabelFor(model => model.Server.Power)
+                        </div>
+                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                            @Html.TextBoxFor(model => model.Server.Power, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                            @Html.ValidationMessageFor(model => model.Server.Power)
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Model</label>
-                        <div class="col-sm-9">
-                            @Html.EditorFor(model => model.Server.Model, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                            @Html.LabelFor(model => model.Server.Model)
+                        </div>
+                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                            @Html.TextBoxFor(model => model.Server.Model, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                            @Html.ValidationMessageFor(model => model.Server.Model)
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Size</label>
-                        <div class="col-sm-3">
+
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                            <label>Size</label>
+                        </div>
+                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
                             @{
                                 List<SelectListItem> myList = new List<SelectListItem>();
-                                int[] list = new int[] { 1, 2, 4 };
+                                int[] list = new int[] {1, 2, 4};
                                 foreach (var i in list)
                                 {
                                     string num = (i).ToString();
@@ -219,42 +233,59 @@
                                     myList.Add(item);
                                 }
                             }
-                            <div class="col-md-10">
-                                @Html.DropDownListFor(model => model.Server.Size, myList, new { htmlAttributes = new { @class = "form-control" } })
-                            </div>
+                            @Html.DropDownListFor(model => model.Server.Size, myList, new {htmlAttributes = new {@class = "form-control"}})
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Bandwidth</label>
-                        <div class="col-sm-9">
-                            <div class="col-md-10">
-                                @Html.RadioButtonFor(model => model.Server.Bandwidth, "100Mbps", new { htmlAttributes = new { @class = "form-control" } }) 100Mbps
-                                @Html.RadioButtonFor(model => model.Server.Bandwidth, "1Gbps", new { htmlAttributes = new { @class = "form-control" } }) 1Gbps
-                            </div>
+
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                            <label>Bandwidth</label>
+                        </div>
+                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                            @Html.RadioButtonFor(model => model.Server.Bandwidth, "100Mbps", new {htmlAttributes = new {@class = "form-control"}}) 100Mbps
+                            @Html.RadioButtonFor(model => model.Server.Bandwidth, "1Gbps", new {htmlAttributes = new {@class = "form-control"}}) 1Gbps
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Serial number</label>
-                        <div class="col-sm-9">
-                            @Html.EditorFor(model => model.Server.SerialNumber, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                            @Html.LabelFor(model => model.Server.SerialNumber)
+                        </div>
+                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                            @Html.TextBoxFor(model => model.Server.SerialNumber, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                            @Html.ValidationMessageFor(model => model.Server.SerialNumber)
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Part number</label>
-                        <div class="col-sm-9">
-                            @Html.EditorFor(model => model.Server.PartNumber, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                            @Html.LabelFor(model => model.Server.PartNumber)
+                        </div>
+                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                            @Html.TextBoxFor(model => model.Server.PartNumber, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                            @Html.ValidationMessageFor(model => model.Server.PartNumber)
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Memory</label>
-                        <div class="col-sm-9">
-                            @Html.EditorFor(model => model.Server.Memory, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                            @Html.LabelFor(model => model.Server.Memory)
+                        </div>
+                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                            @Html.TextBoxFor(model => model.Server.Memory, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                            @Html.ValidationMessageFor(model => model.Server.Memory)
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer clearfix">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-plus"> Add</i></button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+
+                <div class="modal-footer">
+                    <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
+                            data-dismiss="modal">
+                        @Labels.DialogCancel
+                    </button>
+                    <button type="submit" id="submitserver" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        @Labels.DialogOK
+                    </button>
                 </div>
                                 }
         </div><!-- /.modal-content -->
@@ -262,13 +293,49 @@
 </div><!-- /.modal -->
 
 <script type="text/javascript">
-    $(function () {
-        $('#datetimepicker1').datetimepicker(
-       {
-           "disabledHours": [0, 1, 2, 3, 4, 5, 6, 7, 21, 22, 23, 24],
-           "enabledHours": [8, 9, 10, 12, 12, 14, 15, 16, 17, 18, 19, 20],
-           "stepping": '30',
-           "minDate": 'moment'
-       });
+    function clearModal() {
+        $('#Server_Maker').val('');
+        $('#Server_Power').val('');
+        $('#Server_Model').val('');
+        $('#Server_Size').val('1');
+        $('#Server_SerialNumber').val('');
+        $('#Server_PartNumber').val('');
+        $('#Server_Memory').val('');
+    }
+
+    function setModal(server) {
+        $('#Server_Maker').val(server.Maker);
+        $('#Server_Power').val(server.Power);
+        $('#Server_Model').val(server.Model);
+        $('#Server_Size').val(server.Size);
+        $('#Server_SerialNumber').val(server.SerialNumber);
+        $('#Server_PartNumber').val(server.PartNumber);
+        $('#Server_Memory').val(server.Memory);
+    }
+</script>
+
+<script type="text/javascript">
+    $('#datetimepicker1').datetimepicker({
+        "disabledHours": [0, 1, 2, 3, 4, 5, 6, 7, 21, 22, 23, 24],
+        "enabledHours": [8, 9, 10, 12, 12, 14, 15, 16, 17, 18, 19, 20],
+        "stepping": '30',
+        "minDate": 'moment'
+    });
+
+    $('#addserver').click(function () {
+        clearModal();
+        $('#submitserver').val('@Constants.FormAction.OK_ACTION');
+        $('#serverinfo-modal').modal('show');
+    });
+
+    $('a[x-code]').click(function() {
+        clearModal();
+        $('#submitserver').val('@Constants.FormAction.EDIT_ACTION');
+        $('#serverinfo-modal').modal('show');
+        var tempCode = $(this).attr('x-code');
+        get('@Url.Action("GetTempServer", "Temp", new { httproute = "" })' + '/' + tempCode, function (data) {
+            setModal(data.Server);
+        });
+        return false;
     });
 </script>

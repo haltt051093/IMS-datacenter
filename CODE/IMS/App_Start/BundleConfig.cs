@@ -47,6 +47,9 @@ namespace IMS
             builder.Add(new ScriptBundle(Constants.ScriptBundle.ADMINLTE).Include(
                 "~/Scripts/AdminLTE/app.js"
             ));
+            builder.Add(new ScriptBundle(Constants.ScriptBundle.APPLICATION).Include(
+                "~/Scripts/site.js"
+            ));
 
             builder.Add(new StyleBundle(Constants.StyleBundle.BOOTSTRAP).Include(
                 "~/Content/bootstrap.css",

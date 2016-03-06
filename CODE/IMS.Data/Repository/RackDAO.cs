@@ -24,7 +24,12 @@ namespace IMS.Data.Repository
 
         public override Rack GetByKeys(Rack entry)
         {
-            return Query(x => x.Id == entry.Id).FirstOrDefault();
+            var existing = Query(x => x.Id == entry.Id).FirstOrDefault();
+            if (existing == null)
+            {
+                existing = Query(x => x.RackCode == entry.RackCode).FirstOrDefault();
+            }
+            return existing;
         }
 
         public void UpdateRackStatus(string rackCode, string status)

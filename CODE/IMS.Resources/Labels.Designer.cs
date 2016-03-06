@@ -79,6 +79,15 @@ namespace IMS.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Server.
+        /// </summary>
+        public static string AddServer {
+            get {
+                return ResourceManager.GetString("AddServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Block.
         /// </summary>
         public static string Block {

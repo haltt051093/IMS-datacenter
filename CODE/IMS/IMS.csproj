@@ -886,6 +886,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\site.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -894,10 +895,13 @@
     <Compile Include="ApiControllers\IPController.cs" />
     <Compile Include="ApiControllers\LocationController.cs" />
     <Compile Include="ApiControllers\RackController.cs" />
+    <Compile Include="ApiControllers\TempController.cs" />
     <Compile Include="ApiModels\DataTableModel.cs" />
+    <Compile Include="ApiModels\TempRequest.cs" />
     <Compile Include="App_Start\AppConfig.cs" />
     <Compile Include="BrowserJsonFormatter.cs" />
     <Compile Include="Controllers\RackController.cs" />
+    <Compile Include="Models\BaseViewModel.cs" />
     <Compile Include="Models\BreadcrumbModel.cs" />
     <Compile Include="Models\HomeIndexViewModel.cs" />
     <Compile Include="Models\HomeSidebarViewModel.cs" />

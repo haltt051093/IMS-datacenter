@@ -28,7 +28,12 @@ namespace IMS.Data.Repository
 
         public override Server GetByKeys(Server entry)
         {
-            return Query(x => x.ServerCode == entry.ServerCode).FirstOrDefault();
+            var existing = Query(x => x.Id == entry.Id).FirstOrDefault();
+            if (existing == null)
+            {
+                existing = Query(x => x.ServerCode == entry.ServerCode).FirstOrDefault();
+            }
+            return existing;
         }
 
         public List<ServerExtendedModel> GetAllServer()
@@ -158,6 +163,7 @@ namespace IMS.Data.Repository
                         };
             return query.FirstOrDefault();
         }
+
         //get attribute of a server
         public List<AttributeExtendedModel> GetServerAttributes(int id)
         {

@@ -22,7 +22,13 @@ namespace IMS.Data.Repository
 
         public override Note GetByKeys(Note entry)
         {
-            return Query(x => x.Id == entry.Id).FirstOrDefault();
+            var existing = Query(x => x.Id == entry.Id).FirstOrDefault();
+            if (existing == null)
+            {
+                existing = Query(x => x.Id == entry.Id).FirstOrDefault();
+            }
+            return existing;
         }
     }
 }
+

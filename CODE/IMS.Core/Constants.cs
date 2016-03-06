@@ -304,6 +304,7 @@ namespace IMS.Core
         {
             public const string ACTION_NAME = "Action";
             public const string OK_ACTION = "OK";
+            public const string EDIT_ACTION = "Edit";
             public const string CANCEL_ACTION = "Cancel";
         }
 

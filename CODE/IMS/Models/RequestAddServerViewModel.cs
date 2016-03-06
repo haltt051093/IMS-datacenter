@@ -6,7 +6,7 @@ using IMS.Data.ViewModels;
 
 namespace IMS.Models
 {
-    public class RequestAddServerViewModel
+    public class RequestAddServerViewModel : BaseViewModel
     {
         public ServerExtendedModel Server { get; set; }
         public List<ServerExtendedModel> Servers { get; set; }

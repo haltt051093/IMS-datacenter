@@ -27,7 +27,12 @@ namespace IMS.Data.Repository
 
         public override Request GetByKeys(Request entry)
         {
-            return Query(x => x.Id == entry.Id).FirstOrDefault();
+            var existing = Query(x => x.Id == entry.Id).FirstOrDefault();
+            if (existing == null)
+            {
+                existing = Query(x => x.RequestCode == entry.RequestCode).FirstOrDefault();
+            }
+            return existing;
         }
 
         public string GenerateCode()

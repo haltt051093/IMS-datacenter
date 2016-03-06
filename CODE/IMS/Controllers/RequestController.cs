@@ -279,7 +279,14 @@ namespace IMS.Controllers
             temp.RequestCode = Session[Constants.Session.REQUEST_CODE].ToString();
             temp.Data = JsonConvert.SerializeObject(viewmodel.Server);
             temp.TempCode = TempRequestBLO.Current.GenerateCode();
-            TempRequestBLO.Current.Add(temp);
+            if (viewmodel.Action == Constants.FormAction.OK_ACTION)
+            {
+                TempRequestBLO.Current.Add(temp);
+            }
+            else if (viewmodel.Action == Constants.FormAction.EDIT_ACTION)
+            {
+                TempRequestBLO.Current.Update(temp);
+            }
 
             RequestType rt = new RequestType();
             rt.RequestTypeCode = Constants.RequestTypeCode.ADD_SERVER;

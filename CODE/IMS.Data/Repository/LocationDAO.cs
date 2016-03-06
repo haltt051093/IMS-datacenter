@@ -24,7 +24,12 @@ namespace IMS.Data.Repository
 
         public override Location GetByKeys(Location entry)
         {
-            return Query(x => x.Id == entry.Id).FirstOrDefault();
+            var existing = Query(x => x.Id == entry.Id).FirstOrDefault();
+            if (existing == null)
+            {
+                existing = Query(x => x.LocationCode == entry.LocationCode).FirstOrDefault();
+            }
+            return existing;
         }
         public List<LocationExtendedModel> GetAllLocation()
         {

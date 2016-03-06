@@ -26,7 +26,12 @@ namespace IMS.Data.Repository
 
         public override IPAddressPool GetByKeys(IPAddressPool entry)
         {
-            return Query(x => x.Id == entry.Id).FirstOrDefault();
+            var existing = Query(x => x.Id == entry.Id).FirstOrDefault();
+            if (existing == null)
+            {
+                existing = Query(x => x.IPAddress == entry.IPAddress).FirstOrDefault();
+            }
+            return existing;
         }
         public List<IPExtendedModel> GetAllIP()
         {
