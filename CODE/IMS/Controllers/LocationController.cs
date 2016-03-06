@@ -28,7 +28,20 @@ namespace IMS.Controllers
                 Value = x.RackCode,
                 Text = "Rack " + x.RackName
             }).ToList();
-            
+
+            var listpow = new List<SelectListItem>();
+            int[] listp = new int[] { 3, 4, 5, 6, 7, 8, 9, 10 };
+            foreach (var i in listp)
+            {
+                string num = (i).ToString();
+                SelectListItem item = new SelectListItem()
+                {
+                    Value = num,
+                    Text = num+"KW"
+                };
+                listpow.Add(item);
+            }
+            data.ListPower = listpow;
             data.Locations = locations;
             return View(data);
         }

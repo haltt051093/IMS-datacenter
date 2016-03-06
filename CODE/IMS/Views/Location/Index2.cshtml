@@ -48,86 +48,47 @@
 </section><!-- /.content -->
 
 <!-- ADD LOCATION MODAL -->
-<div class="modal fade" id="addlocation-modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" style="width: 300px">
+<div id="addlocation-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
-            
+
             @using (Html.BeginForm())
             {
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title"><i class="fa fa-plus"></i> Add new rack</h4>
+                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i> @Labels.AddRack</div>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        @Html.Label("Rack Name", htmlAttributes: new { @class = "control-label" })
-
-
-                        @Html.EditorFor(model => model.RackName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Ex: A1, B1,..." } })
-                        @Html.ValidationMessageFor(model => model.RackName, "", new { @class = "text-danger" })
+                    <div class="@Constants.HtmlFormat.FORM_LABEL">
+                        @Html.ValidationMessageFor(model => model.RackName, "", new { @class = Constants.HtmlFormat.DANGER_TEXT_CLASS })
+                    </div>
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                            @Html.LabelFor(model => model.RackName)
+                        </div>
+                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                            @Html.TextBoxFor(model => model.RackName, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                        </div>
 
                     </div>
-                    <div class="form-group">
-                        @Html.Label("Power(KW)", htmlAttributes: new { @class = "control-label" })
-                        <div class="form-group" style="width: 100px">
-                            @{
-                                IEnumerable<SelectListItem> power = new List<SelectListItem>()
-                        {
-                            new SelectListItem()
-                            {
-                                Text = "3",
-                                Value = "3"
-                            },
-                            new SelectListItem()
-                            {
-                                Text = "4",
-                                Value = "4"
-                            },
-                            new SelectListItem()
-                            {
-                                Text = "5",
-                                Value = "5"
-                            },
-                            new SelectListItem()
-                            {
-                                Text = "6",
-                                Value = "6"
-                            },
-                            new SelectListItem()
-                            {
-                                Text = "7",
-                                Value = "7"
-                            },
-                            new SelectListItem()
-                            {
-                                Text = "8",
-                                Value = "8"
-                            },
-                            new SelectListItem()
-                            {
-                                Text = "9",
-                                Value = "9"
-                            },
-                            new SelectListItem()
-                            {
-                                Text = "10",
-                                Value = "10"
-                            }
-                        };
-                                SelectList power1 = new SelectList(power, "Value", "Text", Model.MaximumPower);
-                            }
 
-                            @Html.DropDownList("MaximumPower", power1, htmlAttributes: new { @class = "form-control", @id = "power" })
-                            @Html.ValidationMessageFor(model => model.MaximumPower, "", new { @class = "text-danger" })
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                            @Html.LabelFor(model => model.Power)
+                        </div>
+                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                            @Html.DropDownListFor(model => model.MaximumPower, Model.ListPower, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
                         </div>
                     </div>
-
                 </div>
-                <div class="modal-footer clearfix">
 
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-
-                    <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                <div class="modal-footer">
+                    <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
+                            data-dismiss="modal">
+                        @Labels.DialogCancel
+                    </button>
+                    <button type="submit" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        @Labels.DialogOK
+                    </button>
                 </div>
             }
         </div><!-- /.modal-content -->

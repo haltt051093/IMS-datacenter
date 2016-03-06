@@ -123,6 +123,9 @@
   <data name="AddIP" xml:space="preserve">
     <value>Add IP Address</value>
   </data>
+  <data name="AddRack" xml:space="preserve">
+    <value>Add new rack</value>
+  </data>
   <data name="AddServer" xml:space="preserve">
     <value>Add Server</value>
   </data>
