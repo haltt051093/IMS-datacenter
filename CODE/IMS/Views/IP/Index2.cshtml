@@ -13,7 +13,7 @@
 <!-- Main content -->
 <section class="main-content">
     <div>
-        <a class="btn btn-primary pull-left" data-toggle="modal" data-target="#addip-modal"><i class="fa fa-plus"></i> Add new IP Address</a>
+        <a class="btn btn-primary pull-left" data-toggle="modal" data-target="#addip-modal"><i class="fa fa-plus"></i> @Labels.AddIP</a>
     </div>
     <div class="clearfix"></div>
     <div style="height: 10px"></div>
@@ -22,205 +22,149 @@
             <label>IP Address: @Html.DropDownListFor(model => model.NetworkIP, Model.NetworkIPs, "All IP Addresses", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
         </div>
     </div>
-            <table id="example1" class="table table-bordered table-hover">
-                <thead>
-                <tr style="background-color: #404040">
-                    <th><h4 style="color: ghostwhite">Id</h4>
-                    <th><h4 style="color: ghostwhite">NetworkIP</h4>
-                    <th><h4 style="color: ghostwhite">IP Address</h4>
-                    <th><h4 style="color: ghostwhite">Gateway</h4>
-                    <th><h4 style="color: ghostwhite">Subnet mask</h4>
-                    <th><h4 style="color: ghostwhite">Status</h4>
-                    <th></th>
-                </tr>
-                </thead>
-                @*<tbody>
-                    @for (int i = 0; i < Model.IPs.Count; i++)
-                    {
-                        var item = Model.IPs[i];
-                        var j = i + 1;
-                        <tr>
-                            <td>@j</td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.IPAddress)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Gateway)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Subnetmask)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.StatusName)
-                            </td>
-                            <td>
+    <table id="example1" class="table table-bordered table-hover">
+        <thead>
+            <tr style="background-color: #404040">
+                <th><span style="color: ghostwhite">Id</span>
+                <th><span style="color: ghostwhite">NetworkIP</span>
+                <th><span style="color: ghostwhite">IP Address</span>
+                <th><span style="color: ghostwhite">Gateway</span>
+                <th><span style="color: ghostwhite">Subnet mask</span>
+                <th><span style="color: ghostwhite">Status</span>
+                <th></th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr style="background-color: #404040">
+                <th><span style="color: ghostwhite">Id</span>
+                <th><span style="color: ghostwhite">NetworkIP</span>
+                <th><span style="color: ghostwhite">IP Address</span>
+                <th><span style="color: ghostwhite">Gateway</span>
+                <th><span style="color: ghostwhite">Subnet mask</span>
+                <th><span style="color: ghostwhite">Status</span>
+                <th></th>
 
-
-                                <a type="button" data-toggle="modal" class="open-blockIP-modal" data-target="#modal-@i">
-                                    @{
-                                        if (item.StatusName == "Blocked")
-                                        {<label>Unblock IP</label>}
-                                        else if (item.StatusName == "Available")
-                                        {
-                                            <label>Block IP</label>}
-                                    }
-                                </a>
-                                <div class="modal fade" id="modal-@i" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-                                    <div class="modal-dialog" style="width: 400px">
-                                        <div class="modal-content">
-                                            <form action="ChangeIPStatus" method="post">
-
-                                               
-                                                <input class="hidden" name="Id" value="@Model.IPs[i].Id" />
-                                                @if (item.StatusName == "Available")
-                                                {
-                                                    <div class="modal-body">
-                                                        <h4>Please make sure to block this IP Address</h4>
-                                                        <div class="form-inline">
-                                                            <div class="form-group">
-                                                                <label>Reason:</label>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                @Html.TextAreaFor(model => model.Description, new {@class = "form-control", placeholder = "Some reasons here", style = "width: 250px"})
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer clearfix">
-
-                                                       
-                                                        <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Block</button>
-                                                        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-                                                    </div>
-
-
-
-                                                }
-                                                else
-                                                {
-                                                    <div class="modal-body">
-                                                        <h4>Are you sure to unblock this IP Address?</h4>
-                                                    </div>
-                                                    <div class="modal-footer clearfix">
-                                                 
-                                                       
-                                                        <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Yes</button>
-                                                        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-                                                    </div>
-
-                                                }
-
-
-
-                                            </form>
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal-dialog -->
-                                </div><!-- /.modal -->
-                            </td>
-
-
-                        </tr>
-                                        }
-
-                </tbody>*@
-                <tfoot>
-                <tr style="background-color: #404040">
-                    <th><h4 style="color: ghostwhite">Id</h4>
-                    <th><h4 style="color: ghostwhite">NetworkIP</h4>
-                    <th><h4 style="color: ghostwhite">IP Address</h4>
-                    <th><h4 style="color: ghostwhite">Gateway</h4>
-                    <th><h4 style="color: ghostwhite">Subnet mask</h4>
-                    <th><h4 style="color: ghostwhite">Status</h4>
-                    <th></th>
-
-                </tr>
-                </tfoot>
-            </table>
-
-
+            </tr>
+        </tfoot>
+    </table>
 </section><!-- /.content -->
+
 <!-- ADD IP MODAL -->
-<div class="modal fade" id="addip-modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" style="width: 400px">
+<div id="addip-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"><i class="fa fa-plus"></i> Add new IP Address Range</h4>
-            </div>
-            <form action="#" method="post">
-                <div class="modal-body no-border">
-                    <table>
-                        <tr>
-                            <th>@Html.Label("IP Address", htmlAttributes: new { @class = "control-label" })</th>
-                            <th>@Html.Label("Netmask", htmlAttributes: new { @class = "control-label" })</th>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="form-group">
-                                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @placeholder = "Network Address", @id = "address" } })
-
-                                </div>
-
-                            </td>
-                            <td>
-                                <div class="form-group" style="width: 100px">
-                                    @{
-                                        IEnumerable<SelectListItem> netmask = new List<SelectListItem>()
-                                        {
-                                            new SelectListItem()
-                                            {
-                                                Text = "24",
-                                                Value = "24"
-                                            },
-                                            new SelectListItem()
-                                            {
-                                                Text = "25",
-                                                Value = "25"
-                                            },
-                                            new SelectListItem()
-                                            {
-                                                Text = "26",
-                                                Value = "26"
-                                            },
-                                            new SelectListItem()
-                                            {
-                                                Text = "27",
-                                                Value = "27"
-                                            },
-                                            new SelectListItem()
-                                            {
-                                                Text = "28",
-                                                Value = "28"
-                                            }
-
-                                        };
-                                        SelectList netmask1 = new SelectList(netmask, "Value", "Text", Model.Netmask);
-                                    }
-
-                                    @Html.DropDownList("Netmask", netmask1, htmlAttributes: new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.Netmask, "", new { @class = "text-danger" })
-                                </div>
-
-                            </td>
-                        </tr>
-
-                    </table>
-                    <div>
-                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+            @using(Html.BeginForm())
+            {
+                <div class="modal-header">
+                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i> @Labels.AddIP</div>
+                </div>
+                <div class="modal-body">
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                            @Html.LabelFor(model => model.Address)
+                        </div>
+                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                            @Html.TextBoxFor(model => model.Address, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                        </div>
+                    </div>
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                            @Html.LabelFor(model => model.Netmask)
+                        </div>
+                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                            @Html.TextBoxFor(model => model.Netmask, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        </div>
                     </div>
                 </div>
-                <div class="modal-footer clearfix">
-
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-
-                    <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                <div class="modal-footer">
+                    <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
+                            data-dismiss="modal">
+                        @Labels.DialogCancel
+                    </button>
+                    <button type="submit" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        @Labels.DialogOK
+                    </button>
                 </div>
-            </form>
+            }
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<div id="blockip-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm())
+            {
+                <div class="modal-header">
+                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i> @Labels.BlockIP</div>
+                </div>
+                <div class="modal-body">
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.MODAL_MESSAGE_CLASS">
+                            @Messages.BlockIPWarning?
+                        </div>
+                    </div>
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                            @Html.LabelFor(model => model.Description)
+                        </div>
+                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                            @Html.TextBoxFor(model => model.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        </div>
+                    </div>                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
+                            data-dismiss="modal">
+                        @Labels.DialogCancel
+                    </button>
+                    <button type="submit" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        @Labels.DialogOK
+                    </button>
+                </div>
+            }
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="unblockip-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm())
+            {
+                <div class="modal-header">
+                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i> @Labels.UnblockIP</div>
+                </div>
+                <div class="modal-body">
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.MODAL_MESSAGE_CLASS">
+                            @Messages.UnblockIPWarning?
+                        </div>
+                    </div>
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                            @Html.LabelFor(model => model.Description)
+                        </div>
+                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                            @Html.TextBoxFor(model => model.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
+                            data-dismiss="modal">
+                        @Labels.DialogCancel
+                    </button>
+                    <button type="submit" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        @Labels.DialogOK
+                    </button>
+                </div>
+            }
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <!-- page script -->
-
-
 <script>
     $.fn.dataTable.ext.search.push(
         function (settings, data, dataIndex) {
@@ -243,42 +187,60 @@
         ajax: "@Url.Action("GetAll", "IP", new {httproute = ""})",
         columns: [
             { data: "Id" },
-            { data: "NetworkIP"},
+            { data: "NetworkIP" },
             { data: "IPAddress" },
             { data: "Gateway" },
             { data: "Subnetmask" },
             { data: "StatusName" },
-            {}
+            { data: "StatusCode" }
         ],
         iDisplayLength: 32,
         aLengthMenu: [[32, 64, 128, 255], [32, 64, 128, 255]],
-        fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-
-            switch (aData.StatusName) {
-                case 'Reserve':
-                $(nRow).css('background-color', '#ffe6e6');
-                break;
+        fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            var row = $(nRow);
+            var actionCell = $(nRow.cells[4]);
+            switch (aData.StatusCode) {
+                case '@Constants.StatusCode.IP_AVAILABLE':
+                    actionCell.html('<a href="#">Block IP</a>');
+                    actionCell.find('a').click(function () {
+                        $('#blockip-modal').modal('show');
+                        return false;
+                    });
+                    break;
+                case '@Constants.StatusCode.IP_BLOCKED':
+                    actionCell.html('<a href="#">Unblock IP</a>');
+                    actionCell.find('a').click(function () {
+                        $('#unblockip-modal').modal('show');
+                        return false;
+                    });
+                    break;
+                case '@Constants.StatusCode.IP_RESERVE':
+                    row.css('background-color', '#ffe6e6');
+                    break;
+                case '@Constants.StatusCode.IP_USED':
+                    actionCell.html('');
+                    break;
             }
         },
-        order: [[0, "asc"]] ,
-        columnDefs: [
-            {
-                targets: [0],
-                visible: false,
-                searchable: true
-            },
-            {
-                targets: [1],
-                visible: false,
-                searchable: true
-            }
-        ]
+        order: [[0, "asc"]],
+        columnDefs: [{
+            targets: [0],
+            visible: false,
+            searchable: true
+        }, {
+            targets: [1],
+            visible: false,
+            searchable: true
+        }, {
+            targets: [6],
+            orderable: false
+        }]
     });
 
-    $("#example1_filter").append($('#dropdown-template').html());
+    $('#example1_filter').append($('#dropdown-template').html());
     $('#dropdown-template').html('');
 
-    $('#NetworkIP').change(function() {
+    $('#NetworkIP').change(function () {
         table.draw();
     });
 

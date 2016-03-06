@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="AddIP" xml:space="preserve">
+    <value>Add IP Address</value>
+  </data>
+  <data name="Block" xml:space="preserve">
+    <value>Block</value>
+  </data>
+  <data name="BlockIP" xml:space="preserve">
+    <value>Block IP Address</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
@@ -124,7 +136,7 @@
     <value>Create Request</value>
   </data>
   <data name="CurrentIP" xml:space="preserve">
-    <value>Current IP</value>
+    <value>Current IP Address</value>
   </data>
   <data name="CurrentRequest" xml:space="preserve">
     <value>Current Request</value>
@@ -133,7 +145,25 @@
     <value>Customer</value>
   </data>
   <data name="DefaultIP" xml:space="preserve">
-    <value>Default IP</value>
+    <value>Default IP Address</value>
+  </data>
+  <data name="DialogBack" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="DialogCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="DialogDelete" xml:space="preserve">
+    <value>Discard</value>
+  </data>
+  <data name="DialogOK" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="DialogReset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="IP" xml:space="preserve">
+    <value>IP Address</value>
   </data>
   <data name="Location" xml:space="preserve">
     <value>Location</value>
@@ -146,6 +176,9 @@
   </data>
   <data name="NoOfOutlets" xml:space="preserve">
     <value>Number of Outlets</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
   </data>
   <data name="OtherAttributes" xml:space="preserve">
     <value>Other Attributes</value>
@@ -162,8 +195,14 @@
   <data name="RackUnit" xml:space="preserve">
     <value>Rack Unit</value>
   </data>
+  <data name="Reason" xml:space="preserve">
+    <value>Reason</value>
+  </data>
   <data name="RegisteredDate" xml:space="preserve">
     <value>Registered Date</value>
+  </data>
+  <data name="RequestType" xml:space="preserve">
+    <value>Request Type</value>
   </data>
   <data name="SearchBy" xml:space="preserve">
     <value>Search By</value>
@@ -176,5 +215,14 @@
   </data>
   <data name="Status" xml:space="preserve">
     <value>Status</value>
+  </data>
+  <data name="Subnet" xml:space="preserve">
+    <value>Subnet</value>
+  </data>
+  <data name="Unblock" xml:space="preserve">
+    <value>Unblock</value>
+  </data>
+  <data name="UnblockIP" xml:space="preserve">
+    <value>Unblock IP Address</value>
   </data>
 </root>

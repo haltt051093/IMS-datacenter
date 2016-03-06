@@ -61,11 +61,29 @@ namespace IMS.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure to block this IP.
+        /// </summary>
+        public static string BlockIPWarning {
+            get {
+                return ResourceManager.GetString("BlockIPWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select request type.
         /// </summary>
         public static string SelectRequestType {
             get {
                 return ResourceManager.GetString("SelectRequestType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure to unblock this IP.
+        /// </summary>
+        public static string UnblockIPWarning {
+            get {
+                return ResourceManager.GetString("UnblockIPWarning", resourceCulture);
             }
         }
         

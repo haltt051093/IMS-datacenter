@@ -51,11 +51,13 @@
 <div class="modal fade" id="addlocation-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" style="width: 300px">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"><i class="fa fa-plus"></i> Add new rack</h4>
-            </div>
-            <form action="#" method="post">
+            
+            @using (Html.BeginForm())
+            {
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"><i class="fa fa-plus"></i> Add new rack</h4>
+                </div>
                 <div class="modal-body">
                     <div class="form-group">
                         @Html.Label("Rack Name", htmlAttributes: new { @class = "control-label" })
@@ -127,7 +129,7 @@
 
                     <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
                 </div>
-            </form>
+            }
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

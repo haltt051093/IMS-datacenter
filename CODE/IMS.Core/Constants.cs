@@ -285,8 +285,19 @@ namespace IMS.Core
             public const string SECONDARY_BUTTON_CLASS = "btn btn-info";
             public const string DANGER_BUTTON_CLASS = "btn btn-danger";
 
-            public const string FORM_LABEL_CLASS = "";
-            public const string FORM_CONTROL_CLASS = "";
+            public const string FORM_ROW_CLASS = "row form-group";
+            public const string FORM_MESSAGE_CLASS = "col-xs-12";
+            public const string FORM_LABEL_CLASS = "col-xs-3 tf-form-label";
+            public const string FORM_CONTROL_CLASS = "col-xs-9 tf-form-control";
+            public const string FORM_INNER_CLASS = "form-control";
+
+            public const string MODAL_CLASS = "modal fade tf-modal";
+            public const string MODAL_HEADER_CLASS = "h4";
+            public const string MODAL_ROW_CLASS = "row form-group";
+            public const string MODAL_MESSAGE_CLASS = "col-xs-12";
+            public const string MODAL_LABEL_CLASS = "col-xs-3 tf-form-label";
+            public const string MODAL_CONTROL_CLASS = "col-xs-9 tf-form-control";
+            public const string MODAL_INNER_CLASS = "form-control";
         }
 
         public class FormAction

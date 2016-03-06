@@ -19,30 +19,31 @@
 
 
 <!-- ADD LOCATION MODAL -->
-<div id="displayrequesttype-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" style="width: 600px">
+<div id="displayrequesttype-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             @using (Html.BeginForm("CreateRequest", "Request", FormMethod.Get))
             {
                 <div class="modal-header">
-                    <h4 class="modal-title"><i class="fa fa-plus"></i> @Messages.SelectRequestType</h4>
+                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i> @Labels.CreateRequest</div>
                 </div>
                 <div class="modal-body">
-                    <p>
-                        <div class="form-group">
+                    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
                             @Html.LabelFor(model => model.Type):
-                            @Html.DropDownListFor(model => model.Type, Model.RequestTypes, new {@class = "form-control"})
                         </div>
-
-                    </p>
+                        <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                            @Html.DropDownListFor(model => model.Type, Model.RequestTypes, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
                             data-dismiss="modal">
-                        @Labels.Cancel
+                        @Labels.DialogCancel
                     </button>
                     <button type="submit" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                        @Labels.CreateRequest
+                        @Labels.DialogOK
                     </button>
                 </div>
             }
