@@ -18,28 +18,26 @@
         </div>
     </div>
 
-            <table id="example1" class="table table-bordered table-hover">
-                <thead>
-                    <tr style="background-color: #404040">
-                        <th><h4 style="color: ghostwhite">Rack Code</h4>
-                        <th><h4 style="color: ghostwhite">Rack Name</h4>
-                        <th><h4 style="color: ghostwhite">Rack Unit</h4></th>
-                        <th><h4 style="color: ghostwhite">Rack Status</h4></th>
-                        <th><h4 style="color: ghostwhite">IP Address</h4></th>
-                    </tr>
-                </thead>
-                <tfoot>
-
-                    <tr style="background-color: #404040">
-                        <th><h4 style="color: ghostwhite">Rack Code</h4></th>
-                        <th><h4 style="color: ghostwhite">Rack Name</h4></th>
-                        <th><h4 style="color: ghostwhite">Rack Unit</h4></th>
-                        <th><h4 style="color: ghostwhite"></h4>Rack Status</th>
-                        <th><h4 style="color: ghostwhite">IP Address</h4></th>
-                    </tr>
-
-                </tfoot>
-            </table>
+    <table id="example1" class="table table-bordered table-hover">
+        <thead>
+            <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
+                <th>Rack Code</th>
+                <th>Rack Name</th>
+                <th>Rack Unit</th>
+                <th>Rack Status</th>
+                <th>IP Address</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
+                <th>Rack Code</th>
+                <th>Rack Name</th>
+                <th>Rack Unit</th>
+                <th>Rack Status</th>
+                <th>IP Address</th>
+            </tr>
+        </tfoot>
+    </table>
 
 
 </section><!-- /.content -->

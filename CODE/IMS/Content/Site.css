@@ -17,6 +17,19 @@
 .tf-modal .modal-dialog {
 }
 
+tr.tf-datatable-header {
+    background-color: #404040;
+}
+
+tr.tf-datatable-header th {
+    margin-top: 1.33em;
+    margin-bottom: 1.33em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+    color: ghostwhite;
+}
+
 /* http://www.w3schools.com/tags/tag_hn.asp */
 h1 {
     display: block;

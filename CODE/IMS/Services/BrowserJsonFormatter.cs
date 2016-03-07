@@ -3,7 +3,7 @@ using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 
-namespace IMS
+namespace IMS.Services
 {
     public class BrowserJsonFormatter : JsonMediaTypeFormatter
     {

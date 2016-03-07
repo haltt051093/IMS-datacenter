@@ -27,7 +27,7 @@ namespace IMS.Controllers
         }
 
         #region Create Request
-        public ActionResult CreateRequest(RequestCreateViewModel q)
+        public ActionResult Create(RequestCreateViewModel q)
         {
             var requestTypeCode = q.Type;
             if (!string.IsNullOrEmpty(requestTypeCode))
