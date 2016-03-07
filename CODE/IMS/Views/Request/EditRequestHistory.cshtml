@@ -5,7 +5,7 @@
     ViewBag.Title = "EditRequestHistory";
 }
 
-<h2>EditCustomer</h2>
+<h2>Edit Request History</h2>
 
 @using (Html.BeginForm("EditRequestHistory", "Request", FormMethod.Post))
 {
@@ -34,10 +34,10 @@
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.RequestedTime, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.RequestedTime, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-6">
-                @Html.EditorFor(model => model.RequestedTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RequestedTime, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.RequestedTime, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.RequestedTime, "", new {@class = "text-danger"})
             </div>
         </div>
 
@@ -54,12 +54,15 @@
                 @Html.ValidationMessageFor(model => model.StatusCode, "", new {@class = "text-danger"})
             </div>
         </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+        @if (User.IsInRole("Manager"))
+        {
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
             </div>
-        </div>
+        }
+        
     </div>
 }
 

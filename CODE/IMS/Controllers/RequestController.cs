@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Web.Mvc;
 using AutoMapper;
@@ -79,12 +80,32 @@ namespace IMS.Controllers
             return View();
         }
 
-        public ActionResult RequestHistory()
+        public ActionResult RequestHistory(string startTime, string endTime)
         {
             //var data = RequestDAO.Current.GetAll();
             var request = RequestBLO.Current.GetAllRequest();
             var data = new RequestIndexViewModel();
-            data.Request = request;
+
+            if (startTime != null && endTime != null)
+            {
+                DateTime date1 = Convert.ToDateTime(startTime);
+                DateTime date2 = Convert.ToDateTime(endTime);
+                //var date1 = datestart.Date.AddHours(23).AddMinutes(59).AddSeconds(59);
+                //var date2 = dateend.Date.AddHours(23).AddMinutes(59).AddSeconds(59);
+
+                //List<Request> rs = new List<Request>();
+                var obj = (from f in request
+                           where f.RequestedTime >= date1
+                           where f.RequestedTime <= date2
+                           select f).ToList();
+                data.Request = obj;
+                ViewBag.startDate = date1;
+                ViewBag.endDate = date2;
+            }
+            else
+            {
+                data.Request = request;
+            }
             return View(data);
         }
 
@@ -112,6 +133,11 @@ namespace IMS.Controllers
 
             RequestBLO.Current.AddOrUpdate(request);
             return RedirectToAction("RequestHistory", "Request");
+        }
+
+        public ActionResult SearchByDate(string start1, string end1)
+        {
+            return RedirectToAction("RequestHistory", "Request", new { startTime = start1, endTime = end1 });
         }
 
         private static IHubContext commandHubContext;

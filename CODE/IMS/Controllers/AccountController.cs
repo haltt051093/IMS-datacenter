@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Web.WebPages;
 using AutoMapper;
 using IMS.Core;
 using IMS.Data.Business;
@@ -18,7 +19,7 @@ namespace IMS.Controllers
 
     public class AccountController : CoreController
     {
-        public ActionResult Index2(string role)
+        public ActionResult Index2(string role, string roleSearch, string message)
         {
             if (role == null)
             {
@@ -33,7 +34,18 @@ namespace IMS.Controllers
                     return View("Login");
                 }
             }
+            if (!message.IsEmpty())
+            {
+                if (("staff").Equals(message))
+                {
+                    ViewBag.CreateStaff = "This group exist two Staff";
+                }
+                else
+                {
+                    ViewBag.CreateStaff = "This group exist one Shift Head";
+                }
 
+            }
             var data = new AccountIndexViewModel();
             //data.Accounts = AccountBLO.Current.GetAllAccount();
             List<Account> lstall = AccountDAO.Current.GetAll();
@@ -44,6 +56,20 @@ namespace IMS.Controllers
                 {
                     rs = lstall;
                 }
+                else if (role.Equals("Staff"))
+                {
+                    for (int i = 0; i < lstall.Count; i++)
+                    {
+                        if (!lstall[i].Role.IsNullOrWhiteSpace())
+                        {
+                            if (lstall[i].Role.Equals("Customer"))
+                            {
+                                rs.Add(lstall[i]);
+                            }
+                        }
+
+                    }
+                }
                 else if (role.Equals("Shift Head"))
                 {
                     for (int i = 0; i < lstall.Count; i++)
@@ -53,28 +79,27 @@ namespace IMS.Controllers
                             if (lstall[i].Role.Equals("Customer"))
                             {
                                 rs.Add(lstall[i]);
-
                             }
                         }
 
                     }
 
                 }
-                else if (role.Equals("Staff"))
-                {
-                    //for (int i = 0; i < lstall.Count; i++)
-                    //{
-                    //    if (lstall[i].Role.Equals("Staff"))
-                    //    {
-                    //        rs.Add(lstall[i]);
 
-                    //    }
-
-                    //}
-
-                }
             }
-            data.ListAccount = rs;
+            if (roleSearch != null && (!("Get All").Equals(roleSearch)))
+            {
+                List<Account> ls = new List<Account>();
+                ls = (from f in rs
+                      where f.Role.Equals(roleSearch)
+                      select f).ToList();
+                data.ListAccount = ls;
+            }
+            else
+            {
+                data.ListAccount = rs;
+            }
+
             return View(data);
         }
 
@@ -102,22 +127,6 @@ namespace IMS.Controllers
             Account o = AccountDAO.Current.Query(x => x.Username == account.Username && x.Password == account.Password).FirstOrDefault();
             if (o != null)
             {
-                // gioi han tg login, ko cho login persistant
-                // expiration = 30 days
-                //bool isPersistent = false;
-                //Hoi lai FormAuthenticationTicket la gi
-                //FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1,
-                //                                    account.Username,
-                //                                    DateTime.Now,
-                //                                    DateTime.Now.AddMinutes(30),
-                //                                    isPersistent,
-                //                                    FormsAuthentication.FormsCookiePath);
-                //// Encrypt the ticket.
-                //string encTicket = FormsAuthentication.Encrypt(ticket);
-                //// Create the cookie.
-                //Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encTicket));
-                //// Redirect back to original URL.
-                //Response.Redirect(FormsAuthentication.GetRedirectUrl(account.Username, isPersistent));
                 FormsAuthentication.SetAuthCookie(account.Username, false);
 
                 //save account to session
@@ -126,11 +135,11 @@ namespace IMS.Controllers
                     Session[Constants.Session.USER_LOGIN] = o;
                 }
                 string role = o.Role;
-                if (role == "Staff")
+                if (role == "Customer")
                 {
                     return RedirectToAction("ViewProfile", "Account", new { id = o.Id });
                 }
-                return RedirectToAction("Index2", "Account", new {role = role});
+                return RedirectToAction("Index2", "Account", new { role = role });
             }
             //else
             return View();
@@ -162,16 +171,43 @@ namespace IMS.Controllers
         {
             if (ModelState.IsValid)
             {
+                List<Account> lstall = AccountDAO.Current.GetAll();
+
                 var account = Mapper.Map<AccountCreateViewModel, Account>(accountCreateViewModel);
-                AccountBLO.Current.Add(account);
+                var checkStaff = lstall.Where(c => c.GroupCode == account.GroupCode && c.Role == "Staff").Where(c => c.Status == true).Count();
+                var checkShift = lstall.Where(c => c.GroupCode == account.GroupCode && c.Role == "Shift Head").Where(c => c.Status == true).Count();
+                var FailCreate = "";
+                if (("Staff").Equals(account.Role))
+                {
+                    if (checkStaff < 2)
+                    {
+                        AccountBLO.Current.Add(account);
+                    }
+                    else
+                    {
+                        FailCreate = "staff";
+                    }
+                }
+                else
+                {
+                    if (checkShift < 1)
+                    {
+                        AccountBLO.Current.Add(account);
+                    }
+                    else
+                    {
+                        FailCreate = "shifthead";
+                    }
+                }
+
                 //send account info to login to the system
                 bool result = AccountBLO.Current.SendAccountInfo(account);
                 if (result)
                 {
                     //ModelState.AddModelError("", "Send mail successfully");
-                    return RedirectToAction("Index2");
+                    //return RedirectToAction("Index2");
                 }
-                return RedirectToAction("Index2");
+                return RedirectToAction("Index2", new { message = FailCreate });
             }
             return View(accountCreateViewModel);
         }
@@ -246,7 +282,7 @@ namespace IMS.Controllers
             if (Session[Constants.Session.USER_LOGIN] != null)
             {
                 var obj = Session[Constants.Session.USER_LOGIN];
-                Account a = (Account) obj;
+                Account a = (Account)obj;
                 role = a.Role;
             }
             return RedirectToAction("Index2", "Account", new { role = role });
@@ -319,6 +355,12 @@ namespace IMS.Controllers
             return View("ForgotPWSuccess");
         }
 
+        [HttpPost]
+        public ActionResult SearchByRole(string roleName)
+        {
+            return RedirectToAction("Index2", "Account", new { roleSearch = roleName });
+        }
+
         public ActionResult GetChangePW()
         {
             return View("ChangePassword");
@@ -332,7 +374,7 @@ namespace IMS.Controllers
                 if (Session[Constants.Session.USER_LOGIN] != null)
                 {
                     var obj = Session[Constants.Session.USER_LOGIN];
-                    Account a = (Account) obj;
+                    Account a = (Account)obj;
 
                     if (oldpassword.Equals(a.Password))
                     {
@@ -349,7 +391,7 @@ namespace IMS.Controllers
             {
                 ViewBag.confirm = "Confirm Password not match with new password";
             }
-            
+
             return View("ChangePassword");
         }
 
