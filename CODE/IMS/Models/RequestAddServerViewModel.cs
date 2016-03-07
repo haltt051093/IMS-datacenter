@@ -29,6 +29,7 @@ namespace IMS.Models
         public string StatusCode { get; set; }
         public string Description { get; set; }
 
+        public List<SelectListItem> ServerSizes { get; set; }
         public List<SelectListItem> AttributeList { get; set; }
         public List<string> SelectedAttributes { get; set; }
         public List<string> AttributeValues { get; set; }

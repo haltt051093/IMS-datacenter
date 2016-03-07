@@ -129,6 +129,9 @@
   <data name="AddServer" xml:space="preserve">
     <value>Add Server</value>
   </data>
+  <data name="AddServerInfo" xml:space="preserve">
+    <value>Add Server Information</value>
+  </data>
   <data name="Block" xml:space="preserve">
     <value>Block</value>
   </data>

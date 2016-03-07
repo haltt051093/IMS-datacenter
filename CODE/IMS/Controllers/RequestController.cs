@@ -58,6 +58,9 @@ namespace IMS.Controllers
                     data.AttributeList = attrList
                         .Select(x => new SelectListItem { Value = x.AttributeCode, Text = x.AttributeName })
                         .ToList();
+                    data.ServerSizes = new  int[] { 1, 2, 4 }
+                        .Select(x => new SelectListItem { Value = x.ToString(), Text = x.ToString() })
+                        .ToList();
 
                     return View("AddServer", data);
 
@@ -141,22 +144,22 @@ namespace IMS.Controllers
         #endregion
 
         #region New View
-        public ActionResult RequestChangeIP2()
+        public ActionResult ChangeIP2()
         {
             return View();
         }
 
-        public ActionResult RequestChangeIPInfo2()
+        public ActionResult ChangeIPInfo2()
         {
             return View();
         }
 
-        public ActionResult RequestUpgradeServer2()
+        public ActionResult UpgradeServer2()
         {
             return View();
         }
 
-        public ActionResult RequestUpgradeServerInfo2()
+        public ActionResult UpgradeServerInfo2()
         {
             return View();
         }
@@ -199,7 +202,7 @@ namespace IMS.Controllers
 
         #region Process Request
         [HttpPost]
-        public ActionResult RequestReturnRack(RequestReturnRackViewModel viewmodel)
+        public ActionResult ReturnRack(RequestReturnRackViewModel viewmodel)
         {
             if (ModelState.IsValid)
             {
@@ -254,7 +257,7 @@ namespace IMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult RequestRentRack(RequestRentRackViewModel viewmodel)
+        public ActionResult RentRack(RequestRentRackViewModel viewmodel)
         {
             viewmodel.Customer = Constants.Test.CUSTOMER_MANHNH;
             //Edit description
@@ -321,7 +324,7 @@ namespace IMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult RequestAddServer(RequestAddServerViewModel viewmodel)
+        public ActionResult AddServer(RequestAddServerViewModel viewmodel)
         {
             viewmodel.Customer = Constants.Test.CUSTOMER_MANHNH;
             //Add request
@@ -414,7 +417,7 @@ namespace IMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult RequestBringServerAway(RequestBringServerAwayViewModel viewmodel)
+        public ActionResult BringServerAway(RequestBringServerAwayViewModel viewmodel)
         {
             //lay servercode, serverIP (gồm cả defaultIP và current IP
             //update lai trang thai server, trang thai serverIP
@@ -454,7 +457,7 @@ namespace IMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult RequestReturnIp(RequestIPViewModel viewmodel)
+        public ActionResult ReturnIp(RequestIPViewModel viewmodel)
         {
             viewmodel.Customer = Constants.Test.CUSTOMER_MANHNH;
             var selected = viewmodel.Ips;
@@ -525,7 +528,7 @@ namespace IMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult RequestAssignIp(RequestIPViewModel viewmodel)
+        public ActionResult AssignIp(RequestIPViewModel viewmodel)
         {
             viewmodel.Customer = Constants.Test.CUSTOMER_MANHNH;
             if (ModelState.IsValid)
@@ -568,7 +571,7 @@ namespace IMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult RequestChangeIp(RequestIPViewModel viewmodel)
+        public ActionResult ChangeIp(RequestIPViewModel viewmodel)
         {
             viewmodel.Customer = Constants.Test.CUSTOMER_MANHNH;
             var selected = viewmodel.Ips;
@@ -678,7 +681,7 @@ namespace IMS.Controllers
         }
 
         [HttpGet]
-        public ActionResult RequestDetais(string rType, string rCode)
+        public ActionResult Detais(string rType, string rCode)
         {
             if (rType.Equals(Constants.RequestTypeCode.ADD_SERVER))
             {

@@ -21,7 +21,7 @@
             @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                
-                @Html.DisplayFor(model => model.Username, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.DisplayFor(model => model.Username, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                 @Html.ValidationMessageFor(model => model.Username, "", new {@class = "text-danger"})
             </div>
         </div>
@@ -45,7 +45,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Fullname, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.DisplayFor(model => model.Fullname, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.DisplayFor(model => model.Fullname, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                 @Html.ValidationMessageFor(model => model.Fullname, "", new {@class = "text-danger"})
             </div>
         </div>

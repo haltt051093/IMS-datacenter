@@ -290,8 +290,8 @@ namespace IMS.Core
 
             public const string FORM_ROW_CLASS = "row form-group";
             public const string FORM_MESSAGE_CLASS = "col-xs-12";
-            public const string FORM_LABEL_CLASS = "col-xs-3 tf-form-label";
-            public const string FORM_CONTROL_CLASS = "col-xs-9 tf-form-control";
+            public const string FORM_LABEL_CLASS = "col-xs-2 tf-form-label";
+            public const string FORM_CONTROL_CLASS = "col-xs-10 tf-form-control";
             public const string FORM_INNER_CLASS = "form-control";
             public const string FORM_LABEL = "tf-form-label";
 
