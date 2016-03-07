@@ -90,6 +90,27 @@ namespace IMS.Data.Repository
             return requests;
         }
 
+        public List<LogChangedContent> GetBlockedIP(string IP)
+        {
+            string query = @"select * from LogChangedContent as l, 
+                            (
+                            select MAX(l.LogTime)as maxtime from LogChangedContent as l where l.ChangedValueOfObject ='"+IP+@"'and l.TypeOfLog='BLOCKIP'
+                            group by l.ChangedValueOfObject
+                            )as k 
+                            where l.ChangedValueOfObject ='"+IP+@"'and l.TypeOfLog='BLOCKIP' and l.LogTime=k.maxtime";
+            return RawQuery<LogChangedContent>(query, new object[] { });
+        }
 
+        public List<LogChangeExtendModel> GetAllLogIP()
+        {
+            string query = @"select l.*,m.LogTime as Unblocktime, datediff(day,l.LogTime,m.LogTime)as blockedtime, datediff(day,l.LogTime,CURRENT_TIMESTAMP) as blockedtimetonow
+                            from LogChangedContent as l
+                            left join 
+                            (select l.PreviousId,l.LogTime from LogChangedContent as l,(select l.Id from LogChangedContent as l) as k
+                             where l.PreviousId = k.Id)as m
+                             on m.PreviousId=l.Id
+                             where l.TypeOfLog = 'BLOCKIP' ";
+            return RawQuery<LogChangeExtendModel>(query, new object[] {});
+        } 
     }
 }

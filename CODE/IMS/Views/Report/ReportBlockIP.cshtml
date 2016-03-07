@@ -1,0 +1,92 @@
+﻿@model IMS.Models.ReportBlockIPViewModel
+@{
+    ViewBag.Title = Pages.ReportBlockIP;
+    ViewBag.PageTitle = Pages.ReportBlockIP;
+    ViewBag.Role = "Shift Head";
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("Report", "ReportBlockIP", Pages.ReportBlockIP)
+    };
+}
+
+<section class="main-content">
+    <div class="row hide">
+        <div id="dropdown-template" class="col-xs-3">
+            <label>Time Range: @Html.DropDownListFor(model => model.Time, Model.TimeRange, "All Blocked IP", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
+        </div>
+    </div>
+
+    <table id="example1" class="table table-bordered table-hover">
+        <thead>
+            <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
+                <th>IP Address</th>
+                <th>Blocked Time</th>
+                <th>Blocked Reason</th>
+                <th>Unblocked Time</th>
+                <th>Blocked Time Range</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
+                <th>IP Address</th>
+                <th>Blocked Time</th>
+                <th>Blocked Reason</th>
+                <th>Unblocked Time</th>
+                <th>Blocked Time Range</th>
+            </tr>
+        </tfoot>
+    </table>
+</section><!-- /.content -->
+
+<script>
+    $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            var timerange = $('#Time').val();
+            var range = parseInt(timerange);
+            if (timerange == '') {
+                return true;
+            }
+            if (timerange >= data[3]) {
+                return true;
+            }
+            return false;
+        }
+    );
+</script>
+
+<script type="text/javascript">
+    var table = $('#example1').DataTable({
+        dom: '<lf<t>ip>',
+        processing: true,
+        ajax: "@Url.Action("GetAll", "Report", new {httproute = ""})",
+        columns: [
+            { data: "ChangedValueOfObject" },
+            { data: "LogTime" },
+            { data: "Description" },
+            { data: "Unblocktime" },
+            { data: "blockedtime" }
+
+        ],
+        iDisplayLength: 25,
+        aLengthMenu: [[25, 50, 100], [25, 50, 100]],
+        fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+
+        },
+        order: [[1, "desc"]]
+
+    });
+
+    $("#example1_filter").append($('#dropdown-template').html());
+    $('#dropdown-template').html('');
+
+    $('#Time').change(function() {
+        table.draw();
+    });
+
+</script>
+
+@section Styles {
+    <style>
+    </style>
+}
