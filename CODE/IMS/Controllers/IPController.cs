@@ -255,12 +255,15 @@ namespace IMS.Controllers
                 log.Description = iivm.Description;
                 LogChangedContentDAO.Current.Add(log);
                 Alert("Block IP successfully");
+                return RedirectToAction("Index2");
             }
             else
             if (ip.StatusCode == Constants.StatusCode.IP_BLOCKED)
             {
                 ip.StatusCode = Constants.StatusCode.IP_AVAILABLE;
                 IPAddressPoolDAO.Current.Update(ip);
+                var blockip = LogChangedContentBLO.Current.GetBlockedIP(ip.IPAddress).FirstOrDefault();
+                
                 LogChangedContent log = new LogChangedContent();
                 log.TypeOfLog = Constants.TypeOfLog.LOG_UNBLOCK_IP;
                 log.Object = Constants.Object.OBJECT_IP;
@@ -268,8 +271,10 @@ namespace IMS.Controllers
                 log.ObjectStatus = Constants.StatusCode.IP_AVAILABLE;
                 log.Description = iivm.Description;
                 log.LogTime = DateTime.Now;
+                log.PreviousId = blockip.Id;
                 LogChangedContentDAO.Current.Add(log);
                 Alert("Unblock IP successfully");
+                return RedirectToAction("Index2");
             }
             return RedirectToAction("Index2");
         }

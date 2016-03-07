@@ -131,6 +131,7 @@
     <Compile Include="ViewModels\IPAddressModel.cs" />
     <Compile Include="ViewModels\IPExtendedModel.cs" />
     <Compile Include="ViewModels\LocationExtendedModel.cs" />
+    <Compile Include="ViewModels\LogChangeExtendModel.cs" />
     <Compile Include="ViewModels\LogExtentedModel.cs" />
     <Compile Include="ViewModels\NotificationExtendedModel.cs" />
     <Compile Include="ViewModels\RackOfCustomerExtendedModel.cs" />
