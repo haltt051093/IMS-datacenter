@@ -2,7 +2,16 @@
 @model RequestAddServerViewModel
 
 @{
-    ViewBag.Role = "Request Add Server";
+    ViewBag.Title = Pages.RequestCreate;
+    ViewBag.PageTitle = Pages.RequestCreate;
+    ViewBag.Role = Constants.Role.SHIFT_HEAD;
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("Request", "Index", Pages.Request),
+        new BreadcrumbModel("Request", "Create", Pages.RequestCreate),
+        new BreadcrumbModel("Request", "Create", Pages.RequestAddServer, new { Type = Constants.RequestType.SERVER_ADD })
+    };
 }
 <script>
     $(document).ready(function () {

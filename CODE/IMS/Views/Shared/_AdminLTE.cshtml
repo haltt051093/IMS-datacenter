@@ -73,23 +73,17 @@
                             }
                             else if (i == 0)
                             {
-                                <li><i class="fa fa-dashboard"></i> @Html.ActionLink(item.Title, item.Action, item.Controller)</li>
+                                <li><i class="fa fa-dashboard"></i> @Html.ActionLink(item.Title, item.Action, item.Controller, item.RouteValue, null)</li>
                             }
                             else
                             {
-                                <li>@Html.ActionLink(item.Title, item.Action, item.Controller)</li>
+                                <li>@Html.ActionLink(item.Title, item.Action, item.Controller, item.RouteValue, null)</li>
                             }
                         }
                     </ol>
                 }
             </section>
 
-            @*@if (TempData["Message"] != null)
-                {
-                    <div class="alert alert-danger alert-dismissible" role="alert">
-                        <div>@TempData["Message"]</div>
-                    </div>
-                }*@
             @if (TempData["AlertType"] != null)
             {
                 <div class="main-content">

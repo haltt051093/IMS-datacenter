@@ -10,13 +10,8 @@ namespace IMS.Controllers
     {
         [HttpGet]
         public ActionResult Index(HomeIndexViewModel q)
-        {            
-            var data = new HomeIndexViewModel();
-            var requestTypes = RequestTypeBLO.Current.GetAll();
-            data.RequestTypes = requestTypes
-                .Select(x => new SelectListItem {Text = x.RequestTypeName, Value = x.RequestTypeCode})
-                .ToList();
-            return View(data);
+        {
+            return View();
         }
 
         [ChildActionOnly]

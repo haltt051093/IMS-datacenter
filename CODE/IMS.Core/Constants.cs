@@ -11,14 +11,14 @@ namespace IMS.Core
     {
         public class RequestTypeCode
         {
-            public const string RENT_RACK = "RT011";
-            public const string RETURN_RACK = "RT012";
             public const string ADD_SERVER = "RT003";
-            public const string UPGRADE_SERVER = "RT006";
             public const string ASSIGN_IP = "RT009";
-            public const string CHANGE_IP = "RT008";
-            public const string RETURN_IP = "RT010";
             public const string BRING_SERVER_AWAY = "RT007";
+            public const string CHANGE_IP = "RT008";
+            public const string RENT_RACK = "RT011";
+            public const string RETURN_IP = "RT010";
+            public const string RETURN_RACK = "RT012";
+            public const string UPGRADE_SERVER = "RT006";
         }
 
         public class StatusCode

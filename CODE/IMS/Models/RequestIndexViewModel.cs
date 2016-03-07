@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using IMS.Data.ViewModels;
+using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace IMS.Models
 {
@@ -7,8 +8,12 @@ namespace IMS.Models
     {
         public RequestIndexViewModel()
         {
-            Request = new List<RequestExtendedModel>();
+            RequestTypes = new List<SelectListItem>();
         }
-        public List<RequestExtendedModel> Request { get; set; }
+
+        [Display(Name = "RequestType", ResourceType = typeof(Resources.Labels))]
+        public string Type { get; set; }
+
+        public List<SelectListItem> RequestTypes { get; set; }
     }
 }

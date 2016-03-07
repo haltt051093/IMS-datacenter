@@ -23,7 +23,12 @@ namespace IMS.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            var data = new RequestIndexViewModel();
+            var requestTypes = RequestTypeBLO.Current.GetAll();
+            data.RequestTypes = requestTypes
+                .Select(x => new SelectListItem { Text = x.RequestTypeName, Value = x.RequestTypeCode })
+                .ToList();
+            return View(data);
         }
 
         #region Create Request
@@ -32,21 +37,7 @@ namespace IMS.Controllers
             var requestTypeCode = q.Type;
             if (!string.IsNullOrEmpty(requestTypeCode))
             {
-                if (requestTypeCode == Constants.RequestTypeCode.RETURN_RACK)
-                {
-                    var data = new RequestReturnRackViewModel();
-                    data.AllRacks = RackOfCustomerBLO.Current.CountServerPerRack(Constants.Test.CUSTOMER_MANHNH);
-                    //var racksOfCustomer = RackOfCustomerBLO.Current.EmptyRentedRack(Constants.Test.CUSTOMER_MANHNH);
-                    //data.RackOfCustomer = racksOfCustomer
-                    //    .Select(x => new SelectListItem { Value = x.RackCode, Text = x.RackName })
-                    //    .ToList();
-                    return View("RequestReturnRack", data);
-                }
-                else if (requestTypeCode == Constants.RequestTypeCode.RENT_RACK)
-                {
-                    return View("RequestRentRack");
-                }
-                else if (requestTypeCode == Constants.RequestTypeCode.ADD_SERVER)
+                if (requestTypeCode == Constants.RequestTypeCode.ADD_SERVER)
                 {
                     var data = new RequestAddServerViewModel();
                     data.Servers = new List<ServerExtendedModel>();
@@ -68,8 +59,18 @@ namespace IMS.Controllers
                         .Select(x => new SelectListItem { Value = x.AttributeCode, Text = x.AttributeName })
                         .ToList();
 
-                    return View("RequestAddServer", data);
+                    return View("AddServer", data);
 
+                }
+                else if (requestTypeCode == Constants.RequestTypeCode.ASSIGN_IP)
+                {
+                    var data = new RequestIPViewModel();
+
+                    var listServers = ServerDAO.Current.Query(x => x.Customer == Constants.Test.CUSTOMER_MANHNH);
+                    data.Servers = listServers
+                        .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.Model })
+                        .ToList();
+                    return View("AssignIP", data);
                 }
                 else if (requestTypeCode == Constants.RequestTypeCode.BRING_SERVER_AWAY)
                 {
@@ -89,18 +90,9 @@ namespace IMS.Controllers
                         .ToList();
                     }
 
-                    return View("RequestBringServerAway", data);
+                    return View("BringServerAway", data);
                 }
-                if (requestTypeCode == Constants.RequestTypeCode.RETURN_IP)
-                {
-                    var data = new RequestIPViewModel();
-                    var listServers = ServerDAO.Current.Query(x => x.Customer == Constants.Test.CUSTOMER_MANHNH);
-                    data.Servers = listServers
-                        .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.Model })
-                        .ToList();
-                    return View("RequestReturnIP", data);
-                }
-                if (requestTypeCode == Constants.RequestTypeCode.CHANGE_IP)
+                else if (requestTypeCode == Constants.RequestTypeCode.CHANGE_IP)
                 {
                     //co the change duoc nhieu IP--> bo sung t
                     var data = new RequestIPViewModel();
@@ -108,20 +100,43 @@ namespace IMS.Controllers
                     data.Servers = listServers
                         .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.Model })
                         .ToList();
-                    return View("RequestChangeIP", data);
+                    return View("ChangeIP", data);
                 }
-                if (requestTypeCode == Constants.RequestTypeCode.ASSIGN_IP)
+                else if (requestTypeCode == Constants.RequestTypeCode.RENT_RACK)
+                {
+                    return View("RentRack");
+                }
+                else if (requestTypeCode == Constants.RequestTypeCode.RETURN_IP)
                 {
                     var data = new RequestIPViewModel();
-
                     var listServers = ServerDAO.Current.Query(x => x.Customer == Constants.Test.CUSTOMER_MANHNH);
                     data.Servers = listServers
                         .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.Model })
                         .ToList();
-                    return View("RequestAssignIP", data);
+                    return View("ReturnIP", data);
+                }
+                else if (requestTypeCode == Constants.RequestTypeCode.RETURN_RACK)
+                {
+                    var data = new RequestReturnRackViewModel();
+                    data.AllRacks = RackOfCustomerBLO.Current.CountServerPerRack(Constants.Test.CUSTOMER_MANHNH);
+                    //var racksOfCustomer = RackOfCustomerBLO.Current.EmptyRentedRack(Constants.Test.CUSTOMER_MANHNH);
+                    //data.RackOfCustomer = racksOfCustomer
+                    //    .Select(x => new SelectListItem { Value = x.RackCode, Text = x.RackName })
+                    //    .ToList();
+                    return View("ReturnRack", data);
+                }
+                else if (requestTypeCode == Constants.RequestTypeCode.RETURN_RACK)
+                {
+                    return View("ReturnRack");
                 }
             }
-            return View();
+
+            var _data = new RequestIndexViewModel();
+            var requestTypes = RequestTypeBLO.Current.GetAll();
+            _data.RequestTypes = requestTypes
+                .Select(x => new SelectListItem { Text = x.RequestTypeName, Value = x.RequestTypeCode })
+                .ToList();
+            return View(_data);
         }
         #endregion
 
@@ -146,11 +161,11 @@ namespace IMS.Controllers
             return View();
         }
 
-        public ActionResult RequestHistory()
+        public ActionResult History()
         {
             //var data = RequestDAO.Current.GetAll();
             var request = RequestBLO.Current.GetAllRequest();
-            var data = new RequestIndexViewModel();
+            var data = new RequestHistoryViewModel();
             data.Request = request;
             return View(data);
         }
@@ -178,7 +193,7 @@ namespace IMS.Controllers
             Request request = Mapper.Map<RequestCreateViewModel, Request>(requestViewmodel);
 
             RequestBLO.Current.AddOrUpdate(request);
-            return RedirectToAction("RequestHistory", "Request");
+            return RedirectToAction("History", "Request");
         }
         #endregion
 
@@ -291,7 +306,7 @@ namespace IMS.Controllers
             }
             RequestCreateViewModel rt = new RequestCreateViewModel();
             rt.Type = Constants.RequestTypeCode.ADD_SERVER;
-            return RedirectToAction("CreateRequest", rt);
+            return RedirectToAction("Create", rt);
         }
 
         public ActionResult DeleteTempServer(string tempCode)
@@ -686,7 +701,7 @@ namespace IMS.Controllers
                     viewmodel.Servers = list;
                 }
 
-                return View("RequestAddServerInfo", viewmodel);
+                return View("AddServerInfo", viewmodel);
             }
             //DOING, truong hop request thanh trang thai Done
             if (rType.Equals(Constants.RequestTypeCode.BRING_SERVER_AWAY))
@@ -716,7 +731,7 @@ namespace IMS.Controllers
                     viewmodel.SelectedServerNumber = list.Count;
                 }
                 Alert("Success");
-                return View("RequestBringServerAwayInfo", viewmodel);
+                return View("BringServerAwayInfo", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.ASSIGN_IP))
             {
@@ -770,7 +785,7 @@ namespace IMS.Controllers
                     }
                     //select randomly from ipNumber,
                 }
-                return View("RequestAssignIPInfo", viewmodel);
+                return View("AssignIPInfo", viewmodel);
             }
 
             if (rType.Equals(Constants.RequestTypeCode.CHANGE_IP))
@@ -836,7 +851,7 @@ namespace IMS.Controllers
                     //List returning IPs
                     viewmodel.Ips = LogChangedContentBLO.Current.GetIpRequestReturnIp(rCode);
                 }
-                return View("RequestReturnIPInfo", viewmodel);
+                return View("ReturnIPInfo", viewmodel);
             }
 
             if (rType.Equals(Constants.RequestTypeCode.RENT_RACK))
@@ -868,7 +883,7 @@ namespace IMS.Controllers
                     }
                 }
                 //Chuyen IsViewed = true
-                return View("RequestRentRackInfo", viewmodel);
+                return View("RentRackInfo", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.RETURN_RACK))
             {
@@ -886,7 +901,7 @@ namespace IMS.Controllers
                 viewmodel.StatusName = StatusBLO.Current.GetStatusName(viewmodel.StatusCode);
                 var customer = AccountBLO.Current.GetAccountByCode(viewmodel.Customer);
                 viewmodel.CustomerName = customer.Fullname;
-                return View("RequestReturnRackInfo", viewmodel);
+                return View("ReturnRackInfo", viewmodel);
             }
             return RedirectToAction("ListNotifications");
         }

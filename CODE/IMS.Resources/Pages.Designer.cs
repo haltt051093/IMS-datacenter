@@ -79,7 +79,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to List of IP Address.
+        ///   Looks up a localized string similar to List of IP Addresses.
         /// </summary>
         public static string IPIndex {
             get {
@@ -97,7 +97,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to List of Location.
+        ///   Looks up a localized string similar to List of Locations.
         /// </summary>
         public static string LocationIndex {
             get {
@@ -106,11 +106,56 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to List of Rack.
+        ///   Looks up a localized string similar to List of Racks.
         /// </summary>
         public static string RackIndex {
             get {
                 return ResourceManager.GetString("RackIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Requests.
+        /// </summary>
+        public static string Request {
+            get {
+                return ResourceManager.GetString("Request", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request Add Server.
+        /// </summary>
+        public static string RequestAddServer {
+            get {
+                return ResourceManager.GetString("RequestAddServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Request.
+        /// </summary>
+        public static string RequestCreate {
+            get {
+                return ResourceManager.GetString("RequestCreate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request History.
+        /// </summary>
+        public static string RequestHistory {
+            get {
+                return ResourceManager.GetString("RequestHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of Requests.
+        /// </summary>
+        public static string RequestIndex {
+            get {
+                return ResourceManager.GetString("RequestIndex", resourceCulture);
             }
         }
         
@@ -133,7 +178,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to List of Server.
+        ///   Looks up a localized string similar to List of Servers.
         /// </summary>
         public static string ServerIndex {
             get {

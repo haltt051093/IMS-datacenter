@@ -124,16 +124,31 @@
     <value>Home</value>
   </data>
   <data name="IPIndex" xml:space="preserve">
-    <value>List of IP Address</value>
+    <value>List of IP Addresses</value>
   </data>
   <data name="Location" xml:space="preserve">
     <value>Locations</value>
   </data>
   <data name="LocationIndex" xml:space="preserve">
-    <value>List of Location</value>
+    <value>List of Locations</value>
   </data>
   <data name="RackIndex" xml:space="preserve">
-    <value>List of Rack</value>
+    <value>List of Racks</value>
+  </data>
+  <data name="Request" xml:space="preserve">
+    <value>Requests</value>
+  </data>
+  <data name="RequestAddServer" xml:space="preserve">
+    <value>Request Add Server</value>
+  </data>
+  <data name="RequestCreate" xml:space="preserve">
+    <value>Create Request</value>
+  </data>
+  <data name="RequestHistory" xml:space="preserve">
+    <value>Request History</value>
+  </data>
+  <data name="RequestIndex" xml:space="preserve">
+    <value>List of Requests</value>
   </data>
   <data name="Server" xml:space="preserve">
     <value>Servers</value>
@@ -142,6 +157,6 @@
     <value>Server Detail</value>
   </data>
   <data name="ServerIndex" xml:space="preserve">
-    <value>List of Server</value>
+    <value>List of Servers</value>
   </data>
 </root>
