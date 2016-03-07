@@ -22,7 +22,7 @@
     data.Add(new HomeSidebarViewModel("Report", "", "") { Roles = new List<string>() { "Shift Head", "Customer" }, SubMenu = new List<HomeSidebarViewModel>()
         {
             new HomeSidebarViewModel("Server Moving", "", "") { Roles = new List<string>() { "Shift Head", "Customer" } },
-            new HomeSidebarViewModel("Blocked IP Address", "", "") { Roles = new List<string>() { "Shift Head", "Customer" } },
+            new HomeSidebarViewModel("Blocked IP Address", "ReportBlockIP", "Report") { Roles = new List<string>() { "Shift Head", "Customer" } },
             new HomeSidebarViewModel("Free IP Address", "", "") { Roles = new List<string>() { "Shift Head", "Customer" } }
         }
     });

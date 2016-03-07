@@ -13,7 +13,7 @@
 <section class="main-content">
     <div class="row hide">
         <div id="dropdown-template" class="col-xs-3">
-            <label>Time Range: @Html.DropDownListFor(model => model.TimeSelect, Model.TimeRange, "All Blocked IP", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
+            <label>Filter: @Html.DropDownListFor(model => model.TimeSelect, Model.TimeRange, "All Blocked IP", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
         </div>
     </div>
 
@@ -25,6 +25,8 @@
                 <th>Blocked Reason</th>
                 <th>Unblocked Time</th>
                 <th>Blocked Time Range (day)</th>
+                <th>Blocked To Now (day)</th>
+
             </tr>
         </thead>
         <tfoot>
@@ -34,6 +36,7 @@
                 <th>Blocked Reason</th>
                 <th>Unblocked Time</th>
                 <th>Blocked Time Range (day)</th>
+                <th>Blocked To Now (day)</th>
             </tr>
         </tfoot>
     </table>
@@ -43,15 +46,23 @@
     $.fn.dataTable.ext.search.push(
         function (settings, data, dataIndex) {
             var timerange = $('#TimeSelect').val();
-        if (timerange == '') {
-            return true;
-        }
-        if (data[4]<=parseInt(timerange)&&data[4]!=null) {
+            if (timerange == '') {
                 return true;
-        }
-        if (TimeRanges == 'Blocking IP' && data[3] == null) {
-            return true;
-        }
+            }
+            if (timerange == 'blocked') {
+                if (data[4] == null || data[4] == '') {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            if (data[4] == null || data[4] == '') {
+                return false;
+            }
+            if (data[4] <= parseInt(timerange)) {
+            
+                    return true;
+            }
             return false;
         }
        
@@ -68,20 +79,36 @@
             { data: "LogTime" },
             { data: "Description" },
             { data: "Unblocktime" },
-            { data: "blockedtime" }
+            { data: "blockedtime" },
+            { data: "blockedtimetonow" }
 
         ],
         iDisplayLength: 25,
         aLengthMenu: [[25, 50, 100], [25, 50, 100]],
         fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-
+            var actionCell1 = $(nRow.cells[3]);
+            var actionCell2 = $(nRow.cells[5]);
+            var actionCell = $(nRow.cells[4]);
             switch (aData.blockedtime) {
                 case null:
                     $(nRow).css('background-color', '#ffe6e6');
+                    actionCell.html('<label style="color: red">Still blocked</label>');
+                    actionCell1.html('<label style="color: red">Still blocked</label>');
+                    break;
+                case 0:
+                    actionCell.html('<1');
                     break;
             }
+            switch (aData.blockedtimetonow) {
+            case 0:
+                actionCell2.html('<1');
+                break;
+            }
+            if (aData.Unblocktime != null) {
+                actionCell2.html('<label style="color: #337ab7">Unblocked</label>');
+            }
         },
-        order: [[1, "desc"]]
+        order: [[1, "asc"]]
 
     });
 

@@ -48,10 +48,14 @@ namespace IMS.Data.Business
             var scheduletoday = new List<ScheduleExtendedModel>();
             foreach (var item in allschedule)
             {
-                if (item.AppointmentTime.Value.Date == DateTime.Now.Date)
+                if (item.AppointmentTime != null)
                 {
-                    scheduletoday.Add(item);
+                    if (item.AppointmentTime.Value.Date == DateTime.Now.Date)
+                    {
+                        scheduletoday.Add(item);
+                    }
                 }
+                
             }
             return scheduletoday;
         }
