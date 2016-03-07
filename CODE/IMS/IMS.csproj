@@ -243,6 +243,10 @@
     <Content Include="bin\System.Web.Webpages.xml" />
     <Content Include="bin\WebGrease.dll" />
     <Content Include="Content\AdminLTE.css" />
+    <Content Include="Content\alertify.css" />
+    <Content Include="Content\alertify.min.css" />
+    <Content Include="Content\alertify.rtl.css" />
+    <Content Include="Content\alertify.rtl.min.css" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-slider\slider.css" />
@@ -455,6 +459,10 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Content\themes\bootstrap.css" />
+    <Content Include="Content\themes\bootstrap.min.css" />
+    <Content Include="Content\themes\bootstrap.rtl.css" />
+    <Content Include="Content\themes\bootstrap.rtl.min.css" />
     <Content Include="Content\timepicker\bootstrap-timepicker.css" />
     <Content Include="Content\timepicker\bootstrap-timepicker.min.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -491,6 +499,8 @@
     <Content Include="img\user.jpg" />
     <Content Include="img\user2.jpg" />
     <Content Include="Scripts\AdminLTE\app.js" />
+    <Content Include="Scripts\alertify.js" />
+    <Content Include="Scripts\alertify.min.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="fonts\fontawesome-webfont.eot" />
@@ -900,6 +910,7 @@
     <Compile Include="ApiModels\DataTableModel.cs" />
     <Compile Include="ApiModels\TempRequest.cs" />
     <Compile Include="App_Start\AppConfig.cs" />
+    <Compile Include="Controllers\ProcessRequestController.cs" />
     <Compile Include="Models\RequestHistoryViewModel.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Models\ReportBlockIPViewModel.cs" />
@@ -963,7 +974,6 @@
     <Content Include="Views\Account\CreateStaff.cshtml" />
     <Content Include="Views\Account\EditCustomer.cshtml" />
     <Content Include="Views\Account\EditStaff.cshtml" />
-    <Content Include="Views\Request\UpgradeServer.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\ViewProfile.cshtml" />
     <Content Include="Views\Location\AssignLocation.cshtml" />
@@ -1000,7 +1010,6 @@
     <Content Include="Views\Account\ForgotPWSuccess.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Home\Sidebar.cshtml" />
-    <Content Include="Views\Request\WithdrawServer.cshtml" />
     <Content Include="Views\Request\ListNotifications.cshtml" />
     <Content Include="Views\Account\ViewProfile2.cshtml" />
     <Content Include="Views\Request\BringServerAway.cshtml" />
@@ -1031,6 +1040,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\ProcessRequest\" />
     <Folder Include="Views\Shift\" />
   </ItemGroup>
   <ItemGroup>

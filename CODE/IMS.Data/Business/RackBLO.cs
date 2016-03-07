@@ -82,5 +82,10 @@ namespace IMS.Data.Business
         {
             dao.UpdateRackStatus(rackCode,status);
         }
+
+        public List<string> GetAllRowsOfRack()
+        {
+            return dao.GetAllRowsOfRack();
+        }
     }
 }

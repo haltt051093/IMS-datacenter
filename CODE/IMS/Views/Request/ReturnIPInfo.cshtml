@@ -16,7 +16,7 @@
 <section class="content">
     <div class="box">
         <div class="box-body table-responsive">
-            @using (Html.BeginForm("ProcessRequesReturnIp", "Request", FormMethod.Post))
+            @using (Html.BeginForm("ProcessRequesReturnIp", "ProcessRequest", FormMethod.Post))
             {
                 @Html.HiddenFor(model => model.RequestCode)
                 @Html.HiddenFor(model => model.RequestType)

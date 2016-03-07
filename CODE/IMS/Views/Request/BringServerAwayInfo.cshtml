@@ -16,7 +16,7 @@
 <section class="content">
     <div class="box">
         <div class="box-body table-responsive">
-            @using (Html.BeginForm("ProcessRequestBringServerAway", "Request", FormMethod.Post))
+            @using (Html.BeginForm("ProcessRequestBringServerAway", "ProcessRequest", FormMethod.Post))
             {
                 <dl class="dl-horizontal">
                     <dt>
@@ -24,8 +24,6 @@
                     </dt>
                     <dd>
                         @Html.DisplayFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control" } })
-
-
                     </dd>
                     <dt>
                         Requested Time
@@ -41,6 +39,14 @@
                     <dd>
                         @Html.DisplayFor(model => model.StatusName, new { htmlAttributes = new { @class = "form-control" } })
                     </dd>
+                    <div class="form-group">
+                        <dt>
+                            Description:
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                        </dd>
+                    </div>
                     <div class="form-group">
                         <table id="" class="table table-bordered table-striped  col-xs-offset-1">
                             <thead>
@@ -109,14 +115,7 @@
                                 @Html.HiddenFor(model => model.ServerOfCustomer[i].ServerCode)
                             </dd>
                         }*@
-                    <div class="form-group">
-                        <dt>
-                            Description:
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                        </dd>
-                    </div>
+
 
                     <dt></dt>
                     <dd>

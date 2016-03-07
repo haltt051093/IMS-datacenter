@@ -9,6 +9,9 @@ namespace IMS
         {
             builder.IgnoreList.Clear();
 
+            builder.Add(new ScriptBundle(Constants.ScriptBundle.ALERTIFY).Include(
+                "~/Scripts/alertify.js"
+            ));
             builder.Add(new ScriptBundle(Constants.ScriptBundle.BOOTSTRAP).Include(
                 "~/Scripts/bootstrap.js"
             ));
@@ -51,6 +54,10 @@ namespace IMS
                 "~/Scripts/site.js"
             ));
 
+            builder.Add(new StyleBundle(Constants.StyleBundle.ALERTIFY).Include(
+                "~/Content/alertify.css",
+                "~/Content/themes/bootstrap.css"
+            ));
             builder.Add(new StyleBundle(Constants.StyleBundle.BOOTSTRAP).Include(
                 "~/Content/bootstrap.css",
                 "~/Content/bootstrap-theme.css"

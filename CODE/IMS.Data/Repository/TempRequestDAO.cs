@@ -35,8 +35,8 @@ namespace IMS.Data.Repository
         public List<TempRequest> GetByRequestCode(string requestCode)
         {
             var query = from temp in Table()
-                where temp.RequestCode == requestCode
-                select temp;
+                        where temp.RequestCode == requestCode
+                        select temp;
             return query.ToList();
         }
 
@@ -55,6 +55,14 @@ namespace IMS.Data.Repository
                 existing = Query(x => x.TempCode == code).FirstOrDefault();
             }
             return code;
+        }
+
+        public void UpdateByTempCode(string tempCode)
+        {
+            var temp = new TempRequest();
+            temp.TempCode = tempCode;
+            var update = GetByKeys(temp);
+            Update(update);
         }
     }
 }

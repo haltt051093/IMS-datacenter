@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace IMS.Models
@@ -23,5 +24,7 @@ namespace IMS.Models
         //public List<SelectListItem> AvailableRacks { get; set; }
         public MultiSelectList AvailableRacks { get; set; }
         public string[] SelectedRacks { get; set; }
+        public List<string> Rows { get; set; }
     }
+
 }
