@@ -12,7 +12,7 @@ namespace IMS.Data.ViewModels
     [NotMapped]
     public class LogChangeExtendModel: LogChangedContent
     {
-        public DateTime? UnblockTime { get; set; }
-        public int? BlockedDays { get; set; }
+        public DateTime? Unblocktime { get; set; }
+        public int? blockedtime { get; set; }
     }
 }

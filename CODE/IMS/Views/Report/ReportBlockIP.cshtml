@@ -13,7 +13,7 @@
 <section class="main-content">
     <div class="row hide">
         <div id="dropdown-template" class="col-xs-3">
-            <label>Time Range: @Html.DropDownListFor(model => model.Time, Model.TimeRange, "All Blocked IP", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
+            <label>Time Range: @Html.DropDownListFor(model => model.TimeSelect, Model.TimeRange, "All Blocked IP", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
         </div>
     </div>
 
@@ -24,7 +24,7 @@
                 <th>Blocked Time</th>
                 <th>Blocked Reason</th>
                 <th>Unblocked Time</th>
-                <th>Blocked Time Range</th>
+                <th>Blocked Time Range (day)</th>
             </tr>
         </thead>
         <tfoot>
@@ -33,7 +33,7 @@
                 <th>Blocked Time</th>
                 <th>Blocked Reason</th>
                 <th>Unblocked Time</th>
-                <th>Blocked Time Range</th>
+                <th>Blocked Time Range (day)</th>
             </tr>
         </tfoot>
     </table>
@@ -42,16 +42,19 @@
 <script>
     $.fn.dataTable.ext.search.push(
         function (settings, data, dataIndex) {
-            var timerange = $('#Time').val();
-            var range = parseInt(timerange);
-            if (timerange == '') {
+            var timerange = $('#TimeSelect').val();
+        if (timerange == '') {
+            return true;
+        }
+        if (data[4]<=parseInt(timerange)&&data[4]!=null) {
                 return true;
-            }
-            if (timerange >= data[3]) {
-                return true;
-            }
+        }
+        if (TimeRanges == 'Blocking IP' && data[3] == null) {
+            return true;
+        }
             return false;
         }
+       
     );
 </script>
 
@@ -70,8 +73,13 @@
         ],
         iDisplayLength: 25,
         aLengthMenu: [[25, 50, 100], [25, 50, 100]],
-        fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+        fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
 
+            switch (aData.blockedtime) {
+                case null:
+                    $(nRow).css('background-color', '#ffe6e6');
+                    break;
+            }
         },
         order: [[1, "desc"]]
 
@@ -80,7 +88,7 @@
     $("#example1_filter").append($('#dropdown-template').html());
     $('#dropdown-template').html('');
 
-    $('#Time').change(function() {
+    $('#TimeSelect').change(function () {
         table.draw();
     });
 

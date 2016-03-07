@@ -9,6 +9,6 @@ namespace IMS.Models
     public class ReportBlockIPViewModel
     {
         public List<SelectListItem> TimeRange { get; set; } 
-        public int Time { get; set; }
+        public string TimeSelect { get; set; }
     }
 }

@@ -13,7 +13,13 @@ namespace IMS.Controllers
         public ActionResult ReportBlockIP()
         {
             var listtime = new List<SelectListItem>();
-                SelectListItem item = new SelectListItem()
+            SelectListItem item0 = new SelectListItem()
+            {
+                Value = "Blocking IP",
+                Text = "Blocking IP"
+            };
+            listtime.Add(item0);
+            SelectListItem item = new SelectListItem()
                 {
                     Value = "7",
                     Text = "1 week"
