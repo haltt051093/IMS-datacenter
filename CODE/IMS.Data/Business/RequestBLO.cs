@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using IMS.Core;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.Repository;
@@ -65,9 +66,28 @@ namespace IMS.Data.Business
             return dao.GetNoteOfPreviousShift();
         }
 
-        public List<NotificationExtendedModel> ListAllNotification()
+        public List<NotificationExtendedModel> ListServerSideNotification()
         {
-            return dao.ListAllNotification();
+            return dao.ListServerSideNotification();
+        }
+
+        public List<NotificationExtendedModel> ListClientSideNotification(string customer)
+        {
+            return dao.ListClientSideNotification(customer);
+        }
+
+        public List<NotificationExtendedModel> ListNotification(string role, string customer)
+        {
+            var list = new List<NotificationExtendedModel>();
+            if (role == Constants.Role.CUSTOMER && customer != null)
+            {
+                list = ListClientSideNotification(customer);
+            }
+            else if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.STAFF)
+            {
+                list = ListServerSideNotification();
+            }
+            return list;
         }
 
         public Request GetRequestByRequestCode(string requestCode)

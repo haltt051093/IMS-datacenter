@@ -43,6 +43,14 @@
 </section>
 <!-- Main content -->
 <section class="content">
+    <div>
+        Request Type:
+        @Html.DropDownListFor(m => m.FilterByRequestType, Model.FilterByRequestType, new { @id = "servercode" })
+    </div>
+    <div>
+        Request Status
+        @Html.DropDownListFor(m => m.FilterByRequestType, Model.FilterByStatus, new { @id = "servercode" })
+    </div>
     <table id="example1" class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -98,6 +106,11 @@
             </tr>
         </tfoot>
     </table>
+    @if (User.IsInRole("Manager"))
+    {
+        <div>
+        </div>
+    }
 </section><!-- /.content -->
 <!-- ACCEPT REQUEST MODAL -->
 <div class="modal fade" id="acceptrequest-modal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -149,7 +162,6 @@
             $('#requestType').val(requestType);
         });
 
-        //khong chay duoc, why?
         $('.btnRequestCode').click(function () {
             var requestType = $(this).attr('data-requestType');
             if (requestType !== "RT003") {

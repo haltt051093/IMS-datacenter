@@ -69,7 +69,7 @@ namespace IMS.Core
             public const string NO_GROUP = "No Group";
         }
 
-        public class RequestType
+        public class RequestTypeName
         {
             public const string SERVER_ADD = "Add Server";
             public const string IP_ASSIGN = "Assign new IP address";

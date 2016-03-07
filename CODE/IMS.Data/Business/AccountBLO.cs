@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Net.Mail;
 using IMS.Core;
 using IMS.Data.Generic;
 using IMS.Data.Models;
@@ -47,15 +48,28 @@ namespace IMS.Data.Business
             string smtpPassword = Constants.SendMail.FROM_EMAIL_PASSWORD;
             string smtpHost = Constants.SendMail.SMTP_HOST;
             int smtpPort = Constants.SendMail.SMTP_PORT;
-            string emailTo = model.Email;
             string subject = Constants.SendMail.SUBJECT_NEWACCOUNT;
-            string message = "Your account is: " + model.Username + " and password: " + model.Password;
-            string body =
-                string.Format("ban vua nhan duoc lien he tu: <b>{0}</b><br/>Email: {1}<br/>Noi dung: <br/>{2}",
-                    Constants.SendMail.FROM_EMAIL_USERNAME, model.Email, message);
-            MailService service = new MailService();
-            bool kq = service.Send(smtpUsername, smtpPassword, smtpHost, smtpPort, emailTo, subject, body);
-            return kq;
+
+            MailMessage mail = new MailMessage();
+            SmtpClient SmtpServer = new SmtpClient(smtpHost);
+
+            mail.From = new MailAddress(smtpUsername);
+            mail.To.Add(model.Email);
+            mail.Subject = subject;
+            mail.IsBodyHtml = true;
+            string mainMessage = "Your account is: <br/>Username: <b>" + model.Username + "</b><br/> Password: <b>" + model.Password + "</b><br/>" +
+                                 "Now you can use IMS-Datacenter website with this account at: <a href=# >IMS Datacenter</a> ";
+            string htmlBody =
+                string.Format("You've received an email from IMS Datacenter of QTSC<br/> " +
+                              "We want to account that you registered successfully to our IMS system<br/>{0}",
+                    mainMessage);
+            mail.Body = htmlBody;
+
+            SmtpServer.Port = smtpPort;
+            SmtpServer.Credentials = new System.Net.NetworkCredential(smtpUsername, smtpPassword);
+            SmtpServer.EnableSsl = true;
+            SmtpServer.Send(mail);
+            return true;
         }
 
         public Account GetAccountByCode(string username)
