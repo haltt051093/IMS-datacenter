@@ -15,32 +15,32 @@ namespace IMS.Controllers
             var listtime = new List<SelectListItem>();
             SelectListItem item0 = new SelectListItem()
             {
-                Value = "Blocking IP",
+                Value = "blocked",
                 Text = "Blocking IP"
             };
             listtime.Add(item0);
             SelectListItem item = new SelectListItem()
                 {
                     Value = "7",
-                    Text = "1 week"
+                    Text = "Blocked in 1 week"
                 };
                 listtime.Add(item);
             SelectListItem item1 = new SelectListItem()
             {
                 Value = "30",
-                Text = "1 month"
+                Text = "Blocked in 1 month"
             };
             listtime.Add(item1);
             SelectListItem item2 = new SelectListItem()
             {
                 Value = "90",
-                Text = "3 months"
+                Text = "Blocked in 3 months"
             };
             listtime.Add(item2);
             SelectListItem item3 = new SelectListItem()
             {
                 Value = "180",
-                Text = "6 months"
+                Text = "Blocked in 6 months"
             };
             listtime.Add(item3);
             var data = new ReportBlockIPViewModel();

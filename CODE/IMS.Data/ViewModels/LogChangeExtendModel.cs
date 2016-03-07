@@ -14,5 +14,6 @@ namespace IMS.Data.ViewModels
     {
         public DateTime? Unblocktime { get; set; }
         public int? blockedtime { get; set; }
+        public int? blockedtimetonow { get; set; }
     }
 }
