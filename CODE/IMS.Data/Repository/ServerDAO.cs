@@ -281,24 +281,29 @@ namespace IMS.Data.Repository
                             //                  }
                         };
             var server = query.FirstOrDefault();
-            server.ServerIps = (from si in ServerIPDAO.Current.Table()
-                                where si.ServerCode == serverCode
-                                select si).ToList();
-            server.ServerLocation = (from l in LocationDAO.Current.Table()
-                                     join r in RackDAO.Current.Table()
-                                         on l.RackCode equals r.RackCode into lr
-                                     from sublr in lr.DefaultIfEmpty()
-                                     where l.ServerCode == serverCode
-                                     select new LocationExtendedModel
-                                     {
-                                         RackName = sublr.RackName,
-                                         RackUnit = l.RackUnit
-                                     }).ToList();
 
+            var serverip = from si in ServerIPDAO.Current.Table()
+                           where si.ServerCode == serverCode
+                           select si;
+            if (serverip != null)
+            {
+                server.ServerIps = serverip.ToList();
+            }
+            var serverlocation = from l in LocationDAO.Current.Table()
+                                 join r in RackDAO.Current.Table()
+                                     on l.RackCode equals r.RackCode into lr
+                                 from sublr in lr.DefaultIfEmpty()
+                                 where l.ServerCode == serverCode
+                                 select new LocationExtendedModel
+                                 {
+                                     RackName = sublr.RackName,
+                                     RackUnit = l.RackUnit
+                                 };
+            if (serverlocation != null)
+            {
+                server.ServerLocation = serverlocation.ToList();
+            }
             return server;
-
         }
-
-
     }
 }

@@ -38,5 +38,19 @@ namespace IMS.Data.Repository
             query.StatusCode = status;
             Update(query);
         }
+
+        public List<string> GetAllRowsOfRack()
+        {
+            var allRacks = from r in Table()
+                select r.RackName;
+            var listRows = new List<string>();
+            foreach (var item in allRacks)
+            {
+                var row = item.ElementAt(0);
+                listRows.Add(row.ToString());
+            }
+            var abc = (from r in listRows select r).Distinct();
+            return abc.ToList();
+        } 
     }
 }

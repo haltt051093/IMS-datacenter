@@ -43,5 +43,10 @@ namespace IMS.Data.Business
         {
             return dao.GetByCode(tempCode);
         }
+
+        public void UpdateByTempCode(string tempCode)
+        {
+            dao.UpdateByTempCode(tempCode);
+        }
     }
 }

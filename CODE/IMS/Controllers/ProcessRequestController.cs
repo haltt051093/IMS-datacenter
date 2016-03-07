@@ -1,0 +1,653 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Web.Mvc;
+using AutoMapper;
+using IMS.Core;
+using IMS.Data.Business;
+using IMS.Data.Models;
+using IMS.Data.Repository;
+using IMS.Data.ViewModels;
+using IMS.Models;
+using Newtonsoft.Json;
+
+namespace IMS.Controllers
+{
+    public class ProcessRequestController : CoreController
+    {
+        [HttpGet]
+        public ActionResult Detais(string rType, string rCode)
+        {
+            if (rType.Equals(Constants.RequestTypeCode.ADD_SERVER))
+            {
+                //Get request
+                RequestAddServerViewModel viewmodel = new RequestAddServerViewModel();
+                var request = RequestBLO.Current.GetRequestByRequestCode(rCode);
+                viewmodel.RequestCode = rCode;
+                if (request != null)
+                {
+                    viewmodel = Mapper.Map<Request, RequestAddServerViewModel>(request);
+                    viewmodel.StatusName = StatusBLO.Current.GetStatusName(viewmodel.StatusCode);
+                    var customer = AccountBLO.Current.GetAccountByCode(viewmodel.Customer);
+                    viewmodel.CustomerName = customer.Fullname;
+                    viewmodel.Identification = customer.Identification;
+                    //lay list servers
+                    var serverCodes = LogChangedContentBLO.Current.GetServerCodeByRequestCode(rCode);
+                    List<ServerExtendedModel> list = new List<ServerExtendedModel>();
+                    foreach (var servercode in serverCodes)
+                    {
+                        var server = ServerBLO.Current.GetServerByCode(servercode, Constants.StatusCode.SERVER_WAITING);
+                        //lay serverattribute
+                        //doing loi
+                        var listAttributes = ServerAttributeBLO.Current
+                            .GetServerAttributes(servercode, Constants.StatusCode.SERVERATTRIBUTE_UPDATING);
+                        foreach (var attribute in listAttributes)
+                        {
+                            if (attribute.AttributeCode == Constants.ServerAttributeCode.PART_NUMBER)
+                            {
+                                server.PartNumber = attribute.AttributeValue;
+                            }
+                            else if (attribute.AttributeCode == Constants.ServerAttributeCode.SERIAL_NUMBER)
+                            {
+                                server.SerialNumber = attribute.AttributeValue;
+                            }
+                            else if (attribute.AttributeCode == Constants.ServerAttributeCode.MEMORY)
+                            {
+                                server.Memory = attribute.AttributeValue;
+                            }
+                        }
+                        list.Add(server);
+                    }
+                    viewmodel.Servers = list;
+                }
+
+                return View("../Request/AddServerInfo", viewmodel);
+            }
+            //DOING, truong hop request thanh trang thai Done
+            if (rType.Equals(Constants.RequestTypeCode.BRING_SERVER_AWAY))
+            {
+                //Get request
+                RequestBringServerAwayViewModel viewmodel = new RequestBringServerAwayViewModel();
+                var request = RequestBLO.Current.GetRequestByRequestCode(rCode);
+                viewmodel.RequestCode = rCode;
+                if (request != null)
+                {
+                    viewmodel = Mapper.Map<Request, RequestBringServerAwayViewModel>(request);
+                    viewmodel.StatusName = StatusBLO.Current.GetStatusName(viewmodel.StatusCode);
+                    var customer = AccountBLO.Current.GetAccountByCode(viewmodel.Customer);
+                    viewmodel.CustomerName = customer.Fullname;
+                    viewmodel.Identification = customer.Identification;
+                    //lay list servers
+                    var serverCodes = LogChangedContentBLO.Current.GetServerCodeByRequestCode(rCode);
+                    List<ServerExtendedModel> list = new List<ServerExtendedModel>();
+                    foreach (var servercode in serverCodes)
+                    {
+                        var server = ServerBLO.Current.GetAllServerInfo(servercode);
+                        viewmodel.ReturnIpNumber = viewmodel.ReturnIpNumber + server.ServerIps.Count;
+                        viewmodel.ReturnLocationNumber = viewmodel.ReturnLocationNumber + server.ServerLocation.Count;
+                        list.Add(server);
+                    }
+                    viewmodel.ServerOfCustomer = list;
+                    viewmodel.SelectedServerNumber = list.Count;
+                }
+                Alert("Success");
+                return View("../Request/BringServerAwayInfo", viewmodel);
+            }
+            if (rType.Equals(Constants.RequestTypeCode.ASSIGN_IP))
+            {
+                RequestIPViewModel viewmodel = new RequestIPViewModel();
+                var request = RequestBLO.Current.GetRequestByRequestCode(rCode);
+                if (request != null)
+                {
+                    viewmodel = Mapper.Map<Request, RequestIPViewModel>(request);
+                    viewmodel.StatusName = StatusBLO.Current.GetStatusName(viewmodel.StatusCode);
+                    //Lay so luong IP muon assign, tam thoi fix cung
+                    var reqDetail = JsonConvert.DeserializeObject<RequestDetailModel>(viewmodel.Description);
+                    viewmodel.IpNumber = reqDetail.NumberOfIp;
+                    viewmodel.Description = reqDetail.Description;
+                    //lay servercode, roi lay ip cua server do, tim nhung ip cung vung con lai
+                    var serverCode = LogChangedContentBLO.Current.GetServerCodeByRequestCode(rCode).FirstOrDefault();
+                    viewmodel.SelectedServer = serverCode;
+                    //Lay list available ip cung vung
+                    var listAvailableIps = IPAddressPoolBLO.Current.GetAvailableIpsSameGateway(serverCode);
+                    if (listAvailableIps.Count > viewmodel.IpNumber)
+                    {
+                        //selected values
+                        var randomList = IPAddressPoolBLO.Current.SelectRandomIps(listAvailableIps, viewmodel.IpNumber);
+                        viewmodel.SelectedIps = randomList.Select(x => new SelectListItem
+                        {
+                            Value = x,
+                            Text = x
+                        }).ToList();
+                        viewmodel.Ips = randomList;
+                        //cho hien thi multiple list, ko bao gom randomList
+                        for (int i = 0; i < listAvailableIps.Count; i++)
+                        {
+                            for (int j = 0; j < randomList.Count; j++)
+                            {
+                                var item = listAvailableIps[i];
+                                if (item.IPAddress.Equals(randomList[j]))
+                                {
+                                    listAvailableIps.Remove(item);
+                                }
+                            }
+                        }
+                        viewmodel.IpSelectListItems = listAvailableIps.Select(x => new SelectListItem
+                        {
+                            Value = x.IPAddress,
+                            Text = x.IPAddress
+                        }).ToList();
+
+                    }
+                    else
+                    {
+                        ViewBag.Message = "Khong du so luong IP cap phat. Chi con" + listAvailableIps.Count + "Ips";
+                    }
+                    //select randomly from ipNumber,
+                }
+                return View("../Request/AssignIPInfo", viewmodel);
+            }
+
+            if (rType.Equals(Constants.RequestTypeCode.CHANGE_IP))
+            {
+                RequestIPViewModel viewmodel = new RequestIPViewModel();
+                var request = RequestBLO.Current.GetRequestByRequestCode(rCode);
+                if (request != null)
+                {
+                    viewmodel = Mapper.Map<Request, RequestIPViewModel>(request);
+                    //lay servercode, roi lay ip cua server do, tim nhung ip cung vung con lai
+                    var serverCode = LogChangedContentBLO.Current.GetServerCodeByRequestCode(rCode).FirstOrDefault();
+                    viewmodel.SelectedServer = serverCode;
+                    //lay list ips muon change
+                    var returningIps = ServerIPBLO.Current.GetReturningIps(serverCode);
+                    viewmodel.ReturningIps = returningIps;
+                    //Lay so luong IP muon change, tam thoi fix cung
+                    viewmodel.IpNumber = returningIps.Count;
+                    //Lay list available ip cung vung
+                    var listAvailableIps = IPAddressPoolBLO.Current.GetAvailableIpsSameGateway(serverCode);
+                    if (listAvailableIps.Count > viewmodel.IpNumber)
+                    {
+                        //cho hien thi multiple list, ko bao gom randomList
+                        for (int i = 0; i < listAvailableIps.Count; i++)
+                        {
+                            for (int j = 0; j < returningIps.Count; j++)
+                            {
+                                var item = listAvailableIps[i];
+                                if (item.IPAddress.Equals(returningIps[j]))
+                                {
+                                    listAvailableIps.Remove(item);
+                                }
+                            }
+                        }
+                        viewmodel.IpSelectListItems = listAvailableIps.Select(x => new SelectListItem
+                        {
+                            Value = x.IPAddress,
+                            Text = x.IPAddress
+                        }).ToList();
+
+                    }
+                    else
+                    {
+                        ViewBag.Message = "Khong du so luong IP cap phat. Chi con" + listAvailableIps.Count + "Ips";
+                    }
+                    //select randomly from ipNumber,
+                }
+                return View("ProcessRequestChangeIP", viewmodel);
+            }
+
+            if (rType.Equals(Constants.RequestTypeCode.RETURN_IP))
+            {
+                RequestIPViewModel viewmodel = new RequestIPViewModel();
+                var request = RequestDAO.Current.Query(x => x.RequestCode == rCode).FirstOrDefault();
+                if (request != null)
+                {
+                    viewmodel = Mapper.Map<Request, RequestIPViewModel>(request);
+                    //get servercode = requestcode
+                    var servercode = LogChangedContentBLO.Current.GetServerCodeByRequestCode(request.RequestCode).FirstOrDefault();
+                    viewmodel.SelectedServer = servercode;
+                    viewmodel.StatusName = StatusBLO.Current.GetStatusName(viewmodel.StatusCode);
+                    var customer = AccountBLO.Current.GetAccountByCode(viewmodel.Customer);
+                    viewmodel.CustomerName = customer.Fullname;
+                    //List returning IPs
+                    viewmodel.Ips = LogChangedContentBLO.Current.GetIpRequestReturnIp(rCode);
+                }
+                return View("../Request/ReturnIPInfo", viewmodel);
+            }
+
+            if (rType.Equals(Constants.RequestTypeCode.RENT_RACK))
+            {
+                //chưa cắt số lượng rack từ string của description được
+                RequestRentRackViewModel viewmodel = new RequestRentRackViewModel();
+                var request = RequestDAO.Current.Query(x => x.RequestCode == rCode).FirstOrDefault();
+
+                // trang view cho hien thi: Customer, request time, rack number, description --> yeu cau cua khach hang
+                // Phan thuc hien cua staff -->  chọn số lượng rack còn trống
+                if (request != null)
+                {
+                    //Mapping
+                    viewmodel = Mapper.Map<Request, RequestRentRackViewModel>(request);
+                    //DOING
+                    //Tam thoi fix cung rack numbers --> unzip tu desctiption
+                    viewmodel.RackNumbers = viewmodel.RackNumbers;
+                    //list cot rows
+                    viewmodel.Rows = RackBLO.Current.GetAllRowsOfRack();
+                    //Get available racks
+                    var listrack = RackDAO.Current.Query(x => x.StatusCode == Constants.StatusCode.RACK_AVAILABLE);
+                    //Tùy vào rack number mà số lượng rack staff được chọn sẽ tương ứng
+                    if (listrack.Count > 0)
+                    {
+                        var list = listrack.Select(x => new SelectListItem
+                        {
+                            Value = x.RackCode,
+                            Text = x.RackName
+                        }).ToList();
+                        //DOING: van chua multi-select duoc
+                        viewmodel.AvailableRacks = new MultiSelectList(list, "Value", "Text", null);
+                    }
+                }
+                //Chuyen IsViewed = true
+                return View("../Request/RentRackInfo", viewmodel);
+            }
+            if (rType.Equals(Constants.RequestTypeCode.RETURN_RACK))
+            {
+                RequestReturnRackViewModel viewmodel = new RequestReturnRackViewModel();
+                //get request
+                var request = RequestBLO.Current.GetRequestByRequestCode(rCode);
+                //lay rack dang o trang thai returning cua khach hang cu the
+                var rackOfCustomer = RackOfCustomerBLO.Current.GetRacksOfCustomer(request.Customer, Constants.StatusCode.RACKOFCUSTOMER_RETURNING);
+                viewmodel = Mapper.Map<Request, RequestReturnRackViewModel>(request);
+                viewmodel.RackOfCustomer = rackOfCustomer.Select(x => new SelectListItem
+                {
+                    Value = x.RackName,
+                    Text = x.RackCode
+                }).ToList();
+                viewmodel.StatusName = StatusBLO.Current.GetStatusName(viewmodel.StatusCode);
+                var customer = AccountBLO.Current.GetAccountByCode(viewmodel.Customer);
+                viewmodel.CustomerName = customer.Fullname;
+                return View("../Request/ReturnRackInfo", viewmodel);
+            }
+            return RedirectToAction("ListNotifications","Request");
+        }
+        //DOING
+        [HttpPost]
+        public ActionResult ProcessRequestRentRack(RequestRentRackViewModel viewmodel)
+        {
+
+            //Change request status, tu 
+            RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);
+
+            //Add Log Request
+            LogChangedContent logRequest = new LogChangedContent
+            {
+                RequestCode = viewmodel.RequestCode,
+                TypeOfLog = Constants.TypeOfLog.LOG_RENT_RACK,
+                Object = Constants.Object.OBJECT_REQUEST,
+                ChangedValueOfObject = viewmodel.RequestCode,
+                ObjectStatus = Constants.StatusCode.REQUEST_DONE,
+                Staff = viewmodel.StaffCode
+            };
+            LogChangedContentBLO.Current.AddLog(logRequest);
+
+            //Add log Khach hang rent rack
+            foreach (var item in viewmodel.SelectedRacks)
+            {
+                LogChangedContent logRack = new LogChangedContent
+                {
+                    RequestCode = viewmodel.RequestCode,
+                    TypeOfLog = Constants.TypeOfLog.LOG_RENT_RACK,
+                    Object = Constants.Object.OBJECT_RACK,
+                    ChangedValueOfObject = item,
+                    ObjectStatus = Constants.StatusCode.RACK_RENTED,
+                    Staff = viewmodel.StatusCode
+                };
+                LogChangedContentBLO.Current.AddLog(logRack);
+            }
+
+            // add vo bang rack of customer
+            foreach (var item in viewmodel.SelectedRacks)
+            {
+                var rackOfCustomer = new RackOfCustomer
+                {
+                    RackCode = item,
+                    Customer = viewmodel.Customer,
+                    RentedDate = DateTime.Now,
+                };
+                RackOfCustomerBLO.Current.Add(rackOfCustomer);
+            }
+            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult ProcessRequestReturnRack(RequestReturnRackViewModel viewmodel)
+        {
+            //Change request status 
+            RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);
+
+            //update status rackofcustomer
+            foreach (var item in viewmodel.RackOfCustomer)
+            {
+                //update statuscode cua RackOfCustomer
+                RackOfCustomerBLO.Current.UpdateStatusRackOfCustomer(item.Value, viewmodel.Customer
+                    , Constants.StatusCode.RACKOFCUSTOMER_RETURNING, Constants.StatusCode.RACKOFCUSTOMER_OLD);
+                // update statuscode cua bang rack
+                RackBLO.Current.UpdateRackStatus(item.Value, Constants.StatusCode.RACK_AVAILABLE);
+                //Add log trang thai rack
+                LogChangedContent logRack = new LogChangedContent
+                {
+                    RequestCode = viewmodel.RequestCode,
+                    TypeOfLog = Constants.TypeOfLog.LOG_RETURN_RACK,
+                    Object = Constants.Object.OBJECT_RACK,
+                    ChangedValueOfObject = item.Value,
+                    ObjectStatus = Constants.StatusCode.RACK_AVAILABLE,
+                    Staff = viewmodel.StaffCode
+                };
+                LogChangedContentBLO.Current.AddLog(logRack);
+                //log trang thai rack of customer
+                LogChangedContent logRackOfCustomer = new LogChangedContent
+                {
+                    RequestCode = viewmodel.RequestCode,
+                    TypeOfLog = Constants.TypeOfLog.LOG_RETURN_RACK,
+                    Object = Constants.Object.OBJECT_RACKOFCUSTOMER,
+                    ChangedValueOfObject = item.Value,
+                    ObjectStatus = Constants.StatusCode.RACKOFCUSTOMER_OLD,
+                    Staff = viewmodel.StaffCode
+                };
+                LogChangedContentBLO.Current.AddLog(logRackOfCustomer);
+            }
+            //Add Log Request
+            LogChangedContent logRequest = new LogChangedContent
+            {
+                RequestCode = viewmodel.RequestCode,
+                TypeOfLog = Constants.TypeOfLog.LOG_RETURN_RACK,
+                Object = Constants.Object.OBJECT_REQUEST,
+                ChangedValueOfObject = viewmodel.RequestCode,
+                ObjectStatus = Constants.StatusCode.REQUEST_DONE,
+                Staff = viewmodel.StaffCode
+            };
+            LogChangedContentBLO.Current.AddLog(logRequest);
+            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult ProcessRequesReturnIp(RequestIPViewModel viewmodel)
+        {
+            //Change request status 
+            RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);
+
+            //change status cua IP o IPAddresspool
+            foreach (var item in viewmodel.Ips)
+            {
+                IPAddressPoolBLO.Current.UpdateStatusIp(Constants.StatusCode.IP_AVAILABLE, item);
+                // update statuscode cua bang serverIP
+                ServerIPBLO.Current.UpdateStatusServerIp(Constants.StatusCode.SERVERIP_RETURNING,
+                    Constants.StatusCode.SERVERIP_OLD, item);
+                //Add log trang thai IP
+                LogChangedContent logIp = new LogChangedContent
+                {
+                    RequestCode = viewmodel.RequestCode,
+                    TypeOfLog = Constants.TypeOfLog.LOG_RETURN_IP,
+                    Object = Constants.Object.OBJECT_IP,
+                    ChangedValueOfObject = item,
+                    ObjectStatus = Constants.StatusCode.IP_AVAILABLE,
+                    Staff = viewmodel.StaffCode
+                };
+                LogChangedContentBLO.Current.AddLog(logIp);
+            }
+            //Add Log Request
+            LogChangedContent logRequest = new LogChangedContent
+            {
+                RequestCode = viewmodel.RequestCode,
+                TypeOfLog = Constants.TypeOfLog.LOG_RETURN_IP,
+                Object = Constants.Object.OBJECT_REQUEST,
+                ChangedValueOfObject = viewmodel.RequestCode,
+                ObjectStatus = Constants.StatusCode.REQUEST_DONE,
+                Staff = viewmodel.StaffCode
+            };
+            LogChangedContentBLO.Current.AddLog(logRequest);
+            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult ProcessRequestAddServer(RequestAddServerViewModel viewmodel)
+        {
+            var listServer = viewmodel.Servers;
+            foreach (var server in listServer)
+            {
+                ServerBLO.Current.UpdateServerStatus(server.ServerCode, Constants.StatusCode.SERVER_RUNNING);
+                ServerAttributeBLO.Current.UpdateServerAttributeStatus(server.ServerCode, Constants.StatusCode.SERVERATTRIBUTE_NEW);
+                //doi trang thai cua request
+                RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);
+                //luu IP address
+                //Luu location
+
+                //log server status
+                LogChangedContent logServer = new LogChangedContent
+                {
+                    RequestCode = viewmodel.RequestCode,
+                    TypeOfLog = Constants.TypeOfLog.LOG_ADD_SERVER,
+                    Object = Constants.Object.OBJECT_SERVER,
+                    ChangedValueOfObject = viewmodel.RequestCode,
+                    ObjectStatus = Constants.StatusCode.SERVER_RUNNING,
+                    ServerCode = server.ServerCode
+                    //Staff = viewmodel.StaffCode
+                };
+                LogChangedContentBLO.Current.AddLog(logServer);
+
+                //log request status
+                LogChangedContent logRequest = new LogChangedContent
+                {
+                    RequestCode = viewmodel.RequestCode,
+                    TypeOfLog = Constants.TypeOfLog.LOG_ADD_SERVER,
+                    Object = Constants.Object.OBJECT_REQUEST,
+                    ChangedValueOfObject = viewmodel.RequestCode,
+                    ObjectStatus = Constants.StatusCode.REQUEST_DONE,
+                    ServerCode = server.ServerCode
+                    //Staff = viewmodel.StaffCode
+                };
+                LogChangedContentBLO.Current.AddLog(logRequest);
+            }
+            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult ProcessRequestBringServerAway(RequestBringServerAwayViewModel viewmodel)
+        {
+            var listServer = viewmodel.ServerOfCustomer;
+            foreach (var server in listServer)
+            {
+                //log ip status
+                var serverips = ServerIPBLO.Current.GetReturningIps(server.ServerCode);
+                foreach (var ip in serverips)
+                {
+                    LogChangedContent logIp = new LogChangedContent
+                    {
+                        RequestCode = viewmodel.RequestCode,
+                        TypeOfLog = Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
+                        Object = Constants.Object.OBJECT_IP,
+                        ChangedValueOfObject = ip,
+                        ObjectStatus = Constants.StatusCode.IP_AVAILABLE,
+                        ServerCode = server.ServerCode
+                    };
+                    LogChangedContentBLO.Current.AddLog(logIp);
+                }
+
+                //doi trang thai server
+                ServerBLO.Current.UpdateServerStatus(server.ServerCode, Constants.StatusCode.SERVER_DEACTIVATE);
+                ServerAttributeBLO.Current.UpdateServerAttributeStatus(server.ServerCode,
+                    Constants.StatusCode.SERVERATTRIBUTE_OLD);
+                //log server status
+                LogChangedContent logServer = new LogChangedContent
+                {
+                    RequestCode = viewmodel.RequestCode,
+                    TypeOfLog = Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
+                    Object = Constants.Object.OBJECT_SERVER,
+                    ChangedValueOfObject = server.ServerCode,
+                    ObjectStatus = Constants.StatusCode.SERVER_DEACTIVATE,
+                    ServerCode = server.ServerCode
+                    //Staff = viewmodel.StaffCode
+                };
+                LogChangedContentBLO.Current.AddLog(logServer);
+                //doi trang thai cua request
+                RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);
+                //log request status
+                LogChangedContent logRequest = new LogChangedContent
+                {
+                    RequestCode = viewmodel.RequestCode,
+                    TypeOfLog = Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
+                    Object = Constants.Object.OBJECT_REQUEST,
+                    ChangedValueOfObject = viewmodel.RequestCode,
+                    ObjectStatus = Constants.StatusCode.REQUEST_DONE,
+                    ServerCode = server.ServerCode
+                    //Staff = viewmodel.StaffCode
+                };
+                LogChangedContentBLO.Current.AddLog(logRequest);
+                //giai phong location
+                LocationBLO.Current.SetLocationAvailable(server.ServerCode);
+                //change serverip status
+                ServerIPBLO.Current.ReturnAllIpOfServer(server.ServerCode);
+                //giai phong ip
+                IPAddressPoolBLO.Current.SetIpAvailable(server.ServerCode);
+            }
+            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult ProcessRequestAssignIp(RequestIPViewModel viewmodel)
+        {
+            if (Request.Form["Approve"] != null)
+            {
+                //Change request status 
+                RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);
+
+                //add ip vo serverip
+                foreach (var item in viewmodel.Ips.ToList())
+                {
+                    ServerIPBLO.Current.AddServerIp(viewmodel.SelectedServer, item, 0);
+                    //change status cua IP o IPAddresspool
+                    IPAddressPoolBLO.Current.UpdateStatusIp(Constants.StatusCode.IP_USED, item);
+                    //Add log trang thai IP
+                    LogChangedContent logIp = new LogChangedContent
+                    {
+                        RequestCode = viewmodel.RequestCode,
+                        TypeOfLog = Constants.TypeOfLog.LOG_ASSIGN_IP,
+                        Object = Constants.Object.OBJECT_IP,
+                        ChangedValueOfObject = item,
+                        ObjectStatus = Constants.StatusCode.IP_USED,
+                        Staff = viewmodel.StaffCode
+                    };
+                    LogChangedContentBLO.Current.AddLog(logIp);
+                }
+                //Add Log Request
+                LogChangedContent logRequest = new LogChangedContent
+                {
+                    RequestCode = viewmodel.RequestCode,
+                    TypeOfLog = Constants.TypeOfLog.LOG_ASSIGN_IP,
+                    Object = Constants.Object.OBJECT_REQUEST,
+                    ChangedValueOfObject = viewmodel.RequestCode,
+                    ObjectStatus = Constants.StatusCode.REQUEST_DONE,
+                    Staff = viewmodel.StaffCode
+                };
+                LogChangedContentBLO.Current.AddLog(logRequest);
+                return RedirectToAction("Index", "Home");
+            }
+            else if (Request.Form["Reject"] != null)
+            {
+                //O giao dien hien popup Yes/No reject
+
+                //Change request status 
+                RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_REJECTED);
+
+                //Add Log Request
+                LogChangedContent logRequest = new LogChangedContent
+                {
+                    RequestCode = viewmodel.RequestCode,
+                    TypeOfLog = Constants.TypeOfLog.LOG_ASSIGN_IP,
+                    Object = Constants.Object.OBJECT_REQUEST,
+                    ChangedValueOfObject = viewmodel.RequestCode,
+                    ObjectStatus = Constants.StatusCode.REQUEST_REJECTED,
+                    Staff = viewmodel.StaffCode
+                };
+                LogChangedContentBLO.Current.AddLog(logRequest);
+
+                //notification cho khach hang biet
+                //DOING
+
+
+                return RedirectToAction("Index", "Home");
+            }
+            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+            return RedirectToAction("Index", "Home");
+        }
+        //DOING
+        [HttpPost]
+        public ActionResult ProcessRequestChangeIp(RequestIPViewModel viewmodel)
+        {
+            //Lam cach nao de luu gia tri cua moi dropdownlist, trong do co nhieu dropdownlist, ko ro so luong???
+            //Change request status 
+            RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);
+
+            //update ServerIP
+            foreach (var item in viewmodel.SelectedIps)
+            {
+                //get previous ip
+                var preId = ServerIPBLO.Current.GetPreviousIp(viewmodel.SelectedServer, item.Value);
+
+                //add ip vo serverip
+                foreach (var ip in viewmodel.Ips)
+                {
+                    ServerIPBLO.Current.AddServerIp(viewmodel.SelectedServer, ip, preId);
+                    //Update status cua IP moi o IPAddressPool
+                    IPAddressPoolBLO.Current.UpdateStatusIp(Constants.StatusCode.IP_USED, ip);
+                    //Add log trang thai IP moi
+                    LogChangedContent logIp = new LogChangedContent
+                    {
+                        RequestCode = viewmodel.RequestCode,
+                        TypeOfLog = Constants.TypeOfLog.LOG_CHANGE_IP,
+                        Object = Constants.Object.OBJECT_IP,
+                        ChangedValueOfObject = ip,
+                        ObjectStatus = Constants.StatusCode.IP_USED,
+                        Staff = viewmodel.StaffCode
+                    };
+                    LogChangedContentBLO.Current.AddLog(logIp);
+                }
+
+                //Update status cua IP cu o IPAddressPool
+                IPAddressPoolBLO.Current.UpdateStatusIp(Constants.StatusCode.IP_AVAILABLE, item.Value);
+                //update previous ip status
+                ServerIPBLO.Current.UpdateStatusServerIp(Constants.StatusCode.RACKOFCUSTOMER_RETURNING,
+                    Constants.StatusCode.RACKOFCUSTOMER_OLD, item.Value);
+                //Add log trang thai IP moi cu
+                LogChangedContent logPreIp = new LogChangedContent
+                {
+                    RequestCode = viewmodel.RequestCode,
+                    TypeOfLog = Constants.TypeOfLog.LOG_CHANGE_IP,
+                    Object = Constants.Object.OBJECT_IP,
+                    ChangedValueOfObject = item.Value,
+                    ObjectStatus = Constants.StatusCode.IP_AVAILABLE,
+                    Staff = viewmodel.StaffCode
+                };
+                LogChangedContentBLO.Current.AddLog(logPreIp);
+            }
+
+            LogChangedContent logRequest = new LogChangedContent
+            {
+                RequestCode = viewmodel.RequestCode,
+                TypeOfLog = Constants.TypeOfLog.LOG_CHANGE_IP,
+                Object = Constants.Object.OBJECT_REQUEST,
+                ChangedValueOfObject = viewmodel.RequestCode,
+                ObjectStatus = Constants.StatusCode.REQUEST_DONE,
+                Staff = viewmodel.StaffCode
+            };
+            LogChangedContentBLO.Current.AddLog(logRequest);
+            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+            return RedirectToAction("Index", "Home");
+        }
+
+    }
+}

@@ -33,5 +33,7 @@ namespace IMS.Models
         public List<SelectListItem> AttributeList { get; set; }
         public List<string> SelectedAttributes { get; set; }
         public List<string> AttributeValues { get; set; }
+
+        public string TempCode { get; set; }
     }
 }
