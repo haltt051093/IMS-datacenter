@@ -44,7 +44,15 @@ namespace IMS.Data.Repository
         {
             var query =
                 Current.Query(x => x.ServerCode == serverCode && x.StatusCode == Constants.StatusCode.SERVERIP_RETURNING)
-                .Select(x=>x.CurrentIP);
+                .Select(x => x.CurrentIP);
+            return query.ToList();
+        }
+
+        public List<string> GetIpByServer(string serverCode)
+        {
+            var query =
+                Current.Query(x => x.ServerCode == serverCode && x.StatusCode == Constants.StatusCode.SERVERIP_CURRENT)
+                .Select(x => x.CurrentIP);
             return query.ToList();
         }
 
@@ -69,6 +77,16 @@ namespace IMS.Data.Repository
                         x.CurrentIP == ip && x.ServerCode == serverCode &&
                         x.StatusCode == Constants.StatusCode.SERVERIP_RETURNING).Select(x => x.Id).FirstOrDefault();
             return query;
+        }
+
+        public void ReturnAllIpOfServer(string serverCode)
+        {
+            var serverips = Current.Query(x => x.StatusCode == serverCode);
+            for (int i = 0; i < serverips.Count; i++)
+            {
+                serverips[i].StatusCode = Constants.StatusCode.SERVERIP_OLD;
+                Update(serverips[i]);
+            }
         }
     }
 }

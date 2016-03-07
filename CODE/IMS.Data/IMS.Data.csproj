@@ -76,6 +76,7 @@
     <Compile Include="Generic\BaseBLO.cs" />
     <Compile Include="Generic\BaseDAO.cs" />
     <Compile Include="Generic\BaseModel.cs" />
+    <Compile Include="Generic\DataEnum.cs" />
     <Compile Include="IMSContext.cs" />
     <Compile Include="MailService.cs" />
     <Compile Include="Models\Note.cs" />
@@ -126,9 +127,11 @@
     <Compile Include="Repository\TypeOfLogDAO.cs" />
     <Compile Include="ViewModels\AccountExtendedModel.cs" />
     <Compile Include="ViewModels\AttributeExtendedModel.cs" />
+    <Compile Include="ViewModels\ExtendedResultModel.cs" />
     <Compile Include="ViewModels\IPAddressModel.cs" />
     <Compile Include="ViewModels\IPExtendedModel.cs" />
     <Compile Include="ViewModels\LocationExtendedModel.cs" />
+    <Compile Include="ViewModels\LogChangeExtendModel.cs" />
     <Compile Include="ViewModels\LogExtentedModel.cs" />
     <Compile Include="ViewModels\NotificationExtendedModel.cs" />
     <Compile Include="ViewModels\RackOfCustomerExtendedModel.cs" />
@@ -146,9 +149,10 @@
       <Project>{0128e2b7-087b-43bb-a2cc-82457b18cdfd}</Project>
       <Name>IMS.Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Queries\" />
+    <ProjectReference Include="..\IMS.Resources\IMS.Resources.csproj">
+      <Project>{0f9de93b-a0f7-49a0-8162-1a8bb2776fca}</Project>
+      <Name>IMS.Resources</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

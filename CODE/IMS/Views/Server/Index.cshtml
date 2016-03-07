@@ -1,80 +1,85 @@
 ﻿@model ServerIndexViewModel
 
 @{
-    ViewBag.Title = "ServerPage";
+    ViewBag.Title = Pages.ServerIndex;
+    ViewBag.PageTitle = Pages.ServerIndex;
     ViewBag.Role = "Shift Head";
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("Server", "Index", Pages.ServerIndex)
+    };
 }
-<section class="content-header">
-    <h1>
-        List of Server
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="@Url.Action("Index2", "Schedule")"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Server</li>
-    </ol>
-</section>
-<section class="content">
-    <div class="box">
-        <div class="box-body table-responsive">
-            <div class="box-body table-responsive">
-                <table id="example1" class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>Server Code</th>
-                            <th>Customer</th>
-                            <th>Status</th>
-                            <th>Default IP</th>
-                            <th>Location</th>
-                            <th>Current Request</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.Servers)
+
+<div class="main-content">
+    <table id="example1" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>@Labels.ServerCode</th>
+                <th>@Labels.Customer</th>
+                <th>@Labels.Status</th>
+                <th>@Labels.DefaultIP</th>
+                <th>@Labels.Location</th>
+                <th>@Labels.CurrentRequest</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Servers)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(item.ServerCode, "ServerDetails", "Server", new { serverCode = @item.ServerCode }, null)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.CustomerName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DefaultIP)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RackName)U
+                        @Html.DisplayFor(modelItem => item.RackUnit)
+                    </td>
+                    <td class="sidebar-menu">
+                        @if (item.Requests.Count > 0)
                         {
-                            <tr>
-                                <td>
-                                    <a href="@Url.Action("ServerDetails", "Server", new { serverCode = @item.ServerCode })">@item.ServerCode</a>
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(model => item.CustomerName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Status)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.DefaultIP)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.RackName)U
-                                    @Html.DisplayFor(modelItem => item.RackUnit)
-                                </td>
-                                <td class="sidebar-menu">
-                                    @if (item.Requests.Count > 0)
-                                    {
-                                        foreach (var request in item.Requests)
-                                        {
-                                            <ul><a href="#"><i class="fa fa-angle-double-right"></i> @request.RequestTypeName</a></ul>
-                                        }
-                                    }
-                                </td>
-                            </tr>
+                            <dl>
+                                @foreach (var request in item.Requests)
+                                {
+                                    <dt>
+                                        <a href="#"><i class="fa fa-angle-double-right"></i> @request.RequestTypeName</a>
+                                    </dt>
+                                }
+                            </dl>
                         }
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th>Server Code</th>
-                            <th>Customer</th>
-                            <th>Status</th>
-                            <th>Default IP</th>
-                            <th>Location</th>
-                            <th>Current Request</th>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div><!-- /.box-body -->
-        </div><!-- /.box -->
-    </div>
-</section>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>@Labels.ServerCode</th>
+                <th>@Labels.Customer</th>
+                <th>@Labels.Status</th>
+                <th>@Labels.DefaultIP</th>
+                <th>@Labels.Location</th>
+                <th>@Labels.CurrentRequest</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<!-- page script -->
+<script type="text/javascript">
+    $(function () {
+        $("#example1").dataTable();
+
+    });
+</script>
+
 <!-- SERVER DETAIL MODAL -->
 <div class="modal fade" id="serverdetail-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
@@ -83,141 +88,76 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title"><i class="fa fa-search"></i> Server Detail</h4>
             </div>
-            <form action="#" method="post">
-                <div class="modal-body">
+            <div class="modal-body">
 
-                    <dl class="dl-horizontal">
-                        <dt>
-                            Server Code
-                        </dt>
-                        <dd>
-                            GHJHKRN
-                        </dd>
+                <dl class="dl-horizontal">
+                    <dt>@Labels.ServerCode</dt>
+                    <dd>GHJHKRN</dd>
 
-                        <dt>
-                            Customer
-                        </dt>
+                    <dt>@Labels.Customer</dt>
+                    <dd>Nguyễn Hùng Mạnh</dd>
 
-                        <dd>
-                            Nguyễn Hùng Mạnh
-                        </dd>
+                    <dt>@Labels.Maker</dt>
+                    <dd>SUPERMICRO</dd>
 
-                        <dt>
-                            Maker
-                        </dt>
+                    <dt>@Labels.Model</dt>
+                    <dd>X8 DTI</dd>
 
-                        <dd>
-                            SUPERMICRO
-                        </dd>
+                    <dt>@Labels.Power</dt>
+                    <dd>750W</dd>
 
-                        <dt>
-                            Model
-                        </dt>
+                    <dt>@Labels.Size</dt>
+                    <dd>2</dd>
 
-                        <dd>
-                            X8 DTI
-                        </dd>
+                    <dt>@Labels.Status</dt>
+                    <dd>Running</dd>
 
-                        <dt>
-                            Power
-                        </dt>
+                    <dt>@Labels.DefaultIP</dt>
+                    <dd>192.168.0.11</dd>
 
-                        <dd>
-                            750W
-                        </dd>
+                    <dt>@Labels.Location</dt>
+                    <dd>L123456 U2</dd>
 
-                        <dt>
-                            Size
-                        </dt>
+                    <dt>@Labels.RegisteredDate</dt>
+                    <dd>18-Jan-16 01:19:12</dd>
 
-                        <dd>
-                            2
-                        </dd>
+                    <dt>@Labels.NoOfOutlets</dt>
+                    <dd>2</dd>
 
-                        <dt>
-                            Status
-                        </dt>
+                    <dt>@Labels.OtherAttributes</dt>
+                    <dd>
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                Storage : 750GB
+                            </li>
+                            <li class="list-group-item">
+                                Memory : 6GB
+                            </li>
+                        </ul>
+                    </dd>
 
-                        <dd>
-                            Running
-                        </dd>
+                    <dt>@Labels.CurrentIP</dt>
+                    <dd>
+                        <ul class="list-group">
 
-                        <dt>
-                            Default IP
-                        </dt>
+                            <li class="list-group-item">
+                                192.168.0.11
+                            </li>
+                            <li class="list-group-item">
+                                192.168.0.11
+                            </li>
+                        </ul>
+                    </dd>
 
-                        <dd>
-                            192.168.0.11
-                        </dd>
+                </dl>
+            </div>
+            <div class="modal-footer clearfix">
 
-                        <dt>
-                            Location
-                        </dt>
-
-                        <dd>
-                            L123456 U2
-                        </dd>
-
-                        <dt>
-                            Registered Date
-                        </dt>
-
-                        <dd>
-                            18-Jan-16 01:19:12
-                        </dd>
-
-                        <dt>
-                            Outlet
-                        </dt>
-
-                        <dd>
-                            2
-                        </dd>
-                        <dt>
-                            Other Attributes
-                        </dt>
-                        <dd>
-                            <ul class="list-group">
-
-                                <li class="list-group-item">
-                                    Storage : 750GB
-                                </li>
-                                <li class="list-group-item">
-                                    Memory : 6GB
-                                </li>
-
-                            </ul>
-                        </dd>
-                        <dt>
-                            Current IP Address
-                        </dt>
-                        <dd>
-                            <ul class="list-group">
-
-                                <li class="list-group-item">
-                                    192.168.0.11
-                                </li>
-                                <li class="list-group-item">
-                                    192.168.0.11
-                                </li>
-
-                            </ul>
-                        </dd>
-
-                    </dl>
-                </div>
-                <div class="modal-footer clearfix">
-
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-                </div>
-            </form>
+                <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
+                        data-dismiss="modal">
+                    <i class="fa fa-times"></i> @Labels.Cancel
+                </button>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<!-- page script -->
-<script type="text/javascript">
-    $(function () {
-        $("#example1").dataTable();
-
-    });
-</script>

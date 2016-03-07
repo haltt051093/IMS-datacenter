@@ -1,0 +1,136 @@
+﻿@model RequestBringServerAwayViewModel
+@{
+    ViewBag.Title = "RequestBringAwayServerInfo";
+    ViewBag.Role = "Shift Head";
+}
+
+<section class="content-header">
+    <h1>
+        Detail Request Bring Away Server
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index2", "Schedule")"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Detail Request Bring Away Server</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="box">
+        <div class="box-body table-responsive">
+            @using (Html.BeginForm("ProcessRequestBringServerAway", "Request", FormMethod.Post))
+            {
+                <dl class="dl-horizontal">
+                    <dt>
+                        From customer
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control" } })
+
+
+                    </dd>
+                    <dt>
+                        Requested Time
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.RequestedTime, new { htmlAttributes = new { @class = "form-control" } })
+                    </dd>
+                    <dt>
+                        Status
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.StatusName, new { htmlAttributes = new { @class = "form-control" } })
+                    </dd>
+                    <div class="form-group">
+                        <table id="" class="table table-bordered table-striped  col-xs-offset-1">
+                            <thead>
+                                <tr>
+                                    <th>Server</th>
+                                    <th>IP Address</th>
+                                    <th>Location</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.ServerOfCustomer.Count; i++)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            @Html.DisplayFor(model => Model.ServerOfCustomer[i].ServerCode, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.HiddenFor(modelItem => modelItem.ServerOfCustomer[i].ServerCode)
+                                        </td>
+                                        <td>
+                                            <dl>
+                                                @for (int j = 0; j < Model.ServerOfCustomer[i].ServerIps.Count; j++)
+                                                {
+                                                    <dt>
+                                                        @Html.DisplayFor(model => Model.ServerOfCustomer[i].ServerIps[j].CurrentIP, new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.HiddenFor(model => Model.ServerOfCustomer[i].ServerIps[j].CurrentIP, new { htmlAttributes = new { @class = "form-control" } })
+                                                    </dt>
+                                                }
+                                            </dl>
+                                        </td>
+                                        <td>
+                                            <dl>
+                                                @for (int l = 0; l < Model.ServerOfCustomer[i].ServerLocation.Count; l++)
+                                                {
+                                                    <dt>
+                                                        @Html.DisplayFor(model => Model.ServerOfCustomer[i].ServerLocation[l].RackName, new { htmlAttributes = new { @class = "form-control" } })U
+                                                        @Html.DisplayFor(model => Model.ServerOfCustomer[i].ServerLocation[l].RackUnit, new { htmlAttributes = new { @class = "form-control" } })U
+                                                        @Html.HiddenFor(model => Model.ServerOfCustomer[i].ServerLocation[l].RackName, new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.HiddenFor(model => Model.ServerOfCustomer[i].ServerLocation[l].RackUnit, new { htmlAttributes = new { @class = "form-control" } })
+                                                    </dt>
+                                                }
+                                            </dl>
+                                        </td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(model => model.SelectedServerNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => model.ReturnIpNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => model.ReturnLocationNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    @*<dt>
+                            Selected Server
+                        </dt>
+                        @for (int i = 0; i < Model.ServerOfCustomer.Count; i++)
+                        {
+                            <dd>
+                                @Html.DisplayFor(model => Model.ServerOfCustomer[i].ServerCode, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.HiddenFor(model => model.ServerOfCustomer[i].ServerCode)
+                            </dd>
+                        }*@
+                    <div class="form-group">
+                        <dt>
+                            Description:
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                        </dd>
+                    </div>
+
+                    <dt></dt>
+                    <dd>
+                        @Html.HiddenFor(model => model.RequestCode)
+                        @Html.HiddenFor(model => model.Customer)
+                        @if (Model.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                        {
+                            <button type="submit" class="btn btn-primary">Approve</button>
+                            <button type="submit" class="btn btn-danger">Reject</button>
+                        }
+                    </dd>
+
+                </dl>
+            }
+        </div><!-- /.box-body -->
+    </div><!-- /.box -->
+</section>

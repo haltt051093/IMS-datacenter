@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
@@ -20,6 +21,25 @@ namespace IMS.Controllers
         {
             var ips = IPAddressPoolBLO.Current.GetAllIP();
             var data = new IPIndexViewModel();
+            var listNetworkIP = ips.OrderBy(x => x.NetworkIP).GroupBy(x => x.NetworkIP).Select(x => x.FirstOrDefault());
+            data.NetworkIPs = listNetworkIP.Select(x => new SelectListItem
+            {
+                Value = x.NetworkIP,
+                Text = "Network " + x.NetworkIP
+            }).ToList();
+            var listnet = new List<SelectListItem>();
+            int[] list = new int[] { 24, 25, 26, 27, 28 };
+            foreach (var i in list)
+            {
+                string num = (i).ToString();
+                SelectListItem item = new SelectListItem()
+                {
+                    Value = num,
+                    Text = num
+                };
+                listnet.Add(item);
+            }
+            data.ListNetmask = listnet;
             data.IPs = ips;
             return View(data);
         }
@@ -64,6 +84,22 @@ namespace IMS.Controllers
                 var ips = IPAddressPoolBLO.Current.GenerateIP(iivm.Address, iivm.Netmask);
                 var gateway = IPAddressPoolBLO.Current.GenerateIP(iivm.Address, iivm.Netmask).FirstOrDefault().Gateway;
                 var exist = IPAddressPoolDAO.Current.Query(x => x.Gateway == gateway);
+                int k = ips.Count - 1;
+                ips[k].StatusCode = Constants.StatusCode.IP_RESERVE;
+            
+            for (int i = 0; i < ips.Count-1; i++)
+                {
+                    if (ips[i].IPAddress == ips[i].NetworkIP || ips[i].IPAddress == ips[i].Gateway)
+                    {
+                        ips[i].StatusCode = Constants.StatusCode.IP_RESERVE;
+                    }
+                    else
+                    {
+                        ips[i].StatusCode = Constants.StatusCode.IP_AVAILABLE;
+                    }
+                    
+                    
+                }
                 if (exist.Count > 0)
                 {
                     Alert("The Network Address was existed. Please try again!");
@@ -203,9 +239,9 @@ namespace IMS.Controllers
         public ActionResult ChangeIPStatus(IPIndexViewModel iivm)
         {
             //int? id = ipid.ToInt();
-            int id = iivm.IPs.FirstOrDefault().Id;
+           
             IPAddressPool ip = new IPAddressPool();
-            ip = IPAddressPoolBLO.Current.GetById(id);
+            ip = IPAddressPoolBLO.Current.GetById(iivm.Id);
             if (ip.StatusCode == Constants.StatusCode.IP_AVAILABLE)
             {
                 ip.StatusCode = Constants.StatusCode.IP_BLOCKED;
@@ -218,19 +254,27 @@ namespace IMS.Controllers
                 log.LogTime = DateTime.Now;
                 log.Description = iivm.Description;
                 LogChangedContentDAO.Current.Add(log);
+                Alert("Block IP successfully");
+                return RedirectToAction("Index2");
             }
             else
             if (ip.StatusCode == Constants.StatusCode.IP_BLOCKED)
             {
                 ip.StatusCode = Constants.StatusCode.IP_AVAILABLE;
                 IPAddressPoolDAO.Current.Update(ip);
+                var blockip = LogChangedContentBLO.Current.GetBlockedIP(ip.IPAddress).FirstOrDefault();
+                
                 LogChangedContent log = new LogChangedContent();
                 log.TypeOfLog = Constants.TypeOfLog.LOG_UNBLOCK_IP;
                 log.Object = Constants.Object.OBJECT_IP;
                 log.ChangedValueOfObject = ip.IPAddress;
                 log.ObjectStatus = Constants.StatusCode.IP_AVAILABLE;
+                log.Description = iivm.Description;
                 log.LogTime = DateTime.Now;
+                log.PreviousId = blockip.Id;
                 LogChangedContentDAO.Current.Add(log);
+                Alert("Unblock IP successfully");
+                return RedirectToAction("Index2");
             }
             return RedirectToAction("Index2");
         }

@@ -35,6 +35,8 @@ namespace IMS
                 config.CreateMap<Request,RequestAddServerViewModel>();
                 //process return rack
                 config.CreateMap<Request, RequestReturnRackViewModel>();
+                //process bring server away
+                config.CreateMap<Request, RequestBringServerAwayViewModel>();
                 //process assign, change, return ip
                 config.CreateMap<Request, RequestIPViewModel>();
                 config.CreateMap<ServerExtendedModel, Server>();

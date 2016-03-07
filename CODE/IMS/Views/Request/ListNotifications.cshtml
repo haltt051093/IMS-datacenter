@@ -43,61 +43,74 @@
 </section>
 <!-- Main content -->
 <section class="content">
-    <div class="box">
-        <div class="box-body table-responsive">
-            <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>RequestCode</th>
-                        <th>Customer</th>
-                        <th>RequestType</th>
-                        <th>RequestedTime</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
-                    @foreach (var item in Model.NotificationList)
-                    {
-                        <tr>
-                            <td>
-                                @if (item.StatusCode == Constants.StatusCode.REQUEST_SENDING)
-                                {
-                                    <a href="#" data-toggle="modal" class="btnRequestCode" data-target="#acceptrequest-modal"
-                                        data-requestCode="@item.RequestCode" data-requestType="@item.RequestType">@item.RequestCode</a>
-                                }
-                                else
-                                {
-                                    @Html.ActionLink(item.RequestCode, "RequestDetais", "Request", new { rType = item.RequestType, rCode = item.RequestCode }, null)
-                                }
+    <div>
+        Request Type:
+        @Html.DropDownListFor(m => m.FilterByRequestType, Model.FilterByRequestType, new { @id = "servercode" })
+    </div>
+    <div>
+        Request Status
+        @Html.DropDownListFor(m => m.FilterByRequestType, Model.FilterByStatus, new { @id = "servercode" })
+    </div>
+    <table id="example1" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>RequestCode</th>
+                <th>Customer</th>
+                <th>RequestType</th>
+                <th>RequestedTime</th>
+                <th class="hidden">Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            @foreach (var item in Model.NotificationList)
+            {
+                <tr>
+                    <td>
+                        @if (item.StatusCode == Constants.StatusCode.REQUEST_SENDING)
+                        {
+                            <a href="#" data-toggle="modal" class="btnRequestCode" data-target="#acceptrequest-modal"
+                               data-requestCode="@item.RequestCode" data-requestType="@item.RequestType">@item.RequestCode</a>
+                        }
+                        else
+                        {
+                            @Html.ActionLink(item.RequestCode, "RequestDetais", "Request", new { rType = item.RequestType, rCode = item.RequestCode }, null)
+                        }
 
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Customer)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.RequestTypeName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.RequestedTime)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.StatusName)
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th>RequestCode</th>
-                        <th>Customer</th>
-                        <th>RequestType</th>
-                        <th>RequestedTime</th>
-                        <th>Status</th>
-                    </tr>
-                </tfoot>
-            </table>
-        </div><!-- /.box-body -->
-    </div><!-- /.box -->
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Customer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RequestTypeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RequestedTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StatusName)
+                    </td>
+                    <td class="hidden">
+                        @Html.DisplayFor(modelItem => item.Priority)
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>RequestCode</th>
+                <th>Customer</th>
+                <th>RequestType</th>
+                <th>RequestedTime</th>
+                <th>Status</th>
+            </tr>
+        </tfoot>
+    </table>
+    @if (User.IsInRole("Manager"))
+    {
+        <div>
+        </div>
+    }
 </section><!-- /.content -->
 <!-- ACCEPT REQUEST MODAL -->
 <div class="modal fade" id="acceptrequest-modal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -116,7 +129,7 @@
                             @*@Html.ActionLink("View Details", "RequestDetais", "Request", new { rType = item.RequestType, rCode = item.RequestCode }, null)*@
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group hidden assignbox">
                         <label>Assign Name</label>
                         <select>
                             <option>You</option>
@@ -125,7 +138,7 @@
                         </select>
                     </div>
                 </div>
-                <input type="hidden" id="requestCode" name="requestCode" value=""/>
+                <input type="hidden" id="requestCode" name="requestCode" value="" />
                 <input type="hidden" id="requestType" name="requestType" value="" />
                 <div class="modal-footer clearfix">
                     <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
@@ -139,7 +152,7 @@
     $(function () {
         $("#example1").dataTable({
             "iDisplayLength": -1,
-            "aaSorting": [[3, "desc"]] // Sort by first column descending
+            "aaSorting": [[5, "asc"], [3, "desc"]] // Sort by first column descending
         });
         //
         $('#tableBody').on('click', '.btnRequestCode', function () {
@@ -148,7 +161,12 @@
             var requestType = $(this).attr('data-requestType');
             $('#requestType').val(requestType);
         });
+
+        $('.btnRequestCode').click(function () {
+            var requestType = $(this).attr('data-requestType');
+            if (requestType !== "RT003") {
+                $('.assignbox').removeClass('hidden');
+            }
+        });
     });
 </script>
-
-

@@ -1,4 +1,5 @@
-﻿using IMS.Data.Generic;
+﻿using System.Collections.Generic;
+using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.Repository;
 
@@ -27,5 +28,6 @@ namespace IMS.Data.Business
             baseDao = RequestTypeDAO.Current;
             dao = RequestTypeDAO.Current;
         }
+
     }
 }

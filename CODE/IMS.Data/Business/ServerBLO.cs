@@ -36,14 +36,19 @@ namespace IMS.Data.Business
             return dao.GetAllServer();
         }
 
+        public List<ServerExtendedModel> GetServerOfCustomer(string customer)
+        {
+            return dao.GetServerOfCustomer(customer);
+        }
+
         public List<AttributeExtendedModel> GetServerAttributes(int id)
         {
             return dao.GetServerAttributes(id);
         }
 
-        public ServerExtendedModel GetServerByCode(string serverCode)
+        public ServerExtendedModel GetServerByCode(string serverCode, string status)
         {
-            return dao.GetServerByCode(serverCode);
+            return dao.GetServerByCode(serverCode, status);
         }
 
         //public List<Server> Search(string searchBy, string searchValue)
@@ -90,6 +95,11 @@ namespace IMS.Data.Business
         public void UpdateServerStatus(string serverCode, string status)
         {
             dao.UpdateServerStatus(serverCode, status);
+        }
+
+        public ServerExtendedModel GetAllServerInfo(string serverCode)
+        {
+            return dao.GetAllServerInfo(serverCode);
         }
     }
 }

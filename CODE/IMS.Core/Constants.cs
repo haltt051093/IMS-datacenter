@@ -11,14 +11,14 @@ namespace IMS.Core
     {
         public class RequestTypeCode
         {
-            public const string RENT_RACK = "RT011";
-            public const string RETURN_RACK = "RT012";
             public const string ADD_SERVER = "RT003";
-            public const string UPGRADE_SERVER = "RT006";
             public const string ASSIGN_IP = "RT009";
+            public const string BRING_SERVER_AWAY = "RT007";
             public const string CHANGE_IP = "RT008";
+            public const string RENT_RACK = "RT011";
             public const string RETURN_IP = "RT010";
-            public const string WITHDRAW_SERVER = "RT007";
+            public const string RETURN_RACK = "RT012";
+            public const string UPGRADE_SERVER = "RT006";
         }
 
         public class StatusCode
@@ -33,16 +33,19 @@ namespace IMS.Core
             public const string SERVER_WAITING = "STATUS01";
             public const string SERVER_RUNNING = "STATUS02";
             public const string SERVER_DEACTIVATE = "STATUS03";
+            public const string SERVER_BRINGING_AWAY = "STATUS34";
 
             public const string IP_AVAILABLE = "STATUS10";
             public const string IP_USED = "STATUS11";
             public const string IP_BLOCKED = "STATUS12";
+            public const string IP_RESERVE = "STATUS32";
 
             public const string LOCATION_FREE = "STATUS13";
             public const string LOCATION_USED = "STATUS14";
 
             public const string RACK_AVAILABLE = "STATUS19";
             public const string RACK_RENTED = "STATUS20";
+            public const string RACK_USED = "STATUS33";
 
             public const string SERVERATTRIBUTE_OLD = "STATUS23";
             public const string SERVERATTRIBUTE_UPDATING = "STATUS22";
@@ -66,7 +69,7 @@ namespace IMS.Core
             public const string NO_GROUP = "No Group";
         }
 
-        public class RequestType
+        public class RequestTypeName
         {
             public const string SERVER_ADD = "Add Server";
             public const string IP_ASSIGN = "Assign new IP address";
@@ -175,6 +178,8 @@ namespace IMS.Core
             public const string LOG_BLOCK_IP = "BLOCKIP";
             //Unblock IP
             public const string LOG_UNBLOCK_IP = "UNBLOCKIP";
+            //bring server away
+            public const string LOG_BRING_SERVER_AWAY = "BASERVER";
         }
 
         public class BandWidth
@@ -273,15 +278,39 @@ namespace IMS.Core
             public const int NUMBER_10 = 10;
         }
 
-        public class HtmlClass
+        public class HtmlFormat
         {
-            public const string DEFAULT_BUTTON = "btn btn-default";
-            public const string PRIMARY_BUTTON = "btn btn-primary";
-            public const string SECONDARY_BUTTON = "btn btn-info";
-            public const string DANGER_BUTTON = "btn btn-danger";
+            public const string DEFAULT_BUTTON_CLASS = "btn btn-default";
+            public const string PRIMARY_BUTTON_CLASS = "btn btn-primary";
+            public const string SECONDARY_BUTTON_CLASS = "btn btn-info";
+            public const string DANGER_BUTTON_CLASS = "btn btn-danger";
+            public const string DANGER_TEXT_CLASS = "text-danger";
 
-            public const string FORM_LABEL = "";
-            public const string FORM_CONTROL = "";
+            public const string DATATABLE_HEADER_CLASS = "tf-datatable-header";
+
+            public const string FORM_ROW_CLASS = "row form-group";
+            public const string FORM_MESSAGE_CLASS = "col-xs-12";
+            public const string FORM_LABEL_CLASS = "col-xs-2 tf-form-label";
+            public const string FORM_CONTROL_CLASS = "col-xs-10 tf-form-control";
+            public const string FORM_INNER_CLASS = "form-control";
+            public const string FORM_LABEL = "tf-form-label";
+
+
+            public const string MODAL_CLASS = "modal fade tf-modal";
+            public const string MODAL_HEADER_CLASS = "h4";
+            public const string MODAL_ROW_CLASS = "row form-group";
+            public const string MODAL_MESSAGE_CLASS = "col-xs-12";
+            public const string MODAL_LABEL_CLASS = "col-xs-3 tf-form-label";
+            public const string MODAL_CONTROL_CLASS = "col-xs-9 tf-form-control";
+            public const string MODAL_INNER_CLASS = "form-control";
+        }
+
+        public class FormAction
+        {
+            public const string ACTION_NAME = "Action";
+            public const string OK_ACTION = "OK";
+            public const string EDIT_ACTION = "Edit";
+            public const string CANCEL_ACTION = "Cancel";
         }
 
         public class ServerAttributeCode
@@ -289,6 +318,14 @@ namespace IMS.Core
             public const string PART_NUMBER = "SAT001";
             public const string SERIAL_NUMBER = "SAT002";
             public const string MEMORY = "SAT004";
+        }
+
+        public class AlertType
+        {
+            public const string SUCCESS = "success";
+            public const string INFO = "info";
+            public const string WARNING = "warning";
+            public const string DANGER = "danger";
         }
     }
 }

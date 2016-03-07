@@ -50,7 +50,7 @@
                     var myList1 = new SelectList(status, "StatusCode", "StatusName");
 
                 }
-                @Html.DropDownList("StatusCode", myList1, htmlAttributes: new {@class = "form-control"})
+                @Html.DropDownList("StatusCode", myList1, htmlAttributes: new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                 @Html.ValidationMessageFor(model => model.StatusCode, "", new {@class = "text-danger"})
             </div>
         </div>

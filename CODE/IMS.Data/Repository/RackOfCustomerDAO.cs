@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using IMS.Core;
 using IMS.Data.Generic;
@@ -45,20 +46,33 @@ namespace IMS.Data.Repository
 
         public List<RackOfCustomerExtendedModel> CountServerPerRack(string customer)
         {
-            var query = @"select r.RackCode, ra.RackName, COUNT(rc.ServerCode) as serverNum
+            var query = @"select r.RackCode, ra.RackName, COUNT(rc.ServerCode) as serverNum, r.StatusCode
                         from [dbo].[RackOfCustomer] as r
-                         join [dbo].[Location] as rc
+                         left join [dbo].[Location] as rc
                         on r.RackCode = rc.RackCode
-                         join [dbo].[Rack] as ra
+                         left join [dbo].[Rack] as ra
                         on ra.RackCode = rc.RackCode
-                        where r.Customer = '" + customer + @"'
-                        group by r.RackCode, ra.RackName
-                        ";
-            //DOING
-            //sua lai thanh kieu linq
+                        where r.Customer = '" + customer +
+                        @"' AND r.StatusCode='" + Constants.StatusCode.RACKOFCUSTOMER_CURRENT + @"'
+                        group by r.RackCode, ra.RackName, r.StatusCode";
+
+            //var query1 = from rc in Table()
+            //             join r in RackDAO.Current.Table()
+            //                 on rc.RackCode equals r.RackCode into rrc
+            //             from subr in rrc.DefaultIfEmpty()
+            //             join l in LocationDAO.Current.Table()
+            //                 on rc.RackCode equals l.RackCode into lrc
+            //             from subl in lrc.DefaultIfEmpty()
+            //             where rc.Customer == customer
+            //             group subl by subl.RackCode into newGroup
+            //             select new RackOfCustomerExtendedModel
+            //             {
+            //                 ServerNum = newGroup.Count(),
+            //                 RackCode = rrc.
+            //             };
+
             return RawQuery<RackOfCustomerExtendedModel>(query, new object[] { });
         }
-
 
         public List<LocationExtendedModel> GetRackOfCustomer(Server server)
         {
@@ -68,30 +82,39 @@ namespace IMS.Data.Repository
 
         public List<RackOfCustomerExtendedModel> GetAllRackOfCustomer()
         {
-            string query = @"select roc.*,l.LocationCode,l.RackUnit,l.ServerCode,s.StatusName,r.RackName
-                            from Location as l, RackOfCustomer as roc, Status as s, Rack as r
-                            where l.RackCode = roc.RackCode and l.StatusCode = s.StatusCode and r.RackCode=l.RackCode";
+            string query = @"select roc.*,l.RackUnit,l.ServerCode,s.StatusName,r.RackName,k.StatusName as RackStatus, ser.DefaultIP
+                            from  RackOfCustomer as roc, Status as s, Status as k, Rack as r,Location as l
+							left join Server as ser on ser.ServerCode = l.ServerCode
+                            where l.RackCode = roc.RackCode and l.StatusCode = s.StatusCode and r.RackCode=l.RackCode and k.StatusCode = roc.StatusCode";
             return RawQuery<RackOfCustomerExtendedModel>(query, new object[] { });
         }
 
-        public List<string> GetReturningRacks(string customer)
+        public List<RackOfCustomerExtendedModel> GetRacksOfCustomer(string customer, string status)
         {
-            var query =
-                Current.Query(
-                    x => x.Customer == customer && x.StatusCode == Constants.StatusCode.RACKOFCUSTOMER_RETURNING)
-                    .Select(x => x.RackCode);
+            var query = from rc in Table()
+                join r in RackDAO.Current.Table()
+                    on rc.RackCode equals r.RackCode into rrc
+                from subr in rrc.DefaultIfEmpty()
+                where rc.Customer == customer && rc.StatusCode == status
+                select new RackOfCustomerExtendedModel()
+                {
+                    RackName = subr.RackName,
+                    RackCode = subr.RackCode,
+                };
+
             return query.ToList();
         }
 
-        public void UpdateStatusRackOfCustomer(string rackCode, string customer, string PreStatus, string updateStatus)
+        public void UpdateStatusRackOfCustomer(string rackCode, string customer, string preStatus, string updateStatus)
         {
-            var rackOfCustomer =
-                Current.Query(
-                    x =>
-                        x.RackCode == rackCode && x.Customer == customer &&
-                        x.StatusCode == PreStatus).FirstOrDefault();
-            rackOfCustomer.StatusCode = updateStatus;
-            Update(rackOfCustomer);
+            var rackOfCustomer = Current.Query(x =>
+                       x.RackCode == rackCode && x.Customer == customer &&
+                       x.StatusCode == preStatus).FirstOrDefault();
+            if (rackOfCustomer != null)
+            {
+                rackOfCustomer.StatusCode = updateStatus;
+                Update(rackOfCustomer);
+            }
         }
     }
 }

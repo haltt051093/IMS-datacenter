@@ -28,7 +28,12 @@ namespace IMS.Data.Repository
 
         public override Server GetByKeys(Server entry)
         {
-            return Query(x => x.ServerCode == entry.ServerCode).FirstOrDefault();
+            var existing = Query(x => x.Id == entry.Id).FirstOrDefault();
+            if (existing == null)
+            {
+                existing = Query(x => x.ServerCode == entry.ServerCode).FirstOrDefault();
+            }
+            return existing;
         }
 
         public List<ServerExtendedModel> GetAllServer()
@@ -80,8 +85,38 @@ namespace IMS.Data.Repository
             //return RawQuery<ServerExtendedModel>(query, new object[] { });
         }
 
+        public List<ServerExtendedModel> GetServerOfCustomer(string customer)
+        {
+            var distinct = LocationDAO.Current.Table().GroupBy(item => item.ServerCode)
+                .Select(e => e.FirstOrDefault());
+            var rackDis = from r in RackDAO.Current.Table()
+                          join l in distinct
+                              on r.RackCode equals l.RackCode
+                          select new RackOfCustomerExtendedModel
+                          {
+                              LocationCode = l.LocationCode,
+                              ServerCode = l.ServerCode,
+                              RackCode = l.RackCode,
+                              RackName = r.RackName,
+                          };
+            var query = from s in Table()
+                        join l in rackDis
+                            on s.ServerCode equals l.ServerCode into sl
+                        from subl in sl.DefaultIfEmpty()
+                        where s.Customer == customer && s.StatusCode == Constants.StatusCode.SERVER_RUNNING
+                        select new ServerExtendedModel
+                        {
+                            RackCode = subl.RackCode,
+                            RackName = subl.RackName,
+                            DefaultIP = s.DefaultIP,
+                            ServerCode = s.ServerCode,
+                            Customer = s.Customer
+                        };
+            return query.ToList();
+        }
+
         //a server with full fields
-        public ServerExtendedModel GetServerByCode(string serverCode)
+        public ServerExtendedModel GetServerByCode(string serverCode, string status)
         {
             var distinct = LocationDAO.Current.Table().GroupBy(item => item.ServerCode)
                 .Select(e => e.FirstOrDefault());
@@ -106,7 +141,7 @@ namespace IMS.Data.Repository
                         join a in AccountDAO.Current.Table()
                             on s.Customer equals a.Username into astsl
                         from suba in astsl.DefaultIfEmpty()
-                        where s.ServerCode == serverCode
+                        where s.ServerCode == serverCode && s.StatusCode == status
                         select new ServerExtendedModel
                         {
                             RackCode = subl.RackCode,
@@ -128,6 +163,7 @@ namespace IMS.Data.Repository
                         };
             return query.FirstOrDefault();
         }
+
         //get attribute of a server
         public List<AttributeExtendedModel> GetServerAttributes(int id)
         {
@@ -204,5 +240,65 @@ namespace IMS.Data.Repository
                 Update(server);
             }
         }
+
+        public ServerExtendedModel GetAllServerInfo(string serverCode)
+        {
+            var query = from s in Table()
+                        join st in StatusDAO.Current.Table()
+                            on s.StatusCode equals st.StatusCode into stsl
+                        from subst in stsl.DefaultIfEmpty()
+                        join a in AccountDAO.Current.Table()
+                            on s.Customer equals a.Username into astsl
+                        from suba in astsl.DefaultIfEmpty()
+                        where s.ServerCode == serverCode && s.StatusCode == Constants.StatusCode.SERVER_BRINGING_AWAY
+                        select new ServerExtendedModel
+                        {
+                            Status = subst.StatusName,
+                            CustomerName = suba.Fullname,
+                            Customer = s.Customer,
+                            Id = s.Id,
+                            Maker = s.Maker,
+                            Model = s.Model,
+                            DefaultIP = s.DefaultIP,
+                            ServerCode = s.ServerCode,
+                            Size = s.Size,
+                            Power = s.Power,
+                            RegisteredDate = s.RegisteredDate,
+                            Outlet = s.Outlet,
+                            Bandwidth = s.Bandwidth,
+                            //ServerIps = from si in ServerIPDAO.Current.Table()
+                            //             where si.ServerCode == s.ServerCode
+                            //             select si,
+                            //ServerLocation = from l in LocationDAO.Current.Table()
+                            //                  join r in RackDAO.Current.Table()
+                            //                    on l.RackCode equals r.RackCode into lr
+                            //                  from sublr in lr.DefaultIfEmpty()
+                            //                  where l.ServerCode == s.ServerCode
+                            //                  select new LocationExtendedModel
+                            //                  {
+                            //                      RackName = sublr.RackName,
+                            //                      RackUnit = l.RackUnit
+                            //                  }
+                        };
+            var server = query.FirstOrDefault();
+            server.ServerIps = (from si in ServerIPDAO.Current.Table()
+                                where si.ServerCode == serverCode
+                                select si).ToList();
+            server.ServerLocation = (from l in LocationDAO.Current.Table()
+                                     join r in RackDAO.Current.Table()
+                                         on l.RackCode equals r.RackCode into lr
+                                     from sublr in lr.DefaultIfEmpty()
+                                     where l.ServerCode == serverCode
+                                     select new LocationExtendedModel
+                                     {
+                                         RackName = sublr.RackName,
+                                         RackUnit = l.RackUnit
+                                     }).ToList();
+
+            return server;
+
+        }
+
+
     }
 }

@@ -7,291 +7,100 @@
     <title>@ViewBag.Title - IMS DataCenter</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
+    <script>
+        var CONSTANT = {
+            authority: window.location.protocol + "//" + window.location.host
+        }
+    </script>
+
     @Scripts.Render(Constants.ScriptBundle.MODERNIZR)
     @Scripts.Render(Constants.ScriptBundle.MOMENT)
     @Scripts.Render(Constants.ScriptBundle.RESPOND)
     @Scripts.Render(Constants.ScriptBundle.JQUERY)
-    @Scripts.Render(Constants.ScriptBundle.JQUERY)
+    @Scripts.Render(Constants.ScriptBundle.JQUERY_UI)
     @Scripts.Render(Constants.ScriptBundle.JQUERY_VALIDATE)
     @Scripts.Render(Constants.ScriptBundle.BOOTSTRAP)
     @Scripts.Render(Constants.ScriptBundle.BOOTSTRAP_DATETIMEPICKER)
     @Scripts.Render(Constants.ScriptBundle.DATATABLE)
     @Scripts.Render(Constants.ScriptBundle.ADMINLTE)
+    @Scripts.Render(Constants.ScriptBundle.APPLICATION)
     @RenderSection("Scripts", false)
     @Styles.Render(Constants.StyleBundle.BOOTSTRAP)
     @Styles.Render(Constants.StyleBundle.BOOTSTRAP_DATETIMEPICKER)
+    @Styles.Render(Constants.StyleBundle.JQUERY_UI)
     @Styles.Render(Constants.StyleBundle.DATATABLE)
     @Styles.Render(Constants.StyleBundle.ADMINLTE)
+    @Styles.Render(Constants.StyleBundle.APPLICATION)
     @RenderSection("Styles", false)
 
 </head>
 <body class="skin-blue">
-<!-- header logo: style can be found in header.less -->
-<header class="header">
-    @*@{ Html.RenderAction("Header", "Home", new { role = ViewBag.Role }); }*@
-    <a href="@Url.Action("Index2", "Schedule")" class="logo">
-        <!-- Add the class icon to your logo image or logo icon to add the margining -->
-        <img src="@Url.Content("~/img/logoIMS.png")" alt="logo image" class="offline" width="75px"/>
-    </a>
-    <!-- Header Navbar: style can be found in header.less -->
-    <nav class="navbar navbar-static-top" role="navigation">
-        <!-- Sidebar toggle button-->
-        <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </a>
-        <div class="navbar-right">
-            <ul class="nav navbar-nav">
-                <!-- Messages: style can be found in dropdown.less-->
+    <!-- header logo: style can be found in header.less -->
+    <header class="header">
+        @{ Html.RenderAction("Header", "Home", new { role = ViewBag.Role }); }
+    </header>
+    <div class="wrapper row-offcanvas row-offcanvas-left">
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="left-side sidebar-offcanvas">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                @{ Html.RenderAction("Sidebar", "Home", new { role = ViewBag.Role }); }
+            </section>
+            <!-- /.sidebar -->
+        </aside>
 
-                @if (ViewBag.Role == "Shift Head")
-                {
-                    <li class="dropdown notifications-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-warning"></i>
-                            <span class="label label-warning">10</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">You have 10 notifications</li>
-                            <li>
-                                <!-- inner menu: contains the actual data -->
-                                <ul class="menu">
-                                    <li>
-                                        <a href="#" data-toggle="modal" data-target="#requestinfo-modal">
-                                            <i class="ion ion-ios7-people info"></i> Request add server
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-warning danger"></i> Request change IP
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-users warning"></i> Request Return IP
-                                        </a>
-                                    </li>
-
-                                    <li>
-                                        <a href="#">
-                                            <i class="ion ion-ios7-cart success"></i> Request upgrade server
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="ion ion-ios7-person danger"></i> Request assign IP
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="footer"><a href="@Url.Action("ListNotifications2","Request")">View all</a></li>
-                        </ul>
-                    </li>
-                    <!-- Tasks: style can be found in dropdown.less -->
-                    <li class="dropdown tasks-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-tasks"></i>
-                            <span class="label label-danger">9</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">You have 5 tasks</li>
-                            <li>
-                                <!-- inner menu: contains the actual data -->
-                                <ul class="menu">
-                                    <li>
-                                        <!-- Task item -->
-                                        <a href="@Url.Action("RequestAddServerInfo2","Request")">
-                                            <h3>
-                                                Request add server
-                                                <small class="pull-right">Pending</small>
-                                            </h3>
-                                        </a>
-                                    </li><!-- end task item -->
-                                    <li style="color: #d9534f">
-                                        <!-- Task item -->
-                                        <a href="#">
-                                            <h3>
-                                                Request Assign IP Address
-                                                <small class="pull-right">Waiting</small>
-                                            </h3>
-                                        </a>
-                                    </li><!-- end task item -->
-                                    <li>
-                                        <!-- Task item -->
-                                        <a href="#">
-                                            <h3>
-                                                Request upgrade server
-                                                <small class="pull-right">Pending</small>
-                                            </h3>
-                                        </a>
-                                    </li><!-- end task item -->
-                                    <li>
-                                        <!-- Task item -->
-                                        <a href="#">
-                                            <h3>
-                                                Request Return IP Address
-                                                <small class="pull-right">Waiting</small>
-                                            </h3>
-                                        </a>
-                                    </li><!-- end task item -->
-                                </ul>
-                            </li>
-
-                        </ul>
-                    </li>
+        <!-- Right side column. Contains the navbar and content of the page -->
+        <aside class="right-side">
+            <section class="content-header">
+                @if (ViewBag.PageTitle != null)
+            {
+                    <div class="h1">@ViewBag.PageTitle</div>
                 }
-                else if (ViewBag.Role == "Customer")
-                {
-                    <li class="dropdown notifications-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-warning"></i>
-                            <span class="label label-warning">10</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">You have 10 notifications</li>
-                            <li>
-                                <!-- inner menu: contains the actual data -->
-                                <ul class="menu">
-                                    <li>
-                                        <a href="@Url.Action("RequestAddServerInfo2","Request",new {act="Finish"})">
-                                            <i class="ion ion-ios7-people info"></i> Request add server finish
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-warning danger"></i> Request change IP finish
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-users warning"></i> Request Return IP finish
-                                        </a>
-                                    </li>
-
-                                    <li>
-                                        <a href="#">
-                                            <i class="ion ion-ios7-cart success"></i> Request upgrade server finish
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="ion ion-ios7-person danger"></i> Request assign IP finish
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="footer"><a href="#">View all</a></li>
-                        </ul>
-                    </li>
-                }
-                @{
-                    var name = "Thu Ha";
-                    var role = "Head Stiff";
-                    var ID = 0;
-                    var session = Session[Constants.Session.USER_LOGIN];
-                    if (session != null)
-                    {
-                        Account obj = (Account)session;
-                         name = obj.Fullname;
-                         role = obj.Role;
-                         ID = obj.Id;
-                    }
-                }
-                @if (@session != null)
-                {
-                    <!-- User Account: style can be found in dropdown.less -->
-                    <li class="dropdown user user-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="glyphicon glyphicon-user"></i>
-                            <span>@name<i class="caret"></i></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <!-- User image -->
-                            <li class="user-header bg-light-blue">
-                                <img src="@Url.Content("~/img/avatar3.png")" class="img-circle" alt="User Image"/>
-                                <p>
-
-                                    @name - @role
-
-                                    <small>Member since Nov. 2012</small>
-                                </p>
-                            </li>
-                            @if (@ID != 0)
+                @{ var breadcrumbItems = ViewBag.Breadcrumbs as List<BreadcrumbModel>; }
+                @if (breadcrumbItems != null && breadcrumbItems.Count > 0)
+            {
+                    <ol class="breadcrumb">
+                        @for (var i = 0; i < breadcrumbItems.Count; i++)
+                        {
+                            var item = breadcrumbItems[i];
+                            if (i == breadcrumbItems.Count - 1 && i == 0)
                             {
-
-                                <!-- Menu Footer-->
-                                <li class="user-footer">
-                                    <div class="pull-left">
-
-                                        <a href="@Url.Action("ViewProfile", "Account", new {id = @ID})" class="btn btn-default btn-flat">Profile</a>
-                                    </div>
-                                    <div class="pull-right">
-                                        <a href="@Url.Action("Logout", "Account")" class="btn btn-default btn-flat">Sign out</a>
-                                    </div>
-                                </li>
+                                <li class="active"><i class="fa fa-dashboard"></i> @item.Title</li>
                             }
-                        </ul>
-                    </li>
+                            else if (i == breadcrumbItems.Count - 1)
+                            {
+                                <li class="active">@item.Title</li>
+                            }
+                            else if (i == 0)
+                            {
+                                <li><i class="fa fa-dashboard"></i> @Html.ActionLink(item.Title, item.Action, item.Controller, item.RouteValue, null)</li>
+                            }
+                            else
+                            {
+                                <li>@Html.ActionLink(item.Title, item.Action, item.Controller, item.RouteValue, null)</li>
+                            }
+                        }
+                    </ol>
                 }
-                else
-                {
-                    <div class="pull-right">
-                        <a href="@Url.Action("Login", "Account")" class="btn btn-success">Login</a>
+            </section>
+
+            @if (TempData["AlertType"] != null)
+            {
+                <div class="main-content">
+                    <div class="alert alert-@TempData["AlertType"] alert-dismissible" role="alert">
+                        @if (TempData["AlertDismiss"] != null && (bool)TempData["AlertDismiss"])
+                        {
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        }
+                        <div>@TempData["AlertLine1"]</div>
+                        <div>@TempData["AlertLine2"]</div>
                     </div>
-                }
-            </ul>
-        </div>
-    </nav>
-</header>
-<div class="wrapper row-offcanvas row-offcanvas-left">
-    <!-- Left side column. contains the logo and sidebar -->
-    <aside class="left-side sidebar-offcanvas">
-        <!-- sidebar: style can be found in sidebar.less -->
-        <section class="sidebar">            
-            @{ Html.RenderAction("Sidebar", "Home", new {role = ViewBag.Role}); }
-        </section>
-        <!-- /.sidebar -->
-    </aside>
+                </div>
+            }
 
-    <!-- Right side column. Contains the navbar and content of the page -->
-    <aside class="right-side">
-        @{ var breadcrumbItems = ViewBag.Breadcrumbs as List<BreadcrumbModel>; }
-        @if (breadcrumbItems != null && breadcrumbItems.Count > 0)
-        {
-            <ol class="breadcrumb">
-                @for (var i = 0; i < breadcrumbItems.Count; i++)
-                {
-                    var item = breadcrumbItems[i];
-                    if (i == breadcrumbItems.Count - 1)
-                    {
-                        <li>@Html.ActionLink(item.Title, item.Action, item.Controller)</li>
-                    }
-                    else
-                    {
-                        <li class="active">@item.Title</li>
-                    }
-                }
-            </ol>
-        }
-
-        @if (ViewBag.PageTitle != null)
-        {
-            <h2>@ViewBag.PageTitle</h2>
-        }
-
-        @if (TempData["Message"] != null)
-        {
-            <div class="alert alert-danger alert-dismissible" role="alert">
-                <div>@TempData["Message"]</div>
-            </div>
-        }
-        @RenderBody()
-</aside><!-- /.right-side -->
-</div><!-- ./wrapper -->
+            @RenderBody()
+        </aside><!-- /.right-side -->
+    </div><!-- ./wrapper -->
 
 </body>
 </html>
-
-

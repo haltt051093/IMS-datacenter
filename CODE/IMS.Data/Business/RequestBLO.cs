@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using IMS.Core;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.Repository;
@@ -36,9 +37,9 @@ namespace IMS.Data.Business
             return dao.GetAllRequest();
         }
 
-        public string AddRequest(Request passModel, string requestType)
+        public string AddRequest(string requestType, string customer, string description, DateTime? appointmenTime)
         {
-            return dao.AddRequest(passModel, requestType);
+            return dao.AddRequest(requestType, customer, description, appointmenTime);
         }
         //Tien
         public List<ScheduleExtendedModel> GetScheduleToday()
@@ -47,10 +48,14 @@ namespace IMS.Data.Business
             var scheduletoday = new List<ScheduleExtendedModel>();
             foreach (var item in allschedule)
             {
-                if (item.AppointmentTime.Value.Date == DateTime.Now.Date)
+                if (item.AppointmentTime != null)
                 {
-                    scheduletoday.Add(item);
+                    if (item.AppointmentTime.Value.Date == DateTime.Now.Date)
+                    {
+                        scheduletoday.Add(item);
+                    }
                 }
+                
             }
             return scheduletoday;
         }
@@ -65,9 +70,28 @@ namespace IMS.Data.Business
             return dao.GetNoteOfPreviousShift();
         }
 
-        public List<NotificationExtendedModel> ListAllNotification()
+        public List<NotificationExtendedModel> ListServerSideNotification()
         {
-            return dao.ListAllNotification();
+            return dao.ListServerSideNotification();
+        }
+
+        public List<NotificationExtendedModel> ListClientSideNotification(string customer)
+        {
+            return dao.ListClientSideNotification(customer);
+        }
+
+        public List<NotificationExtendedModel> ListNotification(string role, string customer)
+        {
+            var list = new List<NotificationExtendedModel>();
+            if (role == Constants.Role.CUSTOMER && customer != null)
+            {
+                list = ListClientSideNotification(customer);
+            }
+            else if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.STAFF)
+            {
+                list = ListServerSideNotification();
+            }
+            return list;
         }
 
         public Request GetRequestByRequestCode(string requestCode)

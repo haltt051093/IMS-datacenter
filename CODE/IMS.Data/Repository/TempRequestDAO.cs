@@ -24,7 +24,12 @@ namespace IMS.Data.Repository
 
         public override TempRequest GetByKeys(TempRequest entry)
         {
-            return Query(x => x.Id == entry.Id).FirstOrDefault();
+            var existing = Query(x => x.Id == entry.Id).FirstOrDefault();
+            if (existing == null)
+            {
+                existing = Query(x => x.TempCode == entry.TempCode).FirstOrDefault();
+            }
+            return existing;
         }
 
         public List<TempRequest> GetByRequestCode(string requestCode)

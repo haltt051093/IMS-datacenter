@@ -1,0 +1,251 @@
+﻿@model ServerDetailsViewModel
+@{
+    ViewBag.Title = Pages.ServerDetail;
+    ViewBag.PageTitle = Pages.ServerDetail;
+    ViewBag.Role = "Shift Head";
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("Server", "Index", Pages.Server),
+        new BreadcrumbModel("Server", "ServerDetails", Pages.ServerDetail)
+    };
+}
+
+<section class="main-content">
+    <dl class="dl-horizontal">
+        <dt>@Labels.ServerCode</dt>
+        <dd>
+            @Html.HiddenFor(model => model.Server.Customer, htmlAttributes: new {@id = "customer"})
+            @Html.HiddenFor(model => model.Server.ServerCode, htmlAttributes: new {@id = "servercode"})
+            @Html.HiddenFor(model => model.Server.Power, htmlAttributes: new {@id = "power"})
+            @Html.DisplayFor(model => model.Server.ServerCode)
+        </dd>
+
+        <dt>@Labels.Customer</dt>
+        <dd>@Html.DisplayFor(model => model.Server.CustomerName)</dd>
+
+        <dt>@Labels.Maker</dt>
+        <dd>@Html.DisplayFor(model => model.Server.Maker)</dd>
+
+        <dt>@Labels.Model</dt>
+        <dd>@Html.DisplayFor(model => model.Server.Model)</dd>
+
+        <dt>@Labels.Power</dt>
+        <dd>@Html.DisplayFor(model => model.Server.Power)W</dd>
+
+        <dt>@Labels.Rack</dt>
+        <dd>@Html.DisplayFor(model => model.Server.Size)U</dd>
+
+        <dt>@Labels.Status</dt>
+
+        <dd>@Html.DisplayFor(model => model.Server.Status)</dd>
+
+        <dt>@Labels.Location</dt>
+
+        <dd>
+            @foreach (var item in Model.Locations)
+            {
+                <div>
+                    @item.RackName U @item.RackUnit
+                </div>
+            }
+            <label><a href="#" data-toggle="modal" data-target="#changelocation-modal">Change Location?</a></label>
+        </dd>
+
+        <dt>@Labels.RegisteredDate</dt>
+        <dd>@Html.DisplayFor(model => model.Server.RegisteredDate)</dd>
+
+        <dt>@Labels.NoOfOutlets</dt>
+        <dd>@Html.DisplayFor(model => model.Server.Outlet)</dd>
+
+        <dt>@Labels.OtherAttributes</dt>
+        <dd>
+            @*@if (Model.Attributes.Count == 0)
+            {
+                @Html.Raw("No other attributes")
+            }
+            else
+            {
+                <ul class="list-group" id="currentIps">
+                    @foreach (var item in Model.Attributes)
+                    {
+                        <li class="list-group-item">
+                            @item.AttributeName
+                            :
+                            @item.AttributeValue
+                        </li>
+                    }
+                </ul>
+            }*@
+        </dd>
+
+        <dt>@Labels.CurrentIP</dt>
+        <dd>
+            @if (Model.CurrentIPs.Count == 0)
+            {
+                @Html.Raw("No IP")
+            }
+            else
+            {
+                <ul class="list-group">
+                    @foreach (var item in Model.CurrentIPs)
+                    {
+                        <li class="list-group-item">
+                            @item.CurrentIP
+                        </li>
+                    }
+                </ul>
+            }
+        </dd>
+    </dl>
+</section>
+
+<!-- CHANGE LOCATION MODAL -->
+<div class="modal fade" id="changelocation-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 1000px">
+        <div class="modal-content">
+            <form action="#" method="POST">
+                <div class="modal-body">
+
+                    <section class="content-header">
+                        <h1>
+                            List of Location Available
+                        </h1>
+                    </section>
+
+                    <div class="form-group">
+                        <div id="dropdown-template" class="col-xs-3">
+                            <label>Location: @Html.DropDownListFor(model => model.RackCode, Model.Racks, "All Locations", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
+                        </div>
+                    </div>
+                    
+                        <section class="content">
+                           
+                                   
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr style="background-color: #404040">
+                                                    <th><h4 style="color: ghostwhite">Rack Code</h4>
+                                                    <th><h4 style="color: ghostwhite">Rack Name</h4>
+                                                    <th><h4 style="color: ghostwhite">Rack Unit</h4></th>
+                                                    <th><h4 style="color: ghostwhite">Server Code</h4></th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <div id="divPartialView" class="">
+                                                    @foreach (var item in Model.Locations1)
+                                                    {
+                                                        <tr>
+                                                            @if (item.ServerCode == Model.Server.ServerCode)
+                                                            {
+
+                                                                <td>
+                                                                    <label style="color: red">@Html.DisplayFor(modelItem => item.RackName)</label>
+                                                                </td>
+                                                                <td>
+                                                                    <label style="color: red">@Html.DisplayFor(modelItem => item.RackUnit)</label>
+                                                                </td>
+                                                                <td>
+                                                                    <label style="color: red">@Html.DisplayFor(modelItem => item.StatusName)</label>
+                                                                </td>
+                                                                <td>
+                                                                    @if (item.ServerCode == Model.Server.ServerCode)
+                                                                    {
+                                                                        <label style="color: red">@Html.DisplayFor(modelItem => item.ServerCode)</label>
+
+                                                                    }
+                                                                </td>
+                                                                <td>
+                                                                    @if (item.StatusName == "Free")
+                                                                    {
+                                                                        @Html.RadioButtonFor(model => model.LocationCode, item.LocationCode)
+                                                                    }
+                                                                </td>
+                                                            }
+                                                            else
+                                                            {
+
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.RackName)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.RackUnit)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.StatusName)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.ServerCode)
+                                                                </td>
+                                                                <td>
+                                                                    @if (item.StatusName == "Free")
+                                                                    {
+                                                                        @Html.RadioButtonFor(model => model.LocationCode, item.LocationCode)
+                                                                    }
+
+                                                                </td>
+                                                            }
+
+
+                                                        </tr>
+                                                    }
+                                                </div>
+                                            </tbody>
+                                      
+                                            <tfoot>
+
+                                                <tr style="background-color: #404040">
+                                                    <th><h4 style="color: ghostwhite">Rack Code</h4></th>
+                                                    <th><h4 style="color: ghostwhite">Rack Name</h4></th>
+                                                    <th><h4 style="color: ghostwhite">Rack Unit</h4></th>
+                                                    <th><h4 style="color: ghostwhite">Server Code</h4></th>
+                                                    <th></th>
+                                                </tr>
+
+                                            </tfoot>
+                                    </table>                 
+
+                        </section><!-- /.content -->
+                   
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save Change</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+
+
+                </div>
+            </form>
+
+            <script type="text/javascript">
+                $(function() {
+
+                    //DOING
+                    var defaultIp = @Model.Server.DefaultIP;
+                    $('#currentIps li').each(function() {
+                        if (this.value == defaultIp) {
+                            $(this).css("background-color:blue;");
+                        }
+                    });
+                    $("#SearchRack").on("click", function() {
+                        $.ajax(
+                        {
+                            type: "GET",
+                            page: 1,
+                            rp: 6,
+                            url: '@Url.Action("ServerDetails", "Server")',
+                            dataType: "json",
+                            success: function(result) {
+
+                            },
+                            error: function(x, e) {
+
+                            }
+                        });
+                    });
+                });
+            </script>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

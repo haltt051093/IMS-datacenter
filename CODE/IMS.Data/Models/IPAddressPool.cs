@@ -15,6 +15,8 @@ namespace IMS.Data.Models
         [StringLength(50)]
         public string Gateway { get; set; }
 
+        public string NetworkIP { get; set; }
+
         [StringLength(50)]
         public string Subnetmask { get; set; }
 

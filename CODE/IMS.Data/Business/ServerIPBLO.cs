@@ -48,5 +48,15 @@ namespace IMS.Data.Business
         {
             return dao.GetPreviousIp(serverCode, ip);
         }
+
+        public List<string> GetIpByServer(string serverCode)
+        {
+            return dao.GetIpByServer(serverCode);
+        }
+
+        public void ReturnAllIpOfServer(string serverCode)
+        {
+            dao.ReturnAllIpOfServer(serverCode);
+        }
     }
 }

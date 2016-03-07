@@ -1,173 +1,168 @@
-﻿@using System.Collections.Generic
-@using System.Security.Policy
-@model IMS.Models.LocationIndexViewModel
+﻿@model IMS.Models.LocationIndexViewModel
 @{
-    ViewBag.Title = "LocationPage";
+    ViewBag.Title = Pages.RackIndex;
+    ViewBag.PageTitle = Pages.RackIndex;
     ViewBag.Role = "Shift Head";
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("Location", "Index2", Pages.RackIndex)
+    };
 }
 
-<section class="content-header">
-    <h1>
-        List of Location
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="@Url.Action("Index2", "Schedule")"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Location</li>
-    </ol>
-</section>
-<section class="content">
-    <a class="btn btn-primary pull-left" data-toggle="modal" data-target="#addlocation-modal"><i class="fa fa-plus"></i> Add new rack</a>
-</section>
 <!-- Main content -->
-<section class="content">
-    <div class="box">
-        <div class="box-body table-responsive">
-            <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>Rack Name</th>
-                        <th>Rack Unit</th>
-                        <th>Status</th>
-                        <th>Server Code</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
+<section class="main-content">
+    <label style="color: #3c8dbc">Amount of Rack Available: @Model.RackAvailableCount</label>
+    <div>
+        <a class="btn btn-primary pull-left" data-toggle="modal" data-target="#addlocation-modal"><i class="fa fa-plus"></i> Add new rack</a>
+    </div>
+    <div class="clearfix"></div>
+    <div style="height: 10px"></div>
+    <div class="row hide">
+        <div id="dropdown-template" class="col-xs-3">
+            <label>Location: @Html.DropDownListFor(model => model.RackCode, Model.Racks, "All Locations", new {@class = "form-control input-sm", style = "width: 150px"}) </label>
+        </div>
+    </div>
 
-                        for (int i = 0; i < Model.Locations.Count; i++)
-                        {
-                            var item = Model.Locations[i];
-                            <tr>
+    <table id="example1" class="table table-bordered table-hover" style="border-collapse: collapse">
 
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.RackName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.RackUnit)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.StatusName)
-                                </td>
-                                <td>
-                                    @if (item.ServerCode != null)
-                                    {
-                                        @Html.ActionLink(item.ServerCode, "ServerDetails", "Server", new { id = item.Id }, null)
-                                    }
+        <thead>
+        <tr style="background-color: #404040">
+            <th><span style="color: ghostwhite">Rack Code</span>
+            <th><span style="color: ghostwhite">Rack Name</span>
+            <th><span style="color: ghostwhite">Rack Unit</span></th>
+            <th><span style="color: ghostwhite">IP Address</span></th>
+        </tr>
+        </thead>
+        <tfoot>
 
-                                </td>
+        <tr style="background-color: #404040">
+            <th><span style="color: ghostwhite">Rack Code</span></th>
+            <th><span style="color: ghostwhite">Rack Name</span></th>
+            <th><span style="color: ghostwhite">Rack Unit</span></th>
+            <th><span style="color: ghostwhite">IP Address</span></th>
+        </tr>
 
-                            </tr>
-                        }
-                    }
-                </tbody>
-                <tfoot>
-                    <tr>
-                    
-                        <th>Rack Name</th>
-                        <th>Rack Unit</th>
-                        <th>Status</th>
-                        <th>Server Code</th>
-
-                    </tr>
-                </tfoot>
-            </table>
-        </div><!-- /.box-body -->
-    </div><!-- /.box -->
-
+        </tfoot>
+    </table>
 </section><!-- /.content -->
+
 <!-- ADD LOCATION MODAL -->
-<div class="modal fade" id="addlocation-modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" style="width: 300px">
+<div id="addlocation-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"><i class="fa fa-plus"></i> Add new rack</h4>
-            </div>
-            <form action="#" method="post">
+
+            @using (Html.BeginForm())
+            {
+                <div class="modal-header">
+                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i> @Labels.AddRack</div>
+                </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        @Html.Label("Rack Name", htmlAttributes: new { @class = "control-label" })
-
-
-                        @Html.EditorFor(model => model.RackName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Ex: A1, B1,..." } })
-                        @Html.ValidationMessageFor(model => model.RackName, "", new { @class = "text-danger" })
+                    <div class="@Constants.HtmlFormat.FORM_LABEL">
+                        @Html.ValidationMessageFor(model => model.RackName, "", new { @class = Constants.HtmlFormat.DANGER_TEXT_CLASS })
+                    </div>
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                            @Html.LabelFor(model => model.RackName)
+                        </div>
+                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                            @Html.TextBoxFor(model => model.RackName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        </div>
 
                     </div>
-                    <div class="form-group">
-                        @Html.Label("Power(KW)", htmlAttributes: new { @class = "control-label" })
-                        <div class="form-group" style="width: 100px">
-                            @{
-                                IEnumerable<SelectListItem> power = new List<SelectListItem>()
-                        {
-                            new SelectListItem()
-                            {
-                                Text = "3",
-                                Value = "3"
-                            },
-                            new SelectListItem()
-                            {
-                                Text = "4",
-                                Value = "4"
-                            },
-                            new SelectListItem()
-                            {
-                                Text = "5",
-                                Value = "5"
-                            },
-                            new SelectListItem()
-                            {
-                                Text = "6",
-                                Value = "6"
-                            },
-                            new SelectListItem()
-                            {
-                                Text = "7",
-                                Value = "7"
-                            },
-                            new SelectListItem()
-                            {
-                                Text = "8",
-                                Value = "8"
-                            },
-                            new SelectListItem()
-                            {
-                                Text = "9",
-                                Value = "9"
-                            },
-                            new SelectListItem()
-                            {
-                                Text = "10",
-                                Value = "10"
-                            }
-                        };
-                                SelectList power1 = new SelectList(power, "Value", "Text", Model.MaximumPower);
-                            }
 
-                            @Html.DropDownList("MaximumPower", power1, htmlAttributes: new { @class = "form-control", @id = "power" })
-                            @Html.ValidationMessageFor(model => model.MaximumPower, "", new { @class = "text-danger" })
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                            @Html.LabelFor(model => model.Power)
+                        </div>
+                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                            @Html.DropDownListFor(model => model.MaximumPower, Model.ListPower, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                         </div>
                     </div>
-
                 </div>
-                <div class="modal-footer clearfix">
 
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-
-                    <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                <div class="modal-footer">
+                    <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
+                            data-dismiss="modal">
+                        @Labels.DialogCancel
+                    </button>
+                    <button type="submit" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        @Labels.DialogOK
+                    </button>
                 </div>
-            </form>
+            }
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- page script -->
-<script type="text/javascript">
-    $(function() {
-        $("#example1").dataTable({
-            "iDisplayLength": 42,
-            "aLengthMenu": [[42, 84, 126], [42, 84, 126]]
-        });
 
-    });
+<script>
+    $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            var rackCode = $('#RackCode').val();
+            if (rackCode == '') {
+                return true;
+            }
+            if (rackCode == data[0]) {
+                return true;
+            }
+            return false;
+        }
+    );
 </script>
+
+<script type="text/javascript">
+    var table = $('#example1').DataTable({
+        dom: '<lf<t>ip>',
+        processing: true,
+        ajax: "@Url.Action("GetAll", "Location", new {httproute = ""})",
+        columns: [
+            { data: "RackCode" },
+            { data: "RackName" },
+            { data: "RackUnit" },
+            { data: "DefaultIP" }
+        ],
+        iDisplayLength: 42,
+        aLengthMenu: [[42, 84, 126], [42, 84, 126]],
+        fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            $(nRow).click(function() {
+                if (aData.ServerCode != null) {
+                    var url = CONSTANT.authority + '@Url.Action("Detail", "Server")' + '/' + aData.ServerCode;
+                    window.location.assign(url);
+                }
+            });
+            switch (aData.StatusName) {
+            case 'Used':
+                $(nRow).css('background-color', '#ffe6e6');
+                break;
+            }
+        },
+        order: [[1, "asc"] ,[ 2, "desc" ]],
+        columnDefs: [
+            {
+                targets: [0],
+                visible: false,
+                searchable: true
+            }
+        ]
+    });
+
+    $("#example1_filter").append($('#dropdown-template').html());
+    $('#dropdown-template').html('');
+
+    $('#RackCode').change(function() {
+        table.draw();
+    });
+
+    $('#RackName').autocomplete({
+        source: '@Url.Action("GetAvailableName", "Rack", new { httproute = "" })'
+    });
+
+</script>
+
+@section Styles {
+    <style>
+    </style>
+}
 
 

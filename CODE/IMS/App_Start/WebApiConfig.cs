@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Headers;
 using System.Web.Http;
+using IMS.Services;
 
 namespace IMS
 {
@@ -10,7 +11,8 @@ namespace IMS
             config.MapHttpAttributeRoutes();
 
             // Thanks: http://stackoverflow.com/questions/9847564/how-do-i-get-asp-net-web-api-to-return-json-instead-of-xml-using-chrome
-            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+            //config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+            config.Formatters.Add(new BrowserJsonFormatter());
 
             config.Routes.MapHttpRoute(
                 name: "ActionApi",

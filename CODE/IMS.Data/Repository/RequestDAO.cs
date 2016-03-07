@@ -27,7 +27,12 @@ namespace IMS.Data.Repository
 
         public override Request GetByKeys(Request entry)
         {
-            return Query(x => x.Id == entry.Id).FirstOrDefault();
+            var existing = Query(x => x.Id == entry.Id).FirstOrDefault();
+            if (existing == null)
+            {
+                existing = Query(x => x.RequestCode == entry.RequestCode).FirstOrDefault();
+            }
+            return existing;
         }
 
         public string GenerateCode()
@@ -42,13 +47,16 @@ namespace IMS.Data.Repository
             return code;
         }
 
-        public string AddRequest(Request passModel, string requestType)
+        public string AddRequest(string requestType, string customer, string description, DateTime? appointmenTime)
         {
-            Request request = passModel;
+            Request request = new Request();
             request.RequestType = requestType;
             request.RequestCode = GenerateCode();
             request.RequestedTime = DateTime.Now;
             request.StatusCode = Constants.StatusCode.REQUEST_SENDING;
+            request.Customer = customer;
+            request.Description = description;
+            request.AppointmentTime = appointmenTime;
             var existing = GetByKeys(request);
             if (existing == null)
             {
@@ -116,7 +124,7 @@ namespace IMS.Data.Repository
             return RawQuery<ScheduleExtendedModel>(query, new object[] { });
         }
 
-        public List<NotificationExtendedModel> ListAllNotification()
+        public List<NotificationExtendedModel> ListServerSideNotification()
         {
             var query = from r in Table()
                         join rt in RequestTypeDAO.Current.Table()
@@ -135,7 +143,39 @@ namespace IMS.Data.Repository
                             StatusName = subst.StatusName,
                             RequestType = r.RequestType,
                             StatusCode = subst.StatusCode,
-                            RequestedTime = r.RequestedTime
+                            RequestedTime = r.RequestedTime,
+                            Priority = subst.Priority
+                        };
+            return query.ToList();
+        }
+
+        public List<NotificationExtendedModel> ListClientSideNotification(string customer)
+        {
+            var query = from r in Table()
+                        join rt in RequestTypeDAO.Current.Table()
+                            on r.RequestType equals rt.RequestTypeCode into rrt
+                        from subr in rrt.DefaultIfEmpty()
+                        join st in StatusDAO.Current.Table()
+                            on r.StatusCode equals st.StatusCode into stsl
+                        from subst in stsl.DefaultIfEmpty()
+                        where
+                            r.Customer == customer &&
+                            (r.StatusCode == Constants.StatusCode.REQUEST_WAITING ||
+                             r.StatusCode == Constants.StatusCode.REQUEST_PROCESSING ||
+                             r.StatusCode == Constants.StatusCode.REQUEST_DONE ||
+                             r.StatusCode == Constants.StatusCode.REQUEST_REJECTED )
+                        select new NotificationExtendedModel
+                        {
+                            RequestCode = r.RequestCode,
+                            RequestTypeName = subr.RequestTypeName,
+                            Customer = r.Customer,
+                            AppointmentTime = r.AppointmentTime,
+                            Description = r.Description,
+                            StatusName = subst.StatusName,
+                            RequestType = r.RequestType,
+                            StatusCode = subst.StatusCode,
+                            RequestedTime = r.RequestedTime,
+                            Priority = subst.Priority
                         };
             return query.ToList();
         }

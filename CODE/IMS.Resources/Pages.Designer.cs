@@ -59,5 +59,140 @@ namespace IMS.Resources {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IMS.
+        /// </summary>
+        public static string Home {
+            get {
+                return ResourceManager.GetString("Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        public static string HomeIndex {
+            get {
+                return ResourceManager.GetString("HomeIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of IP Addresses.
+        /// </summary>
+        public static string IPIndex {
+            get {
+                return ResourceManager.GetString("IPIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Locations.
+        /// </summary>
+        public static string Location {
+            get {
+                return ResourceManager.GetString("Location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of Locations.
+        /// </summary>
+        public static string LocationIndex {
+            get {
+                return ResourceManager.GetString("LocationIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of Racks.
+        /// </summary>
+        public static string RackIndex {
+            get {
+                return ResourceManager.GetString("RackIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Requests.
+        /// </summary>
+        public static string Request {
+            get {
+                return ResourceManager.GetString("Request", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request Add Server.
+        /// </summary>
+        public static string RequestAddServer {
+            get {
+                return ResourceManager.GetString("RequestAddServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Request.
+        /// </summary>
+        public static string RequestCreate {
+            get {
+                return ResourceManager.GetString("RequestCreate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request History.
+        /// </summary>
+        public static string RequestHistory {
+            get {
+                return ResourceManager.GetString("RequestHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of Requests.
+        /// </summary>
+        public static string RequestIndex {
+            get {
+                return ResourceManager.GetString("RequestIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report of Block IP Address.
+        /// </summary>
+        public static string ReportBlockIP {
+            get {
+                return ResourceManager.GetString("ReportBlockIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Servers.
+        /// </summary>
+        public static string Server {
+            get {
+                return ResourceManager.GetString("Server", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server Detail.
+        /// </summary>
+        public static string ServerDetail {
+            get {
+                return ResourceManager.GetString("ServerDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of Servers.
+        /// </summary>
+        public static string ServerIndex {
+            get {
+                return ResourceManager.GetString("ServerIndex", resourceCulture);
+            }
+        }
     }
 }

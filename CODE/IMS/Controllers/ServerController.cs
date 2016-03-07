@@ -4,8 +4,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Mime;
 using System.Web.Mvc;
+using IMS.Core;
 using IMS.Data.Business;
 using IMS.Data.Models;
+using IMS.Data.ViewModels;
 using IMS.Models;
 
 namespace IMS.Controllers
@@ -23,15 +25,16 @@ namespace IMS.Controllers
                 item.Requests = requestOfServer;
             }
             data.Servers = servers;
+            data.Server = new ServerExtendedModel();
             return View(data);
         }
 
         // GET: Server/Details
-        public ActionResult ServerDetails(string serverCode)
+        public ActionResult Detail(string code)
         {
-            var server = ServerBLO.Current.GetServerByCode(serverCode);
+            var server = ServerBLO.Current.GetServerByCode(code, Constants.StatusCode.SERVER_RUNNING);
             //var serverattributes = ServerBLO.Current.GetServerAttributes(serverCode);
-            var servercurrentips = ServerBLO.Current.GetCurrentIP(serverCode);
+            var servercurrentips = ServerBLO.Current.GetCurrentIP(code);
             if (server == null)
             {
                 return HttpNotFound();
@@ -53,6 +56,7 @@ namespace IMS.Controllers
             }).ToList();           
             
             data.Locations1 = locations;
+            data.ServerCode = code;
             return View(data);
         }
 

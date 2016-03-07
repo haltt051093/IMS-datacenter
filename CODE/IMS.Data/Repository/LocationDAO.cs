@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using IMS.Core;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.ViewModels;
@@ -24,11 +25,17 @@ namespace IMS.Data.Repository
 
         public override Location GetByKeys(Location entry)
         {
-            return Query(x => x.Id == entry.Id).FirstOrDefault();
+            var existing = Query(x => x.Id == entry.Id).FirstOrDefault();
+            if (existing == null)
+            {
+                existing = Query(x => x.LocationCode == entry.LocationCode).FirstOrDefault();
+            }
+            return existing;
         }
+
         public List<LocationExtendedModel> GetAllLocation()
         {
-            string query = @"select l.LocationCode,l.ServerCode, l.RackUnit, s.StatusName,r.RackName, ser.Id from Location as l
+            string query = @"select l.LocationCode,ser.ServerCode,ser.DefaultIP, l.RackUnit, s.StatusName,r.RackName,r.RackCode, ser.Id,r.StatusCode as RackStatus from Location as l
                             left join Status as s
                             on s.StatusCode = l.StatusCode
                             join Rack as r
@@ -157,6 +164,18 @@ namespace IMS.Data.Repository
                                 RackName = r.RackName
                             };
             return locations.ToList();
+        }
+
+        public void SetLocationAvailable(string serverCode)
+        {
+            var query = Query(x => x.ServerCode == serverCode);
+            foreach (var item in query)
+            {
+                Location location = item;
+                location.ServerCode = null;
+                location.StatusCode = Constants.StatusCode.LOCATION_FREE;
+                Update(location);
+            }
         }
     }
 }

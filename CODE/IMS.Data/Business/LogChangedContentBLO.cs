@@ -30,6 +30,16 @@ namespace IMS.Data.Business
             dao = LogChangedContentDAO.Current;
         }
 
+        public List<LogChangedContent> GetBlockedIP(string IP)
+        {
+            return dao.GetBlockedIP(IP);
+        }
+
+        public List<LogChangeExtendModel> GetAllLogIP()
+        {
+            return dao.GetAllLogIP();
+        }  
+
         public void AddLog(LogChangedContent viewmodel)
         {
             dao.AddLog(viewmodel);

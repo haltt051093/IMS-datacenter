@@ -1,113 +1,110 @@
 ﻿@model IMS.Models.RackOfCustomerIndexViewModel
 @{
-    ViewBag.Title = "Rack Of Customer Page";
+    ViewBag.Title = Pages.RackIndex;
+    ViewBag.PageTitle = Pages.RackIndex;
     ViewBag.Role = "Shift Head";
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("Location", "Index2", Pages.RackIndex)
+    };
 }
 
-<section class="content-header">
-    <h1>
-        List of Rack Of Customer
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="@Url.Action("Index2", "Schedule")"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">IP Address</li>
-    </ol>
-</section>
-<section class="content">
 
-    @using (Html.BeginForm("Index", "Rack", FormMethod.Get))
-    {
+<section class="main-content">
+    <div class="row hide">
+        <div id="dropdown-template" class="col-xs-3">
+            <label>Location: @Html.DropDownListFor(model => model.RackCode, Model.listRacks, "All Racks", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
+        </div>
+    </div>
 
-       
-            <h4>Search By</h4>
-            <div class="form-inline">
-                <div class="form-group"><label>Customer: </label></div>
-                <div class="form-group">
-                    @Html.DropDownList("CustomerSearch", "--Select--")
-                </div>
-                <div class="form-group">
-                    <input type="submit" class="btn btn-primary pull-left" value="Search" />
-                </div>
-                <div class="form-group col-sm-offset-1"><label>Rack Name: </label></div>
-                <div class="form-group">
-                    @Html.DropDownList("RackSearch", "--Select--")
-                </div>
-                <div class="form-group">
-                    <input type="submit" class="btn btn-primary pull-left" value="Search" />
-                </div>
-            </div>
-          
-    }
+    <table id="example1" class="table table-bordered table-hover">
+        <thead>
+            <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
+                <th>Rack Code</th>
+                <th>Rack Name</th>
+                <th>Rack Unit</th>
+                <th>Rack Status</th>
+                <th>IP Address</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
+                <th>Rack Code</th>
+                <th>Rack Name</th>
+                <th>Rack Unit</th>
+                <th>Rack Status</th>
+                <th>IP Address</th>
+            </tr>
+        </tfoot>
+    </table>
 
-</section>
-<!-- Main content -->
-<section class="content">
-    <div class="box">
-        <div class="box-body table-responsive">
-            <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>Rack Name</th>
-                        <th>Customer</th>
-                        <th>Rack Unit</th>
-                        <th>Location Code</th>
-                        <th>Server Code</th>
-                        <th>RackUnit Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Racks)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.RackName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Customer)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.RackUnit)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.LocationCode)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ServerCode)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.StatusName)
-                            </td>
-
-
-                        </tr>
-                                        }
-
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th>Rack Name</th>
-                        <th>Customer</th>
-                        <th>Rack Unit</th>
-                        <th>Location Code</th>
-                        <th>Server Code</th>
-                        <th>RackUnit Status</th>
-
-                    </tr>
-                </tfoot>
-            </table>
-        </div><!-- /.box-body -->
-    </div><!-- /.box -->
 
 </section><!-- /.content -->
 
-<script type="text/javascript">
-    $(function() {
-        $('#example1').dataTable({
-            "bPaginate": true,
-            "bFilter": false,
-            "bSort": true,
-            "bInfo": true,
-
-        });
-    });
+<script>
+    $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            var rackCode = $('#RackCode').val();
+            if (rackCode == '') {
+                return true;
+            }
+            if (rackCode == data[0]) {
+                return true;
+            }
+            return false;
+        }
+    );
 </script>
+
+<script type="text/javascript">
+    var table = $('#example1').DataTable({
+        dom: '<lf<t>ip>',
+        processing: true,
+        ajax: "@Url.Action("GetRackOfCustomer", "Rack", new {httproute = "", customer = "manhnh"})",
+        columns: [
+            { data: "RackCode" },
+            { data: "RackName" },
+            { data: "RackUnit" },
+            { data: "RackStatus" },
+            { data: "DefaultIP" }
+            
+        ],
+        iDisplayLength: 42,
+        aLengthMenu: [[42, 84, 126], [42, 84, 126]],
+        fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            $(nRow).click(function() {
+                if (aData.ServerCode != null) {
+                    var url = CONSTANT.authority + '@Url.Action("Detail", "Server")' + '/' + aData.ServerCode;
+                    window.location.assign(url);
+                }
+            });
+            switch (aData.StatusName) {
+            case 'Used':
+                $(nRow).css('background-color', '#ffe6e6');
+                break;
+            }
+        },
+        order: [[1, "asc"] ,[ 2, "desc" ]],
+        columnDefs: [
+            {
+                targets: [0],
+                visible: false,
+                searchable: true
+            }
+        ]
+    });
+
+    $("#example1_filter").append($('#dropdown-template').html());
+    $('#dropdown-template').html('');
+
+    $('#RackCode').change(function() {
+        table.draw();
+    });
+
+</script>
+
+@section Styles {
+    <style>
+    </style>
+}

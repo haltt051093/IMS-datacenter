@@ -47,6 +47,9 @@ namespace IMS
             builder.Add(new ScriptBundle(Constants.ScriptBundle.ADMINLTE).Include(
                 "~/Scripts/AdminLTE/app.js"
             ));
+            builder.Add(new ScriptBundle(Constants.ScriptBundle.APPLICATION).Include(
+                "~/Scripts/site.js"
+            ));
 
             builder.Add(new StyleBundle(Constants.StyleBundle.BOOTSTRAP).Include(
                 "~/Content/bootstrap.css",
@@ -60,7 +63,8 @@ namespace IMS
             ));
             builder.Add(new StyleBundle(Constants.StyleBundle.JQUERY_UI).Include(
                 "~/Content/jquery-ui.css",
-                "~/Content/jquery-ui.structure.css"
+                "~/Content/jquery-ui.structure.css",
+                "~/Content/jquery-ui.tfpatch.css"
             ));
             builder.Add(new StyleBundle(Constants.StyleBundle.JQUERY_VALIDATE).Include(
                 "~/Content/jquery.validate.css"
@@ -69,6 +73,9 @@ namespace IMS
                 "~/Content/AdminLTE.css",
                 "~/Content/font-awesome.css",
                 "~/Content/ionicons.css"
+            ));
+            builder.Add(new StyleBundle(Constants.StyleBundle.APPLICATION).Include(
+                "~/Content/Site.css"
             ));
         }
     }

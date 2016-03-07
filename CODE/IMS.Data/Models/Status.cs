@@ -15,5 +15,6 @@ namespace IMS.Data.Models
         [StringLength(50)]
         public string Object { get; set; }
 
+        public int Priority { get; set; }
     }
 }
