@@ -242,7 +242,7 @@ namespace IMS.Controllers
                     }
                     //Notification
                     var notif = Mapper.Map<RequestReturnRackViewModel, NotificationExtendedModel>(viewmodel);
-                    notif.RequestTypeName = Constants.RequestType.RACK_RETURN;
+                    notif.RequestTypeName = Constants.RequestTypeName.RACK_RETURN;
                     notif.StatusName = Constants.StatusName.REQUEST_SENDING;
                     notif.RequestCode = result;
                     //dang ky ham cho client
@@ -279,7 +279,7 @@ namespace IMS.Controllers
 
             //Notification
             var notif = Mapper.Map<RequestRentRackViewModel, NotificationExtendedModel>(viewmodel);
-            notif.RequestTypeName = Constants.RequestType.RACK_RENT;
+            notif.RequestTypeName = Constants.RequestTypeName.RACK_RENT;
             notif.StatusName = Constants.StatusName.REQUEST_SENDING;
             notif.RequestCode = result;
             //dang ky ham cho client
@@ -404,7 +404,7 @@ namespace IMS.Controllers
 
             //Notification
             var notif = Mapper.Map<RequestAddServerViewModel, NotificationExtendedModel>(viewmodel);
-            notif.RequestTypeName = Constants.RequestType.SERVER_ADD;
+            notif.RequestTypeName = Constants.RequestTypeName.SERVER_ADD;
             notif.StatusName = Constants.StatusName.REQUEST_SENDING;
             notif.RequestCode = result;
             //dang ky ham cho client
@@ -504,7 +504,7 @@ namespace IMS.Controllers
                 }
                 //Notification
                 var notif = Mapper.Map<RequestIPViewModel, NotificationExtendedModel>(viewmodel);
-                notif.RequestTypeName = Constants.RequestType.IP_RETURN;
+                notif.RequestTypeName = Constants.RequestTypeName.IP_RETURN;
                 notif.StatusName = Constants.StatusName.REQUEST_SENDING;
                 notif.RequestCode = result;
                 //dang ky ham cho client
@@ -558,7 +558,7 @@ namespace IMS.Controllers
 
                 //Notification
                 var notif = Mapper.Map<RequestIPViewModel, NotificationExtendedModel>(viewmodel);
-                notif.RequestTypeName = Constants.RequestType.IP_ASSIGN;
+                notif.RequestTypeName = Constants.RequestTypeName.IP_ASSIGN;
                 notif.StatusName = Constants.StatusName.REQUEST_SENDING;
                 notif.RequestCode = result;
                 //dang ky ham cho client
@@ -614,7 +614,7 @@ namespace IMS.Controllers
                 }
                 //Notification
                 var notif = Mapper.Map<RequestIPViewModel, NotificationExtendedModel>(viewmodel);
-                notif.RequestTypeName = Constants.RequestType.IP_CHANGE;
+                notif.RequestTypeName = Constants.RequestTypeName.IP_CHANGE;
                 notif.StatusName = Constants.StatusName.REQUEST_SENDING;
                 notif.RequestCode = result;
                 //dang ky ham cho client
@@ -641,8 +641,30 @@ namespace IMS.Controllers
         //Tam thoi cho VIew notification se dan den requestdetail --> thuc te thi view list notification chi dua ra popup thong tin de xem or confirm
         public ActionResult ListNotifications()
         {
+            //get role
+            var obj = Session[Constants.Session.USER_LOGIN];
+            Account a = (Account)obj;
+            var role = a.Role;
+
+            //neu la kh, se co username kh
+            var customer = Constants.Test.CUSTOMER_MANHNH;
+
             NotificationViewModel viewmodel = new NotificationViewModel();
-            viewmodel.NotificationList = RequestBLO.Current.ListAllNotification();
+
+            //do du lieu vao filter
+            viewmodel.FilterByRequestType = RequestTypeBLO.Current.GetAll().Select(x => new SelectListItem
+            {
+                Value = x.RequestTypeCode,
+                Text = x.RequestTypeName
+            }).ToList();
+            viewmodel.FilterByStatus = StatusBLO.Current.GetStatusByObject(Constants.Object.OBJECT_REQUEST)
+                .Select(x => new SelectListItem()
+                {
+                    Value = x.StatusCode,
+                    Text = x.StatusName
+                }).ToList();
+
+            viewmodel.NotificationList = RequestBLO.Current.ListNotification(role, customer);
             return View("ListNotifications", viewmodel);
         }
 
@@ -1089,7 +1111,7 @@ namespace IMS.Controllers
             Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("Index", "Home");
         }
-        
+
         [HttpPost]
         public ActionResult ProcessRequestBringServerAway(RequestBringServerAwayViewModel viewmodel)
         {

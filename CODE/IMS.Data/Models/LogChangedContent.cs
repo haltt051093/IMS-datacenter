@@ -34,6 +34,6 @@ namespace IMS.Data.Models
 
         public string Description { get; set; }
 
-
+        public int PreviousId { get; set; }
     }
 }

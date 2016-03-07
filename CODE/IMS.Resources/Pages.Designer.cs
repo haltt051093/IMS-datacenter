@@ -160,6 +160,15 @@ namespace IMS.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Report of Block IP Address.
+        /// </summary>
+        public static string ReportBlockIP {
+            get {
+                return ResourceManager.GetString("ReportBlockIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Servers.
         /// </summary>
         public static string Server {

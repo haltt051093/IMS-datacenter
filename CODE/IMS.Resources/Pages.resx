@@ -150,6 +150,9 @@
   <data name="RequestIndex" xml:space="preserve">
     <value>List of Requests</value>
   </data>
+  <data name="ReportBlockIP" xml:space="preserve">
+    <value>Report of Block IP Address</value>
+  </data>
   <data name="Server" xml:space="preserve">
     <value>Servers</value>
   </data>
