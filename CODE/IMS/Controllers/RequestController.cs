@@ -34,7 +34,7 @@ namespace IMS.Controllers
         #region Create Request
         public ActionResult Create(RequestCreateViewModel q)
         {
-            RackDAO.Current.GetAllRowsOfRack();
+            RackDAO.Current.GetRackByRow("A");
             var requestTypeCode = q.Type;
             if (!string.IsNullOrEmpty(requestTypeCode))
             {

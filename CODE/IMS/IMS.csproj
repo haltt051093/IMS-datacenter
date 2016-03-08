@@ -997,14 +997,14 @@
     <Content Include="Views\Location\Index2.cshtml" />
     <Content Include="Views\IP\Index2.cshtml" />
     <Content Include="Views\Request\ChangeIP.cshtml" />
-    <Content Include="Views\Request\ProcessRequestChangeIP.cshtml" />
+    <Content Include="Views\ProcessRequest\ProcessRequestChangeIP.cshtml" />
     <Content Include="Views\Request\AddServer.cshtml" />
     <Content Include="Views\Request\AssignIP.cshtml" />
-    <Content Include="Views\Request\AssignIPInfo.cshtml" />
+    <Content Include="Views\ProcessRequest\AssignIPInfo.cshtml" />
     <Content Include="Views\Server\Detail.cshtml" />
     <Content Include="Views\Account\Index2.cshtml" />
     <Content Include="Views\Account\Login2.cshtml" />
-    <Content Include="Views\Request\AddServerInfo.cshtml" />
+    <Content Include="Views\ProcessRequest\AddServerInfo.cshtml" />
     <Content Include="Views\Account\ViewAccount.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ForgotPWSuccess.cshtml" />
@@ -1013,18 +1013,18 @@
     <Content Include="Views\Request\ListNotifications.cshtml" />
     <Content Include="Views\Account\ViewProfile2.cshtml" />
     <Content Include="Views\Request\BringServerAway.cshtml" />
-    <Content Include="Views\Request\BringServerAwayInfo.cshtml" />
+    <Content Include="Views\ProcessRequest\BringServerAwayInfo.cshtml" />
     <Content Include="Views\Request\RequestChangeIP2.cshtml" />
-    <Content Include="Views\Request\RequestChangeIPInfo2.cshtml" />
+    <Content Include="Views\ProcessRequest\RequestChangeIPInfo2.cshtml" />
     <Content Include="Views\Request\History.cshtml" />
     <Content Include="Views\Request\RentRack.cshtml" />
-    <Content Include="Views\Request\RentRackInfo.cshtml" />
+    <Content Include="Views\ProcessRequest\RentRackInfo.cshtml" />
     <Content Include="Views\Request\ReturnIP.cshtml" />
-    <Content Include="Views\Request\ReturnIPInfo.cshtml" />
-    <Content Include="Views\Request\ReturnRackInfo.cshtml" />
+    <Content Include="Views\ProcessRequest\ReturnIPInfo.cshtml" />
+    <Content Include="Views\ProcessRequest\ReturnRackInfo.cshtml" />
     <Content Include="Views\Request\ReturnRack.cshtml" />
     <Content Include="Views\Request\RequestUpgradeServer2.cshtml" />
-    <Content Include="Views\Request\RequestUpgradeServerInfo2.cshtml" />
+    <Content Include="Views\ProcessRequest\RequestUpgradeServerInfo2.cshtml" />
     <Content Include="Views\Rack\Index.cshtml" />
     <Content Include="Views\Home\Header.cshtml" />
     <Content Include="Views\Request\Index.cshtml" />
@@ -1040,7 +1040,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\ProcessRequest\" />
     <Folder Include="Views\Shift\" />
   </ItemGroup>
   <ItemGroup>

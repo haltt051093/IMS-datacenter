@@ -62,7 +62,7 @@ namespace IMS.Controllers
                     viewmodel.Servers = list;
                 }
 
-                return View("../Request/AddServerInfo", viewmodel);
+                return View("AddServerInfo", viewmodel);
             }
             //DOING, truong hop request thanh trang thai Done
             if (rType.Equals(Constants.RequestTypeCode.BRING_SERVER_AWAY))
@@ -92,7 +92,7 @@ namespace IMS.Controllers
                     viewmodel.SelectedServerNumber = list.Count;
                 }
                 Alert("Success");
-                return View("../Request/BringServerAwayInfo", viewmodel);
+                return View("BringServerAwayInfo", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.ASSIGN_IP))
             {
@@ -102,7 +102,7 @@ namespace IMS.Controllers
                 {
                     viewmodel = Mapper.Map<Request, RequestIPViewModel>(request);
                     viewmodel.StatusName = StatusBLO.Current.GetStatusName(viewmodel.StatusCode);
-                    //Lay so luong IP muon assign, tam thoi fix cung
+                    //Lay so luong IP muon assign
                     var reqDetail = JsonConvert.DeserializeObject<RequestDetailModel>(viewmodel.Description);
                     viewmodel.IpNumber = reqDetail.NumberOfIp;
                     viewmodel.Description = reqDetail.Description;
@@ -146,7 +146,7 @@ namespace IMS.Controllers
                     }
                     //select randomly from ipNumber,
                 }
-                return View("../Request/AssignIPInfo", viewmodel);
+                return View("AssignIPInfo", viewmodel);
             }
 
             if (rType.Equals(Constants.RequestTypeCode.CHANGE_IP))
@@ -212,26 +212,29 @@ namespace IMS.Controllers
                     //List returning IPs
                     viewmodel.Ips = LogChangedContentBLO.Current.GetIpRequestReturnIp(rCode);
                 }
-                return View("../Request/ReturnIPInfo", viewmodel);
+                return View("ReturnIPInfo", viewmodel);
             }
 
             if (rType.Equals(Constants.RequestTypeCode.RENT_RACK))
             {
-                //chưa cắt số lượng rack từ string của description được
                 RequestRentRackViewModel viewmodel = new RequestRentRackViewModel();
                 var request = RequestDAO.Current.Query(x => x.RequestCode == rCode).FirstOrDefault();
-
-                // trang view cho hien thi: Customer, request time, rack number, description --> yeu cau cua khach hang
                 // Phan thuc hien cua staff -->  chọn số lượng rack còn trống
                 if (request != null)
                 {
                     //Mapping
                     viewmodel = Mapper.Map<Request, RequestRentRackViewModel>(request);
-                    //DOING
-                    //Tam thoi fix cung rack numbers --> unzip tu desctiption
-                    viewmodel.RackNumbers = viewmodel.RackNumbers;
+                    //Lay so luong rack muon thue
+                    var desc = JsonConvert.DeserializeObject<RequestDetailModel>(viewmodel.Description);
+                    viewmodel.RackNumbers = desc.NumberOfIp;
+                    viewmodel.Description = desc.Description;
                     //list cot rows
-                    viewmodel.Rows = RackBLO.Current.GetAllRowsOfRack();
+                    var rows = RackBLO.Current.GetAllRowsOfRack();
+                    var listRacks = new List<RackExtendedModel>();
+                    foreach (var item in rows)
+                    {
+
+                    }
                     //Get available racks
                     var listrack = RackDAO.Current.Query(x => x.StatusCode == Constants.StatusCode.RACK_AVAILABLE);
                     //Tùy vào rack number mà số lượng rack staff được chọn sẽ tương ứng
@@ -247,7 +250,7 @@ namespace IMS.Controllers
                     }
                 }
                 //Chuyen IsViewed = true
-                return View("../Request/RentRackInfo", viewmodel);
+                return View("RentRackInfo", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.RETURN_RACK))
             {
@@ -265,9 +268,9 @@ namespace IMS.Controllers
                 viewmodel.StatusName = StatusBLO.Current.GetStatusName(viewmodel.StatusCode);
                 var customer = AccountBLO.Current.GetAccountByCode(viewmodel.Customer);
                 viewmodel.CustomerName = customer.Fullname;
-                return View("../Request/ReturnRackInfo", viewmodel);
+                return View("ReturnRackInfo", viewmodel);
             }
-            return RedirectToAction("ListNotifications","Request");
+            return RedirectToAction("ListNotifications", "Request");
         }
         //DOING
         [HttpPost]

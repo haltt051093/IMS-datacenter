@@ -51,6 +51,12 @@ namespace IMS.Data.Repository
             }
             var abc = (from r in listRows select r).Distinct();
             return abc.ToList();
+        }
+
+        public List<Rack> GetRackByRow(string rowName)
+        {
+            var query = Table().Where(x => x.RackName.StartsWith(rowName));
+            return query.ToList();
         } 
     }
 }

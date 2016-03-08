@@ -87,5 +87,10 @@ namespace IMS.Data.Business
         {
             return dao.GetAllRowsOfRack();
         }
+
+        public List<Rack> GetRackByRow(string rowName)
+        {
+            return dao.GetRackByRow(rowName);
+        }
     }
 }
