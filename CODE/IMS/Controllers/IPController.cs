@@ -211,7 +211,7 @@ namespace IMS.Controllers
             }
 
 
-            bool x = IPAddressPoolBLO.Current.UpdateIP(ivm.ServerCode, ivm.OldIP, ivm.NewIP, listNewIP, ivm.Request);
+            bool x = IPAddressPoolBLO.Current.UpdateIP(ivm.ServerCode, ivm.NewIP);
             if (x)
             {
                 return RedirectToAction("Index");

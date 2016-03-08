@@ -138,8 +138,15 @@
                                         @Html.HiddenFor(modelItem => modelItem.Servers[i].Memory)
                                     </td>
                                     <td>
-                                        <input type="hidden" value="true" name="defaultIp" />
-                                        <label><a href="#" data-toggle="modal" data-target="#assignip-modal">Assign Default IP</a></label>
+                                        @if (Model.Servers[i].DefaultIP == null)
+                                        {
+                                            <label><a data-toggle="modal" class="open-blockIP-modal" href="#assignip-modal" data-id1="@Model.Servers[i].ServerCode" data-id2="@Model.RequestCode" data-id3="@Model.RequestType">Assign Default IP</a></label>
+                                        }
+                                        else
+                                        {
+                                            @Html.DisplayFor(model => Model.Servers[i].DefaultIP, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.HiddenFor(modelItem => modelItem.Servers[i].DefaultIP)
+                                        }
                                     </td>
 
                                     <td>
@@ -170,20 +177,21 @@
 <div id="assignip-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="#" method="POST">
+            <form action="AssignIP" method="POST">
                 <div class="modal-body">
 
                     <section class="content-header">
-                        <h1>
+                        <h3>
                             List of IP Available
-                        </h1>
+                        </h3>
                     </section>
                     <section class="content">
                         <div class="row hide">
-                            <div id="dropdown-template" class="col-xs-3">
-                                <label>IP Address: @Html.DropDownListFor(model => model.NetworkIP, Model.NetworkIPs, "All IP Addresses", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
+                            <div id="dropdown-template">
+                                <label>@Html.DropDownListFor(model => model.NetworkIP, Model.NetworkIPs, "All IP Addresses", new {@class = "form-control input-sm", style = "width: 150px"}) </label>
                             </div>
                         </div>
+
                         <table id="example1" class="table table-bordered table-hover">
                             <thead>
                                 <tr style="background-color: #404040">
@@ -195,23 +203,15 @@
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tfoot>
-                                <tr style="background-color: #404040">
-                                    <th><span style="color: ghostwhite">Id</span>
-                                    <th><span style="color: ghostwhite">NetworkIP</span>
-                                    <th><span style="color: ghostwhite">IP Address</span>
-                                    <th><span style="color: ghostwhite">Gateway</span>
-                                    <th><span style="color: ghostwhite">Subnet mask</span>
-                                    <th></th>
-
-                                </tr>
-                            </tfoot>
                         </table>
 
                     </section><!-- /.content -->
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">Assign</button>
+                    <input class="hidden" name="ServerCode" id="ipid" value=""/>
+                    <input class="hidden" name="RequestCode" id="rcode" value=""/>
+                    <input class="hidden" name="RequestType" id="rtype" value="" />
+                    <button type="submit" class="btn btn-primary">Assign</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
 
 
@@ -246,14 +246,16 @@
                         { data: "Subnetmask" },
                         { data: "StatusCode" }
                     ],
-                    iDisplayLength: 32,
-                    aLengthMenu: [[32, 64, 128, 255], [32, 64, 128, 255]],
+                    iDisplayLength: 10,
+                    aLengthMenu: [[10, 20, 30], [10, 20, 30]],
                     fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                         var row = $(nRow);
                         var actionCell = $(nRow.cells[3]);
+                       
                         switch (aData.StatusCode) {
                             case '@Constants.StatusCode.IP_AVAILABLE':
-                                actionCell.html('<input type="radio" name="radio"/>');
+                                actionCell.html('<input type="radio" name="NewIP" value="'+aData.IPAddress+'"/>');
+                            
                                 break;
 
                         }
@@ -281,7 +283,18 @@
 
 
             </script>
+            <script>
+    $(document).on("click", ".open-blockIP-modal", function () {
+        var myId = $(this).data('id1');
+        var vcode = $(this).data('id2');
+        var vtype = $(this).data('id3');
+        $(".modal-footer #ipid").val(myId);
+        $(".modal-footer #rcode").val(vcode);
+        $(".modal-footer #rtype").val(vtype);
 
+
+});
+            </script>
             @section Styles {
                 <style>
                 </style>

@@ -25,6 +25,7 @@ namespace IMS.Controllers
                 RequestAddServerViewModel viewmodel = new RequestAddServerViewModel();
                 var request = RequestBLO.Current.GetRequestByRequestCode(rCode);
                 viewmodel.RequestCode = rCode;
+                viewmodel.RequestType = rType;
                 if (request != null)
                 {
                     viewmodel = Mapper.Map<Request, RequestAddServerViewModel>(request);
@@ -32,6 +33,7 @@ namespace IMS.Controllers
                     var customer = AccountBLO.Current.GetAccountByCode(viewmodel.Customer);
                     viewmodel.CustomerName = customer.Fullname;
                     viewmodel.Identification = customer.Identification;
+                    
                     //lay list servers
                     var serverCodes = LogChangedContentBLO.Current.GetServerCodeByRequestCode(rCode);
                     List<ServerExtendedModel> list = new List<ServerExtendedModel>();
@@ -668,7 +670,28 @@ namespace IMS.Controllers
             Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpPost]
+        public ActionResult AssignIP(RequestAddServerViewModel ivm)
+        {
+            var listNewIP = new List<string>();
+           
+                if (ivm.NewIP == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }            
+
+            bool x = IPAddressPoolBLO.Current.UpdateIP(ivm.ServerCode, ivm.NewIP);
+            if (x)
+            {
+                return RedirectToAction("Detais",new {rType=ivm.RequestType,rCode=ivm.RequestCode});
+                
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+        }
     }
 
-}
 }
