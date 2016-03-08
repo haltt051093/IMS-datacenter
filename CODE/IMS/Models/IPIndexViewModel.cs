@@ -27,6 +27,7 @@ namespace IMS.Models
         "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
         "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
         "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$", ErrorMessage = "Wrong format of Network Address! Try again!")]
+        [Remote("CheckIPAddress", "Validate", ErrorMessage = "IP Address is existed", HttpMethod = "POST")]
         public string Address { get; set; }
         public int Netmask { get; set; }
 

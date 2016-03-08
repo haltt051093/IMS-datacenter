@@ -214,6 +214,10 @@ namespace IMS.Data.Business
 
         }
 
+        public IPAddressPool GetByIP(IPAddressPool entry)
+        {
+            return dao.Query(x => x.IPAddress == entry.IPAddress).FirstOrDefault();
+        }
         public List<string> GetIPStatus()
         {
             return dao.GetIPStatus();

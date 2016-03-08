@@ -12,5 +12,12 @@ namespace IMS.Controllers
             var existing = RackBLO.Current.GetByName(new Rack { RackName = RackName });
             return Json(existing == null);
         }
+
+        [HttpPost]
+        public JsonResult CheckIPAddress(string Address)
+        {
+            var existing = IPAddressPoolBLO.Current.GetByIP(new IPAddressPool {IPAddress = Address});
+            return Json(existing == null);
+        }
     }
 }
