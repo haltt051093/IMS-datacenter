@@ -61,6 +61,13 @@ namespace IMS.Controllers
                     }
                     viewmodel.Servers = list;
                 }
+                var ips = IPAddressPoolBLO.Current.GetIPAvailable();
+                var listNetworkIP = ips.OrderBy(x => x.NetworkIP).GroupBy(x => x.NetworkIP).Select(x => x.FirstOrDefault());
+                viewmodel.NetworkIPs = listNetworkIP.Select(x => new SelectListItem
+                {
+                    Value = x.NetworkIP,
+                    Text = "Network " + x.NetworkIP
+                }).ToList();
 
                 return View("AddServerInfo", viewmodel);
             }
