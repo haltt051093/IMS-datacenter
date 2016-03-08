@@ -11,6 +11,7 @@ using IMS.Data.Repository;
 using IMS.Data.ViewModels;
 using IMS.Models;
 using Newtonsoft.Json;
+using Microsoft.Office.Interop.Word;
 
 namespace IMS.Controllers
 {

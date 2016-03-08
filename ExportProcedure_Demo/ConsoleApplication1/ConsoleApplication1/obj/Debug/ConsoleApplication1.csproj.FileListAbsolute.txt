@@ -5,3 +5,7 @@ C:\Users\Tien Huynh\Desktop\New folder\ConsoleApplication1\ConsoleApplication1\b
 C:\Users\Tien Huynh\Desktop\New folder\ConsoleApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.pdb
 C:\Users\Tien Huynh\Desktop\New folder\ConsoleApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.exe
 C:\Users\Tien Huynh\Desktop\New folder\ConsoleApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.pdb
+C:\Users\Tien Huynh\Desktop\Data\GitHub_20012016\ExportProcedure_Demo\ConsoleApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe.config
+C:\Users\Tien Huynh\Desktop\Data\GitHub_20012016\ExportProcedure_Demo\ConsoleApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.csproj.ResolveComReference.cache
+C:\Users\Tien Huynh\Desktop\Data\GitHub_20012016\ExportProcedure_Demo\ConsoleApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.exe
+C:\Users\Tien Huynh\Desktop\Data\GitHub_20012016\ExportProcedure_Demo\ConsoleApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.pdb
