@@ -681,16 +681,9 @@ namespace IMS.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }            
 
-            bool x = IPAddressPoolBLO.Current.UpdateIP(ivm.ServerCode, ivm.NewIP);
-            if (x)
-            {
+                IPAddressPoolBLO.Current.UpdateIP(ivm.ServerCode, ivm.NewIP);
+
                 return RedirectToAction("Detais",new {rType=ivm.RequestType,rCode=ivm.RequestCode});
-                
-            }
-            else
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
         }
     }
 

@@ -196,7 +196,7 @@ namespace IMS.Data.Business
             return dao.GetIPAvailable();
         }
 
-        public bool UpdateIP(string ServerCode, string NewIP)
+        public void UpdateIP(string ServerCode, string NewIP)
         {
 
                 var server = ServerBLO.Current.GetByServerCode(ServerCode);
@@ -210,7 +210,7 @@ namespace IMS.Data.Business
                 ip.IsDefault = true;
                 ip.StatusCode = Constants.StatusCode.IP_USED;
                 dao.Update(ip);
-                return true;
+              
 
         }
 
