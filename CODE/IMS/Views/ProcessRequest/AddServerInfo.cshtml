@@ -219,59 +219,65 @@
             </form>
 
             <script>
-                                                    $.fn.dataTable.ext.search.push(
-                                                        function (settings, data, dataIndex) {
-                                                            var networkIP = $('#NetworkIP').val();
-                                                            if (networkIP == '') {
-                                                                return true;
-                                                            }
-                                                            if (networkIP == data[1]) {
-                                                                return true;
-                                                            }
-                                                            return false;
-                                                        }
-                                                    );
+                $.fn.dataTable.ext.search.push(
+                    function (settings, data, dataIndex) {
+                        var networkIP = $('#NetworkIP').val();
+                        if (networkIP == '') {
+                            return true;
+                        }
+                        if (networkIP == data[1]) {
+                            return true;
+                        }
+                        return false;
+                    }
+                );
             </script>
 
             <script type="text/javascript">
-                                                    var table = $('#example1').DataTable({
-                                                        dom: '<lf<t>ip>',
-                                                        processing: true,
-                                                        ajax: "@Url.Action("GetAvailableIP", "IP", new {httproute = ""})",
-                                                        columns: [
-                                                            { data: "Id" },
-                                                            { data: "NetworkIP" },
-                                                            { data: "IPAddress" },
-                                                            { data: "Gateway" },
-                                                            { data: "Subnetmask" },
-                                                            { data: "" }
-                                                        ],
-                                                        iDisplayLength: 32,
-                                                        aLengthMenu: [[32, 64, 128, 255], [32, 64, 128, 255]],
-                                                        fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                                                            var row = $(nRow);
-                                                            var actionCell = $(nRow.cells[4]);
-                                                            actionCell.html('<input type="radio" name="radio"/>');
-                                                        },
-                                                        order: [[0, "asc"]],
-                                                        columnDefs: [{
-                                                            targets: [0],
-                                                            visible: false,
-                                                            searchable: true
-                                                        }, {
-                                                            targets: [1],
-                                                            visible: false,
-                                                            searchable: true
+                var table = $('#example1').DataTable({
+                    dom: '<lf<t>ip>',
+                    processing: true,
+                    ajax: "@Url.Action("GetAvailableIP", "IP", new {httproute = ""})",
+                    columns: [
+                        { data: "Id" },
+                        { data: "NetworkIP" },
+                        { data: "IPAddress" },
+                        { data: "Gateway" },
+                        { data: "Subnetmask" },
+                        { data: "StatusCode" }
+                    ],
+                    iDisplayLength: 32,
+                    aLengthMenu: [[32, 64, 128, 255], [32, 64, 128, 255]],
+                    fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                        var row = $(nRow);
+                        var actionCell = $(nRow.cells[3]);
+                        switch (aData.StatusCode) {
+                            case '@Constants.StatusCode.IP_AVAILABLE':
+                                actionCell.html('<input type="radio" name="radio"/>');
+                                break;
 
-                                                        }]
-                                                    });
+                        }
 
-                                                    $('#example1_filter').append($('#dropdown-template').html());
-                                                    $('#dropdown-template').html('');
+                    },
+                    order: [[0, "asc"]],
+                    columnDefs: [{
+                        targets: [0],
+                        visible: false,
+                        searchable: true
+                    }, {
+                        targets: [1],
+                        visible: false,
+                        searchable: true
 
-                                                    $('#NetworkIP').change(function () {
-                                                        table.draw();
-                                                    });
+                    }]
+                });
+
+                $('#example1_filter').append($('#dropdown-template').html());
+                $('#dropdown-template').html('');
+
+                $('#NetworkIP').change(function () {
+                    table.draw();
+                });
 
 
             </script>
