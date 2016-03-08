@@ -408,6 +408,7 @@
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery-ui.tfpatch.css" />
     <Content Include="Content\jquery.timepicker.css" />
+    <Content Include="Content\jquery.validate.css" />
     <Content Include="Content\jQueryUI\images\animated-overlay.gif" />
     <Content Include="Content\jQueryUI\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\jQueryUI\images\ui-bg_flat_100_e6e7e8_40x100.png" />
@@ -1065,7 +1066,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>61259</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
