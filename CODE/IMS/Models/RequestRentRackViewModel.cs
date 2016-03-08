@@ -9,6 +9,7 @@ namespace IMS.Models
     public class RequestRentRackViewModel
     {
         public int RackNumbers { get; set; }
+        public List<SelectListItem> Numbers { get; set; }
 
         public string Customer { get; set; }
         public string CustomerName { get; set; }

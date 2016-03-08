@@ -61,6 +61,13 @@ namespace IMS.Controllers
                     }
                     viewmodel.Servers = list;
                 }
+                var ips = IPAddressPoolBLO.Current.GetIPAvailable();
+                var listNetworkIP = ips.OrderBy(x => x.NetworkIP).GroupBy(x => x.NetworkIP).Select(x => x.FirstOrDefault());
+                viewmodel.NetworkIPs = listNetworkIP.Select(x => new SelectListItem
+                {
+                    Value = x.NetworkIP,
+                    Text = "Network " + x.NetworkIP
+                }).ToList();
 
                 return View("AddServerInfo", viewmodel);
             }
@@ -193,7 +200,7 @@ namespace IMS.Controllers
                     }
                     //select randomly from ipNumber,
                 }
-                return View("ProcessRequestChangeIP", viewmodel);
+                return View("ChangeIPInfo", viewmodel);
             }
 
             if (rType.Equals(Constants.RequestTypeCode.RETURN_IP))
@@ -226,15 +233,20 @@ namespace IMS.Controllers
                     viewmodel = Mapper.Map<Request, RequestRentRackViewModel>(request);
                     //Lay so luong rack muon thue
                     var desc = JsonConvert.DeserializeObject<RequestDetailModel>(viewmodel.Description);
-                    viewmodel.RackNumbers = desc.NumberOfIp;
+                    viewmodel.RackNumbers = desc.NumberOfRack;
                     viewmodel.Description = desc.Description;
                     //list cot rows
                     var rows = RackBLO.Current.GetAllRowsOfRack();
                     var listRacks = new List<RackExtendedModel>();
                     foreach (var item in rows)
                     {
+                        RackExtendedModel model = new RackExtendedModel();
+                        model.RowName = item;
+                        model.RacksOfRow = RackBLO.Current.GetRackByRow(item);
+                        listRacks.Add(model);
 
                     }
+                    viewmodel.listRackByRows = listRacks;
                     //Get available racks
                     var listrack = RackDAO.Current.Query(x => x.StatusCode == Constants.StatusCode.RACK_AVAILABLE);
                     //Tùy vào rack number mà số lượng rack staff được chọn sẽ tương ứng
@@ -276,6 +288,7 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult ProcessRequestRentRack(RequestRentRackViewModel viewmodel)
         {
+            //Lay rack selected
 
             //Change request status, tu 
             RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);
@@ -594,50 +607,54 @@ namespace IMS.Controllers
             //Lam cach nao de luu gia tri cua moi dropdownlist, trong do co nhieu dropdownlist, ko ro so luong???
             //Change request status 
             RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);
-
+            string last = viewmodel.Ips[0];
+            List<string> ips = last.Split(',').ToList<string>();
+            ips.RemoveAt(0);
+            ips.Reverse();
             //update ServerIP
-            foreach (var item in viewmodel.SelectedIps)
+            foreach (var item in ips)
             {
-                //get previous ip
-                var preId = ServerIPBLO.Current.GetPreviousIp(viewmodel.SelectedServer, item.Value);
-
+                // nhung IP muon change
+                var changedIp = viewmodel.ReturningIps;
                 //add ip vo serverip
-                foreach (var ip in viewmodel.Ips)
+                foreach (var pre in changedIp)
                 {
-                    ServerIPBLO.Current.AddServerIp(viewmodel.SelectedServer, ip, preId);
+                    //get previous ip
+                    var preId = ServerIPBLO.Current.GetPreviousIp(viewmodel.SelectedServer, item);
+                    ServerIPBLO.Current.AddServerIp(viewmodel.SelectedServer, item, preId);
                     //Update status cua IP moi o IPAddressPool
-                    IPAddressPoolBLO.Current.UpdateStatusIp(Constants.StatusCode.IP_USED, ip);
+                    IPAddressPoolBLO.Current.UpdateStatusIp(Constants.StatusCode.IP_USED, item);
                     //Add log trang thai IP moi
                     LogChangedContent logIp = new LogChangedContent
                     {
                         RequestCode = viewmodel.RequestCode,
                         TypeOfLog = Constants.TypeOfLog.LOG_CHANGE_IP,
                         Object = Constants.Object.OBJECT_IP,
-                        ChangedValueOfObject = ip,
+                        ChangedValueOfObject = item,
                         ObjectStatus = Constants.StatusCode.IP_USED,
                         Staff = viewmodel.StaffCode
                     };
                     LogChangedContentBLO.Current.AddLog(logIp);
+                    //}
+
+                    //Update status cua IP cu o IPAddressPool
+                    IPAddressPoolBLO.Current.UpdateStatusIp(Constants.StatusCode.IP_AVAILABLE, item);
+                    //update previous ip status
+                    ServerIPBLO.Current.UpdateStatusServerIp(Constants.StatusCode.RACKOFCUSTOMER_RETURNING,
+                        Constants.StatusCode.RACKOFCUSTOMER_OLD, item);
+                    //Add log trang thai IP moi cu
+                    LogChangedContent logPreIp = new LogChangedContent
+                    {
+                        RequestCode = viewmodel.RequestCode,
+                        TypeOfLog = Constants.TypeOfLog.LOG_CHANGE_IP,
+                        Object = Constants.Object.OBJECT_IP,
+                        ChangedValueOfObject = item,
+                        ObjectStatus = Constants.StatusCode.IP_AVAILABLE,
+                        Staff = viewmodel.StaffCode
+                    };
+                    LogChangedContentBLO.Current.AddLog(logPreIp);
                 }
-
-                //Update status cua IP cu o IPAddressPool
-                IPAddressPoolBLO.Current.UpdateStatusIp(Constants.StatusCode.IP_AVAILABLE, item.Value);
-                //update previous ip status
-                ServerIPBLO.Current.UpdateStatusServerIp(Constants.StatusCode.RACKOFCUSTOMER_RETURNING,
-                    Constants.StatusCode.RACKOFCUSTOMER_OLD, item.Value);
-                //Add log trang thai IP moi cu
-                LogChangedContent logPreIp = new LogChangedContent
-                {
-                    RequestCode = viewmodel.RequestCode,
-                    TypeOfLog = Constants.TypeOfLog.LOG_CHANGE_IP,
-                    Object = Constants.Object.OBJECT_IP,
-                    ChangedValueOfObject = item.Value,
-                    ObjectStatus = Constants.StatusCode.IP_AVAILABLE,
-                    Staff = viewmodel.StaffCode
-                };
-                LogChangedContentBLO.Current.AddLog(logPreIp);
             }
-
             LogChangedContent logRequest = new LogChangedContent
             {
                 RequestCode = viewmodel.RequestCode,
@@ -651,6 +668,7 @@ namespace IMS.Controllers
             Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("Index", "Home");
         }
-
     }
+
+}
 }

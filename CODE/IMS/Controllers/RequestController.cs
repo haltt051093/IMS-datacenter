@@ -34,7 +34,6 @@ namespace IMS.Controllers
         #region Create Request
         public ActionResult Create(RequestCreateViewModel q)
         {
-            RackDAO.Current.GetRackByRow("A");
             var requestTypeCode = q.Type;
             if (!string.IsNullOrEmpty(requestTypeCode))
             {
@@ -108,7 +107,20 @@ namespace IMS.Controllers
                 }
                 else if (requestTypeCode == Constants.RequestTypeCode.RENT_RACK)
                 {
-                    return View("RentRack");
+                    var data = new RequestRentRackViewModel();
+                    List<SelectListItem> myList = new List<SelectListItem>();
+                    for (int i = 0; i < 10; i++)
+                    {
+                        string num = (i + 1).ToString();
+                        SelectListItem item = new SelectListItem()
+                        {
+                            Value = num,
+                            Text = num
+                        };
+                        myList.Add(item);
+                    }
+                    data.Numbers = myList;
+                    return View("RentRack", data);
                 }
                 else if (requestTypeCode == Constants.RequestTypeCode.RETURN_IP)
                 {
@@ -572,7 +584,7 @@ namespace IMS.Controllers
                     ServerCode = viewmodel.SelectedServer,
                 };
                 LogChangedContentBLO.Current.AddLog(logRequest);
-
+                //DOING
                 //log tat ca ip muon change
                 string last = selected[0];
                 List<string> ips = last.Split(',').ToList<string>();
