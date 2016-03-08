@@ -3,7 +3,7 @@
     ViewBag.Title = "RequestAssignIPInfo";
     ViewBag.Role = "Shift Head";
 }
-
+<label style="color: coral">@Model.inform</label>
 <section class="content-header">
     <h1>
         Detail Request Add New Server
@@ -24,6 +24,9 @@
                     </dt>
                     <dd>
                         @Html.DisplayFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.HiddenFor(model=>model.Customer)
+                        @Html.HiddenFor(model=>model.RequestType)
+                        @Html.HiddenFor(model=>model.RequestCode)
                     </dd>
                     <dt>
                         Full Name
@@ -108,6 +111,7 @@
                                         @Html.DisplayFor(model => Model.Servers[i].Maker, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.HiddenFor(modelItem => modelItem.Servers[i].Maker)
                                         @Html.HiddenFor(modelItem => modelItem.Servers[i].ServerCode)
+
                                     </td>
                                     <td>
                                         @Html.DisplayFor(model => Model.Servers[i].Power, new { htmlAttributes = new { @class = "form-control" } })W
@@ -163,9 +167,9 @@
                 @Html.HiddenFor(model => model.RequestCode)
                 if (Model.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                 {
-                    <button type="submit" class="btn btn-info"><i class="fa fa-external-link"></i> Export Procedure</button>
-                    <button type="submit" id="btnApprove" class="btn btn-primary" name="Approve" value="Approve">Approve</button>
-                    <button type="submit" class="btn btn-danger">Reject</button>
+                    <button type="submit" name="Button" value="Export" class="btn btn-info"><i class="fa fa-external-link"></i> Export Procedure</button>
+                    <button type="submit" name="Button" id="btnApprove" class="btn btn-primary"  value="Approve">Approve</button>
+                    <button type="submit" name="Button" class="btn btn-danger">Reject</button>
                 }
             }
         </div><!-- /.box-body -->

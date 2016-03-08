@@ -18,8 +18,9 @@ namespace IMS.Controllers
     public class ProcessRequestController : CoreController
     {
         [HttpGet]
-        public ActionResult Detais(string rType, string rCode)
+        public ActionResult Detais(string rType, string rCode,string inform)
         {
+
             if (rType.Equals(Constants.RequestTypeCode.ADD_SERVER))
             {
                 //Get request
@@ -71,7 +72,10 @@ namespace IMS.Controllers
                     Value = x.NetworkIP,
                     Text = "Network " + x.NetworkIP
                 }).ToList();
-
+                if (inform != null)
+                {
+                    viewmodel.inform = "Export Procedure Successfully!!";
+                }
                 return View("AddServerInfo", viewmodel);
             }
             //DOING, truong hop request thanh trang thai Done
@@ -434,43 +438,154 @@ namespace IMS.Controllers
         public ActionResult ProcessRequestAddServer(RequestAddServerViewModel viewmodel)
         {
             var listServer = viewmodel.Servers;
-            foreach (var server in listServer)
+            if (viewmodel.Button == "Export")
             {
-                ServerBLO.Current.UpdateServerStatus(server.ServerCode, Constants.StatusCode.SERVER_RUNNING);
-                ServerAttributeBLO.Current.UpdateServerAttributeStatus(server.ServerCode, Constants.StatusCode.SERVERATTRIBUTE_NEW);
-                //doi trang thai cua request
-                RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);
-                //luu IP address
-                //Luu location
-
-                //log server status
-                LogChangedContent logServer = new LogChangedContent
+                Account acc = AccountDAO.Current.Query(x => x.Username == viewmodel.Customer).FirstOrDefault();
+                foreach (var item in listServer)
                 {
-                    RequestCode = viewmodel.RequestCode,
-                    TypeOfLog = Constants.TypeOfLog.LOG_ADD_SERVER,
-                    Object = Constants.Object.OBJECT_SERVER,
-                    ChangedValueOfObject = viewmodel.RequestCode,
-                    ObjectStatus = Constants.StatusCode.SERVER_RUNNING,
-                    ServerCode = server.ServerCode
-                    //Staff = viewmodel.StaffCode
-                };
-                LogChangedContentBLO.Current.AddLog(logServer);
+                    IPAddressPool ip =
+                        IPAddressPoolDAO.Current.Query(x => x.IPAddress == item.DefaultIP).FirstOrDefault();
+                    System.Object oMissing = System.Reflection.Missing.Value;
 
-                //log request status
-                LogChangedContent logRequest = new LogChangedContent
-                {
-                    RequestCode = viewmodel.RequestCode,
-                    TypeOfLog = Constants.TypeOfLog.LOG_ADD_SERVER,
-                    Object = Constants.Object.OBJECT_REQUEST,
-                    ChangedValueOfObject = viewmodel.RequestCode,
-                    ObjectStatus = Constants.StatusCode.REQUEST_DONE,
-                    ServerCode = server.ServerCode
-                    //Staff = viewmodel.StaffCode
-                };
-                LogChangedContentBLO.Current.AddLog(logRequest);
+                    System.Object oTemplatePath = "E:/ProcedureOfDatacenter.dotx";
+
+
+                    Application wordApp = new Application();
+                    Document wordDoc = new Document();
+
+                    wordDoc = wordApp.Documents.Add(ref oTemplatePath, ref oMissing, ref oMissing, ref oMissing);
+
+                    foreach (Field myMergeField in wordDoc.Fields)
+                    {
+                        Range rngFieldCode = myMergeField.Code;
+
+                        String fieldText = rngFieldCode.Text;
+                        if (fieldText.StartsWith(" MERGEFIELD"))
+                        {
+                            Int32 endMerge = fieldText.IndexOf("\\");
+
+                            Int32 fieldNameLength = fieldText.Length - endMerge;
+
+                            String fieldName = fieldText.Substring(11, endMerge - 11);
+
+                            fieldName = fieldName.Trim();
+
+                            if (fieldName == "PartA")
+                            {
+
+                                myMergeField.Select();
+
+                                wordApp.Selection.TypeText(acc.Fullname);
+
+                            }
+                            if (fieldName == "Representative")
+                            {
+                                myMergeField.Select();
+                                wordApp.Selection.TypeText(acc.Username);
+                            }
+                            if (fieldName == "Address")
+                            {
+                                myMergeField.Select();
+                                wordApp.Selection.TypeText(acc.Address);
+                            }
+                            if (fieldName == "Tel")
+                            {
+                                myMergeField.Select();
+                                wordApp.Selection.TypeText(acc.Phone);
+                            }
+                            if (fieldName == "Model")
+                            {
+                                myMergeField.Select();
+                                wordApp.Selection.TypeText(item.Model);
+                            }
+                            if (fieldName == "Memory")
+                            {
+                                myMergeField.Select();
+                                wordApp.Selection.TypeText(item.Memory);
+                            }
+                            if (fieldName == "PartNumber")
+                            {
+                                myMergeField.Select();
+                                wordApp.Selection.TypeText(item.PartNumber);
+                            }
+                            if (fieldName == "SerialNumber")
+                            {
+                                myMergeField.Select();
+                                wordApp.Selection.TypeText(item.SerialNumber);
+                            }
+                            if (fieldName == "IPAddress")
+                            {
+                                myMergeField.Select();
+                                wordApp.Selection.TypeText(item.DefaultIP);
+                            }
+                            if (fieldName == "SubnetMask")
+                            {
+                                myMergeField.Select();
+                                wordApp.Selection.TypeText(ip.Subnetmask);
+                            }
+                            if (fieldName == "Gateway")
+                            {
+                                myMergeField.Select();
+                                wordApp.Selection.TypeText(ip.Gateway);
+                            }
+                            if (fieldName == "Bandwidth")
+                            {
+                                myMergeField.Select();
+                                wordApp.Selection.TypeText(item.Bandwidth);
+                            }
+
+                        }
+
+                    }
+                    var name = item.ServerCode + ".doc";
+                    wordDoc.SaveAs(name);
+                    wordApp.Documents.Open(name);
+                    wordApp.Application.Quit();
+
+                }
+                return RedirectToAction("Detais", new {rType = viewmodel.RequestType, rCode = viewmodel.RequestCode, inform="success"});
             }
-            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
-            return RedirectToAction("Index", "Home");
+            else
+            {
+                foreach (var server in listServer)
+                {
+                    ServerBLO.Current.UpdateServerStatus(server.ServerCode, Constants.StatusCode.SERVER_RUNNING);
+                    ServerAttributeBLO.Current.UpdateServerAttributeStatus(server.ServerCode, Constants.StatusCode.SERVERATTRIBUTE_NEW);
+                    //doi trang thai cua request
+                    RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);
+                    //luu IP address
+                    //Luu location
+
+                    //log server status
+                    LogChangedContent logServer = new LogChangedContent
+                    {
+                        RequestCode = viewmodel.RequestCode,
+                        TypeOfLog = Constants.TypeOfLog.LOG_ADD_SERVER,
+                        Object = Constants.Object.OBJECT_SERVER,
+                        ChangedValueOfObject = viewmodel.RequestCode,
+                        ObjectStatus = Constants.StatusCode.SERVER_RUNNING,
+                        ServerCode = server.ServerCode
+                        //Staff = viewmodel.StaffCode
+                    };
+                    LogChangedContentBLO.Current.AddLog(logServer);
+
+                    //log request status
+                    LogChangedContent logRequest = new LogChangedContent
+                    {
+                        RequestCode = viewmodel.RequestCode,
+                        TypeOfLog = Constants.TypeOfLog.LOG_ADD_SERVER,
+                        Object = Constants.Object.OBJECT_REQUEST,
+                        ChangedValueOfObject = viewmodel.RequestCode,
+                        ObjectStatus = Constants.StatusCode.REQUEST_DONE,
+                        ServerCode = server.ServerCode
+                        //Staff = viewmodel.StaffCode
+                    };
+                    LogChangedContentBLO.Current.AddLog(logRequest);
+                }
+                Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+                return RedirectToAction("Index", "Home");
+            }
+
         }
 
         [HttpPost]
