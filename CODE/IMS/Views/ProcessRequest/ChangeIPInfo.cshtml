@@ -26,6 +26,12 @@
                         @Html.DisplayFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control" } })
                     </dd>
                     <dt>
+                        Full Name
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control" } })
+                    </dd>
+                    <dt>
                         Requested Time
                     </dt>
 
@@ -53,17 +59,15 @@
 
                     <dd style="color: #f56954">
                         <div class="form-group">
-                            @Html.Label("Changing Ips", htmlAttributes: new { @class = "control-label col-md-2" })
-
-                            @foreach (var item in Model.ReturningIps)
+                            @for (int i = 0; i < Model.ReturningIps.Count; i++)
                             {
-                                int count = 0;
-                                string ips = "ddl_selected" + count;
                                 <div class="col-md-10">
-                                    @Html.TextBox(item, item)
-                                    @Html.DropDownListFor(model => model.SelectedIps, Model.IpSelectListItems, new { @ip = ips })
+                                    @Html.DisplayFor(model => Model.ReturningIps[i])
+                                    @Html.HiddenFor(model => model.ReturningIps[i])
+                                    <div class="selectedIP">
+                                        @Html.DropDownListFor(model => model.SelectedIps, Model.IpSelectListItems)
+                                    </div>
                                 </div>
-                                count++;
                             }
 
                         </div>
@@ -76,6 +80,7 @@
                     <dd>
                         @Html.DisplayFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                     </dd>
+                    @Html.HiddenFor(model => model.Ips, new { id = "ips" })
                     @Html.HiddenFor(x => x.RequestCode)
                     @Html.HiddenFor(x => x.Customer)
                     @Html.HiddenFor(x => x.RequestType)
@@ -84,7 +89,7 @@
                     @if (Model.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                     {
                         <dd>
-                            <button type="submit" class="btn btn-primary">Approve</button>
+                            <button type="submit" class="btn btn-primary" id="btnApprove">Approve</button>
                             <button type="submit" class="btn btn-danger">Reject</button>
                         </dd>
                     }
@@ -96,11 +101,29 @@
 <script type="text/javascript">
     $(function () {
         $('#availableIps').change(function () {
-            var pass = $('#availableIps').val();
-            $('#selectedIps').append('<option value="' + pass + '">' + pass + '</option>');
-            $("[id*=availableIps] option:selected").remove();
-            return false;
+            //var pass = $('#availableIps').val();
+            //$('#selectedIps').append('<option value="' + pass + '">' + pass + '</option>');
+            //$("[id*=availableIps] option:selected").remove();
+            //return false;
             //document.getElementById("selectedIps").value = pass;
         });
+
+        var ips = $('.selectedIP').val();
+        //DOING, 1 list select thi 2 list kia ko co gia tri nay
+        $('.selectedIP').change(function () {
+            var ip = $(this);
+
+        });
+        //Get value of selected items
+        $("#btnApprove").click(function () {
+            var selectedValues = [];
+            $("select option:selected").each(function () {
+                selectedValues.push($(this).val());
+            });
+            $('#ips').val(selectedValues);
+        });
     });
+
+
+
 </script>

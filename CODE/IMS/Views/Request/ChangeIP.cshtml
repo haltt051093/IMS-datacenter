@@ -3,7 +3,6 @@
     ViewBag.Title = "RequestChangeIP2";
     ViewBag.Role = "Customer";
 }
-<script src="~/scripts/jquery-1.10.2.js"></script>
 <script src="~/scripts/jquery.unobtrusive-ajax.js"></script>
 
 <section class="content-header">
@@ -27,10 +26,11 @@
                             @Html.DropDownListFor(m => m.SelectedServer, Model.Servers, new { @id = "servercode" })
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Which IP do you want to change?</label>
-                        <div class="col-sm-2">
-                            <div id="divPartialView" class="hidden">
+                    <div id="divPartialView" class="hidden">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Which IP do you want to change?</label>
+                            <div class="col-sm-2">
+
                                 <table id="MyTable" class="table">
                                     <thead>
                                         <tr>
@@ -43,22 +43,23 @@
                                             <th></th>
                                         </tr>
                                     </thead>
-                                    <tbody></tbody>
+                                    <tbody id="tbodyid"></tbody>
                                 </table>
                                 @Html.HiddenFor(model => model.Ips, new { id = "ips" })
                                 @*@Html.HiddenFor(model => model.SelectedServerCode)*@
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Description</label>
-                        <div class="col-sm-2">
-                            @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", style = "width: 500px; height: 100px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;", placeholder = "Some description here" } })
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Description</label>
+                            <div class="col-sm-2">
+                                @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", style = "width: 500px; height: 100px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;", placeholder = "Some description here" } })
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-4 col-sm-2">
-                            <button name="Action" type="submit" value="send" id="demo">Send</button>
+                        <div class="form-group">
+                            <div class="col-sm-offset-4 col-sm-2">
+                                <button name="Action" type="submit" value="send" id="demo">Send</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -71,11 +72,12 @@
         $('#servercode').change(function () {
             var pass = $('#servercode').val();
             var myTable = $('#MyTable > tbody');
+            $('#tbodyid').empty();
             $.ajax({
                 cache: false,
                 type: "GET",
                 url: "@(Url.Action("FetchIPs", "Request"))",
-                data: { "SelectedServerCode": pass },
+                data: { "SelectedServer": pass },
                 dataType: "json",
                 success: function (data) {
                     $('#divPartialView').removeClass('hidden');
