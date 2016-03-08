@@ -404,7 +404,6 @@
     <Content Include="Content\ionslider\ion.rangeSlider.css" />
     <Content Include="Content\ionslider\ion.rangeSlider.skinFlat.css" />
     <Content Include="Content\ionslider\ion.rangeSlider.skinNice.css" />
-    <Content Include="Content\jquer.validate.css" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery-ui.tfpatch.css" />
     <Content Include="Content\jquery.timepicker.css" />
@@ -912,6 +911,7 @@
     <Compile Include="ApiModels\TempRequest.cs" />
     <Compile Include="App_Start\AppConfig.cs" />
     <Compile Include="Controllers\ProcessRequestController.cs" />
+    <Compile Include="Controllers\ValidateController.cs" />
     <Compile Include="Models\RequestHistoryViewModel.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Models\ReportBlockIPViewModel.cs" />
@@ -1042,6 +1042,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Shift\" />
+    <Folder Include="Views\Validate\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IMS.Core\IMS.Core.csproj">

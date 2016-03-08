@@ -25,6 +25,13 @@ namespace IMS.Data.Business
                 return instance;
             }
         }
+
+        private RackBLO()
+        {
+            baseDao = RackDAO.Current;
+            dao = RackDAO.Current;
+        }
+
         public bool AddRackAndLocation(Rack entry)
         {
             var rackCode = GenerateCode();
@@ -70,12 +77,6 @@ namespace IMS.Data.Business
                 existing = dao.Query(x => x.RackCode == code).FirstOrDefault();
             }
             return code;
-        }
-
-        private RackBLO()
-        {
-            baseDao = RackDAO.Current;
-            dao = RackDAO.Current;
         }
 
         public void UpdateRackStatus(string rackCode, string status)
