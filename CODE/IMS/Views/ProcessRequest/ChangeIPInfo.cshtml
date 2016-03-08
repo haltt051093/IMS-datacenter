@@ -51,8 +51,12 @@
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.SelectedServer, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.DisplayFor(model => model.SelectedServer, new {htmlAttributes = new {@class = "form-control"}})
                     </dd>
+                    @if (Model.CountAvailableIps < Model.IpNumber)
+                    {
+                        ViewBag.Message = "Khong du so luong IP cap phat";
+                    }
                     <dt>
                         Selected IP of Server
                     </dt>
