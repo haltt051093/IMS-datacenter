@@ -51,9 +51,12 @@
                     </dt>
 
                     <dd>
-                        3
-
+                        @Html.DisplayFor(model => model.RackNumbers, new { htmlAttributes = new { @class = "form-control" } })
                     </dd>
+
+                    <dt>
+                        All racks in system
+                    </dt>
                     <div class="form-group">
                         <dt>
                             Description
@@ -63,20 +66,56 @@
                             I want to be assigned as soon as possible
                         </dd>
                     </div>
+                    <dd>
+                        <div class="form-group">
+                            <table id="" class="table table-bordered table-striped  col-xs-offset-1">
+                                <thead>
+                                    <tr>
+                                        <th>Row</th>
+                                        <th>Racks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < Model.listRackByRows.Count; i++)
+                                    {
+                                        <tr>
 
-
+                                            <td>
+                                                @Html.DisplayFor(model => Model.listRackByRows[i].RowName, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.HiddenFor(modelItem => modelItem.listRackByRows[i].RowName)
+                                            </td>
+                                            <td>
+                                                <dl>
+                                                    @for (int j = 0; j < Model.listRackByRows[i].RacksOfRow.Count; j++)
+                                                    {
+                                                        <dt>
+                                                            <div class="selectedRack">
+                                                                @Html.DisplayFor(model => Model.listRackByRows[i].RacksOfRow[j].RackName, new { htmlAttributes = new { @class = "form-control" } })
+                                                            </div>
+                                                            @Html.HiddenFor(model => Model.listRackByRows[i].RacksOfRow[j].RackName, new {htmlAttributes = new {@class = "form-control"}})
+                                                        </dt>
+                                                    }
+                                                </dl>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </dd>
                     <dt></dt>
                     @Html.HiddenFor(x => x.RequestCode)
                     @Html.HiddenFor(x => x.Customer)
                     @Html.HiddenFor(x => x.RequestType)
-                    <dd>
-                        <button type="submit" class="btn btn-primary">Approve</button>
-                        <button type="submit" class="btn btn-danger">Reject</button>
-                    </dd>
-
+                    @if (Model.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                    {
+                        <dd>
+                            <button type="submit" class="btn btn-primary">Approve</button>
+                            <button type="submit" class="btn btn-danger">Reject</button>
+                        </dd>
+                    }
                 </dl>
             }
         </div><!-- /.box-body -->
     </div><!-- /.box -->
 </section>
-

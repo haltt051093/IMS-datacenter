@@ -193,7 +193,7 @@ namespace IMS.Controllers
                     }
                     //select randomly from ipNumber,
                 }
-                return View("ProcessRequestChangeIP", viewmodel);
+                return View("ChangeIPInfo", viewmodel);
             }
 
             if (rType.Equals(Constants.RequestTypeCode.RETURN_IP))
@@ -226,15 +226,20 @@ namespace IMS.Controllers
                     viewmodel = Mapper.Map<Request, RequestRentRackViewModel>(request);
                     //Lay so luong rack muon thue
                     var desc = JsonConvert.DeserializeObject<RequestDetailModel>(viewmodel.Description);
-                    viewmodel.RackNumbers = desc.NumberOfIp;
+                    viewmodel.RackNumbers = desc.NumberOfRack;
                     viewmodel.Description = desc.Description;
                     //list cot rows
                     var rows = RackBLO.Current.GetAllRowsOfRack();
                     var listRacks = new List<RackExtendedModel>();
                     foreach (var item in rows)
                     {
+                        RackExtendedModel model = new RackExtendedModel();
+                        model.RowName = item;
+                        model.RacksOfRow = RackBLO.Current.GetRackByRow(item);
+                        listRacks.Add(model);
 
                     }
+                    viewmodel.listRackByRows = listRacks;
                     //Get available racks
                     var listrack = RackDAO.Current.Query(x => x.StatusCode == Constants.StatusCode.RACK_AVAILABLE);
                     //Tùy vào rack number mà số lượng rack staff được chọn sẽ tương ứng
@@ -276,6 +281,7 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult ProcessRequestRentRack(RequestRentRackViewModel viewmodel)
         {
+            //Lay rack selected
 
             //Change request status, tu 
             RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);

@@ -996,8 +996,6 @@
     <Content Include="Views\Server\Index.cshtml" />
     <Content Include="Views\Location\Index2.cshtml" />
     <Content Include="Views\IP\Index2.cshtml" />
-    <Content Include="Views\Request\ChangeIP.cshtml" />
-    <Content Include="Views\ProcessRequest\ProcessRequestChangeIP.cshtml" />
     <Content Include="Views\Request\AddServer.cshtml" />
     <Content Include="Views\Request\AssignIP.cshtml" />
     <Content Include="Views\ProcessRequest\AssignIPInfo.cshtml" />
@@ -1014,8 +1012,8 @@
     <Content Include="Views\Account\ViewProfile2.cshtml" />
     <Content Include="Views\Request\BringServerAway.cshtml" />
     <Content Include="Views\ProcessRequest\BringServerAwayInfo.cshtml" />
-    <Content Include="Views\Request\RequestChangeIP2.cshtml" />
-    <Content Include="Views\ProcessRequest\RequestChangeIPInfo2.cshtml" />
+    <Content Include="Views\Request\ChangeIP.cshtml" />
+    <Content Include="Views\ProcessRequest\ChangeIPInfo.cshtml" />
     <Content Include="Views\Request\History.cshtml" />
     <Content Include="Views\Request\RentRack.cshtml" />
     <Content Include="Views\ProcessRequest\RentRackInfo.cshtml" />
