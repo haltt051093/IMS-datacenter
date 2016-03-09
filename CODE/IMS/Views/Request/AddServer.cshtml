@@ -22,6 +22,7 @@
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                 <div class='input-group date' id='datetimepicker1'>
                     @Html.TextBoxFor(model => model.AppointmentTime, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    @Html.ValidationMessageFor(model => model.AppointmentTime)
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -34,6 +35,7 @@
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                 @Html.TextAreaFor(model => model.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.ValidationMessageFor(model => model.Description)
             </div>
         </div>
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">

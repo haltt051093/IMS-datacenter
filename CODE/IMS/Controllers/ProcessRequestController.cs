@@ -17,6 +17,27 @@ namespace IMS.Controllers
 {
     public class ProcessRequestController : CoreController
     {
+        public ActionResult Index(string code)
+        {
+            var role = GetCurrentUserRole();
+
+            //neu la kh, se co username kh
+            var customer = Constants.Test.CUSTOMER_MANHNH;
+            var data = new NotificationViewModel();
+
+            //do du lieu vao filter
+            data.FilterByRequestType = RequestTypeBLO.Current.GetAll()
+                .Select(x => new SelectListItem { Value = x.RequestTypeCode, Text = x.RequestTypeName })
+                .ToList();
+            data.FilterByStatus = StatusBLO.Current.GetStatusByObject(Constants.Object.OBJECT_REQUEST)
+                .Select(x => new SelectListItem { Value = x.StatusCode, Text = x.StatusName })
+                .ToList();
+
+            data.NotificationList = RequestBLO.Current.ListNotification(role, customer);
+            return View(data);
+        }
+        
+
         [HttpGet]
         public ActionResult Detais(string rType, string rCode)
         {

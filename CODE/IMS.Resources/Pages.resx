@@ -162,4 +162,7 @@
   <data name="ServerIndex" xml:space="preserve">
     <value>List of Servers</value>
   </data>
+  <data name="RequestRentRack" xml:space="preserve">
+    <value>Request Rent Rack</value>
+  </data>
 </root>

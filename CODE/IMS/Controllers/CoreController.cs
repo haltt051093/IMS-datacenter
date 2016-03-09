@@ -9,7 +9,33 @@ namespace IMS.Controllers
 {
     public class CoreController : Controller
     {
-        public bool IsAuthorized()
+        protected string GetCurrentUserRole()
+        {
+            var result = string.Empty;
+            if (User == null)
+            {
+                return result;
+            }
+            else if (User.IsInRole(Constants.Role.MANAGER))
+            {
+                result = Constants.Role.SHIFT_HEAD;
+            }
+            else if (User.IsInRole(Constants.Role.SHIFT_HEAD))
+            {
+                result = Constants.Role.SHIFT_HEAD;
+            }
+            if (User.IsInRole(Constants.Role.STAFF))
+            {
+                result = Constants.Role.STAFF;
+            }
+            if (User.IsInRole(Constants.Role.CUSTOMER))
+            {
+                result = Constants.Role.CUSTOMER;
+            }
+            return result;
+        }
+
+        protected bool IsAuthorized()
         {
             var activeGroup = AssignedShiftBLO.Current.GetActiveGroup();
             var account = (Account)Session[Constants.Session.USER_LOGIN];

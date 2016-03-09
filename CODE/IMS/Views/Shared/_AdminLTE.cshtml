@@ -40,14 +40,14 @@
 <body class="skin-blue">
     <!-- header logo: style can be found in header.less -->
     <header class="header">
-        @{ Html.RenderAction("Header", "Home", new { role = ViewBag.Role }); }
+        @{ Html.RenderAction("Header", "Home"); }
     </header>
     <div class="wrapper row-offcanvas row-offcanvas-left">
         <!-- Left side column. contains the logo and sidebar -->
         <aside class="left-side sidebar-offcanvas">
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">
-                @{ Html.RenderAction("Sidebar", "Home", new { role = ViewBag.Role }); }
+                @{ Html.RenderAction("Sidebar", "Home"); }
             </section>
             <!-- /.sidebar -->
         </aside>
