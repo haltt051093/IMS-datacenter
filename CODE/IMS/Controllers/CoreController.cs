@@ -24,7 +24,17 @@ namespace IMS.Controllers
 
         protected void Alert(string message)
         {
-            TempData["Message"] = message;
+            Alert("danger", message, null);
+        }
+
+        protected void Success(string message)
+        {
+            Alert("success", message, null);
+        }
+
+        protected void Info(string message)
+        {
+            Alert("info", message, null);
         }
 
         protected void Alert(ExtendedResultModel q)

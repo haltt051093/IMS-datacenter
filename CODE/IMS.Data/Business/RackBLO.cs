@@ -33,19 +33,13 @@ namespace IMS.Data.Business
             dao = RackDAO.Current;
         }
 
-        public bool AddRackAndLocation(Rack entry)
+        public void AddRackAndLocation(Rack entry)
         {
             var rackCode = GenerateCode();
             entry.RackCode = rackCode;
             entry.AddedDate = DateTime.Now;
             entry.StatusCode = Constants.StatusCode.RACK_AVAILABLE;
-            var exist = dao.Query(x => x.RackName == entry.RackName).FirstOrDefault();
-            if (exist != null)
-            {
-                return false;
-            }
-            else
-            {
+
                 dao.Add(entry);
                 var locations = new List<Location>();
                 for (int i = 1; i < 43; i++)
@@ -58,8 +52,7 @@ namespace IMS.Data.Business
                     locations.Add(item);
                 }
                 LocationBLO.Current.AddMany(locations);
-                return true;
-            }
+      
 
         }
 

@@ -111,16 +111,25 @@
                         <h3>Select Network IP to deactivate:</h3>
                     </div>
                     <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                       
+
                         @for (int i = 0; i < Model.NetworkIPs.Count; i++)
                         {
                             <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                                @Html.HiddenFor(model=>model.NetworkIPs[i].Value)
+                                @Html.HiddenFor(model => model.NetworkIPs[i].Value)
                                 @Html.CheckBoxFor(model => model.NetworkIPs[i].Selected)
-                                @Html.DisplayFor(model=>model.NetworkIPs[i].Text)
+                                @Html.DisplayFor(model => model.NetworkIPs[i].Text)
                             </div>
                         }
 
+                    </div>
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                            @Html.LabelFor(model => model.Confirm)
+                        </div>
+                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                            @Html.TextBoxFor(model => model.Confirm, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS, placeholder="Input OK to Confirm"})
+                            @Html.ValidationMessageFor(model => model.Confirm)
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
