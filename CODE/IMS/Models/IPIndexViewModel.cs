@@ -31,6 +31,9 @@ namespace IMS.Models
         [Remote("CheckIPAddress", "Validate", ErrorMessage = "IP Address is existed", HttpMethod = "POST")]
         public string Address { get; set; }
         public int Netmask { get; set; }
+        [Required(ErrorMessage = "Please confirm OK to deactivate!")]
+        [RegularExpression("^OK",ErrorMessage = "Please input OK!")]
+        public string Confirm { get; set; }
 
         public string Description { get; set; }
         public int Id { get; set; }
