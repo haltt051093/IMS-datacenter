@@ -29,26 +29,29 @@
 
 
 <section>
-    @using (Html.BeginForm("SearchByRole", "Account", FormMethod.Post))
+    @if (User.IsInRole("Manager"))
     {
-        <div class="form-group col-md-12">
-            <div class="col-md-4">
-                <select name="roleName">
-                    <option value="Get All">Get All</option>
-                    <option value="Customer">Customer</option>
-                    <option value="Manager">Manager</option>
-                    <option value="Shift Head">Shift Head</option>
-                    <option value="Staff">Staff</option>
-                </select>
+        using (Html.BeginForm("SearchByRole", "Account", FormMethod.Post))
+        {
+            <div class="form-group col-md-12">
+                <div class="col-md-4">
+                    <select name="roleName">
+                        <option value="Get All">Get All</option>
+                        <option value="Customer">Customer</option>
+                        <option value="Manager">Manager</option>
+                        <option value="Shift Head">Shift Head</option>
+                        <option value="Staff">Staff</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary pull-left"> Filter</button>
             </div>
-            <button type="submit" class="btn btn-primary pull-left"> Filter</button>
-        </div>
+        }
     }
     @if (ViewBag.CreateStaff != null)
     {
         @ViewBag.CreateStaff;
     }
-    
+
 </section>
 <!-- Main content -->
 <section class="content">
@@ -316,7 +319,7 @@
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
@@ -392,7 +395,7 @@
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">

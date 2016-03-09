@@ -165,6 +165,12 @@ namespace IMS.Controllers
                 List<Account> lstall = AccountDAO.Current.GetAll();
 
                 var account = Mapper.Map<AccountCreateViewModel, Account>(accountCreateViewModel);
+                if (CheckExistUsername(account.Username))
+                {
+                    //put code handle can not create user with this username, trung ten
+                    
+                    return RedirectToAction("Index");
+                }
                 var checkStaff = lstall.Where(c => c.GroupCode == account.GroupCode && c.Role == "Staff").Where(c => c.Status == true).Count();
                 var checkShift = lstall.Where(c => c.GroupCode == account.GroupCode && c.Role == "Shift Head").Where(c => c.Status == true).Count();
                 var FailCreate = "";
@@ -215,6 +221,11 @@ namespace IMS.Controllers
             {
                 // su dung mapping cho list
                 var account = Mapper.Map<AccountCreateViewModel, Account>(accountCreateViewModel);
+                if (CheckExistUsername(account.Username))
+                {
+                    //put code handle can not create user with this username
+                    return RedirectToAction("Index");
+                }
                 account.Role = Constants.Role.CUSTOMER;
                 account.GroupCode = Constants.GroupName.NO_GROUP;
                 AccountBLO.Current.Add(account);
