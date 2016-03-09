@@ -1,0 +1,18 @@
+diff a/CODE/IMS/Controllers/AccountController.cs b/CODE/IMS/Controllers/AccountController.cs	(rejected hunks)
+@@ -34,6 +34,16 @@
+                     return View("Login");
+                 }
+             }
++            if (!message.IsEmpty())
++            {
++                if (("staff").Equals(message))
++                {
++                    ViewBag.CreateStaff = "This group exist two Staff";
++                }
++                else
++                {
++                    ViewBag.CreateStaff = "This group exist one Shift Head";
++                }
+ 
+             }
+             var data = new AccountIndexViewModel();
