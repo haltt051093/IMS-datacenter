@@ -44,7 +44,11 @@
             <button type="submit" class="btn btn-primary pull-left"> Filter</button>
         </div>
     }
-    @Html.Raw(ViewBag.CreateStaff)
+    @if (ViewBag.CreateStaff != null)
+    {
+        Html.Raw(ViewBag.CreateStaff);
+    }
+    
 </section>
 <!-- Main content -->
 <section class="content">
