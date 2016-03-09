@@ -39,6 +39,7 @@ namespace IMS.Core
             public const string IP_USED = "STATUS11";
             public const string IP_BLOCKED = "STATUS12";
             public const string IP_RESERVE = "STATUS32";
+            public const string IP_DEACTIVATE = "STATUS35";
 
             public const string LOCATION_FREE = "STATUS13";
             public const string LOCATION_USED = "STATUS14";

@@ -397,6 +397,11 @@ namespace IMS.Controllers
             ////add server attributes
             //ServerAttributeBLO.Current.AddMany(serverAttributes);
 
+            //Xoa session server
+            if (Session[Constants.Session.REQUEST_CODE] != null)
+            {
+                Session[Constants.Session.REQUEST_CODE] = null;
+            }
             //Notification
             var notif = Mapper.Map<RequestAddServerViewModel, NotificationExtendedModel>(viewmodel);
             notif.RequestTypeName = Constants.RequestTypeName.SERVER_ADD;
