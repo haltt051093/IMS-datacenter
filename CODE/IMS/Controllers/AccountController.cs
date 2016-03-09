@@ -173,6 +173,8 @@ namespace IMS.Controllers
                     if (checkStaff < 2)
                     {
                         AccountBLO.Current.Add(account);
+                        //send account info to login to the system
+                        AccountBLO.Current.SendAccountInfo(account);
                     }
                     else
                     {
@@ -184,6 +186,8 @@ namespace IMS.Controllers
                     if (checkShift < 1)
                     {
                         AccountBLO.Current.Add(account);
+                        //send account info to login to the system
+                        AccountBLO.Current.SendAccountInfo(account);
                     }
                     else
                     {
@@ -191,8 +195,7 @@ namespace IMS.Controllers
                     }
                 }
 
-                //send account info to login to the system
-                //bool result = AccountBLO.Current.SendAccountInfo(account);
+                
                 //if (result)
                 //{
                 //    //ModelState.AddModelError("", "Send mail successfully");
@@ -216,12 +219,7 @@ namespace IMS.Controllers
                 account.GroupCode = Constants.GroupName.NO_GROUP;
                 AccountBLO.Current.Add(account);
                 //send account info to login to the system
-                //bool result = AccountBLO.Current.SendAccountInfo(account);
-                //if (result)
-                //{
-                //    //ModelState.AddModelError("", "Send mail successfully");
-                //    return RedirectToAction("Index");
-                //}
+                AccountBLO.Current.SendAccountInfo(account);
                 return RedirectToAction("Index");
             }
             return View(accountCreateViewModel);
@@ -266,7 +264,26 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult EditStaff(AccountCreateViewModel viewmodel)
         {
+            List<Account> lstall = AccountDAO.Current.GetAll();
             Account account = Mapper.Map<AccountCreateViewModel, Account>(viewmodel);
+            var checkStaff = lstall.Where(c => c.GroupCode == account.GroupCode && c.Role == "Staff").Where(c => c.Status == true).Count();
+            var checkShift = lstall.Where(c => c.GroupCode == account.GroupCode && c.Role == "Shift Head").Where(c => c.Status == true).Count();
+            if (("Staff").Equals(account.Role))
+            {
+                if (checkStaff >= 2 && account.Status == true)
+                {
+                    account.Status = false;
+                    //put code hande show message cant update status this staff
+                }
+            }
+            else
+            {
+                if (checkShift >= 1 && account.Status == true)
+                {
+                    account.Status = false;
+                    //put code hande show message cant update status this headshift
+                }
+            }
             AccountBLO.Current.AddOrUpdate(account);
 
             string role = "";
@@ -391,6 +408,17 @@ namespace IMS.Controllers
             FormsAuthentication.SignOut();
             Session[Constants.Session.USER_LOGIN] = null;
             return RedirectToAction("Index", "Home");
+        }
+
+        private Boolean CheckExistUsername(string username)
+        {
+            List<Account> lstall = AccountDAO.Current.GetAll();
+            var count = lstall.Where(c => c.Username == username).Count();
+            if (count > 0)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
