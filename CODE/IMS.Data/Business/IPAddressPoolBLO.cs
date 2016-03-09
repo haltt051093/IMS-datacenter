@@ -81,22 +81,19 @@ namespace IMS.Data.Business
             return dao.GetGatewayByServerCode(q);
         }
 
-        public void UpdateIP(string ServerCode, string NewIP)
+        public void UpdateIP(string serverCode, string newIP)
         {
-
-                var server = ServerBLO.Current.GetByServerCode(ServerCode);
-                server.DefaultIP = NewIP;
-                ServerBLO.Current.Update(server);
-                var si = new ServerIP();
-                si.CurrentIP = NewIP;
-                si.ServerCode = ServerCode;
-                ServerIPBLO.Current.Add(si);
-                var ip = dao.Query(x => x.IPAddress == NewIP).FirstOrDefault();
-                ip.IsDefault = true;
-                ip.StatusCode = Constants.StatusCode.IP_USED;
-                dao.Update(ip);
-              
-
+            var server = ServerBLO.Current.GetByServerCode(serverCode);
+            server.DefaultIP = newIP;
+            ServerBLO.Current.Update(server);
+            var si = new ServerIP();
+            si.CurrentIP = newIP;
+            si.ServerCode = serverCode;
+            ServerIPBLO.Current.Add(si);
+            var ip = dao.GetByKeys(new IPAddressPool { IPAddress = newIP });
+            ip.IsDefault = true;
+            ip.StatusCode = Constants.StatusCode.IP_USED;
+            dao.Update(ip);
         }
 
         public void UpdateStatusIp(string status, string ip)

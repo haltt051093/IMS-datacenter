@@ -7,13 +7,12 @@ namespace IMS.Data.ViewModels
     [NotMapped]
     public class IPExtendedModel : IPAddressPool
     {
-        public IPExtendedModel()
+        public IPAddressPool _IP
         {
-        }
-
-        public IPExtendedModel(IPAddressPool ip)
-        {
-            ObjectExpress.CopyValues<IPAddressPool>(ip, this);
+            set
+            {
+                ObjectExpress.CopyValues<IPAddressPool>(value, this);
+            }
         }
 
         public string StatusName { get; set; }

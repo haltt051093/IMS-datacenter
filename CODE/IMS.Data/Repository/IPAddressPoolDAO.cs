@@ -67,8 +67,9 @@ namespace IMS.Data.Repository
                             on ip.StatusCode equals st.StatusCode into ipst
                         from subIpst in ipst.DefaultIfEmpty()
                         where subIpst.StatusCode == Constants.StatusCode.IP_AVAILABLE
-                        select new IPExtendedModel(ip)
+                        select new IPExtendedModel
                         {
+                            _IP = ip,
                             StatusCode = subIpst.StatusCode
                         };
             var result = query.ToList();
@@ -94,8 +95,9 @@ namespace IMS.Data.Repository
 
             var query = from ips in Table()
                         where ips.Gateway == ip.Gateway && ips.StatusCode == Constants.StatusCode.IP_AVAILABLE
-                        select new IPExtendedModel(ips)
+                        select new IPExtendedModel
                         {
+                            _IP = ips,
                             IPAddress = ips.IPAddress
                         };
             result = query.ToList();
