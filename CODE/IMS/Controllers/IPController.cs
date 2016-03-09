@@ -103,12 +103,13 @@ namespace IMS.Controllers
                             
                         }
                     }
-                }
+                    Alert("Deactivate IP Address Range","Successfully",null,true);
+                return RedirectToAction("Index2");
+            }
                 else
                 {
                     var ips = IPAddressPoolBLO.Current.GenerateIP(iivm.Address, iivm.Netmask);
-                    var gateway = IPAddressPoolBLO.Current.GenerateIP(iivm.Address, iivm.Netmask).FirstOrDefault().Gateway;
-                    var exist = IPAddressPoolDAO.Current.Query(x => x.Gateway == gateway);
+
                     int k = ips.Count - 1;
                     ips[k].StatusCode = Constants.StatusCode.IP_RESERVE;
 
@@ -125,20 +126,15 @@ namespace IMS.Controllers
 
 
                     }
-                    if (exist.Count > 0)
-                    {
-                        Alert("The Network Address was existed. Please try again!");
-                    }
-                    else
-                    {
+
                         IPAddressPoolBLO.Current.AddIP(ips);
-                        Alert("New IP Addresses added successfully!");
+                        Alert("","New IP Addresses added Successfully",null,true);
                         return RedirectToAction("Index2");
-                    }
+                    
                 }
             
 
-            return RedirectToAction("Index2");
+           
         }
         public ActionResult AssignIP(string servercode, string GatewaySearch)
         {
