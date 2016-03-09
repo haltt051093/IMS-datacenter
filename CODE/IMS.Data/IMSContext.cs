@@ -50,6 +50,7 @@ namespace IMS.Data
             modelBuilder.Entity<RackOfCustomer>();
             modelBuilder.Entity<TempRequest>();
             modelBuilder.Entity<Note>();
+            modelBuilder.Entity<Notification>();
         }
 
         public System.Data.Entity.DbSet<IMS.Data.Models.Server> Servers { get; set; }

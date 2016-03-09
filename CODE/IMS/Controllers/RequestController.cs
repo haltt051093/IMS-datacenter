@@ -23,11 +23,18 @@ namespace IMS.Controllers
 
         public ActionResult Index()
         {
-            var data = new RequestIndexViewModel();
-            var requestTypes = RequestTypeBLO.Current.GetAll();
-            data.RequestTypes = requestTypes
-                .Select(x => new SelectListItem { Text = x.RequestTypeName, Value = x.RequestTypeCode })
-                .ToList();
+            //var data = new RequestIndexViewModel();
+            //var requestTypes = RequestTypeBLO.Current.GetAll();
+            //data.RequestTypes = requestTypes
+            //    .Select(x => new SelectListItem { Text = x.RequestTypeName, Value = x.RequestTypeCode })
+            //    .ToList();
+            //return View(data);
+
+            //lay request theo nhom, 1 request la 
+            // trong cai request, moi object gom 1 request o trang thai som nhat, va list nhung request o trang thai cu
+            var request = LogChangedContentBLO.Current.GetAllRequest();
+            var data = new RequestHistoryViewModel();
+            data.Request = request;
             return View(data);
         }
 
@@ -152,16 +159,6 @@ namespace IMS.Controllers
         }
         #endregion
 
-        public ActionResult History()
-        {
-            //lay request theo nhom, 1 request la 
-            // trong cai request, moi object gom 1 request o trang thai som nhat, va list nhung request o trang thai cu
-            var request = LogChangedContentBLO.Current.GetAllRequest();
-            var data = new RequestHistoryViewModel();
-            data.Request = request;
-            return View(data);
-        }
-
         public ActionResult EditRequestHistory(int? id)
         {
             if (id == null)
@@ -185,7 +182,7 @@ namespace IMS.Controllers
             Request request = Mapper.Map<RequestCreateViewModel, Request>(requestViewmodel);
 
             RequestBLO.Current.AddOrUpdate(request);
-            return RedirectToAction("RequestHistory", "Request");
+            return RedirectToAction("Index", "Request");
         }
 
         #region Process Request

@@ -164,7 +164,7 @@ namespace IMS.Core
             // luu server chuyen tu location nao sang location nao
             public const string LOG_UPDATE_VALUE_SERVERLOCATION = "UVALSERLOC";
             // luu servercode cua request duoc add vao
-            public const string LOG_ADD_SERVER = "ASERVER";
+            public const string LOG_ADD_SERVER = "ADDSERVER";
             //Customer rents rack
             public const string LOG_RENT_RACK = "RENTRACK";
             //Customer returns rack
