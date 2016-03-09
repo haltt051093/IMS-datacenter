@@ -22,7 +22,6 @@ namespace IMS.Controllers
         [Authorize(Roles = "Staff,Shift Head,Manager")]
         public ActionResult Index(string role, string roleSearch, string message)
         {
-            ViewBag.CreateStaff = null;
             if (role == null)
             {
                 if (Session[Constants.Session.USER_LOGIN] != null)
@@ -37,15 +36,15 @@ namespace IMS.Controllers
                 }
             }
             {
+                ViewBag.CreateStaff = null;
                 if (("staff").Equals(message))
                 {
                     ViewBag.CreateStaff = "This group exist two Staff";
                 }
-                else
+                else if(("shifthead").Equals(message))
                 {
                     ViewBag.CreateStaff = "This group exist one Shift Head";
                 }
-
             }
             var data = new AccountIndexViewModel();
             //data.Accounts = AccountBLO.Current.GetAllAccount();
@@ -104,15 +103,6 @@ namespace IMS.Controllers
             return View(data);
         }
 
-        public ActionResult Login2()
-        {
-            return View();
-        }
-
-        public ActionResult ViewProfile2()
-        {
-            return View();
-        }
         [AllowAnonymous]
         public ActionResult Login()
         {
