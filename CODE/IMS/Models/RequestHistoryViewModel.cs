@@ -7,9 +7,9 @@ namespace IMS.Models
     {
         public RequestHistoryViewModel()
         {
-            Request = new List<RequestExtendedModel>();
+            Request = new List<LogExtentedModel>();
         }
 
-        public List<RequestExtendedModel> Request { get; set; }
+        public List<LogExtentedModel> Request { get; set; }
     }
 }
