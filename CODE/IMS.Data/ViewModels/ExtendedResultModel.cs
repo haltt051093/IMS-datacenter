@@ -17,7 +17,7 @@ namespace IMS.Data.ViewModels
         {
             get
             {
-                object result = this.Result;
+                var result = this.Result;
                 if (result == null)
                     return (Type) null;
                 return result.GetType();

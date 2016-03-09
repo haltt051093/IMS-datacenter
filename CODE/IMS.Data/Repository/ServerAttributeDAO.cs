@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using IMS.Core;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.ViewModels;
@@ -46,7 +45,7 @@ namespace IMS.Data.Repository
 
         public void UpdateServerAttributeStatus(string serverCode, string status)
         {
-            ServerAttribute server = Query(x => x.ServerCode == serverCode).FirstOrDefault();
+            var server = Query(x => x.ServerCode == serverCode).FirstOrDefault();
             if (server != null)
             {
                 server.StatusCode = status;

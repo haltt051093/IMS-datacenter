@@ -200,7 +200,7 @@ namespace IMS.Data.Repository
         //add new server
         public string AddServer(Server passServer)
         {
-            Server server = passServer;
+            var server = passServer;
             server.ServerCode = GenerateCode();
             server.Customer = Constants.Test.CUSTOMER_MANHNH;
             server.StatusCode = Constants.StatusCode.SERVER_WAITING;
@@ -233,7 +233,7 @@ namespace IMS.Data.Repository
         //change server status
         public void UpdateServerStatus(string serverCode, string status)
         {
-            Server server = Query(x => x.ServerCode == serverCode).FirstOrDefault();
+            var server = Query(x => x.ServerCode == serverCode).FirstOrDefault();
             if (server != null)
             {
                 server.StatusCode = status;

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using IMS.Core;
@@ -131,7 +130,7 @@ namespace IMS.Data.Business
                 IPAddressPoolBLO.Current.UpdateStatusIp(Constants.StatusCode.IP_AVAILABLE, item.old);
 
                 //Add log trang thai IP moi
-                LogChangedContent logIp = new LogChangedContent
+                var logIp = new LogChangedContent
                 {
                     RequestCode = requestCode,
                     TypeOfLog = Constants.TypeOfLog.LOG_CHANGE_IP,
@@ -144,7 +143,7 @@ namespace IMS.Data.Business
                 //}
 
                 //Add log trang thai IP cu
-                LogChangedContent logPreIp = new LogChangedContent
+                var logPreIp = new LogChangedContent
                 {
                     RequestCode = requestCode,
                     TypeOfLog = Constants.TypeOfLog.LOG_CHANGE_IP,

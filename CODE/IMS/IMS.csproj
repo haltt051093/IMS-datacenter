@@ -1014,7 +1014,7 @@
     <Content Include="Views\ProcessRequest\BringServerAwayInfo.cshtml" />
     <Content Include="Views\Request\ChangeIP.cshtml" />
     <Content Include="Views\ProcessRequest\ChangeIPInfo.cshtml" />
-    <Content Include="Views\Request\RequestHistory.cshtml" />
+    <Content Include="Views\Request\History.cshtml" />
     <Content Include="Views\Request\RentRack.cshtml" />
     <Content Include="Views\ProcessRequest\RentRackInfo.cshtml" />
     <Content Include="Views\Request\ReturnIP.cshtml" />

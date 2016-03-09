@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using IMS.Core;
 using IMS.Data.Generic;
@@ -76,13 +75,13 @@ namespace IMS.Data.Repository
 
         public List<LocationExtendedModel> GetRackOfCustomer(Server server)
         {
-            string query = @"select roc.RackCode from RackOfCustomer roc where roc.Customer = '" + server.Customer + @"'";
+            var query = @"select roc.RackCode from RackOfCustomer roc where roc.Customer = '" + server.Customer + @"'";
             return RawQuery<LocationExtendedModel>(query, new object[] { });
         }
 
         public List<RackOfCustomerExtendedModel> GetAllRackOfCustomer()
         {
-            string query = @"select roc.*,l.RackUnit,l.ServerCode,s.StatusName,r.RackName,k.StatusName as RackStatus, ser.DefaultIP
+            var query = @"select roc.*,l.RackUnit,l.ServerCode,s.StatusName,r.RackName,k.StatusName as RackStatus, ser.DefaultIP
                             from  RackOfCustomer as roc, Status as s, Status as k, Rack as r,Location as l
 							left join Server as ser on ser.ServerCode = l.ServerCode
                             where l.RackCode = roc.RackCode and l.StatusCode = s.StatusCode and r.RackCode=l.RackCode and k.StatusCode = roc.StatusCode";

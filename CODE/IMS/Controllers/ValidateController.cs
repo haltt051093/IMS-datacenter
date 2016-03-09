@@ -16,7 +16,7 @@ namespace IMS.Controllers
         [HttpPost]
         public JsonResult CheckIPAddress(string Address)
         {
-            var existing = IPAddressPoolBLO.Current.GetByIP(new IPAddressPool {IPAddress = Address});
+            var existing = IPAddressPoolBLO.Current.GetByModel(new IPAddressPool {IPAddress = Address});
             return Json(existing == null);
         }
     }
