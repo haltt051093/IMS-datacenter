@@ -34,7 +34,6 @@ namespace IMS.Controllers
                     return View("Login");
                 }
             }
-            if (!message.IsEmpty())
             {
                 if (("staff").Equals(message))
                 {
