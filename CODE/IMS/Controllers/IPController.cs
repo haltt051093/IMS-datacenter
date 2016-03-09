@@ -46,44 +46,11 @@ namespace IMS.Controllers
             data.IPs = ips;
             return View(data);
         }
-        // GET: IP
-        //public ActionResult Index(string GatewaySearch, string StatusSearch)
-        //{
-        //    var ips = IPAddressPoolBLO.Current.GetAllIP();
-        //    var data = new IPIndexViewModel();
 
-        //    var status = new List<string>();
-        //    var currentstatus = IPAddressPoolBLO.Current.GetIPStatus().ToList();
-        //    status.AddRange(currentstatus.Distinct());
-        //    ViewBag.StatusSearch = new SelectList(status);
-
-        //    var gateways = new List<string>();
-        //    var currentgateway = ips.OrderBy(x => x.Gateway).Select(x => x.Gateway).ToList();
-        //    gateways.AddRange(currentgateway.Distinct());
-        //    ViewBag.GatewaySearch = new SelectList(gateways);
-
-        //    if (!String.IsNullOrEmpty(StatusSearch))
-        //    {
-        //        ips = ips.Where(st => st.StatusName.Trim() == StatusSearch.Trim()).ToList();
-        //    }
-
-        //    if (!String.IsNullOrWhiteSpace(GatewaySearch))
-        //    {
-        //        ips = ips.Where(r => r.Gateway.Trim() == GatewaySearch.Trim()).ToList();
-        //    }
-        //    data.IPs = ips;
-        //    return View(data);
-        //}
-        //public ActionResult CreateIP()
-        //{
-        //    return View();
-        //}
 
         [HttpPost]
         public ActionResult Index2(IPIndexViewModel iivm)
         {
-            
-
                 if (iivm.Action == "Deactive")
                 {
                     for (int i = 0; i < iivm.NetworkIPs.Count; i++)
@@ -103,7 +70,7 @@ namespace IMS.Controllers
                             
                         }
                     }
-                    Alert("Deactivate IP Address Range");
+                    Success("Deactivate IP Address Range Successfully!");
                 return RedirectToAction("Index2");
             }
                 else
@@ -123,135 +90,13 @@ namespace IMS.Controllers
                         {
                             ips[i].StatusCode = Constants.StatusCode.IP_AVAILABLE;
                         }
-
-
                     }
-
                         IPAddressPoolBLO.Current.AddIP(ips);
-                        Alert("New IP Addresses added Successfully");
-                        return RedirectToAction("Index2");
-                    
+                        Success("New IP Addresses added successfully!");
+                        return RedirectToAction("Index2");    
                 }
-            
-
-           
-        }
-        public ActionResult AssignIP(string servercode, string GatewaySearch)
-        {
-            //IP = "192.168.0.1";
-            //request = "Change";
-            //request = "AddIPForNewServer";
-            //request = "AssignMoreIP";
-            servercode = "BJIWEHDHQ";
-            //if (request == "Change")
-            //{
-            //    string gateway = IPAddressPoolBLO.Current.GetGatewayByIP(IP);
-            //    var data = new IPIndexViewModel();
-            //    data.IPs = IPAddressPoolBLO.Current.GetIPSameGateway(gateway);
-            //    data.OldIP = IP;
-            //    data.Request = request;
-            //    data.ListNewIP = data.IPs.Select(x => new SelectListItem
-            //    {
-            //        Value = x.IPAddress
-            //    }).ToList();
-            //    return View(data);
-            //}
-            //else if (request == "AddIPForNewServer")
-            //{
-                var data = new IPIndexViewModel();
-                var ips = IPAddressPoolBLO.Current.GetIPAvailable();
-                data.ServerCode = servercode;
-                data.ListNewIP = data.IPs.Select(x => new SelectListItem
-                {
-                    Value = x.IPAddress
-                }).ToList();
-                var gateways = new List<string>();
-                var currentgateway = ips.OrderBy(x => x.Gateway).Select(x => x.Gateway).ToList();
-                gateways.AddRange(currentgateway.Distinct());
-                ViewBag.GatewaySearch = new SelectList(gateways);
-
-                if (!String.IsNullOrWhiteSpace(GatewaySearch))
-                {
-                    ips = ips.Where(r => r.Gateway.Trim() == GatewaySearch.Trim()).ToList();
-                }
-                data.IPs = ips;
-                return View(data);
-            //}
-            //else
-            //{
-            //    var data = new IPIndexViewModel();
-            //    string gateway = IPAddressPoolBLO.Current.GetGatewayByServerCode(servercode);
-            //    data.IPs = IPAddressPoolBLO.Current.GetIPSameGateway(gateway);
-            //    data.Request = request;
-            //    data.ServerCode = servercode;
-            //    data.ListNewIP = data.IPs.Select(x => new SelectListItem
-            //    {
-            //        Value = x.IPAddress
-            //    }).ToList();
-            //    return View(data);
-            //}
         }
 
-        [HttpPost]
-        public ActionResult AssignIP(IPIndexViewModel ivm)
-        {
-            var listNewIP = new List<string>();
-            if (ivm.Request.Equals("Change"))
-            {
-                if (ivm.NewIP == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-            }
-            if (ivm.Request.Equals("AddIPForNewServer"))
-            {
-                if (ivm.NewIP == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-            }
-            if (ivm.Request.Equals("AssignMoreIP"))
-            {
-                for (int i = 0; i < ivm.ListNewIP.Count; i++)
-                {
-                    if (ivm.ListNewIP[i].Selected == true)
-                    {
-                        listNewIP.Add(ivm.ListNewIP[i].Value);
-                    }
-                }
-                int j = 0;
-                for (int i = 0; i < ivm.ListNewIP.Count; i++)
-                {
-                    if (ivm.ListNewIP[i].Selected == true)
-                    {
-                        j++;
-                    }
-                }
-                if (j == 0)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-            }
-
-
-            IPAddressPoolBLO.Current.UpdateIP(ivm.ServerCode, ivm.NewIP);
-            return View();
-
-        }
-        //public ActionResult ChangeStatus(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    IPAddressPool ip = IPAddressPoolBLO.Current.GetById(id);
-        //    if (ip == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    var ipviewmodel = Mapper.Map<IPAddressPool, IPChangeStatusViewModel>(ip);
-        //    return View(ipviewmodel);
-        //}
         [HttpPost]
         public ActionResult ChangeIPStatus(IPIndexViewModel iivm)
         {
@@ -271,7 +116,7 @@ namespace IMS.Controllers
                 log.LogTime = DateTime.Now;
                 log.Description = iivm.Description;
                 LogChangedContentDAO.Current.Add(log);
-                Alert("Block IP successfully");
+                Success("Block IP successfully");
                 return RedirectToAction("Index2");
             }
             else
@@ -290,7 +135,7 @@ namespace IMS.Controllers
                 log.LogTime = DateTime.Now;
                 log.PreviousId = blockip.Id;
                 LogChangedContentDAO.Current.Add(log);
-                Alert("Unblock IP successfully");
+                Success("Unblock IP successfully");
                 return RedirectToAction("Index2");
             }
             return RedirectToAction("Index2");
