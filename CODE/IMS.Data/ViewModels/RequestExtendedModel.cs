@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using IMS.Data.Models;
 
 namespace IMS.Data.ViewModels
@@ -7,7 +8,9 @@ namespace IMS.Data.ViewModels
     public class RequestExtendedModel : Request
     {
         public string StatusName { get; set; }
-
         public string RequestTypeName { get; set; }
+
+        public Request LastestStatusRequest { get; set; }
+        public List<Request> OldStatusRequests { get; set; }
     }
 }
