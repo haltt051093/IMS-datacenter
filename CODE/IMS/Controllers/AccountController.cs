@@ -19,8 +19,10 @@ namespace IMS.Controllers
 
     public class AccountController : CoreController
     {
-        public ActionResult Index2(string role, string roleSearch, string message)
+        [Authorize(Roles = "Staff,Shift Head,Manager")]
+        public ActionResult Index(string role, string roleSearch, string message)
         {
+            ViewBag.CreateStaff = null;
             if (role == null)
             {
                 if (Session[Constants.Session.USER_LOGIN] != null)
@@ -146,22 +148,22 @@ namespace IMS.Controllers
 
         [Authorize(Roles = "Staff,Shift Head,Manager")]
         // GET: Account
-        public ActionResult Index(string role)
-        {
-            return RedirectToAction("Index2", "Account");
-        }
+        //public ActionResult Index(string role)
+        //{
+        //    return RedirectToAction("Index", "Account");
+        //}
 
         [Authorize(Roles = "Manager")]
         // GET: Account/Create
         public ActionResult CreateCustomer()
         {
-            return View("Index2");
+            return View("Index");
         }
 
         [Authorize(Roles = "Manager")]
         public ActionResult CreateStaff()
         {
-            return View("Index2");
+            return View("Index");
         }
 
         // POST: Account/CreateStaff
@@ -200,13 +202,13 @@ namespace IMS.Controllers
                 }
 
                 //send account info to login to the system
-                bool result = AccountBLO.Current.SendAccountInfo(account);
-                if (result)
-                {
-                    //ModelState.AddModelError("", "Send mail successfully");
-                    //return RedirectToAction("Index2");
-                }
-                return RedirectToAction("Index2", new { message = FailCreate });
+                //bool result = AccountBLO.Current.SendAccountInfo(account);
+                //if (result)
+                //{
+                //    //ModelState.AddModelError("", "Send mail successfully");
+                //    //return RedirectToAction("Index2");
+                //}
+                return RedirectToAction("Index", new { message = FailCreate });
             }
             return View(accountCreateViewModel);
         }
@@ -224,13 +226,13 @@ namespace IMS.Controllers
                 account.GroupCode = Constants.GroupName.NO_GROUP;
                 AccountBLO.Current.Add(account);
                 //send account info to login to the system
-                bool result = AccountBLO.Current.SendAccountInfo(account);
-                if (result)
-                {
-                    //ModelState.AddModelError("", "Send mail successfully");
-                    return RedirectToAction("Index2");
-                }
-                return RedirectToAction("Index2");
+                //bool result = AccountBLO.Current.SendAccountInfo(account);
+                //if (result)
+                //{
+                //    //ModelState.AddModelError("", "Send mail successfully");
+                //    return RedirectToAction("Index");
+                //}
+                return RedirectToAction("Index");
             }
             return View(accountCreateViewModel);
         }
@@ -284,7 +286,7 @@ namespace IMS.Controllers
                 Account a = (Account)obj;
                 role = a.Role;
             }
-            return RedirectToAction("Index2", "Account", new { role = role });
+            return RedirectToAction("Index", "Account", new { role = role });
         }
 
         // POST: Account/Edit/5
@@ -292,7 +294,7 @@ namespace IMS.Controllers
         public ActionResult EditCustomer(AccountCreateViewModel viewmodel)
         {
             Account account = Mapper.Map<AccountCreateViewModel, Account>(viewmodel);
-            account.GroupCode = Constants.Role.CUSTOMER;
+            account.Role = Constants.Role.CUSTOMER;
             account.GroupCode = Constants.GroupName.NO_GROUP;
             AccountBLO.Current.AddOrUpdate(account);
 
@@ -303,7 +305,7 @@ namespace IMS.Controllers
                 Account a = (Account)obj;
                 role = a.Role;
             }
-            return RedirectToAction("Index2", "Account", new { role = role });
+            return RedirectToAction("Index", "Account", new { role = role });
         }
 
         //// GET: Account/Delete/5
@@ -357,7 +359,7 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult SearchByRole(string roleName)
         {
-            return RedirectToAction("Index2", "Account", new { roleSearch = roleName });
+            return RedirectToAction("Index", "Account", new { roleSearch = roleName });
         }
 
         public ActionResult GetChangePW()
