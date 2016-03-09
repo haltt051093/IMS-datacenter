@@ -103,7 +103,7 @@ namespace IMS.Controllers
                             
                         }
                     }
-                    Alert("Deactivate IP Address Range","Successfully",null,true);
+                    Alert("Deactivate IP Address Range");
                 return RedirectToAction("Index2");
             }
                 else
@@ -128,7 +128,7 @@ namespace IMS.Controllers
                     }
 
                         IPAddressPoolBLO.Current.AddIP(ips);
-                        Alert("","New IP Addresses added Successfully",null,true);
+                        Alert("New IP Addresses added Successfully");
                         return RedirectToAction("Index2");
                     
                 }
