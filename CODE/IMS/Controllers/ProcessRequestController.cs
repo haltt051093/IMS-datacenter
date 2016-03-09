@@ -18,7 +18,7 @@ namespace IMS.Controllers
     public class ProcessRequestController : CoreController
     {
         [HttpGet]
-        public ActionResult Detais(string rType, string rCode,string inform)
+        public ActionResult Detais(string rType, string rCode, string inform)
         {
 
             if (rType.Equals(Constants.RequestTypeCode.ADD_SERVER))
@@ -66,7 +66,8 @@ namespace IMS.Controllers
                     viewmodel.Servers = list;
                 }
                 var ips = IPAddressPoolBLO.Current.GetIPAvailable();
-                var listNetworkIP = ips.OrderBy(x => x.NetworkIP).GroupBy(x => x.NetworkIP).Select(x => x.FirstOrDefault());
+                var listNetworkIP =
+                    ips.OrderBy(x => x.NetworkIP).GroupBy(x => x.NetworkIP).Select(x => x.FirstOrDefault());
                 viewmodel.NetworkIPs = listNetworkIP.Select(x => new SelectListItem
                 {
                     Value = x.NetworkIP,
@@ -217,7 +218,8 @@ namespace IMS.Controllers
                 {
                     viewmodel = Mapper.Map<Request, RequestIPViewModel>(request);
                     //get servercode = requestcode
-                    var servercode = LogChangedContentBLO.Current.GetServerCodeByRequestCode(request.RequestCode).FirstOrDefault();
+                    var servercode =
+                        LogChangedContentBLO.Current.GetServerCodeByRequestCode(request.RequestCode).FirstOrDefault();
                     viewmodel.SelectedServer = servercode;
                     viewmodel.StatusName = StatusBLO.Current.GetStatusName(viewmodel.StatusCode);
                     var customer = AccountBLO.Current.GetAccountByCode(viewmodel.Customer);
@@ -241,6 +243,9 @@ namespace IMS.Controllers
                     var desc = JsonConvert.DeserializeObject<RequestDetailModel>(viewmodel.Description);
                     viewmodel.RackNumbers = desc.NumberOfRack;
                     viewmodel.Description = desc.Description;
+                    viewmodel.StatusName = StatusBLO.Current.GetStatusName(viewmodel.StatusCode);
+                    var customer = AccountBLO.Current.GetAccountByCode(viewmodel.Customer);
+                    viewmodel.CustomerName = customer.Fullname;
                     //list cot rows
                     var rows = RackBLO.Current.GetAllRowsOfRack();
                     var listRacks = new List<RackExtendedModel>();
@@ -276,7 +281,8 @@ namespace IMS.Controllers
                 //get request
                 var request = RequestBLO.Current.GetRequestByRequestCode(rCode);
                 //lay rack dang o trang thai returning cua khach hang cu the
-                var rackOfCustomer = RackOfCustomerBLO.Current.GetRacksOfCustomer(request.Customer, Constants.StatusCode.RACKOFCUSTOMER_RETURNING);
+                var rackOfCustomer = RackOfCustomerBLO.Current.GetRacksOfCustomer(request.Customer,
+                    Constants.StatusCode.RACKOFCUSTOMER_RETURNING);
                 viewmodel = Mapper.Map<Request, RequestReturnRackViewModel>(request);
                 viewmodel.RackOfCustomer = rackOfCustomer.Select(x => new SelectListItem
                 {
@@ -290,15 +296,46 @@ namespace IMS.Controllers
             }
             return RedirectToAction("ListNotifications", "Request");
         }
-        //DOING
+
         [HttpPost]
         public ActionResult ProcessRequestRentRack(RequestRentRackViewModel viewmodel)
         {
-            //Lay rack selected
-
-            //Change request status, tu 
+            var listSelectedRacks = viewmodel.listRackByRows;
+            for (int i = 0; i < listSelectedRacks.Count; i++)
+            {
+                for (int j = 0; j < listSelectedRacks[i].RacksOfRow.Count; j++)
+                {
+                    var rack = listSelectedRacks[i].RacksOfRow[j];
+                    if (rack.Checked)
+                    {
+                        //khi khach hang rent rack --> update rack, rack status --> add rack of customer
+                        var rackCode = rack.RackCode;
+                        var rackOfCustomer = new RackOfCustomer
+                        {
+                            RackCode = rackCode,
+                            Customer = viewmodel.Customer,
+                            RentedDate = DateTime.Now,
+                            StatusCode = Constants.StatusCode.RACKOFCUSTOMER_CURRENT
+                        };
+                        RackOfCustomerBLO.Current.Add(rackOfCustomer);
+                        //update rack
+                        RackBLO.Current.UpdateRackStatus(rackCode, Constants.StatusCode.RACK_RENTED);
+                        //Add log Khach hang rent rack
+                        LogChangedContent logRack = new LogChangedContent
+                        {
+                            RequestCode = viewmodel.RequestCode,
+                            TypeOfLog = Constants.TypeOfLog.LOG_RENT_RACK,
+                            Object = Constants.Object.OBJECT_RACK,
+                            ChangedValueOfObject = rackCode,
+                            ObjectStatus = Constants.StatusCode.RACK_RENTED,
+                            Staff = viewmodel.StatusCode
+                        };
+                        LogChangedContentBLO.Current.AddLog(logRack);
+                    }
+                }
+            }
+            //Change request status
             RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);
-
             //Add Log Request
             LogChangedContent logRequest = new LogChangedContent
             {
@@ -310,33 +347,6 @@ namespace IMS.Controllers
                 Staff = viewmodel.StaffCode
             };
             LogChangedContentBLO.Current.AddLog(logRequest);
-
-            //Add log Khach hang rent rack
-            foreach (var item in viewmodel.SelectedRacks)
-            {
-                LogChangedContent logRack = new LogChangedContent
-                {
-                    RequestCode = viewmodel.RequestCode,
-                    TypeOfLog = Constants.TypeOfLog.LOG_RENT_RACK,
-                    Object = Constants.Object.OBJECT_RACK,
-                    ChangedValueOfObject = item,
-                    ObjectStatus = Constants.StatusCode.RACK_RENTED,
-                    Staff = viewmodel.StatusCode
-                };
-                LogChangedContentBLO.Current.AddLog(logRack);
-            }
-
-            // add vo bang rack of customer
-            foreach (var item in viewmodel.SelectedRacks)
-            {
-                var rackOfCustomer = new RackOfCustomer
-                {
-                    RackCode = item,
-                    Customer = viewmodel.Customer,
-                    RentedDate = DateTime.Now,
-                };
-                RackOfCustomerBLO.Current.Add(rackOfCustomer);
-            }
             Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("Index", "Home");
         }
@@ -541,7 +551,7 @@ namespace IMS.Controllers
                     wordApp.Application.Quit();
 
                 }
-                return RedirectToAction("Detais", new {rType = viewmodel.RequestType, rCode = viewmodel.RequestCode, inform="success"});
+                return RedirectToAction("Detais", new { rType = viewmodel.RequestType, rCode = viewmodel.RequestCode, inform = "success" });
             }
             else
             {
@@ -716,7 +726,7 @@ namespace IMS.Controllers
             Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("Index", "Home");
         }
-       
+
         [HttpPost]
         public ActionResult ProcessRequestChangeIp(RequestIPViewModel viewmodel)
         {

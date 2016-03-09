@@ -58,7 +58,7 @@ namespace IMS.Data.Repository
         public List<RackExtendedModel> GetRackByRow(string rowName)
         {
             var query = from r in Table()
-                        where r.RackName.StartsWith(rowName)
+                        where r.RackName.StartsWith(rowName) && r.StatusCode == Constants.StatusCode.RACK_AVAILABLE
                         select new RackExtendedModel()
                         {
                             StatusCode = r.StatusCode,
