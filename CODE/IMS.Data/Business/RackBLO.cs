@@ -6,6 +6,7 @@ using IMS.Core.Express;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.Repository;
+using IMS.Data.ViewModels;
 
 namespace IMS.Data.Business
 {
@@ -89,7 +90,7 @@ namespace IMS.Data.Business
             return dao.GetAllRowsOfRack();
         }
 
-        public List<Rack> GetRackByRow(string rowName)
+        public List<RackExtendedModel> GetRackByRow(string rowName)
         {
             return dao.GetRackByRow(rowName);
         }

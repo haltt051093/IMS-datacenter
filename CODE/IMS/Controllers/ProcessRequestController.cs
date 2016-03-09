@@ -161,7 +161,6 @@ namespace IMS.Controllers
                 }
                 return View("AssignIPInfo", viewmodel);
             }
-
             if (rType.Equals(Constants.RequestTypeCode.CHANGE_IP))
             {
                 RequestIPViewModel viewmodel = new RequestIPViewModel();
@@ -717,7 +716,7 @@ namespace IMS.Controllers
             Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("Index", "Home");
         }
-        //DOING
+       
         [HttpPost]
         public ActionResult ProcessRequestChangeIp(RequestIPViewModel viewmodel)
         {

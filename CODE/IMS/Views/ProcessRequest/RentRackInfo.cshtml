@@ -88,9 +88,12 @@
                                                 <dl>
                                                     @for (int j = 0; j < Model.listRackByRows[i].RacksOfRow.Count; j++)
                                                     {
-                                                        <dt>
+                                                        <dt  class="check" rack-code="@Model.listRackByRows[i].RacksOfRow[j].RackCode">
+                                                            <div>
+                                                                @Html.CheckBoxFor(modelItem => Model.listRackByRows[i].RacksOfRow[j].Checked)
+                                                            </div>
                                                             <div class="selectedRack">
-                                                                @Html.DisplayFor(model => Model.listRackByRows[i].RacksOfRow[j].RackName, new { htmlAttributes = new { @class = "form-control" } })
+                                                                @Html.DisplayFor(model => Model.listRackByRows[i].RacksOfRow[j].RackName, new {htmlAttributes = new {@class = "form-control"}})
                                                             </div>
                                                             @Html.HiddenFor(model => Model.listRackByRows[i].RacksOfRow[j].RackName, new {htmlAttributes = new {@class = "form-control"}})
                                                         </dt>

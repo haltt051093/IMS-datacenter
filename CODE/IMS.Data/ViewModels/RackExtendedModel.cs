@@ -7,7 +7,8 @@ namespace IMS.Data.ViewModels
     [NotMapped]
     public class RackExtendedModel : Rack
     {
-        public List<Rack> RacksOfRow { get; set; }
+        public List<RackExtendedModel> RacksOfRow { get; set; }
         public string RowName { get; set; }
+        public bool Checked { get; set; }
     }
 }

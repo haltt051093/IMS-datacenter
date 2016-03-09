@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using IMS.Core;
 using IMS.Data.Generic;
 using IMS.Data.Models;
+using IMS.Data.ViewModels;
 
 namespace IMS.Data.Repository
 {
@@ -42,7 +44,7 @@ namespace IMS.Data.Repository
         public List<string> GetAllRowsOfRack()
         {
             var allRacks = from r in Table()
-                select r.RackName;
+                           select r.RackName;
             var listRows = new List<string>();
             foreach (var item in allRacks)
             {
@@ -53,10 +55,18 @@ namespace IMS.Data.Repository
             return abc.ToList();
         }
 
-        public List<Rack> GetRackByRow(string rowName)
+        public List<RackExtendedModel> GetRackByRow(string rowName)
         {
-            var query = Table().Where(x => x.RackName.StartsWith(rowName));
+            var query = from r in Table()
+                        where r.RackName.StartsWith(rowName)
+                        select new RackExtendedModel()
+                        {
+                            StatusCode = r.StatusCode,
+                            RackCode = r.RackCode,
+                            RackName = r.RackName,
+                            RowName = rowName
+                        };
             return query.ToList();
-        } 
+        }
     }
 }
