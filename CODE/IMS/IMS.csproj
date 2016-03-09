@@ -910,6 +910,7 @@
     <Compile Include="ApiModels\DataTableModel.cs" />
     <Compile Include="ApiModels\TempRequest.cs" />
     <Compile Include="App_Start\AppConfig.cs" />
+    <Compile Include="Controllers\DeleteRequestController.cs" />
     <Compile Include="Controllers\ProcessRequestController.cs" />
     <Compile Include="Controllers\ValidateController.cs" />
     <Compile Include="Models\RequestHistoryViewModel.cs" />
@@ -1039,6 +1040,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\DeleteRequest\" />
     <Folder Include="Views\Shift\" />
     <Folder Include="Views\Validate\" />
   </ItemGroup>
