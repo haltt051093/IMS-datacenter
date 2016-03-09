@@ -152,15 +152,14 @@ namespace IMS.Controllers
         }
         #endregion
 
-        #region New View
-
-        public ActionResult RequestHistory()
+        public ActionResult History()
         {
+            //RequestBLO.Current.GetAllRequest();
             //lay request theo nhom, 1 request la 
             // trong cai request, moi object gom 1 request o trang thai som nhat, va list nhung request o trang thai cu
-            var request = RequestBLO.Current.GetAllRequest();
+            //var request = RequestBLO.Current.GetAllRequest();
             var data = new RequestHistoryViewModel();
-            data.Request = request;
+            //data.Request = request;
             return View(data);
         }
 
@@ -187,9 +186,8 @@ namespace IMS.Controllers
             Request request = Mapper.Map<RequestCreateViewModel, Request>(requestViewmodel);
 
             RequestBLO.Current.AddOrUpdate(request);
-            return RedirectToAction("History", "Request");
+            return RedirectToAction("RequestHistory", "Request");
         }
-        #endregion
 
         #region Process Request
         [HttpPost]

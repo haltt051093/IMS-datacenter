@@ -35,7 +35,7 @@ namespace IMS.Data.Repository
 
         public List<LocationExtendedModel> GetAllLocation()
         {
-            string query = @"select l.LocationCode,ser.ServerCode,ser.DefaultIP, l.RackUnit, s.StatusName,r.RackName,r.RackCode, ser.Id,r.StatusCode as RackStatus from Location as l
+            var query = @"select l.LocationCode,ser.ServerCode,ser.DefaultIP, l.RackUnit, s.StatusName,r.RackName,r.RackCode, ser.Id,r.StatusCode as RackStatus from Location as l
                             left join Status as s
                             on s.StatusCode = l.StatusCode
                             join Rack as r
@@ -47,7 +47,7 @@ namespace IMS.Data.Repository
 
         public List<LocationExtendedModel> GetRackValidPowerForNew(Server server)
         {
-            string query = @"select l.LocationCode, l.RackCode, l.RackUnit, s.Status,l.ServerCode, r.RackName
+            var query = @"select l.LocationCode, l.RackCode, l.RackUnit, s.Status,l.ServerCode, r.RackName
                             from rack as r left join
 	                            (select r.RackCode, sum(s.power / s.size) as UsedPower
 	                            from rack as r
@@ -69,7 +69,7 @@ namespace IMS.Data.Repository
 
         public List<LocationExtendedModel> GetCustomerRackValidPowerForNew(Server server)
         {
-            string query = @"select l.LocationCode, l.RackCode, l.RackUnit, s.StatusName, l.ServerCode, r.RackName
+            var query = @"select l.LocationCode, l.RackCode, l.RackUnit, s.StatusName, l.ServerCode, r.RackName
                             from rack as r left join
 	                            (select r.RackCode, sum(s.power / s.size) as UsedPower
 	                            from rack as r
@@ -92,7 +92,7 @@ namespace IMS.Data.Repository
 
         public List<LocationExtendedModel> GetRackValidPowerForChange(Server server)
         {
-            string query = @"select l.LocationCode, l.RackCode, l.RackUnit, s.StatusName,l.ServerCode,r.RackName
+            var query = @"select l.LocationCode, l.RackCode, l.RackUnit, s.StatusName,l.ServerCode,r.RackName
                             from rack as r left join
 	                            (select r.RackCode, sum(s.power / s.size) as UsedPower
 	                            from rack as r
@@ -113,7 +113,7 @@ namespace IMS.Data.Repository
 
         public List<LocationExtendedModel> GetCustomerRackValidPowerForChange(Server server)
         {
-            string query = @"select l.LocationCode, l.RackCode, l.RackUnit, s.StatusName, l.ServerCode,r.RackName
+            var query = @"select l.LocationCode, l.RackCode, l.RackUnit, s.StatusName, l.ServerCode,r.RackName
                             from rack as r left join
 	                            (select r.RackCode, sum(s.power / s.size) as UsedPower
 	                            from rack as r
@@ -135,7 +135,7 @@ namespace IMS.Data.Repository
 
         public LocationExtendedModel GetRackOfServer(Server server)
         {
-            string query =
+            var query =
                 @"select * from Server as s join Location l on s.ServerCode = l.ServerCode and s.ServerCode='" +
                 server.ServerCode + @"'";
             return RawQuery<LocationExtendedModel>(query, new object[] { }).FirstOrDefault();
@@ -143,7 +143,7 @@ namespace IMS.Data.Repository
 
         public List<string> GetLocationStatus()
         {
-            string query = @"select s.StatusName from Status as s
+            var query = @"select s.StatusName from Status as s
                            where s.Object = 'Location'";
             return RawQuery<string>(query, new object[] { });
         }
@@ -171,7 +171,7 @@ namespace IMS.Data.Repository
             var query = Query(x => x.ServerCode == serverCode);
             foreach (var item in query)
             {
-                Location location = item;
+                var location = item;
                 location.ServerCode = null;
                 location.StatusCode = Constants.StatusCode.LOCATION_FREE;
                 Update(location);

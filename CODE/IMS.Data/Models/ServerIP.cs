@@ -1,11 +1,9 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using IMS.Data.Generic;
 
 namespace IMS.Data.Models
 {
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-
     [Table("ServerIP")]
     public partial class ServerIP : BaseModel
     {

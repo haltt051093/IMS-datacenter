@@ -1,9 +1,8 @@
+using System.ComponentModel.DataAnnotations;
 using IMS.Data.Generic;
 
 namespace IMS.Data.Models
 {
-    using System.ComponentModel.DataAnnotations;
-
     public partial class Status : BaseModel
     {
         [StringLength(50)]

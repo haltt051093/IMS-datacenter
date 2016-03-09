@@ -18,7 +18,7 @@ namespace IMS.Controllers
     public class ProcessRequestController : CoreController
     {
         [HttpGet]
-        public ActionResult Detais(string rType, string rCode, string inform)
+        public ActionResult Detais(string rType, string rCode)
         {
 
             if (rType.Equals(Constants.RequestTypeCode.ADD_SERVER))
@@ -65,7 +65,7 @@ namespace IMS.Controllers
                     }
                     viewmodel.Servers = list;
                 }
-                var ips = IPAddressPoolBLO.Current.GetIPAvailable();
+                var ips = IPAddressPoolBLO.Current.GetAvailableIPs();
                 var listNetworkIP =
                     ips.OrderBy(x => x.NetworkIP).GroupBy(x => x.NetworkIP).Select(x => x.FirstOrDefault());
                 viewmodel.NetworkIPs = listNetworkIP.Select(x => new SelectListItem
@@ -73,10 +73,7 @@ namespace IMS.Controllers
                     Value = x.NetworkIP,
                     Text = "Network " + x.NetworkIP
                 }).ToList();
-                if (inform != null)
-                {
-                    viewmodel.inform = "Export Procedure Successfully!!";
-                }
+
                 return View("AddServerInfo", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.BRING_SERVER_AWAY))
@@ -128,7 +125,7 @@ namespace IMS.Controllers
                     if (listAvailableIps.Count > viewmodel.IpNumber)
                     {
                         //selected values
-                        var randomList = IPAddressPoolBLO.Current.SelectRandomIps(listAvailableIps, viewmodel.IpNumber);
+                        var randomList = IPAddressPoolBLO.Current.GetRandomIPs(listAvailableIps, viewmodel.IpNumber);
                         viewmodel.SelectedIps = randomList.Select(x => new SelectListItem
                         {
                             Value = x,
@@ -551,7 +548,8 @@ namespace IMS.Controllers
                     wordApp.Application.Quit();
 
                 }
-                return RedirectToAction("Detais", new { rType = viewmodel.RequestType, rCode = viewmodel.RequestCode, inform = "success" });
+                Success("Export Procedure Successfully!");
+                return RedirectToAction("Detais", new { rType = viewmodel.RequestType, rCode = viewmodel.RequestCode });
             }
             else
             {

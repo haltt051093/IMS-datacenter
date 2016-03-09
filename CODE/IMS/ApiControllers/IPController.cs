@@ -22,7 +22,7 @@ namespace IMS.ApiControllers
 
         public DataTableModel<IPExtendedModel> GetAvailableIP()
         {
-            var ips = IPAddressPoolBLO.Current.GetIPAvailable();
+            var ips = IPAddressPoolBLO.Current.GetAvailableIPs();
             var result = new DataTableModel<IPExtendedModel>();
             result.Data = ips;
             return result;

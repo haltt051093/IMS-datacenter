@@ -49,7 +49,7 @@ namespace IMS.Data.Repository
 
         public string AddRequest(string requestType, string customer, string description, DateTime? appointmenTime)
         {
-            Request request = new Request();
+            var request = new Request();
             request.RequestType = requestType;
             request.RequestCode = GenerateCode();
             request.RequestedTime = DateTime.Now;
@@ -72,7 +72,7 @@ namespace IMS.Data.Repository
         //Tien
         public List<ScheduleExtendedModel> GetSchedule()
         {
-            string query = @"select r.*,rt.RequestTypeName, s.StatusName from Request as r 
+            var query = @"select r.*,rt.RequestTypeName, s.StatusName from Request as r 
                             join Status as s 
                             on s.StatusCode = r.StatusCode
                             join RequestType as rt
@@ -82,7 +82,7 @@ namespace IMS.Data.Repository
         //Tien
         public List<ScheduleExtendedModel> GetNoteOfShift()
         {
-            string query = @"select distinct r.*,rt.RequestTypeName,s.StatusName,note.NoteContent from Request as r
+            var query = @"select distinct r.*,rt.RequestTypeName,s.StatusName,note.NoteContent from Request as r
                             join Status as s on s.StatusCode=r.StatusCode
                             join RequestType as rt on rt.RequestTypeCode = r.RequestType
                             left join(select * from Note as n 
@@ -104,7 +104,7 @@ namespace IMS.Data.Repository
         //Tien
         public List<ScheduleExtendedModel> GetNoteOfPreviousShift()
         {
-            string query = @"select distinct r.*,rt.RequestTypeName,s.StatusName,note.NoteContent from Request as r
+            var query = @"select distinct r.*,rt.RequestTypeName,s.StatusName,note.NoteContent from Request as r
                             join Status as s on s.StatusCode=r.StatusCode
                             join RequestType as rt on rt.RequestTypeCode = r.RequestType
                             left join(select * from Note as n 
@@ -163,7 +163,7 @@ namespace IMS.Data.Repository
                             (r.StatusCode == Constants.StatusCode.REQUEST_WAITING ||
                              r.StatusCode == Constants.StatusCode.REQUEST_PROCESSING ||
                              r.StatusCode == Constants.StatusCode.REQUEST_DONE ||
-                             r.StatusCode == Constants.StatusCode.REQUEST_REJECTED )
+                             r.StatusCode == Constants.StatusCode.REQUEST_REJECTED)
                         select new NotificationExtendedModel
                         {
                             RequestCode = r.RequestCode,
@@ -182,7 +182,7 @@ namespace IMS.Data.Repository
 
         public List<RequestExtendedModel> GetAllRequest()
         {
-            string query = @"select i.*,s.StatusName, r.RequestTypeName from Request as i
+            var query = @"select i.*,s.StatusName, r.RequestTypeName from Request as i
                             left join Status as s
                             on s.StatusCode = i.StatusCode
                             left join RequestType as r
@@ -190,7 +190,6 @@ namespace IMS.Data.Repository
             //
             return RawQuery<RequestExtendedModel>(query, new object[] { });
         }
-
 
         public Request GetRequestByRequestCode(string requestCode)
         {

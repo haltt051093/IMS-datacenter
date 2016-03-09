@@ -1,11 +1,4 @@
-﻿using IMS.Data.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using IMS.Core.Express;
+﻿using System.Collections.Generic;
 
 namespace IMS.Data.Generic
 {

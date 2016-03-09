@@ -22,7 +22,12 @@ namespace IMS.Data.Repository
 
         public override Group GetByKeys(Group entry)
         {
-            return Query(x => x.Id == entry.Id).FirstOrDefault();
+            var existing = Query(x => x.Id == entry.Id).FirstOrDefault();
+            if (existing == null)
+            {
+                existing = Query(x => x.GroupCode == entry.GroupCode).FirstOrDefault();
+            }
+            return existing;
         }
     }
 }

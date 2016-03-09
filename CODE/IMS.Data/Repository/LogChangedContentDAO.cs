@@ -31,7 +31,7 @@ namespace IMS.Data.Repository
 
         public void AddLog(LogChangedContent viewmodel)
         {
-            LogChangedContent log = viewmodel;
+            var log = viewmodel;
             log.LogTime = DateTime.Now;
             var existing = GetByKeys(log);
             if (existing == null)
@@ -70,7 +70,7 @@ namespace IMS.Data.Repository
                 && (x.ObjectStatus == Constants.StatusCode.REQUEST_SENDING
                 || x.ObjectStatus == Constants.StatusCode.REQUEST_WAITING
                 || x.ObjectStatus == Constants.StatusCode.REQUEST_PROCESSING)).Select(x => x.RequestCode);
-            List<RequestExtendedModel> requests = new List<RequestExtendedModel>();
+            var requests = new List<RequestExtendedModel>();
             //item la requestCode
             foreach (var item in query)
             {
@@ -92,7 +92,7 @@ namespace IMS.Data.Repository
 
         public List<LogChangedContent> GetBlockedIP(string IP)
         {
-            string query = @"select * from LogChangedContent as l, 
+            var query = @"select * from LogChangedContent as l, 
                             (
                             select MAX(l.LogTime)as maxtime from LogChangedContent as l where l.ChangedValueOfObject ='"+IP+@"'and l.TypeOfLog='BLOCKIP'
                             group by l.ChangedValueOfObject
@@ -103,7 +103,7 @@ namespace IMS.Data.Repository
 
         public List<LogChangeExtendModel> GetAllLogIP()
         {
-            string query = @"select l.*,m.LogTime as Unblocktime, datediff(day,l.LogTime,m.LogTime)as blockedtime, datediff(day,l.LogTime,CURRENT_TIMESTAMP) as blockedtimetonow
+            var query = @"select l.*,m.LogTime as Unblocktime, datediff(day,l.LogTime,m.LogTime)as blockedtime, datediff(day,l.LogTime,CURRENT_TIMESTAMP) as blockedtimetonow
                             from LogChangedContent as l
                             left join 
                             (select l.PreviousId,l.LogTime from LogChangedContent as l,(select l.Id from LogChangedContent as l) as k
@@ -111,6 +111,44 @@ namespace IMS.Data.Repository
                              on m.PreviousId=l.Id
                              where l.TypeOfLog = 'BLOCKIP' ";
             return RawQuery<LogChangeExtendModel>(query, new object[] {});
-        } 
+        }
+
+        public List<LogExtentedModel> GetAllRequest()
+        {
+            //string query = @"select i.*,s.StatusName, r.RequestTypeName from Request as i
+            //                left join Status as s
+            //                on s.StatusCode = i.StatusCode
+            //                left join RequestType as r
+            //                on r.RequestTypeCode = i.RequestType";
+            //lay list request co cung requestcode
+            var myList = LogChangedContentDAO.Current.Table().ToList();
+            var getRequestCodes = myList.GroupBy(x => x.RequestCode).Select(y => y.First()).ToList();
+            var list = new List<LogExtentedModel>();
+            //DOING
+            for (int i = 0; i < getRequestCodes.Count; i++)
+            {
+                //var requestCode = getRequestCodes[i].RequestCode;
+                //var allStatusOfRequest = LogChangedContentDAO.Current
+                //    .Query(x => x.RequestCode == requestCode && x.Object == Constants.Object.OBJECT_REQUEST)
+                //    .OrderByDescending(x => x.LogTime);
+
+                //var select = from
+                //var newest = allStatusOfRequest.First();
+                //var request = new LogExtentedModel();
+                //request.LastestStatusRequest = newest;
+                //if (allStatusOfRequest.Count() > 1)
+                //{
+                //    var others = allStatusOfRequest.Skip(0);
+                //    request.OldStatusRequests = others.ToList();
+                //}
+                //else
+                //{
+                //    request.OldStatusRequests = null;
+                //}
+                //list.Add(request);
+            }
+            return list;
+            //return RawQuery<RequestExtendedModel>(query, new object[] { });
+        }
     }
 }
