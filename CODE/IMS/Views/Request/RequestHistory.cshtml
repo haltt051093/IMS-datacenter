@@ -71,15 +71,15 @@
                 <tbody>
                     @foreach (var item in Model.Request)
                     {
-                        @*<tr>
+                        <tr>
                                 <td>
                                     @Html.ActionLink(item.LastestStatusRequest.RequestCode, "EditRequestHistory", new { id = item.Id })
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.LastestStatusRequest.)
+                                    @Html.DisplayFor(modelItem => item.LastestStatusRequest.RequestTypeName)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.RequestedTime)
+                                    @Html.DisplayFor(modelItem => item.LogTime)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.StatusName)
@@ -100,7 +100,7 @@
                                         </td>
                                     </tr>
                                 }
-                            }*@
+                            }
                     }
                 </tbody>
                 <tfoot>

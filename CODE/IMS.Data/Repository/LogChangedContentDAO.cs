@@ -127,25 +127,40 @@ namespace IMS.Data.Repository
             //DOING
             for (int i = 0; i < getRequestCodes.Count; i++)
             {
-                //var requestCode = getRequestCodes[i].RequestCode;
+                var requestCode = getRequestCodes[i].RequestCode;
                 //var allStatusOfRequest = LogChangedContentDAO.Current
                 //    .Query(x => x.RequestCode == requestCode && x.Object == Constants.Object.OBJECT_REQUEST)
                 //    .OrderByDescending(x => x.LogTime);
 
-                //var select = from
-                //var newest = allStatusOfRequest.First();
-                //var request = new LogExtentedModel();
-                //request.LastestStatusRequest = newest;
-                //if (allStatusOfRequest.Count() > 1)
-                //{
-                //    var others = allStatusOfRequest.Skip(0);
-                //    request.OldStatusRequests = others.ToList();
-                //}
-                //else
-                //{
-                //    request.OldStatusRequests = null;
-                //}
-                //list.Add(request);
+                var allStatusOfRequest = from sr in Current.Table()
+                    join rt in TypeOfLogDAO.Current.Table()
+                        on sr.TypeOfLog equals rt.TypeCode into srt
+                    from subsrt in srt.DefaultIfEmpty()
+                    join st in StatusDAO.Current.Table()
+                        on sr.ObjectStatus equals st.StatusCode into sstr
+                    from subsstr in sstr.DefaultIfEmpty()
+                    where sr.RequestCode == requestCode && sr.Object == Constants.Object.OBJECT_REQUEST
+                    orderby sr.LogTime descending
+                    select new LogExtentedModel()
+                    {
+                        LogTime = sr.LogTime,
+                        StatusName = subsstr.StatusName,
+                        RequestTypeName = subsrt.TypeName,
+                        RequestCode = sr.RequestCode,
+                    };
+                var newest = allStatusOfRequest.First();
+                var request = new LogExtentedModel();
+                request.LastestStatusRequest = newest;
+                if (allStatusOfRequest.Count() > 1)
+                {
+                    var others = allStatusOfRequest.Skip(0);
+                    request.OldStatusRequests = others.ToList();
+                }
+                else
+                {
+                    request.OldStatusRequests = null;
+                }
+                list.Add(request);
             }
             return list;
             //return RawQuery<RequestExtendedModel>(query, new object[] { });
