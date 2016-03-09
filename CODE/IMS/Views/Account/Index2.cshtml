@@ -1,5 +1,8 @@
-﻿@using IMS.Data.Business
+﻿@using System.Web.Mvc.Html
 @model AccountIndexViewModel
+
+@using IMS.Data.Business
+
 @{
     ViewBag.Title = "AccountPage";
     ViewBag.Role = "Shift Head";
@@ -412,9 +415,16 @@
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
 
         $('#example1').DataTable();
 
     });
 </script>
+
+
+
+
+
+
+
