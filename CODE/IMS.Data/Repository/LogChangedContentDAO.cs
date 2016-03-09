@@ -31,7 +31,7 @@ namespace IMS.Data.Repository
 
         public void AddLog(LogChangedContent viewmodel)
         {
-            LogChangedContent log = viewmodel;
+            var log = viewmodel;
             log.LogTime = DateTime.Now;
             var existing = GetByKeys(log);
             if (existing == null)
@@ -70,7 +70,7 @@ namespace IMS.Data.Repository
                 && (x.ObjectStatus == Constants.StatusCode.REQUEST_SENDING
                 || x.ObjectStatus == Constants.StatusCode.REQUEST_WAITING
                 || x.ObjectStatus == Constants.StatusCode.REQUEST_PROCESSING)).Select(x => x.RequestCode);
-            List<RequestExtendedModel> requests = new List<RequestExtendedModel>();
+            var requests = new List<RequestExtendedModel>();
             //item la requestCode
             foreach (var item in query)
             {
@@ -92,7 +92,7 @@ namespace IMS.Data.Repository
 
         public List<LogChangedContent> GetBlockedIP(string IP)
         {
-            string query = @"select * from LogChangedContent as l, 
+            var query = @"select * from LogChangedContent as l, 
                             (
                             select MAX(l.LogTime)as maxtime from LogChangedContent as l where l.ChangedValueOfObject ='"+IP+@"'and l.TypeOfLog='BLOCKIP'
                             group by l.ChangedValueOfObject
@@ -103,7 +103,7 @@ namespace IMS.Data.Repository
 
         public List<LogChangeExtendModel> GetAllLogIP()
         {
-            string query = @"select l.*,m.LogTime as Unblocktime, datediff(day,l.LogTime,m.LogTime)as blockedtime, datediff(day,l.LogTime,CURRENT_TIMESTAMP) as blockedtimetonow
+            var query = @"select l.*,m.LogTime as Unblocktime, datediff(day,l.LogTime,m.LogTime)as blockedtime, datediff(day,l.LogTime,CURRENT_TIMESTAMP) as blockedtimetonow
                             from LogChangedContent as l
                             left join 
                             (select l.PreviousId,l.LogTime from LogChangedContent as l,(select l.Id from LogChangedContent as l) as k

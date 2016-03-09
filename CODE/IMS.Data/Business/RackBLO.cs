@@ -48,7 +48,7 @@ namespace IMS.Data.Business
             {
                 dao.Add(entry);
                 var locations = new List<Location>();
-                for (int i = 1; i < 43; i++)
+                for (var i = 1; i < 43; i++)
                 {
                     var item = new Location();
                     item.LocationCode = LocationBLO.Current.GenerateCode();

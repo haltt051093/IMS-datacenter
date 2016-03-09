@@ -152,9 +152,7 @@ namespace IMS.Controllers
         }
         #endregion
 
-        #region New View
-
-        public ActionResult RequestHistory()
+        public ActionResult History()
         {
             //lay request theo nhom, 1 request la 
             // trong cai request, moi object gom 1 request o trang thai som nhat, va list nhung request o trang thai cu
@@ -189,7 +187,6 @@ namespace IMS.Controllers
             RequestBLO.Current.AddOrUpdate(request);
             return RedirectToAction("History", "Request");
         }
-        #endregion
 
         #region Process Request
         [HttpPost]

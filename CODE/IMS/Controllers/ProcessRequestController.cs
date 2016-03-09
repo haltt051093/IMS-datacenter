@@ -65,7 +65,7 @@ namespace IMS.Controllers
                     }
                     viewmodel.Servers = list;
                 }
-                var ips = IPAddressPoolBLO.Current.GetIPAvailable();
+                var ips = IPAddressPoolBLO.Current.GetAvailableIPs();
                 var listNetworkIP =
                     ips.OrderBy(x => x.NetworkIP).GroupBy(x => x.NetworkIP).Select(x => x.FirstOrDefault());
                 viewmodel.NetworkIPs = listNetworkIP.Select(x => new SelectListItem
@@ -128,7 +128,7 @@ namespace IMS.Controllers
                     if (listAvailableIps.Count > viewmodel.IpNumber)
                     {
                         //selected values
-                        var randomList = IPAddressPoolBLO.Current.SelectRandomIps(listAvailableIps, viewmodel.IpNumber);
+                        var randomList = IPAddressPoolBLO.Current.GetRandomIPs(listAvailableIps, viewmodel.IpNumber);
                         viewmodel.SelectedIps = randomList.Select(x => new SelectListItem
                         {
                             Value = x,

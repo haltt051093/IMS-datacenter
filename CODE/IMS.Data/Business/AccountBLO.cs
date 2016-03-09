@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net.Mail;
 using IMS.Core;
+using IMS.Core.Express;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.Repository;
@@ -32,9 +33,10 @@ namespace IMS.Data.Business
             dao = AccountDAO.Current;
         }
 
-        public virtual string GeneratePassword()
+        public string GeneratePassword()
         {
-            return dao.GeneratePassword();
+            var password = TextExpress.Randomize(10);
+            return password;
         }
 
         public List<AccountExtendedModel> GetAllAccount()
@@ -44,22 +46,22 @@ namespace IMS.Data.Business
 
         public bool SendAccountInfo(Account model)
         {
-            string smtpUsername = Constants.SendMail.FROM_EMAIL_USERNAME;
-            string smtpPassword = Constants.SendMail.FROM_EMAIL_PASSWORD;
-            string smtpHost = Constants.SendMail.SMTP_HOST;
-            int smtpPort = Constants.SendMail.SMTP_PORT;
-            string subject = Constants.SendMail.SUBJECT_NEWACCOUNT;
+            var smtpUsername = Constants.SendMail.FROM_EMAIL_USERNAME;
+            var smtpPassword = Constants.SendMail.FROM_EMAIL_PASSWORD;
+            var smtpHost = Constants.SendMail.SMTP_HOST;
+            var smtpPort = Constants.SendMail.SMTP_PORT;
+            var subject = Constants.SendMail.SUBJECT_NEWACCOUNT;
 
-            MailMessage mail = new MailMessage();
-            SmtpClient SmtpServer = new SmtpClient(smtpHost);
+            var mail = new MailMessage();
+            var SmtpServer = new SmtpClient(smtpHost);
 
             mail.From = new MailAddress(smtpUsername);
             mail.To.Add(model.Email);
             mail.Subject = subject;
             mail.IsBodyHtml = true;
-            string mainMessage = "Your account is: <br/>Username: <b>" + model.Username + "</b><br/> Password: <b>" + model.Password + "</b><br/>" +
+            var mainMessage = "Your account is: <br/>Username: <b>" + model.Username + "</b><br/> Password: <b>" + model.Password + "</b><br/>" +
                                  "Now you can use IMS-Datacenter website with this account at: <a href=# >IMS Datacenter</a> ";
-            string htmlBody =
+            var htmlBody =
                 string.Format("You've received an email from IMS Datacenter of QTSC<br/> " +
                               "We want to account that you registered successfully to our IMS system<br/>{0}",
                     mainMessage);
@@ -71,9 +73,9 @@ namespace IMS.Data.Business
             return true;
         }
 
-        public Account GetAccountByCode(string username)
+        public Account GetAccountByCode(string q)
         {
-            return dao.GetAccountByCode(username);
+            return dao.GetByKeys(new Account {Username = q});
         }
     }
 }

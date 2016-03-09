@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using IMS.Core;
-using IMS.Data.Business;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 
@@ -82,7 +80,7 @@ namespace IMS.Data.Repository
         public void ReturnAllIpOfServer(string serverCode)
         {
             var serverips = Current.Query(x => x.StatusCode == serverCode);
-            for (int i = 0; i < serverips.Count; i++)
+            for (var i = 0; i < serverips.Count; i++)
             {
                 serverips[i].StatusCode = Constants.StatusCode.SERVERIP_OLD;
                 Update(serverips[i]);

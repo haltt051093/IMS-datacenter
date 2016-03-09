@@ -159,7 +159,7 @@ namespace IMS.Controllers
             //else if (request == "AddIPForNewServer")
             //{
                 var data = new IPIndexViewModel();
-                var ips = IPAddressPoolBLO.Current.GetIPAvailable();
+                var ips = IPAddressPoolBLO.Current.GetAvailableIPs();
                 data.ServerCode = servercode;
                 data.ListNewIP = data.IPs.Select(x => new SelectListItem
                 {

@@ -25,10 +25,114 @@ namespace IMS.Data.Business
                 }
                 return instance;
             }
-        }
-        public string GenerateSubnetMask(int count)
+        }               
+
+        private IPAddressPoolBLO()
         {
-            var remain = count;
+            baseDao = IPAddressPoolDAO.Current;
+            dao = IPAddressPoolDAO.Current;
+
+        }
+
+        public void AddIP(List<IPAddressPool> entry)
+        {
+            var ip = new List<IPAddressPool>();
+            for (var i = 0; i < entry.Count; i++)
+            {
+                var item = new IPAddressPool();
+                item.IPAddress = entry[i].IPAddress;
+                item.Gateway = entry[i].Gateway;
+                item.RegisteredDate = DateTime.Now;
+                item.StatusCode = entry[i].StatusCode;
+                item.Subnetmask = entry[i].Subnetmask;
+                item.NetworkIP = entry[i].NetworkIP;
+                ip.Add(item);
+            }
+            IPAddressPoolBLO.Current.AddMany(ip);
+        }
+
+        public List<IPExtendedModel> GetAllIP()
+        {
+            return dao.GetAllIP();
+        }
+
+        public List<IPExtendedModel> GetIPsByGateway(string gateway)
+        {
+            return dao.GetIPSameGateway(gateway);
+        }
+
+        public List<IPExtendedModel> GetAvailableIPs()
+        {
+            return dao.GetIPAvailable();
+        }
+
+        public string GetGatewayByIP(string q)
+        {
+            var ip = dao.GetByKeys(new IPAddressPool {IPAddress = q});
+            if (ip != null)
+            {
+                return ip.Gateway;
+            }
+            return string.Empty;
+        }
+
+        public string GetGatewayByServerCode(string q)
+        {
+            return dao.GetGatewayByServerCode(q);
+        }
+
+        public void UpdateIP(string ServerCode, string NewIP)
+        {
+
+                var server = ServerBLO.Current.GetByServerCode(ServerCode);
+                server.DefaultIP = NewIP;
+                ServerBLO.Current.Update(server);
+                var si = new ServerIP();
+                si.CurrentIP = NewIP;
+                si.ServerCode = ServerCode;
+                ServerIPBLO.Current.Add(si);
+                var ip = dao.Query(x => x.IPAddress == NewIP).FirstOrDefault();
+                ip.IsDefault = true;
+                ip.StatusCode = Constants.StatusCode.IP_USED;
+                dao.Update(ip);
+              
+
+        }
+
+        public void UpdateStatusIp(string status, string ip)
+        {
+            var existing = dao.GetByKeys(new IPAddressPool {IPAddress = ip});
+            if (existing != null)
+            {
+                existing.StatusCode = status;
+                dao.Update(existing);
+            }
+        }
+
+        public List<IPExtendedModel> GetAvailableIpsSameGateway(string serverCode)
+        {
+            return dao.GetAvailableIpsSameGateway(serverCode);
+        }
+
+        public List<string> GetRandomIPs(List<IPExtendedModel> list, int number)
+        {
+            return dao.GetRandomIPs(list, number);
+        }
+
+        public void SetIpAvailable(string serverCode)
+        {
+            var serverips = ServerIPDAO.Current.Query(x => x.ServerCode == serverCode);
+            foreach (var item in serverips)
+            {
+                var ip = dao.GetByKeys(new IPAddressPool {IPAddress = item.CurrentIP});
+                ip.StatusCode = Constants.StatusCode.IP_AVAILABLE;
+                dao.Update(ip);
+            }
+        }
+
+        public string GenerateSubnetMask(int bitCount)
+        {
+            var remain = bitCount;
             var result = new List<string>();
             for (var i = 0; i < 4; i++)
             {
@@ -62,7 +166,7 @@ namespace IMS.Data.Business
 
             var headCount = (int)Math.Pow(2, bitMod);
             var headBase = (int)Math.Pow(2, 8 - bitMod);
-            for (int i = 0; i < headCount; i++)
+            for (var i = 0; i < headCount; i++)
             {
                 heads.Add(headBase * i);
             }
@@ -75,20 +179,20 @@ namespace IMS.Data.Business
             var loopCount = 0;
             var startIndex = 0;
 
-                var compareValue = ipTemplate.Fourth;
-                for (var i = 0; i < heads.Count - 1; i++)
+            var compareValue = ipTemplate.Fourth;
+            for (var i = 0; i < heads.Count - 1; i++)
+            {
+                if (heads[i] <= compareValue && compareValue < heads[i + 1])
                 {
-                    if (heads[i] <= compareValue && compareValue < heads[i + 1])
-                    {
-                        startIndex = heads[i];
-                        break;
-                    }
-                    else if (heads[i] <= compareValue && compareValue <= 255)
-                    {
-                        startIndex = heads[i + 1];
-                    }
+                    startIndex = heads[i];
+                    break;
                 }
-            for (int i = startIndex; i < 256 && loopCount < 2; i++)
+                else if (heads[i] <= compareValue && compareValue <= 255)
+                {
+                    startIndex = heads[i + 1];
+                }
+            }
+            for (var i = startIndex; i < 256 && loopCount < 2; i++)
             {
                 if (heads.Contains(i))
                 {
@@ -110,8 +214,8 @@ namespace IMS.Data.Business
                 }
 
             }
-            int count = 0;
-            for (int i = startIndex; i < 256 && count < 2; i++)
+            var count = 0;
+            for (var i = startIndex; i < 256 && count < 2; i++)
             {
                 if (heads.Contains(i))
                 {
@@ -129,7 +233,7 @@ namespace IMS.Data.Business
                     };
                     result.Add(ip);
                 }
-                if (heads.Contains(i)&& count<2)
+                if (heads.Contains(i) && count < 2)
                 {
                     ipTemplate.Fourth = i;
                     var ip = new IPAddressPool
@@ -141,106 +245,10 @@ namespace IMS.Data.Business
                     };
                     result.Add(ip);
                 }
-                    
-             }
-          
-            return result;
-        }
 
-        private IPAddressPoolBLO()
-        {
-            baseDao = IPAddressPoolDAO.Current;
-            dao = IPAddressPoolDAO.Current;
-
-        }
-
-        public void AddIP(List<IPAddressPool> entry)
-        {
-            var ip = new List<IPAddressPool>();
-            for (int i = 0; i < entry.Count; i++)
-            {
-                var item = new IPAddressPool();
-                item.IPAddress = entry[i].IPAddress;
-                item.Gateway = entry[i].Gateway;
-                item.RegisteredDate = DateTime.Now;
-                item.StatusCode = entry[i].StatusCode;
-                item.Subnetmask = entry[i].Subnetmask;
-                item.NetworkIP = entry[i].NetworkIP;
-                ip.Add(item);
             }
-            IPAddressPoolBLO.Current.AddMany(ip);
-        }
 
-        public List<IPExtendedModel> GetAllIP()
-        {
-            return dao.GetAllIP();
-        }
-
-        public string GetGatewayByServerCode(string servercode)
-        {
-            return dao.GetGatewayByServerCode(servercode);
-        }
-
-        public string GetGatewayByIP(string ip)
-        {
-            return dao.GetGatewayByIP(ip);
-        }
-
-        public List<IPExtendedModel> GetIPSameGateway(string gateway)
-        {
-            return dao.GetIPSameGateway(gateway);
-        }
-
-        public List<IPExtendedModel> GetIPAvailable()
-        {
-            return dao.GetIPAvailable();
-        }
-
-        public void UpdateIP(string ServerCode, string NewIP)
-        {
-
-                var server = ServerBLO.Current.GetByServerCode(ServerCode);
-                server.DefaultIP = NewIP;
-                ServerBLO.Current.Update(server);
-                ServerIP si = new ServerIP();
-                si.CurrentIP = NewIP;
-                si.ServerCode = ServerCode;
-                ServerIPBLO.Current.Add(si);
-                var ip = dao.Query(x => x.IPAddress == NewIP).FirstOrDefault();
-                ip.IsDefault = true;
-                ip.StatusCode = Constants.StatusCode.IP_USED;
-                dao.Update(ip);
-              
-
-        }
-
-        public IPAddressPool GetByIP(IPAddressPool entry)
-        {
-            return dao.Query(x => x.IPAddress == entry.IPAddress).FirstOrDefault();
-        }
-        public List<string> GetIPStatus()
-        {
-            return dao.GetIPStatus();
-        }
-
-        public void UpdateStatusIp(string status, string ip)
-        {
-            dao.UpdateStatusIp(status, ip);
-        }
-
-        public List<IPExtendedModel> GetAvailableIpsSameGateway(string serverCode)
-        {
-            return dao.GetAvailableIpsSameGateway(serverCode);
-        }
-
-        public List<string> SelectRandomIps(List<IPExtendedModel> list, int number)
-        {
-            return dao.SelectRandomIps(list, number);
-        }
-
-        public void SetIpAvailable(string serverCode)
-        {
-            dao.SetIpAvailable(serverCode);
+            return result;
         }
     }
 }

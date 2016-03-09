@@ -63,17 +63,17 @@ namespace IMS.Data.Business
 
         public ServerIP GetByIP(string ip)
         {
-            string query = @"select s.* from ServerIP as s where s.CurrentIP='" + ip + @"'";
+            var query = @"select s.* from ServerIP as s where s.CurrentIP='" + ip + @"'";
             return dao.RawQuery<ServerIP>(query, new object[] { }).FirstOrDefault();
         }
         public Server GetByServerCode(string servercode)
         {
-            string query = @"select s.* from Server as s where s.ServerCode='" + servercode + @"'";
+            var query = @"select s.* from Server as s where s.ServerCode='" + servercode + @"'";
             return dao.RawQuery<Server>(query, new object[] { }).FirstOrDefault();
         }
         public Server GetByDefaultIP(string defaultIP)
         {
-            string query = @"select s.* from Server as s where s.DefaultIP ='" + defaultIP + @"'";
+            var query = @"select s.* from Server as s where s.DefaultIP ='" + defaultIP + @"'";
             var server = dao.RawQuery<Server>(query, new object[] { }).FirstOrDefault();
             return server;
         }

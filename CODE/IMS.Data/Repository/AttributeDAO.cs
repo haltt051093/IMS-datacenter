@@ -1,9 +1,10 @@
 ﻿using System.Linq;
 using IMS.Data.Generic;
+using IMS.Data.Models;
 
 namespace IMS.Data.Repository
 {
-    public class AttributeDAO : BaseDAO<Models.Attribute>
+    public class AttributeDAO : BaseDAO<Attribute>
     {
         public static AttributeDAO instance;
 
@@ -19,9 +20,14 @@ namespace IMS.Data.Repository
             }
         }
 
-        public override Models.Attribute GetByKeys(Models.Attribute entry)
+        public override Attribute GetByKeys(Attribute entry)
         {
-            return Query(x => x.Id == entry.Id).FirstOrDefault();
+            var existing = Query(x => x.Id == entry.Id).FirstOrDefault();
+            if (existing == null)
+            {
+                existing = Query(x => x.AttributeCode == entry.AttributeCode).FirstOrDefault();
+            }
+            return existing;
         }
     }
 }

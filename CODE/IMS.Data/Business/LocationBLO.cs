@@ -31,9 +31,9 @@ namespace IMS.Data.Business
         {
             if (!request.Equals("Change"))
             {
-                List<Location> locations = dao.GetAll();
-                int exist = locations.IndexOf(dao.Query(x => x.LocationCode == LocationCode).FirstOrDefault());
-                for (int i = exist; i < (exist + size); i++)
+                var locations = dao.GetAll();
+                var exist = locations.IndexOf(dao.Query(x => x.LocationCode == LocationCode).FirstOrDefault());
+                for (var i = exist; i < (exist + size); i++)
                 {
                     if (locations[i].StatusCode.Equals(Constants.StatusCode.LOCATION_FREE))
                     {
@@ -50,18 +50,18 @@ namespace IMS.Data.Business
             }
             else
             {
-                List<Location> existing = dao.Query(x => x.ServerCode == ServerCode).ToList();
+                var existing = dao.Query(x => x.ServerCode == ServerCode).ToList();
                 if (existing.Count > 0)
                 {
-                    for (int i = 0; i < existing.Count; i++)
+                    for (var i = 0; i < existing.Count; i++)
                     {
                         existing[i].StatusCode = Constants.StatusCode.LOCATION_FREE;
                         existing[i].ServerCode = null;
                     }
 
-                    List<Location> locations = dao.GetAll();
-                    int exist = locations.IndexOf(dao.Query(x => x.LocationCode == LocationCode).FirstOrDefault());
-                    for (int i = exist; i < (exist + size); i++)
+                    var locations = dao.GetAll();
+                    var exist = locations.IndexOf(dao.Query(x => x.LocationCode == LocationCode).FirstOrDefault());
+                    for (var i = exist; i < (exist + size); i++)
                     {
                         if (locations[i].StatusCode.Equals(Constants.StatusCode.LOCATION_FREE))
                         {
@@ -164,8 +164,8 @@ namespace IMS.Data.Business
                     result.AddRange(allLocation.Where(x => x.RackCode == rackCode));
                 }
             }
-            int r = 0;
-            for (int i = 0; i < result.Count; i++)
+            var r = 0;
+            for (var i = 0; i < result.Count; i++)
             {
                 if (result[i].RackCode.Equals(dao.GetRackOfServer(server).RackCode))
                 {
