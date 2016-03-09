@@ -169,6 +169,15 @@ namespace IMS.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deactivate IP Address Range.
+        /// </summary>
+        public static string DeactivateIP {
+            get {
+                return ResourceManager.GetString("DeactivateIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Default IP Address.
         /// </summary>
         public static string DefaultIP {

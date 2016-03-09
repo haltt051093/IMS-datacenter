@@ -3,6 +3,7 @@
     ViewBag.Title = "RequestHistory";
     ViewBag.Role = "Customer";
 }
+<link href="~/Content/mystyle.css" rel="stylesheet" type="text/css" />
 <section class="content-header">
     <h1>
         View Request History
@@ -83,6 +84,9 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.StatusName)
                         </td>
+                    </tr>
+                    <tr>
+                        
                     </tr>
                 }
                 </tbody>

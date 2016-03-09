@@ -154,9 +154,10 @@ namespace IMS.Controllers
 
         #region New View
 
-        public ActionResult History()
+        public ActionResult RequestHistory()
         {
-            //var data = RequestDAO.Current.GetAll();
+            //lay request theo nhom, 1 request la 
+            // trong cai request, moi object gom 1 request o trang thai som nhat, va list nhung request o trang thai cu
             var request = RequestBLO.Current.GetAllRequest();
             var data = new RequestHistoryViewModel();
             data.Request = request;

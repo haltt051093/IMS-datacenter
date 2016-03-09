@@ -136,9 +136,9 @@ namespace IMS.Controllers
                 string role = o.Role;
                 if (role == "Customer")
                 {
-                    return RedirectToAction("ViewProfile", "Account", new { id = o.Id });
+                    return RedirectToAction("Index", "Home", new { id = o.Id });
                 }
-                return RedirectToAction("Index2", "Account", new { role = role });
+                return RedirectToAction("ListNotifications", "Request", new { role = role });
             }
             //else
             return View();

@@ -425,6 +425,7 @@
     <Content Include="Content\jQueryUI\jquery-ui-1.10.3.custom.min.css" />
     <Content Include="Content\jvectormap\jquery-jvectormap-1.2.2.css" />
     <Content Include="Content\morris\morris.css" />
+    <Content Include="Content\mystyle.css" />
     <Content Include="Content\site.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -1015,7 +1016,7 @@
     <Content Include="Views\ProcessRequest\BringServerAwayInfo.cshtml" />
     <Content Include="Views\Request\ChangeIP.cshtml" />
     <Content Include="Views\ProcessRequest\ChangeIPInfo.cshtml" />
-    <Content Include="Views\Request\History.cshtml" />
+    <Content Include="Views\Request\RequestHistory.cshtml" />
     <Content Include="Views\Request\RentRack.cshtml" />
     <Content Include="Views\ProcessRequest\RentRackInfo.cshtml" />
     <Content Include="Views\Request\ReturnIP.cshtml" />

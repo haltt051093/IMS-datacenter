@@ -11,6 +11,7 @@ using IMS.Core.Extensions;
 using IMS.Data.Business;
 using IMS.Data.Models;
 using IMS.Data.Repository;
+using IMS.Data.ViewModels;
 using IMS.Models;
 
 namespace IMS.Controllers
@@ -20,8 +21,10 @@ namespace IMS.Controllers
         public ActionResult Index2()
         {
             var ips = IPAddressPoolBLO.Current.GetAllIP();
+            var ipuse = ips.Select(x => x).Where(x => x.StatusCode != "STATUS35");
             var data = new IPIndexViewModel();
-            var listNetworkIP = ips.OrderBy(x => x.NetworkIP).GroupBy(x => x.NetworkIP).Select(x => x.FirstOrDefault());
+
+            var listNetworkIP = ipuse.OrderBy(x => x.NetworkIP).GroupBy(x => x.NetworkIP).Select(x => x.FirstOrDefault()).Where(x => x.NetworkIP!=null);
             data.NetworkIPs = listNetworkIP.Select(x => new SelectListItem
             {
                 Value = x.NetworkIP,
@@ -79,38 +82,62 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult Index2(IPIndexViewModel iivm)
         {
-            if (ModelState.IsValid)
-            { 
-                var ips = IPAddressPoolBLO.Current.GenerateIP(iivm.Address, iivm.Netmask);
-                var gateway = IPAddressPoolBLO.Current.GenerateIP(iivm.Address, iivm.Netmask).FirstOrDefault().Gateway;
-                var exist = IPAddressPoolDAO.Current.Query(x => x.Gateway == gateway);
-                int k = ips.Count - 1;
-                ips[k].StatusCode = Constants.StatusCode.IP_RESERVE;
             
-            for (int i = 0; i < ips.Count-1; i++)
+
+                if (iivm.Action == "Deactive")
                 {
-                    if (ips[i].IPAddress == ips[i].NetworkIP || ips[i].IPAddress == ips[i].Gateway)
+                    for (int i = 0; i < iivm.NetworkIPs.Count; i++)
                     {
-                        ips[i].StatusCode = Constants.StatusCode.IP_RESERVE;
+                        var item = iivm.NetworkIPs[i];
+                        if (item.Selected == true)
+                        {
+                            var listip = IPAddressPoolBLO.Current.GetAllIP();
+                            for (int j = 0; j < listip.Count; j++)
+                            {
+                                if (listip[j].NetworkIP == item.Value)
+                                {
+                                    listip[j].StatusCode = Constants.StatusCode.IP_DEACTIVATE;
+                                    IPAddressPoolDAO.Current.Update(listip[j]);
+                                }
+                            }
+                            
+                        }
                     }
-                    else
-                    {
-                        ips[i].StatusCode = Constants.StatusCode.IP_AVAILABLE;
-                    }
-                    
-                    
-                }
-                if (exist.Count > 0)
-                {
-                    Alert("The Network Address was existed. Please try again!");
                 }
                 else
                 {
-                    IPAddressPoolBLO.Current.AddIP(ips);
-                    Alert("New IP Addresses added successfully!");
-                    return RedirectToAction("Index2");
+                    var ips = IPAddressPoolBLO.Current.GenerateIP(iivm.Address, iivm.Netmask);
+                    var gateway = IPAddressPoolBLO.Current.GenerateIP(iivm.Address, iivm.Netmask).FirstOrDefault().Gateway;
+                    var exist = IPAddressPoolDAO.Current.Query(x => x.Gateway == gateway);
+                    int k = ips.Count - 1;
+                    ips[k].StatusCode = Constants.StatusCode.IP_RESERVE;
+
+                    for (int i = 0; i < ips.Count - 1; i++)
+                    {
+                        if (ips[i].IPAddress == ips[i].NetworkIP || ips[i].IPAddress == ips[i].Gateway)
+                        {
+                            ips[i].StatusCode = Constants.StatusCode.IP_RESERVE;
+                        }
+                        else
+                        {
+                            ips[i].StatusCode = Constants.StatusCode.IP_AVAILABLE;
+                        }
+
+
+                    }
+                    if (exist.Count > 0)
+                    {
+                        Alert("The Network Address was existed. Please try again!");
+                    }
+                    else
+                    {
+                        IPAddressPoolBLO.Current.AddIP(ips);
+                        Alert("New IP Addresses added successfully!");
+                        return RedirectToAction("Index2");
+                    }
                 }
-            }
+            
+
             return RedirectToAction("Index2");
         }
         public ActionResult AssignIP(string servercode, string GatewaySearch)

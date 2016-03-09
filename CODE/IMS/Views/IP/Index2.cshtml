@@ -15,6 +15,10 @@
     <div>
         <a class="btn btn-primary pull-left" data-toggle="modal" data-target="#addip-modal"><i class="fa fa-plus"></i> @Labels.AddIP</a>
     </div>
+   
+    <div>
+        <a class="btn btn-danger pull-left" data-toggle="modal" data-target="#deactivateip-modal"><i class="fa fa-minus"></i> @Labels.DeactivateIP</a>
+    </div>
     <div class="clearfix"></div>
     <div style="height: 10px"></div>
     <div class="row hide">
@@ -59,7 +63,6 @@
                     <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i> @Labels.AddIP</div>
                 </div>
                 <div class="modal-body">
-                   
                     <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
                         <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
                             @Html.LabelFor(model => model.Address)
@@ -77,20 +80,65 @@
                             @Html.DropDownListFor(model => model.Netmask, Model.ListNetmask, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                         </div>
                     </div>
+                    
+
                 </div>
                 <div class="modal-footer">
+                    <button type="submit" name="@Constants.FormAction.ACTION_NAME" value="Add" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        @Labels.DialogOK
+                    </button>
                     <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
                             data-dismiss="modal">
                         @Labels.DialogCancel
                     </button>
-                    <button type="submit" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                        @Labels.DialogOK
-                    </button>
+
                 </div>
             }
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<!-- DEACTIVATE IP MODAL -->
+<div id="deactivateip-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width: 300px">
+        <div class="modal-content">
+            @using (Html.BeginForm())
+            {
+                <div class="modal-header">
+                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i> @Labels.DeactivateIP</div>
+                </div>
+                <div class="modal-body">
+                    <div class="pull-left">
+                        <h3>Select Network IP to deactivate:</h3>
+                    </div>
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                       
+                        @for (int i = 0; i < Model.NetworkIPs.Count; i++)
+                        {
+                            <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                                @Html.HiddenFor(model=>model.NetworkIPs[i].Value)
+                                @Html.CheckBoxFor(model => model.NetworkIPs[i].Selected)
+                                @Html.DisplayFor(model=>model.NetworkIPs[i].Text)
+                            </div>
+                        }
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" name="@Constants.FormAction.ACTION_NAME" value="Deactive" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        @Labels.DialogOK
+                    </button>
+                    <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
+                            data-dismiss="modal">
+                        @Labels.DialogCancel
+                    </button>
+
+                </div>
+            }
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
 
 <div id="blockip-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
@@ -225,6 +273,9 @@
                     actionCell.html('');
                     break;
                 case '@Constants.StatusCode.IP_USED':
+                    actionCell.html('');
+                    break;
+                case '@Constants.StatusCode.IP_DEACTIVATE':
                     actionCell.html('');
                     break;
             }

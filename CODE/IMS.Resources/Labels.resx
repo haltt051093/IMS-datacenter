@@ -153,6 +153,9 @@
   <data name="Customer" xml:space="preserve">
     <value>Customer</value>
   </data>
+  <data name="DeactivateIP" xml:space="preserve">
+    <value>Deactivate IP Address Range</value>
+  </data>
   <data name="DefaultIP" xml:space="preserve">
     <value>Default IP Address</value>
   </data>

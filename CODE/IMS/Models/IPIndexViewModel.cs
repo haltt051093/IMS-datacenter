@@ -20,6 +20,7 @@ namespace IMS.Models
         public List<SelectListItem> NetworkIPs { get; set; }
         public List<SelectListItem> ListNetmask { get; set; } 
         public string NetworkIP { get; set; }
+        public string Action { get; set; }
 
         
         [Required(ErrorMessage = "Please input Network Address!")]
