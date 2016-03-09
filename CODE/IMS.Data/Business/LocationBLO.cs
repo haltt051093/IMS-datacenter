@@ -100,14 +100,14 @@ namespace IMS.Data.Business
             }
             return code;
         }
-        public List<LocationExtendedModel> GetAllLocation()
+        public List<LocationViewModel> GetAllLocation()
         {
             return dao.GetAllLocation();
         }
 
-        public List<LocationExtendedModel> GetChangeLocation(Server server)
+        public List<LocationViewModel> GetChangeLocation(Server server)
         {
-            var allLocation = new List<LocationExtendedModel>();
+            var allLocation = new List<LocationViewModel>();
 
             //Case: customer rent rack
             if (RackOfCustomerDAO.Current.GetRackOfCustomer(server).Count > 0)
@@ -155,7 +155,7 @@ namespace IMS.Data.Business
                 rackMaxSize[lastRackCode] = maxRackSize;
             }
 
-            var result = new List<LocationExtendedModel>();
+            var result = new List<LocationViewModel>();
             foreach (var rackCode in allRackCode)
             {
                 var maxSize = rackMaxSize[rackCode];
@@ -184,9 +184,9 @@ namespace IMS.Data.Business
 
         }
 
-        public List<LocationExtendedModel> GetNewLocation(Server server)
+        public List<LocationViewModel> GetNewLocation(Server server)
         {
-            var allLocation = new List<LocationExtendedModel>();
+            var allLocation = new List<LocationViewModel>();
             if (RackOfCustomerDAO.Current.GetRackOfCustomer(server).Count > 0)
             {
                 allLocation = dao.GetCustomerRackValidPowerForNew(server);
@@ -231,7 +231,7 @@ namespace IMS.Data.Business
                 rackMaxSize[lastRackCode] = maxRackSize;
             }
 
-            var result = new List<LocationExtendedModel>();
+            var result = new List<LocationViewModel>();
             foreach (var rackCode in allRackCode)
             {
                 var maxSize = rackMaxSize[rackCode];

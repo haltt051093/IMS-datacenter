@@ -135,7 +135,7 @@ namespace IMS.Controllers
                     viewmodel = Mapper.Map<Request, RequestIPViewModel>(request);
                     viewmodel.StatusName = StatusBLO.Current.GetStatusName(viewmodel.StatusCode);
                     //Lay so luong IP muon assign
-                    var reqDetail = JsonConvert.DeserializeObject<RequestDetailModel>(viewmodel.Description);
+                    var reqDetail = JsonConvert.DeserializeObject<RequestDetailViewModel>(viewmodel.Description);
                     viewmodel.IpNumber = reqDetail.NumberOfIp;
                     viewmodel.Description = reqDetail.Description;
                     //lay servercode, roi lay ip cua server do, tim nhung ip cung vung con lai
@@ -258,7 +258,7 @@ namespace IMS.Controllers
                     //Mapping
                     viewmodel = Mapper.Map<Request, RequestRentRackViewModel>(request);
                     //Lay so luong rack muon thue
-                    var desc = JsonConvert.DeserializeObject<RequestDetailModel>(viewmodel.Description);
+                    var desc = JsonConvert.DeserializeObject<RequestDetailViewModel>(viewmodel.Description);
                     viewmodel.RackNumbers = desc.NumberOfRack;
                     viewmodel.Description = desc.Description;
                     viewmodel.StatusName = StatusBLO.Current.GetStatusName(viewmodel.StatusCode);

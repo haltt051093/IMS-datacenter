@@ -914,6 +914,7 @@
     <Compile Include="Controllers\DeleteRequestController.cs" />
     <Compile Include="Controllers\ProcessRequestController.cs" />
     <Compile Include="Controllers\ValidateController.cs" />
+    <Compile Include="Models\ProcessRequestIndexModel.cs" />
     <Compile Include="Models\RequestHistoryViewModel.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Models\ReportBlockIPViewModel.cs" />

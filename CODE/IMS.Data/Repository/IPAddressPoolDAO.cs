@@ -33,12 +33,12 @@ namespace IMS.Data.Repository
             }
             return existing;
         }
-        public List<IPExtendedModel> GetAllIP()
+        public List<IPAddressPoolExtendedModel> GetAllIP()
         {
             var query = @"select i.*,s.StatusName from IPAddressPool as i
                             left join Status as s
                             on s.StatusCode = i.StatusCode";
-            return RawQuery<IPExtendedModel>(query, new object[] { });
+            return RawQuery<IPAddressPoolExtendedModel>(query, new object[] { });
         }
 
         public string GetGatewayByServerCode(string q)
@@ -51,34 +51,34 @@ namespace IMS.Data.Repository
             return result;
         }
 
-        public List<IPExtendedModel> GetIPSameGateway(string gateway)
+        public List<IPAddressPoolExtendedModel> GetIPSameGateway(string gateway)
         {
             var query = @"select i.*, s.StatusName from IPAddressPool as i 
                             join Status as s
                             on s.StatusCode = i.StatusCode
                             and i.Gateway='" + gateway + @"'and i.StatusCode='STATUS10'";
-            return RawQuery<IPExtendedModel>(query, new object[] { });
+            return RawQuery<IPAddressPoolExtendedModel>(query, new object[] { });
         }
 
-        public List<IPExtendedModel> GetIPAvailable()
+        public List<IPAddressPoolExtendedModel> GetIPAvailable()
         {
             var query = from ip in Table()
                         join st in StatusDAO.Current.Table()
                             on ip.StatusCode equals st.StatusCode into ipst
                         from subIpst in ipst.DefaultIfEmpty()
                         where subIpst.StatusCode == Constants.StatusCode.IP_AVAILABLE
-                        select new IPExtendedModel
+                        select new IPAddressPoolExtendedModel
                         {
-                            _IP = ip,
+                            _IPAddressPool = ip,
                             StatusCode = subIpst.StatusCode
                         };
             var result = query.ToList();
             return result;
         }
 
-        public List<IPExtendedModel> GetAvailableIpsSameGateway(string serverCode)
+        public List<IPAddressPoolExtendedModel> GetAvailableIpsSameGateway(string serverCode)
         {
-            var result = new List<IPExtendedModel>();
+            var result = new List<IPAddressPoolExtendedModel>();
             //get default IP
             var defaultIp = ServerDAO.Current.Query(x => x.ServerCode == serverCode).Select(x => x.DefaultIP).FirstOrDefault();
             if (string.IsNullOrEmpty(defaultIp))
@@ -95,16 +95,16 @@ namespace IMS.Data.Repository
 
             var query = from ips in Table()
                         where ips.Gateway == ip.Gateway && ips.StatusCode == Constants.StatusCode.IP_AVAILABLE
-                        select new IPExtendedModel
+                        select new IPAddressPoolExtendedModel
                         {
-                            _IP = ips,
+                            _IPAddressPool = ips,
                             IPAddress = ips.IPAddress
                         };
             result = query.ToList();
             return result;
         }
 
-        public List<string> GetRandomIPs(List<IPExtendedModel> list, int number)
+        public List<string> GetRandomIPs(List<IPAddressPoolExtendedModel> list, int number)
         {
             var random = new Random();
             

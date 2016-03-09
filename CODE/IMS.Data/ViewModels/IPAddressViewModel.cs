@@ -3,18 +3,18 @@ using IMS.Core.Extensions;
 
 namespace IMS.Data.ViewModels
 {
-    public class IPAddressModel
+    public class IPAddressViewModel
     {
         public int First { get; set; }
         public int Second { get; set; }
         public int Third { get; set; }
         public int Fourth { get; set; }
 
-        public IPAddressModel()
+        public IPAddressViewModel()
         {
         }
 
-        public IPAddressModel(string address)
+        public IPAddressViewModel(string address)
         {
             var parts = address.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
             if (parts.Length > 0)

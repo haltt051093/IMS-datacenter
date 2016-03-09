@@ -63,7 +63,7 @@ namespace IMS.Controllers
             Alert("info", message, null);
         }
 
-        protected void Alert(ExtendedResultModel q)
+        protected void Alert(BaseResultModel q)
         {
             Alert(QueryResultToAlertType(q.Status), q.StatusText, q.Code, true);
         }

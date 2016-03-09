@@ -101,7 +101,7 @@ namespace IMS.Data.Repository
             return RawQuery<LogChangedContent>(query, new object[] { });
         }
 
-        public List<LogChangeExtendModel> GetAllLogIP()
+        public List<LogContentExtendedModel> GetAllLogIP()
         {
             var query = @"select l.*,m.LogTime as Unblocktime, datediff(day,l.LogTime,m.LogTime)as blockedtime, datediff(day,l.LogTime,CURRENT_TIMESTAMP) as blockedtimetonow
                             from LogChangedContent as l
@@ -110,7 +110,7 @@ namespace IMS.Data.Repository
                              where l.PreviousId = k.Id)as m
                              on m.PreviousId=l.Id
                              where l.TypeOfLog = 'BLOCKIP' ";
-            return RawQuery<LogChangeExtendModel>(query, new object[] {});
+            return RawQuery<LogContentExtendedModel>(query, new object[] {});
         }
 
         public List<LogExtentedModel> GetAllRequest()

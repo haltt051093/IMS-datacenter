@@ -294,7 +294,7 @@ namespace IMS.Data.Repository
                                      on l.RackCode equals r.RackCode into lr
                                  from sublr in lr.DefaultIfEmpty()
                                  where l.ServerCode == serverCode
-                                 select new LocationExtendedModel
+                                 select new LocationViewModel
                                  {
                                      RackName = sublr.RackName,
                                      RackUnit = l.RackUnit

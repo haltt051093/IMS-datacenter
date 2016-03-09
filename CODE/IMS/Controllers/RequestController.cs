@@ -244,7 +244,7 @@ namespace IMS.Controllers
         {
             viewmodel.Customer = Constants.Test.CUSTOMER_MANHNH;
             //Edit description
-            var requestDetail = new RequestDetailModel();
+            var requestDetail = new RequestDetailViewModel();
             requestDetail.NumberOfRack = viewmodel.RackNumbers;
             requestDetail.Description = viewmodel.Description;
             viewmodel.Description = JsonConvert.SerializeObject(requestDetail);
@@ -524,7 +524,7 @@ namespace IMS.Controllers
             if (ModelState.IsValid)
             {
                 //Edit description
-                var requestDetail = new RequestDetailModel();
+                var requestDetail = new RequestDetailViewModel();
                 if (!string.IsNullOrWhiteSpace(viewmodel.Description))
                 {
                     requestDetail.NumberOfIp = viewmodel.IpNumber;

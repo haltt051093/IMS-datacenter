@@ -8,19 +8,19 @@ namespace IMS.ApiControllers
 {
     public class LocationController : ApiController
     {
-        public DataTableModel<LocationExtendedModel> GetAll()
+        public DataTableModel<LocationViewModel> GetAll()
         {
             var locations = LocationBLO.Current.GetAllLocation();
-            var result = new DataTableModel<LocationExtendedModel>();
+            var result = new DataTableModel<LocationViewModel>();
             result.Data = locations;
             return result;
         }
 
-        public DataTableModel<LocationExtendedModel> GetLocationForChange(string code)
+        public DataTableModel<LocationViewModel> GetLocationForChange(string code)
         {
             var server = ServerBLO.Current.GetServerByCode(code, Constants.StatusCode.SERVER_RUNNING);
             var locations = LocationBLO.Current.GetChangeLocation(server);
-            var result = new DataTableModel<LocationExtendedModel>();
+            var result = new DataTableModel<LocationViewModel>();
             result.Data = locations;
             return result;
         } 

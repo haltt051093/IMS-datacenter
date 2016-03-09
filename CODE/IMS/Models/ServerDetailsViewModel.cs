@@ -12,7 +12,7 @@ namespace IMS.Models
         public List<ServerIP> CurrentIPs { get; set; } 
         public List<RackOfCustomerExtendedModel> Locations { get; set; }
 
-        public List<LocationExtendedModel> Locations1 { get; set; }
+        public List<LocationViewModel> Locations1 { get; set; }
         public string LocationCode { get; set; }
         public List<SelectListItem> Racks { get; set; }
         public string SelectedRack { get; set; }

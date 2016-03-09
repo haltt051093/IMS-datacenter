@@ -51,17 +51,17 @@ namespace IMS.Data.Business
             IPAddressPoolBLO.Current.AddMany(ip);
         }
 
-        public List<IPExtendedModel> GetAllIP()
+        public List<IPAddressPoolExtendedModel> GetAllIP()
         {
             return dao.GetAllIP();
         }
 
-        public List<IPExtendedModel> GetIPsByGateway(string gateway)
+        public List<IPAddressPoolExtendedModel> GetIPsByGateway(string gateway)
         {
             return dao.GetIPSameGateway(gateway);
         }
 
-        public List<IPExtendedModel> GetAvailableIPs()
+        public List<IPAddressPoolExtendedModel> GetAvailableIPs()
         {
             return dao.GetIPAvailable();
         }
@@ -106,12 +106,12 @@ namespace IMS.Data.Business
             }
         }
 
-        public List<IPExtendedModel> GetAvailableIpsSameGateway(string serverCode)
+        public List<IPAddressPoolExtendedModel> GetAvailableIpsSameGateway(string serverCode)
         {
             return dao.GetAvailableIpsSameGateway(serverCode);
         }
 
-        public List<string> GetRandomIPs(List<IPExtendedModel> list, int number)
+        public List<string> GetRandomIPs(List<IPAddressPoolExtendedModel> list, int number)
         {
             return dao.GetRandomIPs(list, number);
         }
@@ -168,7 +168,7 @@ namespace IMS.Data.Business
                 heads.Add(headBase * i);
             }
 
-            var ipTemplate = new IPAddressModel(ipSource);
+            var ipTemplate = new IPAddressViewModel(ipSource);
             var result = new List<IPAddressPool>();
             var subnetMask = GenerateSubnetMask(bitCount);
             var gateway = string.Empty;

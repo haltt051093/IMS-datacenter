@@ -35,7 +35,7 @@ namespace IMS.Data.Business
             return dao.GetBlockedIP(IP);
         }
 
-        public List<LogChangeExtendModel> GetAllLogIP()
+        public List<LogContentExtendedModel> GetAllLogIP()
         {
             return dao.GetAllLogIP();
         }  

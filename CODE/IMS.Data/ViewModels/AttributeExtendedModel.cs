@@ -1,11 +1,24 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using IMS.Core.Express;
+using IMS.Data.Models;
 
 namespace IMS.Data.ViewModels
 {
     [NotMapped]
-    public class AttributeExtendedModel : Models.Attribute
+    public class AttributeExtendedModel : Attribute
     {
-        public string AttributeName { get; set; }
+        public Attribute _Attribute
+        {
+            set
+            {
+                if (value == null)
+                {
+                    return;
+                }
+                ObjectExpress.CopyValues(value, this);
+            }
+        }
+
         public string AttributeValue { get; set; }
     }
 }

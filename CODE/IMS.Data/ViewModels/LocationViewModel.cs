@@ -1,9 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
+﻿
 namespace IMS.Data.ViewModels
 {
-    [NotMapped]
-    public class LocationExtendedModel
+    public class LocationViewModel
     {
         public int? Id { get; set; }
         public string LocationCode { get; set; }

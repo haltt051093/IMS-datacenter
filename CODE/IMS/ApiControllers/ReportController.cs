@@ -12,10 +12,10 @@ namespace IMS.ApiControllers
 {
     public class ReportController : ApiController
     {
-        public DataTableModel<LogChangeExtendModel> GetAll()
+        public DataTableModel<LogContentExtendedModel> GetAll()
         {
             var list = LogChangedContentBLO.Current.GetAllLogIP();
-            var result = new DataTableModel<LogChangeExtendModel>();
+            var result = new DataTableModel<LogContentExtendedModel>();
             result.Data = list;
             return result;
         }

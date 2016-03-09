@@ -12,18 +12,18 @@ namespace IMS.ApiControllers
 {
     public class IPController : ApiController
     {
-        public DataTableModel<IPExtendedModel> GetAll()
+        public DataTableModel<IPAddressPoolExtendedModel> GetAll()
         {
             var ips = IPAddressPoolBLO.Current.GetAllIP();
-            var result = new DataTableModel<IPExtendedModel>();
+            var result = new DataTableModel<IPAddressPoolExtendedModel>();
             result.Data = ips;
             return result;
         }
 
-        public DataTableModel<IPExtendedModel> GetAvailableIP()
+        public DataTableModel<IPAddressPoolExtendedModel> GetAvailableIP()
         {
             var ips = IPAddressPoolBLO.Current.GetAvailableIPs();
-            var result = new DataTableModel<IPExtendedModel>();
+            var result = new DataTableModel<IPAddressPoolExtendedModel>();
             result.Data = ips;
             return result;
         } 
