@@ -211,15 +211,9 @@ namespace IMS.Controllers
             }
 
 
-            bool x = IPAddressPoolBLO.Current.UpdateIP(ivm.ServerCode, ivm.OldIP, ivm.NewIP, listNewIP, ivm.Request);
-            if (x)
-            {
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                return RedirectToAction("AssignIP");
-            }
+            IPAddressPoolBLO.Current.UpdateIP(ivm.ServerCode, ivm.NewIP);
+            return View();
+
         }
         //public ActionResult ChangeStatus(int? id)
         //{

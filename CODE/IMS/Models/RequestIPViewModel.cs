@@ -28,5 +28,6 @@ namespace IMS.Models
         public string StatusCode { get; set; }
         public string StatusName { get; set; }
         public bool IsViewed { get; set; }
+        public int CountAvailableIps { get; set; }
     }
 }

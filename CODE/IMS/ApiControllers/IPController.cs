@@ -18,6 +18,14 @@ namespace IMS.ApiControllers
             var result = new DataTableModel<IPExtendedModel>();
             result.Data = ips;
             return result;
+        }
+
+        public DataTableModel<IPExtendedModel> GetAvailableIP()
+        {
+            var ips = IPAddressPoolBLO.Current.GetIPAvailable();
+            var result = new DataTableModel<IPExtendedModel>();
+            result.Data = ips;
+            return result;
         } 
     }
 }

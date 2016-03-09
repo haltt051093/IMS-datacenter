@@ -28,6 +28,17 @@ namespace IMS.Models
         public string StatusName { get; set; }
         public string StatusCode { get; set; }
         public string Description { get; set; }
+        public string RequestType { get; set; }
+
+        //IP
+        public List<SelectListItem> NetworkIPs { get; set; }
+        public string NetworkIP { get; set; }
+        public string NewIP { get; set; }
+        public string ServerCode { get; set; }
+
+        public string Button { get; set; }
+        public string inform { get; set; }
+
 
         public List<SelectListItem> ServerSizes { get; set; }
         public List<SelectListItem> AttributeList { get; set; }

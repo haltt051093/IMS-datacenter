@@ -1,0 +1,382 @@
+﻿@model RequestAddServerViewModel
+@{
+    ViewBag.Title = "RequestAssignIPInfo";
+    ViewBag.Role = "Shift Head";
+}
+<label style="color: coral">@Model.inform</label>
+<section class="content-header">
+    <h1>
+        Detail Request Add New Server
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action(" Index2", "Schedule" )"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Detail Request Add New Server</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="box">
+        <div class="box-body table-responsive">
+            @using (Html.BeginForm("ProcessRequestAddServer", "ProcessRequest", FormMethod.Post))
+            {
+                <dl class="dl-horizontal">
+                    <dt>
+                        From customer
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.HiddenFor(model=>model.Customer)
+                        @Html.HiddenFor(model=>model.RequestType)
+                        @Html.HiddenFor(model=>model.RequestCode)
+                    </dd>
+                    <dt>
+                        Full Name
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control" } })
+                    </dd>
+                    <dt>
+                        Requested Time
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.RequestedTime, new { htmlAttributes = new { @class = "form-control" } })
+                    </dd>
+                    <dt>
+                        Status
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.StatusName, new { htmlAttributes = new { @class = "form-control" } })
+                    </dd>
+                    @if (Model.AssignedPerson != null)
+                    {
+                        <dt>
+                            Assigned Person Name
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.AssignedPerson, new { htmlAttributes = new { @class = "form-control" } })
+                        </dd>
+                    }
+                    <dt>
+                        Identification
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Identification, new { htmlAttributes = new { @class = "form-control" } })
+                    </dd>
+                    <dt>
+                        Appointment Time
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.AppointmentTime, new { htmlAttributes = new { @class = "form-control" } })
+                    </dd>
+                    <dt>
+                        Description
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    </dd>
+                    <dt style="color: #f56954">
+                        <h4>Server Content</h4>
+                    </dt>
+                    <dd></dd>
+                </dl>
+                <div class="form-group" style="width: 1000px">
+                    <table id="" class="table table-bordered table-striped  col-xs-offset-1">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Maker</th>
+                                <th>Power</th>
+                                <th>Model</th>
+                                <th>Size</th>
+                                <th>Bandwidth</th>
+                                <th>Serial Number</th>
+                                <th>Part Number</th>
+                                <th>Memory</th>
+                                <th>Default IP</th>
+                                <th>Location</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.Servers.Count; i++)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.Raw(i + 1)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => Model.Servers[i].Maker, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Maker)
+                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].ServerCode)
+
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => Model.Servers[i].Power, new { htmlAttributes = new { @class = "form-control" } })W
+                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Power)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => Model.Servers[i].Model, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Model)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => Model.Servers[i].Size, new { htmlAttributes = new { @class = "form-control" } })U
+                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Size)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => Model.Servers[i].Bandwidth, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Bandwidth)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => Model.Servers[i].SerialNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].SerialNumber)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => Model.Servers[i].PartNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].PartNumber)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => Model.Servers[i].Memory, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Memory)
+                                    </td>
+                                    <td>
+                                        @if (Model.Servers[i].DefaultIP == null)
+                                        {
+                                            <label><a data-toggle="modal" class="open-blockIP-modal" href="#assignip-modal" data-id1="@Model.Servers[i].ServerCode" data-id2="@Model.RequestCode" data-id3="@Model.RequestType">Assign Default IP</a></label>
+                                        }
+                                        else
+                                        {
+                                            @Html.DisplayFor(model => Model.Servers[i].DefaultIP, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.HiddenFor(modelItem => modelItem.Servers[i].DefaultIP)
+                                        }
+                                    </td>
+
+                                    <td>
+                                        <input type="hidden" value="true" name="location" />
+                                        <label><a href="#" data-toggle="modal" data-target="#assignlocation-modal">Assign Location</a></label>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+
+                @Html.HiddenFor(model => model.RequestCode)
+                if (Model.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                {
+                    <button type="submit" name="Button" value="Export" class="btn btn-info"><i class="fa fa-external-link"></i> Export Procedure</button>
+                    <button type="submit" name="Button" id="btnApprove" class="btn btn-primary"  value="Approve">Approve</button>
+                    <button type="submit" name="Button" class="btn btn-danger">Reject</button>
+                }
+            }
+        </div><!-- /.box-body -->
+    </div><!-- /.box -->
+</section>
+
+
+<!-- ASSIGN IP MODAL -->
+<div id="assignip-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="AssignIP" method="POST">
+                <div class="modal-body">
+
+                    <section class="content-header">
+                        <h3>
+                            List of IP Available
+                        </h3>
+                    </section>
+                    <section class="content">
+                        <div class="row hide">
+                            <div id="dropdown-template">
+                                <label>@Html.DropDownListFor(model => model.NetworkIP, Model.NetworkIPs, "All IP Addresses", new {@class = "form-control input-sm", style = "width: 150px"}) </label>
+                            </div>
+                        </div>
+
+                        <table id="example1" class="table table-bordered table-hover">
+                            <thead>
+                                <tr style="background-color: #404040">
+                                    <th><span style="color: ghostwhite">Id</span>
+                                    <th><span style="color: ghostwhite">NetworkIP</span>
+                                    <th><span style="color: ghostwhite">IP Address</span>
+                                    <th><span style="color: ghostwhite">Gateway</span>
+                                    <th><span style="color: ghostwhite">Subnet mask</span>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+
+                    </section><!-- /.content -->
+                </div>
+                <div class="modal-footer">
+                    <input class="hidden" name="ServerCode" id="ipid" value=""/>
+                    <input class="hidden" name="RequestCode" id="rcode" value=""/>
+                    <input class="hidden" name="RequestType" id="rtype" value="" />
+                    <button type="submit" class="btn btn-primary">Assign</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+
+
+                </div>
+            </form>
+
+            <script>
+                $.fn.dataTable.ext.search.push(
+                    function (settings, data, dataIndex) {
+                        var networkIP = $('#NetworkIP').val();
+                        if (networkIP == '') {
+                            return true;
+                        }
+                        if (networkIP == data[1]) {
+                            return true;
+                        }
+                        return false;
+                    }
+                );
+            </script>
+
+            <script type="text/javascript">
+                var table = $('#example1').DataTable({
+                    dom: '<lf<t>ip>',
+                    processing: true,
+                    ajax: "@Url.Action("GetAvailableIP", "IP", new {httproute = ""})",
+                    columns: [
+                        { data: "Id" },
+                        { data: "NetworkIP" },
+                        { data: "IPAddress" },
+                        { data: "Gateway" },
+                        { data: "Subnetmask" },
+                        { data: "StatusCode" }
+                    ],
+                    iDisplayLength: 10,
+                    aLengthMenu: [[10, 20, 30], [10, 20, 30]],
+                    fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                        var row = $(nRow);
+                        var actionCell = $(nRow.cells[3]);
+                       
+                        switch (aData.StatusCode) {
+                            case '@Constants.StatusCode.IP_AVAILABLE':
+                                actionCell.html('<input type="radio" name="NewIP" value="'+aData.IPAddress+'"/>');
+                            
+                                break;
+
+                        }
+
+                    },
+                    order: [[0, "asc"]],
+                    columnDefs: [{
+                        targets: [0],
+                        visible: false,
+                        searchable: true
+                    }, {
+                        targets: [1],
+                        visible: false,
+                        searchable: true
+
+                    }]
+                });
+
+                $('#example1_filter').append($('#dropdown-template').html());
+                $('#dropdown-template').html('');
+
+                $('#NetworkIP').change(function () {
+                    table.draw();
+                });
+
+
+            </script>
+            <script>
+    $(document).on("click", ".open-blockIP-modal", function () {
+        var myId = $(this).data('id1');
+        var vcode = $(this).data('id2');
+        var vtype = $(this).data('id3');
+        $(".modal-footer #ipid").val(myId);
+        $(".modal-footer #rcode").val(vcode);
+        $(".modal-footer #rtype").val(vtype);
+
+
+});
+            </script>
+            @section Styles {
+                <style>
+                </style>
+            }
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- ASSIGN LOCATION MODAL -->
+<div class="modal fade" id="assignlocation-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 1000px;height: 2000px">
+        <div class="modal-content">
+            <form action="#" method="POST">
+                <div class="modal-body">
+
+                    <section class="content-header">
+                        <h1>
+                            List of Location Available
+                        </h1>
+                    </section>
+                    <section class="content">
+                        <div class="box">
+                            <div class="box-body table-responsive">
+                                <table id="example3" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>LocationCode</th>
+                                            <th>RackName</th>
+                                            <th>RackUnit</th>
+                                            <th>Status</th>
+                                            <th>ServerCode</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Trident</td>
+                                            <td>
+                                                Internet
+                                                Explorer 4.0
+                                            </td>
+                                            <td>Win 95+</td>
+                                            <td> 4</td>
+                                            <td>X</td>
+                                            <td>
+                                                <input type="radio" name="newloca" />
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>LocationCode</th>
+                                            <th>RackName</th>
+                                            <th>RackUnit</th>
+                                            <th>Status</th>
+                                            <th>ServerCode</th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div><!-- /.box-body -->
+                        </div><!-- /.box -->
+
+                    </section><!-- /.content -->
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Assign</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+
+
+                </div>
+            </form>
+            <script type="text/javascript">
+                $(function () {
+                    $("#example3").dataTable();
+                });
+            </script>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

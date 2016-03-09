@@ -134,6 +134,7 @@
     <Compile Include="ViewModels\LogChangeExtendModel.cs" />
     <Compile Include="ViewModels\LogExtentedModel.cs" />
     <Compile Include="ViewModels\NotificationExtendedModel.cs" />
+    <Compile Include="ViewModels\RackExtendedModel.cs" />
     <Compile Include="ViewModels\RackOfCustomerExtendedModel.cs" />
     <Compile Include="ViewModels\RequestDetailModel.cs" />
     <Compile Include="ViewModels\RequestExtendedModel.cs" />

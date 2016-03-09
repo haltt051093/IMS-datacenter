@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using IMS.Core;
@@ -55,7 +56,7 @@ namespace IMS.Data.Business
                         scheduletoday.Add(item);
                     }
                 }
-                
+
             }
             return scheduletoday;
         }
@@ -112,6 +113,51 @@ namespace IMS.Data.Business
         public string GenerateCode()
         {
             return dao.GenerateCode();
+        }
+
+        public void UpdateChangeIP(List<string> returningIp, List<string> selectedIps, 
+            string selectedServer, string requestCode, string staffCode)
+        {
+            var list = Enumerable.Zip(returningIp, selectedIps, (old, changed) => new { old, changed });
+            foreach (var item in list)
+            {
+                //get previous id
+                var preId = ServerIPBLO.Current.GetPreviousIp(selectedServer, item.old);
+                //them hang moi vao serverip
+                ServerIPBLO.Current.AddServerIp(selectedServer, item.changed, preId);
+                //change status cua old ip o server ip
+                ServerIPBLO.Current.UpdateStatusServerIp(Constants.StatusCode.SERVERIP_RETURNING, 
+                    Constants.StatusCode.SERVERIP_OLD, item.old);
+                //Update status cua IP moi o IPAddressPool
+                IPAddressPoolBLO.Current.UpdateStatusIp(Constants.StatusCode.IP_USED, item.changed);
+                //update status cua up cu o IPAddresspool
+                IPAddressPoolBLO.Current.UpdateStatusIp(Constants.StatusCode.IP_AVAILABLE, item.old);
+
+                //Add log trang thai IP moi
+                LogChangedContent logIp = new LogChangedContent
+                {
+                    RequestCode = requestCode,
+                    TypeOfLog = Constants.TypeOfLog.LOG_CHANGE_IP,
+                    Object = Constants.Object.OBJECT_IP,
+                    ChangedValueOfObject = item.changed,
+                    ObjectStatus = Constants.StatusCode.IP_USED,
+                    Staff = staffCode
+                };
+                LogChangedContentBLO.Current.AddLog(logIp);
+                //}
+
+                //Add log trang thai IP cu
+                LogChangedContent logPreIp = new LogChangedContent
+                {
+                    RequestCode = requestCode,
+                    TypeOfLog = Constants.TypeOfLog.LOG_CHANGE_IP,
+                    Object = Constants.Object.OBJECT_IP,
+                    ChangedValueOfObject = item.old,
+                    ObjectStatus = Constants.StatusCode.IP_AVAILABLE,
+                    Staff = staffCode
+                };
+                LogChangedContentBLO.Current.AddLog(logPreIp);
+            }
         }
     }
 }
