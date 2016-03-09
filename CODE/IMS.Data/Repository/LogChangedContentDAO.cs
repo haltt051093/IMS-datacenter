@@ -111,6 +111,44 @@ namespace IMS.Data.Repository
                              on m.PreviousId=l.Id
                              where l.TypeOfLog = 'BLOCKIP' ";
             return RawQuery<LogChangeExtendModel>(query, new object[] {});
-        } 
+        }
+
+        public List<LogExtentedModel> GetAllRequest()
+        {
+            //string query = @"select i.*,s.StatusName, r.RequestTypeName from Request as i
+            //                left join Status as s
+            //                on s.StatusCode = i.StatusCode
+            //                left join RequestType as r
+            //                on r.RequestTypeCode = i.RequestType";
+            //lay list request co cung requestcode
+            var myList = LogChangedContentDAO.Current.Table().ToList();
+            var getRequestCodes = myList.GroupBy(x => x.RequestCode).Select(y => y.First()).ToList();
+            var list = new List<LogExtentedModel>();
+            //DOING
+            for (int i = 0; i < getRequestCodes.Count; i++)
+            {
+                //var requestCode = getRequestCodes[i].RequestCode;
+                //var allStatusOfRequest = LogChangedContentDAO.Current
+                //    .Query(x => x.RequestCode == requestCode && x.Object == Constants.Object.OBJECT_REQUEST)
+                //    .OrderByDescending(x => x.LogTime);
+
+                //var select = from
+                //var newest = allStatusOfRequest.First();
+                //var request = new LogExtentedModel();
+                //request.LastestStatusRequest = newest;
+                //if (allStatusOfRequest.Count() > 1)
+                //{
+                //    var others = allStatusOfRequest.Skip(0);
+                //    request.OldStatusRequests = others.ToList();
+                //}
+                //else
+                //{
+                //    request.OldStatusRequests = null;
+                //}
+                //list.Add(request);
+            }
+            return list;
+            //return RawQuery<RequestExtendedModel>(query, new object[] { });
+        }
     }
 }

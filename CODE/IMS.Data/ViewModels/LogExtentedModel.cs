@@ -11,5 +11,10 @@ namespace IMS.Data.ViewModels
     [NotMapped]
     public class LogExtentedModel : LogChangedContent
     {
+        public string StatusName { get; set; }
+        public string RequestTypeName { get; set; }
+
+        public LogExtentedModel LastestStatusRequest { get; set; }
+        public List<LogExtentedModel> OldStatusRequests { get; set; }
     }
 }

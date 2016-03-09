@@ -9,8 +9,5 @@ namespace IMS.Data.ViewModels
     {
         public string StatusName { get; set; }
         public string RequestTypeName { get; set; }
-
-        public Request LastestStatusRequest { get; set; }
-        public List<Request> OldStatusRequests { get; set; }
     }
 }

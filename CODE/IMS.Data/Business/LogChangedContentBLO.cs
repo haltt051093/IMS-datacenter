@@ -59,5 +59,10 @@ namespace IMS.Data.Business
         {
             return dao.ListWaitingRequestOfServer(serverCode);
         }
+
+        public List<LogExtentedModel> GetAllRequest()
+        {
+            return dao.GetAllRequest();
+        }
     }
 }

@@ -33,10 +33,7 @@ namespace IMS.Data.Business
             baseDao = RequestDAO.Current;
             dao = RequestDAO.Current;
         }
-        public List<RequestExtendedModel> GetAllRequest()
-        {
-            return dao.GetAllRequest();
-        }
+        
 
         public string AddRequest(string requestType, string customer, string description, DateTime? appointmenTime)
         {

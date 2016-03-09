@@ -163,7 +163,7 @@ namespace IMS.Data.Repository
                             (r.StatusCode == Constants.StatusCode.REQUEST_WAITING ||
                              r.StatusCode == Constants.StatusCode.REQUEST_PROCESSING ||
                              r.StatusCode == Constants.StatusCode.REQUEST_DONE ||
-                             r.StatusCode == Constants.StatusCode.REQUEST_REJECTED )
+                             r.StatusCode == Constants.StatusCode.REQUEST_REJECTED)
                         select new NotificationExtendedModel
                         {
                             RequestCode = r.RequestCode,
@@ -180,17 +180,7 @@ namespace IMS.Data.Repository
             return query.ToList();
         }
 
-        public List<RequestExtendedModel> GetAllRequest()
-        {
-            string query = @"select i.*,s.StatusName, r.RequestTypeName from Request as i
-                            left join Status as s
-                            on s.StatusCode = i.StatusCode
-                            left join RequestType as r
-                            on r.RequestTypeCode = i.RequestType";
-            //
-            return RawQuery<RequestExtendedModel>(query, new object[] { });
-        }
-
+        
 
         public Request GetRequestByRequestCode(string requestCode)
         {
