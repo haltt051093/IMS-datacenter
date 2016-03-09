@@ -64,7 +64,6 @@ namespace IMS.Data.Business
                               "We want to account that you registered successfully to our IMS system<br/>{0}",
                     mainMessage);
             mail.Body = htmlBody;
-
             SmtpServer.Port = smtpPort;
             SmtpServer.Credentials = new System.Net.NetworkCredential(smtpUsername, smtpPassword);
             SmtpServer.EnableSsl = true;
