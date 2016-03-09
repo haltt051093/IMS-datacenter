@@ -1,8 +1,5 @@
-﻿@model object
-
-@{
-    //string role = Model == null ? string.Empty : Model.ToString();
-    var obj = Session[Constants.Session.USER_LOGIN];
+﻿@{
+    var user = Session[Constants.Session.USER_LOGIN];
 }
 
 <a href="@Url.Action("Index", "Home")" class="logo">
@@ -22,7 +19,7 @@
     <div class="navbar-right">
         <ul class="nav navbar-nav">
             <!-- Messages: style can be found in dropdown.less-->
-            @if (obj != null)
+            @if (user != null)
             {
                 <li class="dropdown notifications-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">

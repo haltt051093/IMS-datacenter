@@ -8,14 +8,16 @@ namespace IMS.Data.ViewModels
     [NotMapped]
     public class LogExtentedModel : LogChangedContent
     {
-        public LogExtentedModel()
+        public LogChangedContent _LogChangedContent
         {
-            
-        }
-
-        public LogExtentedModel(LogChangedContent log)
-        {
-            ObjectExpress.CopyValues(log, this);
+            set
+            {
+                if (value == null)
+                {
+                    return;
+                }
+                ObjectExpress.CopyValues(value, this);
+            }
         }
 
         public string StatusName { get; set; }

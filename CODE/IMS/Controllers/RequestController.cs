@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -11,16 +10,12 @@ using IMS.Data.Repository;
 using IMS.Data.ViewModels;
 using IMS.Models;
 using IMS.Services;
-using Microsoft.Ajax.Utilities;
-using Microsoft.AspNet.SignalR;
 using Newtonsoft.Json;
 
 namespace IMS.Controllers
 {
     public class RequestController : CoreController
     {
-        private static IHubContext commandHubContext;
-
         public ActionResult Index()
         {
             //var data = new RequestIndexViewModel();
@@ -246,7 +241,7 @@ namespace IMS.Controllers
         {
             viewmodel.Customer = Constants.Test.CUSTOMER_MANHNH;
             //Edit description
-            var requestDetail = new RequestDetailModel();
+            var requestDetail = new RequestDetailViewModel();
             requestDetail.NumberOfRack = viewmodel.RackNumbers;
             requestDetail.Description = viewmodel.Description;
             viewmodel.Description = JsonConvert.SerializeObject(requestDetail);
@@ -526,8 +521,8 @@ namespace IMS.Controllers
             if (ModelState.IsValid)
             {
                 //Edit description
-                var requestDetail = new RequestDetailModel();
-                if (!viewmodel.Description.IsNullOrWhiteSpace())
+                var requestDetail = new RequestDetailViewModel();
+                if (!string.IsNullOrWhiteSpace(viewmodel.Description))
                 {
                     requestDetail.NumberOfIp = viewmodel.IpNumber;
                     requestDetail.Description = viewmodel.Description;
@@ -620,11 +615,7 @@ namespace IMS.Controllers
 
         public void NotifRegister(NotificationExtendedModel model)
         {
-            if (commandHubContext == null)
-            {
-                commandHubContext = GlobalHost.ConnectionManager.GetHubContext<RemoteControllerHub>();
-            }
-            commandHubContext.Clients.All.ExecuteCommand(
+            RemoteControllerHub.Current.Clients.All.ExecuteCommand(
                 model.RequestCode,
                 model.RequestTypeName,
                 model.Customer,
@@ -634,6 +625,7 @@ namespace IMS.Controllers
         }
 
         //Tam thoi cho VIew notification se dan den requestdetail --> thuc te thi view list notification chi dua ra popup thong tin de xem or confirm
+        [Authorize]
         public ActionResult ListNotifications()
         {
             //get role

@@ -1,9 +1,8 @@
 ﻿using System;
-using IMS.Data.Generic;
 
-namespace IMS.Data.ViewModels
+namespace IMS.Data.Generic
 {
-    public class ExtendedResultModel
+    public class BaseResultModel
     {
         public DataEnum.QueryResult Status { get; set; }
 
@@ -24,7 +23,7 @@ namespace IMS.Data.ViewModels
             }
         }
 
-        public ExtendedResultModel()
+        public BaseResultModel()
         {
             this.Status = DataEnum.QueryResult.Success;
         }

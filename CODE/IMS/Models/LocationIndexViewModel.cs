@@ -10,12 +10,12 @@ namespace IMS.Models
     {
         public LocationIndexViewModel()
         {
-            Locations = new List<LocationExtendedModel>();
+            Locations = new List<LocationViewModel>();
         }
 
         public string SearchTerm { get; set; }
 
-        public List<LocationExtendedModel> Locations { get; set; }
+        public List<LocationViewModel> Locations { get; set; }
         public string Request { get; set; }
         public Server Server { get; set; }
         public string LocationCode { get; set; }

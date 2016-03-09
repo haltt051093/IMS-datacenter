@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using IMS.Core.Express;
 using IMS.Data.Models;
 using IMS.Resources;
 
@@ -9,6 +10,18 @@ namespace IMS.Data.ViewModels
     [NotMapped]
     public class ServerExtendedModel : Server
     {
+        public Server _Server
+        {
+            set
+            {
+                if (value == null)
+                {
+                    return;
+                }
+                ObjectExpress.CopyValues(value, this);
+            }
+        }
+
         [Display(Name = "Customer", ResourceType = typeof(Labels))]
         public string CustomerName { get; set; }
 
@@ -36,6 +49,6 @@ namespace IMS.Data.ViewModels
 
         public List<ServerIP> ServerIps { get; set; }
 
-        public List<LocationExtendedModel> ServerLocation { get; set; }
+        public List<LocationViewModel> ServerLocation { get; set; }
     }
 }

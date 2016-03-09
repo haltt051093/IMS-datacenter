@@ -914,6 +914,7 @@
     <Compile Include="Controllers\DeleteRequestController.cs" />
     <Compile Include="Controllers\ProcessRequestController.cs" />
     <Compile Include="Controllers\ValidateController.cs" />
+    <Compile Include="Models\ProcessRequestIndexModel.cs" />
     <Compile Include="Models\RequestHistoryViewModel.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Models\ReportBlockIPViewModel.cs" />
@@ -1028,6 +1029,7 @@
     <Content Include="Views\Request\Create.cshtml" />
     <Content Include="Views\Request\EditRequestHistory.cshtml" />
     <Content Include="Views\Report\ReportBlockIP.cshtml" />
+    <Content Include="Views\ProcessRequest\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1037,7 +1039,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\DeleteRequest\" />
     <Folder Include="Views\Shift\" />
     <Folder Include="Views\Validate\" />
   </ItemGroup>

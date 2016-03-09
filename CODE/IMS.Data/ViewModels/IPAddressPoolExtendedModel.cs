@@ -5,12 +5,16 @@ using IMS.Data.Models;
 namespace IMS.Data.ViewModels
 {
     [NotMapped]
-    public class IPExtendedModel : IPAddressPool
+    public class IPAddressPoolExtendedModel : IPAddressPool
     {
-        public IPAddressPool _IP
+        public IPAddressPool _IPAddressPool
         {
             set
             {
+                if (value == null)
+                {
+                    return;
+                }
                 ObjectExpress.CopyValues<IPAddressPool>(value, this);
             }
         }

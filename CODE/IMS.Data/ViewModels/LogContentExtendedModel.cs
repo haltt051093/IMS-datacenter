@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using IMS.Core.Express;
 using IMS.Data.Models;
@@ -6,9 +6,9 @@ using IMS.Data.Models;
 namespace IMS.Data.ViewModels
 {
     [NotMapped]
-    public class RackExtendedModel : Rack
+    public class LogContentExtendedModel: LogChangedContent
     {
-        public Rack _Rack
+        public LogChangedContent _LogChangedContent
         {
             set
             {
@@ -20,8 +20,8 @@ namespace IMS.Data.ViewModels
             }
         }
 
-        public List<RackExtendedModel> RacksOfRow { get; set; }
-        public string RowName { get; set; }
-        public bool Checked { get; set; }
+        public DateTime? Unblocktime { get; set; }
+        public int? blockedtime { get; set; }
+        public int? blockedtimetonow { get; set; }
     }
 }

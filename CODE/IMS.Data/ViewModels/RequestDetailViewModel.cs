@@ -1,6 +1,6 @@
 ﻿namespace IMS.Data.ViewModels
 {
-    public class RequestDetailModel
+    public class RequestDetailViewModel
     {
         public int NumberOfIp { get; set; }
         public string Description { get; set; }

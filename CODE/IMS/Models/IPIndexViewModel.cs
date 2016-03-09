@@ -9,9 +9,9 @@ namespace IMS.Models
     {
         public IPIndexViewModel()
         {
-            IPs = new List<IPExtendedModel>();
+            IPs = new List<IPAddressPoolExtendedModel>();
         }
-        public List<IPExtendedModel> IPs { get; set; }
+        public List<IPAddressPoolExtendedModel> IPs { get; set; }
         public string Request { get; set; }
         public string OldIP { get; set; }
         public string NewIP { get; set; }

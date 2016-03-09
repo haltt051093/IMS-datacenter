@@ -1,6 +1,4 @@
-﻿@model object
-
-@{
+﻿@{
     var data = new List<HomeSidebarViewModel>();
     data.Add(new HomeSidebarViewModel("Server", "Index", "Server") { Roles = new List<string>() { "Shift Head", "Customer" }});
     data.Add(new HomeSidebarViewModel("Request History", "History", "Request") { Roles = new List<string>() { "Customer" } });
@@ -27,7 +25,24 @@
         }
     });
 
-    string role = Model == null ? string.Empty : Model.ToString();
+    var user = Session[Constants.Session.USER_LOGIN];
+    string role = string.Empty;
+    if (User.IsInRole(Constants.Role.MANAGER))
+    {
+        role = Constants.Role.SHIFT_HEAD;
+    }
+    else if (User.IsInRole(Constants.Role.SHIFT_HEAD))
+    {
+        role = Constants.Role.SHIFT_HEAD;
+    }
+    if (User.IsInRole(Constants.Role.STAFF))
+    {
+        role = Constants.Role.STAFF;
+    }
+    if (User.IsInRole(Constants.Role.CUSTOMER))
+    {
+        role = Constants.Role.CUSTOMER;
+    }
 }
 
 <!-- Sidebar user panel -->

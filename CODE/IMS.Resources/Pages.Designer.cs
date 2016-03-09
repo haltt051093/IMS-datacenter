@@ -115,6 +115,15 @@ namespace IMS.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Report of Block IP Address.
+        /// </summary>
+        public static string ReportBlockIP {
+            get {
+                return ResourceManager.GetString("ReportBlockIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Requests.
         /// </summary>
         public static string Request {
@@ -160,11 +169,11 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Report of Block IP Address.
+        ///   Looks up a localized string similar to Request Rent Rack.
         /// </summary>
-        public static string ReportBlockIP {
+        public static string RequestRentRack {
             get {
-                return ResourceManager.GetString("ReportBlockIP", resourceCulture);
+                return ResourceManager.GetString("RequestRentRack", resourceCulture);
             }
         }
         

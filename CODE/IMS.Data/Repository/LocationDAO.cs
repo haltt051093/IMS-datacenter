@@ -33,7 +33,7 @@ namespace IMS.Data.Repository
             return existing;
         }
 
-        public List<LocationExtendedModel> GetAllLocation()
+        public List<LocationViewModel> GetAllLocation()
         {
             var query = @"select l.LocationCode,ser.ServerCode,ser.DefaultIP, l.RackUnit, s.StatusName,r.RackName,r.RackCode, ser.Id,r.StatusCode as RackStatus from Location as l
                             left join Status as s
@@ -42,10 +42,10 @@ namespace IMS.Data.Repository
                             on r.RackCode = l.RackCode
                             left join Server as ser on ser.ServerCode = l.ServerCode";
 
-            return RawQuery<LocationExtendedModel>(query, new object[] { });
+            return RawQuery<LocationViewModel>(query, new object[] { });
         }
 
-        public List<LocationExtendedModel> GetRackValidPowerForNew(Server server)
+        public List<LocationViewModel> GetRackValidPowerForNew(Server server)
         {
             var query = @"select l.LocationCode, l.RackCode, l.RackUnit, s.Status,l.ServerCode, r.RackName
                             from rack as r left join
@@ -64,10 +64,10 @@ namespace IMS.Data.Repository
                             where r.MaximumPower - ISNULL(ri.UsedPower,0) >'" + server.Power +
                            @"'and r.StatusCode!='STATUS20'";
             ;
-            return RawQuery<LocationExtendedModel>(query, new object[] { });
+            return RawQuery<LocationViewModel>(query, new object[] { });
         }
 
-        public List<LocationExtendedModel> GetCustomerRackValidPowerForNew(Server server)
+        public List<LocationViewModel> GetCustomerRackValidPowerForNew(Server server)
         {
             var query = @"select l.LocationCode, l.RackCode, l.RackUnit, s.StatusName, l.ServerCode, r.RackName
                             from rack as r left join
@@ -87,10 +87,10 @@ namespace IMS.Data.Repository
 	                        join Status as s 
                             on s.StatusCode=l.StatusCode
                             where r.MaximumPower - ISNULL(ri.UsedPower,0) >'" + server.Power + @"'";
-            return RawQuery<LocationExtendedModel>(query, new object[] { });
+            return RawQuery<LocationViewModel>(query, new object[] { });
         }
 
-        public List<LocationExtendedModel> GetRackValidPowerForChange(Server server)
+        public List<LocationViewModel> GetRackValidPowerForChange(Server server)
         {
             var query = @"select l.LocationCode, l.RackCode, l.RackUnit, s.StatusName,l.ServerCode,r.RackName
                             from rack as r left join
@@ -108,10 +108,10 @@ namespace IMS.Data.Repository
                             where r.MaximumPower - ISNULL(ri.UsedPower,0) >'" + server.Power + @"'and r.StatusCode != 'STATUS20' or l.ServerCode = '" +
                            server.ServerCode + @"'";
             ;
-            return RawQuery<LocationExtendedModel>(query, new object[] { });
+            return RawQuery<LocationViewModel>(query, new object[] { });
         }
 
-        public List<LocationExtendedModel> GetCustomerRackValidPowerForChange(Server server)
+        public List<LocationViewModel> GetCustomerRackValidPowerForChange(Server server)
         {
             var query = @"select l.LocationCode, l.RackCode, l.RackUnit, s.StatusName, l.ServerCode,r.RackName
                             from rack as r left join
@@ -130,15 +130,15 @@ namespace IMS.Data.Repository
                             on r.RackCode = l.RackCode
 	                        join Status as s on s.StatusCode=l.StatusCode
                             where r.MaximumPower - ISNULL(ri.UsedPower,0) >'" + server.Power + @"'or l.ServerCode = '" + server.ServerCode + @"'";
-            return RawQuery<LocationExtendedModel>(query, new object[] { });
+            return RawQuery<LocationViewModel>(query, new object[] { });
         }
 
-        public LocationExtendedModel GetRackOfServer(Server server)
+        public LocationViewModel GetRackOfServer(Server server)
         {
             var query =
                 @"select * from Server as s join Location l on s.ServerCode = l.ServerCode and s.ServerCode='" +
                 server.ServerCode + @"'";
-            return RawQuery<LocationExtendedModel>(query, new object[] { }).FirstOrDefault();
+            return RawQuery<LocationViewModel>(query, new object[] { }).FirstOrDefault();
         }
 
         public List<string> GetLocationStatus()
