@@ -78,7 +78,6 @@ namespace IMS.Controllers
                 }
                 return View("AddServerInfo", viewmodel);
             }
-            //DOING, truong hop request thanh trang thai Done
             if (rType.Equals(Constants.RequestTypeCode.BRING_SERVER_AWAY))
             {
                 //Get request
