@@ -41,7 +41,7 @@ namespace IMS.Controllers
                 {
                     ViewBag.CreateStaff = "This group exist two Staff";
                 }
-                else if(("shifthead").Equals(message))
+                else if (("shifthead").Equals(message))
                 {
                     ViewBag.CreateStaff = "This group exist one Shift Head";
                 }
@@ -168,7 +168,7 @@ namespace IMS.Controllers
                 if (CheckExistUsername(account.Username))
                 {
                     //put code handle can not create user with this username, trung ten
-                    
+
                     return RedirectToAction("Index");
                 }
                 var checkStaff = lstall.Where(c => c.GroupCode == account.GroupCode && c.Role == "Staff").Where(c => c.Status == true).Count();
@@ -201,7 +201,7 @@ namespace IMS.Controllers
                     }
                 }
 
-                
+
                 //if (result)
                 //{
                 //    //ModelState.AddModelError("", "Send mail successfully");
@@ -275,26 +275,13 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult EditStaff(AccountCreateViewModel viewmodel)
         {
-            List<Account> lstall = AccountDAO.Current.GetAll();
+            
             Account account = Mapper.Map<AccountCreateViewModel, Account>(viewmodel);
-            var checkStaff = lstall.Where(c => c.GroupCode == account.GroupCode && c.Role == "Staff").Where(c => c.Status == true).Count();
-            var checkShift = lstall.Where(c => c.GroupCode == account.GroupCode && c.Role == "Shift Head").Where(c => c.Status == true).Count();
-            if (("Staff").Equals(account.Role))
+            Account ass = AccountBLO.Current.GetById(account.Id);
+            if (ass.Status == false)
             {
-                if (checkStaff >= 2 && account.Status == true)
-                {
-                    account.Status = false;
-                    //put code hande show message cant update status this staff
-                }
-            }
-            else
-            {
-                if (checkShift >= 1 && account.Status == true)
-                {
-                    account.Status = false;
-                    //put code hande show message cant update status this headshift
-                }
-            }
+                account.Status = false;
+            }          
             AccountBLO.Current.AddOrUpdate(account);
 
             string role = "";
@@ -312,9 +299,18 @@ namespace IMS.Controllers
         public ActionResult EditCustomer(AccountCreateViewModel viewmodel)
         {
             Account account = Mapper.Map<AccountCreateViewModel, Account>(viewmodel);
+            Account ass = AccountBLO.Current.GetById(account.Id);
+            if (ass.Status == false)
+            {
+                account.Status = false;
+            }
             account.Role = Constants.Role.CUSTOMER;
             account.GroupCode = Constants.GroupName.NO_GROUP;
             AccountBLO.Current.AddOrUpdate(account);
+            if (account.Status == false)
+            {
+                account.Status = false;
+            }
 
             string role = "";
             if (Session[Constants.Session.USER_LOGIN] != null)
