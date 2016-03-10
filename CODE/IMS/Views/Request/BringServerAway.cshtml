@@ -20,14 +20,17 @@
                 @using (Html.BeginForm("BringServerAway", "Request", FormMethod.Post))
                 {
 
-                    if (Model.RackOfCustomer.Count > 0)
+                    if (Model.RackOfCustomer != null)
                     {
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Select by rented racks</label>
-                            <div class="col-sm-2">
-                                @Html.DropDownListFor(m => m.SelectedRack, Model.RackOfCustomer, "Select all", new { @id = "selectedRack", @class = "form-group" })
+                        if (Model.RackOfCustomer.Count > 0)
+                        {
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Select by rented racks</label>
+                                <div class="col-sm-2">
+                                    @Html.DropDownListFor(m => m.SelectedRack, Model.RackOfCustomer, "Select all", new { @id = "selectedRack", @class = "form-group" })
+                                </div>
                             </div>
-                        </div>
+                        }
                     }
                     <div class="form-group">
                         <label class="col-sm-4 control-label">The number of your servers in data center</label>

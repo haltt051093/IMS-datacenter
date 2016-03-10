@@ -115,22 +115,14 @@ namespace IMS.Data.Repository
 
         public List<LogExtentedModel> GetAllRequest()
         {
-            //string query = @"select i.*,s.StatusName, r.RequestTypeName from Request as i
-            //                left join Status as s
-            //                on s.StatusCode = i.StatusCode
-            //                left join RequestType as r
-            //                on r.RequestTypeCode = i.RequestType";
             //lay list request co cung requestcode
-            var myList = LogChangedContentDAO.Current.Table().ToList();
+            var myList = Current.Table().ToList();
             var getRequestCodes = myList.GroupBy(x => x.RequestCode).Select(y => y.First()).ToList();
             var list = new List<LogExtentedModel>();
             //DOING
             for (int i = 0; i < getRequestCodes.Count; i++)
             {
                 var requestCode = getRequestCodes[i].RequestCode;
-                //var allStatusOfRequest = LogChangedContentDAO.Current
-                //    .Query(x => x.RequestCode == requestCode && x.Object == Constants.Object.OBJECT_REQUEST)
-                //    .OrderByDescending(x => x.LogTime);
 
                 var allStatusOfRequest = from sr in Current.Table()
                     join rt in TypeOfLogDAO.Current.Table()
@@ -150,10 +142,12 @@ namespace IMS.Data.Repository
                     };
                 var newest = allStatusOfRequest.First();
                 var request = new LogExtentedModel();
+                var others = new List<LogExtentedModel>();
                 request.LastestStatusRequest = newest;
                 if (allStatusOfRequest.Count() > 1)
                 {
-                    var others = allStatusOfRequest.Skip(0);
+                    others = allStatusOfRequest.ToList();
+                    others.RemoveAt(0);
                     request.OldStatusRequests = others.ToList();
                 }
                 else

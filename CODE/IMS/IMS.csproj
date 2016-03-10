@@ -908,8 +908,8 @@
     <Compile Include="ApiControllers\RackController.cs" />
     <Compile Include="ApiControllers\ReportController.cs" />
     <Compile Include="ApiControllers\TempController.cs" />
-    <Compile Include="ApiModels\DataTableModel.cs" />
-    <Compile Include="ApiModels\TempRequest.cs" />
+    <Compile Include="ApiModels\DataTableReponse.cs" />
+    <Compile Include="ApiModels\TempRequestResponse.cs" />
     <Compile Include="App_Start\AppConfig.cs" />
     <Compile Include="Controllers\DeleteRequestController.cs" />
     <Compile Include="Controllers\ProcessRequestController.cs" />

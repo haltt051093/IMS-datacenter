@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using IMS.Core;
 using IMS.Core.Express;
+using IMS.Data.Business;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.ViewModels;
@@ -47,28 +48,6 @@ namespace IMS.Data.Repository
             return code;
         }
 
-        public string AddRequest(string requestType, string customer, string description, DateTime? appointmenTime)
-        {
-            var request = new Request();
-            request.RequestType = requestType;
-            request.RequestCode = GenerateCode();
-            request.RequestedTime = DateTime.Now;
-            request.StatusCode = Constants.StatusCode.REQUEST_SENDING;
-            request.Customer = customer;
-            request.Description = description;
-            request.AppointmentTime = appointmenTime;
-            var existing = GetByKeys(request);
-            if (existing == null)
-            {
-                IMSContext.Current.Set<Request>().Add(request);
-            }
-            else
-            {
-                CopyValues(request, existing);
-            }
-            IMSContext.Current.SaveChanges();
-            return request.RequestCode;
-        }
         //Tien
         public List<ScheduleExtendedModel> GetSchedule()
         {
@@ -196,11 +175,64 @@ namespace IMS.Data.Repository
             return Current.Query(x => x.RequestCode == requestCode).FirstOrDefault();
         }
 
-        public void UpdateRequestStatus(string requestCode, string newStatus)
+        public string AddRequest(string requestType, string newStatus, string customer,
+            string description, DateTime? appointmenTime, string serverCode, string typeOfLog, string UniqueRequestCode)
+        {
+            var requestCode = GenerateCode(); ;
+            if (requestType == Constants.RequestTypeCode.ADD_SERVER)
+            {
+                requestCode = UniqueRequestCode;
+            }
+            var request = new Request()
+            {
+                RequestCode = requestCode,
+                RequestType = requestType,
+                StatusCode = newStatus,
+                Customer = customer,
+                Description = description,
+                AppointmentTime = appointmenTime,
+                RequestedTime = DateTime.Now,
+            };
+
+            var existing = GetByKeys(request);
+            if (existing == null)
+            {
+                IMSContext.Current.Set<Request>().Add(request);
+            }
+            else
+            {
+                CopyValues(request, existing);
+            }
+            IMSContext.Current.SaveChanges();
+            // log request status
+            LogChangedContent logRequest = new LogChangedContent
+            {
+                RequestCode = requestCode,
+                TypeOfLog = typeOfLog,
+                Object = Constants.Object.OBJECT_REQUEST,
+                ObjectStatus = Constants.StatusCode.REQUEST_SENDING,
+                ChangedValueOfObject = requestCode,
+                ServerCode = serverCode,
+            };
+            LogChangedContentBLO.Current.AddLog(logRequest);
+            return requestCode;
+        }
+
+        public void UpdateRequestStatusANDLog(string requestCode, string typeOfLog, string newStatus, string username)
         {
             var request = GetRequestByRequestCode(requestCode);
             request.StatusCode = newStatus;
             Update(request);
+            // log request status
+            LogChangedContent logRequest = new LogChangedContent
+            {
+                RequestCode = requestCode,
+                TypeOfLog = typeOfLog,
+                Object = Constants.Object.OBJECT_REQUEST,
+                ObjectStatus = newStatus,
+                ChangedValueOfObject = requestCode,
+            };
+            LogChangedContentBLO.Current.AddLog(logRequest);
         }
     }
 }

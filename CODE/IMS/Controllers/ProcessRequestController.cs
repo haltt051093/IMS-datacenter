@@ -36,7 +36,7 @@ namespace IMS.Controllers
             data.NotificationList = RequestBLO.Current.ListNotification(role, customer);
             return View(data);
         }
-        
+
 
         [HttpGet]
         public ActionResult Detais(string rType, string rCode)
@@ -321,39 +321,42 @@ namespace IMS.Controllers
             var listSelectedRacks = viewmodel.listRackByRows;
             for (int i = 0; i < listSelectedRacks.Count; i++)
             {
-                for (int j = 0; j < listSelectedRacks[i].RacksOfRow.Count; j++)
+                if (listSelectedRacks[i].RacksOfRow != null)
                 {
-                    var rack = listSelectedRacks[i].RacksOfRow[j];
-                    if (rack.Checked)
+                    for (int j = 0; j < listSelectedRacks[i].RacksOfRow.Count; j++)
                     {
-                        //khi khach hang rent rack --> update rack, rack status --> add rack of customer
-                        var rackCode = rack.RackCode;
-                        var rackOfCustomer = new RackOfCustomer
+                        var rack = listSelectedRacks[i].RacksOfRow[j];
+                        if (rack.Checked)
                         {
-                            RackCode = rackCode,
-                            Customer = viewmodel.Customer,
-                            RentedDate = DateTime.Now,
-                            StatusCode = Constants.StatusCode.RACKOFCUSTOMER_CURRENT
-                        };
-                        RackOfCustomerBLO.Current.Add(rackOfCustomer);
-                        //update rack
-                        RackBLO.Current.UpdateRackStatus(rackCode, Constants.StatusCode.RACK_RENTED);
-                        //Add log Khach hang rent rack
-                        LogChangedContent logRack = new LogChangedContent
-                        {
-                            RequestCode = viewmodel.RequestCode,
-                            TypeOfLog = Constants.TypeOfLog.LOG_RENT_RACK,
-                            Object = Constants.Object.OBJECT_RACK,
-                            ChangedValueOfObject = rackCode,
-                            ObjectStatus = Constants.StatusCode.RACK_RENTED,
-                            Staff = viewmodel.StatusCode
-                        };
-                        LogChangedContentBLO.Current.AddLog(logRack);
+                            //khi khach hang rent rack --> update rack, rack status --> add rack of customer
+                            var rackCode = rack.RackCode;
+                            var rackOfCustomer = new RackOfCustomer
+                            {
+                                RackCode = rackCode,
+                                Customer = viewmodel.Customer,
+                                RentedDate = DateTime.Now,
+                                StatusCode = Constants.StatusCode.RACKOFCUSTOMER_CURRENT
+                            };
+                            RackOfCustomerBLO.Current.Add(rackOfCustomer);
+                            //update rack
+                            RackBLO.Current.UpdateRackStatus(rackCode, Constants.StatusCode.RACK_RENTED);
+                            //Add log Khach hang rent rack
+                            LogChangedContent logRack = new LogChangedContent
+                            {
+                                RequestCode = viewmodel.RequestCode,
+                                TypeOfLog = Constants.TypeOfLog.LOG_RENT_RACK,
+                                Object = Constants.Object.OBJECT_RACK,
+                                ChangedValueOfObject = rackCode,
+                                ObjectStatus = Constants.StatusCode.RACK_RENTED,
+                                Staff = viewmodel.StatusCode
+                            };
+                            LogChangedContentBLO.Current.AddLog(logRack);
+                        }
                     }
                 }
             }
             //Change request status
-            RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);
+            RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_RENT_RACK, Constants.StatusCode.REQUEST_DONE, viewmodel.StaffCode);
             //Add Log Request
             LogChangedContent logRequest = new LogChangedContent
             {
@@ -366,15 +369,12 @@ namespace IMS.Controllers
             };
             LogChangedContentBLO.Current.AddLog(logRequest);
             Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("ListNotifications", "Request");
         }
 
         [HttpPost]
         public ActionResult ProcessRequestReturnRack(RequestReturnRackViewModel viewmodel)
         {
-            //Change request status 
-            RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);
-
             //update status rackofcustomer
             foreach (var item in viewmodel.RackOfCustomer)
             {
@@ -394,6 +394,7 @@ namespace IMS.Controllers
                     Staff = viewmodel.StaffCode
                 };
                 LogChangedContentBLO.Current.AddLog(logRack);
+
                 //log trang thai rack of customer
                 LogChangedContent logRackOfCustomer = new LogChangedContent
                 {
@@ -406,19 +407,12 @@ namespace IMS.Controllers
                 };
                 LogChangedContentBLO.Current.AddLog(logRackOfCustomer);
             }
-            //Add Log Request
-            LogChangedContent logRequest = new LogChangedContent
-            {
-                RequestCode = viewmodel.RequestCode,
-                TypeOfLog = Constants.TypeOfLog.LOG_RETURN_RACK,
-                Object = Constants.Object.OBJECT_REQUEST,
-                ChangedValueOfObject = viewmodel.RequestCode,
-                ObjectStatus = Constants.StatusCode.REQUEST_DONE,
-                Staff = viewmodel.StaffCode
-            };
-            LogChangedContentBLO.Current.AddLog(logRequest);
+            //Add Log and update request status
+            RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
+                Constants.StatusCode.REQUEST_DONE, Constants.Test.STAFF_NHI);
             Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("ListNotifications", "Request");
+
         }
 
         [HttpPost]
@@ -443,21 +437,12 @@ namespace IMS.Controllers
                 };
                 LogChangedContentBLO.Current.AddLog(logIp);
             }
-            //Add Log Request
-            //Change request status 
-            RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);
-            LogChangedContent logRequest = new LogChangedContent
-            {
-                RequestCode = viewmodel.RequestCode,
-                TypeOfLog = Constants.TypeOfLog.LOG_RETURN_IP,
-                Object = Constants.Object.OBJECT_REQUEST,
-                ChangedValueOfObject = viewmodel.RequestCode,
-                ObjectStatus = Constants.StatusCode.REQUEST_DONE,
-                Staff = viewmodel.StaffCode
-            };
-            LogChangedContentBLO.Current.AddLog(logRequest);
+            //Add Log and update request status
+            RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_RETURN_IP,
+                Constants.StatusCode.REQUEST_DONE, Constants.Test.STAFF_NHI);
             Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("ListNotifications", "Request");
+
         }
 
         [HttpPost]
@@ -578,8 +563,7 @@ namespace IMS.Controllers
                 {
                     ServerBLO.Current.UpdateServerStatus(server.ServerCode, Constants.StatusCode.SERVER_RUNNING);
                     ServerAttributeBLO.Current.UpdateServerAttributeStatus(server.ServerCode, Constants.StatusCode.SERVERATTRIBUTE_NEW);
-                    //doi trang thai cua request
-                    RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);
+
                     //luu IP address
                     //Luu location
 
@@ -595,22 +579,13 @@ namespace IMS.Controllers
                         //Staff = viewmodel.StaffCode
                     };
                     LogChangedContentBLO.Current.AddLog(logServer);
-
-                    //log request status
-                    LogChangedContent logRequest = new LogChangedContent
-                    {
-                        RequestCode = viewmodel.RequestCode,
-                        TypeOfLog = Constants.TypeOfLog.LOG_ADD_SERVER,
-                        Object = Constants.Object.OBJECT_REQUEST,
-                        ChangedValueOfObject = viewmodel.RequestCode,
-                        ObjectStatus = Constants.StatusCode.REQUEST_DONE,
-                        ServerCode = server.ServerCode
-                        //Staff = viewmodel.StaffCode
-                    };
-                    LogChangedContentBLO.Current.AddLog(logRequest);
                 }
+                //Add Log and update request status
+                RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_ADD_SERVER,
+                    Constants.StatusCode.REQUEST_DONE, Constants.Test.STAFF_NHI);
                 Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("ListNotifications", "Request");
+
             }
 
         }
@@ -653,20 +628,9 @@ namespace IMS.Controllers
                     //Staff = viewmodel.StaffCode
                 };
                 LogChangedContentBLO.Current.AddLog(logServer);
-                //doi trang thai cua request
-                RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);
-                //log request status
-                LogChangedContent logRequest = new LogChangedContent
-                {
-                    RequestCode = viewmodel.RequestCode,
-                    TypeOfLog = Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
-                    Object = Constants.Object.OBJECT_REQUEST,
-                    ChangedValueOfObject = viewmodel.RequestCode,
-                    ObjectStatus = Constants.StatusCode.REQUEST_DONE,
-                    ServerCode = server.ServerCode
-                    //Staff = viewmodel.StaffCode
-                };
-                LogChangedContentBLO.Current.AddLog(logRequest);
+                //Add Log and update request status
+                RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
+                    Constants.StatusCode.REQUEST_DONE, Constants.Test.STAFF_NHI);
                 //giai phong location
                 LocationBLO.Current.SetLocationAvailable(server.ServerCode);
                 //change serverip status
@@ -675,7 +639,8 @@ namespace IMS.Controllers
                 IPAddressPoolBLO.Current.SetIpAvailable(server.ServerCode);
             }
             Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("ListNotifications", "Request");
+
         }
 
         [HttpPost]
@@ -683,9 +648,6 @@ namespace IMS.Controllers
         {
             if (Request.Form["Approve"] != null)
             {
-                //Change request status 
-                RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);
-
                 //add ip vo serverip
                 foreach (var item in viewmodel.Ips.ToList())
                 {
@@ -704,25 +666,19 @@ namespace IMS.Controllers
                     };
                     LogChangedContentBLO.Current.AddLog(logIp);
                 }
-                //Add Log Request
-                LogChangedContent logRequest = new LogChangedContent
-                {
-                    RequestCode = viewmodel.RequestCode,
-                    TypeOfLog = Constants.TypeOfLog.LOG_ASSIGN_IP,
-                    Object = Constants.Object.OBJECT_REQUEST,
-                    ChangedValueOfObject = viewmodel.RequestCode,
-                    ObjectStatus = Constants.StatusCode.REQUEST_DONE,
-                    Staff = viewmodel.StaffCode
-                };
-                LogChangedContentBLO.Current.AddLog(logRequest);
-                return RedirectToAction("Index", "Home");
+                //Add Log and update request status
+                RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_ASSIGN_IP,
+                    Constants.StatusCode.REQUEST_DONE, Constants.Test.STAFF_NHI);
+                return RedirectToAction("ListNotifications", "Request");
+
             }
+            //DOING
             else if (Request.Form["Reject"] != null)
             {
                 //O giao dien hien popup Yes/No reject
 
                 //Change request status 
-                RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_REJECTED);
+                //RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_REJECTED);
 
                 //Add Log Request
                 LogChangedContent logRequest = new LogChangedContent
@@ -743,7 +699,8 @@ namespace IMS.Controllers
                 return RedirectToAction("Index", "Home");
             }
             Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("ListNotifications", "Request");
+
         }
 
         [HttpPost]
@@ -757,20 +714,12 @@ namespace IMS.Controllers
             RequestBLO.Current.UpdateChangeIP(viewmodel.ReturningIps, ips,
                 viewmodel.SelectedServer, viewmodel.RequestCode, viewmodel.StatusCode);
 
-            //Change request status 
-            RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_DONE);
-            LogChangedContent logRequest = new LogChangedContent
-            {
-                RequestCode = viewmodel.RequestCode,
-                TypeOfLog = Constants.TypeOfLog.LOG_CHANGE_IP,
-                Object = Constants.Object.OBJECT_REQUEST,
-                ChangedValueOfObject = viewmodel.RequestCode,
-                ObjectStatus = Constants.StatusCode.REQUEST_DONE,
-                Staff = viewmodel.StaffCode
-            };
-            LogChangedContentBLO.Current.AddLog(logRequest);
+            //Add Log and update request status
+            RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
+                Constants.StatusCode.REQUEST_DONE, Constants.Test.STAFF_NHI);
             Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("ListNotifications", "Request");
+
         }
 
         [HttpPost]
@@ -783,7 +732,7 @@ namespace IMS.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            IPAddressPoolBLO.Current.UpdateIP(ivm.ServerCode, ivm.NewIP);
+            IPAddressPoolBLO.Current.UpdateIP(ivm.ServerCode, ivm.NewIP,ivm.RequestCode);
 
             return RedirectToAction("Detais", new { rType = ivm.RequestType, rCode = ivm.RequestCode });
         }

@@ -165,6 +165,8 @@ namespace IMS.Core
             public const string LOG_UPDATE_VALUE_SERVERLOCATION = "UVALSERLOC";
             // luu servercode cua request duoc add vao
             public const string LOG_ADD_SERVER = "ADDSERVER";
+            // luu servercode cua request duoc add vao
+            public const string LOG_ASSIGN_DEFAULT_IP = "ASSIGNDEFAULTIP";
             //Customer rents rack
             public const string LOG_RENT_RACK = "RENTRACK";
             //Customer returns rack
