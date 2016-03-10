@@ -59,5 +59,28 @@ namespace IMS.Controllers
             data.Count = count;
             return View(data);
         }
+
+        public ActionResult ReportUsedIP()
+        {
+            var data = new ReportUsedIPViewModel();
+            var uselist = new List<SelectListItem>();
+            SelectListItem item = new SelectListItem()
+            {
+                Value = "used",
+                Text = "Used and Using IP"
+            };
+            uselist.Add(item);
+            var list = LogChangedContentBLO.Current.GetLogUsedIP();
+            var listNetworkIP = list.OrderBy(x => x.NetworkIP).GroupBy(x => x.NetworkIP).Select(x => x.FirstOrDefault()).Where(x => x.NetworkIP != null);
+            var listnet = listNetworkIP.Select(x => new SelectListItem
+            {
+                Value = x.NetworkIP,
+                Text = "Network " + x.NetworkIP
+            }).ToList();
+            
+            uselist.AddRange(listnet);
+            data.ListConditions = uselist;
+            return View(data);
+        }
     }
 }

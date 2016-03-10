@@ -113,6 +113,18 @@ namespace IMS.Data.Repository
             return RawQuery<LogContentExtendedModel>(query, new object[] {});
         }
 
+        public List<LogUsedIPExtendModel> GetLogUsedIP()
+        {
+            var query =
+                @"select ip.IPAddress,ip.NetworkIP,l.LogTime,l.ServerCode,ty.TypeName,s.StatusName from IPAddressPool as ip
+                        LEFT JOIN LogChangedContent as l on l.ChangedValueOfObject = ip.IPAddress and l.Object = 'IPAddress' and l.TypeOfLog != 'UNBLOCKIP' AND l.TypeOfLog!= 'BLOCKIP'
+                        left join Status as s on l.ObjectStatus = s.StatusCode
+                        left join TypeOfLog as ty on ty.TypeCode = l.TypeOfLog
+                        where ip.StatusCode != 'STATUS32' and ip.StatusCode !='STATUS35'";
+            return RawQuery<LogUsedIPExtendModel>(query, new object[] {});
+
+        } 
+
         public List<LogExtentedModel> GetAllRequest()
         {
             //lay list request co cung requestcode
