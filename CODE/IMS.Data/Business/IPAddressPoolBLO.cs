@@ -95,7 +95,7 @@ namespace IMS.Data.Business
             ip.StatusCode = Constants.StatusCode.IP_USED;
             dao.Update(ip);
             var log = new LogChangedContent();
-            log.TypeOfLog = "ASSIGNDEFAULTIP";
+            log.TypeOfLog = Constants.TypeOfLog.LOG_ASSIGN_DEFAULT_IP;
             log.Object = Constants.Object.OBJECT_IP;
             log.ChangedValueOfObject = newIP;
             log.ObjectStatus = Constants.StatusCode.IP_USED;
