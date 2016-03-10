@@ -314,7 +314,6 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult AddServer(RequestAddServerViewModel viewmodel)
         {
-
             //add requestCode
             string UniqueRequestCode = RequestBLO.Current.GenerateCode();
             //add server, trang thai server la waiting
@@ -351,7 +350,7 @@ namespace IMS.Controllers
                 //Add request and log
                 string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.ADD_SERVER,
                     Constants.StatusCode.REQUEST_SENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
-                    viewmodel.AppointmentTime, null, Constants.TypeOfLog.LOG_ADD_SERVER, UniqueRequestCode);
+                    viewmodel.AppointmentTime, serverCode, Constants.TypeOfLog.LOG_ADD_SERVER, UniqueRequestCode);
 
                 // log object server
                 LogChangedContent logServer = new LogChangedContent
@@ -406,10 +405,7 @@ namespace IMS.Controllers
             //lay servercode, serverIP (gồm cả defaultIP và current IP
             //update lai trang thai server, trang thai serverIP
             var listServer = viewmodel.ServerOfCustomer;
-            //Add request and log
-            string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.BRING_SERVER_AWAY,
-                Constants.StatusCode.REQUEST_SENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
-                viewmodel.AppointmentTime, null, Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, null);
+            
 
             foreach (var item in listServer)
             {
@@ -419,6 +415,11 @@ namespace IMS.Controllers
                     ServerBLO.Current.UpdateServerStatus(item.ServerCode, Constants.StatusCode.SERVER_BRINGING_AWAY);
                     //update serverip status
                     var currentIps = ServerIPBLO.Current.GetIpByServer(item.ServerCode);
+                    //Add request and log
+                    string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.BRING_SERVER_AWAY,
+                        Constants.StatusCode.REQUEST_SENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
+                        viewmodel.AppointmentTime, item.ServerCode, Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, null);
+                    //update serverip status
                     foreach (var ip in currentIps)
                     {
                         ServerIPBLO.Current.UpdateStatusServerIp(Constants.StatusCode.SERVERIP_CURRENT,
@@ -512,7 +513,7 @@ namespace IMS.Controllers
             newmodel.ServerIPs = list;
             return Json(newmodel, JsonRequestBehavior.AllowGet);
         }
-
+        
         [HttpPost]
         public ActionResult AssignIp(RequestIPViewModel viewmodel)
         {
@@ -530,21 +531,7 @@ namespace IMS.Controllers
                 //Add request and log
                 string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.ASSIGN_IP,
                     Constants.StatusCode.REQUEST_SENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
-                    null, null, Constants.TypeOfLog.LOG_ASSIGN_IP, null);
-
-                //Add Log Request
-                //ko luu servercode o request duoc, vi moi request co the co nhieu servercode. Luc load len se lay tu bang log
-                LogChangedContent logRequest = new LogChangedContent
-                {
-                    RequestCode = result,
-                    TypeOfLog = Constants.TypeOfLog.LOG_ASSIGN_IP,
-                    Object = Constants.Object.OBJECT_REQUEST,
-                    ChangedValueOfObject = result,
-                    ObjectStatus = Constants.StatusCode.REQUEST_SENDING,
-                    ServerCode = viewmodel.SelectedServer,
-
-                };
-                LogChangedContentBLO.Current.AddLog(logRequest);
+                    null, viewmodel.SelectedServer, Constants.TypeOfLog.LOG_ASSIGN_IP, null);
 
                 //Notification
                 var notif = Mapper.Map<RequestIPViewModel, NotificationExtendedModel>(viewmodel);
