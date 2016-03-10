@@ -79,18 +79,20 @@
                                 @Html.DisplayFor(modelItem => item.LastestStatusRequest.RequestTypeName)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.LogTime)
+                                @Html.DisplayFor(modelItem => item.LastestStatusRequest.LogTime)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.StatusName)
+                                @Html.DisplayFor(modelItem => item.LastestStatusRequest.StatusName)
                             </td>
                         </tr>
-                        @*if (item.OldStatusRequests != null)
+                        if (item.OldStatusRequests != null)
                         {
                             foreach (var old in item.OldStatusRequests)
                             {
                                 <tr>
-                                    <td></td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => old.RequestCode)
+                                    </td>
                                     <td></td>
                                     <td>
                                         @Html.DisplayFor(modelItem => old.LogTime)
@@ -100,7 +102,7 @@
                                     </td>
                                 </tr>
                             }
-                        }*@
+                        }
                     }
                 </tbody>
                 <tfoot>

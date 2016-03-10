@@ -29,25 +29,25 @@ namespace IMS.Data.Business
             dao = ServerIPDAO.Current;
         }
 
-        public void UpdateStatusServerIp(string currentStatus, string updatedStatus, string ip)
+        public List<string> GetIpByStatus(string serverCode, string status)
         {
-            dao.UpdateStatusServerIp(currentStatus, updatedStatus, ip);
+            return dao.GetIpByStatus(serverCode, status);
         }
 
-        public List<string> GetReturningIps(string serverCode)
+        public void AddServerIp(string serverCode, string updatedIp, string updatedStatus)
         {
-            return dao.GetReturningIps(serverCode);
+            dao.AddServerIp(serverCode, updatedIp, updatedStatus);
         }
 
-        public void AddServerIp(string serverCode, string ip, int preId)
+        public void UpdateServerIp(string serverCode, string updatedIp, string updatedStatus)
         {
-            dao.AddServerIp(serverCode, ip, preId);
+            dao.UpdateServerIp(serverCode, updatedIp, updatedStatus);
         }
 
-        public int GetPreviousIp(string serverCode, string ip)
-        {
-            return dao.GetPreviousIp(serverCode, ip);
-        }
+        //public int GetPreviousIp(string serverCode, string preIp, string statusCode)
+        //{
+        //    return dao.GetPreviousIp(serverCode, preIp, statusCode);
+        //}
 
         public List<string> GetIpByServer(string serverCode)
         {

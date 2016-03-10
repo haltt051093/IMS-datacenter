@@ -55,6 +55,7 @@ namespace IMS.Core
             public const string SERVERIP_CURRENT = "STATUS29";
             public const string SERVERIP_RETURNING = "STATUS30";
             public const string SERVERIP_OLD = "STATUS31";
+            public const string SERVERIP_CHANGING = "STATUS36";
 
             public const string RACKOFCUSTOMER_CURRENT = "STATUS26";
             public const string RACKOFCUSTOMER_RETURNING = "STATUS27";

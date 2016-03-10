@@ -252,16 +252,6 @@ namespace IMS.Controllers
                 Constants.StatusCode.REQUEST_SENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
                 null, null, Constants.TypeOfLog.LOG_RENT_RACK, null);
 
-            //log lai thoi diem thay doi trang thai request
-            LogChangedContent requestmodel = new LogChangedContent
-            {
-                RequestCode = result,
-                Object = Constants.Object.OBJECT_REQUEST,
-                ChangedValueOfObject = Constants.StatusCode.REQUEST_SENDING,
-                TypeOfLog = Constants.TypeOfLog.LOG_RENT_RACK
-            };
-            LogChangedContentBLO.Current.AddLog(requestmodel);
-
             //Notification
             var notif = Mapper.Map<RequestRentRackViewModel, NotificationExtendedModel>(viewmodel);
             notif.RequestTypeName = Constants.RequestTypeName.RACK_RENT;
@@ -405,8 +395,6 @@ namespace IMS.Controllers
             //lay servercode, serverIP (gồm cả defaultIP và current IP
             //update lai trang thai server, trang thai serverIP
             var listServer = viewmodel.ServerOfCustomer;
-            
-
             foreach (var item in listServer)
             {
                 if (item.Checked)
@@ -422,8 +410,7 @@ namespace IMS.Controllers
                     //update serverip status
                     foreach (var ip in currentIps)
                     {
-                        ServerIPBLO.Current.UpdateStatusServerIp(Constants.StatusCode.SERVERIP_CURRENT,
-                        Constants.StatusCode.SERVERIP_RETURNING, ip);
+                        ServerIPBLO.Current.UpdateServerIp(item.ServerCode, ip, Constants.StatusCode.SERVERIP_OLD);
                     }
                     // log request status
                     LogChangedContent logRequest = new LogChangedContent
@@ -452,19 +439,7 @@ namespace IMS.Controllers
                 //Add request and log
                 string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.RETURN_IP,
                     Constants.StatusCode.REQUEST_SENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
-                    null, null, Constants.TypeOfLog.LOG_RETURN_IP, null);
-
-                // log request status
-                LogChangedContent logRequest = new LogChangedContent
-                {
-                    RequestCode = result,
-                    TypeOfLog = Constants.TypeOfLog.LOG_RETURN_IP,
-                    Object = Constants.Object.OBJECT_REQUEST,
-                    ObjectStatus = Constants.StatusCode.REQUEST_SENDING,
-                    ChangedValueOfObject = result,
-                    ServerCode = viewmodel.SelectedServer,
-                };
-                LogChangedContentBLO.Current.AddLog(logRequest);
+                    null, viewmodel.SelectedServer, Constants.TypeOfLog.LOG_RETURN_IP, null);
 
                 //log tat ca ip muon change
                 string last = selected[0];
@@ -472,25 +447,8 @@ namespace IMS.Controllers
                 ips.Reverse();
                 foreach (var item in ips)
                 {
-                    LogChangedContent logIps = new LogChangedContent
-                    {
-                        RequestCode = result,
-                        TypeOfLog = Constants.TypeOfLog.LOG_RETURN_IP,
-                        Object = Constants.Object.OBJECT_IP,
-                        ChangedValueOfObject = item,
-                        //object status
-                        ObjectStatus = Constants.StatusCode.SERVERIP_RETURNING,
-                        ServerCode = viewmodel.SelectedServer,
-                    };
-                    LogChangedContentBLO.Current.AddLog(logIps);
-                    //update serverIP IsReturned
-                    var serverip = ServerIPDAO.Current.Query(x => x.CurrentIP == item).FirstOrDefault();
-                    if (serverip != null)
-                    {
-                        serverip.StatusCode = Constants.StatusCode.SERVERIP_RETURNING;
-                        ServerIPDAO.Current.Update(serverip);
-                    }
-
+                    //update server IP status
+                    ServerIPBLO.Current.UpdateServerIp(viewmodel.SelectedServer,item,Constants.StatusCode.SERVERIP_RETURNING);
                 }
                 //Notification
                 var notif = Mapper.Map<RequestIPViewModel, NotificationExtendedModel>(viewmodel);
@@ -504,16 +462,6 @@ namespace IMS.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpGet]
-        public ActionResult FetchIPs(RequestIPViewModel model)
-        {
-            var list = ServerIPDAO.Current.Query(x => x.ServerCode == model.SelectedServer
-                            && x.StatusCode == Constants.StatusCode.SERVERIP_CURRENT).ToList();
-            RequestIPViewModel newmodel = model;
-            newmodel.ServerIPs = list;
-            return Json(newmodel, JsonRequestBehavior.AllowGet);
-        }
-        
         [HttpPost]
         public ActionResult AssignIp(RequestIPViewModel viewmodel)
         {
@@ -554,7 +502,6 @@ namespace IMS.Controllers
                 string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.CHANGE_IP,
                     Constants.StatusCode.REQUEST_SENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
                     null, viewmodel.SelectedServer, Constants.TypeOfLog.LOG_CHANGE_IP, null);
-
                 //log tat ca ip muon change
                 string last = selected[0];
                 List<string> ips = last.Split(',').ToList<string>();
@@ -562,19 +509,8 @@ namespace IMS.Controllers
                 foreach (var item in ips)
                 {
                     //update status ip bang serverip
-                    ServerIPBLO.Current.UpdateStatusServerIp(Constants.StatusCode.SERVERIP_CURRENT,
-                        Constants.StatusCode.SERVERIP_RETURNING, item);
-                    LogChangedContent logIps = new LogChangedContent
-                    {
-                        RequestCode = result,
-                        TypeOfLog = Constants.TypeOfLog.LOG_CHANGE_IP,
-                        Object = Constants.Object.OBJECT_IP,
-                        ChangedValueOfObject = item,
-                        //object status
-                        ObjectStatus = Constants.StatusCode.IP_USED,
-                        ServerCode = viewmodel.SelectedServer,
-                    };
-                    LogChangedContentBLO.Current.AddLog(logIps);
+                    ServerIPBLO.Current.UpdateServerIp(viewmodel.SelectedServer, 
+                        item, Constants.StatusCode.SERVERIP_CHANGING);
                 }
                 //Notification
                 var notif = Mapper.Map<RequestIPViewModel, NotificationExtendedModel>(viewmodel);
@@ -585,6 +521,16 @@ namespace IMS.Controllers
                 NotifRegister(notif);
             }
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public ActionResult FetchIPs(RequestIPViewModel model)
+        {
+            var list = ServerIPDAO.Current.Query(x => x.ServerCode == model.SelectedServer
+                            && x.StatusCode == Constants.StatusCode.SERVERIP_CURRENT).ToList();
+            RequestIPViewModel newmodel = model;
+            newmodel.ServerIPs = list;
+            return Json(newmodel, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

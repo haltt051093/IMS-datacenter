@@ -119,13 +119,10 @@ namespace IMS.Data.Business
             var list = Enumerable.Zip(returningIp, selectedIps, (old, changed) => new { old, changed });
             foreach (var item in list)
             {
-                //get previous id
-                var preId = ServerIPBLO.Current.GetPreviousIp(selectedServer, item.old);
-                //them hang moi vao serverip
-                ServerIPBLO.Current.AddServerIp(selectedServer, item.changed, preId);
                 //change status cua old ip o server ip
-                ServerIPBLO.Current.UpdateStatusServerIp(Constants.StatusCode.SERVERIP_RETURNING,
-                    Constants.StatusCode.SERVERIP_OLD, item.old);
+                ServerIPBLO.Current.UpdateServerIp(selectedServer, item.old, Constants.StatusCode.SERVERIP_OLD);
+                //them hang moi vao serverip
+                ServerIPBLO.Current.AddServerIp(selectedServer, item.changed, Constants.StatusCode.SERVERIP_CURRENT);
                 //Update status cua IP moi o IPAddressPool
                 IPAddressPoolBLO.Current.UpdateStatusIp(Constants.StatusCode.IP_USED, item.changed);
                 //update status cua up cu o IPAddresspool

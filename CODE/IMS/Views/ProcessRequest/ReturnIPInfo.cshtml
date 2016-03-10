@@ -48,6 +48,7 @@
 
                     <dd>
                         @Html.DisplayFor(model => model.SelectedServer, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.HiddenFor(model => model.SelectedServer)
                     </dd>
                     <dt>
                         Selected IP Address

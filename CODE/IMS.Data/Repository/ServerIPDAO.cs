@@ -28,24 +28,6 @@ namespace IMS.Data.Repository
             return Query(x => x.Id == entry.Id).FirstOrDefault();
         }
 
-        public void UpdateStatusServerIp(string currentStatus, string updatedStatus, string ip)
-        {
-            var update = Current.Query(x => x.StatusCode == currentStatus && x.CurrentIP == ip).FirstOrDefault();
-            if (update != null)
-            {
-                update.StatusCode = updatedStatus;
-                Update(update);
-            }
-        }
-
-        public List<string> GetReturningIps(string serverCode)
-        {
-            var query =
-                Current.Query(x => x.ServerCode == serverCode && x.StatusCode == Constants.StatusCode.SERVERIP_RETURNING)
-                .Select(x => x.CurrentIP);
-            return query.ToList();
-        }
-
         public List<string> GetIpByServer(string serverCode)
         {
             var query =
@@ -54,27 +36,46 @@ namespace IMS.Data.Repository
             return query.ToList();
         }
 
-        public void AddServerIp(string serverCode, string ip, int preId)
+        public void AddServerIp(string serverCode, string updatedIp, string updatedStatus)
         {
+            //int preId = GetPreviousIp(serverCode, preIp, statusOfPreIp);
             var serverip = new ServerIP
             {
-                CurrentIP = ip,
+                CurrentIP = updatedIp,
                 ServerCode = serverCode,
-                StatusCode = Constants.StatusCode.SERVERIP_CURRENT,
+                StatusCode = updatedStatus,
                 AssignedDate = DateTime.Now,
-                PreviousId = preId
             };
             Add(serverip);
         }
 
-        public int GetPreviousIp(string serverCode, string ip)
+        public void UpdateServerIp(string serverCode, string updatedIp, string updatedStatus)
+        {
+            var query = Query(x => x.ServerCode == serverCode && x.CurrentIP == updatedIp)
+                .OrderByDescending(x => x.AssignedDate).FirstOrDefault();
+            if (query != null)
+            {
+                query.StatusCode = updatedStatus;
+                Update(query);
+            }
+        }
+
+        //public int GetPreviousIp(string serverCode, string preIp, string statusCode)
+        //{
+        //    var query =
+        //        Current.Query(
+        //            x =>
+        //                x.CurrentIP == preIp && x.ServerCode == serverCode &&
+        //                x.StatusCode == statusCode).Select(x => x.Id).FirstOrDefault();
+        //    return query;
+        //}
+
+        public List<string> GetIpByStatus(string serverCode, string status)
         {
             var query =
-                Current.Query(
-                    x =>
-                        x.CurrentIP == ip && x.ServerCode == serverCode &&
-                        x.StatusCode == Constants.StatusCode.SERVERIP_RETURNING).Select(x => x.Id).FirstOrDefault();
-            return query;
+                Current.Query(x => x.ServerCode == serverCode && x.StatusCode == status)
+                .Select(x => x.CurrentIP);
+            return query.ToList();
         }
 
         public void ReturnAllIpOfServer(string serverCode)
