@@ -81,7 +81,7 @@ namespace IMS.Data.Business
             return dao.GetGatewayByServerCode(q);
         }
 
-        public void UpdateIP(string serverCode, string newIP)
+        public void UpdateIP(string serverCode, string newIP, string requestCode)
         {
             var server = ServerBLO.Current.GetByServerCode(serverCode);
             server.DefaultIP = newIP;
@@ -94,6 +94,15 @@ namespace IMS.Data.Business
             ip.IsDefault = true;
             ip.StatusCode = Constants.StatusCode.IP_USED;
             dao.Update(ip);
+            var log = new LogChangedContent();
+            log.TypeOfLog = "ASSIGNDEFAULTIP";
+            log.Object = Constants.Object.OBJECT_IP;
+            log.ChangedValueOfObject = newIP;
+            log.ObjectStatus = Constants.StatusCode.IP_USED;
+            log.ServerCode = serverCode;
+            log.LogTime = DateTime.Now;
+            log.RequestCode = requestCode;
+            LogChangedContentBLO.Current.Add(log);
         }
 
         public void UpdateStatusIp(string status, string ip)

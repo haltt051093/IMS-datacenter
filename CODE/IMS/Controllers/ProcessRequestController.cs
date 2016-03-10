@@ -732,7 +732,7 @@ namespace IMS.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            IPAddressPoolBLO.Current.UpdateIP(ivm.ServerCode, ivm.NewIP);
+            IPAddressPoolBLO.Current.UpdateIP(ivm.ServerCode, ivm.NewIP,ivm.RequestCode);
 
             return RedirectToAction("Detais", new { rType = ivm.RequestType, rCode = ivm.RequestCode });
         }
