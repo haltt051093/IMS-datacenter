@@ -70,6 +70,7 @@
     <Compile Include="Business\GroupBLO.cs" />
     <Compile Include="Business\StaffAssignmentBLO.cs" />
     <Compile Include="Business\StatusBLO.cs" />
+    <Compile Include="Business\NotificationBLO.cs" />
     <Compile Include="Business\TempRequestBLO.cs" />
     <Compile Include="Business\NoteBLO.cs" />
     <Compile Include="Business\TypeOfLogBLO.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="IMSContext.cs" />
     <Compile Include="MailService.cs" />
     <Compile Include="Models\Note.cs" />
+    <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\TempRequest.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\AssignedShift.cs" />
@@ -122,6 +124,7 @@
     <Compile Include="Repository\GroupDAO.cs" />
     <Compile Include="Repository\StaffAssignmentDAO.cs" />
     <Compile Include="Repository\StatusDAO.cs" />
+    <Compile Include="Repository\NotificationDAO.cs" />
     <Compile Include="Repository\TempRequestDAO.cs" />
     <Compile Include="Repository\NoteDAO.cs" />
     <Compile Include="Repository\TypeOfLogDAO.cs" />

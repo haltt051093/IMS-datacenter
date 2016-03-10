@@ -167,7 +167,7 @@ namespace IMS.Data.Generic
         }
 
         public virtual List<CustomModel> RawQuery<CustomModel>(string sql, object[] parameters) where CustomModel : class
-        {
+        {   
             return IMSContext.Current.Database.SqlQuery<CustomModel>(sql, new object[] {})
                     .ToList();
         }
