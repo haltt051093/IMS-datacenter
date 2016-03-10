@@ -1,0 +1,15 @@
+﻿@model IMS.Models.ReportUsedIPViewModel
+@{
+    ViewBag.Title = Pages.ReportUsingIP;
+    ViewBag.PageTitle = Pages.ReportUsingIP;
+    ViewBag.Role = "Shift Head";
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("Report", "ReportUsedIP", Pages.ReportUsingIP)
+    };
+}
+<div id="dropdown-template" class="col-xs-3">
+    <label>Filter: @Html.DropDownListFor(model => model.Condition, Model.ListConditions, "All IP Address", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
+</div>
+

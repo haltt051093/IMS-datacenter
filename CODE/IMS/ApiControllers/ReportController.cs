@@ -19,5 +19,13 @@ namespace IMS.ApiControllers
             result.Data = list;
             return result;
         }
+
+        public DataTableModel<LogUsedIPExtendModel> GetUsedIP()
+        {
+            var list = LogChangedContentBLO.Current.GetLogUsedIP();
+            var result = new DataTableModel<LogUsedIPExtendModel>();
+            result.Data = list;
+            return result;
+        } 
     }
 }

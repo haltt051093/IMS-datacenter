@@ -124,6 +124,15 @@ namespace IMS.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Report About Used and Using IP.
+        /// </summary>
+        public static string ReportUsingIP {
+            get {
+                return ResourceManager.GetString("ReportUsingIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Requests.
         /// </summary>
         public static string Request {

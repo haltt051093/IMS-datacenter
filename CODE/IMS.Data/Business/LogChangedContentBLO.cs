@@ -38,7 +38,12 @@ namespace IMS.Data.Business
         public List<LogContentExtendedModel> GetAllLogIP()
         {
             return dao.GetAllLogIP();
-        }  
+        }
+
+        public List<LogUsedIPExtendModel> GetLogUsedIP()
+        {
+            return dao.GetLogUsedIP();
+        } 
 
         public void AddLog(LogChangedContent viewmodel)
         {
