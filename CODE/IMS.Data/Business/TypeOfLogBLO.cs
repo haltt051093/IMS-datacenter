@@ -21,7 +21,6 @@ namespace IMS.Data.Business
             }
         }
 
-
         private TypeOfLogBLO()
         {
             baseDao = TypeOfLogDAO.Current;

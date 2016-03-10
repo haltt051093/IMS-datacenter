@@ -6,7 +6,7 @@ using IMS.Data.ViewModels;
 
 namespace IMS.ApiModels
 {
-    public class TempRequest
+    public class TempRequestResponse
     {
         public string TempCode { get; set; }
         public ServerExtendedModel Server { get; set; }

@@ -26,6 +26,12 @@ namespace IMS.Data.Business
             }
         }
 
+        private LocationBLO()
+        {
+            baseDao = LocationDAO.Current;
+            dao = LocationDAO.Current;
+        }
+
 
         public bool UpdateLocation(int? size, string ServerCode, string LocationCode, string request)
         {
@@ -81,25 +87,6 @@ namespace IMS.Data.Business
             }
         }
 
-
-        private LocationBLO()
-        {
-            baseDao = LocationDAO.Current;
-            dao = LocationDAO.Current;
-        }
-
-
-        public string GenerateCode()
-        {
-            var code = "L" + TextExpress.Randomize(6, TextExpress.NUMBER + TextExpress.NUMBER);
-            var existing = dao.Query(x => x.LocationCode == code).FirstOrDefault();
-            while (existing != null)
-            {
-                code = "L" + TextExpress.Randomize(6, TextExpress.NUMBER + TextExpress.NUMBER);
-                existing = dao.Query(x => x.LocationCode == code).FirstOrDefault();
-            }
-            return code;
-        }
         public List<LocationViewModel> GetAllLocation()
         {
             return dao.GetAllLocation();
@@ -243,11 +230,6 @@ namespace IMS.Data.Business
             return result;
         }
 
-        public List<string> GetLocationStatus()
-        {
-            return dao.GetLocationStatus();
-        }
-
         public List<RackOfCustomerExtendedModel> GetLocationsOfServer(string serverCode)
         {
             return dao.GetLocationsOfServer(serverCode);
@@ -255,7 +237,26 @@ namespace IMS.Data.Business
 
         public void SetLocationAvailable(string serverCode)
         {
-            dao.SetLocationAvailable(serverCode);
+            var query = dao.Query(x => x.ServerCode == serverCode);
+            foreach (var item in query)
+            {
+                var location = item;
+                location.ServerCode = null;
+                location.StatusCode = Constants.StatusCode.LOCATION_FREE;
+                Update(location);
+            }
+        }
+
+        public string GenerateCode()
+        {
+            var code = "L" + TextExpress.Randomize(6, TextExpress.NUMBER + TextExpress.NUMBER);
+            var existing = dao.Query(x => x.LocationCode == code).FirstOrDefault();
+            while (existing != null)
+            {
+                code = "L" + TextExpress.Randomize(6, TextExpress.NUMBER + TextExpress.NUMBER);
+                existing = dao.Query(x => x.LocationCode == code).FirstOrDefault();
+            }
+            return code;
         }
     }
 }

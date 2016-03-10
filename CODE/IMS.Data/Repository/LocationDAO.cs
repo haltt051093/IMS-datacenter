@@ -141,13 +141,6 @@ namespace IMS.Data.Repository
             return RawQuery<LocationViewModel>(query, new object[] { }).FirstOrDefault();
         }
 
-        public List<string> GetLocationStatus()
-        {
-            var query = @"select s.StatusName from Status as s
-                           where s.Object = 'Location'";
-            return RawQuery<string>(query, new object[] { });
-        }
-
         public List<RackOfCustomerExtendedModel> GetLocationsOfServer(string serverCode)
         {
             var locations = from r in RackDAO.Current.Table()
@@ -168,14 +161,7 @@ namespace IMS.Data.Repository
 
         public void SetLocationAvailable(string serverCode)
         {
-            var query = Query(x => x.ServerCode == serverCode);
-            foreach (var item in query)
-            {
-                var location = item;
-                location.ServerCode = null;
-                location.StatusCode = Constants.StatusCode.LOCATION_FREE;
-                Update(location);
-            }
+            
         }
     }
 }

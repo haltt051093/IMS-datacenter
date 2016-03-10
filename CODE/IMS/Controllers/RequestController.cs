@@ -275,32 +275,36 @@ namespace IMS.Controllers
         }
         //DOING, Edit
         [HttpPost]
-        public ActionResult SaveTempData(RequestAddServerViewModel viewmodel)
+        public ActionResult SaveTempData(RequestAddServerViewModel r)
         {
 
-            if (viewmodel.Action == Constants.FormAction.OK_ACTION)
+            if (r.Action == Constants.FormAction.OK_ACTION)
             {
                 var temp = new TempRequest();
                 temp.RequestCode = Session[Constants.Session.REQUEST_CODE].ToString();
-                temp.Data = JsonConvert.SerializeObject(viewmodel.Server);
+                temp.Data = JsonConvert.SerializeObject(r.Server);
                 temp.TempCode = TempRequestBLO.Current.GenerateCode();
                 TempRequestBLO.Current.Add(temp);
             }
-            else if (viewmodel.Action == Constants.FormAction.EDIT_ACTION)
+            else if (r.Action == Constants.FormAction.EDIT_ACTION)
             {
                 //DOING
-                var tempCode = viewmodel.Server.TempCode;
-                TempRequestBLO.Current.UpdateByTempCode(tempCode);
+                var tempRequest = new TempRequest
+                {
+                    TempCode = r.Server.TempCode,
+                    Data = JsonConvert.SerializeObject(r.Server)
+                };
+                TempRequestBLO.Current.Update(tempRequest);
             }
             RequestCreateViewModel rt = new RequestCreateViewModel();
             rt.Type = Constants.RequestTypeCode.ADD_SERVER;
             return RedirectToAction("Create", rt);
         }
 
-        public ActionResult DeleteTempServer(string tempCode)
+        public ActionResult DeleteTempServer(string code)
         {
             //delete temp server
-            var temp = TempRequestBLO.Current.GetByCode(tempCode);
+            var temp = TempRequestBLO.Current.GetByModel(new TempRequest { TempCode = code });
             TempRequestBLO.Current.Remove(temp);
             //quay lai trang cu
             RequestType rt = new RequestType();

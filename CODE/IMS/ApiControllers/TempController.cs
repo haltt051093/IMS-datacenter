@@ -1,6 +1,7 @@
 ﻿using System.Web.Http;
 using IMS.ApiModels;
 using IMS.Data.Business;
+using IMS.Data.Models;
 using IMS.Data.ViewModels;
 using Newtonsoft.Json;
 
@@ -9,12 +10,12 @@ namespace IMS.ApiControllers
     public class TempController : ApiController
     {
         [HttpGet]
-        public TempRequest GetTempServer(string code)
+        public TempRequestResponse GetTempServer(string code)
         {
-            var tempInfo = TempRequestBLO.Current.GetByCode(code);
+            var tempInfo = TempRequestBLO.Current.GetByModel(new TempRequest {TempCode = code});
             if (tempInfo != null)
             {
-                var result = new TempRequest();
+                var result = new TempRequestResponse();
                 result.TempCode = tempInfo.TempCode;
                 result.Server = JsonConvert.DeserializeObject<ServerExtendedModel>(tempInfo.Data);
                 result.Server.TempCode = tempInfo.TempCode;
@@ -26,7 +27,7 @@ namespace IMS.ApiControllers
         [HttpGet]
         public bool DeleteTempServer(string code)
         {
-            var tempInfo = TempRequestBLO.Current.GetByCode(code);
+            var tempInfo = TempRequestBLO.Current.GetByModel(new TempRequest { TempCode = code });
             if (tempInfo != null)
             {
                 TempRequestBLO.Current.Remove(tempInfo);

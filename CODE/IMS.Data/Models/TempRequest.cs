@@ -7,6 +7,8 @@ namespace IMS.Data.Models
     [Table("TempRequest")]
     public partial class TempRequest : BaseModel
     {
+        public string TempCode { get; set; }
+
         [StringLength(50)]
         public string RequestCode { get; set; }
 
@@ -15,6 +17,5 @@ namespace IMS.Data.Models
 
         public string Data { get; set; }
 
-        public string TempCode { get; set; }
     }
 }

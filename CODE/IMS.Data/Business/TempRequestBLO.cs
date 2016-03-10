@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using IMS.Core.Express;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.Repository;
@@ -31,22 +33,20 @@ namespace IMS.Data.Business
 
         public List<TempRequest> GetByRequestCode(string requestCode)
         {
-            return dao.GetByRequestCode(requestCode);
+            var result = dao.Query(x => x.RequestCode == requestCode).ToList();
+            return result;
         }
 
         public string GenerateCode()
         {
-            return dao.GenerateCode();
-        }
-
-        public TempRequest GetByCode(string tempCode)
-        {
-            return dao.GetByCode(tempCode);
-        }
-
-        public void UpdateByTempCode(string tempCode)
-        {
-            dao.UpdateByTempCode(tempCode);
+            var code = "T" + TextExpress.Randomize(9, TextExpress.NUMBER + TextExpress.NUMBER);
+            var existing = dao.Query(x => x.TempCode == code).FirstOrDefault();
+            while (existing != null)
+            {
+                code = "T" + TextExpress.Randomize(9, TextExpress.NUMBER + TextExpress.NUMBER);
+                existing = dao.Query(x => x.TempCode == code).FirstOrDefault();
+            }
+            return code;
         }
     }
 }
