@@ -32,11 +32,13 @@ namespace IMS.Data.Business
             baseDao = RequestDAO.Current;
             dao = RequestDAO.Current;
         }
-        
 
-        public string AddRequest(string requestType, string customer, string description, DateTime? appointmenTime)
+
+        public string AddRequest(string requestType, string newStatus, string customer,
+            string description, DateTime? appointmenTime, string serverCode, string typeOfLog, string UniqueRequestCode)
         {
-            return dao.AddRequest(requestType, customer, description, appointmenTime);
+            return dao.AddRequest(requestType, newStatus, customer, description, appointmenTime,
+                serverCode, typeOfLog, UniqueRequestCode);
         }
         //Tien
         public List<ScheduleExtendedModel> GetScheduleToday()
@@ -47,7 +49,7 @@ namespace IMS.Data.Business
             {
                 if (item.AppointmentTime != null)
                 {
-                    if (item.AppointmentTime.Value.Date == DateTime.Now.Date && (item.StatusCode==Constants.StatusCode.REQUEST_WAITING||item.StatusCode==Constants.StatusCode.REQUEST_PROCESSING))
+                    if (item.AppointmentTime.Value.Date == DateTime.Now.Date && (item.StatusCode == Constants.StatusCode.REQUEST_WAITING || item.StatusCode == Constants.StatusCode.REQUEST_PROCESSING))
                     {
                         scheduletoday.Add(item);
                     }
@@ -101,9 +103,9 @@ namespace IMS.Data.Business
             return RequestDAO.Current.Query(x => x.RequestCode == requestCode).Select(x => x.Customer).FirstOrDefault();
         }
 
-        public void UpdateRequestStatus(string requestCode, string newStatus)
+        public void UpdateRequestStatusANDLog(string requestCode, string typeOfLog, string newStatus, string username)
         {
-            dao.UpdateRequestStatus(requestCode, newStatus);
+            dao.UpdateRequestStatusANDLog(requestCode, typeOfLog, newStatus, username);
         }
 
         public string GenerateCode()
@@ -111,7 +113,7 @@ namespace IMS.Data.Business
             return dao.GenerateCode();
         }
 
-        public void UpdateChangeIP(List<string> returningIp, List<string> selectedIps, 
+        public void UpdateChangeIP(List<string> returningIp, List<string> selectedIps,
             string selectedServer, string requestCode, string staffCode)
         {
             var list = Enumerable.Zip(returningIp, selectedIps, (old, changed) => new { old, changed });
@@ -122,7 +124,7 @@ namespace IMS.Data.Business
                 //them hang moi vao serverip
                 ServerIPBLO.Current.AddServerIp(selectedServer, item.changed, preId);
                 //change status cua old ip o server ip
-                ServerIPBLO.Current.UpdateStatusServerIp(Constants.StatusCode.SERVERIP_RETURNING, 
+                ServerIPBLO.Current.UpdateStatusServerIp(Constants.StatusCode.SERVERIP_RETURNING,
                     Constants.StatusCode.SERVERIP_OLD, item.old);
                 //Update status cua IP moi o IPAddressPool
                 IPAddressPoolBLO.Current.UpdateStatusIp(Constants.StatusCode.IP_USED, item.changed);
