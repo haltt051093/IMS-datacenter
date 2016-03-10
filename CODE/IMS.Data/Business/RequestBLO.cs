@@ -47,7 +47,7 @@ namespace IMS.Data.Business
             {
                 if (item.AppointmentTime != null)
                 {
-                    if (item.AppointmentTime.Value.Date == DateTime.Now.Date)
+                    if (item.AppointmentTime.Value.Date == DateTime.Now.Date && (item.StatusCode==Constants.StatusCode.REQUEST_WAITING||item.StatusCode==Constants.StatusCode.REQUEST_PROCESSING))
                     {
                         scheduletoday.Add(item);
                     }
