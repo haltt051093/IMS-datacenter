@@ -10,5 +10,6 @@ namespace IMS.Models
     {
         public List<SelectListItem> TimeRange { get; set; } 
         public string TimeSelect { get; set; }
+        public int Count { get; set; }
     }
 }

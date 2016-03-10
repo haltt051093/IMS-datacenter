@@ -89,6 +89,8 @@ namespace IMS.Data.Business
             var si = new ServerIP();
             si.CurrentIP = newIP;
             si.ServerCode = serverCode;
+            si.AssignedDate = DateTime.Now;
+            si.StatusCode = Constants.StatusCode.SERVERIP_CURRENT;
             ServerIPBLO.Current.Add(si);
             var ip = dao.GetByKeys(new IPAddressPool { IPAddress = newIP });
             ip.IsDefault = true;

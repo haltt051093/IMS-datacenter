@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
+using IMS.Data.Business;
 using IMS.Models;
 
 namespace IMS.Controllers
@@ -45,6 +47,16 @@ namespace IMS.Controllers
             listtime.Add(item3);
             var data = new ReportBlockIPViewModel();
             data.TimeRange = listtime;
+            var list = LogChangedContentBLO.Current.GetAllLogIP();
+            int count = 0;
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].Unblocktime == null)
+                {
+                    count++;
+                }
+            }
+            data.Count = count;
             return View(data);
         }
     }
