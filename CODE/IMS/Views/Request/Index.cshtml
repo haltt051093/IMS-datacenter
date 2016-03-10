@@ -4,6 +4,11 @@
     ViewBag.Role = "Customer";
 }
 <link href="~/Content/mystyle.css" rel="stylesheet" type="text/css" />
+<style>
+    p {
+        width: 400px;
+    }
+</style>
 <section class="content-header">
     <h1>
         View Request History
@@ -17,126 +22,158 @@
     <div class="box">
         <div class="box-body table-responsive">
             <div class="row">
-                @using (Html.BeginForm("SearchByDate", "Request", FormMethod.Post))
-                {
-                    <div class="row" style="margin-bottom: 20px;">
-                        <div class='col-sm-6'>
-                            <div class="form-group">
-                                <div class="col-sm-5">
-                                    <label>From:</label>
-                                    <div class='input-group date' id='datetimepicker1'>
-                                        <input type='text' class="form-control" name="start1" value="@ViewBag.startDate" />
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
+                @using (Html.BeginForm("Index", "DeleteRequest", FormMethod.Post))
+            {
+                    @*<div class="row" style="margin-bottom: 20px;">
+                            <div class='col-sm-6'>
+                                <div class="form-group">
+                                    <div class="col-sm-5">
+                                        <label>From:</label>
+                                        <div class='input-group date' id='datetimepicker1'>
+                                            <input type='text' class="form-control" name="start1" value="@ViewBag.startDate" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <label>To:</label>
+                                        <div class='input-group date' id='datetimepicker2'>
+                                            <input type='text' class="form-control" name="end1" value="@ViewBag.endDate" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-5">
-                                    <label>To:</label>
-                                    <div class='input-group date' id='datetimepicker2'>
-                                        <input type='text' class="form-control" name="end1" value="@ViewBag.endDate" />
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
+                                <div class="col-sm-2">
+                                    <button type="submit" class="btn btn-primary pull-left"> Filter</button>
                                 </div>
                             </div>
-                            <div class="col-sm-2">
-                                <button type="submit" class="btn btn-primary pull-left"> Filter</button>
-                            </div>
-                        </div>
-                    </div>
+                        </div>*@
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.Raw("RequestCode")
+                                </th>
+                                <th>
+                                    @Html.Raw("RequestType")
+                                </th>
+                                <th>
+                                    @Html.Raw("RequestedTime")
+                                </th>
+                                <th>
+                                    @Html.Raw("Status")
+                                </th>
+                                <th>
+                                    @Html.Raw("Action")
+                                </th>
+                            </tr>
+                        </thead>
 
-                }
-            </div>
-
-
-            <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.Raw("RequestCode")
-                        </th>
-                        <th>
-                            @Html.Raw("RequestType")
-                        </th>
-                        <th>
-                            @Html.Raw("RequestedTime")
-                        </th>
-                        <th>
-                            @Html.Raw("Status")
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Request)
-                    {
-                        <tr>
-                            <td>
-                                @Html.ActionLink(item.LastestStatusRequest.RequestCode, "EditRequestHistory", new { id = item.Id })
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.LastestStatusRequest.RequestTypeName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.LastestStatusRequest.LogTime)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.LastestStatusRequest.StatusName)
-                            </td>
-                        </tr>
-                        if (item.OldStatusRequests != null)
+                        @for (int i = 0; i < Model.Request.Count; i++)
                         {
-                            foreach (var old in item.OldStatusRequests)
-                            {
+                            <tbody class="clickmee">
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(modelItem => old.RequestCode)
-                                    </td>
-                                    <td></td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => old.LogTime)
+                                        @Html.ActionLink(Model.Request[i].LastestStatusRequest.RequestCode, "EditRequestHistory", new { id = Model.Request[i].Id })
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => old.ObjectStatus)
+                                        @Html.DisplayFor(modelItem => Model.Request[i].LastestStatusRequest.RequestTypeName)
                                     </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => Model.Request[i].LastestStatusRequest.LogTime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => Model.Request[i].LastestStatusRequest.StatusName)
+                                    </td>
+                                    @if (Model.Request[i].LastestStatusRequest.StatusName == Constants.StatusName.REQUEST_PENDING)
+                                    {
+                                        @*@Html.HiddenFor(modelItem => Model.Request[i].LastestStatusRequest.RequestCode)
+                                            @Html.HiddenFor(modelItem => Model.Request[i].LastestStatusRequest.RequestTypeCode)
+                                            <td>
+                                                <button type="submit" class="btn btn-primary" style="width: 100px" name="Cancel">Cancel</button>
+                                            </td>*@
+                                        <td>
+                                            @Html.ActionLink("Cancel", "Index", "DeleteRequest",
+                                       new
+                                       {
+                                           requestCode = Model.Request[i].LastestStatusRequest.RequestCode,
+                                           requestType = Model.Request[i].LastestStatusRequest.RequestTypeCode,
+                                           actionName = "Cancel"
+                                       },null)
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
                                 </tr>
-                            }
+                            </tbody>
+                            <tbody class="showhide" style="display: none; background-color: lightgrey;">
+                                @if (Model.Request[i].OldStatusRequests != null)
+                                {
+                                    foreach (var old in Model.Request[i].OldStatusRequests)
+                                    {
+                                        <tr style="background-color: lightgrey;">
+                                            <td>
+                                                @Html.DisplayFor(modelItem => old.RequestCode)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => old.RequestTypeName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => old.LogTime)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => old.StatusName)
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
                         }
-                    }
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th>
-                            @Html.Raw("RequestCode")
-                        </th>
-                        <th>
-                            @Html.Raw("RequestType")
-                        </th>
-                        <th>
-                            @Html.Raw("RequestedTime")
-                        </th>
-                        <th>
-                            @Html.Raw("Status")
-                        </th>
-                    </tr>
-                </tfoot>
-            </table>
-        </div><!-- /.box-body -->
-    </div><!-- /.box -->
-
+                        <tfoot>
+                            <tr>
+                                <th>
+                                    @Html.Raw("RequestCode")
+                                </th>
+                                <th>
+                                    @Html.Raw("RequestType")
+                                </th>
+                                <th>
+                                    @Html.Raw("RequestedTime")
+                                </th>
+                                <th>
+                                    @Html.Raw("Status")
+                                </th>
+                                <th>Action</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                }
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div>
 </section><!-- /.content -->
 
 <script type="text/javascript">
     $(document).ready(function () {
-        var oTable = $('#example1').DataTable({
-        });
-        oTable.fnSort([[2, 'desc']]);
+        //var oTable = $('#example1').DataTable({
+        //});
+        //oTable.fnSort([[2, 'desc']]);
 
-        $('#datetimepicker1').datetimepicker({
-        });
-        $('#datetimepicker2').datetimepicker({
-        });
+        //$('#datetimepicker1').datetimepicker({
+        //});
+        //$('#datetimepicker2').datetimepicker({
+        //});
 
+        $(".clickmee").click(function () {
+            $(this).closest('tbody')
+        .next('.showhide')
+        .toggle('fast');
+        });
     });
 </script>

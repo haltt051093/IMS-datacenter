@@ -67,7 +67,7 @@ namespace IMS.Data.Repository
             //list tat ca hang co serverCode, lay ra list requestcode
             var query =
                 Current.Query(x => x.ServerCode == serverCode && x.Object == Constants.Object.OBJECT_REQUEST
-                && (x.ObjectStatus == Constants.StatusCode.REQUEST_SENDING
+                && (x.ObjectStatus == Constants.StatusCode.REQUEST_PENDING
                 || x.ObjectStatus == Constants.StatusCode.REQUEST_WAITING
                 || x.ObjectStatus == Constants.StatusCode.REQUEST_PROCESSING)).Select(x => x.RequestCode);
             var requests = new List<RequestExtendedModel>();
@@ -151,6 +151,7 @@ namespace IMS.Data.Repository
                         StatusName = subsstr.StatusName,
                         RequestTypeName = subsrt.TypeName,
                         RequestCode = sr.RequestCode,
+                        RequestTypeCode = subsrt.TypeCode
                     };
                 var newest = allStatusOfRequest.First();
                 var request = new LogExtentedModel();

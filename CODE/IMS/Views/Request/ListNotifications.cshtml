@@ -67,7 +67,7 @@
             {
                 <tr>
                     <td>
-                        @if (item.StatusCode == Constants.StatusCode.REQUEST_SENDING)
+                        @if (item.StatusCode == Constants.StatusCode.REQUEST_PENDING)
                         {
                             <a href="#" data-toggle="modal" class="btnRequestCode" data-target="#acceptrequest-modal"
                                data-requestCode="@item.RequestCode" data-requestType="@item.RequestType">@item.RequestCode</a>
@@ -103,7 +103,7 @@
                 <th>RequestType</th>
                 <th>RequestedTime</th>
                 <th>Status</th>
-                <th></th>
+                <th class="hidden"></th>
             </tr>
         </tfoot>
     </table>

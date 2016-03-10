@@ -23,7 +23,7 @@ namespace IMS.Core
 
         public class StatusCode
         {
-            public const string REQUEST_SENDING = "STATUS04";
+            public const string REQUEST_PENDING = "STATUS04";
             public const string REQUEST_WAITING = "STATUS05";
             public const string REQUEST_PROCESSING = "STATUS06";
             public const string REQUEST_DONE = "STATUS07";
@@ -89,20 +89,25 @@ namespace IMS.Core
             public const string SERVER_WAITING = "Waiting";
             public const string SERVER_RUNNING = "Running";
             public const string SERVER_DEACTIVATE = "Deactivate";
-            public const string REQUEST_SENDING = "Sending";
+
+            public const string REQUEST_PENDING = "Pending";
             public const string REQUEST_WAITING = "Waiting";
             public const string REQUEST_PROCESSING = "Processing";
             public const string REQUEST_DONE = "Done";
             public const string REQUEST_CANCELLED = "Cancelled";
             public const string REQUEST_REJECTED = "Rejected";
+
             public const string IP_AVAILABLE = "Available";
             public const string IP_USED = "Used";
             public const string IP_BLOCKED = "Blocked";
+
             public const string LOCATION_FREE = "Free";
             public const string LOCATION_USED = "Used";
             public const string RACK_AVAILABLE = "Available";
+
             public const string RACK_RENTED = "Rented";
             public const string RACK_USING = "Using";
+
             public const string ASSIGNMENT_APPROVE = "Approving";
             public const string ASSIGNMENT_DOING = "Doing";
             public const string ASSIGNMENT_DONE = "Done";
@@ -315,6 +320,7 @@ namespace IMS.Core
             public const string OK_ACTION = "OK";
             public const string EDIT_ACTION = "Edit";
             public const string CANCEL_ACTION = "Cancel";
+            public const string DELETE_ACTION = "Delete";
         }
 
         public class ServerAttributeCode

@@ -14,10 +14,13 @@
 
 <div class="main-content">
     <h2>@Messages.Welcome</h2>
-    <a class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS" href="@Url.Action("Create", "Request")"
-       data-toggle="modal">
-        <i class="fa fa-plus"></i> @Labels.CreateRequest
-    </a>
+    @if (User.IsInRole(Constants.Role.CUSTOMER))
+    {
+        <a class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS" href="@Url.Action("Create", "Request")"
+           data-toggle="modal">
+            <i class="fa fa-plus"></i> @Labels.CreateRequest
+        </a>
+    }
 </div>
 
 <!-- page script -->

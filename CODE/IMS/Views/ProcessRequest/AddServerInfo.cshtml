@@ -24,9 +24,9 @@
                     </dt>
                     <dd>
                         @Html.DisplayFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.HiddenFor(model=>model.Customer)
-                        @Html.HiddenFor(model=>model.RequestType)
-                        @Html.HiddenFor(model=>model.RequestCode)
+                        @Html.HiddenFor(model => model.Customer)
+                        @Html.HiddenFor(model => model.RequestType)
+                        @Html.HiddenFor(model => model.RequestCode)
                     </dd>
                     <dt>
                         Full Name
@@ -167,9 +167,12 @@
                 @Html.HiddenFor(model => model.RequestCode)
                 if (Model.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                 {
-                    <button type="submit" name="Button" value="Export" class="btn btn-info"><i class="fa fa-external-link"></i> Export Procedure</button>
-                    <button type="submit" name="Button" id="btnApprove" class="btn btn-primary"  value="Approve">Approve</button>
+                    <button type="submit" name="Button" id="btnApprove" class="btn btn-primary" value="Approve">Approve</button>
                     <button type="submit" name="Button" class="btn btn-danger">Reject</button>
+                }
+                if (Model.StatusCode == Constants.StatusCode.REQUEST_DONE)
+                {
+                    <button type="submit" name="Button" value="Export" class="btn btn-info"><i class="fa fa-external-link"></i> Export Procedure</button>
                 }
             }
         </div><!-- /.box-body -->
@@ -192,7 +195,7 @@
                     <section class="content">
                         <div class="row hide">
                             <div id="dropdown-template">
-                                <label>@Html.DropDownListFor(model => model.NetworkIP, Model.NetworkIPs, "All IP Addresses", new {@class = "form-control input-sm", style = "width: 150px"}) </label>
+                                <label>@Html.DropDownListFor(model => model.NetworkIP, Model.NetworkIPs, "All IP Addresses", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
                             </div>
                         </div>
 
@@ -212,8 +215,8 @@
                     </section><!-- /.content -->
                 </div>
                 <div class="modal-footer">
-                    <input class="hidden" name="ServerCode" id="ipid" value=""/>
-                    <input class="hidden" name="RequestCode" id="rcode" value=""/>
+                    <input class="hidden" name="ServerCode" id="ipid" value="" />
+                    <input class="hidden" name="RequestCode" id="rcode" value="" />
                     <input class="hidden" name="RequestType" id="rtype" value="" />
                     <button type="submit" class="btn btn-primary">Assign</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
@@ -255,11 +258,11 @@
                     fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                         var row = $(nRow);
                         var actionCell = $(nRow.cells[3]);
-                       
+
                         switch (aData.StatusCode) {
                             case '@Constants.StatusCode.IP_AVAILABLE':
-                                actionCell.html('<input type="radio" name="NewIP" value="'+aData.IPAddress+'"/>');
-                            
+                                actionCell.html('<input type="radio" name="NewIP" value="' + aData.IPAddress + '"/>');
+
                                 break;
 
                         }
@@ -288,16 +291,16 @@
 
             </script>
             <script>
-    $(document).on("click", ".open-blockIP-modal", function () {
-        var myId = $(this).data('id1');
-        var vcode = $(this).data('id2');
-        var vtype = $(this).data('id3');
-        $(".modal-footer #ipid").val(myId);
-        $(".modal-footer #rcode").val(vcode);
-        $(".modal-footer #rtype").val(vtype);
+                $(document).on("click", ".open-blockIP-modal", function () {
+                    var myId = $(this).data('id1');
+                    var vcode = $(this).data('id2');
+                    var vtype = $(this).data('id3');
+                    $(".modal-footer #ipid").val(myId);
+                    $(".modal-footer #rcode").val(vcode);
+                    $(".modal-footer #rtype").val(vtype);
 
 
-});
+                });
             </script>
             @section Styles {
                 <style>

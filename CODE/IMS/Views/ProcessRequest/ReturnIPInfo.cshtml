@@ -20,7 +20,6 @@
             {
                 @Html.HiddenFor(model => model.RequestCode)
                 @Html.HiddenFor(model => model.RequestType)
-                @Html.HiddenFor(model => model.Ips)
                 <dl class="dl-horizontal">
                     <dt>
                         From customer
@@ -55,9 +54,10 @@
                     </dt>
 
                     <dd>
-                        @foreach (var item in Model.Ips)
-                {
-                            @Html.DisplayFor(model => item, new { htmlAttributes = new { @class = "form-control" } })
+                        @for (int i = 0; i < Model.Ips.Count; i++)
+                        {
+                            @Html.DisplayFor(model => Model.Ips[i], new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.HiddenFor(model => Model.Ips[i])
                             <br />
                         }
                     </dd>

@@ -210,7 +210,7 @@ namespace IMS.Data.Repository
                 RequestCode = requestCode,
                 TypeOfLog = typeOfLog,
                 Object = Constants.Object.OBJECT_REQUEST,
-                ObjectStatus = Constants.StatusCode.REQUEST_SENDING,
+                ObjectStatus = Constants.StatusCode.REQUEST_PENDING,
                 ChangedValueOfObject = requestCode,
                 ServerCode = serverCode,
             };

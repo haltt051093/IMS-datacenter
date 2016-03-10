@@ -417,35 +417,6 @@ namespace IMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult ProcessRequesReturnIp(RequestIPViewModel viewmodel)
-        {
-            foreach (var item in viewmodel.Ips)
-            {
-                //change status cua IP o IPAddresspool
-                IPAddressPoolBLO.Current.UpdateStatusIp(Constants.StatusCode.IP_AVAILABLE, item);
-                // update statuscode cua bang serverIP
-                ServerIPBLO.Current.UpdateServerIp(viewmodel.SelectedServer, item, Constants.StatusCode.SERVERIP_OLD);
-                //Add log trang thai IP
-                LogChangedContent logIp = new LogChangedContent
-                {
-                    RequestCode = viewmodel.RequestCode,
-                    TypeOfLog = Constants.TypeOfLog.LOG_RETURN_IP,
-                    Object = Constants.Object.OBJECT_IP,
-                    ChangedValueOfObject = item.ToString(),
-                    ObjectStatus = Constants.StatusCode.IP_AVAILABLE,
-                    Staff = viewmodel.StaffCode
-                };
-                LogChangedContentBLO.Current.AddLog(logIp);
-            }
-            //Add Log and update request status
-            RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_RETURN_IP,
-                Constants.StatusCode.REQUEST_DONE, Constants.Test.STAFF_NHI);
-            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
-            return RedirectToAction("ListNotifications", "Request");
-
-        }
-
-        [HttpPost]
         public ActionResult ProcessRequestAddServer(RequestAddServerViewModel viewmodel)
         {
             var listServer = viewmodel.Servers;
@@ -584,8 +555,8 @@ namespace IMS.Controllers
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_ADD_SERVER,
                     Constants.StatusCode.REQUEST_DONE, Constants.Test.STAFF_NHI);
                 Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
-                return RedirectToAction("ListNotifications", "Request");
-
+                //return RedirectToAction("ListNotifications", "Request");
+                return View("AddServerInfo", viewmodel);
             }
 
         }
@@ -717,6 +688,35 @@ namespace IMS.Controllers
 
             //Add Log and update request status
             RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
+                Constants.StatusCode.REQUEST_DONE, Constants.Test.STAFF_NHI);
+            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+            return RedirectToAction("ListNotifications", "Request");
+
+        }
+
+        [HttpPost]
+        public ActionResult ProcessRequesReturnIp(RequestIPViewModel viewmodel)
+        {
+            foreach (var item in viewmodel.Ips)
+            {
+                //change status cua IP o IPAddresspool
+                IPAddressPoolBLO.Current.UpdateStatusIp(Constants.StatusCode.IP_AVAILABLE, item);
+                // update statuscode cua bang serverIP
+                ServerIPBLO.Current.UpdateServerIp(viewmodel.SelectedServer, item, Constants.StatusCode.SERVERIP_OLD);
+                //Add log trang thai IP
+                LogChangedContent logIp = new LogChangedContent
+                {
+                    RequestCode = viewmodel.RequestCode,
+                    TypeOfLog = Constants.TypeOfLog.LOG_RETURN_IP,
+                    Object = Constants.Object.OBJECT_IP,
+                    ChangedValueOfObject = item.ToString(),
+                    ObjectStatus = Constants.StatusCode.IP_AVAILABLE,
+                    Staff = viewmodel.StaffCode
+                };
+                LogChangedContentBLO.Current.AddLog(logIp);
+            }
+            //Add Log and update request status
+            RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_RETURN_IP,
                 Constants.StatusCode.REQUEST_DONE, Constants.Test.STAFF_NHI);
             Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("ListNotifications", "Request");

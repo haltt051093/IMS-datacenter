@@ -18,15 +18,6 @@ namespace IMS.Controllers
     {
         public ActionResult Index()
         {
-            //var data = new RequestIndexViewModel();
-            //var requestTypes = RequestTypeBLO.Current.GetAll();
-            //data.RequestTypes = requestTypes
-            //    .Select(x => new SelectListItem { Text = x.RequestTypeName, Value = x.RequestTypeCode })
-            //    .ToList();
-            //return View(data);
-
-            //lay request theo nhom, 1 request la 
-            // trong cai request, moi object gom 1 request o trang thai som nhat, va list nhung request o trang thai cu
             var request = LogChangedContentBLO.Current.GetAllRequest();
             var data = new RequestHistoryViewModel();
             data.Request = request;
@@ -192,7 +183,7 @@ namespace IMS.Controllers
                 {
                     //Add request and log
                     string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.RETURN_RACK,
-                        Constants.StatusCode.REQUEST_SENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
+                        Constants.StatusCode.REQUEST_PENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
                         viewmodel.AppointmentTime, null, Constants.TypeOfLog.LOG_RETURN_RACK, null);
                     //lay ra rackcode
                     string last = selected[0];
@@ -221,13 +212,13 @@ namespace IMS.Controllers
                         TypeOfLog = Constants.TypeOfLog.LOG_RETURN_RACK,
                         Object = Constants.Object.OBJECT_REQUEST,
                         ChangedValueOfObject = result,
-                        ObjectStatus = Constants.StatusCode.REQUEST_SENDING
+                        ObjectStatus = Constants.StatusCode.REQUEST_PENDING
                     };
                     LogChangedContentBLO.Current.AddLog(logRequest);
                     //Notification
                     var notif = Mapper.Map<RequestReturnRackViewModel, NotificationExtendedModel>(viewmodel);
                     notif.RequestTypeName = Constants.RequestTypeName.RACK_RETURN;
-                    notif.StatusName = Constants.StatusName.REQUEST_SENDING;
+                    notif.StatusName = Constants.StatusName.REQUEST_PENDING;
                     notif.RequestCode = result;
                     //dang ky ham cho client
                     NotifRegister(notif);
@@ -249,13 +240,13 @@ namespace IMS.Controllers
 
             //Add request and log
             string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.RENT_RACK,
-                Constants.StatusCode.REQUEST_SENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
+                Constants.StatusCode.REQUEST_PENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
                 null, null, Constants.TypeOfLog.LOG_RENT_RACK, null);
 
             //Notification
             var notif = Mapper.Map<RequestRentRackViewModel, NotificationExtendedModel>(viewmodel);
             notif.RequestTypeName = Constants.RequestTypeName.RACK_RENT;
-            notif.StatusName = Constants.StatusName.REQUEST_SENDING;
+            notif.StatusName = Constants.StatusName.REQUEST_PENDING;
             notif.RequestCode = result;
             //dang ky ham cho client
             NotifRegister(notif);
@@ -339,7 +330,7 @@ namespace IMS.Controllers
 
                 //Add request and log
                 string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.ADD_SERVER,
-                    Constants.StatusCode.REQUEST_SENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
+                    Constants.StatusCode.REQUEST_PENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
                     viewmodel.AppointmentTime, serverCode, Constants.TypeOfLog.LOG_ADD_SERVER, UniqueRequestCode);
 
                 // log object server
@@ -381,7 +372,7 @@ namespace IMS.Controllers
             //Notification
             var notif = Mapper.Map<RequestAddServerViewModel, NotificationExtendedModel>(viewmodel);
             notif.RequestTypeName = Constants.RequestTypeName.SERVER_ADD;
-            notif.StatusName = Constants.StatusName.REQUEST_SENDING;
+            notif.StatusName = Constants.StatusName.REQUEST_PENDING;
             notif.RequestCode = UniqueRequestCode;
             //dang ky ham cho client
             NotifRegister(notif);
@@ -405,7 +396,7 @@ namespace IMS.Controllers
                     var currentIps = ServerIPBLO.Current.GetIpByServer(item.ServerCode);
                     //Add request and log
                     string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.BRING_SERVER_AWAY,
-                        Constants.StatusCode.REQUEST_SENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
+                        Constants.StatusCode.REQUEST_PENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
                         viewmodel.AppointmentTime, item.ServerCode, Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, null);
                     //update serverip status
                     foreach (var ip in currentIps)
@@ -418,7 +409,7 @@ namespace IMS.Controllers
                         RequestCode = result,
                         TypeOfLog = Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
                         Object = Constants.Object.OBJECT_REQUEST,
-                        ObjectStatus = Constants.StatusCode.REQUEST_SENDING,
+                        ObjectStatus = Constants.StatusCode.REQUEST_PENDING,
                         ChangedValueOfObject = result,
                         ServerCode = item.ServerCode,
                     };
@@ -438,7 +429,7 @@ namespace IMS.Controllers
             {
                 //Add request and log
                 string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.RETURN_IP,
-                    Constants.StatusCode.REQUEST_SENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
+                    Constants.StatusCode.REQUEST_PENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
                     null, viewmodel.SelectedServer, Constants.TypeOfLog.LOG_RETURN_IP, null);
 
                 //log tat ca ip muon change
@@ -453,7 +444,7 @@ namespace IMS.Controllers
                 //Notification
                 var notif = Mapper.Map<RequestIPViewModel, NotificationExtendedModel>(viewmodel);
                 notif.RequestTypeName = Constants.RequestTypeName.IP_RETURN;
-                notif.StatusName = Constants.StatusName.REQUEST_SENDING;
+                notif.StatusName = Constants.StatusName.REQUEST_PENDING;
                 notif.RequestCode = result;
                 //dang ky ham cho client
                 NotifRegister(notif);
@@ -478,13 +469,13 @@ namespace IMS.Controllers
                 viewmodel.Description = JsonConvert.SerializeObject(requestDetail);
                 //Add request and log
                 string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.ASSIGN_IP,
-                    Constants.StatusCode.REQUEST_SENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
+                    Constants.StatusCode.REQUEST_PENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
                     null, viewmodel.SelectedServer, Constants.TypeOfLog.LOG_ASSIGN_IP, null);
 
                 //Notification
                 var notif = Mapper.Map<RequestIPViewModel, NotificationExtendedModel>(viewmodel);
                 notif.RequestTypeName = Constants.RequestTypeName.IP_ASSIGN;
-                notif.StatusName = Constants.StatusName.REQUEST_SENDING;
+                notif.StatusName = Constants.StatusName.REQUEST_PENDING;
                 notif.RequestCode = result;
                 //dang ky ham cho client
                 NotifRegister(notif);
@@ -500,7 +491,7 @@ namespace IMS.Controllers
             {
                 //Add request and log
                 string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.CHANGE_IP,
-                    Constants.StatusCode.REQUEST_SENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
+                    Constants.StatusCode.REQUEST_PENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
                     null, viewmodel.SelectedServer, Constants.TypeOfLog.LOG_CHANGE_IP, null);
                 //log tat ca ip muon change
                 string last = selected[0];
@@ -515,7 +506,7 @@ namespace IMS.Controllers
                 //Notification
                 var notif = Mapper.Map<RequestIPViewModel, NotificationExtendedModel>(viewmodel);
                 notif.RequestTypeName = Constants.RequestTypeName.IP_CHANGE;
-                notif.StatusName = Constants.StatusName.REQUEST_SENDING;
+                notif.StatusName = Constants.StatusName.REQUEST_PENDING;
                 notif.RequestCode = result;
                 //dang ky ham cho client
                 NotifRegister(notif);

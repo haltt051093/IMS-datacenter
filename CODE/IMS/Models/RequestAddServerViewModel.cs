@@ -37,8 +37,6 @@ namespace IMS.Models
         public string ServerCode { get; set; }
 
         public string Button { get; set; }
-       
-
 
         public List<SelectListItem> ServerSizes { get; set; }
         public List<SelectListItem> AttributeList { get; set; }

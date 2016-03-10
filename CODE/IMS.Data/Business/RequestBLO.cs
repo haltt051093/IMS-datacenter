@@ -86,7 +86,7 @@ namespace IMS.Data.Business
             {
                 list = ListClientSideNotification(customer);
             }
-            else if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.STAFF)
+            else if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.STAFF || role == Constants.Role.MANAGER)
             {
                 list = ListServerSideNotification();
             }
