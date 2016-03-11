@@ -25,13 +25,17 @@ namespace IMS.Controllers
         [ChildActionOnly]
         public PartialViewResult Header()
         {
-            return PartialView();
+            var data = new HomeHeaderViewModel();
+            data.Account = GetCurrentAccount();
+            return PartialView(data);
         }
 
         [ChildActionOnly]
         public PartialViewResult Sidebar()
         {
-            return PartialView();
+            var data = new HomeSidebarViewModel();
+            data.Account = GetCurrentAccount();
+            return PartialView(data);
         }
     }
 }

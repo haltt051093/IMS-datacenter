@@ -1,48 +1,33 @@
-﻿@{
-    var data = new List<HomeSidebarViewModel>();
-    data.Add(new HomeSidebarViewModel("Server", "Index", "Server") { Roles = new List<string>() { "Shift Head", "Customer" }});
-    data.Add(new HomeSidebarViewModel("Request History", "Index", "Request") { Roles = new List<string>() { "Customer" } });
-    data.Add(new HomeSidebarViewModel("Location", "Index2", "Location") { Roles = new List<string>() { "Shift Head" } });
-    data.Add(new HomeSidebarViewModel("IP Address", "Index2", "IP") { Roles = new List<string>() { "Shift Head" } });
-    data.Add(new HomeSidebarViewModel("Account", "Index", "Account") { Roles = new List<string>() { "Shift Head" } });
-    data.Add(new HomeSidebarViewModel("Create request", "", "") { Roles = new List<string>() { "Customer" }, SubMenu = new List<HomeSidebarViewModel>()
+﻿@model HomeSidebarViewModel
+
+@{
+    var data = new List<SidebarItemModel>();
+    data.Add(new SidebarItemModel("Server", "Index", "Server") { Roles = new List<string>() { "Shift Head", "Customer" }});
+    data.Add(new SidebarItemModel("Request History", "Index", "Request") { Roles = new List<string>() { "Customer" } });
+    data.Add(new SidebarItemModel("Location", "Index2", "Location") { Roles = new List<string>() { "Shift Head" } });
+    data.Add(new SidebarItemModel("IP Address", "Index2", "IP") { Roles = new List<string>() { "Shift Head" } });
+    data.Add(new SidebarItemModel("Account", "Index", "Account") { Roles = new List<string>() { "Shift Head" } });
+    data.Add(new SidebarItemModel("Create request", "", "") { Roles = new List<string>() { "Customer" }, SubMenu = new List<SidebarItemModel>()
         {
-            new HomeSidebarViewModel("Add New Server", "RequestAddServer2", "Request") { Roles = new List<string>() { "Customer" } },
-            new HomeSidebarViewModel("Upgrade Server", "RequestUpgradeServer2", "Request") { Roles = new List<string>() { "Customer" } },
-            new HomeSidebarViewModel("Bring Away Server", "RequestBringAwayServer2", "Request") { Roles = new List<string>() { "Customer" } },
-            new HomeSidebarViewModel("Change IP Address", "RequestChangeIP2", "Request") { Roles = new List<string>() { "Customer" } },
-            new HomeSidebarViewModel("Return IP Address", "RequestReturnIP2", "Request") { Roles = new List<string>() { "Customer" } },
-            new HomeSidebarViewModel("Assign IP Address", "RequestAssignIP2", "Request") { Roles = new List<string>() { "Customer" } },
-            new HomeSidebarViewModel("Rent Rack", "RequestRentRack2", "Request") { Roles = new List<string>() { "Customer" } },
-            new HomeSidebarViewModel("Return Rack", "RequestReturnRack2", "Request") { Roles = new List<string>() { "Customer" } }
+            new SidebarItemModel("Add New Server", "RequestAddServer2", "Request") { Roles = new List<string>() { "Customer" } },
+            new SidebarItemModel("Upgrade Server", "RequestUpgradeServer2", "Request") { Roles = new List<string>() { "Customer" } },
+            new SidebarItemModel("Bring Away Server", "RequestBringAwayServer2", "Request") { Roles = new List<string>() { "Customer" } },
+            new SidebarItemModel("Change IP Address", "RequestChangeIP2", "Request") { Roles = new List<string>() { "Customer" } },
+            new SidebarItemModel("Return IP Address", "RequestReturnIP2", "Request") { Roles = new List<string>() { "Customer" } },
+            new SidebarItemModel("Assign IP Address", "RequestAssignIP2", "Request") { Roles = new List<string>() { "Customer" } },
+            new SidebarItemModel("Rent Rack", "RequestRentRack2", "Request") { Roles = new List<string>() { "Customer" } },
+            new SidebarItemModel("Return Rack", "RequestReturnRack2", "Request") { Roles = new List<string>() { "Customer" } }
         }
     });
-    data.Add(new HomeSidebarViewModel("Report", "", "") { Roles = new List<string>() { "Shift Head", "Customer" }, SubMenu = new List<HomeSidebarViewModel>()
+    data.Add(new SidebarItemModel("Report", "", "") { Roles = new List<string>() { "Shift Head", "Customer" }, SubMenu = new List<SidebarItemModel>()
         {
-            new HomeSidebarViewModel("Server Moving", "", "") { Roles = new List<string>() { "Shift Head", "Customer" } },
-            new HomeSidebarViewModel("Blocked IP Address", "ReportBlockIP", "Report") { Roles = new List<string>() { "Shift Head", "Customer" } },
-            new HomeSidebarViewModel("Free IP Address", "", "") { Roles = new List<string>() { "Shift Head", "Customer" } }
+            new SidebarItemModel("Server Moving", "", "") { Roles = new List<string>() { "Shift Head", "Customer" } },
+            new SidebarItemModel("Blocked IP Address", "ReportBlockIP", "Report") { Roles = new List<string>() { "Shift Head", "Customer" } },
+            new SidebarItemModel("Free IP Address", "", "") { Roles = new List<string>() { "Shift Head", "Customer" } }
         }
     });
 
-    var user = Session[Constants.Session.USER_LOGIN];
-    string role = string.Empty;
-    if (User.IsInRole(Constants.Role.MANAGER))
-    {
-        role = Constants.Role.SHIFT_HEAD;
-    }
-    else if (User.IsInRole(Constants.Role.SHIFT_HEAD))
-    {
-        role = Constants.Role.SHIFT_HEAD;
-    }
-    if (User.IsInRole(Constants.Role.STAFF))
-    {
-        role = Constants.Role.STAFF;
-    }
-    if (User.IsInRole(Constants.Role.CUSTOMER))
-    {
-        role = Constants.Role.CUSTOMER;
-    }
+    var role = Model.Role;
 }
 
 <!-- Sidebar user panel -->

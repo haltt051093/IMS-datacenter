@@ -915,6 +915,8 @@
     <Compile Include="Controllers\DeleteRequestController.cs" />
     <Compile Include="Controllers\ProcessRequestController.cs" />
     <Compile Include="Controllers\ValidateController.cs" />
+    <Compile Include="Models\HomeHeaderViewModel.cs" />
+    <Compile Include="Models\HomeSidebarViewModel.cs" />
     <Compile Include="Models\ProcessRequestIndexModel.cs" />
     <Compile Include="Models\ReportUsedIPViewModel.cs" />
     <Compile Include="Models\RequestHistoryViewModel.cs" />
@@ -925,7 +927,7 @@
     <Compile Include="Models\BaseViewModel.cs" />
     <Compile Include="Models\BreadcrumbModel.cs" />
     <Compile Include="Models\HomeIndexViewModel.cs" />
-    <Compile Include="Models\HomeSidebarViewModel.cs" />
+    <Compile Include="Models\SidebarItemModel.cs" />
     <Compile Include="Models\RackOfCustomerIndexViewModel.cs" />
     <Compile Include="Models\RequestBringServerAwayViewModel.cs" />
     <Compile Include="Models\RequestCreateViewModel.cs" />
