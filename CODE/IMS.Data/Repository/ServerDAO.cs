@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using IMS.Core;
 using IMS.Core.Express;
+using IMS.Data.Business;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.ViewModels;
@@ -228,17 +229,6 @@ namespace IMS.Data.Repository
                 existing = Query(x => x.ServerCode == code).FirstOrDefault();
             }
             return code;
-        }
-
-        //change server status
-        public void UpdateServerStatus(string serverCode, string status)
-        {
-            var server = Query(x => x.ServerCode == serverCode).FirstOrDefault();
-            if (server != null)
-            {
-                server.StatusCode = status;
-                Update(server);
-            }
         }
 
         public ServerExtendedModel GetAllServerInfo(string serverCode)

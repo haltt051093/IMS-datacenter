@@ -25,7 +25,7 @@ namespace IMS.Data.Business
                 }
                 return instance;
             }
-        }               
+        }
 
         private IPAddressPoolBLO()
         {
@@ -68,7 +68,7 @@ namespace IMS.Data.Business
 
         public string GetGatewayByIP(string q)
         {
-            var ip = dao.GetByKeys(new IPAddressPool {IPAddress = q});
+            var ip = dao.GetByKeys(new IPAddressPool { IPAddress = q });
             if (ip != null)
             {
                 return ip.Gateway;
@@ -107,14 +107,27 @@ namespace IMS.Data.Business
             LogChangedContentBLO.Current.Add(log);
         }
 
-        public void UpdateStatusIp(string status, string ip)
+        public void UpdateStatusIpANDLog(string requestCode, string serverCode, string ip, string newStatus,
+            string typeOfLog, string username)
         {
-            var existing = dao.GetByKeys(new IPAddressPool {IPAddress = ip});
+            var existing = dao.GetByKeys(new IPAddressPool { IPAddress = ip });
             if (existing != null)
             {
-                existing.StatusCode = status;
+                existing.StatusCode = newStatus;
                 dao.Update(existing);
             }
+            //Add log trang thai IP
+            LogChangedContent logIp = new LogChangedContent
+            {
+                RequestCode = requestCode,
+                TypeOfLog = typeOfLog,
+                Object = Constants.Object.OBJECT_IP,
+                ChangedValueOfObject = ip,
+                ObjectStatus = newStatus,
+                ServerCode = serverCode,
+                Staff = username
+            };
+            LogChangedContentBLO.Current.AddLog(logIp);
         }
 
         public List<IPAddressPoolExtendedModel> GetAvailableIpsSameGateway(string serverCode)
@@ -127,16 +140,16 @@ namespace IMS.Data.Business
             return dao.GetRandomIPs(list, number);
         }
 
-        public void SetIpAvailable(string serverCode)
-        {
-            var serverips = ServerIPDAO.Current.Query(x => x.ServerCode == serverCode);
-            foreach (var item in serverips)
-            {
-                var ip = dao.GetByKeys(new IPAddressPool {IPAddress = item.CurrentIP});
-                ip.StatusCode = Constants.StatusCode.IP_AVAILABLE;
-                dao.Update(ip);
-            }
-        }
+        //public void SetIpAvailable(string serverCode)
+        //{
+        //    var serverips = ServerIPDAO.Current.Query(x => x.ServerCode == serverCode);
+        //    foreach (var item in serverips)
+        //    {
+        //        var ip = dao.GetByKeys(new IPAddressPool { IPAddress = item.CurrentIP });
+        //        ip.StatusCode = Constants.StatusCode.IP_AVAILABLE;
+        //        dao.Update(ip);
+        //    }
+        //}
 
         public string GenerateSubnetMask(int bitCount)
         {

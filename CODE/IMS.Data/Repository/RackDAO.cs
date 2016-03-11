@@ -33,13 +33,6 @@ namespace IMS.Data.Repository
             return existing;
         }
 
-        public void UpdateRackStatus(string rackCode, string status)
-        {
-            var query = Current.Query(x => x.RackCode == rackCode).FirstOrDefault();
-            query.StatusCode = status;
-            Update(query);
-        }
-
         public List<string> GetAllRowsOfRack()
         {
             var allRacks = from r in Table()

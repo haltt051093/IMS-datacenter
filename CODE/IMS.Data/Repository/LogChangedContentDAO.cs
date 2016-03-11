@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using IMS.Core;
+using IMS.Data.Business;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.ViewModels;
@@ -70,34 +71,25 @@ namespace IMS.Data.Repository
                 && (x.ObjectStatus == Constants.StatusCode.REQUEST_PENDING
                 || x.ObjectStatus == Constants.StatusCode.REQUEST_WAITING
                 || x.ObjectStatus == Constants.StatusCode.REQUEST_PROCESSING)).Select(x => x.RequestCode);
-            var requests = new List<RequestExtendedModel>();
-            //item la requestCode
-            foreach (var item in query)
-            {
-                var query1 = from re in RequestDAO.Current.Table()
-                             join rt in RequestTypeDAO.Current.Table()
-                                 on re.RequestType equals rt.RequestTypeCode
-                             where re.RequestCode == item
-                             select new RequestExtendedModel()
-                             {
-                                 RequestType = re.RequestType,
-                                 RequestTypeName = rt.RequestTypeName,
-                                 RequestCode = re.RequestCode
-                             };
-                requests.Add(query1.FirstOrDefault());
-            }
-            //requests.OrderByDescending(x => x.RequestedTime);
-            return requests;
+            return query.Select(item => (from re in RequestDAO.Current.Table()
+                                         join rt in RequestTypeDAO.Current.Table() on re.RequestType equals rt.RequestTypeCode
+                                         where re.RequestCode == item
+                                         select new RequestExtendedModel()
+                                         {
+                                             RequestType = re.RequestType,
+                                             RequestTypeName = rt.RequestTypeName,
+                                             RequestCode = re.RequestCode
+                                         })).Select(query1 => Queryable.FirstOrDefault<RequestExtendedModel>(query1)).ToList();
         }
 
         public List<LogChangedContent> GetBlockedIP(string IP)
         {
             var query = @"select * from LogChangedContent as l, 
                             (
-                            select MAX(l.LogTime)as maxtime from LogChangedContent as l where l.ChangedValueOfObject ='"+IP+@"'and l.TypeOfLog='BLOCKIP'
+                            select MAX(l.LogTime)as maxtime from LogChangedContent as l where l.ChangedValueOfObject ='" + IP + @"'and l.TypeOfLog='BLOCKIP'
                             group by l.ChangedValueOfObject
                             )as k 
-                            where l.ChangedValueOfObject ='"+IP+@"'and l.TypeOfLog='BLOCKIP' and l.LogTime=k.maxtime";
+                            where l.ChangedValueOfObject ='" + IP + @"'and l.TypeOfLog='BLOCKIP' and l.LogTime=k.maxtime";
             return RawQuery<LogChangedContent>(query, new object[] { });
         }
 
@@ -110,7 +102,7 @@ namespace IMS.Data.Repository
                              where l.PreviousId = k.Id)as m
                              on m.PreviousId=l.Id
                              where l.TypeOfLog = 'BLOCKIP' ";
-            return RawQuery<LogContentExtendedModel>(query, new object[] {});
+            return RawQuery<LogContentExtendedModel>(query, new object[] { });
         }
 
         public List<LogUsedIPExtendModel> GetLogUsedIP()
@@ -121,9 +113,9 @@ namespace IMS.Data.Repository
                         left join Status as s on l.ObjectStatus = s.StatusCode
                         left join TypeOfLog as ty on ty.TypeCode = l.TypeOfLog
                         where ip.StatusCode != 'STATUS32' and ip.StatusCode !='STATUS35'";
-            return RawQuery<LogUsedIPExtendModel>(query, new object[] {});
+            return RawQuery<LogUsedIPExtendModel>(query, new object[] { });
 
-        } 
+        }
 
         public List<LogExtentedModel> GetAllRequest()
         {
@@ -137,22 +129,22 @@ namespace IMS.Data.Repository
                 var requestCode = getRequestCodes[i].RequestCode;
 
                 var allStatusOfRequest = from sr in Current.Table()
-                    join rt in TypeOfLogDAO.Current.Table()
-                        on sr.TypeOfLog equals rt.TypeCode into srt
-                    from subsrt in srt.DefaultIfEmpty()
-                    join st in StatusDAO.Current.Table()
-                        on sr.ObjectStatus equals st.StatusCode into sstr
-                    from subsstr in sstr.DefaultIfEmpty()
-                    where sr.RequestCode == requestCode && sr.Object == Constants.Object.OBJECT_REQUEST
-                    orderby sr.LogTime descending
-                    select new LogExtentedModel()
-                    {
-                        LogTime = sr.LogTime,
-                        StatusName = subsstr.StatusName,
-                        RequestTypeName = subsrt.TypeName,
-                        RequestCode = sr.RequestCode,
-                        RequestTypeCode = subsrt.TypeCode
-                    };
+                                         join rt in TypeOfLogDAO.Current.Table()
+                                             on sr.TypeOfLog equals rt.TypeCode into srt
+                                         from subsrt in srt.DefaultIfEmpty()
+                                         join st in StatusDAO.Current.Table()
+                                             on sr.ObjectStatus equals st.StatusCode into sstr
+                                         from subsstr in sstr.DefaultIfEmpty()
+                                         where sr.RequestCode == requestCode && sr.Object == Constants.Object.OBJECT_REQUEST
+                                         orderby sr.LogTime descending
+                                         select new LogExtentedModel()
+                                         {
+                                             LogTime = sr.LogTime,
+                                             StatusName = subsstr.StatusName,
+                                             RequestTypeName = subsrt.TypeName,
+                                             RequestCode = sr.RequestCode,
+                                             RequestTypeCode = subsrt.TypeCode
+                                         };
                 var newest = allStatusOfRequest.First();
                 var request = new LogExtentedModel();
                 var others = new List<LogExtentedModel>();
@@ -172,5 +164,16 @@ namespace IMS.Data.Repository
             return list;
             //return RawQuery<RequestExtendedModel>(query, new object[] { });
         }
+
+        public List<LogChangedContent> GetLogInfoByRequestCode(string requestCode, string Object)
+        {
+            var query = from l in Current.Table()
+                        where l.RequestCode == requestCode && l.Object == Object
+                        select l;
+            return query.ToList();
+        }
+
+        
+
     }
 }

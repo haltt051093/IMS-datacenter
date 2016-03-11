@@ -117,7 +117,27 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => old.StatusName)
                                     </td>
-                                    <td></td>
+                                    @if (Model.Request[i].LastestStatusRequest.StatusName == Constants.StatusName.REQUEST_PENDING)
+                                    {
+                                        @*@Html.HiddenFor(modelItem => Model.Request[i].LastestStatusRequest.RequestCode)
+                                            @Html.HiddenFor(modelItem => Model.Request[i].LastestStatusRequest.RequestTypeCode)
+                                            <td>
+                                                <button type="submit" class="btn btn-primary" style="width: 100px" name="Cancel">Cancel</button>
+                                            </td>*@
+                                        <td>
+                                            @Html.ActionLink("Cancel", "Index", "DeleteRequest",
+                                       new
+                                       {
+                                           requestCode = Model.Request[i].LastestStatusRequest.RequestCode,
+                                           requestType = Model.Request[i].LastestStatusRequest.RequestTypeCode,
+                                           actionName = "Cancel"
+                                       }, null)
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
                                 </tr>
                             }
                         }

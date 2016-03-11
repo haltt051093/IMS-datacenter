@@ -104,16 +104,5 @@ namespace IMS.Data.Repository
             return query.ToList();
         }
 
-        public void UpdateStatusRackOfCustomer(string rackCode, string customer, string preStatus, string updateStatus)
-        {
-            var rackOfCustomer = Current.Query(x =>
-                       x.RackCode == rackCode && x.Customer == customer &&
-                       x.StatusCode == preStatus).FirstOrDefault();
-            if (rackOfCustomer != null)
-            {
-                rackOfCustomer.StatusCode = updateStatus;
-                Update(rackOfCustomer);
-            }
-        }
     }
 }
