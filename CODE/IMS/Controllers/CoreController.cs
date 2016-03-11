@@ -50,25 +50,25 @@ namespace IMS.Controllers
 
         protected void Alert(string message)
         {
-            Alert("danger", message, null);
+            Toast("danger", message, null);
         }
 
         protected void Success(string message)
         {
-            Alert("success", message, null);
+            Toast("success", message, null);
         }
 
         protected void Info(string message)
         {
-            Alert("info", message, null);
+            Toast("info", message, null);
         }
 
         protected void Alert(BaseResultModel q)
         {
-            Alert(QueryResultToAlertType(q.Status), q.StatusText, q.Code, true);
+            Toast(QueryResultToAlertType(q.Status), q.StatusText, q.Code, true);
         }
 
-        protected void Alert(string type, string line1, string line2, bool dismissable = false)
+        protected void Toast(string type, string line1, string line2, bool dismissable = false)
         {
             TempData["AlertType"] = type;
             TempData["AlertLine1"] = line1;

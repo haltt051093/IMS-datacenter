@@ -224,7 +224,7 @@ namespace IMS.Controllers
                     NotifRegister(notif);
                 }
             }
-            Alert(Constants.AlertType.SUCCESS, "RequestReturnRack", null, true);
+            Toast(Constants.AlertType.SUCCESS, "RequestReturnRack", null, true);
             return RedirectToAction("Index", "Home");
         }
 
@@ -250,7 +250,7 @@ namespace IMS.Controllers
             notif.RequestCode = result;
             //dang ky ham cho client
             NotifRegister(notif);
-            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+            Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("Index", "Home");
         }
 
@@ -376,7 +376,7 @@ namespace IMS.Controllers
             notif.RequestCode = UniqueRequestCode;
             //dang ky ham cho client
             NotifRegister(notif);
-            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+            Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("Index", "Home");
         }
 
@@ -416,7 +416,7 @@ namespace IMS.Controllers
                     LogChangedContentBLO.Current.AddLog(logRequest);
                 }
             }
-            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+            Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("Index", "Home");
         }
 
@@ -449,7 +449,7 @@ namespace IMS.Controllers
                 //dang ky ham cho client
                 NotifRegister(notif);
             }
-            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+            Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("Index", "Home");
         }
 

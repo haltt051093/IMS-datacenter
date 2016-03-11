@@ -369,7 +369,7 @@ namespace IMS.Controllers
                 Staff = viewmodel.StaffCode
             };
             LogChangedContentBLO.Current.AddLog(logRequest);
-            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+            Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("ListNotifications", "Request");
         }
 
@@ -411,7 +411,7 @@ namespace IMS.Controllers
             //Add Log and update request status
             RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
                 Constants.StatusCode.REQUEST_DONE, Constants.Test.STAFF_NHI);
-            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+            Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("ListNotifications", "Request");
 
         }
@@ -554,7 +554,7 @@ namespace IMS.Controllers
                 //Add Log and update request status
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_ADD_SERVER,
                     Constants.StatusCode.REQUEST_DONE, Constants.Test.STAFF_NHI);
-                Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+                Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
                 //return RedirectToAction("ListNotifications", "Request");
                 return View("AddServerInfo", viewmodel);
             }
@@ -609,7 +609,7 @@ namespace IMS.Controllers
                 //giai phong ip
                 IPAddressPoolBLO.Current.SetIpAvailable(server.ServerCode);
             }
-            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+            Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("ListNotifications", "Request");
 
         }
@@ -670,7 +670,7 @@ namespace IMS.Controllers
 
                 return RedirectToAction("Index", "Home");
             }
-            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+            Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("ListNotifications", "Request");
 
         }
@@ -689,7 +689,7 @@ namespace IMS.Controllers
             //Add Log and update request status
             RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
                 Constants.StatusCode.REQUEST_DONE, Constants.Test.STAFF_NHI);
-            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+            Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("ListNotifications", "Request");
 
         }
@@ -718,7 +718,7 @@ namespace IMS.Controllers
             //Add Log and update request status
             RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_RETURN_IP,
                 Constants.StatusCode.REQUEST_DONE, Constants.Test.STAFF_NHI);
-            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+            Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("ListNotifications", "Request");
 
         }
