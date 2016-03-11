@@ -2,7 +2,7 @@
 
 namespace IMS.Models
 {
-    public class HomeSidebarViewModel
+    public class HomeHeaderViewModel
     {
         public Account Account { get; set; }
 

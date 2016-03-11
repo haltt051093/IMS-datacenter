@@ -1,6 +1,4 @@
-﻿@{
-    var user = Session[Constants.Session.USER_LOGIN];
-}
+﻿@model HomeHeaderViewModel
 
 <a href="@Url.Action("Index", "Home")" class="logo">
     <!-- Add the class icon to your logo image or logo icon to add the margining -->
@@ -19,7 +17,7 @@
     <div class="navbar-right">
         <ul class="nav navbar-nav">
             <!-- Messages: style can be found in dropdown.less-->
-            @if (user != null)
+            @if (Model.Account != null)
             {
                 <li class="dropdown notifications-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
