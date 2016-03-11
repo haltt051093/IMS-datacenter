@@ -339,7 +339,6 @@ namespace IMS.Controllers
                     }
                 }
             }
-<<<<<<< HEAD
             //Change request status
             RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_RENT_RACK, Constants.StatusCode.REQUEST_DONE, viewmodel.StaffCode);
             //Add Log Request
@@ -354,13 +353,6 @@ namespace IMS.Controllers
             };
             LogChangedContentBLO.Current.AddLog(logRequest);
             Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
-=======
-            //add request and log
-            RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_RENT_RACK,
-                Constants.StatusCode.REQUEST_DONE, viewmodel.StaffCode);
-
-            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
->>>>>>> c9f59d78a30cdf8acd2f20ee4c81aa2a5422ca33
             return RedirectToAction("ListNotifications", "Request");
         }
 
