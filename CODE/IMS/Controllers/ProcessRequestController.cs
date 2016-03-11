@@ -339,11 +339,20 @@ namespace IMS.Controllers
                     }
                 }
             }
-            //add request and log
-            RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_RENT_RACK,
-                Constants.StatusCode.REQUEST_DONE, viewmodel.StaffCode);
-
-            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+            //Change request status
+            RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_RENT_RACK, Constants.StatusCode.REQUEST_DONE, viewmodel.StaffCode);
+            //Add Log Request
+            LogChangedContent logRequest = new LogChangedContent
+            {
+                RequestCode = viewmodel.RequestCode,
+                TypeOfLog = Constants.TypeOfLog.LOG_RENT_RACK,
+                Object = Constants.Object.OBJECT_REQUEST,
+                ChangedValueOfObject = viewmodel.RequestCode,
+                ObjectStatus = Constants.StatusCode.REQUEST_DONE,
+                Staff = viewmodel.StaffCode
+            };
+            LogChangedContentBLO.Current.AddLog(logRequest);
+            Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("ListNotifications", "Request");
         }
 
@@ -365,7 +374,7 @@ namespace IMS.Controllers
             //add and log request
             RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
                 Constants.StatusCode.REQUEST_DONE, Constants.Test.STAFF_NHI);
-            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+            Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("ListNotifications", "Request");
 
         }
@@ -497,7 +506,7 @@ namespace IMS.Controllers
                 //Add and log request
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_ADD_SERVER,
                     Constants.StatusCode.REQUEST_DONE, Constants.Test.STAFF_NHI);
-                Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+                Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
                 //return RedirectToAction("ListNotifications", "Request");
                 return View("AddServerInfo", viewmodel);
             }
@@ -541,7 +550,7 @@ namespace IMS.Controllers
                 //giai phong ip
                 //IPAddressPoolBLO.Current.SetIpAvailable(server.ServerCode);
             }
-            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+            Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("ListNotifications", "Request");
 
         }
@@ -591,7 +600,7 @@ namespace IMS.Controllers
 
                 return RedirectToAction("Index", "Home");
             }
-            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+            Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("ListNotifications", "Request");
 
         }
@@ -610,7 +619,7 @@ namespace IMS.Controllers
             //update and log request
             RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
                 Constants.StatusCode.REQUEST_DONE, Constants.Test.STAFF_NHI);
-            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+            Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("ListNotifications", "Request");
 
         }
@@ -630,7 +639,7 @@ namespace IMS.Controllers
             //Add Log and update request status
             RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_RETURN_IP,
                 Constants.StatusCode.REQUEST_DONE, Constants.Test.STAFF_NHI);
-            Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+            Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("ListNotifications", "Request");
 
         }

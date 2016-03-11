@@ -112,28 +112,28 @@
                     </div>
                     <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
 
-                        @for (int i = 0; i < Model.NetworkIPs.Count; i++)
+                        @for (int i = 0; i < Model.NetIPAvai.Count; i++)
                         {
                             <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                                @Html.HiddenFor(model => model.NetworkIPs[i].Value)
-                                @Html.CheckBoxFor(model => model.NetworkIPs[i].Selected)
-                                @Html.DisplayFor(model => model.NetworkIPs[i].Text)
+                                @Html.HiddenFor(model => model.NetIPAvai[i].Value)
+                                @Html.CheckBoxFor(model => model.NetIPAvai[i].Selected)
+                                @Html.DisplayFor(model => model.NetIPAvai[i].Text)
                             </div>
                         }
 
                     </div>
+
                     <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                            @Html.LabelFor(model => model.Confirm)
+                        <div class="col-xs-12 tf-form-control">
+
+                            <input type="checkbox" id="checkbox1"/>
+                            <label style="color: crimson">I agree to deactivate selected IP range</label>
+
                         </div>
-                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                            @Html.TextBoxFor(model => model.Confirm, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS, placeholder="Input OK to Confirm"})
-                            @Html.ValidationMessageFor(model => model.Confirm)
                         </div>
                     </div>
-                </div>
                 <div class="modal-footer">
-                    <button type="submit" name="@Constants.FormAction.ACTION_NAME" value="Deactive" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                    <button id ="deactive" type="submit" name="@Constants.FormAction.ACTION_NAME" value="Deactive" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
                         @Labels.DialogOK
                     </button>
                     <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
@@ -227,6 +227,13 @@
 
 <!-- page script -->
 <script>
+    if ($('#checkbox1').attr('checked')==true) {
+        $('#deactive').prop('disabled', false);
+    } else {
+        $('#deactive').prop('disabled', true);
+    }
+</script>
+<script>
     $.fn.dataTable.ext.search.push(
         function (settings, data, dataIndex) {
             var networkIP = $('#NetworkIP').val();
@@ -261,32 +268,32 @@
             var row = $(nRow);
             var actionCell = $(nRow.cells[4]);
             switch (aData.StatusCode) {
-                case '@Constants.StatusCode.IP_AVAILABLE':
-                    actionCell.html('<a href="#">Block IP</a>');
-                    actionCell.find('a').click(function () {
-                        $('#blockip-modal').modal('show');
-                        $('#idblock').val(aData.Id);
-                        return false;
-                    });
-                    break;
-                case '@Constants.StatusCode.IP_BLOCKED':
-                    actionCell.html('<a href="#">Unblock IP</a>');
-                    actionCell.find('a').click(function () {
-                        $('#unblockip-modal').modal('show');
-                        $('#idunblock').val(aData.Id);
-                        return false;
-                    });
-                    break;
-                case '@Constants.StatusCode.IP_RESERVE':
-                    row.css('background-color', '#ffe6e6');
-                    actionCell.html('');
-                    break;
-                case '@Constants.StatusCode.IP_USED':
-                    actionCell.html('');
-                    break;
-                case '@Constants.StatusCode.IP_DEACTIVATE':
-                    actionCell.html('');
-                    break;
+            case '@Constants.StatusCode.IP_AVAILABLE':
+                actionCell.html('<a href="#">Block IP</a>');
+                actionCell.find('a').click(function () {
+                    $('#blockip-modal').modal('show');
+                    $('#idblock').val(aData.Id);
+                    return false;
+                });
+                break;
+            case '@Constants.StatusCode.IP_BLOCKED':
+                actionCell.html('<a href="#">Unblock IP</a>');
+                actionCell.find('a').click(function () {
+                    $('#unblockip-modal').modal('show');
+                    $('#idunblock').val(aData.Id);
+                    return false;
+                });
+                break;
+            case '@Constants.StatusCode.IP_RESERVE':
+                row.css('background-color', '#ffe6e6');
+                actionCell.html('');
+                break;
+            case '@Constants.StatusCode.IP_USED':
+                actionCell.html('');
+                break;
+            case '@Constants.StatusCode.IP_DEACTIVATE':
+                actionCell.html('');
+                break;
             }
         },
         order: [[0, "asc"]],

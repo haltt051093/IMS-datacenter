@@ -907,6 +907,7 @@
     <Compile Include="ApiControllers\LocationController.cs" />
     <Compile Include="ApiControllers\RackController.cs" />
     <Compile Include="ApiControllers\ReportController.cs" />
+    <Compile Include="ApiControllers\RequestController.cs" />
     <Compile Include="ApiControllers\TempController.cs" />
     <Compile Include="ApiModels\DataTableReponse.cs" />
     <Compile Include="ApiModels\TempRequestResponse.cs" />

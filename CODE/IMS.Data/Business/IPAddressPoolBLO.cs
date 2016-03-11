@@ -56,6 +56,10 @@ namespace IMS.Data.Business
             return dao.GetAllIP();
         }
 
+        public List<string> GetNetworkIPToDeact()
+        {
+            return dao.GetNetworkIPToDeact();
+        } 
         public List<IPAddressPoolExtendedModel> GetIPsByGateway(string gateway)
         {
             return dao.GetIPSameGateway(gateway);

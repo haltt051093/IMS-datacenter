@@ -3,43 +3,43 @@ using IMS.Core;
 using IMS.Data.Business;
 using IMS.Data.Generic;
 using IMS.Data.Models;
-using IMS.Data.ViewModels;
 
 namespace IMS.Controllers
 {
     public class CoreController : Controller
     {
-        protected string GetCurrentUserRole()
+        protected Account GetCurrentAccount()
         {
-            var result = string.Empty;
             if (User == null)
             {
-                return result;
+                return null;
             }
-            else if (User.IsInRole(Constants.Role.MANAGER))
+
+            var account = Session[Constants.Session.USER_LOGIN] as Account;
+
+            if (account == null)
             {
-                result = Constants.Role.SHIFT_HEAD;
+                account = AccountBLO.Current.GetAccountByCode(User.Identity.Name);
             }
-            else if (User.IsInRole(Constants.Role.SHIFT_HEAD))
+            return account;
+        }
+
+        protected string GetCurrentUserRole()
+        {
+            var account = GetCurrentAccount();
+            var role = string.Empty;
+            if (account != null)
             {
-                result = Constants.Role.SHIFT_HEAD;
+                role = account.Role;
             }
-            if (User.IsInRole(Constants.Role.STAFF))
-            {
-                result = Constants.Role.STAFF;
-            }
-            if (User.IsInRole(Constants.Role.CUSTOMER))
-            {
-                result = Constants.Role.CUSTOMER;
-            }
-            return result;
+            return role;
         }
 
         protected bool IsAuthorized()
         {
             var activeGroup = AssignedShiftBLO.Current.GetActiveGroup();
-            var account = (Account)Session[Constants.Session.USER_LOGIN];
-            var userGroup = account == null ? string.Empty : account.GroupCode;
+            var account = GetCurrentAccount();
+            var userGroup = (account == null ? string.Empty : account.GroupCode);
             if (activeGroup == userGroup)
             {
                 return true;
@@ -50,25 +50,25 @@ namespace IMS.Controllers
 
         protected void Alert(string message)
         {
-            Alert("danger", message, null);
+            Toast("danger", message, null);
         }
 
         protected void Success(string message)
         {
-            Alert("success", message, null);
+            Toast("success", message, null);
         }
 
         protected void Info(string message)
         {
-            Alert("info", message, null);
+            Toast("info", message, null);
         }
 
         protected void Alert(BaseResultModel q)
         {
-            Alert(QueryResultToAlertType(q.Status), q.StatusText, q.Code, true);
+            Toast(QueryResultToAlertType(q.Status), q.StatusText, q.Code, true);
         }
 
-        protected void Alert(string type, string line1, string line2, bool dismissable = false)
+        protected void Toast(string type, string line1, string line2, bool dismissable = false)
         {
             TempData["AlertType"] = type;
             TempData["AlertLine1"] = line1;
