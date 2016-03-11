@@ -10,7 +10,7 @@ namespace IMS.Controllers
     {
         protected Account GetCurrentAccount()
         {
-            if (User == null)
+            if (User == null || string.IsNullOrEmpty(User.Identity.Name))
             {
                 return null;
             }
@@ -20,6 +20,7 @@ namespace IMS.Controllers
             if (account == null)
             {
                 account = AccountBLO.Current.GetAccountByCode(User.Identity.Name);
+                Session[Constants.Session.USER_LOGIN] = account;
             }
             return account;
         }

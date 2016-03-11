@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Web.Security;
-using IMS.Data.Repository;
+using IMS.Data.Business;
 
-namespace IMS.Services
+namespace IMS.Authentications
 {
     public class MyRoleProvider : RoleProvider
     {
@@ -14,9 +13,13 @@ namespace IMS.Services
 
         public override string[] GetRolesForUser(string username)
         {
-            string s = AccountDAO.Current.Query(x => x.Username == username).FirstOrDefault().Role;
-            string[] resultS = { s };
-            return resultS;
+            var account = AccountBLO.Current.GetAccountByCode(username);
+
+            if (account == null)
+            {
+                return new string[0];
+            }
+            return new string[] { account.Role };
         }
 
         public override void CreateRole(string roleName)
