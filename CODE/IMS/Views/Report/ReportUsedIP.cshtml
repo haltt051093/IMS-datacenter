@@ -51,10 +51,10 @@
             }
 
             if (timerange == 'used') {
-                if (data[4] != null) {
-                    return true;
-                } else{
+                if (data[2] == null || data[2] == '') {
                     return false;
+                } else {
+                    return true;
                 }
             }
             if (timerange == data[1]) {
@@ -82,7 +82,7 @@
             { data: "StatusName" }
 
         ],
-        iDisplayLength: 25,
+        iDisplayLength: 50,
         aLengthMenu: [[25, 50, 100], [25, 50, 100]],
         fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             var actionCell1 = $(nRow.cells[3]);
@@ -98,7 +98,7 @@
             }
             $(nRow.cells[0]).html('<label>' + aData.IPAddress + '</label>');
         },
-        order: [[2, "desc"], [1, "asc"]]
+        order: [[1, "asc"]]
 
     });
 

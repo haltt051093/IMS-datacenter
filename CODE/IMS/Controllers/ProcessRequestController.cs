@@ -652,7 +652,7 @@ namespace IMS.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            IPAddressPoolBLO.Current.UpdateIP(ivm.ServerCode, ivm.NewIP, ivm.RequestCode);
+            IPAddressPoolBLO.Current.UpdateIP(ivm.ServerCode, ivm.NewIP, ivm.RequestCode,ivm.OldIP);
 
             return RedirectToAction("Detais", new { rType = ivm.RequestType, rCode = ivm.RequestCode });
         }
