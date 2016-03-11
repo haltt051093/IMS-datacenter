@@ -1,69 +1,64 @@
 ﻿@model RequestIPViewModel
 
 @{
-    ViewBag.Title = "RequestAssignIP";
-    ViewBag.Role = "Customer";
+    ViewBag.Title = Pages.RequestAssignIP;
+    ViewBag.PageTitle = Pages.RequestAssignIP;
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("Request", "Index", Pages.Request),
+        new BreadcrumbModel("Request", "Create", Pages.RequestCreate),
+        new BreadcrumbModel("Request", "Create", Pages.RequestAssignIP, new { Type = Constants.RequestTypeCode.ASSIGN_IP })
+    };
 }
-<section class="content-header">
-    <h1>
-        Request Assign IP Address
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="@Url.Action("RequestHistory", "Request")"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Request Assign IP Address</li>
-    </ol>
-</section>
-<section class="content">
-    @using (Html.BeginForm("AssignIp", "Request", FormMethod.Post))
-            {
-        <div class="box">
-            <div class="box-header">
-                <h3 class="box-title">General Elements</h3>
-            </div><!-- /.box-header -->
 
-            <div class="box-body">
-                <div class="form-horizontal">
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Which server do you want more IP?</label>
-                        <div class="col-sm-4">
-                            @Html.DropDownListFor(m => m.SelectedServer, Model.Servers, new { @class = "form-control" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Amount of IP you want to be assigned</label>
-                        <div class="col-sm-4">
-                            @{
-                                List<SelectListItem> myList = new List<SelectListItem>();
-                                for (int i = 0; i < 10; i++)
-                                {
-                                    string num = (i + 1).ToString();
-                                    SelectListItem item = new SelectListItem()
-                                    {
-                                        Value = num,
-                                        Text = num
-                                    };
-                                    myList.Add(item);
-                                }
-                            }
-                            @Html.DropDownListFor(model => model.IpNumber, myList, htmlAttributes: new { @class = "form-control" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Note</label>
-                        <div class="col-sm-4">
-                            @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Some description here", rows="6" })
-                        </div>
+<section class="main-content">
+    @using (Html.BeginForm("AssignIp", "Request", FormMethod.Post))
+    {
+        <div class="box-header">
+            <h3 class="box-title">General Elements</h3>
+        </div><!-- /.box-header -->
+
+        <div class="box-body">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Which server do you want more IP?</label>
+                    <div class="col-sm-4">
+                        @Html.DropDownListFor(m => m.SelectedServer, Model.Servers, new { @class = "form-control" })
                     </div>
                 </div>
-            </div>
-            <!-- /.box-body -->
-            <div class="box-footer">
-                <div class="text-right">
-                    <button type="submit" class="btn btn-primary" style="width: 100px">Send</button>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Amount of IP you want to be assigned</label>
+                    <div class="col-sm-4">
+                        @{
+                            List<SelectListItem> myList = new List<SelectListItem>();
+                            for (int i = 0; i < 10; i++)
+                            {
+                                string num = (i + 1).ToString();
+                                SelectListItem item = new SelectListItem()
+                                {
+                                    Value = num,
+                                    Text = num
+                                };
+                                myList.Add(item);
+                            }
+                        }
+                        @Html.DropDownListFor(model => model.IpNumber, myList, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Note</label>
+                    <div class="col-sm-4">
+                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Some description here", rows="6" })
+                    </div>
                 </div>
             </div>
         </div>
-                    <!-- /.box -->
-                                }
-
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <div class="text-right">
+                <button type="submit" class="btn btn-primary" style="width: 100px">Send</button>
+            </div>
+        </div>
+    }
 </section>

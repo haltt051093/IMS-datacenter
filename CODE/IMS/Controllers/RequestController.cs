@@ -18,8 +18,8 @@ namespace IMS.Controllers
         public ActionResult Index()
         {
             var request = LogChangedContentBLO.Current.GetAllRequest();
-            var data = new RequestHistoryViewModel();
-            data.Request = request;
+            var data = new RequestIndexViewModel();
+            data.Requests = request;
             return View(data);
         }
 
@@ -135,11 +135,9 @@ namespace IMS.Controllers
                 }
             }
 
-            var _data = new RequestIndexViewModel();
+            var _data = new RequestCreateViewModel();
             var requestTypes = RequestTypeBLO.Current.GetAll();
-            _data.RequestTypes = requestTypes
-                .Select(x => new SelectListItem { Text = x.RequestTypeName, Value = x.RequestTypeCode })
-                .ToList();
+            _data.RequestTypes = requestTypes;
             return View(_data);
         }
         #endregion
@@ -236,30 +234,30 @@ namespace IMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveTempData(RequestAddServerViewModel r)
-        {
-            if (r.Action == Constants.FormAction.OK_ACTION)
-            {
-                var temp = new TempRequest();
-                temp.RequestCode = Session[Constants.Session.REQUEST_CODE].ToString();
-                temp.Data = JsonConvert.SerializeObject(r.Server);
-                temp.TempCode = TempRequestBLO.Current.GenerateCode();
-                TempRequestBLO.Current.Add(temp);
-            }
-            else if (r.Action == Constants.FormAction.EDIT_ACTION)
-            {
-                //DOING
-                var tempRequest = new TempRequest
-                {
-                    TempCode = r.Server.TempCode,
-                    Data = JsonConvert.SerializeObject(r.Server)
-                };
-                TempRequestBLO.Current.Update(tempRequest);
-            }
-            RequestCreateViewModel rt = new RequestCreateViewModel();
-            rt.Type = Constants.RequestTypeCode.ADD_SERVER;
-            return RedirectToAction("Create", rt);
-        }
+        //public ActionResult SaveTempData(RequestAddServerViewModel r)
+        //{
+        //    if (r.Action == Constants.FormAction.OK_ACTION)
+        //    {
+        //        var temp = new TempRequest();
+        //        temp.RequestCode = Session[Constants.Session.REQUEST_CODE].ToString();
+        //        temp.Data = JsonConvert.SerializeObject(r.Server);
+        //        temp.TempCode = TempRequestBLO.Current.GenerateCode();
+        //        TempRequestBLO.Current.Add(temp);
+        //    }
+        //    else if (r.Action == Constants.FormAction.EDIT_ACTION)
+        //    {
+        //        //DOING
+        //        var tempRequest = new TempRequest
+        //        {
+        //            TempCode = r.Server.TempCode,
+        //            Data = JsonConvert.SerializeObject(r.Server)
+        //        };
+        //        TempRequestBLO.Current.Update(tempRequest);
+        //    }
+        //    RequestCreateViewModel rt = new RequestCreateViewModel();
+        //    rt.Type = Constants.RequestTypeCode.ADD_SERVER;
+        //    return RedirectToAction("Create", rt);
+        //}
 
         public ActionResult DeleteTempServer(string code)
         {

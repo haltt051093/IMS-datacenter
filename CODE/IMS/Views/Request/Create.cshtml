@@ -1,4 +1,4 @@
-﻿@model RequestIndexViewModel
+﻿@model RequestCreateViewModel
 
 @{
     ViewBag.Title = Pages.RequestCreate;
@@ -13,7 +13,12 @@
 }
 
 <div class="main-content">
-    @using (Html.BeginForm("Create", "Request", FormMethod.Get))
+    @for (var i = 0; i < Model.RequestTypes.Count; i++)
+    {
+        @Html.ActionLink(Model.RequestTypes[i].RequestTypeName, "Create", "Request", new { Type = Model.RequestTypes[i].RequestTypeCode }, new { @class = "btn btn-default" })
+    }
+
+    @*@using (Html.BeginForm("Create", "Request", FormMethod.Get))
     {
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
@@ -32,5 +37,5 @@
                 </button>
             </div>
         </div>
-    }
+    }*@
 </div>

@@ -168,4 +168,22 @@
   <data name="ReportUsingIP" xml:space="preserve">
     <value>Report About Used and Using IP</value>
   </data>
+  <data name="RequestAssignIP" xml:space="preserve">
+    <value>Request Assign IP</value>
+  </data>
+  <data name="RequestBringServerAway" xml:space="preserve">
+    <value>Request Bring Server Away</value>
+  </data>
+  <data name="RequestChangeIP" xml:space="preserve">
+    <value>Request Change IP Address</value>
+  </data>
+  <data name="RequestRentIP" xml:space="preserve">
+    <value>Request Rent IP Address</value>
+  </data>
+  <data name="RequestReturnIP" xml:space="preserve">
+    <value>Request Return IP Address</value>
+  </data>
+  <data name="RequestReturnRack" xml:space="preserve">
+    <value>Request Return Rack</value>
+  </data>
 </root>

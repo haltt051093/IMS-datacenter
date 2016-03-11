@@ -151,6 +151,33 @@ namespace IMS.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Request Assign IP.
+        /// </summary>
+        public static string RequestAssignIP {
+            get {
+                return ResourceManager.GetString("RequestAssignIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request Bring Server Away.
+        /// </summary>
+        public static string RequestBringServerAway {
+            get {
+                return ResourceManager.GetString("RequestBringServerAway", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request Change IP Address.
+        /// </summary>
+        public static string RequestChangeIP {
+            get {
+                return ResourceManager.GetString("RequestChangeIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create Request.
         /// </summary>
         public static string RequestCreate {
@@ -178,11 +205,38 @@ namespace IMS.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Request Rent IP Address.
+        /// </summary>
+        public static string RequestRentIP {
+            get {
+                return ResourceManager.GetString("RequestRentIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Request Rent Rack.
         /// </summary>
         public static string RequestRentRack {
             get {
                 return ResourceManager.GetString("RequestRentRack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request Return IP Address.
+        /// </summary>
+        public static string RequestReturnIP {
+            get {
+                return ResourceManager.GetString("RequestReturnIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request Return Rack.
+        /// </summary>
+        public static string RequestReturnRack {
+            get {
+                return ResourceManager.GetString("RequestReturnRack", resourceCulture);
             }
         }
         
