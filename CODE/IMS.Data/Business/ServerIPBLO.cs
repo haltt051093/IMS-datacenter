@@ -2,6 +2,7 @@
 using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.Repository;
+using System.Linq;
 
 namespace IMS.Data.Business
 {
@@ -55,7 +56,11 @@ namespace IMS.Data.Business
         {
             return dao.GetIpByServer(serverCode);
         }
-
+        public ServerIP GetByServerCode(string servercode)
+        {
+            var query = @"select s.* from ServerIP as s where s.ServerCode='" + servercode + @"'";
+            return dao.RawQuery<ServerIP>(query, new object[] { }).FirstOrDefault();
+        }
         //public void ReturnAllIpOfServer(string serverCode)
         //{
         //    dao.ReturnAllIpOfServer(serverCode);

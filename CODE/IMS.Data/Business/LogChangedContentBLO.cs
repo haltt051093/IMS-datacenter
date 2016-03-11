@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using IMS.Core;
 using IMS.Data.Generic;
 using IMS.Data.Models;
@@ -98,6 +99,11 @@ namespace IMS.Data.Business
                     Constants.StatusCode.REQUEST_CANCELLED, Constants.Test.CUSTOMER_MANHNH);
             }
             return true;
+        }
+        public LogChangedContent GetByServerCode(string servercode)
+        {
+            var query = @"select s.* from LogChangedContent as s where s.ServerCode='" + servercode + @"'and s.TypeOfLog='ASSIGNDEFAULTIP'";
+            return dao.RawQuery<LogChangedContent>(query, new object[] { }).FirstOrDefault();
         }
     }
 }

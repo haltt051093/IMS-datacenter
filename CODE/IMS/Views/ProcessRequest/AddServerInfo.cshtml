@@ -142,15 +142,12 @@
                                         @Html.HiddenFor(modelItem => modelItem.Servers[i].Memory)
                                     </td>
                                     <td>
-                                        @if (Model.Servers[i].DefaultIP == null)
-                                        {
-                                            <label><a data-toggle="modal" class="open-blockIP-modal" href="#assignip-modal" data-id1="@Model.Servers[i].ServerCode" data-id2="@Model.RequestCode" data-id3="@Model.RequestType">Assign Default IP</a></label>
-                                        }
-                                        else
-                                        {
+                                     
+                                            <label><a data-toggle="modal" class="open-blockIP-modal" href="#assignip-modal" data-id1="@Model.Servers[i].ServerCode" data-id2="@Model.RequestCode" data-id3="@Model.RequestType" data-id4="@Model.Servers[i].DefaultIP">Assign Default IP</a></label>
+                                       
                                             @Html.DisplayFor(model => Model.Servers[i].DefaultIP, new { htmlAttributes = new { @class = "form-control" } })
                                             @Html.HiddenFor(modelItem => modelItem.Servers[i].DefaultIP)
-                                        }
+                                        
                                     </td>
 
                                     <td>
@@ -219,6 +216,7 @@
                     <input class="hidden" name="ServerCode" id="ipid" value="" />
                     <input class="hidden" name="RequestCode" id="rcode" value="" />
                     <input class="hidden" name="RequestType" id="rtype" value="" />
+                    <input class="hidden" name="OldIP" id="ipchange" value="" />
                     <button type="submit" class="btn btn-primary">Assign</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
                 </div>
@@ -294,9 +292,11 @@
                     var myId = $(this).data('id1');
                     var vcode = $(this).data('id2');
                     var vtype = $(this).data('id3');
+                    var ipchange = $(this).data('id4');
                     $(".modal-footer #ipid").val(myId);
                     $(".modal-footer #rcode").val(vcode);
                     $(".modal-footer #rtype").val(vtype);
+                    $(".modal-footer #ipchange").val(ipchange);
 
 
                 });
