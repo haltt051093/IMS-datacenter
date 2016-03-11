@@ -41,6 +41,16 @@ namespace IMS.Data.Repository
             return RawQuery<IPAddressPoolExtendedModel>(query, new object[] { });
         }
 
+        public List<string> GetNetworkIPToDeact()
+        {
+            var query = @"select i.NetworkIP from IPAddressPool as i
+                            group by i.NetworkIP
+                            EXCEPT
+                            select ip.NetworkIP from IPAddressPool as ip
+                            where ip.StatusCode = 'STATUS11' or ip.StatusCode = 'STATUS35'";
+            return RawQuery<string>(query, new object[] { });
+        } 
+
         public string GetGatewayByServerCode(string q)
         {
             var query = from ip in Table()

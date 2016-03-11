@@ -20,9 +20,15 @@ namespace IMS.Controllers
     {
         public ActionResult Index2()
         {
-            var ips = IPAddressPoolBLO.Current.GetAllIP();
-            var ipuse = ips.Select(x => x).Where(x => x.StatusCode != "STATUS35");
             var data = new IPIndexViewModel();
+            var ips = IPAddressPoolBLO.Current.GetAllIP();
+            var ipuse = ips.Select(x => x).Where(x => x.StatusCode != Constants.StatusCode.IP_DEACTIVATE);
+            var listnet1 = IPAddressPoolBLO.Current.GetNetworkIPToDeact();
+            data.NetIPAvai = listnet1.Select(x => new SelectListItem
+            {
+                Value = x,
+                Text = "Network " + x
+            }).ToList();
 
             var listNetworkIP = ipuse.OrderBy(x => x.NetworkIP).GroupBy(x => x.NetworkIP).Select(x => x.FirstOrDefault()).Where(x => x.NetworkIP!=null);
             data.NetworkIPs = listNetworkIP.Select(x => new SelectListItem
@@ -53,9 +59,9 @@ namespace IMS.Controllers
         {
                 if (iivm.Action == "Deactive")
                 {
-                    for (int i = 0; i < iivm.NetworkIPs.Count; i++)
+                    for (int i = 0; i < iivm.NetIPAvai.Count; i++)
                     {
-                        var item = iivm.NetworkIPs[i];
+                        var item = iivm.NetIPAvai[i];
                         if (item.Selected == true)
                         {
                             var listip = IPAddressPoolBLO.Current.GetAllIP();

@@ -27,8 +27,8 @@
             <th>Blocked Time</th>
             <th>Blocked Reason</th>
             <th>Unblocked Time</th>
-            <th>Blocked Time Range (day)</th>
-            <th>Blocked To Now (day)</th>
+            <th>Blocked Time Range</th>
+            <th>Blocked To Now</th>
 
         </tr>
         </thead>
@@ -38,8 +38,8 @@
             <th>Blocked Time</th>
             <th>Blocked Reason</th>
             <th>Unblocked Time</th>
-            <th>Blocked Time Range (day)</th>
-            <th>Blocked To Now (day)</th>
+            <th>Blocked Time Range</th>
+            <th>Blocked To Now</th>
         </tr>
         </tfoot>
     </table>
@@ -92,6 +92,7 @@
             var actionCell1 = $(nRow.cells[3]);
             var actionCell2 = $(nRow.cells[5]);
             var actionCell = $(nRow.cells[4]);
+      
             switch (aData.blockedtime) {
                 case null:
                     $(nRow).css('background-color', '#ffe6e6');
@@ -99,13 +100,25 @@
                     actionCell1.html('<label style="color: red">Still blocked</label>');
                     break;
                 case 0:
-                    actionCell.html('<1');
+                    actionCell.html('<1 day');
                     break;
+                case 1:
+                    actionCell.html('1 day');
+                default:
+                    actionCell.html(aData.blockedtime + ' days');
+                    break;
+
             }
             switch (aData.blockedtimetonow) {
             case 0:
-                actionCell2.html('<1');
+                actionCell2.html('<1 day');
                 break;
+                case 1:
+                    actionCell2.html('1 day');
+                    break;
+            default:
+                    actionCell2.html(aData.blockedtimetonow + ' days');
+                    break;
             }
             $(nRow.cells[0]).html('<label>' + aData.ChangedValueOfObject + '</label>');
             if (aData.Unblocktime != null) {
