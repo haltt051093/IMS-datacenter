@@ -57,7 +57,8 @@
                                         var item = Model.Schedules[i];
                                         <div class="panel panel-default">
                                             <div class="panel-heading" id="">
-                                                @item.RequestCode--@item.RequestTypeName--@item.StatusName
+                                                @Html.ActionLink(item.RequestTypeName+"--"+item.StatusName, "Detais","ProcessRequest",new {rType=item.RequestType,rCode = item.RequestCode},null)
+                                                
 
                                             </div>
                                             <div class="panel-body" id="">
@@ -80,7 +81,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         @Html.HiddenFor(model => Model.Schedules[i].RequestCode)
-                                                        @Html.EditorFor(content => Model.NewNote[i])
+                                                        @Html.TextAreaFor(content => Model.NewNote[i],htmlAttributes:new {style="width: 200px"})
                                                         @Html.ValidationMessageFor(model => Model.NewNote[i], "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
@@ -111,7 +112,7 @@
                     {
                         <div class="panel panel-default">
                             <div class="panel-heading" id="">
-                                @item.RequestCode--@item.RequestTypeName--@item.StatusName
+                                @Html.ActionLink(item.RequestTypeName + "--" + item.StatusName, "Detais", "ProcessRequest", new { rType = item.RequestType, rCode = item.RequestCode }, null)
                             </div>
                             
                              
