@@ -88,50 +88,11 @@
             $("[id*=MyTable] input:checked").each(function () {
                 selectedValues.push($(this).val());
             });
-            //if (selectedValues.length > 0) {
-            //    alert("Selected Value(s): " + selectedValues);
-            //} else {
-            //    alert("No item has been selected.");
-            //}
             $('#ips').val(selectedValues);
         });
 
         $("[id*=MyTable] > thead [id*=checkAll]").change(function () {  //on click
-            //if (this.checked) { // check select status
-            //$('.test123').each(function () { //loop through each checkbox
-            //    this.checked = true;  //select all checkboxes with class "checkbox1"
-            //});
             alert("No item has been selected.");
-            //} else {
-            //$('.test123').each(function () { //loop through each checkbox
-            //    this.checked = false; //deselect all checkboxes with class "checkbox1"
-            //});
-            //}
         });
     });
-    //Lam sao de lay id or class cua may thang IP
-    //$("#checkAll").change(function () {
-    //    $("[id*=MyTable] input:checkbox").prop('checked', $(this).prop("checked"));
-    //    //$(".checkbox1").prop('checked', $(this).prop("checked"));
-    //});
-
-    //$("#checkAll").change(function () {
-    //    $(".test123").prop('checked', $(this).prop("checked"));
-    //});
-
-    //$(".checkbox1").change(function() {
-    //    alert("OMGGGG");
-    //});
-
-    //$('#selecctall').click(function (event) {  //on click
-    //    if (this.checked) { // check select status
-    //        $('.checkbox1').each(function () { //loop through each checkbox
-    //            this.checked = true;  //select all checkboxes with class "checkbox1"
-    //        });
-    //    } else {
-    //        $('.checkbox1').each(function () { //loop through each checkbox
-    //            this.checked = false; //deselect all checkboxes with class "checkbox1"
-    //        });
-    //    }
-    //});
 </script>

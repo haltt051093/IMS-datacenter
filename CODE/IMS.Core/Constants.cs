@@ -320,7 +320,7 @@ namespace IMS.Core
             public const string OK_ACTION = "OK";
             public const string EDIT_ACTION = "Edit";
             public const string CANCEL_ACTION = "Cancel";
-            public const string DELETE_ACTION = "Delete";
+            public const string REJECT_ACTION = "Reject";
         }
 
         public class ServerAttributeCode

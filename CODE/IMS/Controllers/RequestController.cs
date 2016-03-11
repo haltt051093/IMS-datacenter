@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Web.Mvc;
 using AutoMapper;
 using IMS.Core;
@@ -145,31 +144,31 @@ namespace IMS.Controllers
         }
         #endregion
 
-        public ActionResult EditRequestHistory(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Request request = RequestBLO.Current.GetById(id);
-            if (request == null)
-            {
-                return HttpNotFound();
-            }
-            Mapper.CreateMap<Request, RequestCreateViewModel>();
-            var requestViewmodel = Mapper.Map<Request, RequestCreateViewModel>(request);
-            return View(requestViewmodel);
-        }
+        //public ActionResult EditRequestHistory(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Request request = RequestBLO.Current.GetById(id);
+        //    if (request == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    Mapper.CreateMap<Request, RequestCreateViewModel>();
+        //    var requestViewmodel = Mapper.Map<Request, RequestCreateViewModel>(request);
+        //    return View(requestViewmodel);
+        //}
 
-        [HttpPost]
-        public ActionResult EditRequestHistory(RequestCreateViewModel requestViewmodel)
-        {
-            Mapper.CreateMap<RequestCreateViewModel, Request>();
-            Request request = Mapper.Map<RequestCreateViewModel, Request>(requestViewmodel);
+        //[HttpPost]
+        //public ActionResult EditRequestHistory(RequestCreateViewModel requestViewmodel)
+        //{
+        //    Mapper.CreateMap<RequestCreateViewModel, Request>();
+        //    Request request = Mapper.Map<RequestCreateViewModel, Request>(requestViewmodel);
 
-            RequestBLO.Current.AddOrUpdate(request);
-            return RedirectToAction("Index", "Request");
-        }
+        //    RequestBLO.Current.AddOrUpdate(request);
+        //    return RedirectToAction("Index", "Request");
+        //}
 
         #region Process Request
         [HttpPost]
@@ -192,7 +191,7 @@ namespace IMS.Controllers
                     foreach (var item in racks)
                     {
                         //update and log rackofCustomer
-                        RackOfCustomerBLO.Current.UpdateStatusRackOfCustomerANDLog(requestCode, item, 
+                        RackOfCustomerBLO.Current.UpdateStatusRackOfCustomerANDLog(requestCode, item,
                             Constants.TypeOfLog.LOG_RETURN_RACK, Constants.Test.CUSTOMER_MANHNH, null
                             , Constants.StatusCode.RACKOFCUSTOMER_CURRENT, Constants.StatusCode.RACKOFCUSTOMER_RETURNING);
                     }
@@ -239,7 +238,6 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult SaveTempData(RequestAddServerViewModel r)
         {
-
             if (r.Action == Constants.FormAction.OK_ACTION)
             {
                 var temp = new TempRequest();
@@ -287,7 +285,6 @@ namespace IMS.Controllers
                 string serverCode = ServerDAO.Current.AddServer(server);
 
                 //add server attribute serial number, part number, memory
-
                 List<ServerAttribute> serverAttributes = new List<ServerAttribute>();
                 List<string> attributeCodes = new List<string>();
                 attributeCodes.Add(Constants.ServerAttributeCode.PART_NUMBER);
@@ -365,7 +362,6 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult BringServerAway(RequestBringServerAwayViewModel viewmodel)
         {
-            //lay servercode, serverIP (gồm cả defaultIP và current IP
             //update lai trang thai server, trang thai serverIP
             var listServer = viewmodel.ServerOfCustomer;
             foreach (var item in listServer)
@@ -503,7 +499,6 @@ namespace IMS.Controllers
         }
         #endregion
 
-        #region list notif, accept request
         public void NotifRegister(NotificationExtendedModel model)
         {
             RemoteControllerHub.Current.Clients.All.ExecuteCommand(
@@ -514,81 +509,5 @@ namespace IMS.Controllers
                 model.AppointmentTime,
                 model.StatusName);
         }
-
-        //Tam thoi cho VIew notification se dan den requestdetail --> thuc te thi view list notification chi dua ra popup thong tin de xem or confirm
-        [Authorize]
-        public ActionResult ListNotifications()
-        {
-            //get role
-            var obj = Session[Constants.Session.USER_LOGIN];
-            Account a = (Account)obj;
-            var role = a.Role;
-
-            //neu la kh, se co username kh
-            var customer = Constants.Test.CUSTOMER_MANHNH;
-
-            NotificationViewModel viewmodel = new NotificationViewModel();
-
-            //do du lieu vao filter
-            viewmodel.FilterByRequestType = RequestTypeBLO.Current.GetAll().Select(x => new SelectListItem
-            {
-                Value = x.RequestTypeCode,
-                Text = x.RequestTypeName
-            }).ToList();
-            viewmodel.FilterByStatus = StatusBLO.Current.GetStatusByObject(Constants.Object.OBJECT_REQUEST)
-                .Select(x => new SelectListItem()
-                {
-                    Value = x.StatusCode,
-                    Text = x.StatusName
-                }).ToList();
-
-            viewmodel.NotificationList = RequestBLO.Current.ListNotification(role, customer);
-            return View("ListNotifications", viewmodel);
-        }
-
-        //Accept request
-        public ActionResult AcceptRequest(string requestCode, string requestType)
-        {
-            //doi trang thai cua request
-            if (requestType == Constants.RequestTypeCode.BRING_SERVER_AWAY)
-            {
-                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
-                    Constants.StatusCode.REQUEST_WAITING, Constants.Test.STAFF_NHI);
-            }
-            if (requestType == Constants.RequestTypeCode.ADD_SERVER)
-            {
-                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ADD_SERVER,
-                    Constants.StatusCode.REQUEST_WAITING, Constants.Test.STAFF_NHI);
-            }
-            if (requestType == Constants.RequestTypeCode.ASSIGN_IP)
-            {
-                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ASSIGN_IP,
-                    Constants.StatusCode.REQUEST_PROCESSING, Constants.Test.STAFF_NHI);
-            }
-            if (requestType == Constants.RequestTypeCode.CHANGE_IP)
-            {
-                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
-                    Constants.StatusCode.REQUEST_PROCESSING, Constants.Test.STAFF_NHI);
-            }
-            if (requestType == Constants.RequestTypeCode.RETURN_IP)
-            {
-                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_IP,
-                    Constants.StatusCode.REQUEST_PROCESSING, Constants.Test.STAFF_NHI);
-            }
-            if (requestType == Constants.RequestTypeCode.RENT_RACK)
-            {
-                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RENT_RACK,
-                    Constants.StatusCode.REQUEST_PROCESSING, Constants.Test.STAFF_NHI);
-            }
-            if (requestType == Constants.RequestTypeCode.RETURN_RACK)
-            {
-                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
-                    Constants.StatusCode.REQUEST_PROCESSING, Constants.Test.STAFF_NHI);
-            }
-            //redirect lai list notif
-            return RedirectToAction("ListNotifications");
-        }
-        #endregion
-
     }
 }

@@ -77,7 +77,13 @@ namespace IMS.Data.Business
             return dao.GetLogInfoByRequestCode(requestCode, Object);
         }
 
-        public bool CancelRequestChangeIp(string requestCode)
+        public LogChangedContent GetByServerCode(string servercode)
+        {
+            var query = @"select s.* from LogChangedContent as s where s.ServerCode='" + servercode + @"'and s.TypeOfLog='ASSIGNDEFAULTIP'";
+            return dao.RawQuery<LogChangedContent>(query, new object[] { }).FirstOrDefault();
+        }
+
+        public void CancelRequestChangeIp(string requestCode)
         {
             var listServerIp = GetLogInfoByRequestCode(requestCode, Constants.Object.OBJECT_SERVERIP);
             if (listServerIp != null && listServerIp.Count > 0)
@@ -90,20 +96,93 @@ namespace IMS.Data.Business
                     ServerIPBLO.Current.UpdateServerIpANDLog(requestCode, serverCode, ip,
                         Constants.TypeOfLog.LOG_CHANGE_IP, Constants.StatusCode.SERVERIP_CURRENT,
                         Constants.Test.CUSTOMER_MANHNH);
-                    //Update and log ip
-                    IPAddressPoolBLO.Current.UpdateStatusIpANDLog(requestCode, serverCode, ip,
-                        Constants.StatusCode.IP_USED, Constants.TypeOfLog.LOG_CHANGE_IP, Constants.Test.CUSTOMER_MANHNH);
                 }
                 //update request status and log
-                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ADD_SERVER,
+                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
                     Constants.StatusCode.REQUEST_CANCELLED, Constants.Test.CUSTOMER_MANHNH);
             }
-            return true;
         }
-        public LogChangedContent GetByServerCode(string servercode)
+
+        public void CancelRequestReturnIp(string requestCode)
         {
-            var query = @"select s.* from LogChangedContent as s where s.ServerCode='" + servercode + @"'and s.TypeOfLog='ASSIGNDEFAULTIP'";
-            return dao.RawQuery<LogChangedContent>(query, new object[] { }).FirstOrDefault();
+            var listServerIp = GetLogInfoByRequestCode(requestCode, Constants.Object.OBJECT_SERVERIP);
+            if (listServerIp != null && listServerIp.Count > 0)
+            {
+                var serverCode = listServerIp[0].ServerCode;
+                for (int i = 0; i < listServerIp.Count; i++)
+                {
+                    var ip = listServerIp[i].ChangedValueOfObject;
+                    //update and log serverip
+                    ServerIPBLO.Current.UpdateServerIpANDLog(requestCode, serverCode, ip,
+                        Constants.TypeOfLog.LOG_RETURN_IP, Constants.StatusCode.SERVERIP_CURRENT,
+                        Constants.Test.CUSTOMER_MANHNH);
+                }
+                //update request status and log
+                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_IP,
+                    Constants.StatusCode.REQUEST_CANCELLED, Constants.Test.CUSTOMER_MANHNH);
+            }
+        }
+
+        public void CancelRequestBringServerAway(string requestCode)
+        {
+            var listServerIp = GetLogInfoByRequestCode(requestCode, Constants.Object.OBJECT_SERVERIP);
+            if (listServerIp != null && listServerIp.Count > 0)
+            {
+                var serverCode = listServerIp[0].ServerCode;
+                for (int i = 0; i < listServerIp.Count; i++)
+                {
+                    var ip = listServerIp[i].ChangedValueOfObject;
+                    //update and log serverip
+                    ServerIPBLO.Current.UpdateServerIpANDLog(requestCode, serverCode, ip,
+                        Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.SERVERIP_CURRENT,
+                        Constants.Test.CUSTOMER_MANHNH);
+                }
+                //update request status and log
+                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
+                    Constants.StatusCode.REQUEST_CANCELLED, Constants.Test.CUSTOMER_MANHNH);
+                //update and log server
+                ServerBLO.Current.UpdateServerStatus(requestCode, serverCode,
+                    Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.SERVER_RUNNING,
+                    Constants.Test.CUSTOMER_MANHNH);
+            }
+        }
+
+        public void CancelRequestReturnRack(string requestCode)
+        {
+            var listRacks = GetLogInfoByRequestCode(requestCode, Constants.Object.OBJECT_RACKOFCUSTOMER);
+            if (listRacks != null && listRacks.Count > 0)
+            {
+                for (int i = 0; i < listRacks.Count; i++)
+                {
+                    var rack = listRacks[i].ChangedValueOfObject;
+                    //update and log rackofCustomer
+                    RackOfCustomerBLO.Current.UpdateStatusRackOfCustomerANDLog(requestCode, rack,
+                        Constants.TypeOfLog.LOG_RETURN_RACK, Constants.Test.CUSTOMER_MANHNH, null,
+                        Constants.StatusCode.RACKOFCUSTOMER_RETURNING, Constants.StatusCode.RACKOFCUSTOMER_CURRENT);
+                }
+                //update request status and log
+                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
+                    Constants.StatusCode.REQUEST_CANCELLED, Constants.Test.CUSTOMER_MANHNH);
+            }
+        }
+
+        public void CancelRequestAddServer(string requestCode)
+        {
+            var listRacks = GetLogInfoByRequestCode(requestCode, Constants.Object.OBJECT_RACKOFCUSTOMER);
+            if (listRacks != null && listRacks.Count > 0)
+            {
+                for (int i = 0; i < listRacks.Count; i++)
+                {
+                    var rack = listRacks[i].ChangedValueOfObject;
+                    //update and log rackofCustomer
+                    RackOfCustomerBLO.Current.UpdateStatusRackOfCustomerANDLog(requestCode, rack,
+                        Constants.TypeOfLog.LOG_RETURN_RACK, Constants.Test.CUSTOMER_MANHNH, null,
+                        Constants.StatusCode.RACKOFCUSTOMER_RETURNING, Constants.StatusCode.RACKOFCUSTOMER_CURRENT);
+                }
+                //update request status and log
+                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
+                    Constants.StatusCode.REQUEST_CANCELLED, Constants.Test.CUSTOMER_MANHNH);
+            }
         }
     }
 }

@@ -9,6 +9,7 @@ namespace IMS.Controllers
     [AllowAnonymous]
     public class HomeController : CoreController
     {
+        [Authorize(Roles = "Staff,Shift Head,Manager,Customer")]
         [HttpGet]
         public ActionResult Index(HomeIndexViewModel q)
         {

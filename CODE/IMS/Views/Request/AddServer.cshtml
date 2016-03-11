@@ -133,102 +133,101 @@
 <div id="serverinfo-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            @using (Html.BeginForm("SaveTempData", "Request", FormMethod.Post))
-            {
-                <div class="modal-header">
-                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i> @Labels.AddServer</div>
-                </div>
-                <div class="modal-body form-horizontal">
-                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                            @Html.LabelFor(model => model.Server.Maker)
-                        </div>
-                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                            @Html.TextBoxFor(model => model.Server.Maker, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                            @Html.ValidationMessageFor(model => model.Server.Maker)
-                        </div>
+            @*@using (Html.BeginForm("SaveTempData", "Request", FormMethod.Post))
+                {*@
+            <div class="modal-header">
+                <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i> @Labels.AddServer</div>
+            </div>
+            <div class="modal-body form-horizontal">
+                <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                        @Html.LabelFor(model => model.Server.Maker)
                     </div>
-
-                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                            @Html.LabelFor(model => model.Server.Power)
-                        </div>
-                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                            @Html.TextBoxFor(model => model.Server.Power, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                            @Html.ValidationMessageFor(model => model.Server.Power)
-                        </div>
-                    </div>
-
-                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                            @Html.LabelFor(model => model.Server.Model)
-                        </div>
-                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                            @Html.TextBoxFor(model => model.Server.Model, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                            @Html.ValidationMessageFor(model => model.Server.Model)
-                        </div>
-                    </div>
-
-                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                            <label>Size</label>
-                        </div>
-                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                            @Html.DropDownListFor(model => model.Server.Size, Model.ServerSizes, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                        </div>
-                    </div>
-
-                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                            <label>Bandwidth</label>
-                        </div>
-                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                            @Html.RadioButtonFor(model => model.Server.Bandwidth, "100Mbps", new { }) 100Mbps
-                            @Html.RadioButtonFor(model => model.Server.Bandwidth, "1Gbps", new { }) 1Gbps
-                        </div>
-                    </div>
-
-                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                            @Html.LabelFor(model => model.Server.SerialNumber)
-                        </div>
-                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                            @Html.TextBoxFor(model => model.Server.SerialNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                            @Html.ValidationMessageFor(model => model.Server.SerialNumber)
-                        </div>
-                    </div>
-
-                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                            @Html.LabelFor(model => model.Server.PartNumber)
-                        </div>
-                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                            @Html.TextBoxFor(model => model.Server.PartNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                            @Html.ValidationMessageFor(model => model.Server.PartNumber)
-                        </div>
-                    </div>
-
-                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                            @Html.LabelFor(model => model.Server.Memory)
-                        </div>
-                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                            @Html.TextBoxFor(model => model.Server.Memory, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                            @Html.ValidationMessageFor(model => model.Server.Memory)
-                        </div>
+                    <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                        @Html.TextBoxFor(model => model.Server.Maker, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        @Html.ValidationMessageFor(model => model.Server.Maker)
                     </div>
                 </div>
-                @Html.HiddenFor(model => model.Server.TempCode)
-                <div class="modal-footer">
-                    <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
-                            data-dismiss="modal">
-                        @Labels.DialogCancel
-                    </button>
-                    <button type="submit" id="submitserver" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                        @Labels.DialogOK
-                    </button>
+
+                <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                        @Html.LabelFor(model => model.Server.Power)
+                    </div>
+                    <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                        @Html.TextBoxFor(model => model.Server.Power, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        @Html.ValidationMessageFor(model => model.Server.Power)
+                    </div>
                 </div>
-            }
+
+                <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                        @Html.LabelFor(model => model.Server.Model)
+                    </div>
+                    <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                        @Html.TextBoxFor(model => model.Server.Model, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        @Html.ValidationMessageFor(model => model.Server.Model)
+                    </div>
+                </div>
+
+                <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                        <label>Size</label>
+                    </div>
+                    <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                        @Html.DropDownListFor(model => model.Server.Size, Model.ServerSizes, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    </div>
+                </div>
+
+                <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                        <label>Bandwidth</label>
+                    </div>
+                    <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                        @Html.RadioButtonFor(model => model.Server.Bandwidth, "100Mbps", new { }) 100Mbps
+                        @Html.RadioButtonFor(model => model.Server.Bandwidth, "1Gbps", new { }) 1Gbps
+                    </div>
+                </div>
+
+                <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                        @Html.LabelFor(model => model.Server.SerialNumber)
+                    </div>
+                    <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                        @Html.TextBoxFor(model => model.Server.SerialNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        @Html.ValidationMessageFor(model => model.Server.SerialNumber)
+                    </div>
+                </div>
+
+                <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                        @Html.LabelFor(model => model.Server.PartNumber)
+                    </div>
+                    <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                        @Html.TextBoxFor(model => model.Server.PartNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        @Html.ValidationMessageFor(model => model.Server.PartNumber)
+                    </div>
+                </div>
+
+                <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                        @Html.LabelFor(model => model.Server.Memory)
+                    </div>
+                    <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                        @Html.TextBoxFor(model => model.Server.Memory, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        @Html.ValidationMessageFor(model => model.Server.Memory)
+                    </div>
+                </div>
+            </div>
+            @Html.HiddenFor(model => model.Server.TempCode)
+            <div class="modal-footer">
+                <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
+                        data-dismiss="modal">
+                    @Labels.DialogCancel
+                </button>
+                <button type="submit" id="submitserver" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                    @Labels.DialogOK
+                </button>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -262,7 +261,7 @@
         "enabledHours": [8, 9, 10, 12, 12, 14, 15, 16, 17, 18, 19, 20],
         "stepping": '30',
         "minDate": 'moment',
-        "locale":'vi'
+        "locale": 'vi'
     });
 
     $('#addserver').click(function () {
@@ -270,6 +269,22 @@
         $('#submitserver').val('@Constants.FormAction.OK_ACTION');
         $('#serverinfo-modal').modal('show');
         //return false;
+        @*$.ajax({
+            cache: false,
+            type: "GET",
+            url: "@(Url.Action("FetchIPs", "Request"))",
+            data: { "SelectedServer": pass },
+            dataType: "json",
+            success: function (data) {
+                $('#divPartialView').removeClass('hidden');
+                $(data.ServerIPs).each(function (index, item) {
+                    //myTable.append($('tr', { value: item.ServerCode, text: item.ServerCode }));
+                    myTable.append('<tr><td>' + item.CurrentIP + '</td><td>' + '<input type="checkbox" id="CheckBoxList"'
+                        + index + ' name="chk" value="' + item.CurrentIP + '" /></td></tr>');
+                });
+            }
+        });*@
+
     });
 
     $('a[x-code][action="edit"]').click(function () {
@@ -289,7 +304,7 @@
             get('@Url.Action("DeleteTempServer", "Temp", new { httproute = "" })' + '/' + tempCode, function (data) {
                 $('#' + tempCode).remove();
             });
-        }, function() {
+        }, function () {
 
         });
         return false;

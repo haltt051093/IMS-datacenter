@@ -172,8 +172,5 @@ namespace IMS.Data.Repository
                         select l;
             return query.ToList();
         }
-
-        
-
     }
 }

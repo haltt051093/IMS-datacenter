@@ -4,13 +4,11 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using System.Web.Security;
-using System.Web.WebPages;
 using AutoMapper;
 using IMS.Core;
 using IMS.Data.Business;
 using IMS.Data.Models;
 using IMS.Data.Repository;
-using IMS.Data.ViewModels;
 using IMS.Models;
 using Microsoft.Ajax.Utilities;
 
@@ -33,17 +31,6 @@ namespace IMS.Controllers
                 else
                 {
                     return View("Login");
-                }
-            }
-            {
-                ViewBag.CreateStaff = null;
-                if (("staff").Equals(message))
-                {
-                    ViewBag.CreateStaff = "This group exist two Staff";
-                }
-                else if (("shifthead").Equals(message))
-                {
-                    ViewBag.CreateStaff = "This group exist one Shift Head";
                 }
             }
             var data = new AccountIndexViewModel();
@@ -110,8 +97,6 @@ namespace IMS.Controllers
         }
 
         [AllowAnonymous]
-
-
         [HttpPost]
         public ActionResult Login(Account account)
         {
@@ -130,18 +115,11 @@ namespace IMS.Controllers
                 {
                     return RedirectToAction("Index", "Home", new { id = o.Id });
                 }
-                return RedirectToAction("ListNotifications", "Request", new { role = role });
+                return RedirectToAction("Index", "Notification", new { role = role });
             }
             //else
             return View();
         }
-
-        [Authorize(Roles = "Staff,Shift Head,Manager")]
-        // GET: Account
-        //public ActionResult Index(string role)
-        //{
-        //    return RedirectToAction("Index", "Account");
-        //}
 
         [Authorize(Roles = "Manager")]
         // GET: Account/Create
@@ -200,13 +178,6 @@ namespace IMS.Controllers
                         FailCreate = "shifthead";
                     }
                 }
-
-
-                //if (result)
-                //{
-                //    //ModelState.AddModelError("", "Send mail successfully");
-                //    //return RedirectToAction("Index2");
-                //}
                 return RedirectToAction("Index", new { message = FailCreate });
             }
             return View(accountCreateViewModel);
@@ -275,13 +246,13 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult EditStaff(AccountCreateViewModel viewmodel)
         {
-            
+
             Account account = Mapper.Map<AccountCreateViewModel, Account>(viewmodel);
             Account ass = AccountBLO.Current.GetById(account.Id);
             if (ass.Status == false)
             {
                 account.Status = false;
-            }          
+            }
             AccountBLO.Current.AddOrUpdate(account);
 
             string role = "";

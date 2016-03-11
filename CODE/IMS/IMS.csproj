@@ -913,6 +913,7 @@
     <Compile Include="ApiModels\TempRequestResponse.cs" />
     <Compile Include="App_Start\AppConfig.cs" />
     <Compile Include="Controllers\DeleteRequestController.cs" />
+    <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\ProcessRequestController.cs" />
     <Compile Include="Controllers\ValidateController.cs" />
     <Compile Include="Models\HomeHeaderViewModel.cs" />
@@ -1014,7 +1015,7 @@
     <Content Include="Views\Account\ForgotPWSuccess.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Home\Sidebar.cshtml" />
-    <Content Include="Views\Request\ListNotifications.cshtml" />
+    <Content Include="Views\Notification\Index.cshtml" />
     <Content Include="Views\Request\BringServerAway.cshtml" />
     <Content Include="Views\ProcessRequest\BringServerAwayInfo.cshtml" />
     <Content Include="Views\Request\ChangeIP.cshtml" />
@@ -1026,12 +1027,9 @@
     <Content Include="Views\ProcessRequest\ReturnIPInfo.cshtml" />
     <Content Include="Views\ProcessRequest\ReturnRackInfo.cshtml" />
     <Content Include="Views\Request\ReturnRack.cshtml" />
-    <Content Include="Views\Request\RequestUpgradeServer2.cshtml" />
-    <Content Include="Views\ProcessRequest\RequestUpgradeServerInfo2.cshtml" />
     <Content Include="Views\Rack\Index.cshtml" />
     <Content Include="Views\Home\Header.cshtml" />
     <Content Include="Views\Request\Create.cshtml" />
-    <Content Include="Views\Request\EditRequestHistory.cshtml" />
     <Content Include="Views\Report\ReportBlockIP.cshtml" />
     <Content Include="Views\ProcessRequest\Index.cshtml" />
     <Content Include="Views\Report\ReportUsedIP.cshtml" />
