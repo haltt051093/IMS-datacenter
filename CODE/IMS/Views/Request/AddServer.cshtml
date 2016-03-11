@@ -43,7 +43,7 @@
                 @Html.LabelFor(model => model.Servers)
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                <table id="" class="table table-bordered table-striped">
+                <table id="MyList" class="table table-bordered table-striped">
                     <thead>
                         <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
                             <th>No</th>
@@ -263,13 +263,13 @@
         "stepping": '30',
         "minDate": 'moment',
         "locale":'vi'
-        
     });
 
     $('#addserver').click(function () {
         clearModal();
         $('#submitserver').val('@Constants.FormAction.OK_ACTION');
         $('#serverinfo-modal').modal('show');
+        //return false;
     });
 
     $('a[x-code][action="edit"]').click(function () {
@@ -294,4 +294,11 @@
         });
         return false;
     });
+
+    var count = document.querySelectorAll('tbody tr').length;
+    if (count > 1) {
+        $("th").removeClass("hidden");
+    } else {
+        $("th").addClass("hidden");
+    }
 </script>
