@@ -1,11 +1,7 @@
-﻿@using IMS.Data.Models
-@model HomeIndexViewModel
+﻿@model HomeIndexViewModel
 @{
     ViewBag.Title = Pages.HomeIndex;
     ViewBag.PageTitle = Pages.HomeIndex;
-    var obj = Session[Constants.Session.USER_LOGIN];
-    Account a = (Account)obj;
-    ViewBag.Role = a.Role;
     ViewBag.Breadcrumbs = new List<BreadcrumbModel>
     {
         new BreadcrumbModel("Home", "Index", Pages.Home)

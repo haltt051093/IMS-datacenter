@@ -1,26 +1,15 @@
-﻿using System.Linq;
-using System.Web.Mvc;
-using IMS.Core;
-using IMS.Data.Business;
+﻿using System.Web.Mvc;
 using IMS.Models;
 
 namespace IMS.Controllers
 {
-    [AllowAnonymous]
     public class HomeController : CoreController
     {
-        [Authorize(Roles = "Staff,Shift Head,Manager,Customer")]
         [HttpGet]
+        [Authorize(Roles = "Staff,Shift Head,Manager,Customer")]
         public ActionResult Index(HomeIndexViewModel q)
         {
-            if (Session[Constants.Session.USER_LOGIN] == null)
-            {
-                return View("../Account/Login");
-            }
-            else
-            {
-                return View();
-            }
+            return View();
         }
 
         [ChildActionOnly]

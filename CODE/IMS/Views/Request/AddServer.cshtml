@@ -183,7 +183,7 @@
                         <label>Bandwidth</label>
                     </div>
                     <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                        @Html.RadioButtonFor(model => model.Server.Bandwidth, "100Mbps", new { }) 100Mbps
+                        @Html.RadioButtonFor(model => model.Server.Bandwidth, "100Mbps", new { @checked = "checked" }) 100Mbps
                         @Html.RadioButtonFor(model => model.Server.Bandwidth, "1Gbps", new { }) 1Gbps
                     </div>
                 </div>
@@ -220,11 +220,12 @@
             </div>
             @Html.HiddenFor(model => model.Server.TempCode)
             <div class="modal-footer">
-                <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
-                        data-dismiss="modal">
+                <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION"
+                        class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS" data-dismiss="modal">
                     @Labels.DialogCancel
                 </button>
-                <button type="submit" id="submitserver" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                <button type="submit" id="submitserver" name="@Constants.FormAction.ACTION_NAME"
+                        value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
                     @Labels.DialogOK
                 </button>
             </div>
@@ -256,35 +257,36 @@
 </script>
 
 <script type="text/javascript">
-    $('#datetimepicker1').datetimepicker({
-        "disabledHours": [0, 1, 2, 3, 4, 5, 6, 7, 21, 22, 23, 24],
-        "enabledHours": [8, 9, 10, 12, 12, 14, 15, 16, 17, 18, 19, 20],
-        "stepping": '30',
-        "minDate": 'moment',
-        "locale": 'vi'
-    });
+    //$('#datetimepicker1').datetimepicker({
+    //    "disabledHours": [0, 1, 2, 3, 4, 5, 6, 7, 21, 22, 23, 24],
+    //    "enabledHours": [8, 9, 10, 12, 12, 14, 15, 16, 17, 18, 19, 20],
+    //    "stepping": '30',
+    //    "minDate": 'moment',
+    //    "locale": 'vi'
+    //});
 
     $('#addserver').click(function () {
         clearModal();
         $('#submitserver').val('@Constants.FormAction.OK_ACTION');
         $('#serverinfo-modal').modal('show');
         //return false;
-        @*$.ajax({
+    });
+
+    $('#submitserver').click(function () {
+        var maker = $('#Server_Maker').val();
+        var power = $('#Server_Power').val();
+        var model = $('#Server_Model').val();
+        var data0 = { Maker: maker, Power: power, Model: model };
+        var json = JSON.stringify(data0);
+        $.ajax({
             cache: false,
             type: "GET",
-            url: "@(Url.Action("FetchIPs", "Request"))",
-            data: { "SelectedServer": pass },
+            url: "@(Url.Action("SaveTempData", "Request"))",
+            data: json,
             dataType: "json",
             success: function (data) {
-                $('#divPartialView').removeClass('hidden');
-                $(data.ServerIPs).each(function (index, item) {
-                    //myTable.append($('tr', { value: item.ServerCode, text: item.ServerCode }));
-                    myTable.append('<tr><td>' + item.CurrentIP + '</td><td>' + '<input type="checkbox" id="CheckBoxList"'
-                        + index + ' name="chk" value="' + item.CurrentIP + '" /></td></tr>');
-                });
             }
-        });*@
-
+        });
     });
 
     $('a[x-code][action="edit"]').click(function () {
