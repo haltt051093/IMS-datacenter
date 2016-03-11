@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using IMS.Core;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.Repository;
@@ -92,9 +93,26 @@ namespace IMS.Data.Business
             return dao.AddServer(passServer);
         }
 
-        public void UpdateServerStatus(string serverCode, string status)
+        //change server status
+        public void UpdateServerStatus(string requestCode, string serverCode,
+             string typeOfLog, string newStatus, string username)
         {
-            dao.UpdateServerStatus(serverCode, status);
+            var server = ServerDAO.Current.Query(x => x.ServerCode == serverCode).FirstOrDefault();
+            if (server != null)
+            {
+                server.StatusCode = newStatus;
+                Update(server);
+            }
+            //log ip, object la serverip
+            LogChangedContent logServer = new LogChangedContent
+            {
+                RequestCode = requestCode,
+                TypeOfLog = typeOfLog,
+                Object = Constants.Object.OBJECT_SERVER,
+                ChangedValueOfObject = serverCode,
+                ObjectStatus = newStatus,
+            };
+            LogChangedContentBLO.Current.AddLog(logServer);
         }
 
         public ServerExtendedModel GetAllServerInfo(string serverCode)

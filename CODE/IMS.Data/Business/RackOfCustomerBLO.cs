@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using IMS.Core;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.Repository;
@@ -39,11 +42,7 @@ namespace IMS.Data.Business
         {
             return dao.GetRacksOfCustomer(customer,status);
         }
-
-        public void UpdateStatusRackOfCustomer(string rackCode, string customer, string preStatus, string updateStatus)
-        {
-            dao.UpdateStatusRackOfCustomer(rackCode, customer, preStatus, updateStatus);
-        }
+        
         //Tien
         public List<RackOfCustomerExtendedModel> GetAllRackOfCustomer()
         {
@@ -53,6 +52,54 @@ namespace IMS.Data.Business
         public List<RackOfCustomerExtendedModel> CountServerPerRack(string customer)
         {
             return dao.CountServerPerRack(customer);
+        }
+
+        public void AddRackOfCustomerANDLog(string requestCode, string rackCode, string typeOfLog, 
+            string customer, string staff)
+        {
+            var rackOfCustomer = new RackOfCustomer
+            {
+                RackCode = rackCode,
+                Customer = customer,
+                RentedDate = DateTime.Now,
+                StatusCode = Constants.StatusCode.RACKOFCUSTOMER_CURRENT
+            };
+            Current.Add(rackOfCustomer);
+            //log rackOfCustomer
+            LogChangedContent logRackOfCustomer = new LogChangedContent
+            {
+                RequestCode = requestCode,
+                TypeOfLog = typeOfLog,
+                Object = Constants.Object.OBJECT_RACKOFCUSTOMER,
+                ChangedValueOfObject = rackCode,
+                ObjectStatus = Constants.StatusCode.RACKOFCUSTOMER_CURRENT,
+                Staff = staff
+            };
+            LogChangedContentBLO.Current.AddLog(logRackOfCustomer);
+        }
+
+        public void UpdateStatusRackOfCustomerANDLog(string requestCode, string rackCode, string typeOfLog,
+            string customer, string staff, string preStatus, string newStatus)
+        {
+            var rackOfCustomer = RackOfCustomerDAO.Current.Query(x =>
+                       x.RackCode == rackCode && x.Customer == customer &&
+                       x.StatusCode == preStatus).FirstOrDefault();
+            if (rackOfCustomer != null)
+            {
+                rackOfCustomer.StatusCode = newStatus;
+                Update(rackOfCustomer);
+            }
+            //log rackOfCustomer
+            LogChangedContent logRackOfCustomer = new LogChangedContent
+            {
+                RequestCode = requestCode,
+                TypeOfLog = typeOfLog,
+                Object = Constants.Object.OBJECT_RACKOFCUSTOMER,
+                ChangedValueOfObject = rackCode,
+                ObjectStatus = newStatus,
+                Staff = staff
+            };
+            LogChangedContentBLO.Current.AddLog(logRackOfCustomer);
         }
     }
 }

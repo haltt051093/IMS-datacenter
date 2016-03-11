@@ -73,9 +73,25 @@ namespace IMS.Data.Business
             return code;
         }
 
-        public void UpdateRackStatus(string rackCode, string status)
+        public void UpdateRackANDLog(string requestCode, string rackCode, string typeOfLog, string customer, string staff, string newStatus)
         {
-            dao.UpdateRackStatus(rackCode,status);
+            var query = RackDAO.Current.Query(x => x.RackCode == rackCode).FirstOrDefault();
+            if (query != null)
+            {
+                query.StatusCode = newStatus;
+                Update(query);
+            }
+            //log rack
+            LogChangedContent logRack = new LogChangedContent
+            {
+                RequestCode = requestCode,
+                TypeOfLog = typeOfLog,
+                Object = Constants.Object.OBJECT_RACK,
+                ChangedValueOfObject = rackCode,
+                ObjectStatus = newStatus,
+                Staff = staff
+            };
+            LogChangedContentBLO.Current.AddLog(logRack);
         }
 
         public List<string> GetAllRowsOfRack()

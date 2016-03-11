@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿
 using System.Web.Mvc;
 using IMS.Core;
 using IMS.Data.Business;
@@ -58,20 +55,11 @@ namespace IMS.Controllers
                     RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
                     Constants.StatusCode.REQUEST_CANCELLED, Constants.Test.CUSTOMER_MANHNH);
 
-                    //Update lai serverip, dua vao 
+                    //Update lai serverip, dua vao log
 
-                    //log lai ip tro ve trang thai nhu ban dau
-
-                    //log tat ca ip muon change
-                    //string last = selected[0];
-                    //List<string> ips = last.Split(',').ToList<string>();
-                    //ips.Reverse();
-                    //foreach (var item in ips)
-                    //{
-                    //    //update status ip bang serverip
-                    //    ServerIPBLO.Current.UpdateServerIp(viewmodel.SelectedServer,
-                    //        item, Constants.StatusCode.SERVERIP_CHANGING);
-                    //}
+                    //log lai ip tro ve trang thai nhu ban dau, dua vao requestcode, object, lay duoc ip va serverCode
+                    //chuyen trang thai serverip, chuyen trang thai ip, chuyen trang thai request
+                    //log lai serverip, request, ipaddress
                 }
                 if (actionName == Constants.FormAction.DELETE_ACTION)
                 {

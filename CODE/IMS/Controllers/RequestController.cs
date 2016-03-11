@@ -181,8 +181,8 @@ namespace IMS.Controllers
                 viewmodel.Customer = Constants.Test.CUSTOMER_MANHNH;
                 if (selected.Count > 0)
                 {
-                    //Add request and log
-                    string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.RETURN_RACK,
+                    //Add and log request
+                    string requestCode = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.RETURN_RACK,
                         Constants.StatusCode.REQUEST_PENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
                         viewmodel.AppointmentTime, null, Constants.TypeOfLog.LOG_RETURN_RACK, null);
                     //lay ra rackcode
@@ -191,35 +191,17 @@ namespace IMS.Controllers
                     racks.Reverse();
                     foreach (var item in racks)
                     {
-                        //ko update status cua bang Rack, chi update rackOfCustomer
-                        RackOfCustomerBLO.Current.UpdateStatusRackOfCustomer(item, viewmodel.Customer
+                        //update and log rackofCustomer
+                        RackOfCustomerBLO.Current.UpdateStatusRackOfCustomerANDLog(requestCode, item, 
+                            Constants.TypeOfLog.LOG_RETURN_RACK, Constants.Test.CUSTOMER_MANHNH, null
                             , Constants.StatusCode.RACKOFCUSTOMER_CURRENT, Constants.StatusCode.RACKOFCUSTOMER_RETURNING);
-                        //Add log rack
-                        LogChangedContent logServer = new LogChangedContent
-                        {
-                            RequestCode = result,
-                            TypeOfLog = Constants.TypeOfLog.LOG_RETURN_RACK,
-                            Object = Constants.Object.OBJECT_RACKOFCUSTOMER,
-                            ChangedValueOfObject = item,
-                            ObjectStatus = Constants.StatusCode.RACKOFCUSTOMER_RETURNING,
-                        };
-                        LogChangedContentBLO.Current.AddLog(logServer);
                     }
-                    //Add Log Request, ko lien quan den servercode
-                    LogChangedContent logRequest = new LogChangedContent
-                    {
-                        RequestCode = result,
-                        TypeOfLog = Constants.TypeOfLog.LOG_RETURN_RACK,
-                        Object = Constants.Object.OBJECT_REQUEST,
-                        ChangedValueOfObject = result,
-                        ObjectStatus = Constants.StatusCode.REQUEST_PENDING
-                    };
-                    LogChangedContentBLO.Current.AddLog(logRequest);
+
                     //Notification
                     var notif = Mapper.Map<RequestReturnRackViewModel, NotificationExtendedModel>(viewmodel);
                     notif.RequestTypeName = Constants.RequestTypeName.RACK_RETURN;
                     notif.StatusName = Constants.StatusName.REQUEST_PENDING;
-                    notif.RequestCode = result;
+                    notif.RequestCode = requestCode;
                     //dang ky ham cho client
                     NotifRegister(notif);
                 }
@@ -238,8 +220,8 @@ namespace IMS.Controllers
             requestDetail.Description = viewmodel.Description;
             viewmodel.Description = JsonConvert.SerializeObject(requestDetail);
 
-            //Add request and log
-            string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.RENT_RACK,
+            //Add and log request
+            string result = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.RENT_RACK,
                 Constants.StatusCode.REQUEST_PENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
                 null, null, Constants.TypeOfLog.LOG_RENT_RACK, null);
 
@@ -296,7 +278,7 @@ namespace IMS.Controllers
         public ActionResult AddServer(RequestAddServerViewModel viewmodel)
         {
             //add requestCode
-            string UniqueRequestCode = RequestBLO.Current.GenerateCode();
+            string uniqueRequestCode = RequestBLO.Current.GenerateCode();
             //add server, trang thai server la waiting
             foreach (var item in viewmodel.Servers)
             {
@@ -329,9 +311,9 @@ namespace IMS.Controllers
                 ServerAttributeBLO.Current.AddMany(serverAttributes);
 
                 //Add request and log
-                string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.ADD_SERVER,
+                string result = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.ADD_SERVER,
                     Constants.StatusCode.REQUEST_PENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
-                    viewmodel.AppointmentTime, serverCode, Constants.TypeOfLog.LOG_ADD_SERVER, UniqueRequestCode);
+                    viewmodel.AppointmentTime, serverCode, Constants.TypeOfLog.LOG_ADD_SERVER, uniqueRequestCode);
 
                 // log object server
                 LogChangedContent logServer = new LogChangedContent
@@ -373,7 +355,7 @@ namespace IMS.Controllers
             var notif = Mapper.Map<RequestAddServerViewModel, NotificationExtendedModel>(viewmodel);
             notif.RequestTypeName = Constants.RequestTypeName.SERVER_ADD;
             notif.StatusName = Constants.StatusName.REQUEST_PENDING;
-            notif.RequestCode = UniqueRequestCode;
+            notif.RequestCode = uniqueRequestCode;
             //dang ky ham cho client
             NotifRegister(notif);
             Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
@@ -390,30 +372,23 @@ namespace IMS.Controllers
             {
                 if (item.Checked)
                 {
-                    //update serverstatus
-                    ServerBLO.Current.UpdateServerStatus(item.ServerCode, Constants.StatusCode.SERVER_BRINGING_AWAY);
-                    //update serverip status
+                    //get currentIps
                     var currentIps = ServerIPBLO.Current.GetIpByServer(item.ServerCode);
-                    //Add request and log
-                    string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.BRING_SERVER_AWAY,
+                    //Add and log request
+                    string requestCode = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.BRING_SERVER_AWAY,
                         Constants.StatusCode.REQUEST_PENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
                         viewmodel.AppointmentTime, item.ServerCode, Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, null);
-                    //update serverip status
                     foreach (var ip in currentIps)
                     {
-                        ServerIPBLO.Current.UpdateServerIp(item.ServerCode, ip, Constants.StatusCode.SERVERIP_OLD);
+                        //update and log status ip bang serverip
+                        ServerIPBLO.Current.UpdateServerIpANDLog(requestCode, item.ServerCode, ip,
+                            Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.SERVERIP_RETURNING,
+                            Constants.Test.CUSTOMER_MANHNH);
                     }
-                    // log request status
-                    LogChangedContent logRequest = new LogChangedContent
-                    {
-                        RequestCode = result,
-                        TypeOfLog = Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
-                        Object = Constants.Object.OBJECT_REQUEST,
-                        ObjectStatus = Constants.StatusCode.REQUEST_PENDING,
-                        ChangedValueOfObject = result,
-                        ServerCode = item.ServerCode,
-                    };
-                    LogChangedContentBLO.Current.AddLog(logRequest);
+                    //update and log server
+                    ServerBLO.Current.UpdateServerStatus(requestCode, item.ServerCode,
+                        Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.SERVER_BRINGING_AWAY,
+                        Constants.Test.CUSTOMER_MANHNH);
                 }
             }
             Alert(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
@@ -427,19 +402,21 @@ namespace IMS.Controllers
             var selected = viewmodel.Ips;
             if (selected.Count > 0)
             {
-                //Add request and log
-                string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.RETURN_IP,
+                //Add and log request
+                string result = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.RETURN_IP,
                     Constants.StatusCode.REQUEST_PENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
                     null, viewmodel.SelectedServer, Constants.TypeOfLog.LOG_RETURN_IP, null);
 
-                //log tat ca ip muon change
+                //update and log serverip muon return
                 string last = selected[0];
                 List<string> ips = last.Split(',').ToList<string>();
                 ips.Reverse();
                 foreach (var item in ips)
                 {
-                    //update server IP status
-                    ServerIPBLO.Current.UpdateServerIp(viewmodel.SelectedServer,item,Constants.StatusCode.SERVERIP_RETURNING);
+                    //update and log status ip bang serverip
+                    ServerIPBLO.Current.UpdateServerIpANDLog(result, viewmodel.SelectedServer, item,
+                        Constants.TypeOfLog.LOG_RETURN_IP, Constants.StatusCode.SERVERIP_RETURNING,
+                        Constants.Test.CUSTOMER_MANHNH);
                 }
                 //Notification
                 var notif = Mapper.Map<RequestIPViewModel, NotificationExtendedModel>(viewmodel);
@@ -468,7 +445,7 @@ namespace IMS.Controllers
                 }
                 viewmodel.Description = JsonConvert.SerializeObject(requestDetail);
                 //Add request and log
-                string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.ASSIGN_IP,
+                string result = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.ASSIGN_IP,
                     Constants.StatusCode.REQUEST_PENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
                     null, viewmodel.SelectedServer, Constants.TypeOfLog.LOG_ASSIGN_IP, null);
 
@@ -490,18 +467,19 @@ namespace IMS.Controllers
             if (selected.Count > 0)
             {
                 //Add request and log
-                string result = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.CHANGE_IP,
+                string result = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.CHANGE_IP,
                     Constants.StatusCode.REQUEST_PENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
                     null, viewmodel.SelectedServer, Constants.TypeOfLog.LOG_CHANGE_IP, null);
-                //log tat ca ip muon change
+                //update and log tat ca ip muon change --> chi co serverip
                 string last = selected[0];
                 List<string> ips = last.Split(',').ToList<string>();
                 ips.Reverse();
                 foreach (var item in ips)
                 {
-                    //update status ip bang serverip
-                    ServerIPBLO.Current.UpdateServerIp(viewmodel.SelectedServer, 
-                        item, Constants.StatusCode.SERVERIP_CHANGING);
+                    //update and log status ip bang serverip
+                    ServerIPBLO.Current.UpdateServerIpANDLog(result, viewmodel.SelectedServer, item,
+                        Constants.TypeOfLog.LOG_CHANGE_IP, Constants.StatusCode.SERVERIP_CHANGING,
+                        Constants.Test.CUSTOMER_MANHNH);
                 }
                 //Notification
                 var notif = Mapper.Map<RequestIPViewModel, NotificationExtendedModel>(viewmodel);

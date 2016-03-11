@@ -34,14 +34,16 @@ namespace IMS.Data.Business
             return dao.GetIpByStatus(serverCode, status);
         }
 
-        public void AddServerIp(string serverCode, string updatedIp, string updatedStatus)
+        public void AddServerIpAndLog(string requestCode, string serverCode, string updatedIp,
+            string typeOfLog, string newStatus, string username)
         {
-            dao.AddServerIp(serverCode, updatedIp, updatedStatus);
+            dao.AddServerIpAndLog(requestCode, serverCode, updatedIp, typeOfLog, newStatus, username);
         }
 
-        public void UpdateServerIp(string serverCode, string updatedIp, string updatedStatus)
+        public void UpdateServerIpANDLog(string requestCode, string serverCode, string updatedIp,
+             string typeOfLog, string newStatus, string username)
         {
-            dao.UpdateServerIp(serverCode, updatedIp, updatedStatus);
+            dao.UpdateServerIpANDLog(requestCode, serverCode, updatedIp, typeOfLog, newStatus, username);
         }
 
         //public int GetPreviousIp(string serverCode, string preIp, string statusCode)
@@ -54,9 +56,9 @@ namespace IMS.Data.Business
             return dao.GetIpByServer(serverCode);
         }
 
-        public void ReturnAllIpOfServer(string serverCode)
-        {
-            dao.ReturnAllIpOfServer(serverCode);
-        }
+        //public void ReturnAllIpOfServer(string serverCode)
+        //{
+        //    dao.ReturnAllIpOfServer(serverCode);
+        //}
     }
 }

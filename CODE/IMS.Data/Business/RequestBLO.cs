@@ -34,10 +34,10 @@ namespace IMS.Data.Business
         }
 
 
-        public string AddRequest(string requestType, string newStatus, string customer,
+        public string AddRequestANDLog(string requestType, string newStatus, string customer,
             string description, DateTime? appointmenTime, string serverCode, string typeOfLog, string UniqueRequestCode)
         {
-            return dao.AddRequest(requestType, newStatus, customer, description, appointmenTime,
+            return dao.AddRequestANDLog(requestType, newStatus, customer, description, appointmenTime,
                 serverCode, typeOfLog, UniqueRequestCode);
         }
         //Tien
@@ -119,39 +119,19 @@ namespace IMS.Data.Business
             var list = Enumerable.Zip(returningIp, selectedIps, (old, changed) => new { old, changed });
             foreach (var item in list)
             {
-                //change status cua old ip o server ip
-                ServerIPBLO.Current.UpdateServerIp(selectedServer, item.old, Constants.StatusCode.SERVERIP_OLD);
-                //them hang moi vao serverip
-                ServerIPBLO.Current.AddServerIp(selectedServer, item.changed, Constants.StatusCode.SERVERIP_CURRENT);
-                //Update status cua IP moi o IPAddressPool
-                IPAddressPoolBLO.Current.UpdateStatusIp(Constants.StatusCode.IP_USED, item.changed);
-                //update status cua up cu o IPAddresspool
-                IPAddressPoolBLO.Current.UpdateStatusIp(Constants.StatusCode.IP_AVAILABLE, item.old);
+                //update and log status cua old ip o server ip
+                ServerIPBLO.Current.UpdateServerIpANDLog(requestCode, selectedServer, item.old,
+                    Constants.TypeOfLog.LOG_CHANGE_IP, Constants.StatusCode.SERVERIP_OLD, Constants.Test.STAFF_NHI);
+                //update and log status cua up cu o IPAddresspool
+                IPAddressPoolBLO.Current.UpdateStatusIpANDLog(requestCode, selectedServer, item.old, Constants.StatusCode.IP_AVAILABLE,
+                    Constants.TypeOfLog.LOG_CHANGE_IP, Constants.Test.STAFF_NHI);
 
-                //Add log trang thai IP moi
-                var logIp = new LogChangedContent
-                {
-                    RequestCode = requestCode,
-                    TypeOfLog = Constants.TypeOfLog.LOG_CHANGE_IP,
-                    Object = Constants.Object.OBJECT_IP,
-                    ChangedValueOfObject = item.changed,
-                    ObjectStatus = Constants.StatusCode.IP_USED,
-                    Staff = staffCode
-                };
-                LogChangedContentBLO.Current.AddLog(logIp);
-                //}
-
-                //Add log trang thai IP cu
-                var logPreIp = new LogChangedContent
-                {
-                    RequestCode = requestCode,
-                    TypeOfLog = Constants.TypeOfLog.LOG_CHANGE_IP,
-                    Object = Constants.Object.OBJECT_IP,
-                    ChangedValueOfObject = item.old,
-                    ObjectStatus = Constants.StatusCode.IP_AVAILABLE,
-                    Staff = staffCode
-                };
-                LogChangedContentBLO.Current.AddLog(logPreIp);
+                //add and log new serverip
+                ServerIPBLO.Current.AddServerIpAndLog(requestCode, selectedServer, item.changed,
+                    Constants.TypeOfLog.LOG_CHANGE_IP, Constants.StatusCode.SERVERIP_CURRENT, Constants.Test.STAFF_NHI);
+                //Update and log status cua IP moi o IPAddressPool
+                IPAddressPoolBLO.Current.UpdateStatusIpANDLog(requestCode, selectedServer, item.changed, Constants.StatusCode.IP_USED,
+                    Constants.TypeOfLog.LOG_CHANGE_IP, Constants.Test.STAFF_NHI);
             }
         }
     }
