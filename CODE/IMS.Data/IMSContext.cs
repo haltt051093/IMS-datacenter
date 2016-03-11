@@ -52,15 +52,5 @@ namespace IMS.Data
             modelBuilder.Entity<Note>();
             modelBuilder.Entity<Notification>();
         }
-
-        public System.Data.Entity.DbSet<IMS.Data.Models.Server> Servers { get; set; }
-
-        public System.Data.Entity.DbSet<IMS.Data.Models.Request> Requests { get; set; }
-
-        public System.Data.Entity.DbSet<IMS.Data.Models.RequestType> RequestTypes { get; set; }
-
-        public System.Data.Entity.DbSet<IMS.Data.Models.ServerIP> ServerIPs { get; set; }
-
-        //public System.Data.Entity.DbSet<IMS.Models.ServerDetailsViewModel> Objects { get; set; }
     }
 }
