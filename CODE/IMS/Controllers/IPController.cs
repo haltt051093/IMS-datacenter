@@ -12,7 +12,7 @@ namespace IMS.Controllers
 {
     public class IPController : CoreController
     {
-        [Authorize]
+        [Authorize(Roles = "Staff,Shift Head,Manager")]
         public ActionResult Index2()
         {
             var data = new IPIndexViewModel();
