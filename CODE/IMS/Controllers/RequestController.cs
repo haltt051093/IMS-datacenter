@@ -300,6 +300,9 @@ namespace IMS.Controllers
         {
             //update lai trang thai server, trang thai serverIP
             var listServer = viewmodel.ServerOfCustomer;
+            var requestCode = RequestBLO.Current.AddRequest(Constants.RequestTypeCode.BRING_SERVER_AWAY,
+                Constants.StatusCode.REQUEST_PENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
+                viewmodel.AppointmentTime);
             foreach (var item in listServer)
             {
                 if (item.Checked)
@@ -307,9 +310,16 @@ namespace IMS.Controllers
                     //get currentIps
                     var currentIps = ServerIPBLO.Current.GetIpByServer(item.ServerCode);
                     //Add and log request
-                    string requestCode = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.BRING_SERVER_AWAY,
-                        Constants.StatusCode.REQUEST_PENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
-                        viewmodel.AppointmentTime, item.ServerCode, Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, null);
+                    LogChangedContent logRequest = new LogChangedContent
+                    {
+                        RequestCode = requestCode,
+                        TypeOfLog = Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
+                        Object = Constants.Object.OBJECT_REQUEST,
+                        ObjectStatus = Constants.StatusCode.REQUEST_PENDING,
+                        ChangedValueOfObject = requestCode,
+                        ServerCode = item.ServerCode,
+                    };
+                    LogChangedContentBLO.Current.AddLog(logRequest);
                     foreach (var ip in currentIps)
                     {
                         //update and log status ip bang serverip
@@ -454,11 +464,11 @@ namespace IMS.Controllers
                 };
                 TempRequestBLO.Current.Update(temp);
             }
-            RequestCreateViewModel rt = new RequestCreateViewModel()
+            RequestAddServerViewModel pass = new RequestAddServerViewModel()
             {
-                Type = Constants.RequestTypeCode.ADD_SERVER
+                Server = server
             };
-            return Json(server, JsonRequestBehavior.AllowGet);
+            return Json(pass, JsonRequestBehavior.AllowGet);
             //return RedirectToAction("Create", rt);
         }
 

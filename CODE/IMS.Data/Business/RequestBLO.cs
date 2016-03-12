@@ -134,5 +134,11 @@ namespace IMS.Data.Business
                     Constants.TypeOfLog.LOG_CHANGE_IP, Constants.Test.STAFF_NHI);
             }
         }
+
+        public string AddRequest(string requestType, string newStatus, string customer,
+            string description, DateTime? appointmenTime)
+        {
+            return dao.AddRequest(requestType, newStatus, customer, description, appointmenTime);
+        }
     }
 }

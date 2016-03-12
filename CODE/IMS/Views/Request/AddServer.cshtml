@@ -12,7 +12,7 @@
     };
 }
 <div class="main-content">
-    @using (Html.BeginForm("AddServer", "Request",new { @id = "addserverform" }))
+    @using (Html.BeginForm("AddServer", "Request", FormMethod.Post, new { @id = "addserverform" }))
     {
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
@@ -59,60 +59,103 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @*@for (int i = 0; i < Model.Servers.Count; i++)
+                        @foreach (var item in Model.Servers)
                         {
-                            <tr id="@Model.Servers[i].TempCode">
+                            @*<tr id="@Model.Servers[i].TempCode">
+                                    <td>
+                                        @Html.Raw(i + 1)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => Model.Servers[i].Maker, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Maker)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => Model.Servers[i].Power, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })W
+                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Power)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => Model.Servers[i].Model, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Model)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => Model.Servers[i].Size, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })U
+                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Size)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => Model.Servers[i].Bandwidth, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Bandwidth)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => Model.Servers[i].SerialNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].SerialNumber)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => Model.Servers[i].PartNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].PartNumber)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => Model.Servers[i].Memory, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Memory)
+                                    </td>
+                                    <td>
+                                        <a href="#" x-code="@Model.Servers[i].TempCode" action="edit">Edit</a>
+                                    </td>
+                                    <td>
+                                        <a href="#" x-code="@Model.Servers[i].TempCode" action="delete">Delete</a>
+                                    </td>
+                                </tr>*@
+                            <tr id="@item.TempCode">
                                 <td>
-                                    @Html.Raw(i + 1)
+                                    @*@Html.Raw(i + 1)*@
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(model => Model.Servers[i].Maker, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Maker)
+                                    @Html.DisplayFor(model => item.Maker, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                    @Html.HiddenFor(modelItem => item.Maker)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(model => Model.Servers[i].Power, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })W
-                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Power)
+                                    @Html.DisplayFor(model => item.Power, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })W
+                                    @Html.HiddenFor(modelItem => item.Power)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(model => Model.Servers[i].Model, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Model)
+                                    @Html.DisplayFor(model => item.Model, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                    @Html.HiddenFor(modelItem => item.Model)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(model => Model.Servers[i].Size, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })U
-                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Size)
+                                    @Html.DisplayFor(model => item.Size, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })U
+                                    @Html.HiddenFor(modelItem => item.Size)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(model => Model.Servers[i].Bandwidth, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Bandwidth)
+                                    @Html.DisplayFor(model => item.Bandwidth, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                    @Html.HiddenFor(modelItem => item.Bandwidth)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(model => Model.Servers[i].SerialNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].SerialNumber)
+                                    @Html.DisplayFor(model => item.SerialNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                    @Html.HiddenFor(modelItem => item.SerialNumber)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(model => Model.Servers[i].PartNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].PartNumber)
+                                    @Html.DisplayFor(model => item.PartNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                    @Html.HiddenFor(modelItem => item.PartNumber)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(model => Model.Servers[i].Memory, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Memory)
+                                    @Html.DisplayFor(model => item.Memory, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                    @Html.HiddenFor(modelItem => item.Memory)
                                 </td>
                                 <td>
-                                    <a href="#" x-code="@Model.Servers[i].TempCode" action="edit">Edit</a>
+                                    <a href="#" x-code="@item.TempCode" action="edit">Edit</a>
                                 </td>
                                 <td>
-                                    <a href="#" x-code="@Model.Servers[i].TempCode" action="delete">Delete</a>
+                                    <a href="#" x-code="@item.TempCode" action="delete">Delete</a>
                                 </td>
                             </tr>
-                        }*@
-                        <tr>
-                            <td colspan="11">
-                                <button type="button" id="addserver" name="@Constants.FormAction.ACTION_NAME" value="" class="@Constants.HtmlFormat.SECONDARY_BUTTON_CLASS">
-                                    @Labels.AddServerInfo
-                                </button>
-                            </td>
-                        </tr>
+                        }
                     </tbody>
+                    <tr>
+                        <td colspan="11">
+                            <button type="button" id="addserver" name="@Constants.FormAction.ACTION_NAME" value="" class="@Constants.HtmlFormat.SECONDARY_BUTTON_CLASS">
+                                @Labels.AddServerInfo
+                            </button>
+                        </td>
+                    </tr>
                 </table>
             </div>
         </div>
@@ -120,7 +163,7 @@
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                <button type="submit" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
                     @Labels.DialogOK
                 </button>
             </div>
@@ -253,6 +296,18 @@
         $('#Server_Memory').val(server.Memory);
         $('#Server_TempCode').val(server.TempCode);
     }
+
+    function addModal(server) {
+        $('#item_Maker').val(server.Maker);
+        $('#item_Power').val(server.Power);
+        $('#item_Model').val(server.Model);
+        $('#item_Size').val(server.Size);
+        $('#item_Bandwidth').val(server.item_Bandwidth);
+        $('#item_SerialNumber').val(server.SerialNumber);
+        $('#item_PartNumber').val(server.PartNumber);
+        $('#item_Memory').val(server.Memory);
+        $('#item_TempCode').val(server.TempCode);
+    }
 </script>
 
 <script type="text/javascript">
@@ -293,20 +348,20 @@
             dataType: "json",
             success: function (data) {
                 $(data).each(function (index, item) {
-                    //myTable.append($('tr', { value: item.ServerCode, text: item.ServerCode }));
                     myTable.append('<tr>' +
                         '<td> 1 </td>' +
-                        '<td>' + item.Maker + '</td>' +
-                        '<td>' + item.Power + '</td>' +
-                        '<td>' + item.Model + '</td>' +
-                        '<td>' + item.Size + '</td>' +
-                        '<td>' + item.Bandwidth + '</td>' +
-                        '<td>' + item.SerialNumber + '</td>' +
-                        '<td>' + item.PartNumber + '</td>' +
-                        '<td>' + item.Memory + '</td>' +
-                        '<td><a href="#" x-code=' + item.TempCode + ' btnAction="edit">Edit</a></td>' +
-                        '<td><a href="#" x-code=' + item.TempCode + 'btnAction="delete">Delete</a></td>' +
+                        '<td id=item_Maker>' + item.Server.Maker + '</td>' +
+                        '<td id=item_Power>' + item.Server.Power + '</td>' +
+                        '<td id=item_Model>' + item.Server.Model + '</td>' +
+                        '<td id=item_Size>' + item.Server.Size + '</td>' +
+                        '<td id=item_Bandwidth>' + item.Server.Bandwidth + '</td>' +
+                        '<td id=item_SerialNumber>' + item.Server.SerialNumber + '</td>' +
+                        '<td id=item_PartNumber>' + item.Server.PartNumber + '</td>' +
+                        '<td id=item_Memory>' + item.Server.Memory + '</td>' +
+                        '<td><a href="#" x-code=' + item.Server.TempCode + ' btnAction="edit">Edit</a></td>' +
+                        '<td><a href="#" x-code=' + item.Server.TempCode + 'btnAction="delete">Delete</a></td>' +
                         '</tr>');
+                    //addModal(data.Server);
                 });
                 $('#serverinfo-modal').modal('hide');
             }
@@ -318,7 +373,7 @@
         $('#submitserver').val('@Constants.FormAction.EDIT_ACTION');
         $('#serverinfo-modal').modal('show');
         var tempCode = $(this).attr('x-code');
-        get('@Url.Action("GetTempServer", "Temp", new { httproute = "" })' + '/' + tempCode, function (data) {
+        get('@Url.Action("GetTempServer", "Temp", new {httproute = ""})' + '/' + tempCode, function (data) {
             setModal(data.Server);
         });
         return false;
@@ -327,7 +382,7 @@
     $('a[x-code][action="delete"]').click(function () {
         var tempCode = $(this).attr('x-code');
         alertify.confirm('Are you sure to delete this server?', function () {
-            get('@Url.Action("DeleteTempServer", "Temp", new { httproute = "" })' + '/' + tempCode, function (data) {
+            get('@Url.Action("DeleteTempServer", "Temp", new {httproute = ""})' + '/' + tempCode, function (data) {
                 $('#' + tempCode).remove();
             });
         }, function () {
@@ -343,46 +398,11 @@
         $("th").addClass("hidden");
     }
 
-    $("#addserverform").submit(function (event) {
+    //$("#addserverform").ajaxForm({ url: '@Url.Action("AddServer", "Request", new {httproute = ""})', type: 'post' });
+    //$("#addserverform").ajaxSubmit({ url: '@Url.Action("AddServer", "Request", new {httproute = ""})', type: 'post' });
 
-        /* stop form from submitting normally */
-        event.preventDefault();
-
-        /* get some values from elements on the page: */
-        var $form = $(this),
-            url = $form.attr('action');
-
-        //$.post(url, $("#addserverform").serialize());
-
-        var tableObject = $('#MyList tbody tr').map(function (i) {
-            var row = {};
-
-            // Find all of the table cells on this row.
-            $(this).find('td').each(function (i) {
-                // Determine the cell's column name by comparing its index
-                //  within the row with the columns list we built previously.
-                var rowName = columns[i];
-
-                // Add a new property to the row object, using this cell's
-                //  column name as the key and the cell's text as the value.
-                row[rowName] = $(this).text();
-            });
-
-            // Finally, return the row's object representation, to be included
-            //  in the array that $.map() ultimately returns.
-            return row;
-
-            // Don't forget .get() to convert the jQuery set to a regular array.
-        }).get();
-
-        /* Send the data using post */
-        var posting = $.post(
-            url,
-            { "Servers": tableObject });
-
-        /* Alerts the results */
-        posting.done(function (data) {
-            alert('success');
-        });
-    });
+    //$("addserverform").on("submit", function (event) {
+    //    event.preventDefault();
+    //    console.log($(this).serialize());
+    //});
 </script>

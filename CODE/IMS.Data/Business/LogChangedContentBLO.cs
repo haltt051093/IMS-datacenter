@@ -184,5 +184,15 @@ namespace IMS.Data.Business
                     Constants.StatusCode.REQUEST_CANCELLED, Constants.Test.CUSTOMER_MANHNH);
             }
         }
+
+        public List<string> ViewDoneRequestBringServerAway(string requestCode)
+        {
+            var list = GetLogInfoByRequestCode(requestCode, Constants.Object.OBJECT_SERVER);
+            var servers = from l in list
+                group l by l.ChangedValueOfObject
+                into g
+                select g.Key;
+            return servers.ToList();
+        }
     }
 }

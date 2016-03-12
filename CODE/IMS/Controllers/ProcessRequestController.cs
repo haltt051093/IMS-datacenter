@@ -106,21 +106,39 @@ namespace IMS.Controllers
                 {
                     viewmodel = Mapper.Map<Request, RequestBringServerAwayViewModel>(request);
                     viewmodel.StatusName = StatusBLO.Current.GetStatusName(viewmodel.StatusCode);
-                    var customer = AccountBLO.Current.GetAccountByCode(viewmodel.Customer);
-                    viewmodel.CustomerName = customer.Fullname;
-                    viewmodel.Identification = customer.Identification;
-                    //lay list servers
-                    var serverCodes = LogChangedContentBLO.Current.GetServerCodeByRequestCode(rCode);
-                    List<ServerExtendedModel> list = new List<ServerExtendedModel>();
-                    foreach (var servercode in serverCodes)
+                    if (viewmodel.StatusName == Constants.StatusName.REQUEST_DONE)
                     {
-                        var server = ServerBLO.Current.GetAllServerInfo(servercode);
-                        viewmodel.ReturnIpNumber = viewmodel.ReturnIpNumber + server.ServerIps.Count;
-                        viewmodel.ReturnLocationNumber = viewmodel.ReturnLocationNumber + server.ServerLocation.Count;
-                        list.Add(server);
+                        //lay du lieu tu log
+                        var selectedServers = LogChangedContentBLO.Current.ViewDoneRequestBringServerAway(rCode);
+                        List<ServerExtendedModel> list = new List<ServerExtendedModel>();
+                        foreach (var servercode in selectedServers)
+                        {
+                            var server = ServerBLO.Current.GetAllServerInfo(servercode);
+                            viewmodel.ReturnIpNumber = viewmodel.ReturnIpNumber + server.ServerIps.Count;
+                            viewmodel.ReturnLocationNumber = viewmodel.ReturnLocationNumber + server.ServerLocation.Count;
+                            list.Add(server);
+                        }
+                        viewmodel.ServerOfCustomer = list;
+                        viewmodel.SelectedServerNumber = list.Count;
                     }
-                    viewmodel.ServerOfCustomer = list;
-                    viewmodel.SelectedServerNumber = list.Count;
+                    else
+                    {
+                        var customer = AccountBLO.Current.GetAccountByCode(viewmodel.Customer);
+                        viewmodel.CustomerName = customer.Fullname;
+                        viewmodel.Identification = customer.Identification;
+                        //lay list servers
+                        var serverCodes = LogChangedContentBLO.Current.GetServerCodeByRequestCode(rCode);
+                        List<ServerExtendedModel> list = new List<ServerExtendedModel>();
+                        foreach (var servercode in serverCodes)
+                        {
+                            var server = ServerBLO.Current.GetAllServerInfo(servercode);
+                            viewmodel.ReturnIpNumber = viewmodel.ReturnIpNumber + server.ServerIps.Count;
+                            viewmodel.ReturnLocationNumber = viewmodel.ReturnLocationNumber + server.ServerLocation.Count;
+                            list.Add(server);
+                        }
+                        viewmodel.ServerOfCustomer = list;
+                        viewmodel.SelectedServerNumber = list.Count;
+                    }
                 }
                 Alert("Success");
                 return View("BringServerAwayInfo", viewmodel);
@@ -312,7 +330,7 @@ namespace IMS.Controllers
                 viewmodel.CustomerName = customer.Fullname;
                 return View("ReturnRackInfo", viewmodel);
             }
-            return RedirectToAction("ListNotifications", "Request");
+            return RedirectToAction("Index", "Notification");
         }
 
         [HttpPost]
@@ -563,31 +581,6 @@ namespace IMS.Controllers
                     Constants.StatusCode.REQUEST_DONE, Constants.Test.STAFF_NHI);
                 return RedirectToAction("Index", "Notification");
 
-            }
-            else if (Request.Form["Reject"] != null)
-            {
-                //O giao dien hien popup Yes/No reject
-
-                //Change request status 
-                //RequestBLO.Current.UpdateRequestStatus(viewmodel.RequestCode, Constants.StatusCode.REQUEST_REJECTED);
-
-                //Add Log Request
-                LogChangedContent logRequest = new LogChangedContent
-                {
-                    RequestCode = viewmodel.RequestCode,
-                    TypeOfLog = Constants.TypeOfLog.LOG_ASSIGN_IP,
-                    Object = Constants.Object.OBJECT_REQUEST,
-                    ChangedValueOfObject = viewmodel.RequestCode,
-                    ObjectStatus = Constants.StatusCode.REQUEST_REJECTED,
-                    Staff = viewmodel.StaffCode
-                };
-                LogChangedContentBLO.Current.AddLog(logRequest);
-
-                //notification cho khach hang biet
-                //DOING
-
-
-                return RedirectToAction("Index", "Home");
             }
             Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("Index", "Notification");

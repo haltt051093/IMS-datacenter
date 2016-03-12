@@ -240,7 +240,8 @@ namespace IMS.Data.Repository
                         join a in AccountDAO.Current.Table()
                             on s.Customer equals a.Username into astsl
                         from suba in astsl.DefaultIfEmpty()
-                        where s.ServerCode == serverCode && s.StatusCode == Constants.StatusCode.SERVER_BRINGING_AWAY
+                        where s.ServerCode == serverCode
+                        //&& s.StatusCode == Constants.StatusCode.SERVER_BRINGING_AWAY
                         select new ServerExtendedModel
                         {
                             Status = subst.StatusName,
@@ -256,19 +257,6 @@ namespace IMS.Data.Repository
                             RegisteredDate = s.RegisteredDate,
                             Outlet = s.Outlet,
                             Bandwidth = s.Bandwidth,
-                            //ServerIps = from si in ServerIPDAO.Current.Table()
-                            //             where si.ServerCode == s.ServerCode
-                            //             select si,
-                            //ServerLocation = from l in LocationDAO.Current.Table()
-                            //                  join r in RackDAO.Current.Table()
-                            //                    on l.RackCode equals r.RackCode into lr
-                            //                  from sublr in lr.DefaultIfEmpty()
-                            //                  where l.ServerCode == s.ServerCode
-                            //                  select new LocationExtendedModel
-                            //                  {
-                            //                      RackName = sublr.RackName,
-                            //                      RackUnit = l.RackUnit
-                            //                  }
                         };
             var server = query.FirstOrDefault();
 

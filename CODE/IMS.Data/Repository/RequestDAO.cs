@@ -176,7 +176,7 @@ namespace IMS.Data.Repository
         {
             return Current.Query(x => x.RequestCode == requestCode).FirstOrDefault();
         }
-        
+
         public string AddRequestANDLog(string requestType, string newStatus, string customer,
             string description, DateTime? appointmenTime, string serverCode, string typeOfLog, string UniqueRequestCode)
         {
@@ -235,6 +235,34 @@ namespace IMS.Data.Repository
                 ChangedValueOfObject = requestCode,
             };
             LogChangedContentBLO.Current.AddLog(logRequest);
+        }
+
+        public string AddRequest(string requestType, string newStatus, string customer, 
+            string description, DateTime? appointmenTime)
+        {
+            var requestCode = GenerateCode(); ;
+            var request = new Request()
+            {
+                RequestCode = requestCode,
+                RequestType = requestType,
+                StatusCode = newStatus,
+                Customer = customer,
+                Description = description,
+                AppointmentTime = appointmenTime,
+                RequestedTime = DateTime.Now,
+            };
+
+            var existing = GetByKeys(request);
+            if (existing == null)
+            {
+                IMSContext.Current.Set<Request>().Add(request);
+            }
+            else
+            {
+                CopyValues(request, existing);
+            }
+            IMSContext.Current.SaveChanges();
+            return requestCode;
         }
     }
 }
