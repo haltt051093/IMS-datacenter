@@ -50,5 +50,7 @@ namespace IMS.Data.ViewModels
         public List<ServerIP> ServerIps { get; set; }
 
         public List<LocationViewModel> ServerLocation { get; set; }
+
+        public string btnAction { get; set; }
     }
 }

@@ -12,7 +12,7 @@
     };
 }
 <div class="main-content">
-    @using (Html.BeginForm("AddServer", "Request"))
+    @using (Html.BeginForm("AddServer", "Request",new { @id = "addserverform" }))
     {
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
@@ -59,7 +59,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @for (int i = 0; i < Model.Servers.Count; i++)
+                        @*@for (int i = 0; i < Model.Servers.Count; i++)
                         {
                             <tr id="@Model.Servers[i].TempCode">
                                 <td>
@@ -104,7 +104,7 @@
                                     <a href="#" x-code="@Model.Servers[i].TempCode" action="delete">Delete</a>
                                 </td>
                             </tr>
-                        }
+                        }*@
                         <tr>
                             <td colspan="11">
                                 <button type="button" id="addserver" name="@Constants.FormAction.ACTION_NAME" value="" class="@Constants.HtmlFormat.SECONDARY_BUTTON_CLASS">
@@ -272,18 +272,43 @@
     });
 
     $('#submitserver').click(function () {
-        var maker = $('#Server_Maker').val();
-        var power = $('#Server_Power').val();
-        var model = $('#Server_Model').val();
-        var data0 = { Maker: maker, Power: power, Model: model };
-        var json = JSON.stringify(data0);
+        var server =
+        {
+            "Maker": $('#Server_Maker').val(),
+            "Power": $('#Server_Power').val(),
+            "Model": $('#Server_Model').val(),
+            "Size": $('#Server_Size').val(),
+            "SerialNumber": $('#Server_SerialNumber').val(),
+            "PartNumber": $('#Server_PartNumber').val(),
+            "Memory": $('#Server_Memory').val(),
+            "Bandwidth": $('#Server_Bandwidth').val(),
+            "btnAction": "OK"
+        };
+        var myTable = $('#MyList > tbody');
         $.ajax({
             cache: false,
             type: "GET",
             url: "@(Url.Action("SaveTempData", "Request"))",
-            data: json,
+            data: server,
             dataType: "json",
             success: function (data) {
+                $(data).each(function (index, item) {
+                    //myTable.append($('tr', { value: item.ServerCode, text: item.ServerCode }));
+                    myTable.append('<tr>' +
+                        '<td> 1 </td>' +
+                        '<td>' + item.Maker + '</td>' +
+                        '<td>' + item.Power + '</td>' +
+                        '<td>' + item.Model + '</td>' +
+                        '<td>' + item.Size + '</td>' +
+                        '<td>' + item.Bandwidth + '</td>' +
+                        '<td>' + item.SerialNumber + '</td>' +
+                        '<td>' + item.PartNumber + '</td>' +
+                        '<td>' + item.Memory + '</td>' +
+                        '<td><a href="#" x-code=' + item.TempCode + ' btnAction="edit">Edit</a></td>' +
+                        '<td><a href="#" x-code=' + item.TempCode + 'btnAction="delete">Delete</a></td>' +
+                        '</tr>');
+                });
+                $('#serverinfo-modal').modal('hide');
             }
         });
     });
@@ -317,4 +342,47 @@
     } else {
         $("th").addClass("hidden");
     }
+
+    $("#addserverform").submit(function (event) {
+
+        /* stop form from submitting normally */
+        event.preventDefault();
+
+        /* get some values from elements on the page: */
+        var $form = $(this),
+            url = $form.attr('action');
+
+        //$.post(url, $("#addserverform").serialize());
+
+        var tableObject = $('#MyList tbody tr').map(function (i) {
+            var row = {};
+
+            // Find all of the table cells on this row.
+            $(this).find('td').each(function (i) {
+                // Determine the cell's column name by comparing its index
+                //  within the row with the columns list we built previously.
+                var rowName = columns[i];
+
+                // Add a new property to the row object, using this cell's
+                //  column name as the key and the cell's text as the value.
+                row[rowName] = $(this).text();
+            });
+
+            // Finally, return the row's object representation, to be included
+            //  in the array that $.map() ultimately returns.
+            return row;
+
+            // Don't forget .get() to convert the jQuery set to a regular array.
+        }).get();
+
+        /* Send the data using post */
+        var posting = $.post(
+            url,
+            { "Servers": tableObject });
+
+        /* Alerts the results */
+        posting.done(function (data) {
+            alert('success');
+        });
+    });
 </script>

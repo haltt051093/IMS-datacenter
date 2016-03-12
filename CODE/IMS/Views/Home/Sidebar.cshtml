@@ -2,24 +2,57 @@
 
 @{
     var data = new List<SidebarItemModel>();
-    data.Add(new SidebarItemModel("Server", "Index", "Server") { Roles = new List<string>() { "Shift Head", "Customer" }});
+    data.Add(new SidebarItemModel("Server", "Index", "Server") { Roles = new List<string>() { "Shift Head", "Customer" } });
     data.Add(new SidebarItemModel("Request History", "Index", "Request") { Roles = new List<string>() { "Customer" } });
     data.Add(new SidebarItemModel("Location", "Index2", "Location") { Roles = new List<string>() { "Shift Head" } });
     data.Add(new SidebarItemModel("IP Address", "Index2", "IP") { Roles = new List<string>() { "Shift Head" } });
     data.Add(new SidebarItemModel("Account", "Index", "Account") { Roles = new List<string>() { "Shift Head" } });
-    data.Add(new SidebarItemModel("Create request", "", "") { Roles = new List<string>() { "Customer" }, SubMenu = new List<SidebarItemModel>()
+    data.Add(new SidebarItemModel("Create request", "", "")
+    {
+        Roles = new List<string>() { "Customer" },
+        SubMenu = new List<SidebarItemModel>()
         {
-            new SidebarItemModel("Add New Server", "RequestAddServer2", "Request") { Roles = new List<string>() { "Customer" } },
-            new SidebarItemModel("Upgrade Server", "RequestUpgradeServer2", "Request") { Roles = new List<string>() { "Customer" } },
-            new SidebarItemModel("Bring Away Server", "RequestBringAwayServer2", "Request") { Roles = new List<string>() { "Customer" } },
-            new SidebarItemModel("Change IP Address", "RequestChangeIP2", "Request") { Roles = new List<string>() { "Customer" } },
-            new SidebarItemModel("Return IP Address", "RequestReturnIP2", "Request") { Roles = new List<string>() { "Customer" } },
-            new SidebarItemModel("Assign IP Address", "RequestAssignIP2", "Request") { Roles = new List<string>() { "Customer" } },
-            new SidebarItemModel("Rent Rack", "RequestRentRack2", "Request") { Roles = new List<string>() { "Customer" } },
-            new SidebarItemModel("Return Rack", "RequestReturnRack2", "Request") { Roles = new List<string>() { "Customer" } }
+            new SidebarItemModel("Add New Server", "Create", "Request")
+            {
+                Roles = new List<string>() { "Customer" },
+                RequestType = new RequestCreateViewModel() { Type = Constants.RequestTypeCode.ADD_SERVER}
+            },
+            new SidebarItemModel("Bring Away Server", "Create", "Request")
+            {
+                Roles = new List<string>() { "Customer" },
+                RequestType = new RequestCreateViewModel() { Type = Constants.RequestTypeCode.BRING_SERVER_AWAY}
+            },
+            new SidebarItemModel("Assign IP Address", "Create", "Request")
+            {
+                Roles = new List<string>() { "Customer" },
+                RequestType = new RequestCreateViewModel() { Type = Constants.RequestTypeCode.ASSIGN_IP}
+            },
+            new SidebarItemModel("Change IP Address", "Create", "Request")
+            {
+                Roles = new List<string>() { "Customer" },
+                RequestType = new RequestCreateViewModel() { Type = Constants.RequestTypeCode.CHANGE_IP}
+            },
+            new SidebarItemModel("Return IP Address", "Create", "Request")
+            {
+                Roles = new List<string>() { "Customer" },
+                RequestType = new RequestCreateViewModel() { Type = Constants.RequestTypeCode.RETURN_IP}
+            },
+            new SidebarItemModel("Rent Rack", "Create", "Request")
+            {
+                Roles = new List<string>() { "Customer" },
+                RequestType = new RequestCreateViewModel() { Type = Constants.RequestTypeCode.RENT_RACK}
+            },
+            new SidebarItemModel("Return Rack", "Create", "Request")
+            {
+                Roles = new List<string>() { "Customer" },
+                RequestType = new RequestCreateViewModel() { Type = Constants.RequestTypeCode.RETURN_RACK}
+            }
         }
     });
-    data.Add(new SidebarItemModel("Report", "", "") { Roles = new List<string>() { "Shift Head", "Customer" }, SubMenu = new List<SidebarItemModel>()
+    data.Add(new SidebarItemModel("Report", "", "")
+    {
+        Roles = new List<string>() { "Shift Head", "Customer" },
+        SubMenu = new List<SidebarItemModel>()
         {
             new SidebarItemModel("Server Moving", "", "") { Roles = new List<string>() { "Shift Head", "Customer" } },
             new SidebarItemModel("Blocked IP Address", "ReportBlockIP", "Report") { Roles = new List<string>() { "Shift Head", "Customer" } },
@@ -36,7 +69,7 @@
     var account = Model.Account;
     <div class="user-panel">
         <div class="pull-left image">
-            <img src="@Url.Content("~/img/avatar3.png")" class="img-circle" alt="User Image"/>
+            <img src="@Url.Content("~/img/avatar3.png")" class="img-circle" alt="User Image" />
         </div>
         <div class="pull-left info">
             <p>Hello, @account.Fullname</p>
@@ -48,42 +81,42 @@
 
 <!-- Sidebar navigation panel -->
 <ul class="sidebar-menu">
-@foreach (var menu in data)
-{
-    if (!menu.Roles.Contains(role))
+    @foreach (var menu in data)
     {
-        continue;
-    }
-    if (menu.SubMenu.Count == 0)
-    {
-        <li>
-            <a href="@Url.Action(menu.Action, menu.Controller)"><i class="fa fa-table"></i><span>@menu.Title</span></a>
-        </li>
-    }
-    else
-    {
-        <li class="treeview ">
-            @{
-                if (menu.Title == "Create request")
-                {
-                    <a href="#"><i class="fa fa-pencil-square-o"></i><span>@menu.Title</span><i class="fa fa-angle-left pull-right"></i></a>
-                }
-                else
-                {
-                    <a href="#"><i class="fa fa-bar-chart-o"></i><span>@menu.Title</span><i class="fa fa-angle-left pull-right"></i></a>
-                }
-            }           
-            <ul class="treeview-menu">
-                @foreach (var subMenu in menu.SubMenu)
-                {
-                    if (!subMenu.Roles.Contains(role))
+        if (!menu.Roles.Contains(role))
+        {
+            continue;
+        }
+        if (menu.SubMenu.Count == 0)
+        {
+            <li>
+                <a href="@Url.Action(menu.Action, menu.Controller)"><i class="fa fa-table"></i><span>@menu.Title</span></a>
+            </li>
+        }
+        else
+        {
+            <li class="treeview ">
+                @{
+                    if (menu.Title == "Create request")
                     {
-                        continue;
+                        <a href="#"><i class="fa fa-pencil-square-o"></i><span>@menu.Title</span><i class="fa fa-angle-left pull-right"></i></a>
                     }
-                    <li><a href="@Url.Action(subMenu.Action, subMenu.Controller)"><i class="fa fa-angle-double-right"></i>@subMenu.Title</a></li>
+                    else
+                    {
+                        <a href="#"><i class="fa fa-bar-chart-o"></i><span>@menu.Title</span><i class="fa fa-angle-left pull-right"></i></a>
+                    }
                 }
-            </ul>
-        </li>
-    }
-}
+                <ul class="treeview-menu">
+                    @foreach (var subMenu in menu.SubMenu)
+                    {
+                        if (!subMenu.Roles.Contains(role))
+                        {
+                            continue;
+                        }
+                        <li><a href="@Url.Action(subMenu.Action, subMenu.Controller)"><i class="fa fa-angle-double-right"></i>@subMenu.Title</a></li>
+                    }
+                </ul>
+            </li>
+                        }
+                    }
 </ul>

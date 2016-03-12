@@ -142,32 +142,6 @@ namespace IMS.Controllers
         }
         #endregion
 
-        //public ActionResult EditRequestHistory(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Request request = RequestBLO.Current.GetById(id);
-        //    if (request == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    Mapper.CreateMap<Request, RequestCreateViewModel>();
-        //    var requestViewmodel = Mapper.Map<Request, RequestCreateViewModel>(request);
-        //    return View(requestViewmodel);
-        //}
-
-        //[HttpPost]
-        //public ActionResult EditRequestHistory(RequestCreateViewModel requestViewmodel)
-        //{
-        //    Mapper.CreateMap<RequestCreateViewModel, Request>();
-        //    Request request = Mapper.Map<RequestCreateViewModel, Request>(requestViewmodel);
-
-        //    RequestBLO.Current.AddOrUpdate(request);
-        //    return RedirectToAction("Index", "Request");
-        //}
-
         #region Process Request
         [HttpPost]
         public ActionResult ReturnRack(RequestReturnRackViewModel viewmodel)
@@ -246,6 +220,7 @@ namespace IMS.Controllers
                 string serverCode = ServerDAO.Current.AddServer(server);
 
                 //add server attribute serial number, part number, memory
+
                 List<ServerAttribute> serverAttributes = new List<ServerAttribute>();
                 List<string> attributeCodes = new List<string>();
                 attributeCodes.Add(Constants.ServerAttributeCode.PART_NUMBER);
@@ -460,10 +435,31 @@ namespace IMS.Controllers
         }
 
         //public ActionResult SaveTempData(RequestAddServerViewModel r)
-        public ActionResult SaveTempData(string r)
+        public ActionResult SaveTempData(ServerExtendedModel server)
         {
-            var reqDetail = JsonConvert.DeserializeObject<Server>(r);
-            return RedirectToAction("Create");
+            if (server.btnAction == Constants.FormAction.OK_ACTION)
+            {
+                var temp = new TempRequest();
+                temp.RequestCode = Session[Constants.Session.REQUEST_CODE].ToString();
+                temp.Data = JsonConvert.SerializeObject(server);
+                temp.TempCode = TempRequestBLO.Current.GenerateCode();
+                TempRequestBLO.Current.Add(temp);
+            }
+            else if (server.btnAction == Constants.FormAction.EDIT_ACTION)
+            {
+                var temp = new TempRequest()
+                {
+                    TempCode = server.TempCode,
+                    Data = JsonConvert.SerializeObject(server)
+                };
+                TempRequestBLO.Current.Update(temp);
+            }
+            RequestCreateViewModel rt = new RequestCreateViewModel()
+            {
+                Type = Constants.RequestTypeCode.ADD_SERVER
+            };
+            return Json(server, JsonRequestBehavior.AllowGet);
+            //return RedirectToAction("Create", rt);
         }
 
         public ActionResult DeleteTempServer(string code)
@@ -478,6 +474,101 @@ namespace IMS.Controllers
         }
         #endregion
 
+        #region cancel and rejrect request
+        public ActionResult Delete(string requestCode, string requestType, string actionName)
+        {
+
+            if (requestType == Constants.TypeOfLog.LOG_ADD_SERVER)
+            {
+                if (actionName == Constants.FormAction.CANCEL_ACTION)
+                {
+                    //DOING
+                    //Hoi thay lai xem co can bang serverattributes nữa ko --> bỏ attribute cho rảnh nợ
+                }
+                if (actionName == Constants.FormAction.REJECT_ACTION)
+                {
+
+                }
+            }
+            if (requestType == Constants.TypeOfLog.LOG_BRING_SERVER_AWAY)
+            {
+                if (actionName == Constants.FormAction.CANCEL_ACTION)
+                {
+                    //Update lai serverip, server, request
+                    LogChangedContentBLO.Current.CancelRequestBringServerAway(requestCode);
+                }
+                if (actionName == Constants.FormAction.REJECT_ACTION)
+                {
+                    //PENDING
+                }
+            }
+            if (requestType == Constants.TypeOfLog.LOG_ASSIGN_IP)
+            {
+                if (actionName == Constants.FormAction.CANCEL_ACTION)
+                {
+                    //update request status and log
+                    RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ASSIGN_IP,
+                    Constants.StatusCode.REQUEST_CANCELLED, Constants.Test.CUSTOMER_MANHNH);
+                }
+                if (actionName == Constants.FormAction.REJECT_ACTION)
+                {
+
+                }
+            }
+            //DOING
+            if (requestType == Constants.TypeOfLog.LOG_CHANGE_IP)
+            {
+                if (actionName == Constants.FormAction.CANCEL_ACTION)
+                {
+                    //Update and log serverip, request
+                    LogChangedContentBLO.Current.CancelRequestChangeIp(requestCode);
+                }
+                if (actionName == Constants.FormAction.REJECT_ACTION)
+                {
+
+                }
+            }
+            if (requestType == Constants.TypeOfLog.LOG_RETURN_IP)
+            {
+                if (actionName == Constants.FormAction.CANCEL_ACTION)
+                {
+                    //Update va log serverip, request
+                    LogChangedContentBLO.Current.CancelRequestReturnIp(requestCode);
+                }
+                if (actionName == Constants.FormAction.REJECT_ACTION)
+                {
+
+                }
+            }
+            if (requestType == Constants.TypeOfLog.LOG_RENT_RACK)
+            {
+                if (actionName == Constants.FormAction.CANCEL_ACTION)
+                {
+                    //update request status and log
+                    RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RENT_RACK,
+                    Constants.StatusCode.REQUEST_CANCELLED, Constants.Test.CUSTOMER_MANHNH);
+                }
+                if (actionName == Constants.FormAction.REJECT_ACTION)
+                {
+
+                }
+            }
+            if (requestType == Constants.TypeOfLog.LOG_RETURN_RACK)
+            {
+                if (actionName == Constants.FormAction.CANCEL_ACTION)
+                {
+
+                }
+                if (actionName == Constants.FormAction.REJECT_ACTION)
+                {
+
+                }
+            }
+
+            return RedirectToAction("Index", "Request");
+        }
+        #endregion
+
         public void NotifRegister(NotificationExtendedModel model)
         {
             RemoteControllerHub.Current.Clients.All.ExecuteCommand(
@@ -488,5 +579,7 @@ namespace IMS.Controllers
                 model.AppointmentTime,
                 model.StatusName);
         }
+
+
     }
 }

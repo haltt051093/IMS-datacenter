@@ -88,11 +88,6 @@
             $("[id*=MyTable] input:checked").each(function () {
                 selectedValues.push($(this).val());
             });
-            //if (selectedValues.length > 0) {
-            //    alert("Selected Value(s): " + selectedValues);
-            //} else {
-            //    alert("No item has been selected.");
-            //}
             $('#ips').val(selectedValues);
         });
     });

@@ -21,6 +21,7 @@ namespace IMS.Models
         public string Action { get; set; }
         public string Controller { get; set; }
         public List<string> Roles { get; set; }
+        public RequestCreateViewModel RequestType { get; set; }
         public List<SidebarItemModel> SubMenu { get; set; }
     }
 }

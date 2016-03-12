@@ -912,7 +912,6 @@
     <Compile Include="ApiModels\TempRequestResponse.cs" />
     <Compile Include="App_Start\AppConfig.cs" />
     <Compile Include="Authentications\RolesAttribute.cs" />
-    <Compile Include="Controllers\DeleteRequestController.cs" />
     <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\ProcessRequestController.cs" />
     <Compile Include="Controllers\ValidateController.cs" />

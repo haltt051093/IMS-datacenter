@@ -174,7 +174,7 @@ namespace IMS.Data.Repository
         {
             return Current.Query(x => x.RequestCode == requestCode).FirstOrDefault();
         }
-        //DOING
+        
         public string AddRequestANDLog(string requestType, string newStatus, string customer,
             string description, DateTime? appointmenTime, string serverCode, string typeOfLog, string UniqueRequestCode)
         {
