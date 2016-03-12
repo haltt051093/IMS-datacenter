@@ -37,7 +37,6 @@ namespace IMS.Controllers
             return View(data);
         }
 
-
         [HttpGet]
         public ActionResult Detais(string rType, string rCode)
         {
@@ -340,20 +339,10 @@ namespace IMS.Controllers
                 }
             }
             //Change request status
-            RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_RENT_RACK, Constants.StatusCode.REQUEST_DONE, viewmodel.StaffCode);
-            //Add Log Request
-            LogChangedContent logRequest = new LogChangedContent
-            {
-                RequestCode = viewmodel.RequestCode,
-                TypeOfLog = Constants.TypeOfLog.LOG_RENT_RACK,
-                Object = Constants.Object.OBJECT_REQUEST,
-                ChangedValueOfObject = viewmodel.RequestCode,
-                ObjectStatus = Constants.StatusCode.REQUEST_DONE,
-                Staff = viewmodel.StaffCode
-            };
-            LogChangedContentBLO.Current.AddLog(logRequest);
+            RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_RENT_RACK,
+                Constants.StatusCode.REQUEST_DONE, viewmodel.StaffCode);
             Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
-            return RedirectToAction("ListNotifications", "Request");
+            return RedirectToAction("Index", "Notification");
         }
 
         [HttpPost]
@@ -375,7 +364,7 @@ namespace IMS.Controllers
             RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
                 Constants.StatusCode.REQUEST_DONE, Constants.Test.STAFF_NHI);
             Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
-            return RedirectToAction("ListNotifications", "Request");
+            return RedirectToAction("Index", "Notification");
 
         }
 
@@ -551,7 +540,7 @@ namespace IMS.Controllers
                 //IPAddressPoolBLO.Current.SetIpAvailable(server.ServerCode);
             }
             Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
-            return RedirectToAction("ListNotifications", "Request");
+            return RedirectToAction("Index", "Notification");
 
         }
 
@@ -572,7 +561,7 @@ namespace IMS.Controllers
                 //Add Log and update request status
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_ASSIGN_IP,
                     Constants.StatusCode.REQUEST_DONE, Constants.Test.STAFF_NHI);
-                return RedirectToAction("ListNotifications", "Request");
+                return RedirectToAction("Index", "Notification");
 
             }
             else if (Request.Form["Reject"] != null)
@@ -601,7 +590,7 @@ namespace IMS.Controllers
                 return RedirectToAction("Index", "Home");
             }
             Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
-            return RedirectToAction("ListNotifications", "Request");
+            return RedirectToAction("Index", "Notification");
 
         }
 
@@ -620,7 +609,7 @@ namespace IMS.Controllers
             RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
                 Constants.StatusCode.REQUEST_DONE, Constants.Test.STAFF_NHI);
             Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
-            return RedirectToAction("ListNotifications", "Request");
+            return RedirectToAction("Index", "Notification");
 
         }
 
@@ -640,7 +629,7 @@ namespace IMS.Controllers
             RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_RETURN_IP,
                 Constants.StatusCode.REQUEST_DONE, Constants.Test.STAFF_NHI);
             Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
-            return RedirectToAction("ListNotifications", "Request");
+            return RedirectToAction("Index", "Notification");
 
         }
 
@@ -652,7 +641,7 @@ namespace IMS.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            IPAddressPoolBLO.Current.UpdateIP(ivm.ServerCode, ivm.NewIP, ivm.RequestCode,ivm.OldIP);
+            IPAddressPoolBLO.Current.UpdateIP(ivm.ServerCode, ivm.NewIP, ivm.RequestCode, ivm.OldIP);
 
             return RedirectToAction("Detais", new { rType = ivm.RequestType, rCode = ivm.RequestCode });
         }

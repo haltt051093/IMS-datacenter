@@ -234,43 +234,6 @@ namespace IMS.Controllers
         }
 
         [HttpPost]
-        //public ActionResult SaveTempData(RequestAddServerViewModel r)
-        //{
-        //    if (r.Action == Constants.FormAction.OK_ACTION)
-        //    {
-        //        var temp = new TempRequest();
-        //        temp.RequestCode = Session[Constants.Session.REQUEST_CODE].ToString();
-        //        temp.Data = JsonConvert.SerializeObject(r.Server);
-        //        temp.TempCode = TempRequestBLO.Current.GenerateCode();
-        //        TempRequestBLO.Current.Add(temp);
-        //    }
-        //    else if (r.Action == Constants.FormAction.EDIT_ACTION)
-        //    {
-        //        //DOING
-        //        var tempRequest = new TempRequest
-        //        {
-        //            TempCode = r.Server.TempCode,
-        //            Data = JsonConvert.SerializeObject(r.Server)
-        //        };
-        //        TempRequestBLO.Current.Update(tempRequest);
-        //    }
-        //    RequestCreateViewModel rt = new RequestCreateViewModel();
-        //    rt.Type = Constants.RequestTypeCode.ADD_SERVER;
-        //    return RedirectToAction("Create", rt);
-        //}
-
-        public ActionResult DeleteTempServer(string code)
-        {
-            //delete temp server
-            var temp = TempRequestBLO.Current.GetByModel(new TempRequest { TempCode = code });
-            TempRequestBLO.Current.Remove(temp);
-            //quay lai trang cu
-            RequestType rt = new RequestType();
-            rt.RequestTypeCode = Constants.RequestTypeCode.ADD_SERVER;
-            return RedirectToAction("Index", "Home", rt);
-        }
-
-        [HttpPost]
         public ActionResult AddServer(RequestAddServerViewModel viewmodel)
         {
             //add requestCode
@@ -494,6 +457,24 @@ namespace IMS.Controllers
             RequestIPViewModel newmodel = model;
             newmodel.ServerIPs = list;
             return Json(newmodel, JsonRequestBehavior.AllowGet);
+        }
+
+        //public ActionResult SaveTempData(RequestAddServerViewModel r)
+        public ActionResult SaveTempData(string r)
+        {
+            var reqDetail = JsonConvert.DeserializeObject<Server>(r);
+            return RedirectToAction("Create");
+        }
+
+        public ActionResult DeleteTempServer(string code)
+        {
+            //delete temp server
+            var temp = TempRequestBLO.Current.GetByModel(new TempRequest { TempCode = code });
+            TempRequestBLO.Current.Remove(temp);
+            //quay lai trang cu
+            RequestType rt = new RequestType();
+            rt.RequestTypeCode = Constants.RequestTypeCode.ADD_SERVER;
+            return RedirectToAction("Index", "Home", rt);
         }
         #endregion
 

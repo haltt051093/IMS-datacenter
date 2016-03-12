@@ -20,21 +20,7 @@ namespace IMS.Controllers
         [Authorize(Roles = "Staff,Shift Head,Manager")]
         public ActionResult Index(string role, string roleSearch, string message)
         {
-            if (role == null)
-            {
-                if (Session[Constants.Session.USER_LOGIN] != null)
-                {
-                    var obj = Session[Constants.Session.USER_LOGIN];
-                    Account a = (Account)obj;
-                    role = a.Role;
-                }
-                else
-                {
-                    return View("Login");
-                }
-            }
             var data = new AccountIndexViewModel();
-            //data.Accounts = AccountBLO.Current.GetAllAccount();
             List<Account> lstall = AccountDAO.Current.GetAll();
             List<Account> rs = new List<Account>();
             if (role != null)
@@ -122,7 +108,6 @@ namespace IMS.Controllers
         }
 
         [Authorize(Roles = "Manager")]
-        // GET: Account/Create
         public ActionResult CreateCustomer()
         {
             return View("Index");
@@ -246,7 +231,6 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult EditStaff(AccountCreateViewModel viewmodel)
         {
-
             Account account = Mapper.Map<AccountCreateViewModel, Account>(viewmodel);
             Account ass = AccountBLO.Current.GetById(account.Id);
             if (ass.Status == false)
@@ -292,13 +276,6 @@ namespace IMS.Controllers
             }
             return RedirectToAction("Index", "Account", new { role = role });
         }
-
-        //// GET: Account/Delete/5
-        //public ActionResult Delete(int id)
-        //{
-        //    AccountBLO.Current.Remove(new Account() {Id = id});
-        //    return RedirectToAction("Index");
-        //}
 
         public ActionResult ViewProfile(int? id)
         {

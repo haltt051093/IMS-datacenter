@@ -10,11 +10,6 @@ namespace IMS.Models
     {
         public ServerExtendedModel Server { get; set; }
         public List<ServerExtendedModel> Servers { get; set; }
-
-        //public string Time { get; set; }
-        //[Required]
-        //[Display(Name = "Appointment Time")]
-        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
         public DateTime AppointmentTime { get; set; }
 
         //Customer

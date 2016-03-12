@@ -10,7 +10,6 @@ namespace IMS.Controllers
 {
     public class RackController : Controller
     {
-        // GET: Rack
         public ActionResult Index(string CustomerSearch)
         {
             var racks = RackOfCustomerBLO.Current.GetAllRackOfCustomer();
