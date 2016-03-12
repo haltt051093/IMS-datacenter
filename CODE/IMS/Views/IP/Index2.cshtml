@@ -169,6 +169,7 @@
                         </div>
                         <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
                             @Html.TextBoxFor(model => model.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                            @Html.ValidationMessageFor(model => model.Description)
                         </div>
                     </div>
                     <input class="hidden" name="Id" id="idblock"/>
@@ -207,6 +208,7 @@
                         </div>
                         <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
                             @Html.TextBoxFor(model => model.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                            @Html.ValidationMessageFor(model => model.Description)
                         </div>
                     </div>
                     <input name  ="Id" Id="idunblock" class="hidden"/>

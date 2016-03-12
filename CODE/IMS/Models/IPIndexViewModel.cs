@@ -35,6 +35,7 @@ namespace IMS.Models
        
         public string Confirm { get; set; }
 
+        [Required(ErrorMessage = "Please input Description")]
         public string Description { get; set; }
         public int Id { get; set; }
     }

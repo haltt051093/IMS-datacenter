@@ -77,7 +77,8 @@ namespace IMS.Data.Repository
                             ) as k
                             on CAST(r.AppointmentTime as date)=CAST(k.StartedTime AS DATE)
                             and r.AppointmentTime < k.EndedTime
-                            and r.StatusCode='STATUS05' or r.StatusCode='STATUS06'";
+                            and (r.StatusCode='STATUS05' or r.StatusCode='STATUS06')
+							and (r.RequestType='RT003' or r.RequestType='RT007')";
             return RawQuery<ScheduleExtendedModel>(query, new object[] { });
         }
         //Tien
@@ -99,7 +100,8 @@ namespace IMS.Data.Repository
                             ) as k
                             on CAST(r.AppointmentTime as date)=CAST(k.StartedTime AS DATE)
                             and r.AppointmentTime < k.EndedTime
-                            and r.StatusCode='STATUS05' or r.StatusCode='STATUS06'";
+                            and (r.StatusCode='STATUS05' or r.StatusCode='STATUS06')
+							and (r.RequestType='RT003' or r.RequestType='RT007')";
             return RawQuery<ScheduleExtendedModel>(query, new object[] { });
         }
 
