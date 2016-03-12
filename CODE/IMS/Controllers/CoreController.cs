@@ -25,6 +25,15 @@ namespace IMS.Controllers
             return account;
         }
 
+        protected string GetCurrentUserName()
+        {
+            if (User == null)
+            {
+                return string.Empty;
+            }
+            return User.Identity.Name;
+        }
+
         protected string GetCurrentUserRole()
         {
             var account = GetCurrentAccount();

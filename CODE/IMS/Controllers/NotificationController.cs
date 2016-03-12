@@ -10,37 +10,28 @@ using IMS.Models;
 
 namespace IMS.Controllers
 {
-    public class NotificationController : Controller
+    public class NotificationController : CoreController
     {
         //Tam thoi cho VIew notification se dan den requestdetail --> thuc te thi view list notification chi dua ra popup thong tin de xem or confirm
         [Authorize]
         public ActionResult Index()
         {
-            //get role
-            var obj = Session[Constants.Session.USER_LOGIN];
-            Account a = (Account)obj;
-            var role = a.Role;
+            var userName = GetCurrentUserName();
+            var role = GetCurrentUserRole();
 
-            //neu la kh, se co username kh
-            var customer = Constants.Test.CUSTOMER_MANHNH;
+            var data = new NotificationViewModel();
 
-            NotificationViewModel viewmodel = new NotificationViewModel();
+            data.FilterByRequestType = RequestTypeBLO.Current
+                .GetAll()
+                .Select(x => new SelectListItem { Value = x.RequestTypeCode, Text = x.RequestTypeName })
+                .ToList();
+            data.FilterByStatus = StatusBLO.Current
+                .GetStatusByObject(Constants.Object.OBJECT_REQUEST)
+                .Select(x => new SelectListItem { Value = x.StatusCode, Text = x.StatusName })
+                .ToList();
 
-            //do du lieu vao filter
-            viewmodel.FilterByRequestType = RequestTypeBLO.Current.GetAll().Select(x => new SelectListItem
-            {
-                Value = x.RequestTypeCode,
-                Text = x.RequestTypeName
-            }).ToList();
-            viewmodel.FilterByStatus = StatusBLO.Current.GetStatusByObject(Constants.Object.OBJECT_REQUEST)
-                .Select(x => new SelectListItem()
-                {
-                    Value = x.StatusCode,
-                    Text = x.StatusName
-                }).ToList();
-
-            viewmodel.NotificationList = RequestBLO.Current.ListNotification(role, customer);
-            return View(viewmodel);
+            data.NotificationList = RequestBLO.Current.ListNotification(role, userName);
+            return View(data);
         }
 
         //Accept request

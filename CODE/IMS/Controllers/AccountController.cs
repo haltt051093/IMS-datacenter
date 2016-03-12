@@ -76,35 +76,26 @@ namespace IMS.Controllers
             return View(data);
         }
 
-        [AllowAnonymous]
         public ActionResult Login()
         {
             return View();
         }
 
-        [AllowAnonymous]
         [HttpPost]
-        public ActionResult Login(Account account)
+        public ActionResult Login(Account q)
         {
-            Account o = AccountDAO.Current.Query(x => x.Username == account.Username && x.Password == account.Password).FirstOrDefault();
+            Account o = AccountDAO.Current.Query(x => x.Username == q.Username && x.Password == q.Password).FirstOrDefault();
             if (o != null)
             {
-                FormsAuthentication.SetAuthCookie(account.Username, false);
+                FormsAuthentication.SetAuthCookie(q.Username, false);
 
                 //save account to session
-                if (Session[Constants.Session.USER_LOGIN] == null)
-                {
-                    Session[Constants.Session.USER_LOGIN] = o;
-                }
-                string role = o.Role;
-                if (role == "Customer")
-                {
-                    return RedirectToAction("Index", "Home", new { id = o.Id });
-                }
-                return RedirectToAction("Index", "Notification", new { role = role });
+                Session[Constants.Session.USER_LOGIN] = o;
+
+                return RedirectToAction("Index", "Notification");
             }
-            //else
-            return View();
+            
+            return View(q);
         }
 
         [Authorize(Roles = "Manager")]
