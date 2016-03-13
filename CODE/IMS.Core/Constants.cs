@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace IMS.Core
 {
     public static class Constants
@@ -336,6 +330,11 @@ namespace IMS.Core
             public const string INFO = "info";
             public const string WARNING = "warning";
             public const string DANGER = "danger";
+        }
+
+        public class TimeConversion 
+        {
+            public const long EPOCH_VS_TICK_OFFSET = 621355968000000000;
         }
     }
 }
