@@ -1,8 +1,7 @@
-﻿@model IMS.Models.RackOfCustomerIndexViewModel
+﻿@model RackOfCustomerIndexViewModel
 @{
     ViewBag.Title = Pages.RackIndex;
     ViewBag.PageTitle = Pages.RackIndex;
-    ViewBag.Role = "Shift Head";
     ViewBag.Breadcrumbs = new List<BreadcrumbModel>
     {
         new BreadcrumbModel("Home", "Index", Pages.Home),
@@ -14,7 +13,7 @@
 <section class="main-content">
     <div class="row hide">
         <div id="dropdown-template" class="col-xs-3">
-            <label>Location: @Html.DropDownListFor(model => model.RackCode, Model.listRacks, "All Racks", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
+            <label>Location: @Html.DropDownListFor(model => model.RackCode, Model.RackSelectList, "All Racks", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
         </div>
     </div>
 
@@ -61,7 +60,7 @@
     var table = $('#example1').DataTable({
         dom: '<lf<t>ip>',
         processing: true,
-        ajax: "@Url.Action("GetRackOfCustomer", "Rack", new {httproute = "", customer = "manhnh"})",
+        ajax: "@Url.Action("GetRackOfCustomer", "Rack", new { httproute = "", customer = Model.CustomerCode })",
         columns: [
             { data: "RackCode" },
             { data: "RackName" },

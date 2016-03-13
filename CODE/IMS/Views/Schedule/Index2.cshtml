@@ -52,6 +52,10 @@
                                 <input type="hidden" name="StaffCode" value="haltt"/>
 
                                 @{
+                                    if (Model.Schedules.Count > 0)
+                                    {
+                                        
+                                   
                                     for (int i = 0; i < Model.Schedules.Count; i++)
                                     {
                                         var item = Model.Schedules[i];
@@ -89,12 +93,15 @@
 
                                         </div>
 
-                                    }
-                                }
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-check"></i> Send</button>
+                                        }
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-check"></i> Send</button>
 
-                                </div>
+                                        </div>
+                                    }
+
+                                }
+                                
                             </div>
 
                         </div>
@@ -211,57 +218,31 @@
                         week: 'week',
                         day: 'day'
                     },
+                    eventClick: function(calEvent, jsEvent, view) {
+                        if (calEvent.Status != '@Constants.StatusCode.REQUEST_DONE') {
+                            alert('Event: ' + calEvent.title);
+                            alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+                            alert('View: ' + view.name);
+
+                            // change the border color just for fun
+                            $(this).css('border-color', 'red');
+                        }
+                        
+
+                    },
+                    eventAfterRender: function (event, element, view) {
+                        
+                        if (event.Status == '@Constants.StatusCode.REQUEST_DONE') {
+                            //event.color = "#FFB347"; //Em andamento
+                            element.css('background-color', '#FFB347');
+                        } 
+                    },
                     allDaySlot: false,
                     defaultView: 'agendaDay',
                     minTime: '08:00:00',
                     maxTime: '21:00:00',
                     //Random default events
-                    events: [
-                        //{
-                        //    title: 'All Day Event',
-                        //    start: new Date(y, m, 1),
-                        //    backgroundColor: "#f56954", //red
-                        //    borderColor: "#f56954" //red
-                        //},
-                        //{
-                        //    title: 'Long Event',
-                        //    start: new Date(y, m, d - 5),
-                        //    end: new Date(y, m, d - 2),
-                        //    backgroundColor: "#f39c12", //yellow
-                        //    borderColor: "#f39c12" //yellow
-                        //},
-                        {
-                            title: 'Request Add New Server',
-                            start: new Date(y, m, d, 10, 30),
-                            allDay: false,
-                            backgroundColor: "#0073b7", //Blue
-                            borderColor: "#0073b7" //Blue
-                        },
-                        //{
-                        //    title: 'Lunch',
-                        //    start: new Date(y, m, d, 12, 0),
-                        //    end: new Date(y, m, d, 14, 0),
-                        //    allDay: false,
-                        //    backgroundColor: "#00c0ef", //Info (aqua)
-                        //    borderColor: "#00c0ef" //Info (aqua)
-                        //},
-                        //{
-                        //    title: 'Birthday Party',
-                        //    start: new Date(y, m, d + 1, 19, 0),
-                        //    end: new Date(y, m, d + 1, 22, 30),
-                        //    allDay: false,
-                        //    backgroundColor: "#00a65a", //Success (green)
-                        //    borderColor: "#00a65a" //Success (green)
-                        //},
-                        //{
-                        //    title: 'Click for Google',
-                        //    start: new Date(y, m, 28),
-                        //    end: new Date(y, m, 29),
-                        //    url: 'http://google.com/',
-                        //    backgroundColor: "#3c8dbc", //Primary (light-blue)
-                        //    borderColor: "#3c8dbc" //Primary (light-blue)
-                        //}
-                    ],
+                    events: '@Url.Action("GetSchedule","Schedule", new { httpRoute = "" })',
                     editable: false,
                     droppable: true, // this allows things to be dropped onto the calendar !!!
                     drop: function(date, allDay) { // this function is called when something is dropped

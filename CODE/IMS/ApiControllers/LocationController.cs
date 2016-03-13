@@ -1,12 +1,11 @@
-﻿using System.Web.Http;
-using IMS.ApiModels;
+﻿using IMS.ApiModels;
 using IMS.Core;
 using IMS.Data.Business;
 using IMS.Data.ViewModels;
 
 namespace IMS.ApiControllers
 {
-    public class LocationController : ApiController
+    public class LocationController : BaseApiController
     {
         public DataTableModel<LocationViewModel> GetAll()
         {

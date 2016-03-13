@@ -41,22 +41,18 @@ namespace IMS.Data.Business
                 serverCode, typeOfLog, UniqueRequestCode);
         }
         //Tien
+        public List<ScheduleExtendedModel> GetSchedule(DateTime? start = null, DateTime? end = null)
+        {
+            var reult = dao.GetSchedule(start, end);
+            return reult;
+        }
+
         public List<ScheduleExtendedModel> GetScheduleToday()
         {
-            var allschedule = dao.GetSchedule();
-            var scheduletoday = new List<ScheduleExtendedModel>();
-            foreach (var item in allschedule)
-            {
-                if (item.AppointmentTime != null)
-                {
-                    if (item.AppointmentTime.Value.Date == DateTime.Now.Date && (item.StatusCode == Constants.StatusCode.REQUEST_WAITING || item.StatusCode == Constants.StatusCode.REQUEST_PROCESSING))
-                    {
-                        scheduletoday.Add(item);
-                    }
-                }
-
-            }
-            return scheduletoday;
+            var today = DateTime.Now.Date;
+            var tomorrow = today.AddDays(1);
+            var reult = dao.GetSchedule(today, tomorrow);
+            return reult;
         }
         //Tien
         public List<ScheduleExtendedModel> GetNoteOfShift()

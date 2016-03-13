@@ -9,7 +9,7 @@ namespace IMS.Authentications
 
         }
 
-        public RolesAttribute(string[] roles)
+        public RolesAttribute(params string[] roles)
         {
             Roles = string.Join(",", roles);
         }

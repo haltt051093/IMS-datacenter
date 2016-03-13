@@ -33,6 +33,17 @@ namespace IMS.Data.Business
             dao = RackOfCustomerDAO.Current;
         }
 
+
+        public List<Tuple<string, string>>  GetRackOfCustomer(string customer)
+        {
+            var racks = dao.GetAllRackOfCustomer(customer);
+            var result = racks.Select(x => new Tuple<string, string>(x.RackCode, x.RackName))
+                .Distinct()
+                .ToList();
+            return result;
+        }
+
+        // TO BE OPTIMIZED
         public List<RackOfCustomerExtendedModel> EmptyRentedRack(string customer)
         {
             return dao.EmptyRentedRack(customer);
@@ -44,9 +55,9 @@ namespace IMS.Data.Business
         }
         
         //Tien
-        public List<RackOfCustomerExtendedModel> GetAllRackOfCustomer()
+        public List<RackOfCustomerExtendedModel> GetAllRackOfCustomer(string customer = null)
         {
-            return dao.GetAllRackOfCustomer();
+            return dao.GetAllRackOfCustomer(customer);
         }
 
         public List<RackOfCustomerExtendedModel> CountServerPerRack(string customer)
