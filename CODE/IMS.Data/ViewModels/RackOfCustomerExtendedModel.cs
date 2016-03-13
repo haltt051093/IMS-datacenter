@@ -27,5 +27,6 @@ namespace IMS.Data.ViewModels
         public string DefaultIP { get; set; }
         public string RackStatus { get; set; }
         public string LocationCode { get; set; }
+        public bool Checked { get; set; }
     }
 }

@@ -263,66 +263,96 @@ namespace IMS.Controllers
 
             if (rType.Equals(Constants.RequestTypeCode.RENT_RACK))
             {
+                var request = RequestBLO.Current.GetRequestByRequestCode(rCode);
                 RequestRentRackViewModel viewmodel = new RequestRentRackViewModel();
-                var request = RequestDAO.Current.Query(x => x.RequestCode == rCode).FirstOrDefault();
-                // Phan thuc hien cua staff -->  chọn số lượng rack còn trống
+                viewmodel = Mapper.Map<Request, RequestRentRackViewModel>(request);
+                //customer info
+                var customer = AccountBLO.Current.GetAccountByCode(request.Customer);
+                viewmodel.CustomerName = customer.Fullname;
+                viewmodel.Company = customer.Company;
+                viewmodel.Phone = customer.Phone;
+                viewmodel.Username = GetCurrentUserName();
+                //request info
+                viewmodel.StatusName = StatusBLO.Current.GetStatusName(viewmodel.StatusCode);
+                // assignee la dropdownlist
+                if (request.StatusCode == Constants.StatusCode.REQUEST_PENDING)
+                {
+                    var group = GetCurrentUserGroup();
+                    var listStaff = AccountBLO.Current.ListAccountSameGroup(group);
+                    viewmodel.AssignGroup = listStaff
+                        .Select(x => new SelectListItem
+                        {
+                            Value = x.Username,
+                            Text = x.Fullname,
+                            Selected = x.Role == Constants.Role.SHIFT_HEAD
+                        })
+                        .ToList();
+                }
+                else
+                {
+                    viewmodel.StaffCode = RequestBLO.Current.GetAssignStaff(rCode, Constants.StatusCode.REQUEST_PROCESSING);
+                }
                 if (request != null)
                 {
-                    //Mapping
-                    viewmodel = Mapper.Map<Request, RequestRentRackViewModel>(request);
-                    //Lay so luong rack muon thue
-                    var desc = JsonConvert.DeserializeObject<RequestDetailViewModel>(viewmodel.Description);
-                    viewmodel.RackNumbers = desc.NumberOfRack;
-                    viewmodel.Description = desc.Description;
-                    viewmodel.StatusName = StatusBLO.Current.GetStatusName(viewmodel.StatusCode);
-                    var customer = AccountBLO.Current.GetAccountByCode(viewmodel.Customer);
-                    viewmodel.CustomerName = customer.Fullname;
-                    //list cot rows
-                    var rows = RackBLO.Current.GetAllRowsOfRack();
-                    var listRacks = new List<RackExtendedModel>();
-                    foreach (var item in rows)
+                    if (request.StatusCode == Constants.StatusCode.REQUEST_DONE)
                     {
-                        RackExtendedModel model = new RackExtendedModel();
-                        model.RowName = item;
-                        model.RacksOfRow = RackBLO.Current.GetRackByRow(item);
-                        listRacks.Add(model);
-
+                        //lay tu bang log len: so luong rack rent, va nhung rack da duoc chon
                     }
-                    viewmodel.listRackByRows = listRacks;
-                    //Get available racks
-                    var listrack = RackDAO.Current.Query(x => x.StatusCode == Constants.StatusCode.RACK_AVAILABLE);
-                    //Tùy vào rack number mà số lượng rack staff được chọn sẽ tương ứng
-                    if (listrack.Count > 0)
+                    else
                     {
-                        var list = listrack.Select(x => new SelectListItem
+                        //Lay so luong rack muon thue
+                        var desc = JsonConvert.DeserializeObject<RequestDetailViewModel>(viewmodel.Description);
+                        viewmodel.RackNumbers = desc.NumberOfRack;
+                        viewmodel.Description = desc.Description;
+                        //list cot rows
+                        var rows = RackBLO.Current.GetAllRowsOfRack();
+                        var listRacks = new List<RackExtendedModel>();
+                        foreach (var item in rows)
                         {
-                            Value = x.RackCode,
-                            Text = x.RackName
-                        }).ToList();
-                        //DOING: van chua multi-select duoc
-                        viewmodel.AvailableRacks = new MultiSelectList(list, "Value", "Text", null);
+                            RackExtendedModel model = new RackExtendedModel();
+                            model.RowName = item;
+                            model.RacksOfRow = RackBLO.Current.GetRackByRow(item);
+                            listRacks.Add(model);
+                        }
+                        viewmodel.listRackByRows = listRacks;
                     }
                 }
-                //Chuyen IsViewed = true
                 return View("RentRackInfo", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.RETURN_RACK))
             {
-                RequestReturnRackViewModel viewmodel = new RequestReturnRackViewModel();
-                //get request
                 var request = RequestBLO.Current.GetRequestByRequestCode(rCode);
-                //lay rack dang o trang thai returning cua khach hang cu the
-                var rackOfCustomer = RackOfCustomerBLO.Current.GetRacksOfCustomer(request.Customer,
-                    Constants.StatusCode.RACKOFCUSTOMER_RETURNING);
+                RequestReturnRackViewModel viewmodel = new RequestReturnRackViewModel();
                 viewmodel = Mapper.Map<Request, RequestReturnRackViewModel>(request);
-                viewmodel.RackOfCustomer = rackOfCustomer.Select(x => new SelectListItem
-                {
-                    Value = x.RackName,
-                    Text = x.RackCode
-                }).ToList();
-                viewmodel.StatusName = StatusBLO.Current.GetStatusName(viewmodel.StatusCode);
-                var customer = AccountBLO.Current.GetAccountByCode(viewmodel.Customer);
+                //customer info
+                var customer = AccountBLO.Current.GetAccountByCode(request.Customer);
                 viewmodel.CustomerName = customer.Fullname;
+                viewmodel.Company = customer.Company;
+                viewmodel.Phone = customer.Phone;
+                viewmodel.Username = GetCurrentUserName();
+                //request info
+                viewmodel.StatusName = StatusBLO.Current.GetStatusName(viewmodel.StatusCode);
+                // assignee la dropdownlist
+                if (request.StatusCode == Constants.StatusCode.REQUEST_PENDING)
+                {
+                    var group = GetCurrentUserGroup();
+                    var listStaff = AccountBLO.Current.ListAccountSameGroup(group);
+                    viewmodel.AssignGroup = listStaff
+                        .Select(x => new SelectListItem
+                        {
+                            Value = x.Username,
+                            Text = x.Fullname,
+                            Selected = x.Role == Constants.Role.SHIFT_HEAD
+                        })
+                        .ToList();
+                }
+                else
+                {
+                    viewmodel.StaffCode = RequestBLO.Current.GetAssignStaff(rCode, Constants.StatusCode.REQUEST_PROCESSING);
+                }
+                //list rack lay ra tu Log --> DOING
+                var listRacks = LogChangedContentBLO.Current.RequestDetailsReturnRack(rCode);
+                viewmodel.SelectedRacks = listRacks.listRacks;
                 return View("ReturnRackInfo", viewmodel);
             }
             return RedirectToAction("Index", "Notification");

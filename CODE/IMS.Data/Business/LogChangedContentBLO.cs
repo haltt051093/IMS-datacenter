@@ -239,6 +239,16 @@ namespace IMS.Data.Business
                                      RackUnit = l.RackUnit
                                  };
             return serverlocation.ToList();
-        } 
+        }
+
+        public LogExtentedModel RequestDetailsReturnRack(string requestCode)
+        {
+            LogExtentedModel data = new LogExtentedModel();
+            var query = from l in LogChangedContentDAO.Current.Table()
+                        where l.RequestCode == requestCode && l.Object == Constants.Object.OBJECT_RACKOFCUSTOMER
+                        select l.ChangedValueOfObject;
+            data.listRacks = query.ToList();
+            return data;
+        }
     }
 }
