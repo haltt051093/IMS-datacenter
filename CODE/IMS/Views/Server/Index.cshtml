@@ -12,6 +12,15 @@
 }
 
 <div class="main-content">
+    <div class="row">
+        <div class="col-xs-1">
+            Server Status
+        </div>
+        <div class="col-xs-11">
+            @Html.DropDownListFor(m => m.SelectedServer, Model.Servers, new { @id = "servercode" })
+        </div>
+    </div>
+
     <table id="example1" class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -49,9 +58,15 @@
                             <dl>
                                 @foreach (var request in item.Requests)
                                 {
-                                    <dt>
-                                        <a href="#"><i class="fa fa-angle-double-right"></i> @request.RequestTypeName</a>
-                                    </dt>
+                                    if (request.RequestCode != Constants.StatusCode.REQUEST_DONE ||
+                                        request.RequestCode != Constants.StatusCode.REQUEST_REJECTED ||
+                                        request.RequestCode != Constants.StatusCode.REQUEST_CANCELLED)
+                                    {
+                                        <dt>
+                                            @Html.ActionLink(@request.RequestTypeName, "Detais", "ProcessRequest",
+                                            new { rType = request.RequestType, rCode = request.RequestCode }, new { @class = "fa fa-angle-double-right" })
+                                        </dt>
+                                    }
                                 }
                             </dl>
                         }

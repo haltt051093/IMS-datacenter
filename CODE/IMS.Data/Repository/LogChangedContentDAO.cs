@@ -78,7 +78,8 @@ namespace IMS.Data.Repository
                                          {
                                              RequestType = re.RequestType,
                                              RequestTypeName = rt.RequestTypeName,
-                                             RequestCode = re.RequestCode
+                                             RequestCode = re.RequestCode,
+                                             StatusCode = re.StatusCode
                                          })).Select(query1 => Queryable.FirstOrDefault<RequestExtendedModel>(query1)).ToList();
         }
 

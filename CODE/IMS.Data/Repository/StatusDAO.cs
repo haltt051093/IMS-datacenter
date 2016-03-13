@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 
@@ -30,5 +31,7 @@ namespace IMS.Data.Repository
             var statusName = Current.Query(x => x.StatusCode == statusCode).Select(x => x.StatusName).FirstOrDefault();
             return statusName;
         }
+
+        //public List<>
     }
 }

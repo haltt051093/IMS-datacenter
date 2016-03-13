@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Web.Mvc;
 using IMS.Data.ViewModels;
 
 namespace IMS.Models
@@ -12,6 +13,7 @@ namespace IMS.Models
 
         public ServerExtendedModel Server { get; set; }
 
-        public List<ServerExtendedModel> Servers { get; set; } 
+        public List<ServerExtendedModel> Servers { get; set; }
+        public List<SelectListItem> ServerStatus { get; set; }
     }
 }
