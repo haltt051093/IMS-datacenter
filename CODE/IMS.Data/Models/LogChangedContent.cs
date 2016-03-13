@@ -12,7 +12,7 @@ namespace IMS.Data.Models
         public string RequestCode { get; set; }
 
         [StringLength(50)]
-        public string Staff { get; set; }
+        public string Username { get; set; }
 
         public DateTime? LogTime { get; set; }
 

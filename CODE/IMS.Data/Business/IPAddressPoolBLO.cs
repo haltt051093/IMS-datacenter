@@ -156,7 +156,7 @@ namespace IMS.Data.Business
                 ChangedValueOfObject = ip,
                 ObjectStatus = newStatus,
                 ServerCode = serverCode,
-                Staff = username
+                Username = username
             };
             LogChangedContentBLO.Current.AddLog(logIp);
         }

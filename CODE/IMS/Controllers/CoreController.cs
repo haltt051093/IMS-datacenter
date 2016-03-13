@@ -45,6 +45,17 @@ namespace IMS.Controllers
             return role;
         }
 
+        protected string GetCurrentUserGroup()
+        {
+            var account = GetCurrentAccount();
+            var group = string.Empty;
+            if (account != null)
+            {
+                group = account.GroupCode;
+            }
+            return group;
+        }
+
         protected bool IsAuthorized()
         {
             var activeGroup = AssignedShiftBLO.Current.GetActiveGroup();

@@ -89,7 +89,7 @@ namespace IMS.Data.Business
                 Object = Constants.Object.OBJECT_RACK,
                 ChangedValueOfObject = rackCode,
                 ObjectStatus = newStatus,
-                Staff = staff
+                Username = staff
             };
             LogChangedContentBLO.Current.AddLog(logRack);
         }

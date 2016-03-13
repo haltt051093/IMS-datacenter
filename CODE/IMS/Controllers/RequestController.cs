@@ -308,7 +308,7 @@ namespace IMS.Controllers
                 if (item.Checked)
                 {
                     //get currentIps
-                    var currentIps = ServerIPBLO.Current.GetIpByServer(item.ServerCode);
+                    var currentIps = ServerIPBLO.Current.GetIpByServer(item.ServerCode, Constants.StatusCode.SERVERIP_CURRENT);
                     //Add and log request
                     LogChangedContent logRequest = new LogChangedContent
                     {
@@ -318,8 +318,26 @@ namespace IMS.Controllers
                         ObjectStatus = Constants.StatusCode.REQUEST_PENDING,
                         ChangedValueOfObject = requestCode,
                         ServerCode = item.ServerCode,
+                        Username = Constants.Test.CUSTOMER_MANHNH
                     };
                     LogChangedContentBLO.Current.AddLog(logRequest);
+                    //log location
+                    var serverLocation = LogChangedContentBLO.Current.GetLocationOfServer(item.ServerCode);
+                    foreach (var item1 in serverLocation)
+                    {
+                        var lc = item1.RackName + "U" + item1.RackUnit;
+                        LogChangedContent logLocation = new LogChangedContent
+                        {
+                            RequestCode = requestCode,
+                            TypeOfLog = Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
+                            Object = Constants.Object.OBJECT_LOCATION,
+                            ObjectStatus = Constants.StatusCode.LOCATION_USED,
+                            ChangedValueOfObject = lc,
+                            ServerCode = item.ServerCode,
+                            Username = Constants.Test.CUSTOMER_MANHNH
+                        };
+                        LogChangedContentBLO.Current.AddLog(logLocation);
+                    }
                     foreach (var ip in currentIps)
                     {
                         //update and log status ip bang serverip
@@ -331,6 +349,7 @@ namespace IMS.Controllers
                     ServerBLO.Current.UpdateServerStatus(requestCode, item.ServerCode,
                         Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.SERVER_BRINGING_AWAY,
                         Constants.Test.CUSTOMER_MANHNH);
+
                 }
             }
             Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);

@@ -73,7 +73,7 @@ namespace IMS.Data.Business
                 Object = Constants.Object.OBJECT_RACKOFCUSTOMER,
                 ChangedValueOfObject = rackCode,
                 ObjectStatus = Constants.StatusCode.RACKOFCUSTOMER_CURRENT,
-                Staff = staff
+                Username = staff
             };
             LogChangedContentBLO.Current.AddLog(logRackOfCustomer);
         }
@@ -97,7 +97,7 @@ namespace IMS.Data.Business
                 Object = Constants.Object.OBJECT_RACKOFCUSTOMER,
                 ChangedValueOfObject = rackCode,
                 ObjectStatus = newStatus,
-                Staff = staff
+                Username = staff
             };
             LogChangedContentBLO.Current.AddLog(logRackOfCustomer);
         }

@@ -34,47 +34,6 @@ namespace IMS.Controllers
             return View(data);
         }
 
-        //Accept request
-        public ActionResult AcceptRequest(string requestCode, string requestType)
-        {
-            //doi trang thai cua request
-            if (requestType == Constants.RequestTypeCode.BRING_SERVER_AWAY)
-            {
-                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
-                    Constants.StatusCode.REQUEST_WAITING, Constants.Test.STAFF_NHI);
-            }
-            if (requestType == Constants.RequestTypeCode.ADD_SERVER)
-            {
-                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ADD_SERVER,
-                    Constants.StatusCode.REQUEST_WAITING, Constants.Test.STAFF_NHI);
-            }
-            if (requestType == Constants.RequestTypeCode.ASSIGN_IP)
-            {
-                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ASSIGN_IP,
-                    Constants.StatusCode.REQUEST_PROCESSING, Constants.Test.STAFF_NHI);
-            }
-            if (requestType == Constants.RequestTypeCode.CHANGE_IP)
-            {
-                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
-                    Constants.StatusCode.REQUEST_PROCESSING, Constants.Test.STAFF_NHI);
-            }
-            if (requestType == Constants.RequestTypeCode.RETURN_IP)
-            {
-                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_IP,
-                    Constants.StatusCode.REQUEST_PROCESSING, Constants.Test.STAFF_NHI);
-            }
-            if (requestType == Constants.RequestTypeCode.RENT_RACK)
-            {
-                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RENT_RACK,
-                    Constants.StatusCode.REQUEST_PROCESSING, Constants.Test.STAFF_NHI);
-            }
-            if (requestType == Constants.RequestTypeCode.RETURN_RACK)
-            {
-                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
-                    Constants.StatusCode.REQUEST_PROCESSING, Constants.Test.STAFF_NHI);
-            }
-            //redirect lai list notif
-            return RedirectToAction("Index");
-        }
+        
     }
 }

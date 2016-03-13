@@ -26,5 +26,10 @@ namespace IMS.Data.ViewModels
 
         public LogExtentedModel LastestStatusRequest { get; set; }
         public List<LogExtentedModel> OldStatusRequests { get; set; }
+        //log bring away server
+        public List<ServerExtendedModel> Servers { get; set; }
+        public int ReturnServerNumber { get; set; }
+        public int ReturnIpNumber { get; set; }
+        public int ReturnLocationNumber { get; set; }
     }
 }
