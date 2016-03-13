@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace IMS.ApiControllers
 {
-    public class TempController : ApiController
+    public class TempController : BaseApiController
     {
         [HttpGet]
         public TempRequestResponse GetTempServer(string code)

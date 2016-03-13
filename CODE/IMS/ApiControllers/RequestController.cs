@@ -4,7 +4,7 @@ using IMS.Data.ViewModels;
 
 namespace IMS.ApiControllers
 {
-    public class RequestController : ApiController
+    public class RequestController : BaseApiController
     {
         [HttpGet]
         public DataTableModel<RequestExtendedModel> GetForUser()

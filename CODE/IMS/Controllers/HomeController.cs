@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using IMS.Authentications;
 using IMS.Models;
 
 namespace IMS.Controllers
@@ -6,7 +7,7 @@ namespace IMS.Controllers
     public class HomeController : CoreController
     {
         [HttpGet]
-        [Authorize(Roles = "Staff,Shift Head,Manager,Customer")]
+        [Roles]
         public ActionResult Index(HomeIndexViewModel q)
         {
             return View();

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Http;
 using IMS.ApiModels;
 using IMS.Core.Extensions;
 using IMS.Data.Business;
@@ -9,7 +8,7 @@ using IMS.Data.ViewModels;
 
 namespace IMS.ApiControllers
 {
-    public class RackController : ApiController
+    public class RackController : BaseApiController
     {
         public List<string> GetAvailableName(string term)
         {
@@ -25,7 +24,7 @@ namespace IMS.ApiControllers
                     .OrderBy(x => x)
                     .ToList();
                 var result = new List<string>();
-                int count = 1;
+                var count = 1;
                 while (result.Count < 10)
                 {
                     if (!rackNumbers.Contains(count))
@@ -42,11 +41,7 @@ namespace IMS.ApiControllers
 
         public DataTableModel<RackOfCustomerExtendedModel> GetRackOfCustomer(string customer)
         {
-            var racks = RackOfCustomerBLO.Current.GetAllRackOfCustomer();
-            if (!String.IsNullOrWhiteSpace(customer))
-            {
-                racks = racks.Where(r => r.Customer.Trim() == customer.Trim()).ToList();
-            }
+            var racks = RackOfCustomerBLO.Current.GetAllRackOfCustomer(customer);
             var result = new DataTableModel<RackOfCustomerExtendedModel>();
             result.Data = racks;
             return result;
@@ -55,8 +50,8 @@ namespace IMS.ApiControllers
         public string CheckDuplicate(string rack)
         {
             var racks = RackBLO.Current.GetAll().Select(x => x.RackName).ToList();
-            int count = 0;
-            for (int i = 0; i < racks.Count; i++)
+            var count = 0;
+            for (var i = 0; i < racks.Count; i++)
             {
                 if (racks[i] == rack) count++;
             }
