@@ -988,7 +988,6 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\ViewProfile.cshtml" />
     <Content Include="Views\Location\AssignLocation.cshtml" />
-    <Content Include="Views\IP\AssignIP.cshtml" />
     <Content Include="Views\Schedule\_AppointmentTime.cshtml" />
     <Content Include="Views\Shared\_AdminLTE.cshtml" />
     <Content Include="Scripts\plugins\ckeditor\CHANGES.md" />
