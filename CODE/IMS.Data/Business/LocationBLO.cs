@@ -4,6 +4,7 @@ using IMS.Core;
 using IMS.Core.Express;
 using IMS.Data.Generic;
 using IMS.Data.Models;
+using IMS.Data.Queries;
 using IMS.Data.Repository;
 using IMS.Data.ViewModels;
 
@@ -33,63 +34,72 @@ namespace IMS.Data.Business
         }
 
 
-        public bool UpdateLocation(int? size, string ServerCode, string LocationCode, string request)
+        public bool UpdateLocation(string ServerCode, List<string> Locations, string request)
         {
             if (!request.Equals("Change"))
             {
+
                 var locations = dao.GetAll();
-                var exist = locations.IndexOf(dao.Query(x => x.LocationCode == LocationCode).FirstOrDefault());
-                for (var i = exist; i < (exist + size); i++)
+                for (int i = 0; i < locations.Count; i++)
                 {
-                    if (locations[i].StatusCode.Equals(Constants.StatusCode.LOCATION_FREE))
+                    if (locations[i].ServerCode == ServerCode)
                     {
-                        locations[i].ServerCode = ServerCode;
-                        locations[i].StatusCode = Constants.StatusCode.LOCATION_USED;
-                    }
-                    else
-                    {
-                        return false;
+                        locations[i].ServerCode = null;
+                        locations[i].StatusCode = Constants.StatusCode.LOCATION_FREE;
                     }
                 }
-                dao.UpdateMany(locations);
+                for (int i = 0; i < Locations.Count; i++)
+                {
+                    for (int j = 0; j < locations.Count; j++)
+                    {
+                        if (Locations[i] == locations[j].LocationCode)
+                        {
+                            locations[j].StatusCode = Constants.StatusCode.LOCATION_USED;
+                            locations[j].ServerCode = ServerCode;
+                            dao.Update(locations[j]);
+                        }
+                    }
+                }
+               
                 return true;
             }
-            else
-            {
-                var existing = dao.Query(x => x.ServerCode == ServerCode).ToList();
-                if (existing.Count > 0)
-                {
-                    for (var i = 0; i < existing.Count; i++)
-                    {
-                        existing[i].StatusCode = Constants.StatusCode.LOCATION_FREE;
-                        existing[i].ServerCode = null;
-                    }
+            //else
+            //{
+            //    var existing = dao.Query(x => x.ServerCode == ServerCode).ToList();
+            //    if (existing.Count > 0)
+            //    {
+            //        for (var i = 0; i < existing.Count; i++)
+            //        {
+            //            existing[i].StatusCode = Constants.StatusCode.LOCATION_FREE;
+            //            existing[i].ServerCode = null;
+            //        }
 
-                    var locations = dao.GetAll();
-                    var exist = locations.IndexOf(dao.Query(x => x.LocationCode == LocationCode).FirstOrDefault());
-                    for (var i = exist; i < (exist + size); i++)
-                    {
-                        if (locations[i].StatusCode.Equals(Constants.StatusCode.LOCATION_FREE))
-                        {
-                            locations[i].ServerCode = ServerCode;
-                            locations[i].StatusCode = Constants.StatusCode.LOCATION_USED;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    }
-                    dao.UpdateMany(existing);
-                    dao.UpdateMany(locations);
-                    return true;
-                }
-                return false;
-            }
+            //        var locations = dao.GetAll();
+            //        var exist = locations.IndexOf(dao.Query(x => x.LocationCode == LocationCode).FirstOrDefault());
+            //        for (var i = exist; i < (exist + size); i++)
+            //        {
+            //            if (locations[i].StatusCode.Equals(Constants.StatusCode.LOCATION_FREE))
+            //            {
+            //                locations[i].ServerCode = ServerCode;
+            //                locations[i].StatusCode = Constants.StatusCode.LOCATION_USED;
+            //            }
+            //            else
+            //            {
+            //                return false;
+            //            }
+            //        }
+            //        dao.UpdateMany(existing);
+            //        dao.UpdateMany(locations);
+            //        return true;
+            //    }
+            //    return false;
+            //}
+            return false;
         }
 
-        public List<LocationViewModel> GetAllLocation()
+        public List<LocationViewModel> GetAllLocation(GetLocationQuery q = null)
         {
-            return dao.GetAllLocation();
+            return dao.GetAllLocation(q);
         }
 
         public List<LocationViewModel> GetChangeLocation(Server server)

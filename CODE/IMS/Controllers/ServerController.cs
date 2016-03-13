@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mime;
+using System.Security.Cryptography.X509Certificates;
 using System.Web.Mvc;
 using IMS.Core;
 using IMS.Data.Business;
 using IMS.Data.Models;
+using IMS.Data.Queries;
+using IMS.Data.Repository;
 using IMS.Data.ViewModels;
 using IMS.Models;
 
@@ -35,10 +38,7 @@ namespace IMS.Controllers
             var server = ServerBLO.Current.GetServerByCode(code, Constants.StatusCode.SERVER_RUNNING);
             //var serverattributes = ServerBLO.Current.GetServerAttributes(serverCode);
             var servercurrentips = ServerBLO.Current.GetCurrentIP(code);
-            if (server == null)
-            {
-                return HttpNotFound();
-            }
+
             var data = new ServerDetailsViewModel();
             //them list location
             data.Locations = LocationBLO.Current.GetLocationsOfServer(server.ServerCode);
@@ -61,20 +61,60 @@ namespace IMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult ServerDetails(ServerDetailsViewModel sdvm)
+        public ActionResult Detail(ServerDetailsViewModel sdvm)
         {
-            if (sdvm.LocationCode == null)
+           
+            var selectedLocationCodes = sdvm.Selected
+                .Where(x => x.IsSelected)
+                .Select(x => x.LocationCode)
+                .ToList();
+            if (selectedLocationCodes.Count == 0)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return View(sdvm);
             }
-            bool x = LocationBLO.Current.UpdateLocation(sdvm.Server.Size, sdvm.Server.ServerCode, sdvm.LocationCode, "Change");
-            if (x)
+            var location = LocationBLO.Current.GetByModel(new Location {LocationCode = selectedLocationCodes[0]});
+            if (location == null)
             {
-                return RedirectToAction("ServerDetails");
+                return View(sdvm);
+            }
+
+            var locations = LocationBLO.Current.GetAllLocation(new GetLocationQuery {RackCode = location.RackCode});
+            var startIndex = -1;
+            var endIndex = -1;
+            for (var i = 0; i < locations.Count; i++)
+            {
+                var l = locations[i];
+                if (startIndex == -1 && selectedLocationCodes.Contains(l.LocationCode))
+                {
+                    startIndex = i;
+                }
+                if(startIndex != -1 && selectedLocationCodes.Contains(l.LocationCode))
+                {
+                    endIndex = i;
+                }
+                if (startIndex != -1 && !selectedLocationCodes.Contains(l.LocationCode))
+                {
+                    break;
+                }
+            }
+
+            if ((endIndex - startIndex + 1) != sdvm.Size ||(locations[startIndex].ServerCode!=null)||(locations[endIndex].ServerCode!=null))
+            {
+                Alert("Change Location Fail!");
+                return RedirectToAction("Detail", new { code = sdvm.ServerCode });
+            }
+
+
+            bool result = LocationBLO.Current.UpdateLocation(sdvm.ServerCode, selectedLocationCodes, "Change");
+            if (result)
+            {
+                Success("Change Location Successfully!");
+                return RedirectToAction("Detail", new { code = sdvm.ServerCode });
             }
             else
             {
-                return RedirectToAction("ServerDetails");
+                Alert("Change Location Fail!");
+                return RedirectToAction("Detail", new { code = sdvm.ServerCode });
             }
 
         }

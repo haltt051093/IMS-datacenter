@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using IMS.Core;
 using IMS.Data.Generic;
 using IMS.Data.Models;
+using IMS.Data.Queries;
 using IMS.Data.ViewModels;
 
 namespace IMS.Data.Repository
@@ -33,16 +35,23 @@ namespace IMS.Data.Repository
             return existing;
         }
 
-        public List<LocationViewModel> GetAllLocation()
+        public List<LocationViewModel> GetAllLocation(GetLocationQuery q = null)
         {
+            if (q == null)
+            {
+                q = new GetLocationQuery();
+            }
             var query = @"select l.LocationCode,ser.ServerCode,ser.DefaultIP, l.RackUnit, s.StatusName,r.RackName,r.RackCode, ser.Id,r.StatusCode as RackStatus from Location as l
                             left join Status as s
                             on s.StatusCode = l.StatusCode
                             join Rack as r
                             on r.RackCode = l.RackCode
-                            left join Server as ser on ser.ServerCode = l.ServerCode";
+                            left join Server as ser on ser.ServerCode = l.ServerCode
+                            where (isnull(@rackcode, '') = '' or l.RackCode = @rackcode)";
 
-            return RawQuery<LocationViewModel>(query, new object[] { });
+            return RawQuery<LocationViewModel>(query,
+                new SqlParameter("rackcode", q.RackCode)    
+            );
         }
 
         public List<LocationViewModel> GetRackValidPowerForNew(Server server)

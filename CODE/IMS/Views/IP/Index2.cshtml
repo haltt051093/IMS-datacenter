@@ -17,7 +17,7 @@
     </div>
    
     <div>
-        <a class="btn btn-danger pull-left" data-toggle="modal" data-target="#deactivateip-modal"><i class="fa fa-minus"></i> @Labels.DeactivateIP</a>
+        <a id="deactivateip" class="btn btn-danger pull-left"><i class="fa fa-minus"></i> @Labels.DeactivateIP</a>
     </div>
     <div class="clearfix"></div>
     <div style="height: 10px"></div>
@@ -229,11 +229,19 @@
 
 <!-- page script -->
 <script>
-    if ($('#checkbox1').attr('checked')==true) {
-        $('#deactive').prop('disabled', false);
-    } else {
-        $('#deactive').prop('disabled', true);
-    }
+    $('#checkbox1').change(function() {
+        if ($('#checkbox1').prop('checked') == true) {
+            $('#deactive').prop('disabled', false);
+        } else {
+            $('#deactive').prop('disabled', true);
+        }
+    });
+
+    $('#deactivateip').click(function () {
+        $('#checkbox1').prop('checked', false);
+        $('#checkbox1').trigger('change');
+        $('#deactivateip-modal').modal('show');
+    })
 </script>
 <script>
     $.fn.dataTable.ext.search.push(
