@@ -14,79 +14,76 @@
 <section class="main-content">
     @using (Html.BeginForm("BringServerAway", "Request", FormMethod.Post))
     {
-
-        if (Model.RackOfCustomer != null)
-        {
-            if (Model.RackOfCustomer.Count > 0)
-            {
-                <div class="form-group">
-                    <label class="col-sm-4 control-label">Select by rented racks</label>
-                    <div class="col-sm-2">
-                        @Html.DropDownListFor(m => m.SelectedRack, Model.RackOfCustomer, "Select all", new {@id = "selectedRack", @class = "form-group"})
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.Label("Select Servers")
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @if (Model.RackOfCustomer != null)
+                    {
+                        if (Model.RackOfCustomer.Count > 0)
+                        {
+                            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                                <div class="@Constants.HtmlFormat.FORM_MESSAGE_CLASS">
+                                    @Html.DropDownListFor(m => m.SelectedRack, Model.RackOfCustomer, "Show all", new { @id = "selectedRack", @class = @Constants.HtmlFormat.FORM_INNER_CLASS })
+                                </div>
+                            </div>
+                        }
+                    }
+                <table id="masterTable" class="@Constants.HtmlFormat.DATATABLE_CLASS">
+                    <thead>
+                    <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
+                        <th>
+                            <input id="checkAll" type="checkbox"/>
+                        </th>
+                        <th>
+                            @Labels.ServerCode
+                        </th>
+                        <th>
+                            @Labels.DefaultIP
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @for (var i = 0; i < Model.ServerOfCustomer.Count; i++)
+                    {
+                        <tr class="check" rack-code="@Model.ServerOfCustomer[i].RackCode">
+                            <td>
+                                @Html.CheckBoxFor(modelItem => Model.ServerOfCustomer[i].Checked)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.ServerOfCustomer[i].ServerCode)
+                                @Html.HiddenFor(modelItem => Model.ServerOfCustomer[i].ServerCode)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.ServerOfCustomer[i].DefaultIP)
+                                @Html.HiddenFor(modelItem => Model.ServerOfCustomer[i].DefaultIP)
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_MESSAGE_CLASS">
+                        <span id="selectedNumber">@Model.SelectedServerNumber</span> of <span>@Model.ServerNumber</span> servers selected
                     </div>
                 </div>
-            }
-        }
-        <div class="form-group">
-            <label class="col-sm-4 control-label">The number of your servers in data center</label>
-            <div class="col-sm-1">
-                @Html.DisplayFor(modelItem => modelItem.ServerNumber)
             </div>
         </div>
-        <div class="form-group">
-            <label class="col-sm-4 control-label">The number of selected servers</label>
-            <div class="col-sm-1">
-                <span id="selectedNumber">@Html.DisplayFor(modelItem => modelItem.SelectedServerNumber, new {})</span>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.Description)
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.TextAreaFor(model => model.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.ValidationMessageFor(model => model.Description)
             </div>
         </div>
-        <div class="form-group">
-            <label class="col-sm-4 control-label">Which server do you want to bring away?</label>
-            <div class="col-sm-1">
-                <div id="divPartialView">
-                    <table id="masterTable" class="table" style="width: 600px">
-                        <thead>
-                        <tr>
-                            <th>
-                                <input type="checkbox" id="checkAll"/>Check all
-                            </th>
-                            <th>
-                                ServerCode
-                            </th>
-                            <th>
-                                Default IP
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @for (var i = 0; i < Model.ServerOfCustomer.Count; i++)
-                        {
-                            <tr class="check" rack-code="@Model.ServerOfCustomer[i].RackCode">
-                                <td>
-                                    @Html.CheckBoxFor(modelItem => Model.ServerOfCustomer[i].Checked)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => Model.ServerOfCustomer[i].ServerCode)
-                                    @Html.HiddenFor(modelItem => Model.ServerOfCustomer[i].ServerCode)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => Model.ServerOfCustomer[i].DefaultIP)
-                                    @Html.HiddenFor(modelItem => Model.ServerOfCustomer[i].DefaultIP)
-                                </td>
-                            </tr>
-                        }
-                        </tbody>
-                    </table>
-                </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+
             </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-4 control-label">Description</label>
-            <div class="col-sm-2">
-                @Html.TextAreaFor(model => model.Description, new {@class = "form-control", style = "width: 600px; height: 100px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;", placeholder = "Some description here", rows = "6"})
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-4 col-sm-2">
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                 @Html.HiddenFor(modelItem => modelItem.Customer)
                 <button type="submit" class="btn btn-primary">Send</button>
             </div>
@@ -95,6 +92,12 @@
 </section>
 
 <script type="text/javascript">
+    $('#masterTable').dataTable({
+        dom: 't',
+        ordering: false,
+        searching: false
+    });
+
     function countSelected() {
         var count = 0;
         $('tr.check input[type="checkbox"]').each(function (i, e) {
