@@ -31,5 +31,7 @@ namespace IMS.Data.ViewModels
         public int ReturnServerNumber { get; set; }
         public int ReturnIpNumber { get; set; }
         public int ReturnLocationNumber { get; set; }
+        //log return ip
+        public List<string> listRacks { get; set; }
     }
 }

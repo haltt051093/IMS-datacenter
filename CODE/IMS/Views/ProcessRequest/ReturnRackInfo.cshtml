@@ -10,74 +10,139 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="@Url.Action("Index2", "Schedule")"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Detail Request Return Rack</li>
+        Detail Request:
+        <li class="active">Return Rack</li>
     </ol>
 </section>
-<section class="content">
-    <div class="box">
-        <div class="box-body table-responsive">
-            @using (Html.BeginForm("ProcessRequestReturnRack", "ProcessRequest", FormMethod.Post))
-            {
-                <dl class="dl-horizontal">
-                    <dt>
-                        From customer
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.Customer, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                    </dd>
-                    <dt>
-                        Full Name
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control" } })
-                    </dd>
-                    <dt>
-                        Requested Time
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.RequestedTime, new { htmlAttributes = new { @class = "form-control" } })
-                    </dd>
-                    <dt>
-                        Status
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.StatusName, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <dt>
-                        Returned Rack
-                    </dt>
-
-                    <dd>
-                        @foreach (var item in Model.RackOfCustomer)
-                {
-                            @Html.DisplayFor(model => item.Value, new { htmlAttributes = new { @class = "form-control" } })
-                            <br />
-                        }
-                    </dd>
-                    <div class="form-group">
-                        <dt>
-                            Description:
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                        </dd>
+<section class="main-contentcontent">
+    @using (Html.BeginForm("ProcessRequestReturnRack", "ProcessRequest", FormMethod.Post))
+    {
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="row dl-horizontal">
+                    <div class="col-xs-4">
+                        Request Code
                     </div>
-                    <dt></dt>
-                    <dd>
-                        @Html.HiddenFor(x => x.RequestCode)
-                        @Html.HiddenFor(x => x.Customer)
-                        @Html.HiddenFor(x => x.RequestType)
-                        @Html.HiddenFor(x => x.RackOfCustomer)
-                        @if (Model.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
-                        {
-                            <button type="submit" id="btnApprove" class="btn btn-primary" name="Approve" value="Approve">Approve</button>
-                            <button type="submit" class="btn btn-danger">Reject</button>
-                        }
-                    </dd>
-                </dl>
-            }
-        </div><!-- /.box-body -->
-    </div><!-- /.box -->
+                    <div class="col-xs-8">
+                        @Html.DisplayFor(model => model.RequestCode, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        Current Status
+                    </div>
+                    <div class="col-xs-8">
+                        @Html.DisplayFor(model => model.StatusName, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        Requested Time
+                    </div>
+                    <div class="col-xs-8">
+                        @Html.DisplayFor(model => model.RequestedTime, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        Assignee
+                    </div>
+                    @if (Model.StatusCode == Constants.StatusCode.REQUEST_PENDING)
+                    {
+                        <div class="col-xs-8">
+                            @Html.DropDownListFor(model => model.StaffCode, Model.AssignGroup, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-xs-8">
+                            @Html.DisplayFor(model => model.StaffCode, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="row">
+                    <div class="col-xs-4">
+                        Username
+                    </div>
+                    <div class="col-xs-8">
+                        @Html.DisplayFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        Full Name
+                    </div>
+                    <div class="col-xs-8">
+                        @Html.DisplayFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                @if (Model.Company != null)
+                {
+                    <div class="row">
+                        <div class="col-xs-4">
+                            Company Name
+                        </div>
+                        <div class="col-xs-8">
+                            @Html.DisplayFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-xs-4">
+                        Phone Number
+                    </div>
+                    <div class="col-xs-8">
+                        @Html.DisplayFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div clsas="row">
+            <div class="col-xs-6">
+                <div class="col-xs-4">
+                    Returned Racks
+                </div>
+                <div class="col-xs-8">
+                    @foreach (var item in Model.SelectedRacks)
+                    {
+                        @Html.DisplayFor(model => item, new { htmlAttributes = new { @class = "form-control" } })
+                        <br />
+                    }
+                </div>
+            </div>
+            <div class="col-xs-6"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="col-xs-4">
+                    Description
+                </div>
+                <div class="col-xs-8">
+                    @Html.DisplayFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                @Html.HiddenFor(model => model.RequestCode)
+                @Html.HiddenFor(model => model.Customer)
+                @Html.HiddenFor(x => x.RequestType)
+                @Html.HiddenFor(x => x.RackOfCustomer)
+                @if (Model.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                {
+                    if (Model.StaffCode == Model.Username)
+                    {
+                        <button type="submit" class="btn btn-primary" name="Approve">Approve</button>
+                            <button type="submit" class="btn btn-danger" name="Reject">Reject</button>
+                    }
+                }
+                else if (Model.StatusCode == Constants.StatusCode.REQUEST_PENDING)
+                {
+                    <button type="submit" class="btn btn-primary" name="Accept">Accept</button>
+                }
+            </div>
+        </div>
+    }
 </section>

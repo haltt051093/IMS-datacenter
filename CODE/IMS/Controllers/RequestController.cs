@@ -129,10 +129,6 @@ namespace IMS.Controllers
                     data.AllRacks = RackOfCustomerBLO.Current.CountServerPerRack(Constants.Test.CUSTOMER_MANHNH);
                     return View("ReturnRack", data);
                 }
-                else if (requestTypeCode == Constants.RequestTypeCode.RETURN_RACK)
-                {
-                    return View("ReturnRack");
-                }
             }
 
             var _data = new RequestCreateViewModel();
@@ -146,37 +142,29 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult ReturnRack(RequestReturnRackViewModel viewmodel)
         {
-            if (ModelState.IsValid)
+            var customer = GetCurrentUserName();
+            var listRacks = viewmodel.AllRacks;
+            //Add and log request
+            string requestCode = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.RETURN_RACK,
+                Constants.StatusCode.REQUEST_PENDING, customer, viewmodel.Description,
+                null, null, Constants.TypeOfLog.LOG_RETURN_RACK, null);
+            foreach (var item in listRacks)
             {
-                var selected = viewmodel.SelectedRacks;
-                viewmodel.Customer = Constants.Test.CUSTOMER_MANHNH;
-                if (selected.Count > 0)
+                if (item.Checked)
                 {
-                    //Add and log request
-                    string requestCode = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.RETURN_RACK,
-                        Constants.StatusCode.REQUEST_PENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
-                        viewmodel.AppointmentTime, null, Constants.TypeOfLog.LOG_RETURN_RACK, null);
-                    //lay ra rackcode
-                    string last = selected[0];
-                    List<string> racks = last.Split(',').ToList<string>();
-                    racks.Reverse();
-                    foreach (var item in racks)
-                    {
-                        //update and log rackofCustomer
-                        RackOfCustomerBLO.Current.UpdateStatusRackOfCustomerANDLog(requestCode, item,
-                            Constants.TypeOfLog.LOG_RETURN_RACK, Constants.Test.CUSTOMER_MANHNH, null
-                            , Constants.StatusCode.RACKOFCUSTOMER_CURRENT, Constants.StatusCode.RACKOFCUSTOMER_RETURNING);
-                    }
-
-                    //Notification
-                    var notif = Mapper.Map<RequestReturnRackViewModel, NotificationExtendedModel>(viewmodel);
-                    notif.RequestTypeName = Constants.RequestTypeName.RACK_RETURN;
-                    notif.StatusName = Constants.StatusName.REQUEST_PENDING;
-                    notif.RequestCode = requestCode;
-                    //dang ky ham cho client
-                    NotifRegister(notif);
+                    //update and log rackofCustomer
+                    RackOfCustomerBLO.Current.UpdateStatusRackOfCustomerANDLog(requestCode, item.RackName,
+                        Constants.TypeOfLog.LOG_RETURN_RACK, customer, null
+                        , Constants.StatusCode.RACKOFCUSTOMER_CURRENT, Constants.StatusCode.RACKOFCUSTOMER_RETURNING);
                 }
             }
+            //Notification
+            var notif = Mapper.Map<RequestReturnRackViewModel, NotificationExtendedModel>(viewmodel);
+            notif.RequestTypeName = Constants.RequestTypeName.RACK_RETURN;
+            notif.StatusName = Constants.StatusName.REQUEST_PENDING;
+            notif.RequestCode = requestCode;
+            //dang ky ham cho client
+            NotifRegister(notif);
             Toast(Constants.AlertType.SUCCESS, "RequestReturnRack", null, true);
             return RedirectToAction("Index", "Home");
         }
@@ -184,7 +172,7 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult RentRack(RequestRentRackViewModel viewmodel)
         {
-            viewmodel.Customer = Constants.Test.CUSTOMER_MANHNH;
+            var customer = GetCurrentUserName();
             //Edit description
             var requestDetail = new RequestDetailViewModel();
             requestDetail.NumberOfRack = viewmodel.RackNumbers;
@@ -193,7 +181,7 @@ namespace IMS.Controllers
 
             //Add and log request
             string result = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.RENT_RACK,
-                Constants.StatusCode.REQUEST_PENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
+                Constants.StatusCode.REQUEST_PENDING, customer, viewmodel.Description,
                 null, null, Constants.TypeOfLog.LOG_RENT_RACK, null);
 
             //Notification

@@ -158,6 +158,12 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-xs-6">Description</div>
+            <div class="col-xs-6">
+                @Html.DisplayFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="row">
             <div class="col-xs-12">
                 @Html.HiddenFor(model => model.RequestCode)
                 @Html.HiddenFor(model => model.Customer)
