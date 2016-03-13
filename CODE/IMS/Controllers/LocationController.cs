@@ -112,24 +112,24 @@ namespace IMS.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult AssignLocation(LocationIndexViewModel livm)
-        {
-            if (livm.LocationCode == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            bool x = LocationBLO.Current.UpdateLocation(livm.Server.Size, livm.Server.ServerCode, livm.LocationCode, livm.Request);
-            if (x)
-            {
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                return RedirectToAction("AssignLocation");
-            }
+        //[HttpPost]
+        //public ActionResult AssignLocation(LocationIndexViewModel livm)
+        //{
+        //    if (livm.LocationCode == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    bool x = LocationBLO.Current.UpdateLocation(livm.Server.Size, livm.Server.ServerCode, livm.LocationCode, livm.Request);
+        //    if (x)
+        //    {
+        //        return RedirectToAction("Index");
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("AssignLocation");
+        //    }
 
-        }
+        //}
 
     }
 }

@@ -925,6 +925,7 @@
     <Compile Include="Models\RequestHistoryViewModel.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Models\ReportBlockIPViewModel.cs" />
+    <Compile Include="Models\SelectLocationViewModel.cs" />
     <Compile Include="Services\BrowserJsonFormatter.cs" />
     <Compile Include="Controllers\RackController.cs" />
     <Compile Include="Models\BaseViewModel.cs" />
