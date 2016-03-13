@@ -52,26 +52,29 @@ namespace IMS.Data.Repository
         //Tien
         public List<ScheduleExtendedModel> GetSchedule(DateTime? start = null, DateTime? end = null)
         {
-            var query = @"select r.*,rt.RequestTypeName, s.StatusName from Request as r 
+            var query = @"select r.*,rt.RequestTypeName, s.StatusName,acc.Fullname from Request as r 
                             join Status as s 
                             on s.StatusCode = r.StatusCode
+                            join Account as acc
+                            on acc.Username = r.Customer
                             join RequestType as rt
                             on rt.RequestTypeCode = r.RequestType
                             where (isnull(@start, '') = '' or r.AppointmentTime >= @start)
                                 and (isnull(@end, '') = '' or r.AppointmentTime <= @end)
                                 and (isnull(r.AppointmentTime, '') != '')
-                                and (r.StatusCode = @waiting or r.StatusCode = @processing)";
+                                and (r.StatusCode = @waiting or r.StatusCode = @processing or r.StatusCode = @done)";
             return RawQuery<ScheduleExtendedModel>(query,
                 new SqlParameter("start", start),
                 new SqlParameter("end", end),
                 new SqlParameter("waiting", Constants.StatusCode.REQUEST_WAITING),
-                new SqlParameter("processing", Constants.StatusCode.REQUEST_PROCESSING)
+                new SqlParameter("processing", Constants.StatusCode.REQUEST_PROCESSING),
+                new SqlParameter("done",Constants.StatusCode.REQUEST_DONE)
             );
         }
         //Tien
         public List<ScheduleExtendedModel> GetNoteOfShift()
         {
-            var query = @"select distinct r.*,rt.RequestTypeName,s.StatusName,note.NoteContent from Request as r
+            var query = @"select r.*,rt.RequestTypeName,s.StatusName,note.NoteContent from Request as r
                             join Status as s on s.StatusCode=r.StatusCode
                             join RequestType as rt on rt.RequestTypeCode = r.RequestType
                             left join(select * from Note as n 
@@ -94,7 +97,7 @@ namespace IMS.Data.Repository
         //Tien
         public List<ScheduleExtendedModel> GetNoteOfPreviousShift()
         {
-            var query = @"select distinct r.*,rt.RequestTypeName,s.StatusName,note.NoteContent from Request as r
+            var query = @"select r.*,rt.RequestTypeName,s.StatusName,note.NoteContent from Request as r
                             join Status as s on s.StatusCode=r.StatusCode
                             join RequestType as rt on rt.RequestTypeCode = r.RequestType
                             left join(select * from Note as n 

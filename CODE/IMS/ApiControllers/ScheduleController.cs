@@ -22,10 +22,10 @@ namespace IMS.ApiControllers
                         var appointmentTime = x.AppointmentTime ?? DateTime.Now.Date;
                         return new FullCalendarReponse
                         {
-                            Title = string.Format("[{0}] {1}", x.RequestTypeName, x.Customer),
+                            Title = string.Format("[{0}] {1}", x.RequestTypeName, x.Fullname),
                             Start = appointmentTime.ToString("yyyy-MM-dd HH:mm:ss"),
-                            End = appointmentTime.AddHours(2).ToString("yyyy-MM-dd HH:mm:ss"),
-                            AllDay = false
+                            AllDay = false,
+                            Status = x.StatusCode
                         };
                     })
                 .ToList();

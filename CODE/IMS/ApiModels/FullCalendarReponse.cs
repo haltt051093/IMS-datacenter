@@ -19,5 +19,7 @@ namespace IMS.ApiModels
 
         [JsonProperty("allDay")]
         public bool AllDay { get; set; }
+
+        public string Status { get; set; }
     }
 }
