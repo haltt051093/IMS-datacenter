@@ -36,7 +36,7 @@ namespace IMS.Data.Business
 
         public bool UpdateLocation(string ServerCode, List<string> Locations, string request)
         {
-            if (!request.Equals("Change"))
+            if (request.Equals("Change"))
             {
 
                 var locations = dao.GetAll();
