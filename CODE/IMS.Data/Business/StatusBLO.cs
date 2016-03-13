@@ -40,5 +40,7 @@ namespace IMS.Data.Business
             var query = dao.Query(x => x.Object == obj);
             return query.ToList();
         }
+
+
     }
 }

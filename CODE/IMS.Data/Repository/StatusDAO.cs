@@ -31,7 +31,5 @@ namespace IMS.Data.Repository
             var statusName = Current.Query(x => x.StatusCode == statusCode).Select(x => x.StatusName).FirstOrDefault();
             return statusName;
         }
-
-        //public List<>
     }
 }

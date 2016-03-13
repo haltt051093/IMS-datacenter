@@ -50,7 +50,7 @@ namespace IMS.Data.Repository
                             where (isnull(@rackcode, '') = '' or l.RackCode = @rackcode)";
 
             return RawQuery<LocationViewModel>(query,
-                new SqlParameter("rackcode", q.RackCode)    
+                new SqlParameter("rackcode", q.RackCode)
             );
         }
 
@@ -165,12 +165,16 @@ namespace IMS.Data.Repository
                                 RackCode = subl.RackCode,
                                 RackName = r.RackName
                             };
-            return locations.ToList();
+            if (locations != null)
+            {
+                return locations.ToList();
+            }
+            return null;
         }
 
         public void SetLocationAvailable(string serverCode)
         {
-            
+
         }
     }
 }

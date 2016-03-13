@@ -15,5 +15,6 @@ namespace IMS.Models
 
         public List<ServerExtendedModel> Servers { get; set; }
         public List<SelectListItem> ServerStatus { get; set; }
+        public string SelectedStatus { get; set; }
     }
 }

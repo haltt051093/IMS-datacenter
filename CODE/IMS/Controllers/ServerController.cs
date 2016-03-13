@@ -24,9 +24,12 @@ namespace IMS.Controllers
             var data = new ServerIndexViewModel();
             foreach (var item in servers)
             {
-                var requestOfServer = LogChangedContentBLO.Current.ListWaitingRequestOfServer(item.ServerCode);
-                item.Requests = requestOfServer;
+                item.Requests = LogChangedContentBLO.Current.ListWaitingRequestOfServer(item.ServerCode);
             }
+            var listStatus = StatusBLO.Current.GetStatusByObject(Constants.Object.OBJECT_SERVER);
+            data.ServerStatus = listStatus
+                        .Select(x => new SelectListItem { Value = x.StatusCode, Text = x.StatusName })
+                        .ToList();
             data.Servers = servers;
             data.Server = new ServerExtendedModel();
             return View(data);
@@ -47,14 +50,14 @@ namespace IMS.Controllers
             data.CurrentIPs = servercurrentips;
 
             var locations = LocationBLO.Current.GetChangeLocation(server);
-         
-            var listrack = locations.OrderBy(x => x.RackName).GroupBy(x=>x.RackName).Select(x=>x.FirstOrDefault());
+
+            var listrack = locations.OrderBy(x => x.RackName).GroupBy(x => x.RackName).Select(x => x.FirstOrDefault());
             data.Racks = listrack.Select(x => new SelectListItem
             {
                 Value = x.RackCode,
                 Text = x.RackName
-            }).ToList();           
-            
+            }).ToList();
+
             data.Locations1 = locations;
             data.ServerCode = code;
             return View(data);
@@ -63,7 +66,7 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult Detail(ServerDetailsViewModel sdvm)
         {
-           
+
             var selectedLocationCodes = sdvm.Selected
                 .Where(x => x.IsSelected)
                 .Select(x => x.LocationCode)
@@ -72,13 +75,13 @@ namespace IMS.Controllers
             {
                 return View(sdvm);
             }
-            var location = LocationBLO.Current.GetByModel(new Location {LocationCode = selectedLocationCodes[0]});
+            var location = LocationBLO.Current.GetByModel(new Location { LocationCode = selectedLocationCodes[0] });
             if (location == null)
             {
                 return View(sdvm);
             }
 
-            var locations = LocationBLO.Current.GetAllLocation(new GetLocationQuery {RackCode = location.RackCode});
+            var locations = LocationBLO.Current.GetAllLocation(new GetLocationQuery { RackCode = location.RackCode });
             var startIndex = -1;
             var endIndex = -1;
             for (var i = 0; i < locations.Count; i++)
@@ -88,7 +91,7 @@ namespace IMS.Controllers
                 {
                     startIndex = i;
                 }
-                if(startIndex != -1 && selectedLocationCodes.Contains(l.LocationCode))
+                if (startIndex != -1 && selectedLocationCodes.Contains(l.LocationCode))
                 {
                     endIndex = i;
                 }
@@ -98,7 +101,7 @@ namespace IMS.Controllers
                 }
             }
 
-            if ((endIndex - startIndex + 1) != sdvm.Size ||(locations[startIndex].ServerCode!=null)||(locations[endIndex].ServerCode!=null))
+            if ((endIndex - startIndex + 1) != sdvm.Size || (locations[startIndex].ServerCode != null) || (locations[endIndex].ServerCode != null))
             {
                 Alert("Change Location Fail!");
                 return RedirectToAction("Detail", new { code = sdvm.ServerCode });
