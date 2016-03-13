@@ -166,7 +166,7 @@ namespace IMS.Data.Generic
             return result;
         }
 
-        public virtual List<CustomModel> RawQuery<CustomModel>(string sql, object[] parameters) where CustomModel : class
+        public virtual List<CustomModel> RawQuery<CustomModel>(string sql, params object[] parameters) where CustomModel : class
         {   
             return IMSContext.Current.Database.SqlQuery<CustomModel>(sql, parameters)
                     .ToList();

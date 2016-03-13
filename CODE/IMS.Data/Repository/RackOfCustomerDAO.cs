@@ -87,7 +87,9 @@ namespace IMS.Data.Repository
 							left join Server as ser on ser.ServerCode = l.ServerCode
                             where l.RackCode = roc.RackCode and l.StatusCode = s.StatusCode and r.RackCode=l.RackCode and k.StatusCode = roc.StatusCode
                             and (isnull(@customer, '') = '' or roc.Customer = @customer)";
-            return RawQuery<RackOfCustomerExtendedModel>(query, new object[] { new SqlParameter("customer", customer) });
+            return RawQuery<RackOfCustomerExtendedModel>(query, 
+                new SqlParameter("customer", customer)
+            );
         }
 
         public List<RackOfCustomerExtendedModel> GetRacksOfCustomer(string customer, string status)

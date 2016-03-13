@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using IMS.Core;
 using IMS.Core.Express;
@@ -49,14 +50,23 @@ namespace IMS.Data.Repository
         }
 
         //Tien
-        public List<ScheduleExtendedModel> GetSchedule()
+        public List<ScheduleExtendedModel> GetSchedule(DateTime? start = null, DateTime? end = null)
         {
             var query = @"select r.*,rt.RequestTypeName, s.StatusName from Request as r 
                             join Status as s 
                             on s.StatusCode = r.StatusCode
                             join RequestType as rt
-                            on rt.RequestTypeCode = r.RequestType";
-            return RawQuery<ScheduleExtendedModel>(query, new object[] { });
+                            on rt.RequestTypeCode = r.RequestType
+                            where (isnull(@start, '') = '' or r.AppointmentTime >= @start)
+                                and (isnull(@end, '') = '' or r.AppointmentTime <= @end)
+                                and (isnull(r.AppointmentTime, '') != '')
+                                and (r.StatusCode = @waiting or r.StatusCode = @processing)";
+            return RawQuery<ScheduleExtendedModel>(query,
+                new SqlParameter("start", start),
+                new SqlParameter("end", end),
+                new SqlParameter("waiting", Constants.StatusCode.REQUEST_WAITING),
+                new SqlParameter("processing", Constants.StatusCode.REQUEST_PROCESSING)
+            );
         }
         //Tien
         public List<ScheduleExtendedModel> GetNoteOfShift()

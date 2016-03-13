@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using IMS.ApiModels;
 using IMS.Core.Extensions;
+using IMS.Data.Business;
 
 namespace IMS.ApiControllers
 {
@@ -15,6 +16,20 @@ namespace IMS.ApiControllers
         {
             var startTime = start.AsEpochToDateTime();
             var endTime = end.AsEpochToDateTime();
+            var schedule = RequestBLO.Current.GetSchedule(startTime, endTime);
+            var result = schedule.Select(x =>
+                    {
+                        var appointmentTime = x.AppointmentTime ?? DateTime.Now.Date;
+                        return new FullCalendarReponse
+                        {
+                            Title = string.Format("[{0}] {1}", x.RequestTypeName, x.Customer),
+                            Start = appointmentTime.ToString("yyyy-MM-dd HH:mm:ss"),
+                            End = appointmentTime.AddHours(2).ToString("yyyy-MM-dd HH:mm:ss"),
+                            AllDay = false
+                        };
+                    })
+                .ToList();
+            return result;
 
         }
     }
