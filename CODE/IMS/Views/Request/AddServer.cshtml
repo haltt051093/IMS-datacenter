@@ -59,8 +59,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.Servers)
-                        {
+                    @foreach (var item in Model.Servers)
+                    {
                             @*<tr id="@Model.Servers[i].TempCode">
                                     <td>
                                         @Html.Raw(i + 1)
@@ -104,58 +104,60 @@
                                         <a href="#" x-code="@Model.Servers[i].TempCode" action="delete">Delete</a>
                                     </td>
                                 </tr>*@
-                            <tr id="@item.TempCode">
-                                <td>
-                                    @*@Html.Raw(i + 1)*@
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(model => item.Maker, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                    @Html.HiddenFor(modelItem => item.Maker)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(model => item.Power, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })W
-                                    @Html.HiddenFor(modelItem => item.Power)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(model => item.Model, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                    @Html.HiddenFor(modelItem => item.Model)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(model => item.Size, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })U
-                                    @Html.HiddenFor(modelItem => item.Size)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(model => item.Bandwidth, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                    @Html.HiddenFor(modelItem => item.Bandwidth)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(model => item.SerialNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                    @Html.HiddenFor(modelItem => item.SerialNumber)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(model => item.PartNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                    @Html.HiddenFor(modelItem => item.PartNumber)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(model => item.Memory, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                    @Html.HiddenFor(modelItem => item.Memory)
-                                </td>
-                                <td>
-                                    <a href="#" x-code="@item.TempCode" action="edit">Edit</a>
-                                </td>
-                                <td>
-                                    <a href="#" x-code="@item.TempCode" action="delete">Delete</a>
-                                </td>
-                            </tr>
-                        }
+                        <tr id="@item.TempCode">
+                            <td>
+                                @*@Html.Raw(i + 1)*@
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.Maker, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                                @Html.HiddenFor(modelItem => item.Maker)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.Power, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})W
+                                @Html.HiddenFor(modelItem => item.Power)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.Model, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                                @Html.HiddenFor(modelItem => item.Model)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.Size, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})U
+                                @Html.HiddenFor(modelItem => item.Size)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.Bandwidth, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                                @Html.HiddenFor(modelItem => item.Bandwidth)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.SerialNumber, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                                @Html.HiddenFor(modelItem => item.SerialNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.PartNumber, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                                @Html.HiddenFor(modelItem => item.PartNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.Memory, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                                @Html.HiddenFor(modelItem => item.Memory)
+                            </td>
+                            <td>
+                                <a href="#" x-code="@item.TempCode" action="edit">Edit</a>
+                            </td>
+                            <td>
+                                <a href="#" x-code="@item.TempCode" action="delete">Delete</a>
+                            </td>
+                        </tr>
+                    }
                     </tbody>
-                    <tr>
-                        <td colspan="11">
-                            <button type="button" id="addserver" name="@Constants.FormAction.ACTION_NAME" value="" class="@Constants.HtmlFormat.SECONDARY_BUTTON_CLASS">
-                                @Labels.AddServerInfo
-                            </button>
-                        </td>
-                    </tr>
+                    <tfoot>
+                        <tr>
+                            <td colspan="11">
+                                <button type="button" id="addserver" name="@Constants.FormAction.ACTION_NAME" value="" class="@Constants.HtmlFormat.SECONDARY_BUTTON_CLASS">
+                                    @Labels.AddServerInfo
+                                </button>
+                            </td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
