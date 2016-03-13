@@ -148,17 +148,17 @@ namespace IMS.Controllers
                     viewmodel.StatusName = StatusBLO.Current.GetStatusName(viewmodel.StatusCode);
                     //Lay so luong IP muon assign
                     var reqDetail = JsonConvert.DeserializeObject<RequestDetailViewModel>(viewmodel.Description);
-                    viewmodel.IpNumber = reqDetail.NumberOfIp;
+                    viewmodel.NumberOfIP = reqDetail.NumberOfIp;
                     viewmodel.Description = reqDetail.Description;
                     //lay servercode, roi lay ip cua server do, tim nhung ip cung vung con lai
                     var serverCode = LogChangedContentBLO.Current.GetServerCodeByRequestCode(rCode).FirstOrDefault();
                     viewmodel.SelectedServer = serverCode;
                     //Lay list available ip cung vung
                     var listAvailableIps = IPAddressPoolBLO.Current.GetAvailableIpsSameGateway(serverCode);
-                    if (listAvailableIps.Count > viewmodel.IpNumber)
+                    if (listAvailableIps.Count > viewmodel.NumberOfIP)
                     {
                         //selected values
-                        var randomList = IPAddressPoolBLO.Current.GetRandomIPs(listAvailableIps, viewmodel.IpNumber);
+                        var randomList = IPAddressPoolBLO.Current.GetRandomIPs(listAvailableIps, viewmodel.NumberOfIP);
                         viewmodel.SelectedIps = randomList.Select(x => new SelectListItem
                         {
                             Value = x,
@@ -206,11 +206,11 @@ namespace IMS.Controllers
                     var returningIps = ServerIPBLO.Current.GetIpByStatus(serverCode, Constants.StatusCode.SERVERIP_CHANGING);
                     viewmodel.ReturningIps = returningIps;
                     //Lay so luong IP muon change, tam thoi fix cung
-                    viewmodel.IpNumber = returningIps.Count;
+                    viewmodel.NumberOfIP = returningIps.Count;
                     //Lay list available ip cung vung
                     var listAvailableIps = IPAddressPoolBLO.Current.GetAvailableIpsSameGateway(serverCode);
                     viewmodel.CountAvailableIps = listAvailableIps.Count;
-                    if (listAvailableIps.Count > viewmodel.IpNumber)
+                    if (listAvailableIps.Count > viewmodel.NumberOfIP)
                     {
                         //cho hien thi multiple list, ko bao gom randomList
                         for (int i = 0; i < listAvailableIps.Count; i++)

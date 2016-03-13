@@ -19,7 +19,7 @@
                 Select Server:
             </div>
             <div class="col-xs-8">
-                @Html.DropDownListFor(m => m.SelectedServer, Model.Servers, new { @id = "servercode" })
+                @Html.DropDownListFor(m => m.SelectedServer, Model.ServerOptions, new { @id = "servercode" })
             </div>
         </div>
         <div class="row hidden" id="divPartialView">

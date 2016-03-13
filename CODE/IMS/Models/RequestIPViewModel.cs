@@ -6,16 +6,23 @@ using SelectListItem = System.Web.Mvc.SelectListItem;
 
 namespace IMS.Models
 {
-    public class RequestIPViewModel
+    public class RequestIPViewModel : BaseViewModel
     {
-        public string Action { get; set; }
-        public List<SelectListItem> Servers { get; set; }
+        public RequestIPViewModel()
+        {
+            ServerOptions = new List<SelectListItem>();
+            NumberOfIPOptions = new List<SelectListItem>();
+            SelectedIps = new List<SelectListItem>();
+            IpSelectListItems = new List<SelectListItem>();
+        }
+
+        public List<SelectListItem> ServerOptions { get; set; }
         public List<ServerIP> ServerIPs { get; set; }
         public string Description { get; set; }
         public List<string> Ips { get; set; }
         public List<SelectListItem> SelectedIps { get; set; } 
         public string SelectedServer { get; set; }
-        public int IpNumber { get; set; }
+        public int NumberOfIP { get; set; }
         public string Customer { get; set; }
         public string CustomerName { get; set; }
         public List<SelectListItem> IpSelectListItems { get; set; } 
@@ -29,5 +36,6 @@ namespace IMS.Models
         public string StatusName { get; set; }
         public bool IsViewed { get; set; }
         public int CountAvailableIps { get; set; }
+        public List<SelectListItem> NumberOfIPOptions { get; set; }
     }
 }
