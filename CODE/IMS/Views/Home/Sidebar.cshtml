@@ -12,40 +12,33 @@
         Roles = new List<string>() { "Customer" },
         SubMenu = new List<SidebarItemModel>()
         {
-            new SidebarItemModel("Add New Server", "Create", "Request")
+            new SidebarItemModel("Add New Server", "Create", "Request", new { Type = Constants.RequestTypeCode.ADD_SERVER})
             {
-                Roles = new List<string>() { "Customer" },
-                RequestType = new RequestCreateViewModel() { Type = Constants.RequestTypeCode.ADD_SERVER}
+                Roles = new List<string>() { "Customer" }
             },
-            new SidebarItemModel("Bring Away Server", "Create", "Request")
+            new SidebarItemModel("Bring Away Server", "Create", "Request", new { Type = Constants.RequestTypeCode.BRING_SERVER_AWAY})
             {
-                Roles = new List<string>() { "Customer" },
-                RequestType = new RequestCreateViewModel() { Type = Constants.RequestTypeCode.BRING_SERVER_AWAY}
+                Roles = new List<string>() { "Customer" }
             },
-            new SidebarItemModel("Assign IP Address", "Create", "Request")
+            new SidebarItemModel("Assign IP Address", "Create", "Request", new { Type = Constants.RequestTypeCode.ASSIGN_IP})
             {
-                Roles = new List<string>() { "Customer" },
-                RequestType = new RequestCreateViewModel() { Type = Constants.RequestTypeCode.ASSIGN_IP}
+                Roles = new List<string>() { "Customer" }
             },
-            new SidebarItemModel("Change IP Address", "Create", "Request")
+            new SidebarItemModel("Change IP Address", "Create", "Request", new { Type = Constants.RequestTypeCode.CHANGE_IP})
             {
-                Roles = new List<string>() { "Customer" },
-                RequestType = new RequestCreateViewModel() { Type = Constants.RequestTypeCode.CHANGE_IP}
+                Roles = new List<string>() { "Customer" }
             },
-            new SidebarItemModel("Return IP Address", "Create", "Request")
+            new SidebarItemModel("Return IP Address", "Create", "Request", new { Type = Constants.RequestTypeCode.RETURN_IP})
             {
-                Roles = new List<string>() { "Customer" },
-                RequestType = new RequestCreateViewModel() { Type = Constants.RequestTypeCode.RETURN_IP}
+                Roles = new List<string>() { "Customer" }
             },
-            new SidebarItemModel("Rent Rack", "Create", "Request")
+            new SidebarItemModel("Rent Rack", "Create", "Request", new { Type = Constants.RequestTypeCode.RENT_RACK})
             {
-                Roles = new List<string>() { "Customer" },
-                RequestType = new RequestCreateViewModel() { Type = Constants.RequestTypeCode.RENT_RACK}
+                Roles = new List<string>() { "Customer" }
             },
-            new SidebarItemModel("Return Rack", "Create", "Request")
+            new SidebarItemModel("Return Rack", "Create", "Request", new { Type = Constants.RequestTypeCode.RETURN_RACK})
             {
-                Roles = new List<string>() { "Customer" },
-                RequestType = new RequestCreateViewModel() { Type = Constants.RequestTypeCode.RETURN_RACK}
+                Roles = new List<string>() { "Customer" }
             }
         }
     });
@@ -72,7 +65,7 @@
             <img src="@Url.Content("~/img/avatar3.png")" class="img-circle" alt="User Image" />
         </div>
         <div class="pull-left info">
-            <p>Hello, @account.Fullname</p>
+            <p>Hello, @account.LastName</p>
 
             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
@@ -90,7 +83,7 @@
         if (menu.SubMenu.Count == 0)
         {
             <li>
-                <a href="@Url.Action(menu.Action, menu.Controller)"><i class="fa fa-table"></i><span>@menu.Title</span></a>
+                <a href="@Url.Action(menu.Action, menu.Controller, menu.RouteValue)"><i class="fa fa-table"></i><span>@menu.Title</span></a>
             </li>
         }
         else
@@ -113,7 +106,7 @@
                         {
                             continue;
                         }
-                        <li><a href="@Url.Action(subMenu.Action, subMenu.Controller)"><i class="fa fa-angle-double-right"></i>@subMenu.Title</a></li>
+                        <li><a href="@Url.Action(subMenu.Action, subMenu.Controller, subMenu.RouteValue)"><i class="fa fa-angle-double-right"></i>@subMenu.Title</a></li>
                     }
                 </ul>
             </li>
