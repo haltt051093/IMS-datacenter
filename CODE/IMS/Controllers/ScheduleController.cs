@@ -13,15 +13,9 @@ namespace IMS.Controllers
     public class ScheduleController : CoreController
     {
         // GET: Schedule
-        public ActionResult Index()
-        {
-            var schedule = RequestBLO.Current.GetScheduleToday();
-            var data = new ScheduleIndexViewModel();
-            data.Schedules = schedule;
-            return View(data);
-        }
+       
 
-        public ActionResult Index2()
+        public ActionResult Index()
         {
             var note = RequestBLO.Current.GetNoteOfShift();
             var prenote = RequestBLO.Current.GetNoteOfPreviousShift();
@@ -34,7 +28,7 @@ namespace IMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index2(ScheduleIndexViewModel sivm)
+        public ActionResult Index(ScheduleIndexViewModel sivm)
         {
             List<Note> notes = new List<Note>();
             for (int i = 0; i < sivm.Schedules.Count; i++)
@@ -48,7 +42,7 @@ namespace IMS.Controllers
                 notes.Add(note);
             }
             NoteDAO.Current.AddMany(notes);
-            return RedirectToAction("Index2");
+            return RedirectToAction("Index");
         }
     }
 }

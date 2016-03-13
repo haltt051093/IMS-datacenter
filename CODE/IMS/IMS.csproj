@@ -988,9 +988,7 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\ViewProfile.cshtml" />
     <Content Include="Views\Location\AssignLocation.cshtml" />
-    <Content Include="Views\IP\AssignIP.cshtml" />
     <Content Include="Views\Schedule\_AppointmentTime.cshtml" />
-    <Content Include="Views\Schedule\Index.cshtml" />
     <Content Include="Views\Shared\_AdminLTE.cshtml" />
     <Content Include="Scripts\plugins\ckeditor\CHANGES.md" />
     <Content Include="Scripts\plugins\ckeditor\LICENSE.md" />
@@ -1003,10 +1001,10 @@
     <Content Include="Scripts\plugins\input-mask\phone-codes\phone-be.json" />
     <Content Include="Scripts\plugins\input-mask\phone-codes\phone-codes.json" />
     <Content Include="Scripts\plugins\slimScroll\slimScroll.jquery.json" />
-    <Content Include="Views\Schedule\Index2.cshtml" />
+    <Content Include="Views\Schedule\Index.cshtml" />
     <Content Include="Views\Server\Index.cshtml" />
-    <Content Include="Views\Location\Index2.cshtml" />
-    <Content Include="Views\IP\Index2.cshtml" />
+    <Content Include="Views\Location\Index.cshtml" />
+    <Content Include="Views\IP\Index.cshtml" />
     <Content Include="Views\Request\AddServer.cshtml" />
     <Content Include="Views\Request\AssignIP.cshtml" />
     <Content Include="Views\ProcessRequest\AssignIPInfo.cshtml" />
