@@ -60,9 +60,13 @@ namespace IMS.Controllers
                 else if (requestTypeCode == Constants.RequestTypeCode.ASSIGN_IP)
                 {
                     var data = new RequestIPViewModel();
+                    for (var i = 1; i < 17; i++)
+                    {
+                        data.NumberOfIPOptions.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+                    }
 
                     var listServers = ServerDAO.Current.Query(x => x.Customer == Constants.Test.CUSTOMER_MANHNH);
-                    data.Servers = listServers
+                    data.ServerOptions = listServers
                         .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.Model })
                         .ToList();
                     return View("AssignIP", data);
@@ -92,7 +96,7 @@ namespace IMS.Controllers
                     //co the change duoc nhieu IP--> bo sung t
                     var data = new RequestIPViewModel();
                     var listServers = ServerDAO.Current.Query(x => x.Customer == Constants.Test.CUSTOMER_MANHNH);
-                    data.Servers = listServers
+                    data.ServerOptions = listServers
                         .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.Model })
                         .ToList();
                     return View("ChangeIP", data);
@@ -118,7 +122,7 @@ namespace IMS.Controllers
                 {
                     var data = new RequestIPViewModel();
                     var listServers = ServerDAO.Current.Query(x => x.Customer == Constants.Test.CUSTOMER_MANHNH);
-                    data.Servers = listServers
+                    data.ServerOptions = listServers
                         .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.Model })
                         .ToList();
                     return View("ReturnIP", data);
@@ -389,7 +393,7 @@ namespace IMS.Controllers
                 var requestDetail = new RequestDetailViewModel();
                 if (!string.IsNullOrWhiteSpace(viewmodel.Description))
                 {
-                    requestDetail.NumberOfIp = viewmodel.IpNumber;
+                    requestDetail.NumberOfIp = viewmodel.NumberOfIP;
                     requestDetail.Description = viewmodel.Description;
                 }
                 viewmodel.Description = JsonConvert.SerializeObject(requestDetail);

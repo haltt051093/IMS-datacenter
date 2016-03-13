@@ -15,50 +15,42 @@
 <section class="main-content">
     @using (Html.BeginForm("AssignIp", "Request", FormMethod.Post))
     {
-        <div class="box-header">
-            <h3 class="box-title">General Elements</h3>
-        </div><!-- /.box-header -->
-
-        <div class="box-body">
-            <div class="form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-4 control-label">Which server do you want more IP?</label>
-                    <div class="col-sm-4">
-                        @Html.DropDownListFor(m => m.SelectedServer, Model.Servers, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-4 control-label">Amount of IP you want to be assigned</label>
-                    <div class="col-sm-4">
-                        @{
-                            List<SelectListItem> myList = new List<SelectListItem>();
-                            for (int i = 0; i < 10; i++)
-                            {
-                                string num = (i + 1).ToString();
-                                SelectListItem item = new SelectListItem()
-                                {
-                                    Value = num,
-                                    Text = num
-                                };
-                                myList.Add(item);
-                            }
-                        }
-                        @Html.DropDownListFor(model => model.IpNumber, myList, htmlAttributes: new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-4 control-label">Note</label>
-                    <div class="col-sm-4">
-                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Some description here", rows="6" })
-                    </div>
-                </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.SelectedServer)
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.DropDownListFor(m => m.SelectedServer, Model.ServerOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.ValidationMessageFor(model => model.SelectedServer)
             </div>
         </div>
-        <!-- /.box-body -->
-        <div class="box-footer">
-            <div class="text-right">
-                <button type="submit" class="btn btn-primary" style="width: 100px">Send</button>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.NumberOfIP)
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.DropDownListFor(model => model.NumberOfIP, Model.NumberOfIPOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.ValidationMessageFor(model => model.NumberOfIP)
             </div>
         </div>
-    }
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.Description)
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.TextAreaFor(model => model.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.ValidationMessageFor(model => model.Description)
+            </div>
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                    @Labels.DialogOK
+                </button>
+            </div>
+        </div>
+                    }
 </section>
+

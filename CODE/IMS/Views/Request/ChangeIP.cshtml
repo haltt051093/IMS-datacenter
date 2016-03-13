@@ -18,7 +18,7 @@
         <div class="form-group">
             <label class="col-sm-4 control-label">Which server do you want change IP?</label>
             <div class="col-sm-2">
-                @Html.DropDownListFor(m => m.SelectedServer, Model.Servers, new { @id = "servercode" })
+                @Html.DropDownListFor(m => m.SelectedServer, Model.ServerOptions, new { @id = "servercode" })
             </div>
         </div>
         <div id="divPartialView" class="hidden">
