@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net.Mail;
 using IMS.Core;
 using IMS.Core.Express;
@@ -25,7 +26,6 @@ namespace IMS.Data.Business
                 return instance;
             }
         }
-
 
         private AccountBLO()
         {
@@ -75,7 +75,15 @@ namespace IMS.Data.Business
 
         public Account GetAccountByCode(string q)
         {
-            return dao.GetByKeys(new Account {Username = q});
+            return dao.GetByKeys(new Account { Username = q });
+        }
+
+        public List<Account> ListAccountSameGroup(string groupCode)
+        {
+            var query = from a in AccountDAO.Current.Table()
+                        where a.GroupCode == groupCode
+                        select a;
+            return query.ToList();
         }
     }
 }

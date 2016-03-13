@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using IMS.Data.Generic;
@@ -37,5 +38,18 @@ namespace IMS.Data.Models
 
         public string Company { get; set; }
 
+        [NotMapped]
+        public string LastName {
+            get
+            {
+                if (string.IsNullOrEmpty(Fullname))
+                {
+                    return string.Empty;
+                }
+                var nameParts = Fullname.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+                var lastPart = nameParts[nameParts.Length - 1];
+                return lastPart;
+            }
+        }
     }
 }

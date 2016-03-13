@@ -52,9 +52,9 @@ namespace IMS.Data.Business
         //    return dao.GetPreviousIp(serverCode, preIp, statusCode);
         //}
 
-        public List<string> GetIpByServer(string serverCode)
+        public List<string> GetIpByServer(string serverCode, string statusCode)
         {
-            return dao.GetIpByServer(serverCode);
+            return dao.GetIpByServer(serverCode, statusCode);
         }
         public ServerIP GetByServerCode(string servercode)
         {

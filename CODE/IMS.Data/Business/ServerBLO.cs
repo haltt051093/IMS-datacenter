@@ -103,7 +103,7 @@ namespace IMS.Data.Business
                 server.StatusCode = newStatus;
                 Update(server);
             }
-            //log ip, object la serverip
+            //log server
             LogChangedContent logServer = new LogChangedContent
             {
                 RequestCode = requestCode,

@@ -246,11 +246,12 @@ namespace IMS.Data.Repository
                 Object = Constants.Object.OBJECT_REQUEST,
                 ObjectStatus = newStatus,
                 ChangedValueOfObject = requestCode,
+                Username = username
             };
             LogChangedContentBLO.Current.AddLog(logRequest);
         }
 
-        public string AddRequest(string requestType, string newStatus, string customer, 
+        public string AddRequest(string requestType, string newStatus, string customer,
             string description, DateTime? appointmenTime)
         {
             var requestCode = GenerateCode(); ;
@@ -276,6 +277,16 @@ namespace IMS.Data.Repository
             }
             IMSContext.Current.SaveChanges();
             return requestCode;
+        }
+
+        public string GetAssignStaff(string requestCode, string statusCode)
+        {
+            var query = from l in LogChangedContentDAO.Current.Table()
+                        where
+                            l.RequestCode == requestCode && l.Object == Constants.Object.OBJECT_REQUEST &&
+                            l.ObjectStatus == statusCode
+                        select l.Username;
+            return query.FirstOrDefault();
         }
     }
 }

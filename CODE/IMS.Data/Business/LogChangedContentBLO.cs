@@ -185,14 +185,60 @@ namespace IMS.Data.Business
             }
         }
 
-        public List<string> ViewDoneRequestBringServerAway(string requestCode)
+        public LogExtentedModel RequestDetailsBringServerAway(string requestCode)
         {
-            var list = GetLogInfoByRequestCode(requestCode, Constants.Object.OBJECT_SERVER);
-            var servers = from l in list
-                group l by l.ChangedValueOfObject
-                into g
-                select g.Key;
-            return servers.ToList();
+            LogExtentedModel data = new LogExtentedModel();
+            List<ServerExtendedModel> list = new List<ServerExtendedModel>();
+            //list server
+            var listServers = GetLogInfoByRequestCode(requestCode, Constants.Object.OBJECT_SERVER)
+                .Where(x => x.ObjectStatus == Constants.StatusCode.SERVER_BRINGING_AWAY).Select(x => x.ChangedValueOfObject);
+            var servers = from s in listServers
+                          select new ServerExtendedModel()
+                          {
+                              ServerCode = s
+                          };
+            data.ReturnServerNumber = listServers.ToList().Count();
+            foreach (var item in servers)
+            {
+                ServerExtendedModel s = new ServerExtendedModel();
+                s.ServerCode = item.ServerCode;
+                //list serverips
+                var listServerIps = GetLogInfoByRequestCode(requestCode, Constants.Object.OBJECT_SERVERIP)
+                    .Where(x => x.ObjectStatus == Constants.StatusCode.SERVERIP_RETURNING && x.ServerCode == s.ServerCode)
+                    .Select(x => x.ChangedValueOfObject);
+                var ips = from i in listServerIps
+                          select new ServerIP
+                          {
+                              CurrentIP = i
+                          };
+                s.ServerIps = ips.ToList();
+                data.ReturnIpNumber = data.ReturnIpNumber + listServerIps.ToList().Count();
+
+                //list serverLocation
+                var listServerLocation = GetLogInfoByRequestCode(requestCode, Constants.Object.OBJECT_LOCATION)
+                    .Where(x => x.ObjectStatus == Constants.StatusCode.LOCATION_USED && x.ServerCode == s.ServerCode)
+                    .Select(x => x.ChangedValueOfObject);
+                s.locations = listServerLocation.ToList();
+                data.ReturnLocationNumber = data.ReturnLocationNumber + listServerLocation.ToList().Count();
+                list.Add(s);
+            }
+            data.Servers = list;
+            return data;
         }
+
+        public List<LocationViewModel> GetLocationOfServer(string serverCode)
+        {
+            var serverlocation = from l in LocationDAO.Current.Table()
+                                 join r in RackDAO.Current.Table()
+                                     on l.RackCode equals r.RackCode into lr
+                                 from sublr in lr.DefaultIfEmpty()
+                                 where l.ServerCode == serverCode
+                                 select new LocationViewModel
+                                 {
+                                     RackName = sublr.RackName,
+                                     RackUnit = l.RackUnit
+                                 };
+            return serverlocation.ToList();
+        } 
     }
 }

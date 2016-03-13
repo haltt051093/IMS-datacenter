@@ -51,6 +51,8 @@ namespace IMS.Data.ViewModels
 
         public List<LocationViewModel> ServerLocation { get; set; }
 
+        public List<string> locations { get; set; } 
+
         public string btnAction { get; set; }
     }
 }

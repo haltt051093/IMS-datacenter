@@ -29,10 +29,10 @@ namespace IMS.Data.Repository
             return Query(x => x.Id == entry.Id).FirstOrDefault();
         }
 
-        public List<string> GetIpByServer(string serverCode)
+        public List<string> GetIpByServer(string serverCode, string statusCode)
         {
             var query =
-                Current.Query(x => x.ServerCode == serverCode && x.StatusCode == Constants.StatusCode.SERVERIP_CURRENT)
+                Current.Query(x => x.ServerCode == serverCode && x.StatusCode == statusCode)
                 .Select(x => x.CurrentIP);
             return query.ToList();
         }
@@ -80,20 +80,11 @@ namespace IMS.Data.Repository
                 Object = Constants.Object.OBJECT_SERVERIP,
                 ChangedValueOfObject = updatedIp,
                 ObjectStatus = newStatus,
-                ServerCode = serverCode
+                ServerCode = serverCode,
+                Username = username
             };
             LogChangedContentBLO.Current.AddLog(logServerIp);
         }
-
-        //public int GetPreviousIp(string serverCode, string preIp, string statusCode)
-        //{
-        //    var query =
-        //        Current.Query(
-        //            x =>
-        //                x.CurrentIP == preIp && x.ServerCode == serverCode &&
-        //                x.StatusCode == statusCode).Select(x => x.Id).FirstOrDefault();
-        //    return query;
-        //}
 
         public List<string> GetIpByStatus(string serverCode, string status)
         {

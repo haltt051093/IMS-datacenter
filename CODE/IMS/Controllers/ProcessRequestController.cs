@@ -98,49 +98,44 @@ namespace IMS.Controllers
             }
             if (rType.Equals(Constants.RequestTypeCode.BRING_SERVER_AWAY))
             {
-                //Get request
-                RequestBringServerAwayViewModel viewmodel = new RequestBringServerAwayViewModel();
                 var request = RequestBLO.Current.GetRequestByRequestCode(rCode);
-                viewmodel.RequestCode = rCode;
+                RequestBringServerAwayViewModel viewmodel = new RequestBringServerAwayViewModel();
+                viewmodel = Mapper.Map<Request, RequestBringServerAwayViewModel>(request);
+                //customer info
+                var customer = AccountBLO.Current.GetAccountByCode(request.Customer);
+                viewmodel.CustomerName = customer.Fullname;
+                viewmodel.Company = customer.Company;
+                viewmodel.Phone = customer.Phone;
+                viewmodel.Username = GetCurrentUserName();
+                //request info
+                viewmodel.StatusName = StatusBLO.Current.GetStatusName(viewmodel.StatusCode);
+                // assignee la dropdownlist
+                if (request.StatusCode == Constants.StatusCode.REQUEST_PENDING)
+                {
+                    var group = GetCurrentUserGroup();
+                    var listStaff = AccountBLO.Current.ListAccountSameGroup(group);
+                    viewmodel.AssignGroup = listStaff
+                        .Select(x => new SelectListItem
+                        {
+                            Value = x.Username,
+                            Text = x.Fullname,
+                            Selected = x.Role == Constants.Role.SHIFT_HEAD
+                        })
+                        .ToList();
+                }
+                else
+                {
+                    viewmodel.StaffCode = RequestBLO.Current.GetAssignStaff(rCode, Constants.StatusCode.REQUEST_WAITING);
+                }
+                //main info
                 if (request != null)
                 {
-                    viewmodel = Mapper.Map<Request, RequestBringServerAwayViewModel>(request);
-                    viewmodel.StatusName = StatusBLO.Current.GetStatusName(viewmodel.StatusCode);
-                    if (viewmodel.StatusName == Constants.StatusName.REQUEST_DONE)
-                    {
-                        //lay du lieu tu log
-                        var selectedServers = LogChangedContentBLO.Current.ViewDoneRequestBringServerAway(rCode);
-                        List<ServerExtendedModel> list = new List<ServerExtendedModel>();
-                        foreach (var servercode in selectedServers)
-                        {
-                            var server = ServerBLO.Current.GetAllServerInfo(servercode);
-                            viewmodel.ReturnIpNumber = viewmodel.ReturnIpNumber + server.ServerIps.Count;
-                            viewmodel.ReturnLocationNumber = viewmodel.ReturnLocationNumber + server.ServerLocation.Count;
-                            list.Add(server);
-                        }
-                        viewmodel.ServerOfCustomer = list;
-                        viewmodel.SelectedServerNumber = list.Count;
-                    }
-                    else
-                    {
-                        var customer = AccountBLO.Current.GetAccountByCode(viewmodel.Customer);
-                        viewmodel.CustomerName = customer.Fullname;
-                        viewmodel.Identification = customer.Identification;
-                        //lay list servers
-                        var serverCodes = LogChangedContentBLO.Current.GetServerCodeByRequestCode(rCode);
-                        List<ServerExtendedModel> list = new List<ServerExtendedModel>();
-                        foreach (var servercode in serverCodes)
-                        {
-                            var server = ServerBLO.Current.GetAllServerInfo(servercode);
-                            viewmodel.ReturnIpNumber = viewmodel.ReturnIpNumber + server.ServerIps.Count;
-                            viewmodel.ReturnLocationNumber = viewmodel.ReturnLocationNumber + server.ServerLocation.Count;
-                            list.Add(server);
-                        }
-                        viewmodel.ServerOfCustomer = list;
-                        viewmodel.SelectedServerNumber = list.Count;
-                    }
+                    var returnValues = LogChangedContentBLO.Current.RequestDetailsBringServerAway(rCode);
+                    viewmodel.ReturnIpNumber = returnValues.ReturnIpNumber;
+                    viewmodel.ReturnLocationNumber = returnValues.ReturnLocationNumber;
+                    viewmodel.SelectedServerNumber = returnValues.ReturnServerNumber;
+                    viewmodel.ServerOfCustomer = returnValues.Servers;
                 }
-                Alert("Success");
                 return View("BringServerAwayInfo", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.ASSIGN_IP))
@@ -523,43 +518,53 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult ProcessRequestBringServerAway(RequestBringServerAwayViewModel viewmodel)
         {
-            var listServer = viewmodel.ServerOfCustomer;
-            foreach (var server in listServer)
+            var staffCode = GetCurrentUserName();
+            if (Request.Form["Accept"] != null)
             {
-                //update and log serverip
-                var serverips = ServerIPBLO.Current.GetIpByStatus(server.ServerCode, Constants.StatusCode.SERVERIP_RETURNING);
-                foreach (var ip in serverips)
-                {
-                    //update and log status cua IP o IPAddresspool
-                    IPAddressPoolBLO.Current.UpdateStatusIpANDLog(viewmodel.RequestCode, server.ServerCode, ip,
-                        Constants.StatusCode.IP_AVAILABLE, Constants.TypeOfLog.LOG_RETURN_IP, Constants.Test.STAFF_NHI);
-                    // update and log statuscode cua bang serverIP
-                    ServerIPBLO.Current.UpdateServerIpANDLog(viewmodel.RequestCode, server.ServerCode, ip,
-                        Constants.TypeOfLog.LOG_RETURN_IP, Constants.StatusCode.SERVERIP_OLD, Constants.Test.STAFF_NHI);
-                }
-
-                //update and log server
-                ServerBLO.Current.UpdateServerStatus(viewmodel.RequestCode, server.ServerCode,
-                    Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.SERVER_DEACTIVATE,
-                    Constants.Test.STAFF_NHI);
-                ServerAttributeBLO.Current.UpdateServerAttributeStatus(server.ServerCode,
-                    Constants.StatusCode.SERVERATTRIBUTE_OLD);
-
-                //add and log request
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode,
-                    Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.REQUEST_DONE, Constants.Test.STAFF_NHI);
-
-                //giai phong location, co can log ko?
-                LocationBLO.Current.SetLocationAvailable(server.ServerCode);
-
-                //change serverip status
-                //ServerIPBLO.Current.ReturnAllIpOfServer(server.ServerCode);
-                //giai phong ip
-                //IPAddressPoolBLO.Current.SetIpAvailable(server.ServerCode);
+                    Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.REQUEST_WAITING, viewmodel.StaffCode);
+                return RedirectToAction("Detais", "ProcessRequest",
+                    new { rType = Constants.RequestTypeCode.BRING_SERVER_AWAY, rCode = viewmodel.RequestCode });
             }
-            Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
-            return RedirectToAction("Index", "Notification");
+            if (Request.Form["Approve"] != null)
+            {
+                var listServer = viewmodel.ServerOfCustomer;
+                foreach (var server in listServer)
+                {
+                    //update and log serverip
+                    var serverips = ServerIPBLO.Current.GetIpByStatus(server.ServerCode, Constants.StatusCode.SERVERIP_RETURNING);
+                    foreach (var ip in serverips)
+                    {
+                        //update and log status cua IP o IPAddresspool
+                        IPAddressPoolBLO.Current.UpdateStatusIpANDLog(viewmodel.RequestCode, server.ServerCode, ip,
+                            Constants.StatusCode.IP_AVAILABLE, Constants.TypeOfLog.LOG_RETURN_IP, staffCode);
+                        // update and log statuscode cua bang serverIP
+                        ServerIPBLO.Current.UpdateServerIpANDLog(viewmodel.RequestCode, server.ServerCode, ip,
+                            Constants.TypeOfLog.LOG_RETURN_IP, Constants.StatusCode.SERVERIP_OLD, staffCode);
+                    }
+                    //update and log server
+                    ServerBLO.Current.UpdateServerStatus(viewmodel.RequestCode, server.ServerCode,
+                        Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.SERVER_DEACTIVATE,
+                        staffCode);
+                    //ServerAttributeBLO.Current.UpdateServerAttributeStatus(server.ServerCode,
+                    //    Constants.StatusCode.SERVERATTRIBUTE_OLD);
 
+                    //add and log request
+                    RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode,
+                        Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.REQUEST_DONE, staffCode);
+
+                    //giai phong location, co can log ko?
+                    LocationBLO.Current.SetLocationAvailable(server.ServerCode);
+
+                    //DOING   giai phong ip
+                    Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+                }
+            }
+            if (Request.Form["Reject"] != null)
+            {
+
+            }
+            return RedirectToAction("Index", "Notification");
         }
 
         [HttpPost]
@@ -637,6 +642,49 @@ namespace IMS.Controllers
             IPAddressPoolBLO.Current.UpdateIP(ivm.ServerCode, ivm.NewIP, ivm.RequestCode, ivm.OldIP);
 
             return RedirectToAction("Detais", new { rType = ivm.RequestType, rCode = ivm.RequestCode });
+        }
+
+        //Accept request
+        public ActionResult AcceptRequest(string requestCode, string requestType)
+        {
+            //doi trang thai cua request
+            if (requestType == Constants.RequestTypeCode.BRING_SERVER_AWAY)
+            {
+                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
+                    Constants.StatusCode.REQUEST_WAITING, Constants.Test.STAFF_NHI);
+            }
+            if (requestType == Constants.RequestTypeCode.ADD_SERVER)
+            {
+                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ADD_SERVER,
+                    Constants.StatusCode.REQUEST_WAITING, Constants.Test.STAFF_NHI);
+            }
+            if (requestType == Constants.RequestTypeCode.ASSIGN_IP)
+            {
+                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ASSIGN_IP,
+                    Constants.StatusCode.REQUEST_PROCESSING, Constants.Test.STAFF_NHI);
+            }
+            if (requestType == Constants.RequestTypeCode.CHANGE_IP)
+            {
+                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
+                    Constants.StatusCode.REQUEST_PROCESSING, Constants.Test.STAFF_NHI);
+            }
+            if (requestType == Constants.RequestTypeCode.RETURN_IP)
+            {
+                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_IP,
+                    Constants.StatusCode.REQUEST_PROCESSING, Constants.Test.STAFF_NHI);
+            }
+            if (requestType == Constants.RequestTypeCode.RENT_RACK)
+            {
+                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RENT_RACK,
+                    Constants.StatusCode.REQUEST_PROCESSING, Constants.Test.STAFF_NHI);
+            }
+            if (requestType == Constants.RequestTypeCode.RETURN_RACK)
+            {
+                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
+                    Constants.StatusCode.REQUEST_PROCESSING, Constants.Test.STAFF_NHI);
+            }
+            //redirect lai list notif
+            return RedirectToAction("Index");
         }
     }
 
