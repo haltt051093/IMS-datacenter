@@ -16,7 +16,7 @@ namespace IMS.Controllers
     public class LocationController : CoreController
     {
         [Authorize(Roles = "Staff,Shift Head,Manager")]
-        public ActionResult Index2()
+        public ActionResult Index()
         {
             var data = new LocationIndexViewModel();
             var locations = LocationBLO.Current.GetAllLocation();
@@ -47,7 +47,7 @@ namespace IMS.Controllers
             return View(data);
         }
         [HttpPost]
-        public ActionResult Index2(LocationIndexViewModel livm)
+        public ActionResult Index(LocationIndexViewModel livm)
         {
             //if (IsAuthorized())
             //{
@@ -59,10 +59,10 @@ namespace IMS.Controllers
                 RackBLO.Current.AddRackAndLocation(rack);
 
                 Success("New Rack added successfully!");
-                return RedirectToAction("Index2");
+                return RedirectToAction("Index");
 
             }
-            return RedirectToAction("Index2");
+            return RedirectToAction("Index");
         }
 
         public ActionResult AssignLocation(Server server, string request, string RackSearch)

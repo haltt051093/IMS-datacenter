@@ -13,7 +13,7 @@ namespace IMS.Controllers
     public class IPController : CoreController
     {
         [Authorize(Roles = "Staff,Shift Head,Manager")]
-        public ActionResult Index2()
+        public ActionResult Index()
         {
             var data = new IPIndexViewModel();
             var ips = IPAddressPoolBLO.Current.GetAllIP();
@@ -50,7 +50,7 @@ namespace IMS.Controllers
 
 
         [HttpPost]
-        public ActionResult Index2(IPIndexViewModel iivm)
+        public ActionResult Index(IPIndexViewModel iivm)
         {
                 if (iivm.Action == "Deactive")
                 {
@@ -72,7 +72,7 @@ namespace IMS.Controllers
                         }
                     }
                     Success("Deactivate IP Address Range Successfully!");
-                return RedirectToAction("Index2");
+                return RedirectToAction("Index");
             }
                 else
                 {
@@ -94,7 +94,7 @@ namespace IMS.Controllers
                     }
                         IPAddressPoolBLO.Current.AddIP(ips);
                         Success("New IP Addresses added successfully!");
-                        return RedirectToAction("Index2");    
+                        return RedirectToAction("Index");    
                 }
         }
 
@@ -118,7 +118,7 @@ namespace IMS.Controllers
                 log.Description = iivm.Description;
                 LogChangedContentDAO.Current.Add(log);
                 Success("Block IP successfully");
-                return RedirectToAction("Index2");
+                return RedirectToAction("Index");
             }
             else
             if (ip.StatusCode == Constants.StatusCode.IP_BLOCKED)
@@ -137,9 +137,9 @@ namespace IMS.Controllers
                 log.PreviousId = blockip.Id;
                 LogChangedContentDAO.Current.Add(log);
                 Success("Unblock IP successfully");
-                return RedirectToAction("Index2");
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index2");
+            return RedirectToAction("Index");
         }
     }
 }
