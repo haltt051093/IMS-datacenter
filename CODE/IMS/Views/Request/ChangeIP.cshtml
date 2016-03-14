@@ -10,50 +10,57 @@
         new BreadcrumbModel("Request", "Create", Pages.RequestChangeIP, new { Type = Constants.RequestTypeCode.CHANGE_IP })
     };
 }
-<script src="~/scripts/jquery.unobtrusive-ajax.js"></script>
-
 <section class="main-content">
     @using (Html.BeginForm("ChangeIp", "Request", FormMethod.Post))
     {
-        <div class="form-group">
-            <label class="col-sm-4 control-label">Which server do you want change IP?</label>
-            <div class="col-sm-2">
-                @Html.DropDownListFor(m => m.SelectedServer, Model.ServerOptions, new { @id = "servercode" })
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.SelectedServer)
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.DropDownListFor(m => m.SelectedServer, Model.ServerOptions, new { @id = "servercode", @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.ValidationMessageFor(model => model.SelectedServer)
             </div>
         </div>
         <div id="divPartialView" class="hidden">
-            <div class="form-group">
-                <label class="col-sm-4 control-label">Which IP do you want to change?</label>
-                <div class="col-sm-2">
-
-                    <table id="MyTable" class="table">
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    @Html.LabelFor(model => model.Ips)
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    <table id="MyTable" class="@Constants.HtmlFormat.DATATABLE_CLASS">
                         <thead>
-                            <tr>
+                            <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
                                 <th>
-                                    @Html.Raw("IP")
+                                    <div>@Labels.IP</div>
                                 </th>
                                 <th>
-                                    @Html.Raw("Select IPs")
+                                    <div>@Labels.IP</div>
                                 </th>
-                                <th></th>
                             </tr>
                         </thead>
                         <tbody id="tbodyid"></tbody>
                     </table>
                     @Html.HiddenFor(model => model.Ips, new { id = "ips" })
-                    @*@Html.HiddenFor(model => model.SelectedServerCode)*@
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="col-sm-4 control-label">Description</label>
-                <div class="col-sm-2">
-                    @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", style = "width: 500px; height: 100px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;", placeholder = "Some description here" } })
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    @Html.LabelFor(model => model.Description)
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.TextAreaFor(model => model.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    @Html.ValidationMessageFor(model => model.Description)
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-sm-offset-4 col-sm-2">
-                    <button name="Action" type="submit" value="send" id="demo">Send</button>
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        @Labels.DialogOK
+                    </button>
                 </div>
             </div>
         </div>
@@ -75,8 +82,7 @@
                     $('#divPartialView').removeClass('hidden');
                     $(data.ServerIPs).each(function (index, item) {
                         //myTable.append($('tr', { value: item.ServerCode, text: item.ServerCode }));
-                        myTable.append('<tr><td>' + item.CurrentIP + '</td><td>' + '<input type="checkbox" id="CheckBoxList"'
-                            + index + ' name="chk" value="' + item.CurrentIP + '" /></td></tr>');
+                        myTable.append('<tr><td>' + '<input type="checkbox" id="CheckBoxList"' + index + ' name="chk" value="' + item.CurrentIP + '" /></td><td>' + item.CurrentIP + '</td></tr>');
                     });
                 }
             });
