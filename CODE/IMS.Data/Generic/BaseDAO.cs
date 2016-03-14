@@ -190,7 +190,10 @@ namespace IMS.Data.Generic
             var props = typeof(TModel).GetProperties();
             foreach (var _prop in props)
             {
-                _prop.SetValue(target, _prop.GetValue(source, null), null);
+                if (_prop.CanRead && _prop.CanWrite)
+                {
+                    _prop.SetValue(target, _prop.GetValue(source, null), null);
+                }
             }
         }
     }

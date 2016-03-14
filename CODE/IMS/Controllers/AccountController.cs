@@ -61,6 +61,10 @@ namespace IMS.Controllers
             return View(q);
         }
 
+        public ActionResult CreateCustomer()
+        {
+            return View();
+        }
         // POST: Account/CreateStaff
         [HttpPost]
         public ActionResult CreateStaff(AccountCreateViewModel accountCreateViewModel)

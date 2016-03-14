@@ -21,22 +21,22 @@ namespace IMS.Models
         public int Id { get; set; }
        
         public string Company { get; set; }
-        [Required]
+        
         public string Username { get; set; }
         public string Password { get; set; }
         public string Role { get; set; }
         public bool Status { get; set; }
-        [Required]
+        
         public string Fullname { get; set; }
-        [Required]
+        
         public string Phone { get; set; }
 
-        [Required]
+        
         [DataType(DataType.EmailAddress, ErrorMessage = "Email format is incorrect")]
         public string Email { get; set; }
-        [Required]
+        
         public string Address { get; set; }
-        [Required]
+       
         public string Identification { get; set; }
         public string GroupCode { get; set; }
         public string RoleSearch { get; set; }

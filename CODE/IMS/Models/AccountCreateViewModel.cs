@@ -8,16 +8,22 @@ namespace IMS.Models
     public class AccountCreateViewModel
     {
         public int Id { get; set; }
-        [Required(ErrorMessage = "Please enter username")]
+        
+        [Required]
         public string Username { get; set; }      
         public string Password { get; set; }
         public string Role { get; set; }
-        public bool Status { get; set; }    
-        public string Fullname { get; set; }     
+        public bool Status { get; set; }  
+        [Required]  
+        public string Fullname { get; set; }   
+        [Required]  
         public string Phone { get; set; }
+        [Required]
         [DataType(DataType.EmailAddress,ErrorMessage = "Email format is incorrect")]
         public string Email { get; set; }   
-        public string Address { get; set; }      
+        [Required]
+        public string Address { get; set; }   
+        [Required]   
         public string Identification { get; set; }
         public string GroupCode { get; set; }
         public string Company { get; set; }
