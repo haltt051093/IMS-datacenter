@@ -21,6 +21,10 @@ namespace IMS.Controllers
         public ActionResult Index(string role, string roleSearch, string message)
         {
             var data = new AccountIndexViewModel();
+            var accounts = AccountBLO.Current.GetAll();
+            var acc =
+                accounts.Select(x => x).Where(x => x.Status == true && ((x.Role == "Staff") ||(x.Role == "Shift Head")));
+            data.Count = acc.Count();
             var roles = RoleBLO.Current.GetAll().Select(x => x.RoleName).ToList();
             data.Roles = roles.Select(x => new SelectListItem {Value = x, Text = x}).ToList();
             data.UserLogin = GetCurrentUserName();
@@ -55,18 +59,6 @@ namespace IMS.Controllers
             }
 
             return View(q);
-        }
-
-        [Authorize(Roles = "Manager")]
-        public ActionResult CreateCustomer()
-        {
-            return View("Index");
-        }
-
-        [Authorize(Roles = "Manager")]
-        public ActionResult CreateStaff()
-        {
-            return View("Index");
         }
 
         // POST: Account/CreateStaff
@@ -238,6 +230,20 @@ namespace IMS.Controllers
             }
             var accountviewmodel = Mapper.Map<Account, AccountCreateViewModel>(account);
             return View(accountviewmodel);
+        }
+
+        [HttpPost]
+        public ActionResult ViewProfile(AccountCreateViewModel acvm)
+        {
+            var account = AccountBLO.Current.GetAccountByCode(acvm.Username);
+            account.Address = acvm.Address;
+            account.Email = acvm.Email;
+            account.Fullname = acvm.Fullname;
+            account.Company = acvm.Company;
+            account.Identification = acvm.Identification;
+            account.Phone = acvm.Phone;
+            AccountDAO.Current.Update(account);
+            return RedirectToAction("ViewProfile", new {username = acvm.Username});
         }
 
         public ActionResult GetForgotPassword()
