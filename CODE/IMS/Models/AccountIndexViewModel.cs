@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using IMS.Data.Models;
 using IMS.Data.ViewModels;
 using System.ComponentModel.DataAnnotations;
-using System.Web.WebPages.Html;
+using System.Web.Mvc;
 
 namespace IMS.Models
 {
@@ -11,18 +11,19 @@ namespace IMS.Models
     {
         public AccountIndexViewModel()
         {
-            Accounts = new List<AccountExtendedModel>();
+            Accounts = new List<Account>();
         }
 
-        public List<AccountExtendedModel> Accounts { get; set; }
+        public List<Account> Accounts { get; set; }
         public List<Account> ListAccount { get; set; }
         public static implicit operator List<object>(AccountIndexViewModel v)
         {
             throw new NotImplementedException();
         }
-
+  
         public int Id { get; set; }
         [Required(ErrorMessage = "Please enter username")]
+        public string Company { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public string Role { get; set; }
@@ -34,7 +35,9 @@ namespace IMS.Models
         public string Address { get; set; }
         public string Identification { get; set; }
         public string GroupCode { get; set; }
-
+        public string RoleSearch { get; set; }
+        public string UserLogin { get; set; }
+        public string RoleLogin { get; set; }
         public List<SelectListItem> Roles { get; set; }
         public List<SelectListItem> Statuses { get; set; }
         public List<SelectListItem> Groups { get; set; }

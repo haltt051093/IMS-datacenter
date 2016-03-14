@@ -21,58 +21,10 @@ namespace IMS.Controllers
         public ActionResult Index(string role, string roleSearch, string message)
         {
             var data = new AccountIndexViewModel();
-            List<Account> lstall = AccountDAO.Current.GetAll();
-            List<Account> rs = new List<Account>();
-            if (role != null)
-            {
-                if (role.Equals("Manager"))
-                {
-                    rs = lstall;
-                }
-                else if (role.Equals("Staff"))
-                {
-                    for (int i = 0; i < lstall.Count; i++)
-                    {
-                        if (!lstall[i].Role.IsNullOrWhiteSpace())
-                        {
-                            if (lstall[i].Role.Equals("Customer"))
-                            {
-                                rs.Add(lstall[i]);
-                            }
-                        }
-
-                    }
-                }
-                else if (role.Equals("Shift Head"))
-                {
-                    for (int i = 0; i < lstall.Count; i++)
-                    {
-                        if (!lstall[i].Role.IsNullOrWhiteSpace())
-                        {
-                            if (lstall[i].Role.Equals("Customer"))
-                            {
-                                rs.Add(lstall[i]);
-                            }
-                        }
-
-                    }
-
-                }
-
-            }
-            if (roleSearch != null && (!("Get All").Equals(roleSearch)))
-            {
-                List<Account> ls = new List<Account>();
-                ls = (from f in rs
-                      where f.Role.Equals(roleSearch)
-                      select f).ToList();
-                data.ListAccount = ls;
-            }
-            else
-            {
-                data.ListAccount = rs;
-            }
-
+            var roles = RoleBLO.Current.GetAll().Select(x => x.RoleName).ToList();
+            data.Roles = roles.Select(x => new SelectListItem {Value = x, Text = x}).ToList();
+            data.UserLogin = GetCurrentUserName();
+            data.RoleLogin = GetCurrentUserRole();
             return View(data);
         }
 
@@ -182,6 +134,8 @@ namespace IMS.Controllers
                 }
                 account.Role = Constants.Role.CUSTOMER;
                 account.GroupCode = Constants.GroupName.NO_GROUP;
+                account.Status = true;
+                account.Password = AccountBLO.Current.GeneratePassword();         
                 AccountBLO.Current.Add(account);
                 //send account info to login to the system
                 AccountBLO.Current.SendAccountInfo(account);

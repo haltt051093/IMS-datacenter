@@ -61,6 +61,24 @@ namespace IMS.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to List of Accounts.
+        /// </summary>
+        public static string AccountIndex {
+            get {
+                return ResourceManager.GetString("AccountIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of Customers.
+        /// </summary>
+        public static string Customer {
+            get {
+                return ResourceManager.GetString("Customer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to IMS.
         /// </summary>
         public static string Home {
