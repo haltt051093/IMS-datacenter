@@ -78,21 +78,28 @@ namespace IMS.Controllers
 
         public ActionResult Login()
         {
-            return View();
+            var returnUrl = Request.QueryString["ReturnUrl"];
+            var data = new AccountLoginViewModel();
+            data.ReturnUrl = returnUrl;
+            return View(data);
         }
 
         [HttpPost]
-        public ActionResult Login(Account q)
+        public ActionResult Login(AccountLoginViewModel q)
         {
-            Account o = AccountDAO.Current.Query(x => x.Username == q.Username && x.Password == q.Password).FirstOrDefault();
+            Account o = AccountDAO.Current.Query(x => x.Username == q.UserName && x.Password == q.Password).FirstOrDefault();
             if (o != null)
             {
-                FormsAuthentication.SetAuthCookie(q.Username, false);
+                FormsAuthentication.SetAuthCookie(q.UserName, false);
 
                 //save account to session
                 Session[Constants.Session.USER_LOGIN] = o;
 
-                return RedirectToAction("Index", "Notification");
+                if (string.IsNullOrEmpty(q.ReturnUrl))
+                {
+                    return RedirectToAction("Index", "Notification");
+                }
+                return Redirect(q.ReturnUrl);
             }
             
             return View(q);
