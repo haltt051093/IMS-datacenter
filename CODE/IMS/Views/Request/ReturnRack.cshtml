@@ -14,19 +14,16 @@
 <section class="main-content">
     @using (Html.BeginForm("ReturnRack", "Request", FormMethod.Post))
     {
-        <div class="row">
-            <div class="col-xs-6">
-                <label>Select Rack: </label>
-                @Html.HiddenFor(model => model.SelectedRacks, new { id = "selectedRacks" })
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                <label>Select Rack</label>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <table id="MyTable" class="table">
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                <table id="MyTable" class="@Constants.HtmlFormat.DATATABLE_CLASS">
                     <thead>
-                        <tr>
+                        <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
                             <th>
-                                <input type="checkbox" id="checkAll" /> Select All
+                                <input type="checkbox" id="checkAll" />
                             </th>
                             <th>
                                 Rack
@@ -68,17 +65,23 @@
                 </table>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-2">
-                <label>Note</label>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.Description)
             </div>
-            <div class="col-xs-10">
-                @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.TextAreaFor(model => model.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.ValidationMessageFor(model => model.Description)
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <button type="submit" class="btn btn-primary" id="btnSend">Send</button>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.HiddenFor(model => model.SelectedRacks, new { id = "selectedRacks" })
+                <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                    @Labels.DialogOK
+                </button>
             </div>
         </div>
     }
