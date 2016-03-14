@@ -258,5 +258,6 @@ namespace IMS.Data.Business
                         select l.ChangedValueOfObject;
             return query.ToList();
         }
+
     }
 }

@@ -80,15 +80,13 @@
                 success: function (data) {
                     $('#divPartialView').removeClass('hidden');
                     $(data.ServerIPs).each(function (index, item) {
-                        //myTable.append($('tr', { value: item.ServerCode, text: item.ServerCode }));
                         myTable.append('<tr><td>' + '<input type="checkbox" id="CheckBoxList"' + index + ' name="chk" value="' + item.CurrentIP + '" /></td><td>' + item.CurrentIP + '</td></tr>');
                     });
                 }
             });
         });
-
         //Get value of selected items
-        $("#demo").click(function () {
+        $("#btnAccept").click(function () {
             var selectedValues = [];
             $("[id*=MyTable] input:checked").each(function () {
                 selectedValues.push($(this).val());
@@ -96,6 +94,5 @@
             $('#ips').val(selectedValues);
         });
     });
-
 </script>
 

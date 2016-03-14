@@ -93,15 +93,5 @@ namespace IMS.Data.Repository
                 .Select(x => x.CurrentIP);
             return query.ToList();
         }
-
-        //public void ReturnAllIpOfServer(string serverCode)
-        //{
-        //    var serverips = Current.Query(x => x.StatusCode == serverCode);
-        //    for (var i = 0; i < serverips.Count; i++)
-        //    {
-        //        serverips[i].StatusCode = Constants.StatusCode.SERVERIP_OLD;
-        //        Update(serverips[i]);
-        //    }
-        //}
     }
 }

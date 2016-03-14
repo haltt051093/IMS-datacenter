@@ -228,10 +228,10 @@ namespace IMS.Controllers
                 viewmodel.Username = GetCurrentUserName();
                 //request info
                 viewmodel.StatusName = StatusBLO.Current.GetStatusName(viewmodel.StatusCode);
-                //Lay so luong IP muon assign
-                var reqDetail = JsonConvert.DeserializeObject<RequestDetailViewModel>(viewmodel.Description);
-                viewmodel.NumberOfIP = reqDetail.NumberOfIp;
-                viewmodel.Description = reqDetail.Description;
+                //lay ip muon change
+                viewmodel.Description = viewmodel.Description;
+                viewmodel.ReturningIps = LogChangedContentBLO.Current.GetChangedValueOfObject(rCode, Constants.Object.OBJECT_SERVERIP,
+                    Constants.StatusCode.SERVERIP_CHANGING);
                 //lay servercode, roi lay ip cua server do, tim nhung ip cung vung con lai
                 var serverCode = LogChangedContentBLO.Current.GetServerCodeByRequestCode(rCode).FirstOrDefault();
                 viewmodel.SelectedServer = serverCode;
@@ -257,40 +257,18 @@ namespace IMS.Controllers
                 }
                 if (viewmodel.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                 {
-                    //DOING
-                    //lay list ips muon change
-                    var returningIps = ServerIPBLO.Current.GetIpByStatus(serverCode, Constants.StatusCode.SERVERIP_CHANGING);
-                    viewmodel.ReturningIps = returningIps;
-                    //Lay so luong IP muon change, tam thoi fix cung
-                    viewmodel.NumberOfIP = returningIps.Count;
                     //Lay list available ip cung vung
                     var listAvailableIps = IPAddressPoolBLO.Current.GetAvailableIpsSameGateway(serverCode);
                     viewmodel.CountAvailableIps = listAvailableIps.Count;
-                    if (listAvailableIps.Count > viewmodel.NumberOfIP)
+                    viewmodel.IpSelectListItems = listAvailableIps.Select(x => new SelectListItem
                     {
-                        //cho hien thi multiple list, ko bao gom randomList
-                        for (int i = 0; i < listAvailableIps.Count; i++)
-                        {
-                            for (int j = 0; j < returningIps.Count; j++)
-                            {
-                                var item = listAvailableIps[i];
-                                if (item.IPAddress.Equals(returningIps[j]))
-                                {
-                                    listAvailableIps.Remove(item);
-                                }
-                            }
-                        }
-                        viewmodel.IpSelectListItems = listAvailableIps.Select(x => new SelectListItem
-                        {
-                            Value = x.IPAddress,
-                            Text = x.IPAddress
-                        }).ToList();
-
-                    }
+                        Value = x.IPAddress,
+                        Text = x.IPAddress
+                    }).ToList();
                 }
                 if (viewmodel.StatusCode == Constants.StatusCode.REQUEST_DONE)
                 {
-                    
+
                 }
                 return View("ChangeIPInfo", viewmodel);
             }
@@ -704,18 +682,33 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult ProcessRequestChangeIp(RequestIPViewModel viewmodel)
         {
-            string last = viewmodel.Ips[0];
-            List<string> ips = last.Split(',').ToList<string>();
-            ips.RemoveAt(0);
-            ips.Reverse();
-            //update and log ServerIP and IpAddress
-            RequestBLO.Current.UpdateChangeIP(viewmodel.ReturningIps, ips,
-                viewmodel.SelectedServer, viewmodel.RequestCode, viewmodel.StatusCode);
+            if (Request.Form["Accept"] != null)
+            {
+                RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode,
+                    Constants.TypeOfLog.LOG_CHANGE_IP, Constants.StatusCode.REQUEST_PROCESSING, viewmodel.StaffCode);
+                return RedirectToAction("Detais", "ProcessRequest",
+                    new { rType = Constants.RequestTypeCode.CHANGE_IP, rCode = viewmodel.RequestCode });
+            }
+            if (Request.Form["Approve"] != null)
+            {
+                foreach (var item in viewmodel.ReturningIps)
+                {
+                    
+                }
+                //DOING
+                string last = viewmodel.Ips[0];
+                List<string> ips = last.Split(',').ToList<string>();
+                ips.RemoveAt(0);
+                ips.Reverse();
+                //update and log ServerIP and IpAddress
+                RequestBLO.Current.UpdateChangeIP(viewmodel.ReturningIps, ips,
+                    viewmodel.SelectedServer, viewmodel.RequestCode, viewmodel.StatusCode);
 
-            //update and log request
-            RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
-                Constants.StatusCode.REQUEST_DONE, Constants.Test.STAFF_NHI);
-            Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+                //update and log request
+                RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
+                    Constants.StatusCode.REQUEST_DONE, Constants.Test.STAFF_NHI);
+                Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+            }
             return RedirectToAction("Index", "Notification");
 
         }
