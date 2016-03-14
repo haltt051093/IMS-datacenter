@@ -17,7 +17,7 @@
             Server Status
         </div>
         <div class="col-xs-8">
-            @Html.DropDownListFor(m => m.SelectedStatus, Model.ServerStatus, new { @id = "servercode" })
+            @Html.DropDownListFor(m => m.SelectedStatus, Model.ServerStatus, "Show all", new { @id = "selectedStatus" })
         </div>
     </div>
 
@@ -33,30 +33,31 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.Servers)
+            @for (int i = 0; i < Model.Servers.Count; i++)
             {
-                <tr>
+                <tr class="check" status-code="@Model.Servers[i].StatusCode">
                     <td>
-                        @Html.ActionLink(item.ServerCode, "Detail", "Server", new { code = @item.ServerCode }, null)
+                        @Html.ActionLink(Model.Servers[i].ServerCode, "Detail", "Server",
+                       new { code = @Model.Servers[i].ServerCode }, null)
                     </td>
                     <td>
-                        @Html.DisplayFor(model => item.CustomerName)
+                        @Html.DisplayFor(model => Model.Servers[i].CustomerName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Status)
+                        @Html.DisplayFor(modelItem => Model.Servers[i].Status)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.DefaultIP)
+                        @Html.DisplayFor(modelItem => Model.Servers[i].DefaultIP)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.RackName)U
-                        @Html.DisplayFor(modelItem => item.RackUnit)
+                        @Html.DisplayFor(modelItem => Model.Servers[i].RackName)U
+                        @Html.DisplayFor(modelItem => Model.Servers[i].RackUnit)
                     </td>
                     <td class="sidebar-menu">
-                        @if (item.Requests.Count > 0)
+                        @if (Model.Servers[i].Requests.Count > 0)
                         {
                             <dl>
-                                @foreach (var request in item.Requests)
+                                @foreach (var request in Model.Servers[i].Requests)
                                 {
                                     if (request.StatusCode == Constants.StatusCode.REQUEST_PENDING ||
                                         request.StatusCode == Constants.StatusCode.REQUEST_WAITING ||
@@ -94,5 +95,15 @@
             "iDisplayLength": -1,
             "aaSorting": [[5, "desc"]] // Sort by first column descending
         });
+    });
+
+    $("#selectedStatus").change(function () {
+        var status = $("#selectedStatus").val();
+        if (status == null || status == '') {
+            $('#example1 tbody tr').show();
+        } else {
+            $('#example1 tbody tr').hide();
+            $('#example1 tbody tr[status-code="' + status + '"]').show();
+        }
     });
 </script>

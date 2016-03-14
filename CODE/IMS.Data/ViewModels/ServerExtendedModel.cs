@@ -35,10 +35,6 @@ namespace IMS.Data.ViewModels
         [Display(Name = "Status", ResourceType = typeof(Labels))]
         public string Status { get; set; }
 
-        public string PartNumber { get; set; }
-
-        public string SerialNumber { get; set; }
-
         public string Memory { get; set; }
 
         public string TempCode { get; set; }

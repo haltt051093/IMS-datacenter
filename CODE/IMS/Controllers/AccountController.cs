@@ -101,7 +101,7 @@ namespace IMS.Controllers
                 }
                 return Redirect(q.ReturnUrl);
             }
-            
+
             return View(q);
         }
 
@@ -275,13 +275,9 @@ namespace IMS.Controllers
             return RedirectToAction("Index", "Account", new { role = role });
         }
 
-        public ActionResult ViewProfile(int? id)
+        public ActionResult ViewProfile(string username)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Account account = AccountBLO.Current.GetById(id);
+            Account account = AccountBLO.Current.GetAccountByCode(username);
             if (account == null)
             {
                 return HttpNotFound();
