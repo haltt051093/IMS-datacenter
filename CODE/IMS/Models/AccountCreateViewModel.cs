@@ -20,6 +20,7 @@ namespace IMS.Models
         public string Address { get; set; }      
         public string Identification { get; set; }
         public string GroupCode { get; set; }
+        public string Company { get; set; }
 
         public List<SelectListItem> Roles { get; set; }
         public List<SelectListItem> Statuses { get; set; }

@@ -12,92 +12,168 @@
 }
 
 <section class="main-content">
-    <dl class="dl-horizontal">
-        <dt>@Labels.ServerCode</dt>
-        <dd>
-            @Html.HiddenFor(model => model.Server.Customer, htmlAttributes: new {@id = "customer"})
-            @Html.HiddenFor(model => model.Server.ServerCode, htmlAttributes: new {@id = "servercode"})
-            @Html.HiddenFor(model => model.Server.Power, htmlAttributes: new {@id = "power"})
-            @Html.DisplayFor(model => model.Server.ServerCode)
-        </dd>
-
-        <dt>@Labels.Customer</dt>
-        <dd>@Html.DisplayFor(model => model.Server.CustomerName)</dd>
-
-        <dt>@Labels.Maker</dt>
-        <dd>@Html.DisplayFor(model => model.Server.Maker)</dd>
-
-        <dt>@Labels.Model</dt>
-        <dd>@Html.DisplayFor(model => model.Server.Model)</dd>
-
-        <dt>@Labels.Power</dt>
-        <dd>@Html.DisplayFor(model => model.Server.Power)W</dd>
-
-        <dt>@Labels.Rack</dt>
-        <dd>@Html.DisplayFor(model => model.Server.Size)U</dd>
-
-        <dt>@Labels.Status</dt>
-
-        <dd>@Html.DisplayFor(model => model.Server.Status)</dd>
-
-        <dt>@Labels.Location</dt>
-
-        <dd>
-            @foreach (var item in Model.Locations)
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="row">
+                <div class="col-xs-4">
+                    Server Code
+                </div>
+                <div class="col-xs-8">
+                    @Html.HiddenFor(model => model.Server.Customer, new { @id = "customer" })
+                    @Html.HiddenFor(model => model.Server.ServerCode, new { @id = "servercode" })
+                    @Html.HiddenFor(model => model.Server.Power, new { @id = "power" })
+                    @Html.DisplayFor(model => model.Server.ServerCode)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    Status
+                </div>
+                <div class="col-xs-8">
+                    @Html.DisplayFor(model => model.Server.Status)
+                </div>
+            </div>
+            @if (Model.Server.PartNumber != null)
             {
-                <div>
-                    @item.RackName U @item.RackUnit
+                <div class="row">
+                    <div class="col-xs-4">
+                        Part Number
+                    </div>
+                    <div class="col-xs-8">
+                        @Html.DisplayFor(model => model.Server.ServerCode)
+                    </div>
                 </div>
             }
-            <label><a data-toggle="modal" class="open-blockIP-modal" href="#changelocation-modal" data-id="@Model.Server.ServerCode" data-id1="@Model.Server.Size">Change Location?</a></label>
-        </dd>
-
-        <dt>@Labels.RegisteredDate</dt>
-        <dd>@Html.DisplayFor(model => model.Server.RegisteredDate)</dd>
-
-        <dt>@Labels.NoOfOutlets</dt>
-        <dd>@Html.DisplayFor(model => model.Server.Outlet)</dd>
-
-        <dt>@Labels.OtherAttributes</dt>
-        <dd>
-            @*@if (Model.Attributes.Count == 0)
+            @if (Model.Server.SerialNumber != null)
             {
-                @Html.Raw("No other attributes")
+                <div class="row">
+                    <div class="col-xs-4">
+                        Serial Number
+                    </div>
+                    <div class="col-xs-8">
+                        @Html.DisplayFor(model => model.Server.ServerCode)
+                    </div>
+                </div>
+            }
+            <div class="row">
+                <div class="col-xs-4">
+                    Power
+                </div>
+                <div class="col-xs-8">
+                    @Html.DisplayFor(model => model.Server.Power)W
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    Size
+                </div>
+                <div class="col-xs-8">
+                    @Html.DisplayFor(model => model.Server.Size)U
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    Using Bandwidth
+                </div>
+                <div class="col-xs-8">
+                    @Html.DisplayFor(model => model.Server.Bandwidth)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    Brought in day
+                </div>
+                <div class="col-xs-8">
+                    @Html.DisplayFor(model => model.Server.RegisteredDate)
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            @if (Model.CustomerInfo.Company != null)
+            {
+                <div class="row">
+                    <div class="col-xs-4">
+                        Comapny
+                    </div>
+                    <div class="col-xs-8">
+                        @Html.DisplayFor(model => model.CustomerInfo.Company)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        Representative
+                    </div>
+                    <div class="col-xs-8">
+                        @Html.ActionLink(Model.CustomerInfo.Fullname, "ViewProfile", "Account",
+                       new { username = Model.CustomerInfo.Username }, null)
+                    </div>
+                </div>
             }
             else
             {
-                <ul class="list-group" id="currentIps">
-                    @foreach (var item in Model.Attributes)
-                    {
-                        <li class="list-group-item">
-                            @item.AttributeName
-                            :
-                            @item.AttributeValue
-                        </li>
-                    }
-                </ul>
-            }*@
-        </dd>
+                <div class="row">
+                    <div class="col-xs-4">
+                        Customer
+                    </div>
+                    <div class="col-xs-8">
+                        @Html.ActionLink(Model.CustomerInfo.Fullname, "ViewProfile", "Account",
+                       new { username = Model.CustomerInfo.Username }, null)
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="col-xs-4">
+                Current IP
+            </div>
+            <div class="col-xs-8">
+                @if (Model.CurrentIPs.Count == 0)
+                {
+                    @Html.Raw("No IP")
+                }
+                else
+                {
+                    <ul class="list-group">
+                        @foreach (var item in Model.CurrentIPs)
+                        {
+                            if (item.CurrentIP == Model.Server.DefaultIP)
+                            {
+                                <li class="list-group-item">
+                                    <b style="color:blue;">@item.CurrentIP</b>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="list-group-item">
+                                    @item.CurrentIP
+                                </li>
+                            }
 
-        <dt>@Labels.CurrentIP</dt>
-        <dd>
-            @if (Model.CurrentIPs.Count == 0)
-            {
-                @Html.Raw("No IP")
-            }
-            else
-            {
-                <ul class="list-group">
-                    @foreach (var item in Model.CurrentIPs)
-                    {
-                        <li class="list-group-item">
-                            @item.CurrentIP
-                        </li>
-                    }
-                </ul>
-            }
-        </dd>
-    </dl>
+                        }
+                    </ul>
+                }
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="col-xs-4">
+                Location
+            </div>
+            <div class="col-xs-8">
+                @foreach (var item in Model.Locations)
+                {
+                    <div>
+                        @item.RackName U @item.RackUnit
+                    </div>
+                }
+                <label>
+                    <a data-toggle="modal" class="open-blockIP-modal" href="#changelocation-modal"
+                       data-id="@Model.Server.ServerCode" data-id1="@Model.Server.Size">Change Location?</a>
+                </label>
+            </div>
+        </div>
+    </div>
 </section>
 
 <!-- CHANGE LOCATION MODAL -->
@@ -118,29 +194,29 @@
                             <label>Location: @Html.DropDownListFor(model => model.RackCode, Model.Racks, new { @class = "form-control input-sm", style = "width: 150px" }) </label>
                         </div>
                     </div>
-                    
-                        <section class="content">
-                           
-                                   
-                                        <table id="example1" class="table table-bordered table-hover">
-                                            <thead>
-                                                <tr style="background-color: #404040">
-                                                    <th><h4 style="color: ghostwhite">Rack Code</h4>
-                                                    <th><h4 style="color: ghostwhite">Rack Name</h4>
-                                                    <th><h4 style="color: ghostwhite">Rack Unit</h4></th>
-                                                    <th><h4 style="color: ghostwhite">Server Code</h4></th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>                                           
-                                    </table>                 
 
-                        </section><!-- /.content -->
-                   
+                    <section class="content">
+
+
+                        <table id="example1" class="table table-bordered table-hover">
+                            <thead>
+                                <tr style="background-color: #404040">
+                                    <th><h4 style="color: ghostwhite">Rack Code</h4>
+                                    <th><h4 style="color: ghostwhite">Rack Name</h4>
+                                    <th><h4 style="color: ghostwhite">Rack Unit</h4></th>
+                                    <th><h4 style="color: ghostwhite">Server Code</h4></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+
+                    </section><!-- /.content -->
+
                 </div>
                 <div class="modal-footer">
                     <input class="hidden" name="ServerCode" id="servercode" value="" />
                     <input class="hidden" name="Size" id="size" value="" />
-                    
+
                     <button type="submit" class="btn btn-primary">Save Change</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
 
@@ -175,20 +251,20 @@
                         { data: "LocationCode" }
                     ],
                     iDisplayLength: 42,
-                    
+
                     fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                         var row = $(nRow);
                         var actionCell = $(nRow.cells[4]);
                         actionCell.html('');
                         actionCell.append('<input type="hidden" name="Selected['  + iDisplayIndex + '].LocationCode" value="'+aData.LocationCode+'">');
                         switch (aData.StatusName) {
-                        case 'Free':
-                            actionCell.append('<input type="checkbox" name="Selected['  + iDisplayIndex + '].IsSelected" value="true"/>');
+                            case 'Free':
+                                actionCell.append('<input type="checkbox" name="Selected['  + iDisplayIndex + '].IsSelected" value="true"/>');
 
-                            break;
-                        default:
-                            actionCell.append('<input type="checkbox" name="Selected['  + iDisplayIndex + '].IsSelected" value="true"/>');
-                            break;
+                                break;
+                            default:
+                                actionCell.append('<input type="checkbox" name="Selected['  + iDisplayIndex + '].IsSelected" value="true"/>');
+                                break;
 
                         }
 
@@ -211,10 +287,10 @@
                 $(document).on("click", ".open-blockIP-modal", function () {
                     var code  = $(this).data('id');
                     var size = $(this).data('id1');
-                
+
                     $(".modal-footer #servercode").val(code);
                     $(".modal-footer #size").val(size);
-                 
+
 
 
                 });

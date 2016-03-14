@@ -74,7 +74,8 @@ namespace IMS.Data.Repository
                             DefaultIP = s.DefaultIP,
                             Customer = s.Customer,
                             ServerCode = s.ServerCode,
-                            RackName = subl.RackName
+                            RackName = subl.RackName,
+                            StatusCode = s.StatusCode
 
                         };
             return query.ToList();
@@ -139,9 +140,6 @@ namespace IMS.Data.Repository
                         join st in StatusDAO.Current.Table()
                             on s.StatusCode equals st.StatusCode into stsl
                         from subst in stsl.DefaultIfEmpty()
-                        join a in AccountDAO.Current.Table()
-                            on s.Customer equals a.Username into astsl
-                        from suba in astsl.DefaultIfEmpty()
                         where s.ServerCode == serverCode && s.StatusCode == status
                         select new ServerExtendedModel
                         {
@@ -149,7 +147,6 @@ namespace IMS.Data.Repository
                             RackName = subl.RackName,
                             RackUnit = subl.RackUnit,
                             Status = subst.StatusName,
-                            CustomerName = suba.Fullname,
                             Customer = s.Customer,
                             Id = s.Id,
                             Maker = s.Maker,
@@ -160,7 +157,9 @@ namespace IMS.Data.Repository
                             Power = s.Power,
                             RegisteredDate = s.RegisteredDate,
                             Outlet = s.Outlet,
-                            Bandwidth = s.Bandwidth
+                            Bandwidth = s.Bandwidth,
+                            PartNumber = s.PartNumber,
+                            SerialNumber = s.SerialNumber
                         };
             return query.FirstOrDefault();
         }

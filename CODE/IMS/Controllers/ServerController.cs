@@ -38,28 +38,23 @@ namespace IMS.Controllers
         // GET: Server/Details
         public ActionResult Detail(string code)
         {
-            var server = ServerBLO.Current.GetServerByCode(code, Constants.StatusCode.SERVER_RUNNING);
-            //var serverattributes = ServerBLO.Current.GetServerAttributes(serverCode);
-            var servercurrentips = ServerBLO.Current.GetCurrentIP(code);
-
             var data = new ServerDetailsViewModel();
+            data.Server = ServerBLO.Current.GetServerByCode(code, Constants.StatusCode.SERVER_RUNNING);
+            //var serverattributes = ServerBLO.Current.GetServerAttributes(serverCode);
+            data.CurrentIPs = ServerBLO.Current.GetCurrentIP(code);
             //them list location
-            data.Locations = LocationBLO.Current.GetLocationsOfServer(server.ServerCode);
-            //data.Attributes = serverattributes;
-            data.Server = server;
-            data.CurrentIPs = servercurrentips;
-
-            var locations = LocationBLO.Current.GetChangeLocation(server);
-
+            data.Locations = LocationBLO.Current.GetLocationsOfServer(data.Server.ServerCode);
+            var locations = LocationBLO.Current.GetChangeLocation(data.Server);
             var listrack = locations.OrderBy(x => x.RackName).GroupBy(x => x.RackName).Select(x => x.FirstOrDefault());
             data.Racks = listrack.Select(x => new SelectListItem
             {
                 Value = x.RackCode,
                 Text = x.RackName
             }).ToList();
-
             data.Locations1 = locations;
             data.ServerCode = code;
+            //get customer
+            data.CustomerInfo = AccountBLO.Current.GetAccountByCode(data.Server.Customer);
             return View(data);
         }
 
