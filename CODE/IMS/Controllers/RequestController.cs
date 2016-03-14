@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
+using IMS.Authentications;
 using IMS.Core;
 using IMS.Data.Business;
 using IMS.Data.Models;
@@ -13,6 +14,7 @@ using Newtonsoft.Json;
 
 namespace IMS.Controllers
 {
+    [Roles(Constants.Role.CUSTOMER)]
     public class RequestController : CoreController
     {
         public ActionResult Index()
@@ -104,11 +106,11 @@ namespace IMS.Controllers
                 else if (requestTypeCode == Constants.RequestTypeCode.RENT_RACK)
                 {
                     var data = new RequestRentRackViewModel();
-                    List<SelectListItem> myList = new List<SelectListItem>();
-                    for (int i = 0; i < 10; i++)
+                    var myList = new List<SelectListItem>();
+                    for (var i = 0; i < 10; i++)
                     {
-                        string num = (i + 1).ToString();
-                        SelectListItem item = new SelectListItem()
+                        var num = (i + 1).ToString();
+                        var item = new SelectListItem()
                         {
                             Value = num,
                             Text = num
@@ -149,7 +151,7 @@ namespace IMS.Controllers
             var customer = GetCurrentUserName();
             var listRacks = viewmodel.AllRacks;
             //Add and log request
-            string requestCode = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.RETURN_RACK,
+            var requestCode = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.RETURN_RACK,
                 Constants.StatusCode.REQUEST_PENDING, customer, viewmodel.Description,
                 null, null, Constants.TypeOfLog.LOG_RETURN_RACK, null);
             foreach (var item in listRacks)
@@ -184,7 +186,7 @@ namespace IMS.Controllers
             viewmodel.Description = JsonConvert.SerializeObject(requestDetail);
 
             //Add and log request
-            string result = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.RENT_RACK,
+            var result = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.RENT_RACK,
                 Constants.StatusCode.REQUEST_PENDING, customer, viewmodel.Description,
                 null, null, Constants.TypeOfLog.LOG_RENT_RACK, null);
 
@@ -203,28 +205,28 @@ namespace IMS.Controllers
         public ActionResult AddServer(RequestAddServerViewModel viewmodel)
         {
             //add requestCode
-            string uniqueRequestCode = RequestBLO.Current.GenerateCode();
+            var uniqueRequestCode = RequestBLO.Current.GenerateCode();
             //add server, trang thai server la waiting
             foreach (var item in viewmodel.Servers)
             {
                 var server = Mapper.Map<ServerExtendedModel, Server>(item);
                 server.Customer = Constants.Test.CUSTOMER_MANHNH;
-                string serverCode = ServerDAO.Current.AddServer(server);
+                var serverCode = ServerDAO.Current.AddServer(server);
 
                 //add server attribute serial number, part number, memory
 
-                List<ServerAttribute> serverAttributes = new List<ServerAttribute>();
-                List<string> attributeCodes = new List<string>();
+                var serverAttributes = new List<ServerAttribute>();
+                var attributeCodes = new List<string>();
                 attributeCodes.Add(Constants.ServerAttributeCode.PART_NUMBER);
                 attributeCodes.Add(Constants.ServerAttributeCode.SERIAL_NUMBER);
                 attributeCodes.Add(Constants.ServerAttributeCode.MEMORY);
-                List<string> attributeValues = new List<string>();
+                var attributeValues = new List<string>();
                 attributeValues.Add(item.PartNumber);
                 attributeValues.Add(item.SerialNumber);
                 attributeValues.Add(item.Memory);
-                for (int i = 0; i < attributeValues.Count; i++)
+                for (var i = 0; i < attributeValues.Count; i++)
                 {
-                    ServerAttribute sa = new ServerAttribute();
+                    var sa = new ServerAttribute();
                     sa.AttributeValue = attributeValues[i];
                     sa.AttributeCode = attributeCodes[i];
                     sa.ServerCode = serverCode;
@@ -236,12 +238,12 @@ namespace IMS.Controllers
                 ServerAttributeBLO.Current.AddMany(serverAttributes);
 
                 //Add request and log
-                string result = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.ADD_SERVER,
+                var result = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.ADD_SERVER,
                     Constants.StatusCode.REQUEST_PENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
                     viewmodel.AppointmentTime, serverCode, Constants.TypeOfLog.LOG_ADD_SERVER, uniqueRequestCode);
 
                 // log object server
-                LogChangedContent logServer = new LogChangedContent
+                var logServer = new LogChangedContent
                 {
                     RequestCode = result,
                     TypeOfLog = Constants.TypeOfLog.LOG_ADD_SERVER,
@@ -302,7 +304,7 @@ namespace IMS.Controllers
                     //get currentIps
                     var currentIps = ServerIPBLO.Current.GetIpByServer(item.ServerCode, Constants.StatusCode.SERVERIP_CURRENT);
                     //Add and log request
-                    LogChangedContent logRequest = new LogChangedContent
+                    var logRequest = new LogChangedContent
                     {
                         RequestCode = requestCode,
                         TypeOfLog = Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
@@ -318,7 +320,7 @@ namespace IMS.Controllers
                     foreach (var item1 in serverLocation)
                     {
                         var lc = item1.RackName + "U" + item1.RackUnit;
-                        LogChangedContent logLocation = new LogChangedContent
+                        var logLocation = new LogChangedContent
                         {
                             RequestCode = requestCode,
                             TypeOfLog = Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
@@ -356,13 +358,13 @@ namespace IMS.Controllers
             if (selected.Count > 0)
             {
                 //Add and log request
-                string result = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.RETURN_IP,
+                var result = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.RETURN_IP,
                     Constants.StatusCode.REQUEST_PENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
                     null, viewmodel.SelectedServer, Constants.TypeOfLog.LOG_RETURN_IP, null);
 
                 //update and log serverip muon return
-                string last = selected[0];
-                List<string> ips = last.Split(',').ToList<string>();
+                var last = selected[0];
+                var ips = last.Split(',').ToList<string>();
                 ips.Reverse();
                 foreach (var item in ips)
                 {
@@ -398,7 +400,7 @@ namespace IMS.Controllers
                 }
                 viewmodel.Description = JsonConvert.SerializeObject(requestDetail);
                 //Add request and log
-                string result = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.ASSIGN_IP,
+                var result = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.ASSIGN_IP,
                     Constants.StatusCode.REQUEST_PENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
                     null, viewmodel.SelectedServer, Constants.TypeOfLog.LOG_ASSIGN_IP, null);
 
@@ -420,12 +422,12 @@ namespace IMS.Controllers
             if (selected.Count > 0)
             {
                 //Add request and log
-                string result = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.CHANGE_IP,
+                var result = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.CHANGE_IP,
                     Constants.StatusCode.REQUEST_PENDING, Constants.Test.CUSTOMER_MANHNH, viewmodel.Description,
                     null, viewmodel.SelectedServer, Constants.TypeOfLog.LOG_CHANGE_IP, null);
                 //update and log tat ca ip muon change --> chi co serverip
-                string last = selected[0];
-                List<string> ips = last.Split(',').ToList<string>();
+                var last = selected[0];
+                var ips = last.Split(',').ToList<string>();
                 ips.Reverse();
                 foreach (var item in ips)
                 {
@@ -450,7 +452,7 @@ namespace IMS.Controllers
         {
             var list = ServerIPDAO.Current.Query(x => x.ServerCode == model.SelectedServer
                             && x.StatusCode == Constants.StatusCode.SERVERIP_CURRENT).ToList();
-            RequestIPViewModel newmodel = model;
+            var newmodel = model;
             newmodel.ServerIPs = list;
             return Json(newmodel, JsonRequestBehavior.AllowGet);
         }
@@ -475,7 +477,7 @@ namespace IMS.Controllers
                 };
                 TempRequestBLO.Current.Update(temp);
             }
-            RequestAddServerViewModel pass = new RequestAddServerViewModel()
+            var pass = new RequestAddServerViewModel()
             {
                 Server = server
             };
@@ -489,7 +491,7 @@ namespace IMS.Controllers
             var temp = TempRequestBLO.Current.GetByModel(new TempRequest { TempCode = code });
             TempRequestBLO.Current.Remove(temp);
             //quay lai trang cu
-            RequestType rt = new RequestType();
+            var rt = new RequestType();
             rt.RequestTypeCode = Constants.RequestTypeCode.ADD_SERVER;
             return RedirectToAction("Index", "Home", rt);
         }

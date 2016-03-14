@@ -234,8 +234,12 @@
                         
                         if (event.Status == '@Constants.StatusCode.REQUEST_DONE') {
                             //event.color = "#FFB347"; //Em andamento
-                            element.css('background-color', '#FFB347');
-                        } 
+                            element.css('background-color', '#009900');
+                        }
+                        if (event.Status != '@Constants.StatusCode.REQUEST_DONE') {
+                            //event.color = "#FFB347"; //Em andamento
+                            element.css('background-color', '#cc0000');
+                        }
                     },
                     allDaySlot: false,
                     defaultView: 'agendaDay',
