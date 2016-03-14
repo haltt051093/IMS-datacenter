@@ -14,45 +14,55 @@
 <section class="main-content">
     @using (Html.BeginForm("ReturnIp", "Request", FormMethod.Post))
     {
-        <div class="row">
-            <div class="col-xs-4">
-                Select Server:
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.SelectedServer)
             </div>
-            <div class="col-xs-8">
-                @Html.DropDownListFor(m => m.SelectedServer, Model.ServerOptions, new { @id = "servercode" })
-            </div>
-        </div>
-        <div class="row hidden" id="divPartialView">
-            <div class="col-xs-12">
-                <table id="MyTable" class="table">
-                    <thead>
-                        <tr>
-                            <th>
-                                <input type="checkbox" id="checkAll" />check all
-                            </th>
-                            <th>
-                                @Html.Raw("Select IPs")
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-            @Html.HiddenFor(model => model.Ips, new { id = "ips" })
-            @Html.HiddenFor(model => model.SelectedServer)
-        </div>
-        <div class="row">
-            <div class="col-xs-4">
-                Note
-            </div>
-            <div class="col-xs-8">
-                @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", style = "width: 500px; height: 100px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;", placeholder = "Some description here" } })
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.DropDownListFor(m => m.SelectedServer, Model.ServerOptions, new { @id = "servercode", @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.ValidationMessageFor(model => model.SelectedServer)
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <button type="submit" class="btn btn-primary" id="demo">Send</button>
+        <div id="divPartialView" class="hidden">
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    @Html.LabelFor(model => model.Ips)
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    <table id="MyTable" class="@Constants.HtmlFormat.DATATABLE_CLASS">
+                        <thead>
+                            <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
+                                <th>
+                                    <div>@Labels.IP</div>
+                                </th>
+                                <th>
+                                    <div>@Labels.IP</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyid"></tbody>
+                    </table>
+                    @Html.HiddenFor(model => model.Ips, new { id = "ips" })
+                    @Html.HiddenFor(model => model.SelectedServer)
+                </div>
+            </div>
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.Description)
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.TextAreaFor(model => model.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.ValidationMessageFor(model => model.Description)
+            </div>
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                    @Labels.DialogOK
+                </button>
             </div>
         </div>
     }
