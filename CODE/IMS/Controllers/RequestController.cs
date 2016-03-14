@@ -59,20 +59,6 @@ namespace IMS.Controllers
                     return View("AddServer", data);
 
                 }
-                else if (requestTypeCode == Constants.RequestTypeCode.ASSIGN_IP)
-                {
-                    var data = new RequestIPViewModel();
-                    for (var i = 1; i < 17; i++)
-                    {
-                        data.NumberOfIPOptions.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
-                    }
-
-                    var listServers = ServerDAO.Current.Query(x => x.Customer == Constants.Test.CUSTOMER_MANHNH);
-                    data.ServerOptions = listServers
-                        .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.Model })
-                        .ToList();
-                    return View("AssignIP", data);
-                }
                 else if (requestTypeCode == Constants.RequestTypeCode.BRING_SERVER_AWAY)
                 {
                     var data = new RequestBringServerAwayViewModel();
@@ -92,6 +78,20 @@ namespace IMS.Controllers
                     }
 
                     return View("BringServerAway", data);
+                }
+                else if (requestTypeCode == Constants.RequestTypeCode.ASSIGN_IP)
+                {
+                    var data = new RequestIPViewModel();
+                    for (var i = 1; i < 17; i++)
+                    {
+                        data.NumberOfIPOptions.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+                    }
+
+                    var listServers = ServerDAO.Current.Query(x => x.Customer == Constants.Test.CUSTOMER_MANHNH);
+                    data.ServerOptions = listServers
+                        .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.Model })
+                        .ToList();
+                    return View("AssignIP", data);
                 }
                 else if (requestTypeCode == Constants.RequestTypeCode.CHANGE_IP)
                 {
@@ -141,6 +141,27 @@ namespace IMS.Controllers
             var requestTypes = RequestTypeBLO.Current.GetAll();
             _data.RequestTypes = requestTypes;
             return View(_data);
+        }
+
+        public ActionResult ReturnRackByBringServerAway(string rackCode)
+        {
+            var data = new RequestBringServerAwayViewModel();
+            //lay server cua customer
+            data.ServerOfCustomer = ServerBLO.Current.GetServerOfCustomer(Constants.Test.CUSTOMER_MANHNH);
+            //Muon hien thi number of server trong rack tuy theo viec lua chon dropdownlist
+            data.ServerNumber = data.ServerOfCustomer.Count();
+            //rack cua server, select all va list cua rack, neu ko co thi ko hien
+            var rackOfCustomer = RackOfCustomerBLO.Current.GetRacksOfCustomer(Constants.Test.CUSTOMER_MANHNH,
+                Constants.StatusCode.RACKOFCUSTOMER_CURRENT);
+            //check select all 
+            if (rackOfCustomer.Count > 0)
+            {
+                data.RackOfCustomer = rackOfCustomer
+                .Select(x => new SelectListItem { Value = x.RackCode, Text = x.RackName,
+                    Selected = x.RackCode == rackCode })
+                .ToList();
+            }
+            return View("BringServerAway", data);
         }
         #endregion
 
@@ -255,24 +276,6 @@ namespace IMS.Controllers
                 };
                 LogChangedContentBLO.Current.AddLog(logServer);
             }
-
-            ////lay thong tin attributes, đã lấy được, giờ tìm cách gộp 2 mảng song song
-            //List<string> attributeValues = viewmodel.AttributeValues;
-            //List<string> attributeCodes = viewmodel.SelectedAttributes;
-            //List<ServerAttribute> serverAttributes = new List<ServerAttribute>();
-            //for (int i = 0; i < attributeValues.Count; i++)
-            //{
-            //    ServerAttribute sa = new ServerAttribute();
-            //    sa.AttributeValue = attributeValues[i];
-            //    sa.AttributeCode = attributeCodes[i];
-            //    sa.ServerCode = serverCode;
-            //    sa.UpdatedVersion = 0;
-            //    sa.StatusCode = Constants.StatusCode.SERVERATTRIBUTE_UPDATING;
-            //    serverAttributes.Add(sa);
-            //}
-            ////add server attributes
-            //ServerAttributeBLO.Current.AddMany(serverAttributes);
-
             //Xoa session server
             if (Session[Constants.Session.REQUEST_CODE] != null)
             {
@@ -457,7 +460,6 @@ namespace IMS.Controllers
             return Json(newmodel, JsonRequestBehavior.AllowGet);
         }
 
-        //public ActionResult SaveTempData(RequestAddServerViewModel r)
         public ActionResult SaveTempData(ServerExtendedModel server)
         {
             if (server.btnAction == Constants.FormAction.OK_ACTION)
@@ -482,7 +484,6 @@ namespace IMS.Controllers
                 Server = server
             };
             return Json(pass, JsonRequestBehavior.AllowGet);
-            //return RedirectToAction("Create", rt);
         }
 
         public ActionResult DeleteTempServer(string code)

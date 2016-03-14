@@ -73,7 +73,8 @@ namespace IMS.Data.Business
             return code;
         }
 
-        public void UpdateRackANDLog(string requestCode, string rackCode, string typeOfLog, string customer, string staff, string newStatus)
+        public void UpdateRackANDLog(string requestCode, string rackCode, string rackName,
+            string typeOfLog, string customer, string staff, string newStatus)
         {
             var query = RackDAO.Current.Query(x => x.RackCode == rackCode).FirstOrDefault();
             if (query != null)
@@ -87,7 +88,7 @@ namespace IMS.Data.Business
                 RequestCode = requestCode,
                 TypeOfLog = typeOfLog,
                 Object = Constants.Object.OBJECT_RACK,
-                ChangedValueOfObject = rackCode,
+                ChangedValueOfObject = rackName,
                 ObjectStatus = newStatus,
                 Username = staff
             };

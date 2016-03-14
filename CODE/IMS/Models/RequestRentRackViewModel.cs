@@ -13,8 +13,11 @@ namespace IMS.Models
         public List<SelectListItem> Numbers { get; set; }
         public string Description { get; set; }
         public MultiSelectList AvailableRacks { get; set; }
-        public string[] SelectedRacks { get; set; }
         public List<RackExtendedModel> listRackByRows { get; set; }
+        public List<SelectListItem> ListRows { get; set; }
+        public string SelectedRow { get; set; }
+        public List<string> RentedRacks { get; set; } 
+
         //customer info
         public string Customer { get; set; }
         public string CustomerName { get; set; }

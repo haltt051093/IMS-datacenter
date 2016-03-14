@@ -59,7 +59,8 @@
                                     @Html.DisplayFor(model => Model.AllRacks[i].ServerNum)
                                     @if (Model.AllRacks[i].ServerNum != 0)
                                     {
-                                        <a href="#">Return all servers</a>
+                                        @Html.ActionLink("Return all servers", "ReturnRackByBringServerAway", "Request",
+                                       new { rackCode = Model.AllRacks[i].RackCode }, null)
                                     }
                                 </td>
                             </tr>

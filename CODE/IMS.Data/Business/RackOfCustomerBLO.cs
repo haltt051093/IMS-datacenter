@@ -65,7 +65,7 @@ namespace IMS.Data.Business
             return dao.CountServerPerRack(customer);
         }
 
-        public void AddRackOfCustomerANDLog(string requestCode, string rackCode, string typeOfLog, 
+        public void AddRackOfCustomerANDLog(string requestCode, string rackCode, string rackName, string typeOfLog, 
             string customer, string staff)
         {
             var rackOfCustomer = new RackOfCustomer
@@ -82,7 +82,7 @@ namespace IMS.Data.Business
                 RequestCode = requestCode,
                 TypeOfLog = typeOfLog,
                 Object = Constants.Object.OBJECT_RACKOFCUSTOMER,
-                ChangedValueOfObject = rackCode,
+                ChangedValueOfObject = rackName,
                 ObjectStatus = Constants.StatusCode.RACKOFCUSTOMER_CURRENT,
                 Username = staff
             };

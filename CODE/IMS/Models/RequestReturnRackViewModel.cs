@@ -19,6 +19,7 @@ namespace IMS.Models
         public string StatusCode { get; set; }
         public string StatusName { get; set; }
         public string StaffCode { get; set; }
+        public string StaffName { get; set; }
         public DateTime? RequestedTime { get; set; }
         public string Username { get; set; }
         public List<SelectListItem> AssignGroup { get; set; }

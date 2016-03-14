@@ -228,6 +228,7 @@ namespace IMS.Data.Repository
                 ObjectStatus = Constants.StatusCode.REQUEST_PENDING,
                 ChangedValueOfObject = requestCode,
                 ServerCode = serverCode,
+                Description = description
             };
             LogChangedContentBLO.Current.AddLog(logRequest);
             return requestCode;
@@ -279,14 +280,15 @@ namespace IMS.Data.Repository
             return requestCode;
         }
 
-        public string GetAssignStaff(string requestCode, string statusCode)
+        public Account GetAssignStaff(string requestCode, string statusCode)
         {
             var query = from l in LogChangedContentDAO.Current.Table()
                         where
                             l.RequestCode == requestCode && l.Object == Constants.Object.OBJECT_REQUEST &&
                             l.ObjectStatus == statusCode
                         select l.Username;
-            return query.FirstOrDefault();
+            var account = AccountBLO.Current.GetAccountByCode(query.FirstOrDefault());
+            return account;
         }
 
        

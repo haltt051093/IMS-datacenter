@@ -137,7 +137,7 @@ namespace IMS.Data.Business
             return dao.AddRequest(requestType, newStatus, customer, description, appointmenTime);
         }
 
-        public string GetAssignStaff(string requestCode, string statusCode)
+        public Account GetAssignStaff(string requestCode, string statusCode)
         {
             return dao.GetAssignStaff(requestCode, statusCode);
         }

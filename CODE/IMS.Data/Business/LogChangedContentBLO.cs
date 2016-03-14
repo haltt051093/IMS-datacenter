@@ -250,5 +250,13 @@ namespace IMS.Data.Business
             data.listRacks = query.ToList();
             return data;
         }
+
+        public List<string> GetChangedValueOfObject(string requestCode, string obj, string objStatus)
+        {
+            var query = from l in LogChangedContentDAO.Current.Table()
+                        where l.RequestCode == requestCode && l.Object == obj && l.ObjectStatus == objStatus
+                        select l.ChangedValueOfObject;
+            return query.ToList();
+        }
     }
 }
