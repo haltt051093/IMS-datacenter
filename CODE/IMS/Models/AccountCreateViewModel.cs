@@ -21,6 +21,7 @@ namespace IMS.Models
         public string Identification { get; set; }
         public string GroupCode { get; set; }
         public string Company { get; set; }
+        public  string UserLogin { get; set; }
 
         public List<SelectListItem> Roles { get; set; }
         public List<SelectListItem> Statuses { get; set; }

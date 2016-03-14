@@ -139,13 +139,18 @@
        {
         <a class="btn btn-primary" data-toggle="modal" data-target="#editstaff-modal"><i class="fa fa-pencil"></i> Update Profile</a>
        }
-       @if (Model.Status)
+       @if (Model.Username != Model.UserLogin)
        {
-           <a class="btn btn-danger" data-toggle="modal" data-target="#deactivate-modal"><i class="fa fa-pencil"></i> Deactivate Account</a>
-       }
-       else
-       {
-        <a class="btn btn-warning" data-toggle="modal" data-target="#activate-modal"><i class="fa fa-pencil"></i> Activate Account</a>
+
+           if (Model.Status)
+           {
+               <a class="btn btn-danger" data-toggle="modal" data-target="#deactivate-modal"><i class="fa fa-pencil"></i> Deactivate Account</a>
+           }
+           else
+           {
+            <a class="btn btn-warning" data-toggle="modal" data-target="#activate-modal"><i class="fa fa-pencil"></i> Activate Account</a>
+           }
+
        }
         <!-- EDIT CUSTOMER MODAL -->
         <div class="modal fade" id="editcustomer-modal" tabindex="-1" role="dialog" aria-hidden="true">

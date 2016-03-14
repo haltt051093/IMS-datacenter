@@ -229,6 +229,7 @@ namespace IMS.Controllers
                 return HttpNotFound();
             }
             var accountviewmodel = Mapper.Map<Account, AccountCreateViewModel>(account);
+            accountviewmodel.UserLogin = GetCurrentUserName();
             return View(accountviewmodel);
         }
 
