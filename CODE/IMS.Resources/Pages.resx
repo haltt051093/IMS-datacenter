@@ -186,4 +186,10 @@
   <data name="RequestReturnRack" xml:space="preserve">
     <value>Request Return Rack</value>
   </data>
+  <data name="AccountIndex" xml:space="preserve">
+    <value>List of Accounts</value>
+  </data>
+  <data name="Customer" xml:space="preserve">
+    <value>List of Customers</value>
+  </data>
 </root>

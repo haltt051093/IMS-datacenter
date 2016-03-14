@@ -1,29 +1,35 @@
-﻿@using System.Web.Mvc.Html
+﻿@using IMS.Data.Business
 @model AccountIndexViewModel
 
-@using IMS.Data.Business
 
 @{
-    ViewBag.Title = "AccountPage";
+    if (User.IsInRole("Manager")) {
+        ViewBag.Title = Pages.AccountIndex;
+        ViewBag.PageTitle = Pages.AccountIndex;
+    }
+    if (User.IsInRole("Shift Head") || User.IsInRole("Staff"))
+    {
+        ViewBag.Title = Pages.Customer;
+        ViewBag.PageTitle = Pages.Customer;
+    }
     ViewBag.Role = "Shift Head";
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("Account", "Index", Pages.AccountIndex)
+    };
 }
 
-<section class="content-header">
-    <h1>
-        List of Account
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="@Url.Action("Index2", "Schedule")"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Account</li>
-    </ol>
-</section>
-
-<section class="content">
+<section class="main-content">
     @if (User.IsInRole("Manager"))
     {
         <a class="btn btn-primary" data-toggle="modal" data-target="#addstaff-modal"><i class="fa fa-plus"></i> Add new staff</a>
         <a class="btn btn-primary" data-toggle="modal" data-target="#addcustomer-modal"><i class="fa fa-plus"></i> Add new customer</a>
 
+    }
+    @if (User.IsInRole("Shift Head") || User.IsInRole("Staff"))
+    {
+        <a class="btn btn-primary" data-toggle="modal" data-target="#addcustomer-modal"><i class="fa fa-plus"></i> Add new customer</a>
     }
 </section>
 
@@ -31,125 +37,43 @@
 <section>
     @if (User.IsInRole("Manager"))
     {
-        using (Html.BeginForm("SearchByRole", "Account", FormMethod.Post))
-        {
-            <div class="form-group col-md-12">
-                <div class="col-md-4">
-                    <select name="roleName">
-                        <option value="Get All">Get All</option>
-                        <option value="Customer">Customer</option>
-                        <option value="Manager">Manager</option>
-                        <option value="Shift Head">Shift Head</option>
-                        <option value="Staff">Staff</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary pull-left"> Filter</button>
+        <div class="row hide">
+            <div id="dropdown-template" class="col-xs-3">
+                <label>IP Address: @Html.DropDownListFor(model => model.RoleSearch, Model.Roles, "All Roles", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
             </div>
-        }
-    }
-    @if (ViewBag.CreateStaff != null)
-    {
-        @ViewBag.CreateStaff;
+        </div>
     }
 
-</section>
-<!-- Main content -->
-<section class="content">
-    <div class="box">
+    <table id="example1" class="table table-bordered table-hover">
+        
+            <thead>
+                <tr style="background-color: #404040">
+                    <th><span style="color: ghostwhite">Username</span>
+                    <th><span style="color: ghostwhite">Fullname</span>
+                    <th><span style="color: ghostwhite">Role</span>
+                    <th><span style="color: ghostwhite">Phone</span>
+                    <th><span style="color: ghostwhite">Email</span>
+                    <th><span style="color: ghostwhite">Address</span>
+                    <th><span style="color: ghostwhite">Group</span>
 
-        <div class="box-body table-responsive">
+                </tr>
+            </thead>
+            <tfoot>
+                <tr style="background-color: #404040">
+                    <th><span style="color: ghostwhite">Username</span>
+                    <th><span style="color: ghostwhite">Fullname</span>
+                    <th><span style="color: ghostwhite">Role</span>
+                    <th><span style="color: ghostwhite">Phone</span>
+                    <th><span style="color: ghostwhite">Email</span>
+                    <th><span style="color: ghostwhite">Address</span>
+                    <th><span style="color: ghostwhite">Group</span>
+                </tr>
+            </tfoot>
+        
 
-            <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>Username</th>
-                        <th>Identification</th>
-                        <th>Full Name</th>
-                        <th>Phone</th>
-                        <th>Email</th>
-                        <th>Address</th>
-                        <th>Role</th>
-                        <th>Group</th>
-                        <th>Status</th>
-                        @if (User.IsInRole("Manager"))
-                        {
-                            <th>Action</th>
-                        }
 
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.ListAccount)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Username)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Identification)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Fullname)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Phone)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Email)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Address)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Role)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.GroupCode)
-                            </td>
-                            <td>
-                                @if (item.Status == true)
-                                {
-                                    @Html.Raw("Activate")
-                                }
-                                else
-                                {
-                                    @Html.Raw("Deactivate")
-                                }
-                            </td>
-
-                            @if (User.IsInRole("Manager"))
-                            {
-                                var action = item.Role == "Customer" ? "EditCustomer" : "EditStaff";
-                                <td>
-
-                                    @Html.ActionLink("Edit", action, new { id = item.Id })
-                                </td>
-                            }
-
-                        </tr>
-                    }
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th>Username</th>
-                        <th>Identification</th>
-                        <th>Full Name</th>
-                        <th>Phone</th>
-                        <th>Email</th>
-                        <th>Address</th>
-                        <th>Role</th>
-                        <th>Group</th>
-                        <th>Status</th>
-                        @if (User.IsInRole("Manager"))
-                        {
-                            <th>Action</th>
-                        }
-
-                    </tr>
-                </tfoot>
-            </table>
-        </div><!-- /.box-body -->
-    </div><!-- /.box -->
+    </table>
+       
 </section>
 
 <!-- EDIT CUSTOMER MODAL -->
@@ -384,9 +308,14 @@
                         @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Fullname, htmlAttributes: new { @class = "control-label col-md-2" })
-                        @Html.EditorFor(model => model.Fullname, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Fullname, "", new { @class = "text-danger" })
+                        @Html.LabelFor(model => model.Fullname, htmlAttributes: new {@class = "control-label col-md-2"})
+                        @Html.EditorFor(model => model.Fullname, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.Fullname, "", new {@class = "text-danger"})
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Company, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.EditorFor(model => model.Company, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Company, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -422,12 +351,90 @@
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@
 <script>
-    $(document).ready(function() {
-
-        $('#example1').DataTable();
-
-    });
+    $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            var role = $('#RoleSearch').val();
+            if (role == '') {
+                return true;
+            }
+            if (role == data[2]) {
+                return true;
+            }
+            
+            if (role == null) {
+                return true;
+            }
+            return false;
+        }
+    );
 </script>
 
+<script type="text/javascript">
+    var table = $('#example1').DataTable({
+        dom: '<lf<t>ip>',
+        processing: true,
+        ajax: "@Url.Action("GetAll", "Account", new {httproute = "", role = Model.RoleLogin })",
+        columns: [
+            { data: "Username" },
+            { data: "Fullname" },
+            { data: "Role" },
+            { data: "Phone" },
+            { data: "Email" },
+            { data: "Address" },
+            { data: "GroupCode" },
+            { data: "Status" }
+        ],
+        iDisplayLength: 10,
+        aLengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
+       
+        fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            $(nRow).click(function () {
+                if (aData.Fullname != null) {
+                    var url = CONSTANT.authority + '@Url.Action("ViewProfile", "Account")' + '?username=' + aData.Username;
+                    window.location.assign(url);
+                }
+            });
+            var row = $(nRow);
+            //var actionCell = $(nRow.cells[4]);
+            switch (aData.Status) {
+                case false:
+                    row.css('background-color', '#ffe6e6');
+               
+                break;
+            
+            }
+        },
+ 
+  columnDefs: [{
+      targets: [0],
+            visible: false,
+            searchable: true
+        },
+        {
+      targets: [2],
+            visible: false,
+            searchable: true
+        }, {     
+        
+      targets:[7],
+            visible: false,
+            searchable: true
+        }]
+    });
+
+    $('#example1_filter').append($('#dropdown-template').html());
+    $('#dropdown-template').html('');
+
+    $('#RoleSearch').change(function () {
+        table.draw();
+    });
+
+
+</script>
+
+@section Styles {
+    <style>
+    </style>
+}
 
 

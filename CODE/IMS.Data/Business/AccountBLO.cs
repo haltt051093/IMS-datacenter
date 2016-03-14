@@ -69,7 +69,7 @@ namespace IMS.Data.Business
             SmtpServer.Port = smtpPort;
             SmtpServer.Credentials = new System.Net.NetworkCredential(smtpUsername, smtpPassword);
             SmtpServer.EnableSsl = true;
-            //SmtpServer.Send(mail);
+            SmtpServer.Send(mail);
             return true;
         }
 

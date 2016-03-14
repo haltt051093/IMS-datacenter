@@ -30,38 +30,37 @@
                 <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                     <table id="MyTable" class="@Constants.HtmlFormat.DATATABLE_CLASS">
                         <thead>
-                            <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
-                                <th>
-                                    <div>@Labels.IP</div>
-                                </th>
-                                <th>
-                                    <div>@Labels.IP</div>
-                                </th>
-                            </tr>
+                        <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
+                            <th>
+                                <div>@Labels.IP</div>
+                            </th>
+                            <th>
+                                <div>@Labels.IP</div>
+                            </th>
+                        </tr>
                         </thead>
                         <tbody id="tbodyid"></tbody>
                     </table>
-                    @Html.HiddenFor(model => model.Ips, new { id = "ips" })
+                    @Html.HiddenFor(model => model.Ips, new {id = "ips"})
                 </div>
             </div>
-
-            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                    @Html.LabelFor(model => model.Description)
-                </div>
-                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                    @Html.TextAreaFor(model => model.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                    @Html.ValidationMessageFor(model => model.Description)
-                </div>
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.Description)
             </div>
-            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                </div>
-                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                    <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                        @Labels.DialogOK
-                    </button>
-                </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.TextAreaFor(model => model.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.ValidationMessageFor(model => model.Description)
+            </div>
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                    @Labels.DialogOK
+                </button>
             </div>
         </div>
     }

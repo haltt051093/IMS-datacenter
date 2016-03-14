@@ -20,5 +20,6 @@ namespace IMS.Data.ViewModels
         }
 
         public string StatusName { get; set; }
+       public string ServerCode { get; set; }
     }
 }

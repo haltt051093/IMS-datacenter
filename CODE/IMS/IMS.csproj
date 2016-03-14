@@ -902,6 +902,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiControllers\AccountController.cs" />
     <Compile Include="ApiControllers\BaseApiController.cs" />
     <Compile Include="ApiControllers\IPController.cs" />
     <Compile Include="ApiControllers\LocationController.cs" />

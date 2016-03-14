@@ -6,7 +6,7 @@
     ViewBag.Breadcrumbs = new List<BreadcrumbModel>
     {
         new BreadcrumbModel("Home", "Index", Pages.Home),
-        new BreadcrumbModel("IP", "Index2", Pages.IPIndex)
+        new BreadcrumbModel("IP", "Index", Pages.IPIndex)
     };
 }
 
@@ -272,11 +272,19 @@
             { data: "Gateway" },
             { data: "Subnetmask" },
             { data: "StatusName" },
-            { data: "StatusCode" }
+            { data: "StatusCode" },
+            { data: "ServerCode" }
         ],
         iDisplayLength: 32,
         aLengthMenu: [[32, 64, 128, 255], [32, 64, 128, 255]],
+        bAutoWidth: false,
         fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            $(nRow).click(function () {
+                if (aData.ServerCode != null) {
+                    var url = CONSTANT.authority + '@Url.Action("Detail", "Server")' + '/' + aData.ServerCode;
+                    window.location.assign(url);
+                }
+            });
             var row = $(nRow);
             var actionCell = $(nRow.cells[4]);
             switch (aData.StatusCode) {
@@ -301,6 +309,7 @@
                 actionCell.html('');
                 break;
             case '@Constants.StatusCode.IP_USED':
+                row.css('background-color', '#ccd9ff');
                 actionCell.html('');
                 break;
             case '@Constants.StatusCode.IP_DEACTIVATE':
@@ -317,7 +326,12 @@
             targets: [1],
             visible: false,
             searchable: true
-        }, {
+        },
+        {
+            targets: [7],
+            visible: false,
+            searchable: false
+        },{
             targets: [6],
             orderable: false
         }]
