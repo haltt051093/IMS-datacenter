@@ -13,8 +13,8 @@ namespace IMS.Controllers
     public class ScheduleController : CoreController
     {
         // GET: Schedule
-       
 
+        [Authorize(Roles = "Staff,Shift Head,Manager")]
         public ActionResult Index()
         {
             var note = RequestBLO.Current.GetNoteOfShift();
