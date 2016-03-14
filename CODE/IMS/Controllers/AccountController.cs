@@ -236,15 +236,20 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult ViewProfile(AccountCreateViewModel acvm)
         {
-            var account = AccountBLO.Current.GetAccountByCode(acvm.Username);
-            account.Address = acvm.Address;
-            account.Email = acvm.Email;
-            account.Fullname = acvm.Fullname;
-            account.Company = acvm.Company;
-            account.Identification = acvm.Identification;
-            account.Phone = acvm.Phone;
-            AccountDAO.Current.Update(account);
-            return RedirectToAction("ViewProfile", new {username = acvm.Username});
+            if (acvm.Button == "EditCustomer")
+            {
+            
+                var account = AccountBLO.Current.GetAccountByCode(acvm.Username);
+                account.Address = acvm.Address;
+                account.Email = acvm.Email;
+                account.Fullname = acvm.Fullname;
+                account.Company = acvm.Company;
+                account.Identification = acvm.Identification;
+                account.Phone = acvm.Phone;
+                AccountDAO.Current.Update(account);
+            }
+
+        return RedirectToAction("ViewProfile", new {username = acvm.Username});
         }
 
         public ActionResult GetForgotPassword()
