@@ -63,6 +63,7 @@ namespace IMS.Core
             public const string GROUP_3 = "Group 3";
             public const string GROUP_4 = "Group 4";
             public const string NO_GROUP = "No Group";
+            public const string CUSTOMER = "Customer";
         }
 
         public class RequestTypeName

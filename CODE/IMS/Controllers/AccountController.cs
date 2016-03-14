@@ -125,7 +125,7 @@ namespace IMS.Controllers
                     return RedirectToAction("Index");
                 }
                 account.Role = Constants.Role.CUSTOMER;
-                account.GroupCode = Constants.GroupName.NO_GROUP;
+                account.GroupCode = Constants.GroupName.CUSTOMER;
                 account.Status = true;
                 account.Password = AccountBLO.Current.GeneratePassword();         
                 AccountBLO.Current.Add(account);
