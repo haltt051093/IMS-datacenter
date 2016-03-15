@@ -1,7 +1,8 @@
 ﻿
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Web.WebPages.Html;
+using System.Web.Mvc;
+using SelectListItem = System.Web.WebPages.Html.SelectListItem;
 
 namespace IMS.Models
 {
@@ -10,6 +11,7 @@ namespace IMS.Models
         public int Id { get; set; }
         
         [Required]
+        [Remote("CheckUsername","Validate", ErrorMessage = "Username is existed", HttpMethod = "POST")]
         public string Username { get; set; }      
         public string Password { get; set; }
         public string Role { get; set; }
