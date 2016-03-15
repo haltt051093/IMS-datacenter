@@ -525,7 +525,7 @@ namespace IMS.Controllers
                 {
                     //update request status and log
                     RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ASSIGN_IP,
-                    Constants.StatusCode.REQUEST_CANCELLED, null, customer);
+                    Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
                 }
             }
             //DOING
@@ -551,7 +551,7 @@ namespace IMS.Controllers
                 {
                     //update request status and log
                     RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RENT_RACK,
-                    Constants.StatusCode.REQUEST_CANCELLED, null, customer);
+                    Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
                 }
             }
             if (requestType == Constants.TypeOfLog.LOG_RETURN_RACK)

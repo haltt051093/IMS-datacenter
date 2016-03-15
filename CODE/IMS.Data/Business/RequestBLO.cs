@@ -94,9 +94,9 @@ namespace IMS.Data.Business
             return RequestDAO.Current.Query(x => x.RequestCode == requestCode).Select(x => x.Customer).FirstOrDefault();
         }
 
-        public void UpdateRequestStatusANDLog(string requestCode, string typeOfLog, string newStatus, string assignee, string staffCode)
+        public void UpdateRequestStatusANDLog(string requestCode, string typeOfLog, string newStatus, string assignee, string staffCode, string description)
         {
-            dao.UpdateRequestStatusANDLog(requestCode, typeOfLog, newStatus, assignee, staffCode);
+            dao.UpdateRequestStatusANDLog(requestCode, typeOfLog, newStatus, assignee, staffCode, description);
         }
 
         public string GenerateCode()

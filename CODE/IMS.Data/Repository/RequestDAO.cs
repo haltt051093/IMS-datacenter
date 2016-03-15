@@ -229,7 +229,7 @@ namespace IMS.Data.Repository
             return requestCode;
         }
 
-        public void UpdateRequestStatusANDLog(string requestCode, string typeOfLog, string newStatus, string assignee, string staffCode)
+        public void UpdateRequestStatusANDLog(string requestCode, string typeOfLog, string newStatus, string assignee, string staffCode, string description)
         {
             var request = (from r in Current.Table()
                            where r.RequestCode == requestCode
@@ -248,7 +248,8 @@ namespace IMS.Data.Repository
                 Object = Constants.Object.OBJECT_REQUEST,
                 ObjectStatus = newStatus,
                 ChangedValueOfObject = requestCode,
-                Username = staffCode
+                Username = staffCode,
+                Description = description
             };
             LogChangedContentBLO.Current.AddLog(logRequest);
         }

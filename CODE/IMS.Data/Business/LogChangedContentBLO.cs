@@ -99,7 +99,7 @@ namespace IMS.Data.Business
                 }
                 //update request status and log
                 RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
-                    Constants.StatusCode.REQUEST_CANCELLED, null, customer);
+                    Constants.StatusCode.REQUEST_CANCELLED, null, customer,null);
             }
         }
 
@@ -119,7 +119,7 @@ namespace IMS.Data.Business
                 }
                 //update request status and log
                 RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_IP,
-                    Constants.StatusCode.REQUEST_CANCELLED, null, customer);
+                    Constants.StatusCode.REQUEST_CANCELLED, null, customer,null);
             }
         }
 
@@ -139,7 +139,7 @@ namespace IMS.Data.Business
                 }
                 //update request status and log
                 RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
-                    Constants.StatusCode.REQUEST_CANCELLED, null, customer);
+                    Constants.StatusCode.REQUEST_CANCELLED, null, customer,null);
                 //update and log server
                 ServerBLO.Current.UpdateServerStatus(requestCode, serverCode,
                     Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.SERVER_RUNNING,
@@ -162,7 +162,7 @@ namespace IMS.Data.Business
                 }
                 //update request status and log
                 RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
-                    Constants.StatusCode.REQUEST_CANCELLED, null, customer);
+                    Constants.StatusCode.REQUEST_CANCELLED, null, customer,null);
             }
         }
 
@@ -181,7 +181,7 @@ namespace IMS.Data.Business
                 }
                 //update request status and log
                 RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
-                    Constants.StatusCode.REQUEST_CANCELLED, null, customer);
+                    Constants.StatusCode.REQUEST_CANCELLED, null, customer,null);
             }
         }
 

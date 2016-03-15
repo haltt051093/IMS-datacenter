@@ -371,7 +371,7 @@ namespace IMS.Controllers
             {
                 var shifthead = GetCurrentUserName();
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
-                    Constants.TypeOfLog.LOG_RENT_RACK, Constants.StatusCode.REQUEST_PROCESSING, viewmodel.RequestInfo.StaffCode, shifthead);
+                    Constants.TypeOfLog.LOG_RENT_RACK, Constants.StatusCode.REQUEST_PROCESSING, viewmodel.RequestInfo.StaffCode, shifthead, null);
                 return RedirectToAction("Detais", "ProcessRequest",
                     new { rType = Constants.RequestTypeCode.RENT_RACK, rCode = viewmodel.RequestInfo.RequestCode });
             }
@@ -392,13 +392,15 @@ namespace IMS.Controllers
                 }
                 //Change request status
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_RENT_RACK,
-                    Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.StaffCode);
+                    Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.StaffCode, null);
                 Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
+                //Change request status
+                RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_RENT_RACK,
+                    Constants.StatusCode.REQUEST_REJECTED, null, viewmodel.RequestInfo.StaffCode, viewmodel.RequestInfo.RejectReason);
             }
-
             return RedirectToAction("Index", "Notification");
         }
 
@@ -409,7 +411,7 @@ namespace IMS.Controllers
             {
                 var shifthead = GetCurrentUserName();
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
-                    Constants.TypeOfLog.LOG_RETURN_RACK, Constants.StatusCode.REQUEST_PROCESSING, viewmodel.RequestInfo.StaffCode, shifthead);
+                    Constants.TypeOfLog.LOG_RETURN_RACK, Constants.StatusCode.REQUEST_PROCESSING, viewmodel.RequestInfo.StaffCode, shifthead, null);
                 return RedirectToAction("Detais", "ProcessRequest",
                     new { rType = Constants.RequestTypeCode.RETURN_RACK, rCode = viewmodel.RequestInfo.RequestCode });
             }
@@ -429,11 +431,23 @@ namespace IMS.Controllers
                 }
                 //add and log request
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
-                    Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.StaffCode);
+                    Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.StaffCode, null);
                 Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
+                //Lay so luong rack muon return
+                var listRacks = LogChangedContentBLO.Current.RequestDetailsReturnRack(viewmodel.RequestInfo.RequestCode);
+                foreach (var item in listRacks.listRacks)
+                {
+                    //update and log rackofCustomer
+                    RackOfCustomerBLO.Current.UpdateStatusRackOfCustomerANDLog(viewmodel.RequestInfo.RequestCode,
+                        item, Constants.TypeOfLog.LOG_RETURN_RACK, viewmodel.CustomerInfo.Customer, null
+                        , Constants.StatusCode.RACKOFCUSTOMER_RETURNING, Constants.StatusCode.RACKOFCUSTOMER_CURRENT);
+                }
+                //add and log request
+                RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
+                    Constants.StatusCode.REQUEST_REJECTED, null, viewmodel.RequestInfo.StaffCode, viewmodel.RequestInfo.RejectReason);
             }
             return RedirectToAction("Index", "Notification");
 
@@ -446,7 +460,7 @@ namespace IMS.Controllers
             {
                 var shifthead = GetCurrentUserName();
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
-                    Constants.TypeOfLog.LOG_ADD_SERVER, Constants.StatusCode.REQUEST_WAITING, viewmodel.RequestInfo.StaffCode, shifthead);
+                    Constants.TypeOfLog.LOG_ADD_SERVER, Constants.StatusCode.REQUEST_WAITING, viewmodel.RequestInfo.StaffCode, shifthead, null);
                 return RedirectToAction("Detais", "ProcessRequest",
                     new { rType = Constants.RequestTypeCode.ADD_SERVER, rCode = viewmodel.RequestInfo.RequestCode });
             }
@@ -548,9 +562,7 @@ namespace IMS.Controllers
                                     myMergeField.Select();
                                     wordApp.Selection.TypeText(item.Bandwidth);
                                 }
-
                             }
-
                         }
                         var name = item.ServerCode + ".doc";
                         wordDoc.SaveAs(name);
@@ -567,22 +579,28 @@ namespace IMS.Controllers
                         //update and log server
                         ServerBLO.Current.UpdateServerStatus(viewmodel.RequestInfo.RequestCode, server.ServerCode,
                             Constants.TypeOfLog.LOG_ADD_SERVER, Constants.StatusCode.SERVER_RUNNING, viewmodel.RequestInfo.StaffCode);
-                        ServerAttributeBLO.Current.UpdateServerAttributeStatus(server.ServerCode, Constants.StatusCode.SERVERATTRIBUTE_NEW);
                         //DOING
                         //luu IP address
                         //Luu location
                     }
                     //Add and log request
                     RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_ADD_SERVER,
-                        Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.StaffCode);
+                        Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.StaffCode, null);
                     Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
-                    //return RedirectToAction("ListNotifications", "Request");
-                    return View("AddServerInfo", viewmodel);
                 }
-
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
+                var serverCodes = LogChangedContentBLO.Current.GetServerCodeByRequestCode(viewmodel.RequestInfo.RequestCode);
+                foreach (var server in serverCodes)
+                {
+                    //update and log server
+                    ServerBLO.Current.UpdateServerStatus(viewmodel.RequestInfo.RequestCode, server,
+                        Constants.TypeOfLog.LOG_ADD_SERVER, Constants.StatusCode.SERVER_DEACTIVATE, viewmodel.RequestInfo.StaffCode);
+                }
+                //Add and log request
+                RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_ADD_SERVER,
+                    Constants.StatusCode.REQUEST_REJECTED, null, viewmodel.RequestInfo.StaffCode, viewmodel.RequestInfo.RejectReason);
             }
             return RedirectToAction("Index", "Notification");
         }
@@ -594,7 +612,7 @@ namespace IMS.Controllers
             {
                 var shifthead = GetCurrentUserName();
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
-                    Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.REQUEST_WAITING, viewmodel.RequestInfo.StaffCode, shifthead);
+                    Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.REQUEST_WAITING, viewmodel.RequestInfo.StaffCode, shifthead, null);
                 return RedirectToAction("Detais", "ProcessRequest",
                     new { rType = Constants.RequestTypeCode.BRING_SERVER_AWAY, rCode = viewmodel.RequestInfo.RequestCode });
             }
@@ -620,7 +638,7 @@ namespace IMS.Controllers
                         viewmodel.RequestInfo.StaffCode);
                     //add and log request
                     RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
-                        Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.StaffCode);
+                        Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.StaffCode, null);
 
                     //giai phong location, co can log ko?
                     LocationBLO.Current.SetLocationAvailable(server.ServerCode);
@@ -631,7 +649,26 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
-
+                var listServer = viewmodel.ServerOfCustomer;
+                foreach (var server in listServer)
+                {
+                    //update and log serverip
+                    var serverips = ServerIPBLO.Current.GetIpByStatus(server.ServerCode,
+                        Constants.StatusCode.SERVERIP_RETURNING);
+                    foreach (var ip in serverips)
+                    {
+                        // update and log statuscode cua bang serverIP
+                        ServerIPBLO.Current.UpdateServerIpANDLog(viewmodel.RequestInfo.RequestCode, server.ServerCode, ip,
+                            Constants.TypeOfLog.LOG_RETURN_IP, Constants.StatusCode.SERVERIP_CURRENT, viewmodel.RequestInfo.StaffCode);
+                    }
+                    //update and log server
+                    ServerBLO.Current.UpdateServerStatus(viewmodel.RequestInfo.RequestCode, server.ServerCode,
+                        Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.SERVER_RUNNING,
+                        viewmodel.RequestInfo.StaffCode);
+                }
+                //Add and log request
+                RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_ADD_SERVER,
+                    Constants.StatusCode.REQUEST_REJECTED, null, viewmodel.RequestInfo.StaffCode, viewmodel.RequestInfo.RejectReason);
             }
             return RedirectToAction("Index", "Notification");
         }
@@ -643,7 +680,7 @@ namespace IMS.Controllers
             {
                 var shifthead = GetCurrentUserName();
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
-                    Constants.TypeOfLog.LOG_ASSIGN_IP, Constants.StatusCode.REQUEST_PROCESSING, viewmodel.RequestInfo.StaffCode, shifthead);
+                    Constants.TypeOfLog.LOG_ASSIGN_IP, Constants.StatusCode.REQUEST_PROCESSING, viewmodel.RequestInfo.StaffCode, shifthead, null);
                 return RedirectToAction("Detais", "ProcessRequest",
                     new { rType = Constants.RequestTypeCode.ASSIGN_IP, rCode = viewmodel.RequestInfo.RequestCode });
             }
@@ -660,14 +697,16 @@ namespace IMS.Controllers
                 }
                 //Add Log and update request status
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_ASSIGN_IP,
-                    Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.RequestCode);
+                    Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.RequestCode, null);
                 Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
+                //Add Log and update request status
+                RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_ASSIGN_IP,
+                    Constants.StatusCode.REQUEST_REJECTED, null, viewmodel.RequestInfo.RequestCode, viewmodel.RequestInfo.RejectReason);
             }
             return RedirectToAction("Index", "Notification");
-
         }
 
         [HttpPost]
@@ -677,7 +716,7 @@ namespace IMS.Controllers
             {
                 var shifthead = GetCurrentUserName();
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
-                    Constants.TypeOfLog.LOG_CHANGE_IP, Constants.StatusCode.REQUEST_PROCESSING, viewmodel.RequestInfo.StaffCode, shifthead);
+                    Constants.TypeOfLog.LOG_CHANGE_IP, Constants.StatusCode.REQUEST_PROCESSING, viewmodel.RequestInfo.StaffCode, shifthead, null);
                 return RedirectToAction("Detais", "ProcessRequest",
                     new { rType = Constants.RequestTypeCode.CHANGE_IP, rCode = viewmodel.RequestInfo.RequestCode });
             }
@@ -688,14 +727,21 @@ namespace IMS.Controllers
                     viewmodel.SelectedServer, viewmodel.RequestInfo.RequestCode, viewmodel.RequestInfo.StatusCode);
                 //update and log request
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
-                    Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.StaffCode);
+                    Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.StaffCode, null);
                 Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
+                foreach (var item in viewmodel.ReturningIPs)
+                {
+                    ServerIPBLO.Current.UpdateServerIpANDLog(viewmodel.RequestInfo.RequestCode, viewmodel.SelectedServer, item,
+                    Constants.TypeOfLog.LOG_CHANGE_IP, Constants.StatusCode.SERVERIP_CURRENT, viewmodel.RequestInfo.StaffCode);
+                }
+                //update and log request
+                RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
+                    Constants.StatusCode.REQUEST_REJECTED, null, viewmodel.RequestInfo.StaffCode, viewmodel.RequestInfo.RejectReason);
             }
             return RedirectToAction("Index", "Notification");
-
         }
 
         [HttpPost]
@@ -705,7 +751,7 @@ namespace IMS.Controllers
             {
                 var shifthead = GetCurrentUserName();
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
-                    Constants.TypeOfLog.LOG_RETURN_IP, Constants.StatusCode.REQUEST_PROCESSING, viewmodel.RequestInfo.StaffCode, shifthead);
+                    Constants.TypeOfLog.LOG_RETURN_IP, Constants.StatusCode.REQUEST_PROCESSING, viewmodel.RequestInfo.StaffCode, shifthead, null);
                 return RedirectToAction("Detais", "ProcessRequest",
                     new { rType = Constants.RequestTypeCode.RETURN_IP, rCode = viewmodel.RequestInfo.RequestCode });
             }
@@ -722,11 +768,20 @@ namespace IMS.Controllers
                 }
                 //Add Log and update request status
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_RETURN_IP,
-                    Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.StaffCode);
+                    Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.StaffCode, null);
                 Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
+                foreach (var item in viewmodel.ReturningIPs)
+                {
+                    // update and log statuscode cua bang serverIP
+                    ServerIPBLO.Current.UpdateServerIpANDLog(viewmodel.RequestInfo.RequestCode, viewmodel.SelectedServer, item.ToString(),
+                        Constants.TypeOfLog.LOG_RETURN_IP, Constants.StatusCode.SERVERIP_CURRENT, viewmodel.RequestInfo.StaffCode);
+                }
+                //Add Log and update request status
+                RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_RETURN_IP,
+                    Constants.StatusCode.REQUEST_REJECTED, null, viewmodel.RequestInfo.StaffCode, viewmodel.RequestInfo.RejectReason);
             }
             return RedirectToAction("Index", "Notification");
         }

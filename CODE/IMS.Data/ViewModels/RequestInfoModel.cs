@@ -9,5 +9,6 @@ namespace IMS.Data.ViewModels
         public string StaffName { get; set; }
         public string StaffCode { get; set; }
         public string StatusName { get; set; }
+        public string RejectReason { get; set; }
     }
 }
