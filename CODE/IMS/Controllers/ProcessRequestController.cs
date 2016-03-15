@@ -48,7 +48,7 @@ namespace IMS.Controllers
                 if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
                 {
                     var group = GetCurrentUserGroup();
-                    var listStaff = AccountBLO.Current.ListAccountSameGroup(group);
+                    var listStaff = AccountBLO.Current.GetAccountsByGroup(group);
                     viewmodel.StaffCodeOptions = listStaff
                         .Select(x => new SelectListItem
                         {
@@ -262,7 +262,7 @@ namespace IMS.Controllers
                 if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
                 {
                     var group = GetCurrentUserGroup();
-                    var listStaff = AccountBLO.Current.ListAccountSameGroup(group);
+                    var listStaff = AccountBLO.Current.GetAccountsByGroup(group);
                     viewmodel.StaffCodeOptions = listStaff
                         .Select(x => new SelectListItem
                         {
@@ -367,7 +367,7 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult ProcessRequestRentRack(ProcessRequestRentRackViewModel viewmodel)
         {
-            if (Request.Form["Accept"] != null)
+            if (Request.Form[Constants.FormAction.ACCEPT_ACTION] != null)
             {
                 var shifthead = GetCurrentUserName();
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
@@ -375,7 +375,7 @@ namespace IMS.Controllers
                 return RedirectToAction("Detais", "ProcessRequest",
                     new { rType = Constants.RequestTypeCode.RENT_RACK, rCode = viewmodel.RequestInfo.RequestCode });
             }
-            if (Request.Form["Approve"] != null)
+            if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
                 var listSelectedRacks = viewmodel.listRackByRows;
                 foreach (var item in listSelectedRacks)
@@ -395,6 +395,9 @@ namespace IMS.Controllers
                     Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.StaffCode);
                 Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             }
+            if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
+            {
+            }
 
             return RedirectToAction("Index", "Notification");
         }
@@ -402,7 +405,7 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult ProcessRequestReturnRack(ProcessRequestReturnRackViewModel viewmodel)
         {
-            if (Request.Form["Accept"] != null)
+            if (Request.Form[Constants.FormAction.ACCEPT_ACTION] != null)
             {
                 var shifthead = GetCurrentUserName();
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
@@ -410,7 +413,7 @@ namespace IMS.Controllers
                 return RedirectToAction("Detais", "ProcessRequest",
                     new { rType = Constants.RequestTypeCode.RETURN_RACK, rCode = viewmodel.RequestInfo.RequestCode });
             }
-            if (Request.Form["Approve"] != null)
+            if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
                 //update status rackofcustomer
                 foreach (var item in viewmodel.SelectedRacks)
@@ -429,6 +432,9 @@ namespace IMS.Controllers
                     Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.StaffCode);
                 Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             }
+            if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
+            {
+            }
             return RedirectToAction("Index", "Notification");
 
         }
@@ -436,7 +442,7 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult ProcessRequestAddServer(ProcessRequestAddServerViewModel viewmodel)
         {
-            if (Request.Form["Accept"] != null)
+            if (Request.Form[Constants.FormAction.ACCEPT_ACTION] != null)
             {
                 var shifthead = GetCurrentUserName();
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
@@ -444,7 +450,7 @@ namespace IMS.Controllers
                 return RedirectToAction("Detais", "ProcessRequest",
                     new { rType = Constants.RequestTypeCode.ADD_SERVER, rCode = viewmodel.RequestInfo.RequestCode });
             }
-            if (Request.Form["Approve"] != null)
+            if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
                 var listServer = viewmodel.Servers;
                 if (viewmodel.Button == "Export")
@@ -573,6 +579,10 @@ namespace IMS.Controllers
                     //return RedirectToAction("ListNotifications", "Request");
                     return View("AddServerInfo", viewmodel);
                 }
+
+            }
+            if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
+            {
             }
             return RedirectToAction("Index", "Notification");
         }
@@ -580,7 +590,7 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult ProcessRequestBringServerAway(ProcessRequestBringServerAwayViewModel viewmodel)
         {
-            if (Request.Form["Accept"] != null)
+            if (Request.Form[Constants.FormAction.ACCEPT_ACTION] != null)
             {
                 var shifthead = GetCurrentUserName();
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
@@ -588,7 +598,7 @@ namespace IMS.Controllers
                 return RedirectToAction("Detais", "ProcessRequest",
                     new { rType = Constants.RequestTypeCode.BRING_SERVER_AWAY, rCode = viewmodel.RequestInfo.RequestCode });
             }
-            if (Request.Form["Approve"] != null)
+            if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
                 var listServer = viewmodel.ServerOfCustomer;
                 foreach (var server in listServer)
@@ -619,7 +629,7 @@ namespace IMS.Controllers
                     Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
                 }
             }
-            if (Request.Form["Reject"] != null)
+            if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
 
             }
@@ -629,7 +639,7 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult ProcessRequestAssignIp(ProcessRequestAssignIPViewModel viewmodel)
         {
-            if (Request.Form["Accept"] != null)
+            if (Request.Form[Constants.FormAction.ACCEPT_ACTION] != null)
             {
                 var shifthead = GetCurrentUserName();
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
@@ -637,7 +647,7 @@ namespace IMS.Controllers
                 return RedirectToAction("Detais", "ProcessRequest",
                     new { rType = Constants.RequestTypeCode.ASSIGN_IP, rCode = viewmodel.RequestInfo.RequestCode });
             }
-            if (Request.Form["Approve"] != null)
+            if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
                 foreach (var item in viewmodel.IPs.ToList())
                 {
@@ -653,6 +663,9 @@ namespace IMS.Controllers
                     Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.RequestCode);
                 Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             }
+            if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
+            {
+            }
             return RedirectToAction("Index", "Notification");
 
         }
@@ -660,7 +673,7 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult ProcessRequestChangeIp(ProcessRequestChangeIPViewModel viewmodel)
         {
-            if (Request.Form["Accept"] != null)
+            if (Request.Form[Constants.FormAction.ACCEPT_ACTION] != null)
             {
                 var shifthead = GetCurrentUserName();
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
@@ -668,7 +681,7 @@ namespace IMS.Controllers
                 return RedirectToAction("Detais", "ProcessRequest",
                     new { rType = Constants.RequestTypeCode.CHANGE_IP, rCode = viewmodel.RequestInfo.RequestCode });
             }
-            if (Request.Form["Approve"] != null)
+            if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
                 //update and log ServerIP and IpAddress
                 RequestBLO.Current.UpdateChangeIP(viewmodel.ReturningIPs, viewmodel.NewIPs,
@@ -678,6 +691,9 @@ namespace IMS.Controllers
                     Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.StaffCode);
                 Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             }
+            if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
+            {
+            }
             return RedirectToAction("Index", "Notification");
 
         }
@@ -685,7 +701,7 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult ProcessRequesReturnIp(ProcessRequestReturnIPViewModel viewmodel)
         {
-            if (Request.Form["Accept"] != null)
+            if (Request.Form[Constants.FormAction.ACCEPT_ACTION] != null)
             {
                 var shifthead = GetCurrentUserName();
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
@@ -693,7 +709,7 @@ namespace IMS.Controllers
                 return RedirectToAction("Detais", "ProcessRequest",
                     new { rType = Constants.RequestTypeCode.RETURN_IP, rCode = viewmodel.RequestInfo.RequestCode });
             }
-            if (Request.Form["Approve"] != null)
+            if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
                 foreach (var item in viewmodel.ReturningIPs)
                 {
@@ -708,6 +724,9 @@ namespace IMS.Controllers
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_RETURN_IP,
                     Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.StaffCode);
                 Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+            }
+            if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
+            {
             }
             return RedirectToAction("Index", "Notification");
         }
