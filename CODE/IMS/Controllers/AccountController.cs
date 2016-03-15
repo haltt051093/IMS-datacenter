@@ -62,8 +62,23 @@ namespace IMS.Controllers
         }
 
         public ActionResult CreateStaff()
-        {
-            return View();
+        {var data = new AccountCreateViewModel();
+            var listgroup = new List<SelectListItem>();
+            
+            var count = AccountDAO.Current.GetCountMemberOfGroup();
+            for (int i = 0; i < count.Count; i++)
+            {
+                var list = new SelectListItem();
+                if (count[i].CountMember < 3)
+                {
+                    list.Value = count[i].GroupCode;
+                    list.Text = count[i].GroupCode;
+                    listgroup.Add(list);
+                }
+                
+            }
+            data.Groups = listgroup;
+            return View(data);
         }
         // POST: Account/CreateStaff
         [HttpPost]
@@ -127,11 +142,6 @@ namespace IMS.Controllers
             {
                 // su dung mapping cho list
                 var account = Mapper.Map<AccountCreateViewModel, Account>(accountCreateViewModel);
-                if (CheckExistUsername(account.Username))
-                {
-                    //put code handle can not create user with this username
-                    return RedirectToAction("Index");
-                }
                 account.Role = Constants.Role.CUSTOMER;
                 account.GroupCode = Constants.GroupName.CUSTOMER;
                 account.Status = true;
@@ -271,11 +281,6 @@ namespace IMS.Controllers
             return View("ForgotPWSuccess");
         }
 
-        [HttpPost]
-        public ActionResult SearchByRole(string roleName)
-        {
-            return RedirectToAction("Index", "Account", new { roleSearch = roleName });
-        }
 
         public ActionResult GetChangePW()
         {

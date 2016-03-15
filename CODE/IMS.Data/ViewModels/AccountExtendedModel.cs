@@ -7,6 +7,6 @@ namespace IMS.Data.ViewModels
     [NotMapped]
     public class AccountExtendedModel : Account
     {
-        
+        public int CountMember { get; set; }
     }
 }

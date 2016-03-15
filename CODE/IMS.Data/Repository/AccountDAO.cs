@@ -42,5 +42,14 @@ namespace IMS.Data.Repository
                             on a.GroupCode = g.GroupCode";
             return RawQuery<AccountExtendedModel>(query, new object[] { });
         }
+
+        public List<AccountExtendedModel> GetCountMemberOfGroup()
+        {
+            var query =
+                @"select a.GroupCode,COUNT(a.Role) as CountMember from Account as a where a.GroupCode != 'Customer' and a.GroupCode!=''
+                        and a.Status='true'
+                        group by a.GroupCode";
+            return RawQuery<AccountExtendedModel>(query, new object[] { });
+        }
     }
 }
