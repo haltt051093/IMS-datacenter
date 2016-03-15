@@ -23,29 +23,21 @@
 <section class="main-content">
     @if (User.IsInRole("Manager"))
     {
-        if (Model.Count == 12)
-        {
-            <a class="btn btn-primary disabled" data-toggle="modal" data-target="#addstaff-modal" ><i class="fa fa-plus"></i> Add new staff</a>
-        }
         if (Model.Count < 12)
         {
-            <a class="btn btn-primary" data-toggle="modal" data-target="#addstaff-modal"><i class="fa fa-plus"></i> Add new staff</a>
+            @Html.ActionLink("Add new staff", "CreateStaff", "Account", htmlAttributes: new { @class = "btn btn-primary" })
         }
         @Html.ActionLink("Add new customer", "CreateCustomer", "Account", htmlAttributes: new { @class = "btn btn-primary" })
-
-    }
-    @if (User.IsInRole("Shift Head") || User.IsInRole("Staff"))
-    {
-        @Html.ActionLink("Add new customer", "CreateCustomer", "Account", htmlAttributes: new {@class = "btn btn-primary"})
-    }
-
-    @if (User.IsInRole("Manager"))
-    {
         <div class="row hide">
             <div id="dropdown-template" class="col-xs-3">
                 <label>Filter: @Html.DropDownListFor(model => model.RoleSearch, Model.Roles, "All Roles", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
             </div>
         </div>
+
+    }
+    @if (User.IsInRole("Shift Head") || User.IsInRole("Staff"))
+    {
+        @Html.ActionLink("Add new customer", "CreateCustomer", "Account", htmlAttributes: new {@class = "btn btn-primary"})
     }
 
     <table id="example1" class="table table-bordered table-hover">
@@ -79,101 +71,6 @@
     </table>
        
 </section>
-
-<!-- ADD STAFF MODAL -->
-<div class="modal fade" id="addstaff-modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" style="width: 500px">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"><i class="fa fa-plus"></i> Add new staff</h4>
-            </div>
-            <div class="modal-body">
-                @using (Html.BeginForm("CreateStaff", "Account", FormMethod.Post))
-                {
-                    @Html.AntiForgeryToken()
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
-                        @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Role, "Role", htmlAttributes: new { @class = "control-label col-md-2" })
-                        @{
-                            var roles = RoleBLO.Current.GetAll().Where(c => c.RoleName != "Customer").Where(c => c.RoleName != "Manager");
-                            var myList = new SelectList(roles, "RoleName", "RoleName");
-                        }
-                        @Html.DropDownListFor(model => model.Role, myList, new { @class = "form-control", style = "width:200px" })
-                        @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.GroupCode, "Group", htmlAttributes: new { @class = "control-label col-md-2" })
-                        @{
-                            var groups = GroupBLO.Current.GetAll().Where(g => g.GroupCode != "No Group");
-                            var myList1 = new SelectList(groups, "GroupCode", "GroupCode");
-                        }
-                        @Html.DropDownListFor(model => model.GroupCode, myList1, new { @class = "form-control", style = "width:200px" })
-                        @Html.ValidationMessageFor(model => model.GroupCode, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Fullname, htmlAttributes: new { @class = "control-label col-md-2" })
-                        @Html.EditorFor(model => model.Fullname, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Fullname, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
-                        @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
-                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Identification, htmlAttributes: new { @class = "control-label col-md-2" })
-                        @Html.EditorFor(model => model.Identification, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Identification, "", new { @class = "text-danger" })
-                    </div>
-                    @*<div class="form-group">
-                            @Html.LabelFor(model => model.Email, htmlAttributes: new {@class = "control-label col-md-2"})
-                            @Html.EditorFor(model => model.Email, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
-                            @Html.ValidationMessageFor(model => model.Email, "", new {@class = "text-danger"})
-                        </div>*@
-                            @*<div class="form-group">
-                                    @Html.EditorFor(model => model.Fullname, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                    @Html.ValidationMessageFor(model => model.Fullname)
-                                </div>*@
-                            @*<div class="form-group">
-                                    @Html.LabelFor(model => model.Phone, htmlAttributes: new {@class = "control-label col-md-2"})
-                                    @Html.EditorFor(model => model.Phone, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                    @Html.ValidationMessageFor(model => model.Phone)
-                                </div>*@
-                            @*<div class="form-group">
-                                    @Html.LabelFor(model => model.Address, htmlAttributes: new {@class = "control-label col-md-2"})
-                                    @Html.EditorFor(model => model.Address, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                    @Html.ValidationMessageFor(model => model.Address)
-                                </div>
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.Identification, htmlAttributes: new {@class = "control-label col-md-2"})
-                                    @Html.EditorFor(model => model.Identification, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                    @Html.ValidationMessageFor(model => model.Identification, "", new {@class = "text-danger"})
-                                </div>*@
-                            <div class="modal-footer clearfix">
-                                <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
-                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-                            </div>
-                            }
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
 
 <script>

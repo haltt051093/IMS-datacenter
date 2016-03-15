@@ -61,7 +61,7 @@ namespace IMS.Controllers
             return View(q);
         }
 
-        public ActionResult CreateCustomer()
+        public ActionResult CreateStaff()
         {
             return View();
         }
@@ -114,8 +114,12 @@ namespace IMS.Controllers
             return View(accountCreateViewModel);
         }
 
-        //POST: Account/CreateCustomer
-        //Doing
+        [Authorize(Roles = "Staff,Shift Head,Manager")]
+        public ActionResult CreateCustomer()
+        {
+            return View();
+        }
+        
         [HttpPost]
         public ActionResult CreateCustomer(AccountCreateViewModel accountCreateViewModel)
         {
@@ -135,46 +139,53 @@ namespace IMS.Controllers
                 AccountBLO.Current.Add(account);
                 //send account info to login to the system
                 AccountBLO.Current.SendAccountInfo(account);
+                Success("Add Customer Successfully!");
                 return RedirectToAction("Index");
             }
             return View(accountCreateViewModel);
         }
 
-        [Authorize(Roles = "Manager")]
-        // GET: Account/Edit/5
-        public ActionResult EditStaff(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Account account = AccountBLO.Current.GetById(id);
-            if (account == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.role = account.Role;
-            var accountviewmodel = Mapper.Map<Account, AccountCreateViewModel>(account);
-            return View(accountviewmodel);
-        }
 
-        [Authorize(Roles = Constants.Role.MANAGER)]
-        // GET: Account/Edit/5
-        public ActionResult EditCustomer(int? id)
+        [Authorize(Roles = "Staff,Shift Head,Manager")]
+        public ActionResult EditCustomer(string username)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Account account = AccountBLO.Current.GetById(id);
+            Account account = AccountBLO.Current.GetAccountByCode(username);
             if (account == null)
             {
                 return HttpNotFound();
             }
             var accountviewmodel = Mapper.Map<Account, AccountCreateViewModel>(account);
+            accountviewmodel.UserLogin = GetCurrentUserName();
             return View(accountviewmodel);
         }
+        // POST: Account/Edit/5
+        [HttpPost]
+        public ActionResult EditCustomer(AccountCreateViewModel acvm)
+        {
+            var account = AccountBLO.Current.GetAccountByCode(acvm.Username);
+            account.Address = acvm.Address;
+            account.Email = acvm.Email;
+            account.Fullname = acvm.Fullname;
+            account.Company = acvm.Company;
+            account.Identification = acvm.Identification;
+            account.Phone = acvm.Phone;
+            AccountDAO.Current.Update(account);
+            Success("Update Profile Successfully!");
+            return RedirectToAction("ViewProfile", new {username = acvm.Username});
+        }
 
+        [Authorize(Roles = "Staff,Shift Head,Manager")]
+        public ActionResult EditStaff(string username)
+        {
+            Account account = AccountBLO.Current.GetAccountByCode(username);
+            if (account == null)
+            {
+                return HttpNotFound();
+            }
+            var accountviewmodel = Mapper.Map<Account, AccountCreateViewModel>(account);
+            accountviewmodel.UserLogin = GetCurrentUserName();
+            return View(accountviewmodel);
+        }
         // POST: Account/Edit/5
         [HttpPost]
         public ActionResult EditStaff(AccountCreateViewModel viewmodel)
@@ -197,33 +208,8 @@ namespace IMS.Controllers
             return RedirectToAction("Index", "Account", new { role = role });
         }
 
-        // POST: Account/Edit/5
-        [HttpPost]
-        public ActionResult EditCustomer(AccountCreateViewModel viewmodel)
-        {
-            Account account = Mapper.Map<AccountCreateViewModel, Account>(viewmodel);
-            Account ass = AccountBLO.Current.GetById(account.Id);
-            if (ass.Status == false)
-            {
-                account.Status = false;
-            }
-            account.Role = Constants.Role.CUSTOMER;
-            account.GroupCode = Constants.GroupName.NO_GROUP;
-            AccountBLO.Current.AddOrUpdate(account);
-            if (account.Status == false)
-            {
-                account.Status = false;
-            }
 
-            string role = "";
-            if (Session[Constants.Session.USER_LOGIN] != null)
-            {
-                var obj = Session[Constants.Session.USER_LOGIN];
-                Account a = (Account)obj;
-                role = a.Role;
-            }
-            return RedirectToAction("Index", "Account", new { role = role });
-        }
+   
 
         public ActionResult ViewProfile(string username)
         {
@@ -240,17 +226,20 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult ViewProfile(AccountCreateViewModel acvm)
         {
-            if (acvm.Button == "EditCustomer")
+            if (acvm.Button == "Deactivate")
             {
             
                 var account = AccountBLO.Current.GetAccountByCode(acvm.Username);
-                account.Address = acvm.Address;
-                account.Email = acvm.Email;
-                account.Fullname = acvm.Fullname;
-                account.Company = acvm.Company;
-                account.Identification = acvm.Identification;
-                account.Phone = acvm.Phone;
+                account.Status = false;
                 AccountDAO.Current.Update(account);
+                Success("Deactiave Account Successfully!");
+            }
+            if (acvm.Button == "Activate")
+            {
+                var account = AccountBLO.Current.GetAccountByCode(acvm.Username);
+                account.Status = true;
+                AccountDAO.Current.Update(account);
+                Success("Activate Account Successfully!");
             }
 
         return RedirectToAction("ViewProfile", new {username = acvm.Username});

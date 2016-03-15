@@ -16,8 +16,13 @@ namespace IMS.Data.Generic
             var props = _type.GetProperties();
             foreach (var _prop in props)
             {
-                _prop.SetValue(target, _prop.GetValue(this, null), null);
-            }
+                if (_prop.CanRead && _prop.CanWrite)
+                {
+                    _prop.SetValue(target, _prop.GetValue(this, null), null);
+                }
+                    
+            
+        }
 
             return target as TResult;
         }
