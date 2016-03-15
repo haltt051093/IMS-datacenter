@@ -12,7 +12,7 @@
 function post(url, data, success, fail) {
     $.ajax({
         url: url,
-        data: data,
+        data: JSON.stringify(data),
         type: "POST",
         contentType: "application/json; charset=utf-8",
         dataType: "json"

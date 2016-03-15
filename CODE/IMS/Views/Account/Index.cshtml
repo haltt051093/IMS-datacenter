@@ -109,9 +109,9 @@
         ],
         iDisplayLength: 10,
         aLengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
-       
-        fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-            $(nRow).click(function () {
+
+        fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            $(nRow).click(function() {
                 if (aData.Fullname != null) {
                     var url = CONSTANT.authority + '@Url.Action("ViewProfile", "Account")' + '?username=' + aData.Username;
                     window.location.assign(url);
@@ -120,28 +120,32 @@
             var row = $(nRow);
             //var actionCell = $(nRow.cells[4]);
             switch (aData.Status) {
-                case false:
-                    row.css('background-color', '#ffe6e6');
-               
+            case false:
+                row.css('background-color', '#ffe6e6');
+
                 break;
-            
+
             }
         },
- 
-  columnDefs: [{
-      targets: [0],
+
+        columnDefs: [
+        {
+            targets: [0],
             visible: false,
             searchable: true
         },
         {
-      targets: [2],
+            targets: [2],
             visible: false,
             searchable: true
-        }, {     
-        
-      targets:[7],
-            visible: false,
+        }, {
+            targets: [6],
+            visible: @{if(Model.RoleLogin == "Manager") { <text>true</text> } else { <text>false</text> }},
             searchable: true
+        }, {
+            targets: [7],
+            visible: false,
+            searchable:true
         }]
     });
 

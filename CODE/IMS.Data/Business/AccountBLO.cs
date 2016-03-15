@@ -78,12 +78,11 @@ namespace IMS.Data.Business
             return dao.GetByKeys(new Account { Username = q });
         }
 
-        public List<Account> ListAccountSameGroup(string groupCode)
+        public List<Account> GetAccountsByGroup(string groupCode)
         {
-            var query = from a in AccountDAO.Current.Table()
-                        where a.GroupCode == groupCode
-                        select a;
-            return query.ToList();
+            var result = dao.Query(x => x.GroupCode == groupCode && x.Status == true)
+                .ToList();
+            return result;
         }
 
         public CustomerInfoModel GeCustomerInfo(string username)

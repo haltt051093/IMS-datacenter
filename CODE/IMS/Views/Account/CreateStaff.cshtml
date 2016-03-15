@@ -9,59 +9,82 @@
     <h2>Create new Staff</h2>
     @using (Html.BeginForm("CreateStaff", "Account", FormMethod.Post))
     {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Username, htmlAttributes: new {@class = "control-label col-md-2"})
-            @Html.EditorFor(model => model.Username, new {htmlAttributes = new {@class = "form-control"}})
-            @Html.ValidationMessageFor(model => model.Username, "", new {@class = "text-danger"})
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.GroupCode, "Group", htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.DropDownListFor(model => model.GroupCode, Model.Groups, new { @class = "form-control", style = "width:200px" })
-            @Html.ValidationMessageFor(model => model.GroupCode, "", new { @class = "text-danger" })
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Role, "Role", htmlAttributes: new { @class = "control-label col-md-2" })
-            @{
-                var roles = RoleBLO.Current.GetAll().Where(c => c.RoleName != "Customer").Where(c => c.RoleName != "Manager");
-                var myList = new SelectList(roles, "RoleName", "RoleName");
-            }
-            @Html.DropDownListFor(model => model.Role, myList, new { @class = "form-control", style = "width:200px" })
-            @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
-        </div>
-        
+
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Fullname, htmlAttributes: new { @class = "control-label col-md-2" })
-                        @Html.EditorFor(model => model.Fullname, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Fullname, "", new { @class = "text-danger" })
+                        @Html.LabelFor(model => model.Username)
+                        @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", style = "width:600px" } })
+                        @Html.ValidationMessageFor(model => model.Username)
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
-                        @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                        @Html.LabelFor(model => model.GroupCode, "Group")
+                        @Html.DropDownListFor(model => model.GroupCode, Model.Groups, "--Select Group--", new { @class = "form-control", style = "width:200px" })
+                        @Html.ValidationMessageFor(model => model.GroupCode)
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
-                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Identification, htmlAttributes: new { @class = "control-label col-md-2" })
-                        @Html.EditorFor(model => model.Identification, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Identification, "", new { @class = "text-danger" })
+                        @Html.LabelFor(model => model.Role, "Role")
+                        @{
+                            var roles = RoleBLO.Current.GetAll().Where(c => c.RoleName != "Customer").Where(c => c.RoleName != "Manager");
+                            var myList = new SelectList(roles, "RoleName", "RoleName");
+                        }
+                        @Html.DropDownListFor(model => model.Role, myList, "--Select Role--", new { @class = "form-control", style = "width:200px" })
+                        @Html.ValidationMessageFor(model => model.Role)
                     </div>
 
                     <div class="form-group">
-                       @Html.ActionLink("Cancel", "Index", "Account", htmlAttributes: new { @class = "btn btn-default pull-right" })
-                    <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Add</button>
+                        @Html.LabelFor(model => model.Fullname)
+                        @Html.EditorFor(model => model.Fullname, new { htmlAttributes = new { @class = "form-control", style = "width:600px" } })
+                        @Html.ValidationMessageFor(model => model.Fullname)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Phone)
+                        @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", style = "width:600px" } })
+                        @Html.ValidationMessageFor(model => model.Phone)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email)
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", style = "width:600px" } })
+                        @Html.ValidationMessageFor(model => model.Email)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Address)
+                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", style = "width:600px" } })
+                        @Html.ValidationMessageFor(model => model.Address)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Identification)
+                        @Html.EditorFor(model => model.Identification, new { htmlAttributes = new { @class = "form-control", style = "width:600px" } })
+                        @Html.ValidationMessageFor(model => model.Identification)
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                        @Html.ActionLink("Cancel", "Index", "Account", htmlAttributes: new { @class = "btn btn-default pull-left" })
+
                     </div>
                 }
 
 </section>
 
+<script>
+    function verifyRole() {
+        $('#Role option').prop('disabled', true);
+        $('#Role option[value=""]').prop('disabled', false);
+        var groupCode = $('#GroupCode').val();
+
+        post('@Url.Action("GetAvailableRoles", "Account", new { httproute = "" })', {
+            GroupCode: groupCode
+        }, function (data) {
+            $(data).each(function (i, role) {
+                $('#Role option[value="' + role + '"]').prop('disabled', false);
+            });
+        });
+    }
+
+
+    $('#GroupCode').change(function () {
+        $('#Role').val('');
+        verifyRole();
+    });
+
+    verifyRole();
+</script>
