@@ -75,7 +75,7 @@
             $.ajax({
                 cache: false,
                 type: "GET",
-                url: "@(Url.Action("FetchIPs", "Request"))",
+                url: "@(Url.Action("FetchReturnedIPs", "Request"))",
                 data: { "SelectedServer": pass },
                 dataType: "json",
                 success: function (data) {

@@ -127,20 +127,21 @@
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                 @Html.HiddenFor(model => model.RequestInfo.RequestCode)
                 @Html.HiddenFor(model => model.CustomerInfo.Customer)
+                @Html.HiddenFor(model => model.RequestInfo.StaffCode)
                 @Html.HiddenFor(x => x.RequestInfo.RequestType)
                 @Html.HiddenFor(x => x.SelectedServer)
                 @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                 {
-                    <button type="submit" id="btnApprove" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                    <button type="submit" id="btnApprove" name="@Constants.FormAction.APPROVE_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
                         @Labels.Approve
                     </button>
-                            <button type="submit" id="btnReject" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
+                            <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
                                 @Labels.Reject
                             </button>
                 }
                 else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
                 {
-                    <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                    <button type="submit" id="btnAccept" name="@Constants.FormAction.ACCEPT_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
                         @Labels.Accept
                     </button>
                 }

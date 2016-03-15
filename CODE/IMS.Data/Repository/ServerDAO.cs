@@ -168,21 +168,18 @@ namespace IMS.Data.Repository
         public List<AttributeExtendedModel> GetServerAttributes(int id)
         {
             var query = from sa in ServerAttributeDAO.Current.Table()
-                        join a in AttributeDAO.Current.Table()
-                            on sa.AttributeCode equals a.AttributeCode into saa
-                        from subsaa in saa.DefaultIfEmpty()
-                        join s in Table()
-                            on sa.ServerCode equals s.ServerCode into ssa
-                        from subssa in ssa.DefaultIfEmpty()
-                        where subssa.Id == id
-                        select new AttributeExtendedModel
-                        {
-                            AttributeName = subsaa.AttributeName,
-                            AttributeValue = sa.AttributeValue
-                        }
-            ;
-            //var query = ServerAttributeDAO.Current.Table().Include("Server").
-            //var query = Table().Include("ServerAttribute").Include("Attribute");
+                join a in AttributeDAO.Current.Table()
+                    on sa.AttributeCode equals a.AttributeCode into saa
+                from subsaa in saa.DefaultIfEmpty()
+                join s in Table()
+                    on sa.ServerCode equals s.ServerCode into ssa
+                from subssa in ssa.DefaultIfEmpty()
+                where subssa.Id == id
+                select new AttributeExtendedModel
+                {
+                    AttributeName = subsaa.AttributeName,
+                    AttributeValue = sa.AttributeValue
+                };
             return query.ToList();
         }
 
@@ -202,7 +199,6 @@ namespace IMS.Data.Repository
         {
             var server = passServer;
             server.ServerCode = GenerateCode();
-            server.Customer = Constants.Test.CUSTOMER_MANHNH;
             server.StatusCode = Constants.StatusCode.SERVER_WAITING;
             server.RegisteredDate = DateTime.Now;
             var existing = GetByKeys(server);
@@ -256,6 +252,8 @@ namespace IMS.Data.Repository
                             RegisteredDate = s.RegisteredDate,
                             Outlet = s.Outlet,
                             Bandwidth = s.Bandwidth,
+                            PartNumber = s.PartNumber,
+                            SerialNumber = s.SerialNumber
                         };
             var server = query.FirstOrDefault();
 

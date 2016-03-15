@@ -94,9 +94,9 @@ namespace IMS.Data.Business
             return RequestDAO.Current.Query(x => x.RequestCode == requestCode).Select(x => x.Customer).FirstOrDefault();
         }
 
-        public void UpdateRequestStatusANDLog(string requestCode, string typeOfLog, string newStatus, string username)
+        public void UpdateRequestStatusANDLog(string requestCode, string typeOfLog, string newStatus, string assignee, string staffCode)
         {
-            dao.UpdateRequestStatusANDLog(requestCode, typeOfLog, newStatus, username);
+            dao.UpdateRequestStatusANDLog(requestCode, typeOfLog, newStatus, assignee, staffCode);
         }
 
         public string GenerateCode()
@@ -112,29 +112,24 @@ namespace IMS.Data.Business
             {
                 //update and log status cua old ip o server ip
                 ServerIPBLO.Current.UpdateServerIpANDLog(requestCode, selectedServer, item.old,
-                    Constants.TypeOfLog.LOG_CHANGE_IP, Constants.StatusCode.SERVERIP_OLD, Constants.Test.STAFF_NHI);
+                    Constants.TypeOfLog.LOG_CHANGE_IP, Constants.StatusCode.SERVERIP_OLD, staffCode);
                 //update and log status cua up cu o IPAddresspool
                 IPAddressPoolBLO.Current.UpdateStatusIpANDLog(requestCode, selectedServer, item.old, Constants.StatusCode.IP_AVAILABLE,
-                    Constants.TypeOfLog.LOG_CHANGE_IP, Constants.Test.STAFF_NHI);
+                    Constants.TypeOfLog.LOG_CHANGE_IP, staffCode);
 
                 //add and log new serverip
                 ServerIPBLO.Current.AddServerIpAndLog(requestCode, selectedServer, item.changed,
-                    Constants.TypeOfLog.LOG_CHANGE_IP, Constants.StatusCode.SERVERIP_CURRENT, Constants.Test.STAFF_NHI);
+                    Constants.TypeOfLog.LOG_CHANGE_IP, Constants.StatusCode.SERVERIP_CURRENT, staffCode);
                 //Update and log status cua IP moi o IPAddressPool
                 IPAddressPoolBLO.Current.UpdateStatusIpANDLog(requestCode, selectedServer, item.changed, Constants.StatusCode.IP_USED,
-                    Constants.TypeOfLog.LOG_CHANGE_IP, Constants.Test.STAFF_NHI);
+                    Constants.TypeOfLog.LOG_CHANGE_IP, staffCode);
             }
         }
 
-        public string AddRequest(string requestType, string newStatus, string customer,
+        public string AddRequest(string requestCode, string requestType, string newStatus, string customer,
             string description, DateTime? appointmenTime)
         {
-            return dao.AddRequest(requestType, newStatus, customer, description, appointmenTime);
-        }
-
-        public Account GetAssignStaff(string requestCode, string statusCode)
-        {
-            return dao.GetAssignStaff(requestCode, statusCode);
+            return dao.AddRequest(requestCode, requestType, newStatus, customer, description, appointmenTime);
         }
 
         public RequestInfoModel GetRequestInfo(string requestCode)
@@ -155,5 +150,18 @@ namespace IMS.Data.Business
             request.StatusName = StatusBLO.Current.GetStatusName(request.StatusCode);
             return request;
         }
+
+        public Account GetAssignee(string requestCode)
+        {
+            var query1 = from r in RequestDAO.Current.Table()
+                           where r.RequestCode == requestCode
+                           select r.Assignee;
+            var assignee = query1.FirstOrDefault().ToString();
+            var query = from a in AccountDAO.Current.Table()
+                        where a.Username == assignee
+                        select a;
+            return query.FirstOrDefault();
+        }
+
     }
 }

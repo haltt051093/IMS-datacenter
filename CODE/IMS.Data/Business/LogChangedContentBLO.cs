@@ -83,7 +83,7 @@ namespace IMS.Data.Business
             return dao.RawQuery<LogChangedContent>(query, new object[] { }).FirstOrDefault();
         }
 
-        public void CancelRequestChangeIp(string requestCode)
+        public void CancelRequestChangeIp(string requestCode, string customer)
         {
             var listServerIp = GetLogInfoByRequestCode(requestCode, Constants.Object.OBJECT_SERVERIP);
             if (listServerIp != null && listServerIp.Count > 0)
@@ -95,15 +95,15 @@ namespace IMS.Data.Business
                     //update and log serverip
                     ServerIPBLO.Current.UpdateServerIpANDLog(requestCode, serverCode, ip,
                         Constants.TypeOfLog.LOG_CHANGE_IP, Constants.StatusCode.SERVERIP_CURRENT,
-                        Constants.Test.CUSTOMER_MANHNH);
+                        customer);
                 }
                 //update request status and log
                 RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
-                    Constants.StatusCode.REQUEST_CANCELLED, Constants.Test.CUSTOMER_MANHNH);
+                    Constants.StatusCode.REQUEST_CANCELLED, null, customer);
             }
         }
 
-        public void CancelRequestReturnIp(string requestCode)
+        public void CancelRequestReturnIp(string requestCode, string customer)
         {
             var listServerIp = GetLogInfoByRequestCode(requestCode, Constants.Object.OBJECT_SERVERIP);
             if (listServerIp != null && listServerIp.Count > 0)
@@ -115,15 +115,15 @@ namespace IMS.Data.Business
                     //update and log serverip
                     ServerIPBLO.Current.UpdateServerIpANDLog(requestCode, serverCode, ip,
                         Constants.TypeOfLog.LOG_RETURN_IP, Constants.StatusCode.SERVERIP_CURRENT,
-                        Constants.Test.CUSTOMER_MANHNH);
+                        customer);
                 }
                 //update request status and log
                 RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_IP,
-                    Constants.StatusCode.REQUEST_CANCELLED, Constants.Test.CUSTOMER_MANHNH);
+                    Constants.StatusCode.REQUEST_CANCELLED, null, customer);
             }
         }
 
-        public void CancelRequestBringServerAway(string requestCode)
+        public void CancelRequestBringServerAway(string requestCode, string customer)
         {
             var listServerIp = GetLogInfoByRequestCode(requestCode, Constants.Object.OBJECT_SERVERIP);
             if (listServerIp != null && listServerIp.Count > 0)
@@ -135,11 +135,11 @@ namespace IMS.Data.Business
                     //update and log serverip
                     ServerIPBLO.Current.UpdateServerIpANDLog(requestCode, serverCode, ip,
                         Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.SERVERIP_CURRENT,
-                        Constants.Test.CUSTOMER_MANHNH);
+                        customer);
                 }
                 //update request status and log
                 RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
-                    Constants.StatusCode.REQUEST_CANCELLED, Constants.Test.CUSTOMER_MANHNH);
+                    Constants.StatusCode.REQUEST_CANCELLED, null, customer);
                 //update and log server
                 ServerBLO.Current.UpdateServerStatus(requestCode, serverCode,
                     Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.SERVER_RUNNING,
@@ -147,7 +147,7 @@ namespace IMS.Data.Business
             }
         }
 
-        public void CancelRequestReturnRack(string requestCode)
+        public void CancelRequestReturnRack(string requestCode, string customer)
         {
             var listRacks = GetLogInfoByRequestCode(requestCode, Constants.Object.OBJECT_RACKOFCUSTOMER);
             if (listRacks != null && listRacks.Count > 0)
@@ -157,16 +157,16 @@ namespace IMS.Data.Business
                     var rack = listRacks[i].ChangedValueOfObject;
                     //update and log rackofCustomer
                     RackOfCustomerBLO.Current.UpdateStatusRackOfCustomerANDLog(requestCode, rack,
-                        Constants.TypeOfLog.LOG_RETURN_RACK, Constants.Test.CUSTOMER_MANHNH, null,
+                        Constants.TypeOfLog.LOG_RETURN_RACK, customer, null,
                         Constants.StatusCode.RACKOFCUSTOMER_RETURNING, Constants.StatusCode.RACKOFCUSTOMER_CURRENT);
                 }
                 //update request status and log
                 RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
-                    Constants.StatusCode.REQUEST_CANCELLED, Constants.Test.CUSTOMER_MANHNH);
+                    Constants.StatusCode.REQUEST_CANCELLED, null, customer);
             }
         }
 
-        public void CancelRequestAddServer(string requestCode)
+        public void CancelRequestAddServer(string requestCode, string customer)
         {
             var listRacks = GetLogInfoByRequestCode(requestCode, Constants.Object.OBJECT_RACKOFCUSTOMER);
             if (listRacks != null && listRacks.Count > 0)
@@ -176,12 +176,12 @@ namespace IMS.Data.Business
                     var rack = listRacks[i].ChangedValueOfObject;
                     //update and log rackofCustomer
                     RackOfCustomerBLO.Current.UpdateStatusRackOfCustomerANDLog(requestCode, rack,
-                        Constants.TypeOfLog.LOG_RETURN_RACK, Constants.Test.CUSTOMER_MANHNH, null,
+                        Constants.TypeOfLog.LOG_RETURN_RACK, customer, null,
                         Constants.StatusCode.RACKOFCUSTOMER_RETURNING, Constants.StatusCode.RACKOFCUSTOMER_CURRENT);
                 }
                 //update request status and log
                 RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
-                    Constants.StatusCode.REQUEST_CANCELLED, Constants.Test.CUSTOMER_MANHNH);
+                    Constants.StatusCode.REQUEST_CANCELLED, null, customer);
             }
         }
 

@@ -46,108 +46,50 @@
                     <thead>
                         <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
                             <th>No</th>
-                            <th>Maker</th>
                             <th>Power</th>
-                            <th>Model</th>
                             <th>Size</th>
                             <th>Bandwidth</th>
                             <th>Serial Number</th>
                             <th>Part Number</th>
-                            <th>Memory</th>
                             <th></th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                    @foreach (var item in Model.Servers)
-                    {
-                            @*<tr id="@Model.Servers[i].TempCode">
-                                    <td>
-                                        @Html.Raw(i + 1)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => Model.Servers[i].Maker, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Maker)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => Model.Servers[i].Power, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })W
-                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Power)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => Model.Servers[i].Model, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Model)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => Model.Servers[i].Size, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })U
-                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Size)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => Model.Servers[i].Bandwidth, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Bandwidth)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => Model.Servers[i].SerialNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].SerialNumber)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => Model.Servers[i].PartNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].PartNumber)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => Model.Servers[i].Memory, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Memory)
-                                    </td>
-                                    <td>
-                                        <a href="#" x-code="@Model.Servers[i].TempCode" action="edit">Edit</a>
-                                    </td>
-                                    <td>
-                                        <a href="#" x-code="@Model.Servers[i].TempCode" action="delete">Delete</a>
-                                    </td>
-                                </tr>*@
-                        <tr id="@item.TempCode">
-                            <td>
-                                @*@Html.Raw(i + 1)*@
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => item.Maker, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
-                                @Html.HiddenFor(modelItem => item.Maker)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => item.Power, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})W
-                                @Html.HiddenFor(modelItem => item.Power)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => item.Model, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
-                                @Html.HiddenFor(modelItem => item.Model)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => item.Size, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})U
-                                @Html.HiddenFor(modelItem => item.Size)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => item.Bandwidth, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
-                                @Html.HiddenFor(modelItem => item.Bandwidth)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => item.SerialNumber, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
-                                @Html.HiddenFor(modelItem => item.SerialNumber)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => item.PartNumber, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
-                                @Html.HiddenFor(modelItem => item.PartNumber)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => item.Memory, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
-                                @Html.HiddenFor(modelItem => item.Memory)
-                            </td>
-                            <td>
-                                <a href="#" x-code="@item.TempCode" action="edit">Edit</a>
-                            </td>
-                            <td>
-                                <a href="#" x-code="@item.TempCode" action="delete">Delete</a>
-                            </td>
-                        </tr>
-                    }
+                        @for (int i = 0; i < Model.Servers.Count; i++)
+                        {
+                            <tr id="@Model.Servers[i].TempCode">
+                                <td>
+                                    @Html.Raw(i + 1)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].Power, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })W
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Power)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].Size, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })U
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Size)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].Bandwidth, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Bandwidth)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].SerialNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].SerialNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].PartNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].PartNumber)
+                                </td>
+                                <td>
+                                    <a href="#" x-code="@Model.Servers[i].TempCode" action="edit">Edit</a>
+                                </td>
+                                <td>
+                                    <a href="#" x-code="@Model.Servers[i].TempCode" action="delete">Delete</a>
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                     <tfoot>
                         <tr>
@@ -164,6 +106,7 @@
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
             </div>
+            @Html.HiddenFor(x => x.RequestInfo.RequestCode)
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                 <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
                     @Labels.DialogOK
@@ -177,22 +120,10 @@
 <div id="serverinfo-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            @*@using (Html.BeginForm("SaveTempData", "Request", FormMethod.Post))
-                {*@
             <div class="modal-header">
                 <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i> @Labels.AddServer</div>
             </div>
             <div class="modal-body form-horizontal">
-                <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                        @Html.LabelFor(model => model.Server.Maker)
-                    </div>
-                    <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                        @Html.TextBoxFor(model => model.Server.Maker, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                        @Html.ValidationMessageFor(model => model.Server.Maker)
-                    </div>
-                </div>
-
                 <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
                     <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
                         @Html.LabelFor(model => model.Server.Power)
@@ -202,36 +133,14 @@
                         @Html.ValidationMessageFor(model => model.Server.Power)
                     </div>
                 </div>
-
-                <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                        @Html.LabelFor(model => model.Server.Model)
-                    </div>
-                    <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                        @Html.TextBoxFor(model => model.Server.Model, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                        @Html.ValidationMessageFor(model => model.Server.Model)
-                    </div>
-                </div>
-
                 <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
                     <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
                         <label>Size</label>
                     </div>
                     <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                        @Html.DropDownListFor(model => model.Server.Size, Model.ServerSizes, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        @Html.DropDownListFor(model => model.Server.Size, Model.ServerSizes, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
                     </div>
                 </div>
-
-                <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                        <label>Bandwidth</label>
-                    </div>
-                    <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                        @Html.RadioButtonFor(model => model.Server.Bandwidth, "100Mbps", new { @checked = "checked" }) 100Mbps
-                        @Html.RadioButtonFor(model => model.Server.Bandwidth, "1Gbps", new { }) 1Gbps
-                    </div>
-                </div>
-
                 <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
                     <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
                         @Html.LabelFor(model => model.Server.SerialNumber)
@@ -251,160 +160,143 @@
                         @Html.ValidationMessageFor(model => model.Server.PartNumber)
                     </div>
                 </div>
-
                 <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
                     <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                        @Html.LabelFor(model => model.Server.Memory)
+                        <label>Bandwidth</label>
                     </div>
                     <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                        @Html.TextBoxFor(model => model.Server.Memory, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                        @Html.ValidationMessageFor(model => model.Server.Memory)
+                        @Html.RadioButtonFor(model => model.Server.Bandwidth, "100Mbps", new { @checked = "checked" }) 100Mbps
+                        @Html.RadioButtonFor(model => model.Server.Bandwidth, "1Gbps", new { }) 1Gbps
                     </div>
                 </div>
-            </div>
-            @Html.HiddenFor(model => model.Server.TempCode)
-            <div class="modal-footer">
-                <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION"
-                        class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS" data-dismiss="modal">
-                    @Labels.DialogCancel
-                </button>
-                <button type="submit" id="submitserver" name="@Constants.FormAction.ACTION_NAME"
-                        value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                    @Labels.DialogOK
-                </button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+                @Html.HiddenFor(model => model.Server.TempCode)
+                <div class="modal-footer">
+                    <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION"
+                            class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS" data-dismiss="modal">
+                        @Labels.DialogCancel
+                    </button>
+                    <button type="submit" id="submitserver" name="@Constants.FormAction.ACTION_NAME"
+                            value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        @Labels.DialogOK
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
-<script type="text/javascript">
-    function clearModal() {
-        $('#Server_Maker').val('');
-        $('#Server_Power').val('');
-        $('#Server_Model').val('');
-        $('#Server_Size').val('1');
-        $('#Server_SerialNumber').val('');
-        $('#Server_PartNumber').val('');
-        $('#Server_Memory').val('');
-    }
+    <script type="text/javascript">
+        function clearModal() {
+            $('#Server_Power').val('');
+            $('#Server_Size').val('1');
+            $('#Server_SerialNumber').val('');
+            $('#Server_PartNumber').val('');
+        }
 
-    function setModal(server) {
-        $('#Server_Maker').val(server.Maker);
-        $('#Server_Power').val(server.Power);
-        $('#Server_Model').val(server.Model);
-        $('#Server_Size').val(server.Size);
-        $('#Server_SerialNumber').val(server.SerialNumber);
-        $('#Server_PartNumber').val(server.PartNumber);
-        $('#Server_Memory').val(server.Memory);
-        $('#Server_TempCode').val(server.TempCode);
-    }
+        function setModal(server) {
+            $('#Server_Power').val(server.Power);
+            $('#Server_Size').val(server.Size);
+            $('#Server_SerialNumber').val(server.SerialNumber);
+            $('#Server_PartNumber').val(server.PartNumber);
+            $('#Server_TempCode').val(server.TempCode);
+        }
 
-    function addModal(server) {
-        $('#item_Maker').val(server.Maker);
-        $('#item_Power').val(server.Power);
-        $('#item_Model').val(server.Model);
-        $('#item_Size').val(server.Size);
-        $('#item_Bandwidth').val(server.item_Bandwidth);
-        $('#item_SerialNumber').val(server.SerialNumber);
-        $('#item_PartNumber').val(server.PartNumber);
-        $('#item_Memory').val(server.Memory);
-        $('#item_TempCode').val(server.TempCode);
-    }
-</script>
+        function addModal(server) {
+            $('#item_Power').val(server.Power);
+            $('#item_Size').val(server.Size);
+            $('#item_Bandwidth').val(server.item_Bandwidth);
+            $('#item_SerialNumber').val(server.SerialNumber);
+            $('#item_PartNumber').val(server.PartNumber);
+            $('#item_TempCode').val(server.TempCode);
+        }
+    </script>
 
-<script type="text/javascript">
-    //$('#datetimepicker1').datetimepicker({
-    //    "disabledHours": [0, 1, 2, 3, 4, 5, 6, 7, 21, 22, 23, 24],
-    //    "enabledHours": [8, 9, 10, 12, 12, 14, 15, 16, 17, 18, 19, 20],
-    //    "stepping": '30',
-    //    "minDate": 'moment',
-    //    "locale": 'vi'
-    //});
+    <script type="text/javascript">
+        //$('#datetimepicker1').datetimepicker({
+        //    "disabledHours": [0, 1, 2, 3, 4, 5, 6, 7, 21, 22, 23, 24],
+        //    "enabledHours": [8, 9, 10, 12, 12, 14, 15, 16, 17, 18, 19, 20],
+        //    "stepping": '30',
+        //    "minDate": 'moment',
+        //    "locale": 'vi'
+        //});
 
-    $('#addserver').click(function () {
-        clearModal();
-        $('#submitserver').val('@Constants.FormAction.OK_ACTION');
-        $('#serverinfo-modal').modal('show');
-        //return false;
-    });
-
-    $('#submitserver').click(function () {
-        var server =
-        {
-            "Maker": $('#Server_Maker').val(),
-            "Power": $('#Server_Power').val(),
-            "Model": $('#Server_Model').val(),
-            "Size": $('#Server_Size').val(),
-            "SerialNumber": $('#Server_SerialNumber').val(),
-            "PartNumber": $('#Server_PartNumber').val(),
-            "Memory": $('#Server_Memory').val(),
-            "Bandwidth": $('#Server_Bandwidth').val(),
-            "btnAction": "OK"
-        };
-        var myTable = $('#MyList > tbody');
-        $.ajax({
-            cache: false,
-            type: "GET",
-            url: "@(Url.Action("SaveTempData", "Request"))",
-            data: server,
-            dataType: "json",
-            success: function (data) {
-                $(data).each(function (index, item) {
-                    myTable.append('<tr>' +
-                        '<td> 1 </td>' +
-                        '<td id=item_Maker>' + item.Server.Maker + '</td>' +
-                        '<td id=item_Power>' + item.Server.Power + '</td>' +
-                        '<td id=item_Model>' + item.Server.Model + '</td>' +
-                        '<td id=item_Size>' + item.Server.Size + '</td>' +
-                        '<td id=item_Bandwidth>' + item.Server.Bandwidth + '</td>' +
-                        '<td id=item_SerialNumber>' + item.Server.SerialNumber + '</td>' +
-                        '<td id=item_PartNumber>' + item.Server.PartNumber + '</td>' +
-                        '<td id=item_Memory>' + item.Server.Memory + '</td>' +
-                        '<td><a href="#" x-code=' + item.Server.TempCode + ' btnAction="edit">Edit</a></td>' +
-                        '<td><a href="#" x-code=' + item.Server.TempCode + 'btnAction="delete">Delete</a></td>' +
-                        '</tr>');
-                    //addModal(data.Server);
-                });
-                $('#serverinfo-modal').modal('hide');
-            }
+        $('#addserver').click(function () {
+            clearModal();
+            $('#submitserver').val('@Constants.FormAction.OK_ACTION');
+            $('#serverinfo-modal').modal('show');
+            //return false;
         });
-    });
 
-    $('a[x-code][action="edit"]').click(function () {
-        clearModal();
-        $('#submitserver').val('@Constants.FormAction.EDIT_ACTION');
-        $('#serverinfo-modal').modal('show');
-        var tempCode = $(this).attr('x-code');
-        get('@Url.Action("GetTempServer", "Temp", new {httproute = ""})' + '/' + tempCode, function (data) {
-            setModal(data.Server);
-        });
-        return false;
-    });
-
-    $('a[x-code][action="delete"]').click(function () {
-        var tempCode = $(this).attr('x-code');
-        alertify.confirm('Are you sure to delete this server?', function () {
-            get('@Url.Action("DeleteTempServer", "Temp", new {httproute = ""})' + '/' + tempCode, function (data) {
-                $('#' + tempCode).remove();
+        $('#submitserver').click(function () {
+            var server =
+            {
+                "Power": $('#Server_Power').val(),
+                "Size": $('#Server_Size').val(),
+                "SerialNumber": $('#Server_SerialNumber').val(),
+                "PartNumber": $('#Server_PartNumber').val(),
+                "Bandwidth": $('#Server_Bandwidth').val(),
+                "btnAction": "OK"
+            };
+            var myTable = $('#MyList > tbody');
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@(Url.Action("SaveTempData", "Request"))",
+                data: server,
+                dataType: "json",
+                success: function (data) {
+                    $(data).each(function (index, item) {
+                        myTable.append('<tr>' +
+                            '<td></td>' +
+                            '<td id=item_Power>' + item.Server.Power + '</td>' +
+                            '<td id=item_Size>' + item.Server.Size + '</td>' +
+                            '<td id=item_Bandwidth>' + item.Server.Bandwidth + '</td>' +
+                            '<td id=item_SerialNumber>' + item.Server.SerialNumber + '</td>' +
+                            '<td id=item_PartNumber>' + item.Server.PartNumber + '</td>' +
+                            '<td><a href="#" x-code=' + item.Server.TempCode + ' btnAction="edit">Edit</a></td>' +
+                            '<td><a href="#" x-code=' + item.Server.TempCode + 'btnAction="delete">Delete</a></td>' +
+                            '</tr>');
+                        //addModal(data.Server);
+                    });
+                    $('#serverinfo-modal').modal('hide');
+                }
             });
-        }, function () {
-
         });
-        return false;
-    });
 
-    var count = document.querySelectorAll('tbody tr').length;
-    if (count > 1) {
-        $("th").removeClass("hidden");
-    } else {
-        $("th").addClass("hidden");
-    }
+        $('a[x-code][action="edit"]').click(function () {
+            clearModal();
+            $('#submitserver').val('@Constants.FormAction.EDIT_ACTION');
+            $('#serverinfo-modal').modal('show');
+            var tempCode = $(this).attr('x-code');
+            get('@Url.Action("GetTempServer", "Temp", new {httproute = ""})' + '/' + tempCode, function (data) {
+                setModal(data.Server);
+            });
+            return false;
+        });
 
-    //$("#addserverform").ajaxForm({ url: '@Url.Action("AddServer", "Request", new {httproute = ""})', type: 'post' });
-    //$("#addserverform").ajaxSubmit({ url: '@Url.Action("AddServer", "Request", new {httproute = ""})', type: 'post' });
+        $('a[x-code][action="delete"]').click(function () {
+            var tempCode = $(this).attr('x-code');
+            alertify.confirm('Are you sure to delete this server?', function () {
+                get('@Url.Action("DeleteTempServer", "Temp", new {httproute = ""})' + '/' + tempCode, function (data) {
+                    $('#' + tempCode).remove();
+                });
+            }, function () {
 
-    //$("addserverform").on("submit", function (event) {
-    //    event.preventDefault();
-    //    console.log($(this).serialize());
-    //});
-</script>
+            });
+            return false;
+        });
+
+        var count = document.querySelectorAll('tbody tr').length;
+        if (count > 1) {
+            $("th").removeClass("hidden");
+        } else {
+            $("th").addClass("hidden");
+        }
+
+        //$("#addserverform").ajaxForm({ url: '@Url.Action("AddServer", "Request", new {httproute = ""})', type: 'post' });
+        //$("#addserverform").ajaxSubmit({ url: '@Url.Action("AddServer", "Request", new {httproute = ""})', type: 'post' });
+
+        //$("addserverform").on("submit", function (event) {
+        //    event.preventDefault();
+        //    console.log($(this).serialize());
+        //});
+    </script>

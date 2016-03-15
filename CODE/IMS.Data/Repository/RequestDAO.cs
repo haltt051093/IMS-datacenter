@@ -229,12 +229,16 @@ namespace IMS.Data.Repository
             return requestCode;
         }
 
-        public void UpdateRequestStatusANDLog(string requestCode, string typeOfLog, string newStatus, string username)
+        public void UpdateRequestStatusANDLog(string requestCode, string typeOfLog, string newStatus, string assignee, string staffCode)
         {
             var request = (from r in Current.Table()
                            where r.RequestCode == requestCode
                            select r).FirstOrDefault();
             request.StatusCode = newStatus;
+            if (assignee != null)
+            {
+                request.Assignee = assignee;
+            }
             Update(request);
             // log request status
             LogChangedContent logRequest = new LogChangedContent
@@ -244,15 +248,18 @@ namespace IMS.Data.Repository
                 Object = Constants.Object.OBJECT_REQUEST,
                 ObjectStatus = newStatus,
                 ChangedValueOfObject = requestCode,
-                Username = username
+                Username = staffCode
             };
             LogChangedContentBLO.Current.AddLog(logRequest);
         }
 
-        public string AddRequest(string requestType, string newStatus, string customer,
+        public string AddRequest(string requestCode, string requestType, string newStatus, string customer,
             string description, DateTime? appointmenTime)
         {
-            var requestCode = GenerateCode(); ;
+            if (requestCode == null)
+            {
+                requestCode = GenerateCode();
+            }
             var request = new Request()
             {
                 RequestCode = requestCode,
@@ -276,18 +283,5 @@ namespace IMS.Data.Repository
             IMSContext.Current.SaveChanges();
             return requestCode;
         }
-
-        public Account GetAssignStaff(string requestCode, string statusCode)
-        {
-            var query = from l in LogChangedContentDAO.Current.Table()
-                        where
-                            l.RequestCode == requestCode && l.Object == Constants.Object.OBJECT_REQUEST &&
-                            l.ObjectStatus == statusCode
-                        select l.Username;
-            var account = AccountBLO.Current.GetAccountByCode(query.FirstOrDefault());
-            return account;
-        }
-
-
     }
 }

@@ -8,7 +8,6 @@ namespace IMS.Data.Models
     [Table("Request")]
     public partial class Request : BaseModel
     {
-        [StringLength(50)]
         public string RequestCode { get; set; }
 
         [StringLength(50)]
@@ -27,5 +26,7 @@ namespace IMS.Data.Models
         public string StatusCode { get; set; }
 
         public bool IsViewed { get; set; }
+
+        public string Assignee { get; set; }
     }
 }

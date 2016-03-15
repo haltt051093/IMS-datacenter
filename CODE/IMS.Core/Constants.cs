@@ -317,6 +317,8 @@ namespace IMS.Core
             public const string EDIT_ACTION = "Edit";
             public const string CANCEL_ACTION = "Cancel";
             public const string REJECT_ACTION = "Reject";
+            public const string APPROVE_ACTION = "Approve";
+            public const string ACCEPT_ACTION = "Accept";
         }
 
         public class ServerAttributeCode

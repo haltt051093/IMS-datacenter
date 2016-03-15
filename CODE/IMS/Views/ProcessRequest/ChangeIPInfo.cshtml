@@ -109,7 +109,7 @@
 
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                @Html.LabelFor(model => model.NewIPs)
+                @Html.LabelFor(model => model.ReturningIPs)
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                 @for (int i = 0; i < Model.ReturningIPs.Count; i++)
@@ -124,6 +124,12 @@
                             @Html.DropDownListFor(model => model.NewIPs[i], Model.NewIPsOptions)
                         </div>
                     }
+                    if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
+                    {
+                        <div class="col-xs-6">
+                            @Html.DisplayFor(model => Model.NewIPs[i])<br />
+                        </div>
+                    }
 
                 }
             </div>
@@ -135,19 +141,20 @@
                 @Html.HiddenFor(model => model.RequestInfo.RequestCode)
                 @Html.HiddenFor(model => model.CustomerInfo.Customer)
                 @Html.HiddenFor(x => x.RequestInfo.RequestType)
+                @Html.HiddenFor(model => model.RequestInfo.StaffCode)
                 @Html.HiddenFor(x => x.SelectedServer)
                 @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                 {
-                    <button type="submit" id="btnApprove" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                    <button type="submit" id="btnApprove" name="@Constants.FormAction.APPROVE_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
                         @Labels.Approve
                     </button>
-                    <button type="submit" id="btnReject" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
+                    <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
                         @Labels.Reject
                     </button>
                 }
                 else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
                 {
-                    <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                    <button type="submit" id="btnAccept" name="@Constants.FormAction.ACCEPT_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
                         @Labels.Accept
                     </button>
                 }

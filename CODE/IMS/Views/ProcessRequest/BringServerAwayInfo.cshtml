@@ -160,6 +160,7 @@
             <div class="col-xs-12">
                 @Html.HiddenFor(model => model.RequestInfo.RequestCode)
                 @Html.HiddenFor(model => model.CustomerInfo.Customer)
+                @Html.HiddenFor(model => model.RequestInfo.StaffCode)
                 @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                 {
                     //if (Model.RequestInfo.StaffCode == Model.RequestInfo.Username)

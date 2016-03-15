@@ -23,7 +23,7 @@
                         Request Code
                     </div>
                     <div class="col-xs-8">
-                        @Html.DisplayFor(model => model.RequestInfo.RequestCode, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.DisplayFor(model => model.RequestInfo.RequestCode, new { htmlAttributes = new { @class = "form-control" } })
                     </div>
                 </div>
                 <div class="row">
@@ -31,7 +31,7 @@
                         Current Status
                     </div>
                     <div class="col-xs-8">
-                        @Html.DisplayFor(model => model.RequestInfo.StatusName, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.DisplayFor(model => model.RequestInfo.StatusName, new { htmlAttributes = new { @class = "form-control" } })
                     </div>
                 </div>
                 <div class="row">
@@ -39,7 +39,7 @@
                         Requested Time
                     </div>
                     <div class="col-xs-8">
-                        @Html.DisplayFor(model => model.RequestInfo.RequestedTime, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.DisplayFor(model => model.RequestInfo.RequestedTime, new { htmlAttributes = new { @class = "form-control" } })
                     </div>
                 </div>
                 <div class="row">
@@ -49,15 +49,15 @@
                     @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
                     {
                         <div class="col-xs-8">
-                            @Html.DropDownListFor(model => model.RequestInfo.StaffCode, Model.StaffCodeOptions, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                            @Html.DropDownListFor(model => model.RequestInfo.StaffCode, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                         </div>
                     }
                     else
                     {
                         <div class="col-xs-8">
                             @Html.ActionLink(Model.RequestInfo.StaffName, "ViewProfile", "Account",
-                                new {username = Model.RequestInfo.StaffCode }, null)
-                            @Html.HiddenFor(model => model.RequestInfo.StaffCode, new {@class = "form-control"})
+                                new { username = Model.RequestInfo.StaffCode }, null)
+                            @Html.HiddenFor(model => model.RequestInfo.StaffCode, new { @class = "form-control" })
                         </div>
                     }
                 </div>
@@ -68,7 +68,7 @@
                         Customer
                     </div>
                     <div class="col-xs-8">
-                        @Html.ActionLink(Model.CustomerInfo.CustomerName, "ViewProfile", "Account", new {username = Model.CustomerInfo.Customer }, null)
+                        @Html.ActionLink(Model.CustomerInfo.CustomerName, "ViewProfile", "Account", new { username = Model.CustomerInfo.Customer }, null)
                     </div>
                 </div>
                 @if (Model.CustomerInfo.Company != null)
@@ -78,7 +78,7 @@
                             Company Name
                         </div>
                         <div class="col-xs-8">
-                            @Html.DisplayFor(model => model.CustomerInfo.Customer, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.DisplayFor(model => model.CustomerInfo.Customer, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
                 }
@@ -87,51 +87,32 @@
                         Phone Number
                     </div>
                     <div class="col-xs-8">
-                        @Html.DisplayFor(model => model.CustomerInfo.Phone, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.DisplayFor(model => model.CustomerInfo.Phone, new { htmlAttributes = new { @class = "form-control" } })
                     </div>
                 </div>
             </div>
         </div>
-        <hr/>
-        if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
-        {
-            <div clsas="row">
-                <div class="col-xs-4">
-                    Returned Racks
-                </div>
-                <div class="col-xs-8">
-                    @foreach (var item in Model.SelectedRacks)
-                    {
-                        @Html.DisplayFor(model => item)
-                        <br />
-                    }
-                </div>
-            </div>
-        }
-        else
-        {
-            <div clsas="row">
-                <div class="col-xs-4">
-                    Returned Racks
-                </div>
-                <div class="col-xs-8">
-                    @foreach (var item in Model.RackOfCustomer)
-                    {
-                        @Html.DisplayFor(model => item.Text)
-                        @Html.HiddenFor(model => item.Value)
-                        <br />
-                    }
-                </div>
-            </div>
-        }
+        <hr />
         <div class="row">
             <div class="col-xs-4">
-                Note
+                Returned Racks
             </div>
             <div class="col-xs-8">
-                @Html.DisplayFor(model => model.RequestInfo.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @foreach (var item in Model.SelectedRacks)
+                {
+                    @Html.DisplayFor(model => item)
+                    <br />
+                }
             </div>
         </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    Note
+                </div>
+                <div class="col-xs-8">
+                    @Html.DisplayFor(model => model.RequestInfo.Description, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
         if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_CANCELLED)
         {
             @ViewBag.Message
@@ -143,9 +124,9 @@
         <div class="row">
             <div class="col-xs-12">
                 @Html.HiddenFor(model => model.RequestInfo.RequestCode)
-                @Html.HiddenFor(model => model.RequestInfo.Customer)
+                @Html.HiddenFor(model => model.CustomerInfo.Customer)
                 @Html.HiddenFor(x => x.RequestInfo.RequestType)
-                @Html.HiddenFor(x => x.RackOfCustomer)
+                @Html.HiddenFor(model => model.RequestInfo.StaffCode)
                 @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                 {
                     //if (Model.StaffCode == Model.Username)

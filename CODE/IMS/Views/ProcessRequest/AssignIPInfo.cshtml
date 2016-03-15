@@ -47,17 +47,17 @@
                     </div>
                     @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
                     {
-                        <div class="col-xs-8">
-                            @Html.DropDownListFor(model => model.RequestInfo.StaffCode, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                        </div>
+                    <div class="col-xs-8">
+                        @Html.DropDownListFor(model => model.RequestInfo.StaffCode, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    </div>
                     }
                     else
                     {
-                        <div class="col-xs-8">
-                            @Html.ActionLink(Model.RequestInfo.StaffName, "ViewProfile", "Account",
+                    <div class="col-xs-8">
+                        @Html.ActionLink(Model.RequestInfo.StaffName, "ViewProfile", "Account",
                                 new { username = Model.RequestInfo.StaffCode }, null)
-                            @Html.HiddenFor(model => model.RequestInfo.StaffCode, new { @class = "form-control" })
-                        </div>
+                        @Html.HiddenFor(model => model.RequestInfo.StaffCode, new { @class = "form-control" })
+                    </div>
                     }
                 </div>
             </div>
@@ -72,14 +72,14 @@
                 </div>
                 @if (Model.CustomerInfo.Company != null)
                 {
-                    <div class="row">
-                        <div class="col-xs-4">
-                            Company Name
-                        </div>
-                        <div class="col-xs-8">
-                            @Html.DisplayFor(model => model.CustomerInfo.Company, new { htmlAttributes = new { @class = "form-control" } })
-                        </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        Company Name
                     </div>
+                    <div class="col-xs-8">
+                        @Html.DisplayFor(model => model.CustomerInfo.Company, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
                 }
                 <div class="row">
                     <div class="col-xs-4">
@@ -167,20 +167,28 @@
         <div class="row">
             <div class="col-xs-12">
                 @Html.HiddenFor(model => model.RequestInfo.RequestCode)
-                @Html.HiddenFor(model => model.RequestInfo.Customer)
+                @Html.HiddenFor(model => model.CustomerInfo.Customer)
                 @Html.HiddenFor(x => x.RequestInfo.RequestType)
+                @Html.HiddenFor(model => model.RequestInfo.StaffCode)
                 @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING ||
                     Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                 {
                     //if (Model.StaffCode == Model.Username)
                     //{
-                    <button type="submit" class="btn btn-primary" name="Approve">Approve</button>
-                    <button type="submit" class="btn btn-danger" name="Reject">Reject</button>
+                    <button type="submit" id="btnApprove" name="@Constants.FormAction.APPROVE_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        @Labels.Approve
+                    </button>
+                    <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
+                        @Labels.Reject
+                    </button>
                     //}
+
                 }
                 else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
                 {
-                    <button type="submit" class="btn btn-primary" name="Accept">Accept</button>
+                    <button type="submit" id="btnAccept" name="@Constants.FormAction.ACCEPT_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        @Labels.Accept
+                    </button>
                 }
             </div>
         </div>
@@ -200,9 +208,8 @@
         });
 
         $('#selectedIps').dblclick(function () {
-            var count = $('#selectedIps option:selected').length;
-            args.IsValid = count > 0 && count <= 5;
-
+            //var count = $('#selectedIps option:selected').length;
+            //args.IsValid = count > 0 && count <= 5;
             var pass = $('#selectedIps').val();
             var ipNumber = $('#IpNumber').val();
             $('#availableIps').append('<option value="' + pass + '">' + pass + '</option>');

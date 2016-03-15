@@ -47,11 +47,6 @@ namespace IMS.Data.Business
             dao.UpdateServerIpANDLog(requestCode, serverCode, updatedIp, typeOfLog, newStatus, username);
         }
 
-        //public int GetPreviousIp(string serverCode, string preIp, string statusCode)
-        //{
-        //    return dao.GetPreviousIp(serverCode, preIp, statusCode);
-        //}
-
         public List<string> GetIpByServer(string serverCode, string statusCode)
         {
             return dao.GetIpByServer(serverCode, statusCode);
@@ -61,9 +56,13 @@ namespace IMS.Data.Business
             var query = @"select s.* from ServerIP as s where s.ServerCode='" + servercode + @"'";
             return dao.RawQuery<ServerIP>(query, new object[] { }).FirstOrDefault();
         }
-        //public void ReturnAllIpOfServer(string serverCode)
-        //{
-        //    dao.ReturnAllIpOfServer(serverCode);
-        //}
+
+        public List<ServerIP> GetIPtoFetch(string serverCode, string status)
+        {
+            var query = from si in ServerIPDAO.Current.Table()
+                        where si.ServerCode == serverCode && si.StatusCode == status
+                        select si;
+            return query.OrderBy(x => x.CurrentIP).ToList();
+        }
     }
 }
