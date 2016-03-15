@@ -86,47 +86,16 @@ namespace IMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                List<Account> lstall = AccountDAO.Current.GetAll();
-
                 var account = Mapper.Map<AccountCreateViewModel, Account>(accountCreateViewModel);
-                if (CheckExistUsername(account.Username))
-                {
-                    //put code handle can not create user with this username, trung ten
-
-                    return RedirectToAction("Index");
-                }
-                var checkStaff = lstall.Where(c => c.GroupCode == account.GroupCode && c.Role == "Staff").Where(c => c.Status == true).Count();
-                var checkShift = lstall.Where(c => c.GroupCode == account.GroupCode && c.Role == "Shift Head").Where(c => c.Status == true).Count();
-                var FailCreate = "";
-                if (("Staff").Equals(account.Role))
-                {
-                    if (checkStaff < 2)
-                    {
-                        AccountBLO.Current.Add(account);
-                        //send account info to login to the system
-                        AccountBLO.Current.SendAccountInfo(account);
-                    }
-                    else
-                    {
-                        FailCreate = "staff";
-                    }
-                }
-                else
-                {
-                    if (checkShift < 1)
-                    {
-                        AccountBLO.Current.Add(account);
-                        //send account info to login to the system
-                        AccountBLO.Current.SendAccountInfo(account);
-                    }
-                    else
-                    {
-                        FailCreate = "shifthead";
-                    }
-                }
-                return RedirectToAction("Index", new { message = FailCreate });
+                account.Status = true;
+                account.Password = AccountBLO.Current.GeneratePassword();
+                AccountBLO.Current.Add(account);
+                //send account info to login to the system
+                AccountBLO.Current.SendAccountInfo(account);
+                Success("Add Staff Successfully!");
+                return RedirectToAction("Index");
             }
-            return View(accountCreateViewModel);
+            return RedirectToAction("Index");
         }
 
         [Authorize(Roles = "Staff,Shift Head,Manager")]
@@ -194,28 +163,38 @@ namespace IMS.Controllers
             }
             var accountviewmodel = Mapper.Map<Account, AccountCreateViewModel>(account);
             accountviewmodel.UserLogin = GetCurrentUserName();
+            var listgroup = new List<SelectListItem>();
+
+            var count = AccountDAO.Current.GetCountMemberOfGroup();
+            for (int i = 0; i < count.Count; i++)
+            {
+                var list = new SelectListItem();
+                if (count[i].CountMember < 3 || count[i].GroupCode==account.GroupCode)
+                {
+                    list.Value = count[i].GroupCode;
+                    list.Text = count[i].GroupCode;
+                    listgroup.Add(list);
+                }
+
+            }
+            accountviewmodel.Groups = listgroup;
             return View(accountviewmodel);
         }
         // POST: Account/Edit/5
         [HttpPost]
         public ActionResult EditStaff(AccountCreateViewModel viewmodel)
         {
-            Account account = Mapper.Map<AccountCreateViewModel, Account>(viewmodel);
-            Account ass = AccountBLO.Current.GetById(account.Id);
-            if (ass.Status == false)
-            {
-                account.Status = false;
-            }
-            AccountBLO.Current.AddOrUpdate(account);
-
-            string role = "";
-            if (Session[Constants.Session.USER_LOGIN] != null)
-            {
-                var obj = Session[Constants.Session.USER_LOGIN];
-                Account a = (Account)obj;
-                role = a.Role;
-            }
-            return RedirectToAction("Index", "Account", new { role = role });
+            var account = AccountBLO.Current.GetAccountByCode(viewmodel.Username);
+            account.GroupCode = viewmodel.GroupCode;
+            account.Role = viewmodel.Role;
+            account.Fullname = viewmodel.Fullname;
+            account.Phone = viewmodel.Phone;
+            account.Address = viewmodel.Address;
+            account.Identification = viewmodel.Identification;
+            account.Email = viewmodel.Email;
+            AccountDAO.Current.Update(account);
+            Success("Update Profile Successfully!");
+            return RedirectToAction("ViewProfile", new { username = viewmodel.Username });
         }
 
 

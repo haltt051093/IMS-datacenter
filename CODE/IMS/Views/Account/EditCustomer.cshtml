@@ -5,54 +5,54 @@
     ViewBag.Title = "EditCustomer";
 }
 
-<h2>EditCustomer</h2>
+
 
 <section class="main-content">
+    <h2>Edit Customer Profile</h2>
     @using (Html.BeginForm())
     {
         <div class="form-group">
-            @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.EditorFor(model => model.Username, Model.Username, new { htmlAttributes = new { @class = "form-control" ,disabled="disabled" } })
-            @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.Username)
+            @Html.EditorFor(model => model.Username, Model.Username, new {htmlAttributes = new {@class = "form-control", disabled = "disabled", style = "width:600px"}})
+            @Html.ValidationMessageFor(model => model.Username)
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.Fullname, htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.EditorFor(model => model.Fullname, Model.Fullname, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Fullname, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.Fullname)
+            @Html.EditorFor(model => model.Fullname, Model.Fullname, new {htmlAttributes = new {@class = "form-control", style = "width:600px"}})
+            @Html.ValidationMessageFor(model => model.Fullname)
         </div>
-                            if (Model.Company != null)
-                            {
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.Company, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    @Html.EditorFor(model => model.Company, Model.Company, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Company, "", new { @class = "text-danger" })
-                                </div>
-                            }
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
-                                @Html.EditorFor(model => model.Phone, Model.Phone, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-                                @Html.EditorFor(model => model.Email, Model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
-                                @Html.EditorFor(model => model.Address, Model.Address, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Identification, htmlAttributes: new { @class = "control-label col-md-2" })
-                                @Html.EditorFor(model => model.Identification, Model.Identification, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Identification, "", new { @class = "text-danger" })
-                            </div>
+        if (Model.Company != null)
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.Company)
+                @Html.EditorFor(model => model.Company, Model.Company, new {htmlAttributes = new {@class = "form-control", style = "width:600px"}})
+                @Html.ValidationMessageFor(model => model.Company)
+            </div>
+        }
+        <div class="form-group">
+            @Html.LabelFor(model => model.Phone)
+            @Html.EditorFor(model => model.Phone, Model.Phone, new {htmlAttributes = new {@class = "form-control", style = "width:600px"}})
+            @Html.ValidationMessageFor(model => model.Phone)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email)
+            @Html.EditorFor(model => model.Email, Model.Email, new {htmlAttributes = new {@class = "form-control", style = "width:600px"}})
+            @Html.ValidationMessageFor(model => model.Email)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Address)
+            @Html.EditorFor(model => model.Address, Model.Address, new {htmlAttributes = new {@class = "form-control", style = "width:600px"}})
+            @Html.ValidationMessageFor(model => model.Address)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Identification)
+            @Html.EditorFor(model => model.Identification, Model.Identification, new {htmlAttributes = new {@class = "form-control", style = "width:600px"}})
+            @Html.ValidationMessageFor(model => model.Identification)
+        </div>
 
         <div class="form-group">
-            @Html.ActionLink("Cancel", "ViewProfile", "Account", new {username=Model.Username}, htmlAttributes: new { @class = "btn btn-default pull-right" })
-            <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-pencil"></i> Change</button>
-           
+            <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-pencil"></i> Change</button>
+            @Html.ActionLink("Cancel", "ViewProfile", "Account", new {username = Model.Username}, htmlAttributes: new {@class = "btn btn-default pull-left"})
         </div>
     }
 </section>

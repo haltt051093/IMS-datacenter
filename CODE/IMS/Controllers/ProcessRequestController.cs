@@ -94,7 +94,7 @@ namespace IMS.Controllers
                 if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
                 {
                     var group = GetCurrentUserGroup();
-                    var listStaff = AccountBLO.Current.ListAccountSameGroup(group);
+                    var listStaff = AccountBLO.Current.GetAccountsByGroup(group);
                     viewmodel.StaffCodeOptions = listStaff
                         .Select(x => new SelectListItem
                         {
@@ -135,7 +135,7 @@ namespace IMS.Controllers
                 if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
                 {
                     var group = GetCurrentUserGroup();
-                    var listStaff = AccountBLO.Current.ListAccountSameGroup(group);
+                    var listStaff = AccountBLO.Current.GetAccountsByGroup(group);
                     viewmodel.StaffCodeOptions = listStaff
                         .Select(x => new SelectListItem
                         {
@@ -206,7 +206,7 @@ namespace IMS.Controllers
                 if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
                 {
                     var group = GetCurrentUserGroup();
-                    var listStaff = AccountBLO.Current.ListAccountSameGroup(group);
+                    var listStaff = AccountBLO.Current.GetAccountsByGroup(group);
                     viewmodel.StaffCodeOptions = listStaff
                         .Select(x => new SelectListItem
                         {
@@ -269,7 +269,7 @@ namespace IMS.Controllers
                 if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
                 {
                     var group = GetCurrentUserGroup();
-                    var listStaff = AccountBLO.Current.ListAccountSameGroup(group);
+                    var listStaff = AccountBLO.Current.GetAccountsByGroup(group);
                     viewmodel.StaffCodeOptions = listStaff
                         .Select(x => new SelectListItem
                         {
@@ -322,7 +322,7 @@ namespace IMS.Controllers
                 if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
                 {
                     var group = GetCurrentUserGroup();
-                    var listStaff = AccountBLO.Current.ListAccountSameGroup(group);
+                    var listStaff = AccountBLO.Current.GetAccountsByGroup(group);
                     viewmodel.StaffCodeOptions = listStaff
                         .Select(x => new SelectListItem
                         {
