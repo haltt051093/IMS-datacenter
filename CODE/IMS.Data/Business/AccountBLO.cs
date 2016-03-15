@@ -85,5 +85,19 @@ namespace IMS.Data.Business
                         select a;
             return query.ToList();
         }
+
+        public CustomerInfoModel GeCustomerInfo(string username)
+        {
+            var account = from a in AccountDAO.Current.Table()
+                          where a.Username == username
+                          select new CustomerInfoModel()
+                          {
+                              Company = a.Company,
+                              Customer = a.Username,
+                              CustomerName = a.Fullname,
+                              Phone = a.Phone
+                          };
+            return account.FirstOrDefault();
+        }
     }
 }

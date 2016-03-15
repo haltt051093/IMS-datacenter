@@ -16,12 +16,12 @@
     {
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                @Html.LabelFor(model => model.AppointmentTime)
+                @Html.LabelFor(model => model.RequestInfo.AppointmentTime)
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                 <div class='input-group date' id='datetimepicker1'>
-                    @Html.TextBoxFor(model => model.AppointmentTime, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                    @Html.ValidationMessageFor(model => model.AppointmentTime)
+                    @Html.TextBoxFor(model => model.RequestInfo.AppointmentTime, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    @Html.ValidationMessageFor(model => model.RequestInfo.AppointmentTime)
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -30,11 +30,11 @@
         </div>
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                @Html.LabelFor(model => model.Description)
+                @Html.LabelFor(model => model.RequestInfo.Description)
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                @Html.TextAreaFor(model => model.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                @Html.ValidationMessageFor(model => model.Description)
+                @Html.TextAreaFor(model => model.RequestInfo.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.ValidationMessageFor(model => model.RequestInfo.Description)
             </div>
         </div>
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">

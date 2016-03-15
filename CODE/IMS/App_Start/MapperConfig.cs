@@ -26,7 +26,7 @@ namespace IMS
                 config.CreateMap<RequestRentRackViewModel, NotificationExtendedModel>();
                 config.CreateMap<RequestReturnRackViewModel, NotificationExtendedModel>();
                 config.CreateMap<RequestAddServerViewModel, NotificationExtendedModel>();
-                config.CreateMap<RequestIPViewModel, NotificationExtendedModel>();
+                config.CreateMap<ProcessRequestChangeIPViewModel, NotificationExtendedModel>();
                 //request add server
                 config.CreateMap<RequestAddServerViewModel,Server>();
                 //process rent rack
@@ -38,7 +38,7 @@ namespace IMS
                 //process bring server away
                 config.CreateMap<Request, RequestBringServerAwayViewModel>();
                 //process assign, change, return ip
-                config.CreateMap<Request, RequestIPViewModel>();
+                config.CreateMap<Request, ProcessRequestChangeIPViewModel>();
                 config.CreateMap<ServerExtendedModel, Server>();
             });
         }

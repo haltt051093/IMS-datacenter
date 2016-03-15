@@ -136,6 +136,7 @@
     <Compile Include="ViewModels\AccountExtendedModel.cs" />
     <Compile Include="ViewModels\AttributeExtendedModel.cs" />
     <Compile Include="Generic\BaseResultModel.cs" />
+    <Compile Include="ViewModels\CustomerInfoModel.cs" />
     <Compile Include="ViewModels\IPAddressViewModel.cs" />
     <Compile Include="ViewModels\IPAddressPoolExtendedModel.cs" />
     <Compile Include="ViewModels\LocationViewModel.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="ViewModels\RackOfCustomerExtendedModel.cs" />
     <Compile Include="ViewModels\RequestDetailViewModel.cs" />
     <Compile Include="ViewModels\RequestExtendedModel.cs" />
+    <Compile Include="ViewModels\RequestInfoModel.cs" />
     <Compile Include="ViewModels\ScheduleExtendedModel.cs" />
     <Compile Include="ViewModels\ServerExtendedModel.cs" />
   </ItemGroup>

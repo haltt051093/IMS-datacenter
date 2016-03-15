@@ -1,4 +1,4 @@
-﻿@model RequestIPViewModel
+﻿@model RequestReturnIPViewModel
 @{
     ViewBag.Title = Pages.RequestReturnIP;
     ViewBag.PageTitle = Pages.RequestReturnIP;
@@ -26,7 +26,7 @@
         <div id="divPartialView" class="hidden">
             <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                 <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                    @Html.LabelFor(model => model.Ips)
+                    @Html.LabelFor(model => model.ReturningIPs)
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                     <table id="MyTable" class="@Constants.HtmlFormat.DATATABLE_CLASS">
@@ -42,18 +42,18 @@
                         </thead>
                         <tbody id="tbodyid"></tbody>
                     </table>
-                    @Html.HiddenFor(model => model.Ips, new { id = "ips" })
+                    @Html.HiddenFor(model => model.ReturningIPs, new { id = "ips" })
                     @Html.HiddenFor(model => model.SelectedServer)
                 </div>
             </div>
         </div>
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                @Html.LabelFor(model => model.Description)
+                @Html.LabelFor(model => model.RequestInfo.Description)
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                @Html.TextAreaFor(model => model.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                @Html.ValidationMessageFor(model => model.Description)
+                @Html.TextAreaFor(model => model.RequestInfo.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.ValidationMessageFor(model => model.RequestInfo.Description)
             </div>
         </div>
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
@@ -81,25 +81,20 @@
                 success: function (data) {
                     $('#divPartialView').removeClass('hidden');
                     $(data.ServerIPs).each(function (index, item) {
-                        //myTable.append($('tr', { value: item.ServerCode, text: item.ServerCode }));
-                        myTable.append('<tr><td>' + item.CurrentIP + '</td><td>' + '<input type="checkbox" id="CheckBoxList"'
-                            + index + ' name="chk" value="' + item.CurrentIP + '" /></td></tr>');
+                        myTable.append('<tr><td>' + '<input type="checkbox" id="CheckBoxList"'
+                            + index + ' name="chk" value="' + item.CurrentIP + '" /></td><td>' + item.CurrentIP + '</td></tr>');
                     });
                 }
             });
         });
 
         //Get value of selected items
-        $("#demo").click(function () {
+        $("#btnAccept").click(function () {
             var selectedValues = [];
             $("[id*=MyTable] input:checked").each(function () {
                 selectedValues.push($(this).val());
             });
             $('#ips').val(selectedValues);
-        });
-
-        $("[id*=MyTable] > thead [id*=checkAll]").change(function () {  //on click
-            alert("No item has been selected.");
         });
     });
 </script>

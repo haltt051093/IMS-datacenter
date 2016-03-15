@@ -68,7 +68,7 @@ namespace IMS.Data.Repository
                 new SqlParameter("end", end),
                 new SqlParameter("waiting", Constants.StatusCode.REQUEST_WAITING),
                 new SqlParameter("processing", Constants.StatusCode.REQUEST_PROCESSING),
-                new SqlParameter("done",Constants.StatusCode.REQUEST_DONE)
+                new SqlParameter("done", Constants.StatusCode.REQUEST_DONE)
             );
         }
         //Tien
@@ -185,11 +185,6 @@ namespace IMS.Data.Repository
             return RawQuery<RequestExtendedModel>(query, new object[] { });
         }
 
-        public Request GetRequestByRequestCode(string requestCode)
-        {
-            return Current.Query(x => x.RequestCode == requestCode).FirstOrDefault();
-        }
-
         public string AddRequestANDLog(string requestType, string newStatus, string customer,
             string description, DateTime? appointmenTime, string serverCode, string typeOfLog, string UniqueRequestCode)
         {
@@ -236,7 +231,9 @@ namespace IMS.Data.Repository
 
         public void UpdateRequestStatusANDLog(string requestCode, string typeOfLog, string newStatus, string username)
         {
-            var request = GetRequestByRequestCode(requestCode);
+            var request = (from r in Current.Table()
+                           where r.RequestCode == requestCode
+                           select r).FirstOrDefault();
             request.StatusCode = newStatus;
             Update(request);
             // log request status
@@ -291,6 +288,6 @@ namespace IMS.Data.Repository
             return account;
         }
 
-       
+
     }
 }

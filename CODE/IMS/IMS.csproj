@@ -921,6 +921,15 @@
     <Compile Include="Controllers\ValidateController.cs" />
     <Compile Include="Models\HomeHeaderViewModel.cs" />
     <Compile Include="Models\HomeSidebarViewModel.cs" />
+    <Compile Include="Models\ProcessRequestAddServerViewModel.cs" />
+    <Compile Include="Models\ProcessRequestReturnRackViewModel - Copy.cs" />
+    <Compile Include="Models\ProcessRequestBringServerAwayViewModel.cs" />
+    <Compile Include="Models\ProcessRequestRentRackViewModel.cs" />
+    <Compile Include="Models\ProcessRequestAssignIPViewModel.cs" />
+    <Compile Include="Models\RequestAssignIPViewModel.cs" />
+    <Compile Include="Models\RequestReturnIPViewModel.cs" />
+    <Compile Include="Models\RequestChangeIPViewModel.cs" />
+    <Compile Include="Models\ProcessRequestReturnIPViewModel.cs" />
     <Compile Include="Models\ProcessRequestIndexModel.cs" />
     <Compile Include="Models\ReportUsedIPViewModel.cs" />
     <Compile Include="Models\RequestHistoryViewModel.cs" />
@@ -966,7 +975,7 @@
     <Compile Include="Models\NotificationViewModel.cs" />
     <Compile Include="Models\RackCreateViewModel.cs" />
     <Compile Include="Models\RequestRentRackViewModel.cs" />
-    <Compile Include="Models\RequestIPViewModel.cs" />
+    <Compile Include="Models\ProcessRequestChangeIPViewModel.cs" />
     <Compile Include="Models\RequestReturnRackViewModel.cs" />
     <Compile Include="Models\RequestAddServerViewModel.cs" />
     <Compile Include="Models\ScheduleIndexViewModel.cs" />
@@ -1031,7 +1040,6 @@
     <Content Include="Views\Request\ReturnRack.cshtml" />
     <Content Include="Views\Rack\Index.cshtml" />
     <Content Include="Views\Home\Header.cshtml" />
-    <Content Include="Views\Request\Create.cshtml" />
     <Content Include="Views\Report\ReportBlockIP.cshtml" />
     <Content Include="Views\ProcessRequest\Index.cshtml" />
     <Content Include="Views\Report\ReportUsedIP.cshtml" />

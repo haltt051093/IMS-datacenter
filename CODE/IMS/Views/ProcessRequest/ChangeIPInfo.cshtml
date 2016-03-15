@@ -1,176 +1,162 @@
-﻿@model RequestIPViewModel
+﻿@model ProcessRequestChangeIPViewModel
 @{
-    ViewBag.Title = "RequestChangeIPInfo";
+    ViewBag.Title = Pages.ProcessRequestChangeIP;
+    ViewBag.PageTitle = Pages.ProcessRequestChangeIP;
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("ProcessRequest", "Index", Pages.ProcessRequest),
+        new BreadcrumbModel("ProcessRequest", "Detail", Pages.ProcessRequestChangeIP)
+    };
 }
 
-<section class="content-header">
-    <h1>
-        Detail Request Change IP Address
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="@Url.Action("Index", "Schedule")"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Detail Request Change IP Address</li>
-    </ol>
-</section>
-<section class="content">
+<section class="main-content">
     @using (Html.BeginForm("ProcessRequestChangeIp", "ProcessRequest", FormMethod.Post))
             {
         <div class="row">
             <div class="col-xs-6">
-                <div class="row dl-horizontal">
-                    <div class="col-xs-4">
-                        Request Code
+                <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                        @Html.LabelFor(model => model.RequestInfo.RequestCode)
                     </div>
-                    <div class="col-xs-8">
-                        @Html.DisplayFor(model => model.RequestCode, new { htmlAttributes = new { @class = "form-control" } })
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4">
-                        Current Status
-                    </div>
-                    <div class="col-xs-8">
-                        @Html.DisplayFor(model => model.StatusName, new { htmlAttributes = new { @class = "form-control" } })
+                    <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                        @Html.DisplayFor(model => model.RequestInfo.RequestCode, new { @class = Constants.HtmlFormat.MODAL_INNER_CLASS })
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-xs-4">
-                        Requested Time
+                <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                        @Html.LabelFor(model => model.RequestInfo.StatusName)
                     </div>
-                    <div class="col-xs-8">
-                        @Html.DisplayFor(model => model.RequestedTime, new { htmlAttributes = new { @class = "form-control" } })
+                    <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                        @Html.DisplayFor(model => model.RequestInfo.StatusName, new { @class = Constants.HtmlFormat.MODAL_INNER_CLASS })
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-xs-4">
-                        Assignee
+                <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                        @Html.LabelFor(model => model.RequestInfo.RequestedTime)
                     </div>
-                    @if (Model.StatusCode == Constants.StatusCode.REQUEST_PENDING)
+                    <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                        @Html.DisplayFor(model => model.RequestInfo.RequestedTime, new { @class = Constants.HtmlFormat.MODAL_INNER_CLASS })
+                    </div>
+                </div>
+                <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                        @Html.LabelFor(model => model.RequestInfo.StaffCode)
+                    </div>
+                    @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
                     {
-                        <div class="col-xs-8">
-                            @Html.DropDownListFor(model => model.StaffCode, Model.AssignGroup, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                            @Html.DropDownListFor(model => model.RequestInfo.StaffCode, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                         </div>
                     }
                     else
                     {
-                        <div class="col-xs-8">
-                            @Html.ActionLink(Model.StaffName, "ViewProfile", "Account",
-                                new { username = Model.StaffCode }, null)
-                            @Html.HiddenFor(model => model.StaffCode, new { @class = "form-control" })
+                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                            @Html.ActionLink(Model.RequestInfo.StaffName, "ViewProfile", "Account",
+                                new { username = Model.RequestInfo.StaffCode }, null)
+                            @Html.HiddenFor(model => model.RequestInfo.StaffCode, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                         </div>
                     }
                 </div>
             </div>
             <div class="col-xs-6">
-                <div class="row">
-                    <div class="col-xs-4">
-                        Customer
+                <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                        @Html.LabelFor(model => model.CustomerInfo.CustomerName)
                     </div>
-                    <div class="col-xs-8">
-                        @Html.ActionLink(Model.CustomerName, "ViewProfile", "Account", new { username = Model.Customer }, null)
+                    <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                        @Html.ActionLink(Model.CustomerInfo.CustomerName, "ViewProfile", "Account", new { username = Model.CustomerInfo.Customer }, null)
                     </div>
                 </div>
-                @if (Model.Company != null)
+                @if (Model.CustomerInfo.Company != null)
                 {
-                    <div class="row">
-                        <div class="col-xs-4">
-                            Company Name
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                            @Html.LabelFor(model => model.CustomerInfo.Company)
                         </div>
-                        <div class="col-xs-8">
-                            @Html.DisplayFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control" } })
+                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                            @Html.DisplayFor(model => model.CustomerInfo.Company, new { @class = Constants.HtmlFormat.MODAL_INNER_CLASS })
                         </div>
                     </div>
                 }
-                <div class="row">
-                    <div class="col-xs-4">
-                        Phone Number
+                <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                        @Html.LabelFor(model => model.CustomerInfo.Phone)
                     </div>
-                    <div class="col-xs-8">
-                        @Html.DisplayFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                    <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                        @Html.DisplayFor(model => model.CustomerInfo.Phone, new { @class = Constants.HtmlFormat.MODAL_INNER_CLASS })
                     </div>
                 </div>
             </div>
         </div>
         <hr />
-        <div class="row">
-            <div class="col-xs-4">
-                Selected server
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.SelectedServer)
             </div>
-            <div class="col-xs-8">
-                @Html.DisplayFor(model => model.SelectedServer, new { @class = "form-control" })
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.DisplayFor(model => model.SelectedServer, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-4">
-                Note
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.RequestInfo.Description)
             </div>
-            <div class="col-xs-8">
-                @Html.DisplayFor(model => model.Description, new { @class = "form-control" })
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.DisplayFor(model => model.RequestInfo.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-xs-4">
-                Selected IPs
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.NewIPs)
             </div>
-            <div class="col-xs-8">
-                @for (int i = 0; i < Model.ReturningIps.Count; i++)
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @for (int i = 0; i < Model.ReturningIPs.Count; i++)
                 {
                     <div class="col-xs-6">
-                        @Html.DisplayFor(model => Model.ReturningIps[i])<br/>
-                        @Html.HiddenFor(model => model.ReturningIps[i])
+                        @Html.DisplayFor(model => Model.ReturningIPs[i])<br/>
+                        @Html.HiddenFor(model => model.ReturningIPs[i])
                     </div>
-                    if (Model.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                    if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                     {
                         <div class="col-xs-6">
-                            @Html.DropDownListFor(model => model.SelectedIps, Model.IpSelectListItems)
+                            @Html.DropDownListFor(model => model.NewIPs[i], Model.NewIPsOptions)
                         </div>
                     }
 
                 }
             </div>
         </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    @Html.HiddenFor(model => model.RequestCode)
-                    @Html.HiddenFor(model => model.Customer)
-                    @Html.HiddenFor(x => x.RequestType)
-                    @Html.HiddenFor(model => model.Ips, new { id = "ips" })
-                    @Html.HiddenFor(x => x.SelectedServer)
-                    @Html.HiddenFor(x => x.NumberOfIP, new { @ip = "IpNumber" })
-                    @if (Model.StatusCode == Constants.StatusCode.REQUEST_WAITING ||
-                Model.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
-                    {
-                        //if (Model.StaffCode == Model.Username)
-                        //{
-                        <button type="submit" class="btn btn-primary" name="Approve">Approve</button>
-                        <button type="submit" class="btn btn-danger" name="Reject">Reject</button>
-                        //}
-                    }
-                    else if (Model.StatusCode == Constants.StatusCode.REQUEST_PENDING)
-                    {
-                        <button type="submit" class="btn btn-primary" name="Accept">Accept</button>
-                    }
-                </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
             </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.HiddenFor(model => model.RequestInfo.RequestCode)
+                @Html.HiddenFor(model => model.CustomerInfo.Customer)
+                @Html.HiddenFor(x => x.RequestInfo.RequestType)
+                @Html.HiddenFor(x => x.SelectedServer)
+                @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                {
+                    <button type="submit" id="btnApprove" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        @Labels.Approve
+                    </button>
+                    <button type="submit" id="btnReject" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
+                        @Labels.Reject
+                    </button>
+                }
+                else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
+                {
+                    <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        @Labels.Accept
+                    </button>
+                }
+            </div>
+        </div>
     }
 </section>
 <script type="text/javascript">
     $(function () {
-        $('#availableIps').change(function () {
-            //var pass = $('#availableIps').val();
-            //$('#selectedIps').append('<option value="' + pass + '">' + pass + '</option>');
-            //$("[id*=availableIps] option:selected").remove();
-            //return false;
-            //document.getElementById("selectedIps").value = pass;
-        });
-
-        var ips = $('.selectedIP').val();
-        //DOING, 1 list select thi 2 list kia ko co gia tri nay
-        $('.selectedIP').change(function () {
-            var ip = $(this);
-
-        });
         //Get value of selected items
         $("#btnApprove").click(function () {
             var selectedValues = [];

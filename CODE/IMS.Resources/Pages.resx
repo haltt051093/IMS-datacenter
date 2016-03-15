@@ -192,4 +192,10 @@
   <data name="Customer" xml:space="preserve">
     <value>List of Customers</value>
   </data>
+  <data name="ProcessRequest" xml:space="preserve">
+    <value>Process Requests</value>
+  </data>
+  <data name="ProcessRequestChangeIP" xml:space="preserve">
+    <value>Process Request Change IP Address</value>
+  </data>
 </root>

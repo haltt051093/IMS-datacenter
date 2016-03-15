@@ -124,6 +124,24 @@ namespace IMS.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Process Requests.
+        /// </summary>
+        public static string ProcessRequest {
+            get {
+                return ResourceManager.GetString("ProcessRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Process Request Change IP Address.
+        /// </summary>
+        public static string ProcessRequestChangeIP {
+            get {
+                return ResourceManager.GetString("ProcessRequestChangeIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to List of Racks.
         /// </summary>
         public static string RackIndex {

@@ -78,15 +78,6 @@ namespace IMS.Data.Business
             var server = dao.RawQuery<Server>(query, new object[] { }).FirstOrDefault();
             return server;
         }
-        //public List<ServerViewModel> GetServers()
-        //{
-        //    var query = @"select *, a.Fullname
-        //                from server as s
-        //                join account as a on
-        //                    s.CustomerId = a.UserId";
-        //    var list = dao.RawQuery<ServerViewModel>(query, new object[] { }).ToList();
-        //    return list;
-        //}
 
         public string AddServer(Server passServer)
         {

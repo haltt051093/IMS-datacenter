@@ -1,7 +1,6 @@
-﻿@model RequestIPViewModel
+﻿@model ProcessRequestReturnIPViewModel
 @{
-    ViewBag.Title = "RequestReturnIPInfo2";
-    ViewBag.Role = "Shift Head";
+    ViewBag.Title = "RequestReturnIPInfo";
 }
 
 <section class="content-header">
@@ -9,79 +8,143 @@
         Detail Request Return IP Address
     </h1>
     <ol class="breadcrumb">
-        <li><a href="@Url.Action("Index2", "Schedule")"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="@Url.Action("Index", "Schedule")"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Detail Request Return IP Address</li>
     </ol>
 </section>
-<section class="content">
-    <div class="box">
-        <div class="box-body table-responsive">
-            @using (Html.BeginForm("ProcessRequesReturnIp", "ProcessRequest", FormMethod.Post))
+<section class="main-content">
+    @using (Html.BeginForm("ProcessRequesReturnIp", "ProcessRequest", FormMethod.Post))
             {
-                @Html.HiddenFor(model => model.RequestCode)
-                @Html.HiddenFor(model => model.RequestType)
-                <dl class="dl-horizontal">
-                    <dt>
-                        From customer
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control" } })
-                    </dd>
-                    <dt>
-                        Requested Time
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.RequestedTime, new { htmlAttributes = new { @class = "form-control" } })
-                    </dd>
-                    <dt>
-                        Status
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.StatusName, new { htmlAttributes = new { @class = "form-control" } })
-                    </dd>
-                    <dt>
-                        Server
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.SelectedServer, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.HiddenFor(model => model.SelectedServer)
-                    </dd>
-                    <dt>
-                        Selected IP Address
-                    </dt>
-
-                    <dd>
-                        @for (int i = 0; i < Model.Ips.Count; i++)
-                        {
-                            @Html.DisplayFor(model => Model.Ips[i], new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.HiddenFor(model => Model.Ips[i])
-                            <br />
-                        }
-                    </dd>
-                    <div class="form-group">
-                        <dt>
-                            Description:
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                        </dd>
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="row dl-horizontal">
+                    <div class="col-xs-4">
+                        Request Code
                     </div>
-
-                    <dt></dt>
-                    <dd>
-                        @if (Model.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
-                        {
-                            <button type="submit" id="btnApprove" class="btn btn-primary" name="Approve" value="Approve">Approve</button>
-                            <button type="submit" class="btn btn-danger">Reject</button>
-                        }
-                    </dd>
-
-                </dl>
-            }
-        </div><!-- /.box-body -->
-    </div><!-- /.box -->
+                    <div class="col-xs-8">
+                        @Html.DisplayFor(model => model.RequestInfo.RequestCode, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        Current Status
+                    </div>
+                    <div class="col-xs-8">
+                        @Html.DisplayFor(model => model.RequestInfo.StatusName, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        Requested Time
+                    </div>
+                    <div class="col-xs-8">
+                        @Html.DisplayFor(model => model.RequestInfo.RequestedTime, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        Assignee
+                    </div>
+                    @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
+                    {
+                        <div class="col-xs-8">
+                            @Html.DropDownListFor(model => model.RequestInfo.StaffCode, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-xs-8">
+                            @Html.ActionLink(Model.RequestInfo.StaffName, "ViewProfile", "Account",
+                                        new { username = Model.RequestInfo.StaffCode }, null)
+                            @Html.HiddenFor(model => model.RequestInfo.StaffCode, new { @class = "form-control" })
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="row">
+                    <div class="col-xs-4">
+                        Customer
+                    </div>
+                    <div class="col-xs-8">
+                        @Html.ActionLink(Model.CustomerInfo.CustomerName, "ViewProfile", "Account", new { username = Model.CustomerInfo.Customer }, null)
+                    </div>
+                </div>
+                @if (Model.CustomerInfo.Company != null)
+                {
+                    <div class="row">
+                        <div class="col-xs-4">
+                            Company Name
+                        </div>
+                        <div class="col-xs-8">
+                            @Html.DisplayFor(model => model.CustomerInfo.Customer, new { @class = "form-control" })
+                        </div>
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-xs-4">
+                        Phone Number
+                    </div>
+                    <div class="col-xs-8">
+                        @Html.DisplayFor(model => model.CustomerInfo.Phone, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-xs-4">
+                Selected Server
+            </div>
+            <div class="col-xs-8">
+                @Html.DisplayFor(model => model.SelectedServer, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                Description
+            </div>
+            <div class="col-xs-8">
+                @Html.DisplayFor(model => model.RequestInfo.Description, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                Returned IPs
+            </div>
+            <div class="col-xs-8">
+                @for (int i = 0; i < Model.ReturningIPs.Count; i++)
+                {
+                    @Html.DisplayFor(model => Model.ReturningIPs[i], new { @class = "form-control" })
+                    @Html.HiddenFor(model => Model.ReturningIPs[i])
+                    <br />
+                }
+            </div>
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.HiddenFor(model => model.RequestInfo.RequestCode)
+                @Html.HiddenFor(model => model.CustomerInfo.Customer)
+                @Html.HiddenFor(x => x.RequestInfo.RequestType)
+                @Html.HiddenFor(x => x.SelectedServer)
+                @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                {
+                    <button type="submit" id="btnApprove" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        @Labels.Approve
+                    </button>
+                            <button type="submit" id="btnReject" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
+                                @Labels.Reject
+                            </button>
+                }
+                else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
+                {
+                    <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        @Labels.Accept
+                    </button>
+                }
+            </div>
+        </div>
+    }
 </section>

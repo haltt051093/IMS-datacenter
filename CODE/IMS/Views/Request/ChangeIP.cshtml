@@ -1,4 +1,4 @@
-﻿@model RequestIPViewModel
+﻿@model RequestChangeIPViewModel
 @{
     ViewBag.Title = Pages.RequestChangeIP;
     ViewBag.PageTitle = Pages.RequestChangeIP;
@@ -25,7 +25,7 @@
         <div id="divPartialView" class="hidden">
             <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                 <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                    @Html.LabelFor(model => model.Ips)
+                    @Html.LabelFor(model => model.ReturningIPs)
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                     <table id="MyTable" class="@Constants.HtmlFormat.DATATABLE_CLASS">
@@ -41,17 +41,17 @@
                         </thead>
                         <tbody id="tbodyid"></tbody>
                     </table>
-                    @Html.HiddenFor(model => model.Ips, new {id = "ips"})
+                    @Html.HiddenFor(model => model.ReturningIPs, new {id = "ips"})
                 </div>
             </div>
         </div>
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                @Html.LabelFor(model => model.Description)
+                @Html.LabelFor(model => model.RequestInfo.Description)
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                @Html.TextAreaFor(model => model.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                @Html.ValidationMessageFor(model => model.Description)
+                @Html.TextAreaFor(model => model.RequestInfo.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.ValidationMessageFor(model => model.RequestInfo.Description)
             </div>
         </div>
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">

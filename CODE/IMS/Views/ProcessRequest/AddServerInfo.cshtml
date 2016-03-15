@@ -1,7 +1,6 @@
-﻿@model RequestAddServerViewModel
+﻿@model ProcessRequestAddServerViewModel
 @{
-    ViewBag.Title = "RequestAssignIPInfo";
-    ViewBag.Role = "Shift Head";
+    ViewBag.Title = "Request Add Server";
 }
 
 <section class="content-header">
@@ -9,174 +8,190 @@
         Detail Request Add New Server
     </h1>
     <ol class="breadcrumb">
-        <li><a href="@Url.Action(" Index2", "Schedule" )"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="@Url.Action("Index", "Schedule" )">><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Detail Request Add New Server</li>
     </ol>
 </section>
-<section class="content">
-    <div class="box">
-        <div class="box-body table-responsive">
-            @using (Html.BeginForm("ProcessRequestAddServer", "ProcessRequest", FormMethod.Post))
+<section class="main-content">
+    @using (Html.BeginForm("ProcessRequestAddServer", "ProcessRequest", FormMethod.Post))
             {
-                <dl class="dl-horizontal">
-                    <dt>
-                        From customer
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.HiddenFor(model => model.Customer)
-                        @Html.HiddenFor(model => model.RequestType)
-                        @Html.HiddenFor(model => model.RequestCode)
-                    </dd>
-                    <dt>
-                        Full Name
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control" } })
-                    </dd>
-                    <dt>
-                        Requested Time
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.RequestedTime, new { htmlAttributes = new { @class = "form-control" } })
-                    </dd>
-                    <dt>
-                        Status
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.StatusName, new { htmlAttributes = new { @class = "form-control" } })
-                    </dd>
-                    @if (Model.AssignedPerson != null)
-                    {
-                        <dt>
-                            Assigned Person Name
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.AssignedPerson, new { htmlAttributes = new { @class = "form-control" } })
-                        </dd>
-                    }
-                    <dt>
-                        Identification
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Identification, new { htmlAttributes = new { @class = "form-control" } })
-                    </dd>
-                    <dt>
-                        Appointment Time
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.AppointmentTime, new { htmlAttributes = new { @class = "form-control" } })
-                    </dd>
-                    <dt>
-                        Description
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                    </dd>
-                    <dt style="color: #f56954">
-                        <h4>Server Content</h4>
-                    </dt>
-                    <dd></dd>
-                </dl>
-                <div class="form-group" style="width: 1000px">
-                    <table id="" class="table table-bordered table-striped  col-xs-offset-1">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Maker</th>
-                                <th>Power</th>
-                                <th>Model</th>
-                                <th>Size</th>
-                                <th>Bandwidth</th>
-                                <th>Serial Number</th>
-                                <th>Part Number</th>
-                                <th>Memory</th>
-                                <th>Default IP</th>
-                                <th>Location</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @for (int i = 0; i < Model.Servers.Count; i++)
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.Raw(i + 1)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => Model.Servers[i].Maker, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Maker)
-                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].ServerCode)
-
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => Model.Servers[i].Power, new { htmlAttributes = new { @class = "form-control" } })W
-                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Power)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => Model.Servers[i].Model, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Model)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => Model.Servers[i].Size, new { htmlAttributes = new { @class = "form-control" } })U
-                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Size)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => Model.Servers[i].Bandwidth, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Bandwidth)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => Model.Servers[i].SerialNumber, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].SerialNumber)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => Model.Servers[i].PartNumber, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].PartNumber)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => Model.Servers[i].Memory, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].Memory)
-                                    </td>
-                                    <td>
-                                     
-                                            <label><a data-toggle="modal" class="open-blockIP-modal" href="#assignip-modal" data-id1="@Model.Servers[i].ServerCode" data-id2="@Model.RequestCode" data-id3="@Model.RequestType" data-id4="@Model.Servers[i].DefaultIP">Assign Default IP</a></label>
-                                       
-                                            @Html.DisplayFor(model => Model.Servers[i].DefaultIP, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.HiddenFor(modelItem => modelItem.Servers[i].DefaultIP)
-                                        
-                                    </td>
-
-                                    <td>
-                                        <input type="hidden" value="true" name="location" />
-                                        <label><a href="#" data-toggle="modal" data-target="#assignlocation-modal">Assign Location</a></label>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="row dl-horizontal">
+                    <div class="col-xs-4">
+                        Request Code
+                    </div>
+                    <div class="col-xs-8">
+                        @Html.DisplayFor(model => model.RequestInfo.RequestCode, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
                 </div>
-
-
-                @Html.HiddenFor(model => model.RequestCode)
-                if (Model.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                <div class="row">
+                    <div class="col-xs-4">
+                        Current Status
+                    </div>
+                    <div class="col-xs-8">
+                        @Html.DisplayFor(model => model.RequestInfo.StatusName, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        Requested Time
+                    </div>
+                    <div class="col-xs-8">
+                        @Html.DisplayFor(model => model.RequestInfo.RequestedTime, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        Assignee
+                    </div>
+                    @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
+                    {
+                        <div class="col-xs-8">
+                            @Html.DropDownListFor(model => model.RequestInfo.StaffCode, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-xs-8">
+                            @Html.ActionLink(Model.RequestInfo.StaffName, "ViewProfile", "Account",
+                                new { username = Model.RequestInfo.StaffCode }, null)
+                            @Html.HiddenFor(model => model.RequestInfo.StaffCode, new { @class = "form-control" })
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="row">
+                    <div class="col-xs-4">
+                        Customer
+                    </div>
+                    <div class="col-xs-8">
+                        @Html.ActionLink(Model.CustomerInfo.CustomerName, "ViewProfile", "Account", new { username = Model.CustomerInfo.Customer }, null)
+                    </div>
+                </div>
+                @if (Model.CustomerInfo.Company != null)
                 {
-                    <button type="submit" name="Button" id="btnApprove" class="btn btn-primary" value="Approve">Approve</button>
-                    <button type="submit" name="Button" class="btn btn-danger">Reject</button>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            Company Name
+                        </div>
+                        <div class="col-xs-8">
+                            @Html.DisplayFor(model => model.CustomerInfo.Company, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
                 }
-                if (Model.StatusCode == Constants.StatusCode.REQUEST_DONE)
+                <div class="row">
+                    <div class="col-xs-4">
+                        Phone Number
+                    </div>
+                    <div class="col-xs-8">
+                        @Html.DisplayFor(model => model.CustomerInfo.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-xs-12">
+                <table id="" class="table table-bordered table-striped  col-xs-offset-1">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Maker</th>
+                            <th>Power</th>
+                            <th>Model</th>
+                            <th>Size</th>
+                            <th>Bandwidth</th>
+                            <th>Serial Number</th>
+                            <th>Part Number</th>
+                            <th>Memory</th>
+                            <th>Default IP</th>
+                            <th>Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Servers.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.Raw(i + 1)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].Maker, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Maker)
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].ServerCode)
+
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].Power, new { htmlAttributes = new { @class = "form-control" } })W
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Power)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].Model, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Model)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].Size, new { htmlAttributes = new { @class = "form-control" } })U
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Size)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].Bandwidth, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Bandwidth)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].SerialNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].SerialNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].PartNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].PartNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => Model.Servers[i].Memory, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].Memory)
+                                </td>
+                                <td>
+
+                                    <label><a data-toggle="modal" class="open-blockIP-modal" href="#assignip-modal" data-id1="@Model.Servers[i].ServerCode" data-id2="@Model.RequestInfo.RequestCode" data-id3="@Model.RequestInfo.RequestType" data-id4="@Model.Servers[i].DefaultIP">Assign Default IP</a></label>
+
+                                    @Html.DisplayFor(model => Model.Servers[i].DefaultIP, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].DefaultIP)
+
+                                </td>
+
+                                <td>
+                                    <input type="hidden" value="true" name="location" />
+                                    <label><a href="#" data-toggle="modal" data-target="#assignlocation-modal">Assign Location</a></label>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                @Html.HiddenFor(model => model.RequestInfo.RequestCode)
+                @Html.HiddenFor(model => model.RequestInfo.Customer)
+                @Html.HiddenFor(x => x.RequestInfo.RequestType)
+                @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING ||
+Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                 {
-                    <button type="submit" name="Button" value="Export" class="btn btn-info"><i class="fa fa-external-link"></i> Export Procedure</button>
+                    //if (Model.StaffCode == Model.Username)
+                    //{
+                    <button type="submit" class="btn btn-primary" name="Approve">Approve</button>
+                        <button type="submit" class="btn btn-danger" name="Reject">Reject</button>
+                    //}
                 }
-            }
-        </div><!-- /.box-body -->
-    </div><!-- /.box -->
+                else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
+                {
+                    <button type="submit" class="btn btn-primary" name="Accept">Accept</button>
+                }
+            </div>
+        </div>
+    }
 </section>
-
-
 <!-- ASSIGN IP MODAL -->
 <div id="assignip-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">

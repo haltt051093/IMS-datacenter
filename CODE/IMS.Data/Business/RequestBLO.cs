@@ -89,11 +89,6 @@ namespace IMS.Data.Business
             return list;
         }
 
-        public Request GetRequestByRequestCode(string requestCode)
-        {
-            return dao.GetRequestByRequestCode(requestCode);
-        }
-
         public string GetCustomerOfRequest(string requestCode)
         {
             return RequestDAO.Current.Query(x => x.RequestCode == requestCode).Select(x => x.Customer).FirstOrDefault();
@@ -140,6 +135,25 @@ namespace IMS.Data.Business
         public Account GetAssignStaff(string requestCode, string statusCode)
         {
             return dao.GetAssignStaff(requestCode, statusCode);
+        }
+
+        public RequestInfoModel GetRequestInfo(string requestCode)
+        {
+            var request = (from r in RequestDAO.Current.Table()
+                           where r.RequestCode == requestCode
+                           select new RequestInfoModel()
+                           {
+                               StatusCode = r.StatusCode,
+                               RequestCode = r.RequestCode,
+                               StaffCode = r.StatusCode,
+                               Description = r.Description,
+                               IsViewed = r.IsViewed,
+                               RequestType = r.RequestType,
+                               RequestedTime = r.RequestedTime,
+                               Customer = r.Customer
+                           }).FirstOrDefault();
+            request.StatusName = StatusBLO.Current.GetStatusName(request.StatusCode);
+            return request;
         }
     }
 }

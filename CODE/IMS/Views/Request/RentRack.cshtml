@@ -19,17 +19,17 @@
                 @Html.LabelFor(model => model.RackNumbers)
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                @Html.DropDownListFor(model => model.RackNumbers, Model.Numbers, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.DropDownListFor(model => model.RackNumbers, Model.ListRackNumbers, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                 @Html.ValidationMessageFor(model => model.RackNumbers)
             </div>
         </div>
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                @Html.LabelFor(model => model.Description)
+                @Html.LabelFor(model => model.RequestInfo.Description)
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                @Html.TextAreaFor(model => model.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                @Html.ValidationMessageFor(model => model.Description)
+                @Html.TextAreaFor(model => model.RequestInfo.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.ValidationMessageFor(model => model.RequestInfo.Description)
             </div>
         </div>
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
