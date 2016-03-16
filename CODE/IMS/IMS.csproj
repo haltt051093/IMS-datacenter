@@ -1032,7 +1032,7 @@
     <Content Include="Views\ProcessRequest\BringServerAwayInfo.cshtml" />
     <Content Include="Views\Request\ChangeIP.cshtml" />
     <Content Include="Views\ProcessRequest\ChangeIPInfo.cshtml" />
-    <Content Include="Views\Request\Index.cshtml" />
+    <Content Include="Views\RequestDetail\Index.cshtml" />
     <Content Include="Views\Request\RentRack.cshtml" />
     <Content Include="Views\ProcessRequest\RentRackInfo.cshtml" />
     <Content Include="Views\Request\ReturnIP.cshtml" />
@@ -1052,7 +1052,6 @@
     <Content Include="Views\RequestDetail\ReturnIPInfo.cshtml" />
     <Content Include="Views\RequestDetail\ReturnRackInfo.cshtml" />
     <Content Include="Views\IP\AssignIP.cshtml" />
-
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

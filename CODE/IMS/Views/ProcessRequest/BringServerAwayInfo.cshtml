@@ -49,15 +49,23 @@
                     @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
                     {
                         <div class="col-xs-8">
-                            @Html.DropDownListFor(model => model.RequestInfo.StaffCode, Model.StaffCodeOptions, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                            @Html.ActionLink(Model.RequestInfo.StaffName, "ViewProfile", "Account",
+                                new { username = Model.RequestInfo.StaffCode }, null)
+                            @Html.HiddenFor(model => model.RequestInfo.StaffCode, new { @class = "form-control" })
+                        </div>
+                    }
+                    @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                    {
+                        <div class="col-xs-8">
+                            @Html.DropDownListFor(model => model.RequestInfo.StaffCode, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                         </div>
                     }
                     else
                     {
                         <div class="col-xs-8">
                             @Html.ActionLink(Model.RequestInfo.StaffName, "ViewProfile", "Account",
-                                new {username = Model.RequestInfo.StaffCode }, null)
-                            @Html.HiddenFor(model => model.RequestInfo.StaffCode, new {@class = "form-control"})
+                                new { username = Model.RequestInfo.StaffCode }, null)
+                            @Html.HiddenFor(model => model.RequestInfo.StaffCode, new { @class = "form-control" })
                         </div>
                     }
                 </div>
@@ -172,6 +180,9 @@
                 else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
                 {
                     <button type="submit" class="btn btn-primary" name="Accept">Accept</button>
+                    <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
+                        @Labels.Reject
+                    </button>
                 }
             </div>
         </div>

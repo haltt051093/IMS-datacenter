@@ -10,17 +10,41 @@
 }
 <!-- Main content -->
 <section class="main-content">
+    <div class="row">
+        <div class="col-xs-4">
+            Request Type:
+        </div>
+        <div class="col-xs-8">
+            @Html.DropDownListFor(m => m.FilterByRequestType, Model.FilterByRequestType, "Select All", new { @id = "selectedType" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            Request Status:
+        </div>
+        <div class="col-xs-8">
+            @Html.DropDownListFor(m => m.FilterByStatus, Model.FilterByStatus, "Select All", new { @id = "selectedStatus" })
+        </div>
+    </div>
+    @*<div class="row">
+        <div class="col-xs-4">
+            Time of Request:
+        </div>
+        <div class="col-xs-8">
+            @Html.DropDownListFor(m => m.FilterByPeriodOfTime, Model.FilterByPeriodOfTime, "Today", new { @id = "selectedTime" })
+        </div>
+    </div>*@
     <table id="example1" class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th>
-                    @Html.Raw("RequestCode")
+                    @Html.Raw("Request Code")
                 </th>
                 <th>
-                    @Html.Raw("RequestType")
+                    @Html.Raw("Request Type")
                 </th>
                 <th>
-                    @Html.Raw("RequestedTime")
+                    @Html.Raw("Requested Time")
                 </th>
                 <th>
                     @Html.Raw("Status")
@@ -29,12 +53,12 @@
         </thead>
 
         @for (int i = 0; i < Model.Requests.Count; i++)
-            {
-            <tbody class="clickmee">
+        {
+            <tbody class="clickmee check" status-code="@Model.Requests[i].LastestStatusRequest.StatusCode" type-code="@Model.Requests[i].LastestStatusRequest.RequestTypeCode">
                 <tr>
                     <td>
                         @Html.ActionLink(Model.Requests[i].LastestStatusRequest.RequestCode, "Detais", "RequestDetail",
-                           new { rType = Model.Requests[i].LastestStatusRequest.RequestTypeCode, rCode = Model.Requests[i].LastestStatusRequest.RequestCode }, null)
+                        new { rType = Model.Requests[i].LastestStatusRequest.RequestTypeCode, rCode = Model.Requests[i].LastestStatusRequest.RequestCode }, null)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.RequestTypeName)
@@ -96,5 +120,27 @@
         .next('.showhide')
         .toggle('fast');
         });
+    });
+    $("#example1").dataTable({
+        "iDisplayLength": -1,
+        "aaSorting": [[2, "desc"]] // Sort by first column descending
+    });
+    $("#selectedType").change(function () {
+        var typeCode = $("#selectedType").val();
+        if (typeCode == null || typeCode == '') {
+            $('#example1 tbody tr').show();
+        } else {
+            $('#example1 tbody tr').hide();
+            $('#example1 tbody tr[type-code="' + typeCode + '"]').show();
+        }
+    });
+    $("#selectedStatus").change(function () {
+        var statusCode = $("#selectedStatus").val();
+        if (statusCode == null || statusCode == '') {
+            $('#example1 tbody tr').show();
+        } else {
+            $('#example1 tbody tr').hide();
+            $('#example1 tbody tr[status-code="' + statusCode + '"]').show();
+        }
     });
 </script>

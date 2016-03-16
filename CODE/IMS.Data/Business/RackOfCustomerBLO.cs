@@ -90,7 +90,7 @@ namespace IMS.Data.Business
         }
 
         public void UpdateStatusRackOfCustomerANDLog(string requestCode, string rackCode, string typeOfLog,
-            string customer, string staff, string preStatus, string newStatus)
+            string customer, string staff, string preStatus, string newStatus, string rackName)
         {
             var rackOfCustomer = RackOfCustomerDAO.Current.Query(x =>
                        x.RackCode == rackCode && x.Customer == customer &&
@@ -106,7 +106,7 @@ namespace IMS.Data.Business
                 RequestCode = requestCode,
                 TypeOfLog = typeOfLog,
                 Object = Constants.Object.OBJECT_RACKOFCUSTOMER,
-                ChangedValueOfObject = rackCode,
+                ChangedValueOfObject = rackName,
                 ObjectStatus = newStatus,
                 Username = staff
             };

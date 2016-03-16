@@ -13,6 +13,22 @@ namespace IMS.Controllers
     [Roles(Constants.Role.CUSTOMER)]
     public class RequestDetailController : CoreController
     {
+        public ActionResult Index()
+        {
+            var customer = GetCurrentUserName();
+            var request = LogChangedContentBLO.Current.GetRequestOfCustomer(customer);
+            var data = new RequestIndexViewModel();
+            data.Requests = request;
+            data.FilterByRequestType = TypeOfLogBLO.Current
+                .GetLogTypeOfRequest()
+                .Select(x => new SelectListItem { Value = x.TypeCode, Text = x.TypeName })
+                .ToList();
+            data.FilterByStatus = StatusBLO.Current
+                .GetStatusByObject(Constants.Object.OBJECT_REQUEST)
+                .Select(x => new SelectListItem { Value = x.StatusCode, Text = x.StatusName })
+                .ToList();
+            return View(data);
+        }
         [HttpGet]
         public ActionResult Detais(string rType, string rCode)
         {
@@ -23,7 +39,7 @@ namespace IMS.Controllers
                 //request info
                 viewmodel.RequestInfo = RequestBLO.Current.GetRequestInfo(rCode);
                 //lay list servers
-                var serverCodes = LogChangedContentBLO.Current.GetServerCodeByRequestCode(rCode);
+                var serverCodes = LogChangedContentBLO.Current.GetAddingServers(rCode);
                 List<ServerExtendedModel> list = new List<ServerExtendedModel>();
                 foreach (var servercode in serverCodes)
                 {
@@ -139,7 +155,17 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult CancelRequestAddServer(ProcessRequestAddServerViewModel viewmodel)
         {
-            //DOING
+            var customer = GetCurrentUserName();
+            var serverCodes = LogChangedContentBLO.Current.GetAddingServers(viewmodel.RequestInfo.RequestCode);
+            foreach (var server in serverCodes)
+            {
+                //update and log server
+                ServerBLO.Current.UpdateServerStatus(viewmodel.RequestInfo.RequestCode, server,
+                    Constants.TypeOfLog.LOG_ADD_SERVER, Constants.StatusCode.SERVER_DEACTIVATE, viewmodel.RequestInfo.StaffCode);
+            }
+            //update request status and log
+            RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_ADD_SERVER,
+            Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
             return RedirectToAction("Detais",
                 new { rType = Constants.TypeOfLog.LOG_ADD_SERVER, rCode = viewmodel.RequestInfo.RequestCode });
         }

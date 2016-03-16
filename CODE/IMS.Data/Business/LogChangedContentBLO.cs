@@ -62,14 +62,19 @@ namespace IMS.Data.Business
             return dao.GetServerCodeByRequestCode(requestCode);
         }
 
+        public List<string> GetAddingServers(string requestCode)
+        {
+            return dao.GetAddingServers(requestCode);
+        }
+
         public List<RequestExtendedModel> ListWaitingRequestOfServer(string serverCode)
         {
             return dao.ListWaitingRequestOfServer(serverCode);
         }
 
-        public List<LogExtentedModel> GetAllRequest()
+        public List<LogExtentedModel> GetRequestOfCustomer(string customer)
         {
-            return dao.GetAllRequest();
+            return dao.GetRequestOfCustomer(customer);
         }
 
         public List<LogChangedContent> GetLogInfoByRequestCode(string requestCode, string Object)
@@ -99,7 +104,7 @@ namespace IMS.Data.Business
                 }
                 //update request status and log
                 RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
-                    Constants.StatusCode.REQUEST_CANCELLED, null, customer,null);
+                    Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
             }
         }
 
@@ -119,7 +124,7 @@ namespace IMS.Data.Business
                 }
                 //update request status and log
                 RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_IP,
-                    Constants.StatusCode.REQUEST_CANCELLED, null, customer,null);
+                    Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
             }
         }
 
@@ -138,16 +143,17 @@ namespace IMS.Data.Business
                         customer);
                 }
             }
-            var servers = from l in LogChangedContentDAO.Current.Table()
-                where l.RequestCode == requestCode && l.Object == Constants.Object.OBJECT_SERVER
-                      && l.ObjectStatus == Constants.StatusCode.SERVER_BRINGING_AWAY
-                select l;
+            var servers = (from l in LogChangedContentDAO.Current.Table()
+                           where l.RequestCode == requestCode && l.Object == Constants.Object.OBJECT_SERVER
+                                 && l.ObjectStatus == Constants.StatusCode.SERVER_BRINGING_AWAY
+                           select l).ToList();
             foreach (var server in servers)
             {
+                var serverCode = server.ChangedValueOfObject;
                 //update and log server
-                ServerBLO.Current.UpdateServerStatus(requestCode, server.ServerCode,
+                ServerBLO.Current.UpdateServerStatus(requestCode, serverCode,
                     Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.SERVER_RUNNING,
-                    Constants.Test.CUSTOMER_MANHNH);
+                    customer);
             }
             //update request status and log
             RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
@@ -165,11 +171,11 @@ namespace IMS.Data.Business
                     //update and log rackofCustomer
                     RackOfCustomerBLO.Current.UpdateStatusRackOfCustomerANDLog(requestCode, rack,
                         Constants.TypeOfLog.LOG_RETURN_RACK, customer, null,
-                        Constants.StatusCode.RACKOFCUSTOMER_RETURNING, Constants.StatusCode.RACKOFCUSTOMER_CURRENT);
+                        Constants.StatusCode.RACKOFCUSTOMER_RETURNING, Constants.StatusCode.RACKOFCUSTOMER_CURRENT,null);
                 }
                 //update request status and log
                 RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
-                    Constants.StatusCode.REQUEST_CANCELLED, null, customer,null);
+                    Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
             }
         }
 
@@ -184,11 +190,11 @@ namespace IMS.Data.Business
                     //update and log rackofCustomer
                     RackOfCustomerBLO.Current.UpdateStatusRackOfCustomerANDLog(requestCode, rack,
                         Constants.TypeOfLog.LOG_RETURN_RACK, customer, null,
-                        Constants.StatusCode.RACKOFCUSTOMER_RETURNING, Constants.StatusCode.RACKOFCUSTOMER_CURRENT);
+                        Constants.StatusCode.RACKOFCUSTOMER_RETURNING, Constants.StatusCode.RACKOFCUSTOMER_CURRENT,null);
                 }
                 //update request status and log
                 RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
-                    Constants.StatusCode.REQUEST_CANCELLED, null, customer,null);
+                    Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
             }
         }
 
@@ -253,6 +259,7 @@ namespace IMS.Data.Business
             LogExtentedModel data = new LogExtentedModel();
             var query = from l in LogChangedContentDAO.Current.Table()
                         where l.RequestCode == requestCode && l.Object == Constants.Object.OBJECT_RACKOFCUSTOMER
+                        && l.ObjectStatus == Constants.StatusCode.RACKOFCUSTOMER_RETURNING
                         select l.ChangedValueOfObject;
             data.listRacks = query.ToList();
             return data;

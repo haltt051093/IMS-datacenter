@@ -78,7 +78,7 @@
                             Company Name
                         </div>
                         <div class="col-xs-8">
-                            @Html.DisplayFor(model => model.CustomerInfo.Customer, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.DisplayFor(model => model.CustomerInfo.Customer, new { @class = "form-control" })
                         </div>
                     </div>
                 }
@@ -87,7 +87,7 @@
                         Phone Number
                     </div>
                     <div class="col-xs-8">
-                        @Html.DisplayFor(model => model.CustomerInfo.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.DisplayFor(model => model.CustomerInfo.Phone, new { @class = "form-control" })
                     </div>
                 </div>
             </div>
@@ -98,21 +98,22 @@
                 Returned Racks
             </div>
             <div class="col-xs-8">
-                @foreach (var item in Model.SelectedRacks)
+                @for (int i = 0; i < Model.SelectedRacks.Count; i++)
                 {
-                    @Html.DisplayFor(model => item)
+                    @Html.DisplayFor(model => Model.SelectedRacks[i])
+                    @Html.HiddenFor(model => Model.SelectedRacks[i])
                     <br />
                 }
             </div>
         </div>
-            <div class="row">
-                <div class="col-xs-4">
-                    Note
-                </div>
-                <div class="col-xs-8">
-                    @Html.DisplayFor(model => model.RequestInfo.Description, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
+        <div class="row">
+            <div class="col-xs-4">
+                Note
             </div>
+            <div class="col-xs-8">
+                @Html.DisplayFor(model => model.RequestInfo.Description, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
         if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_CANCELLED)
         {
             @ViewBag.Message
@@ -138,6 +139,9 @@
                 else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
                 {
                     <button type="submit" class="btn btn-primary" name="Accept">Accept</button>
+                    <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
+                        @Labels.Reject
+                    </button>
                 }
             </div>
         </div>

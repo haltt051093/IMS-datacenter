@@ -51,6 +51,12 @@
                             @Html.DropDownListFor(model => model.RequestInfo.StaffCode, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                         </div>
                     }
+                    @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                    {
+                        <div class="col-xs-8">
+                            @Html.DropDownListFor(model => model.RequestInfo.StaffCode, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        </div>
+                    }
                     else
                     {
                         <div class="col-xs-8">
@@ -142,7 +148,7 @@
                                     <td>
                                         @if (Model.RequestInfo.StatusCode != Constants.StatusCode.REQUEST_DONE)
                                         {
-                                            @Html.ActionLink("Assign Default IP","AssignIP","IP",new {rType = Model.RequestInfo.RequestType,rCode=Model.RequestInfo.RequestCode,OldIP = Model.Servers[i].DefaultIP,ServerCode = Model.Servers[i].ServerCode},null)
+                                            @Html.ActionLink("Assign Default IP", "AssignIP", "IP", new { rType = Model.RequestInfo.RequestType, rCode = Model.RequestInfo.RequestCode, OldIP = Model.Servers[i].DefaultIP, ServerCode = Model.Servers[i].ServerCode }, null)
                                         }
                                         @Html.DisplayFor(model => Model.Servers[i].DefaultIP, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.HiddenFor(modelItem => modelItem.Servers[i].DefaultIP)
@@ -151,19 +157,19 @@
                                         <input type="hidden" value="true" name="location" />
                                         @if (Model.RequestInfo.StatusCode != Constants.StatusCode.REQUEST_DONE)
                                         {
-                                            
-                                                @Html.ActionLink("Assign Location", "AssignLocation", "Location", new { rType = Model.RequestInfo.RequestType, rCode = Model.RequestInfo.RequestCode, ServerCode = Model.Servers[i].ServerCode,Size = Model.Servers[i].Size }, null)
-                                              
-                                            
+
+                                            @Html.ActionLink("Assign Location", "AssignLocation", "Location", new { rType = Model.RequestInfo.RequestType, rCode = Model.RequestInfo.RequestCode, ServerCode = Model.Servers[i].ServerCode, Size = Model.Servers[i].Size }, null)
+
+
 
                                         }
                                         @foreach (var item in Model.Servers[i].ServerLocation)
                                         {<div>
-                                             @Html.DisplayFor(model => item.RackName) U @Html.DisplayFor(model => item.RackUnit)
-                                         </div>
-                                           
+                                            @Html.DisplayFor(model => item.RackName) U @Html.DisplayFor(model => item.RackUnit)
+                                        </div>
+
                                         }
-                                        
+
                                     </td>
                                 }
                             </tr>
@@ -190,6 +196,9 @@ Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                 else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
                 {
                     <button type="submit" class="btn btn-primary" name="Accept">Accept</button>
+                    <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
+                        @Labels.Reject
+                    </button>
                 }
             </div>
         </div>

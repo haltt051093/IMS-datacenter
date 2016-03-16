@@ -154,13 +154,17 @@ namespace IMS.Data.Business
         public Account GetAssignee(string requestCode)
         {
             var query1 = from r in RequestDAO.Current.Table()
-                           where r.RequestCode == requestCode
-                           select r.Assignee;
-            var assignee = query1.FirstOrDefault().ToString();
-            var query = from a in AccountDAO.Current.Table()
-                        where a.Username == assignee
-                        select a;
-            return query.FirstOrDefault();
+                         where r.RequestCode == requestCode
+                         select r.Assignee;
+            if (query1 != null)
+            {
+                var assignee = query1.FirstOrDefault().ToString();
+                var query = from a in AccountDAO.Current.Table()
+                            where a.Username == assignee
+                            select a;
+                return query.FirstOrDefault();
+            }
+            return null;
         }
 
     }

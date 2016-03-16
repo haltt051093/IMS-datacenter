@@ -45,7 +45,8 @@ namespace IMS.Controllers
                 //customer info
                 viewmodel.CustomerInfo = AccountBLO.Current.GeCustomerInfo(viewmodel.RequestInfo.Customer);
                 // assignee la dropdownlist
-                if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
+                if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING ||
+                    viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING)
                 {
                     var group = GetCurrentUserGroup();
                     var listStaff = AccountBLO.Current.GetAccountsByGroup(group);
@@ -58,6 +59,13 @@ namespace IMS.Controllers
                         })
                         .ToList();
                 }
+                else if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
+                {
+                    var shifthead = GetCurrentUserName();
+                    var account = AccountBLO.Current.GetAccountByCode(shifthead);
+                    viewmodel.RequestInfo.StaffCode = account.Username;
+                    viewmodel.RequestInfo.StaffName = account.Fullname;
+                }
                 else
                 {
                     var staff = RequestBLO.Current.GetAssignee(rCode);
@@ -65,14 +73,14 @@ namespace IMS.Controllers
                     viewmodel.RequestInfo.StaffName = staff.Fullname;
                 }
                 //lay list servers
-                var serverCodes = LogChangedContentBLO.Current.GetServerCodeByRequestCode(rCode);
+                var serverCodes = LogChangedContentBLO.Current.GetAddingServers(rCode);
                 List<ServerExtendedModel> list = new List<ServerExtendedModel>();
                 foreach (var servercode in serverCodes)
                 {
                     var server = ServerBLO.Current.GetAllServerInfo(servercode);
                     list.Add(server);
                 }
-                viewmodel.Servers = list;                
+                viewmodel.Servers = list;
                 return View("AddServerInfo", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.BRING_SERVER_AWAY))
@@ -83,7 +91,8 @@ namespace IMS.Controllers
                 //customer info
                 viewmodel.CustomerInfo = AccountBLO.Current.GeCustomerInfo(viewmodel.RequestInfo.Customer);
                 // assignee la dropdownlist
-                if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
+                if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING ||
+                    viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING)
                 {
                     var group = GetCurrentUserGroup();
                     var listStaff = AccountBLO.Current.GetAccountsByGroup(group);
@@ -95,6 +104,13 @@ namespace IMS.Controllers
                             Selected = x.Role == Constants.Role.SHIFT_HEAD
                         })
                         .ToList();
+                }
+                else if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
+                {
+                    var shifthead = GetCurrentUserName();
+                    var account = AccountBLO.Current.GetAccountByCode(shifthead);
+                    viewmodel.RequestInfo.StaffCode = account.Username;
+                    viewmodel.RequestInfo.StaffName = account.Fullname;
                 }
                 else
                 {
@@ -408,12 +424,13 @@ namespace IMS.Controllers
                 //update status rackofcustomer
                 foreach (var item in viewmodel.SelectedRacks)
                 {
+                    var rack = RackBLO.Current.GetByName(new Rack { RackName = item });
                     //update and log RackOfCustomer
-                    RackOfCustomerBLO.Current.UpdateStatusRackOfCustomerANDLog(viewmodel.RequestInfo.RequestCode, item,
+                    RackOfCustomerBLO.Current.UpdateStatusRackOfCustomerANDLog(viewmodel.RequestInfo.RequestCode, rack.RackCode,
                         Constants.TypeOfLog.LOG_RETURN_RACK, viewmodel.CustomerInfo.Customer, viewmodel.RequestInfo.StaffCode,
-                        Constants.StatusCode.RACKOFCUSTOMER_RETURNING, Constants.StatusCode.RACKOFCUSTOMER_OLD);
+                        Constants.StatusCode.RACKOFCUSTOMER_RETURNING, Constants.StatusCode.RACKOFCUSTOMER_OLD, item);
                     // update and log Rack
-                    RackBLO.Current.UpdateRackANDLog(viewmodel.RequestInfo.RequestCode, item, null,
+                    RackBLO.Current.UpdateRackANDLog(viewmodel.RequestInfo.RequestCode, rack.RackCode, null,
                         Constants.TypeOfLog.LOG_RETURN_RACK, viewmodel.CustomerInfo.Customer, viewmodel.RequestInfo.StaffCode,
                         Constants.StatusCode.RACK_AVAILABLE);
                 }
@@ -428,10 +445,11 @@ namespace IMS.Controllers
                 var listRacks = LogChangedContentBLO.Current.RequestDetailsReturnRack(viewmodel.RequestInfo.RequestCode);
                 foreach (var item in listRacks.listRacks)
                 {
+                    var rack = RackBLO.Current.GetByName(new Rack { RackName = item });
                     //update and log rackofCustomer
                     RackOfCustomerBLO.Current.UpdateStatusRackOfCustomerANDLog(viewmodel.RequestInfo.RequestCode,
-                        item, Constants.TypeOfLog.LOG_RETURN_RACK, viewmodel.CustomerInfo.Customer, null
-                        , Constants.StatusCode.RACKOFCUSTOMER_RETURNING, Constants.StatusCode.RACKOFCUSTOMER_CURRENT);
+                        rack.RackCode, Constants.TypeOfLog.LOG_RETURN_RACK, viewmodel.CustomerInfo.Customer, null
+                        , Constants.StatusCode.RACKOFCUSTOMER_RETURNING, Constants.StatusCode.RACKOFCUSTOMER_CURRENT, item);
                 }
                 //add and log request
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
@@ -772,7 +790,7 @@ namespace IMS.Controllers
                     Constants.StatusCode.REQUEST_REJECTED, null, viewmodel.RequestInfo.StaffCode, viewmodel.RequestInfo.RejectReason);
             }
             return RedirectToAction("Index", "Notification");
-        }       
+        }
     }
 
 }

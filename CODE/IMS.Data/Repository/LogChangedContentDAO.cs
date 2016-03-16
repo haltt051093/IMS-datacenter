@@ -63,6 +63,15 @@ namespace IMS.Data.Repository
             return serverCodes.ToList();
         }
 
+        public List<string> GetAddingServers(string requestCode)
+        {
+            //request assign IP chi luu 1 hang trong bang Log
+            var serverCodes = Current.Query(x => x.RequestCode == requestCode && x.Object == Constants.Object.OBJECT_SERVER
+            && x.ObjectStatus == Constants.StatusCode.SERVER_WAITING)
+                .Select(x => x.ServerCode);
+            return serverCodes.ToList();
+        }
+
         public List<RequestExtendedModel> ListWaitingRequestOfServer(string serverCode)
         {
             //list tat ca hang co serverCode, lay ra list requestcode
@@ -118,13 +127,12 @@ namespace IMS.Data.Repository
 
         }
 
-        public List<LogExtentedModel> GetAllRequest()
+        public List<LogExtentedModel> GetRequestOfCustomer(string customer)
         {
             //lay list request co cung requestcode
             var myList = Current.Table().ToList();
             var getRequestCodes = myList.GroupBy(x => x.RequestCode).Select(y => y.First()).ToList();
             var list = new List<LogExtentedModel>();
-            //DOING
             for (int i = 0; i < getRequestCodes.Count; i++)
             {
                 var requestCode = getRequestCodes[i].RequestCode;
@@ -136,7 +144,11 @@ namespace IMS.Data.Repository
                                          join st in StatusDAO.Current.Table()
                                              on sr.ObjectStatus equals st.StatusCode into sstr
                                          from subsstr in sstr.DefaultIfEmpty()
+                                         join r in RequestDAO.Current.Table()
+                                             on sr.RequestCode equals r.RequestCode into ssr
+                                         from subssr in ssr.DefaultIfEmpty()
                                          where sr.RequestCode == requestCode && sr.Object == Constants.Object.OBJECT_REQUEST
+                                         && subssr.Customer == customer
                                          orderby sr.LogTime descending
                                          select new LogExtentedModel()
                                          {
@@ -144,7 +156,9 @@ namespace IMS.Data.Repository
                                              StatusName = subsstr.StatusName,
                                              RequestTypeName = subsrt.TypeName,
                                              RequestCode = sr.RequestCode,
-                                             RequestTypeCode = subsrt.TypeCode
+                                             RequestTypeCode = subsrt.TypeCode,
+                                             Customer = subssr.Customer,
+                                             StatusCode = subsstr.StatusCode
                                          };
                 if (allStatusOfRequest.Any())
                 {

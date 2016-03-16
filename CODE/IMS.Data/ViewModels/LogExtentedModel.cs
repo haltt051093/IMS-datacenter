@@ -21,8 +21,10 @@ namespace IMS.Data.ViewModels
         }
 
         public string StatusName { get; set; }
+        public string StatusCode { get; set; }
         public string RequestTypeName { get; set; }
         public string RequestTypeCode { get; set; }
+        public string Customer { get; set; }
 
         public LogExtentedModel LastestStatusRequest { get; set; }
         public List<LogExtentedModel> OldStatusRequests { get; set; }

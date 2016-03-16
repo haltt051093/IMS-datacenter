@@ -17,14 +17,6 @@ namespace IMS.Controllers
     [Roles(Constants.Role.CUSTOMER)]
     public class RequestController : CoreController
     {
-        public ActionResult Index()
-        {
-            var request = LogChangedContentBLO.Current.GetAllRequest();
-            var data = new RequestIndexViewModel();
-            data.Requests = request;
-            return View(data);
-        }
-
         #region Create Request
         public ActionResult Create(RequestCreateViewModel q)
         {
@@ -183,9 +175,9 @@ namespace IMS.Controllers
                 if (item.Checked)
                 {
                     //update and log rackofCustomer
-                    RackOfCustomerBLO.Current.UpdateStatusRackOfCustomerANDLog(requestCode, item.RackName,
+                    RackOfCustomerBLO.Current.UpdateStatusRackOfCustomerANDLog(requestCode, item.RackCode,
                         Constants.TypeOfLog.LOG_RETURN_RACK, customer, null
-                        , Constants.StatusCode.RACKOFCUSTOMER_CURRENT, Constants.StatusCode.RACKOFCUSTOMER_RETURNING);
+                        , Constants.StatusCode.RACKOFCUSTOMER_CURRENT, Constants.StatusCode.RACKOFCUSTOMER_RETURNING, item.RackName);
                 }
             }
             //Notification
@@ -253,19 +245,18 @@ namespace IMS.Controllers
                     ServerCode = serverCode
                 };
                 LogChangedContentBLO.Current.AddLog(logServer);
-                //log request status
-                var logRequest = new LogChangedContent
-                {
-                    RequestCode = requestCode,
-                    TypeOfLog = Constants.TypeOfLog.LOG_ADD_SERVER,
-                    Object = Constants.Object.OBJECT_REQUEST,
-                    ObjectStatus = Constants.StatusCode.REQUEST_PENDING,
-                    ChangedValueOfObject = requestCode,
-                    ServerCode = serverCode,
-                    Username = customer
-                };
-                LogChangedContentBLO.Current.AddLog(logRequest);
             }
+            //log request status
+            var logRequest = new LogChangedContent
+            {
+                RequestCode = requestCode,
+                TypeOfLog = Constants.TypeOfLog.LOG_ADD_SERVER,
+                Object = Constants.Object.OBJECT_REQUEST,
+                ObjectStatus = Constants.StatusCode.REQUEST_PENDING,
+                ChangedValueOfObject = requestCode,
+                Username = customer
+            };
+            LogChangedContentBLO.Current.AddLog(logRequest);
             //Xoa session server
             if (Session[Constants.Session.REQUEST_CODE] != null)
             {
