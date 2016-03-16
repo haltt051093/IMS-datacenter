@@ -72,17 +72,7 @@ namespace IMS.Controllers
                     var server = ServerBLO.Current.GetAllServerInfo(servercode);
                     list.Add(server);
                 }
-                viewmodel.Servers = list;
-             
-                    var ips = IPAddressPoolBLO.Current.GetAvailableIPs();
-                    var listNetworkIP =
-                        ips.OrderBy(x => x.NetworkIP).GroupBy(x => x.NetworkIP).Select(x => x.FirstOrDefault());
-                    viewmodel.NetworkIPs = listNetworkIP.Select(x => new SelectListItem
-                    {
-                        Value = x.NetworkIP,
-                        Text = "Network " + x.NetworkIP
-                    }).ToList();
-                
+                viewmodel.Servers = list;                
                 return View("AddServerInfo", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.BRING_SERVER_AWAY))
@@ -782,20 +772,7 @@ namespace IMS.Controllers
                     Constants.StatusCode.REQUEST_REJECTED, null, viewmodel.RequestInfo.StaffCode, viewmodel.RequestInfo.RejectReason);
             }
             return RedirectToAction("Index", "Notification");
-        }
-
-        [HttpPost]
-        public ActionResult AssignIP(ProcessRequestAddServerViewModel ivm)
-        {
-            if (ivm.NewIP == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            IPAddressPoolBLO.Current.UpdateIP(ivm.ServerCode, ivm.NewIP, ivm.RequestInfo.RequestCode, ivm.OldIP);
-
-            return RedirectToAction("Detais", new { rType = ivm.RequestType, rCode = ivm.RequestCode });
-        }
+        }       
     }
 
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using IMS.Core;
 using IMS.Data.Business;
@@ -140,6 +141,37 @@ namespace IMS.Controllers
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Index");
+        }
+
+        public ActionResult AssignIP(string rType, string rCode, string OldIP, string ServerCode)
+        {
+            var data = new IPCreateViewModel();
+            data.RequestCode = rCode;
+            data.RequestType = rType;
+            data.OldIP = OldIP;
+            data.ServerCode = ServerCode;
+            var ips = IPAddressPoolBLO.Current.GetAvailableIPs();
+            var listNetworkIP =
+                ips.OrderBy(x => x.NetworkIP).GroupBy(x => x.NetworkIP).Select(x => x.FirstOrDefault());
+            data.NetworkIPs = listNetworkIP.Select(x => new SelectListItem
+            {
+                Value = x.NetworkIP,
+                Text = "Network " + x.NetworkIP
+            }).ToList();
+            return View(data);
+        }
+
+        [HttpPost]
+        public ActionResult AssignIP(IPCreateViewModel icvm)
+        {
+            if (icvm.NewIP == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            IPAddressPoolBLO.Current.UpdateIP(icvm.ServerCode, icvm.NewIP, icvm.RequestCode, icvm.OldIP);
+
+            return RedirectToAction("Detais","ProcessRequest", new { rType = icvm.RequestType, rCode = icvm.RequestCode });
         }
     }
 }

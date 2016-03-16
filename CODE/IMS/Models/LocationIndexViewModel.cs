@@ -17,10 +17,15 @@ namespace IMS.Models
 
         public List<LocationViewModel> Locations { get; set; }
         public string Request { get; set; }
+        public string RequestType { get; set; }
+        public string RequestCode { get; set; }
+        public string ServerCode { get; set; }
         public Server Server { get; set; }
         public string LocationCode { get; set; }
         public List<SelectListItem> Racks { get; set; }
         public string RackCode { get; set; }
+        public int Size { get; set; }
+        public List<SelectLocationViewModel> Selected { get; set; }
 
         [Required(ErrorMessage = "Please input Rack Name!")]
         [RegularExpression("^[A-Z][1-9]?[0-9]+$", ErrorMessage = "Wrong format of Rack Name! Try again!")]

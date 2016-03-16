@@ -1043,6 +1043,7 @@
     <Content Include="Views\Report\ReportBlockIP.cshtml" />
     <Content Include="Views\ProcessRequest\Index.cshtml" />
     <Content Include="Views\Report\ReportUsedIP.cshtml" />
+    <Content Include="Views\IP\AssignIP.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
