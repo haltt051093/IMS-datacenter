@@ -10,131 +10,83 @@
 }
 <!-- Main content -->
 <section class="main-content">
-    @using (Html.BeginForm("Index", "DeleteRequest", FormMethod.Post))
-    {
-        <table id="example1" class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.Raw("RequestCode")
-                    </th>
-                    <th>
-                        @Html.Raw("RequestType")
-                    </th>
-                    <th>
-                        @Html.Raw("RequestedTime")
-                    </th>
-                    <th>
-                        @Html.Raw("Status")
-                    </th>
-                    <th>
-                        @Html.Raw("Action")
-                    </th>
-                </tr>
-            </thead>
+    <table id="example1" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.Raw("RequestCode")
+                </th>
+                <th>
+                    @Html.Raw("RequestType")
+                </th>
+                <th>
+                    @Html.Raw("RequestedTime")
+                </th>
+                <th>
+                    @Html.Raw("Status")
+                </th>
+            </tr>
+        </thead>
 
-            @for (int i = 0; i < Model.Requests.Count; i++)
+        @for (int i = 0; i < Model.Requests.Count; i++)
             {
-                <tbody class="clickmee">
-                    <tr>
-                        <td>
-                            @Html.ActionLink(Model.Requests[i].LastestStatusRequest.RequestCode, "EditRequestHistory", new { id = Model.Requests[i].Id })
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.RequestTypeName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.LogTime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.StatusName)
-                        </td>
-                        @if (Model.Requests[i].LastestStatusRequest.StatusName == Constants.StatusName.REQUEST_PENDING)
-                        {
-                            @*@Html.HiddenFor(modelItem => Model.Request[i].LastestStatusRequest.RequestCode)
-                                @Html.HiddenFor(modelItem => Model.Request[i].LastestStatusRequest.RequestTypeCode)
-                                <td>
-                                    <button type="submit" class="btn btn-primary" style="width: 100px" name="Cancel">Cancel</button>
-                                </td>*@
-                            <td>
-                                @Html.ActionLink("Cancel", "Index", "DeleteRequest",
-                            new
-                            {
-                                requestCode = Model.Requests[i].LastestStatusRequest.RequestCode,
-                                requestType = Model.Requests[i].LastestStatusRequest.RequestTypeCode,
-                                actionName = "Cancel"
-                            },null)
-                            </td>
-                        }
-                        else
-                        {
-                            <td></td>
-                        }
-                    </tr>
-                </tbody>
-                <tbody class="showhide" style="display: none; background-color: lightgrey;">
-                    @if (Model.Requests[i].OldStatusRequests != null)
-                    {
-                        foreach (var old in Model.Requests[i].OldStatusRequests)
-                        {
-                            <tr style="background-color: lightgrey;">
-                                <td>
-                                    @Html.DisplayFor(modelItem => old.RequestCode)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => old.RequestTypeName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => old.LogTime)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => old.StatusName)
-                                </td>
-                                @if (Model.Requests[i].LastestStatusRequest.StatusName == Constants.StatusName.REQUEST_PENDING)
-                                {
-                                    @*@Html.HiddenFor(modelItem => Model.Request[i].LastestStatusRequest.RequestCode)
-                                        @Html.HiddenFor(modelItem => Model.Request[i].LastestStatusRequest.RequestTypeCode)
-                                        <td>
-                                            <button type="submit" class="btn btn-primary" style="width: 100px" name="Cancel">Cancel</button>
-                                        </td>*@
-                                    <td>
-                                        @Html.ActionLink("Cancel", "Index", "DeleteRequest",
-                                    new
-                                    {
-                                        requestCode = Model.Requests[i].LastestStatusRequest.RequestCode,
-                                        requestType = Model.Requests[i].LastestStatusRequest.RequestTypeCode,
-                                        actionName = "Cancel"
-                                    }, null)
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
-                            </tr>
-                        }
-                    }
-                </tbody>
-            }
-            <tfoot>
+            <tbody class="clickmee">
                 <tr>
-                    <th>
-                        @Html.Raw("RequestCode")
-                    </th>
-                    <th>
-                        @Html.Raw("RequestType")
-                    </th>
-                    <th>
-                        @Html.Raw("RequestedTime")
-                    </th>
-                    <th>
-                        @Html.Raw("Status")
-                    </th>
-                    <th>Action</th>
+                    <td>
+                        @Html.ActionLink(Model.Requests[i].LastestStatusRequest.RequestCode, "Detais", "RequestDetail",
+                           new { rType = Model.Requests[i].LastestStatusRequest.RequestTypeCode, rCode = Model.Requests[i].LastestStatusRequest.RequestCode }, null)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.RequestTypeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.LogTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.StatusName)
+                    </td>
                 </tr>
-            </tfoot>
-        </table>
-    }
+            </tbody>
+            <tbody class="showhide" style="display: none; background-color: lightgrey;">
+                @if (Model.Requests[i].OldStatusRequests != null)
+                {
+                    foreach (var old in Model.Requests[i].OldStatusRequests)
+                    {
+                        <tr style="background-color: lightgrey;">
+                            <td>
+                                @Html.DisplayFor(modelItem => old.RequestCode)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => old.RequestTypeName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => old.LogTime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => old.StatusName)
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        }
+        <tfoot>
+            <tr>
+                <th>
+                    @Html.Raw("RequestCode")
+                </th>
+                <th>
+                    @Html.Raw("RequestType")
+                </th>
+                <th>
+                    @Html.Raw("RequestedTime")
+                </th>
+                <th>
+                    @Html.Raw("Status")
+                </th>
+            </tr>
+        </tfoot>
+    </table>
 </section><!-- /.content -->
 
 <script type="text/javascript">

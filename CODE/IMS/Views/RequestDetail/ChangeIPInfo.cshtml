@@ -1,0 +1,119 @@
+﻿@model ProcessRequestChangeIPViewModel
+@{
+    ViewBag.Title = Pages.ProcessRequestChangeIP;
+    ViewBag.PageTitle = Pages.ProcessRequestChangeIP;
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("ProcessRequest", "Index", Pages.ProcessRequest),
+        new BreadcrumbModel("ProcessRequest", "Detail", Pages.ProcessRequestChangeIP)
+    };
+}
+
+<section class="main-content">
+    @using (Html.BeginForm("CancelRequestChangeIp", "RequestDetail", FormMethod.Post))
+            {
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                        @Html.LabelFor(model => model.RequestInfo.RequestCode)
+                    </div>
+                    <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                        @Html.DisplayFor(model => model.RequestInfo.RequestCode, new { @class = Constants.HtmlFormat.MODAL_INNER_CLASS })
+                    </div>
+                </div>
+                <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                        @Html.LabelFor(model => model.RequestInfo.StatusName)
+                    </div>
+                    <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                        @Html.DisplayFor(model => model.RequestInfo.StatusName, new { @class = Constants.HtmlFormat.MODAL_INNER_CLASS })
+                    </div>
+                </div>
+                <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                        @Html.LabelFor(model => model.RequestInfo.RequestedTime)
+                    </div>
+                    <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                        @Html.DisplayFor(model => model.RequestInfo.RequestedTime, new { @class = Constants.HtmlFormat.MODAL_INNER_CLASS })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.SelectedServer)
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.DisplayFor(model => model.SelectedServer, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+            </div>
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.RequestInfo.Description)
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.DisplayFor(model => model.RequestInfo.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+            </div>
+        </div>
+
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.ReturningIPs)
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @for (int i = 0; i < Model.ReturningIPs.Count; i++)
+                {
+                    <div class="col-xs-6">
+                        @Html.DisplayFor(model => Model.ReturningIPs[i])<br />
+                        @Html.HiddenFor(model => model.ReturningIPs[i])
+                    </div>
+                    if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                    {
+                        <div class="col-xs-6">
+                            @Html.DropDownListFor(model => model.NewIPs[i], Model.NewIPsOptions)
+                        </div>
+                    }
+                    if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
+                    {
+                        <div class="col-xs-6">
+                            @Html.DisplayFor(model => Model.NewIPs[i])<br />
+                        </div>
+                    }
+
+                }
+            </div>
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.HiddenFor(model => model.RequestInfo.RequestCode)
+                @Html.HiddenFor(model => model.RequestInfo.RequestType)
+                @Html.HiddenFor(model => model.CustomerInfo.Customer)
+                @Html.HiddenFor(x => x.RequestInfo.RequestType)
+                @Html.HiddenFor(x => x.SelectedServer)
+                @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
+                {
+                    <button type="submit" id="btnAccept" name="@Constants.FormAction.CANCEL_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        @Labels.Cancel
+                    </button>
+                }
+            </div>
+        </div>
+    }
+</section>
+<script type="text/javascript">
+    $(function () {
+        //Get value of selected items
+        $("#btnApprove").click(function () {
+            var selectedValues = [];
+            $("select option:selected").each(function () {
+                selectedValues.push($(this).val());
+            });
+            $('#ips').val(selectedValues);
+        });
+    });
+</script>

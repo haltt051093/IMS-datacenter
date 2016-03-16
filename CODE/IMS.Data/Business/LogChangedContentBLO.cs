@@ -137,14 +137,21 @@ namespace IMS.Data.Business
                         Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.SERVERIP_CURRENT,
                         customer);
                 }
-                //update request status and log
-                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
-                    Constants.StatusCode.REQUEST_CANCELLED, null, customer,null);
+            }
+            var servers = from l in LogChangedContentDAO.Current.Table()
+                where l.RequestCode == requestCode && l.Object == Constants.Object.OBJECT_SERVER
+                      && l.ObjectStatus == Constants.StatusCode.SERVER_BRINGING_AWAY
+                select l;
+            foreach (var server in servers)
+            {
                 //update and log server
-                ServerBLO.Current.UpdateServerStatus(requestCode, serverCode,
+                ServerBLO.Current.UpdateServerStatus(requestCode, server.ServerCode,
                     Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.SERVER_RUNNING,
                     Constants.Test.CUSTOMER_MANHNH);
             }
+            //update request status and log
+            RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
+                Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
         }
 
         public void CancelRequestReturnRack(string requestCode, string customer)

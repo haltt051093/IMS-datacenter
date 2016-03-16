@@ -918,6 +918,7 @@
     <Compile Include="Authentications\RolesAttribute.cs" />
     <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\ProcessRequestController.cs" />
+    <Compile Include="Controllers\RequestDetailController.cs" />
     <Compile Include="Controllers\ValidateController.cs" />
     <Compile Include="Models\HomeHeaderViewModel.cs" />
     <Compile Include="Models\HomeSidebarViewModel.cs" />
@@ -1043,6 +1044,13 @@
     <Content Include="Views\Report\ReportBlockIP.cshtml" />
     <Content Include="Views\ProcessRequest\Index.cshtml" />
     <Content Include="Views\Report\ReportUsedIP.cshtml" />
+    <Content Include="Views\RequestDetail\AddServerInfo.cshtml" />
+    <Content Include="Views\RequestDetail\AssignIPInfo.cshtml" />
+    <Content Include="Views\RequestDetail\BringServerAwayInfo.cshtml" />
+    <Content Include="Views\RequestDetail\ChangeIPInfo.cshtml" />
+    <Content Include="Views\RequestDetail\RentRackInfo.cshtml" />
+    <Content Include="Views\RequestDetail\ReturnIPInfo.cshtml" />
+    <Content Include="Views\RequestDetail\ReturnRackInfo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

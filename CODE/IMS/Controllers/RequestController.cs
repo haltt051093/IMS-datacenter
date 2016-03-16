@@ -291,24 +291,23 @@ namespace IMS.Controllers
             var requestCode = RequestBLO.Current.AddRequest(null, Constants.RequestTypeCode.BRING_SERVER_AWAY,
                 Constants.StatusCode.REQUEST_PENDING, customer, viewmodel.RequestInfo.Description,
                 viewmodel.RequestInfo.AppointmentTime);
+            //Add and log request
+            var logRequest = new LogChangedContent
+            {
+                RequestCode = requestCode,
+                TypeOfLog = Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
+                Object = Constants.Object.OBJECT_REQUEST,
+                ObjectStatus = Constants.StatusCode.REQUEST_PENDING,
+                ChangedValueOfObject = requestCode,
+                Username = customer
+            };
+            LogChangedContentBLO.Current.AddLog(logRequest);
             foreach (var item in listServer)
             {
                 if (item.Checked)
                 {
                     //get currentIps
                     var currentIps = ServerIPBLO.Current.GetIpByServer(item.ServerCode, Constants.StatusCode.SERVERIP_CURRENT);
-                    //Add and log request
-                    var logRequest = new LogChangedContent
-                    {
-                        RequestCode = requestCode,
-                        TypeOfLog = Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
-                        Object = Constants.Object.OBJECT_REQUEST,
-                        ObjectStatus = Constants.StatusCode.REQUEST_PENDING,
-                        ChangedValueOfObject = requestCode,
-                        ServerCode = item.ServerCode,
-                        Username = customer
-                    };
-                    LogChangedContentBLO.Current.AddLog(logRequest);
                     //log location
                     var serverLocation = LogChangedContentBLO.Current.GetLocationOfServer(item.ServerCode);
                     foreach (var item1 in serverLocation)
@@ -337,7 +336,6 @@ namespace IMS.Controllers
                     ServerBLO.Current.UpdateServerStatus(requestCode, item.ServerCode,
                         Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.SERVER_BRINGING_AWAY,
                         customer);
-
                 }
             }
             Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);

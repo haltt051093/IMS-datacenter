@@ -1,0 +1,133 @@
+﻿@model ProcessRequestAssignIPViewModel
+@{
+    ViewBag.Title = "RequestAssignIPInfo";
+}
+
+<section class="content-header">
+    <h1>
+        Detail Request Assign IP Address
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index", "Schedule")"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Detail Request Assign IP Address</li>
+    </ol>
+</section>
+<section class="main-content">
+    @using (Html.BeginForm("CancelRequestAssignIp", "RequestDetail", FormMethod.Post))
+    {
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="row dl-horizontal">
+                    <div class="col-xs-4">
+                        Request Code
+                    </div>
+                    <div class="col-xs-8">
+                        @Html.DisplayFor(model => model.RequestInfo.RequestCode, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        Current Status
+                    </div>
+                    <div class="col-xs-8">
+                        @Html.DisplayFor(model => model.RequestInfo.StatusName, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        Requested Time
+                    </div>
+                    <div class="col-xs-8">
+                        @Html.DisplayFor(model => model.RequestInfo.RequestedTime, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-xs-4">
+                Number of IPs
+            </div>
+            <div class="col-xs-8">
+                @Html.DisplayFor(model => model.NumberOfIP)
+                @Html.HiddenFor(model => model.NumberOfIP)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                Selected server
+            </div>
+            <div class="col-xs-8">
+                @Html.ActionLink(Model.SelectedServer, "Detail", "Server",
+                                new { code = Model.SelectedServer }, null)
+                @Html.HiddenFor(model => model.SelectedServer)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                Note
+            </div>
+            <div class="col-xs-8">
+                @Html.DisplayFor(model => model.RequestInfo.Description, new { @class = "form-control" })
+            </div>
+        </div>
+        if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
+        {
+            <div class="row">
+                <div class="col-xs-4">
+                    Assigned IP(s)
+                </div>
+                <div class="col-xs-8">
+                    @foreach (var item in Model.IPs)
+                    {
+                        @Html.DisplayFor(model => item)
+                        <br />
+                    }
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="col-xs-12">
+                @Html.HiddenFor(model => model.RequestInfo.RequestCode)
+                @Html.HiddenFor(model => model.CustomerInfo.Customer)
+                @Html.HiddenFor(x => x.RequestInfo.RequestType)
+                @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
+                {
+                    <button type="submit" id="btnCancel" name="@Constants.FormAction.CANCEL_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        @Labels.Cancel
+                    </button>
+                }
+            </div>
+        </div>
+    }
+</section>
+<script type="text/javascript">
+    $(function () {
+        $('#btnApprove').on('click', function () {
+            $('#selectedIps').find('option').attr('selected', true);
+        });
+        $('#availableIps').dblclick(function () {
+            var pass = $('#availableIps').val();
+            $('#selectedIps').append('<option value="' + pass + '">' + pass + '</option>');
+            $("[id*=availableIps] option:selected").remove();
+            return false;
+            //document.getElementById("selectedIps").value = pass;
+        });
+
+        $('#selectedIps').dblclick(function () {
+            //var count = $('#selectedIps option:selected').length;
+            //args.IsValid = count > 0 && count <= 5;
+            var pass = $('#selectedIps').val();
+            var ipNumber = $('#IpNumber').val();
+            $('#availableIps').append('<option value="' + pass + '">' + pass + '</option>');
+            $("[id*=selectedIps] option:selected").remove();
+            // Check if the parent has reached the limit of selected items.
+            if ($(this).parent().val().length >= ipNumber) {
+                // Removed the selected attribute from this option.
+                $(this).remdaoveAttr("selected");
+                //remove gia tri duoc chon khoi list
+            }
+        });
+    });
+
+</script>

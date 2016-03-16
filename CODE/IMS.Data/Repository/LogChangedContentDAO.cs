@@ -146,21 +146,24 @@ namespace IMS.Data.Repository
                                              RequestCode = sr.RequestCode,
                                              RequestTypeCode = subsrt.TypeCode
                                          };
-                var newest = allStatusOfRequest.First();
-                var request = new LogExtentedModel();
-                var others = new List<LogExtentedModel>();
-                request.LastestStatusRequest = newest;
-                if (allStatusOfRequest.Count() > 1)
+                if (allStatusOfRequest.Any())
                 {
-                    others = allStatusOfRequest.ToList();
-                    others.RemoveAt(0);
-                    request.OldStatusRequests = others.ToList();
+                    var newest = allStatusOfRequest.First();
+                    var request = new LogExtentedModel();
+                    var others = new List<LogExtentedModel>();
+                    request.LastestStatusRequest = newest;
+                    if (allStatusOfRequest.Count() > 1)
+                    {
+                        others = allStatusOfRequest.ToList();
+                        others.RemoveAt(0);
+                        request.OldStatusRequests = others.ToList();
+                    }
+                    else
+                    {
+                        request.OldStatusRequests = null;
+                    }
+                    list.Add(request);
                 }
-                else
-                {
-                    request.OldStatusRequests = null;
-                }
-                list.Add(request);
             }
             return list;
             //return RawQuery<RequestExtendedModel>(query, new object[] { });
