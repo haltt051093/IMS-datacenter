@@ -1044,7 +1044,6 @@
     <Content Include="Views\Report\ReportBlockIP.cshtml" />
     <Content Include="Views\ProcessRequest\Index.cshtml" />
     <Content Include="Views\Report\ReportUsedIP.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\RequestDetail\AddServerInfo.cshtml" />
     <Content Include="Views\RequestDetail\AssignIPInfo.cshtml" />
     <Content Include="Views\RequestDetail\BringServerAwayInfo.cshtml" />
@@ -1052,9 +1051,8 @@
     <Content Include="Views\RequestDetail\RentRackInfo.cshtml" />
     <Content Include="Views\RequestDetail\ReturnIPInfo.cshtml" />
     <Content Include="Views\RequestDetail\ReturnRackInfo.cshtml" />
-=======
     <Content Include="Views\IP\AssignIP.cshtml" />
->>>>>>> a3be5f81779091d7fea3e5f1e7423453050c70a4
+
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
