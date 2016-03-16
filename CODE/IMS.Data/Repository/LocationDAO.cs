@@ -70,8 +70,25 @@ namespace IMS.Data.Repository
                             on r.RackCode = l.RackCode
 	                        join Status as s 
                             on s.StatusCode=l.StatusCode
-                            where r.MaximumPower*1000 - ISNULL(ri.UsedPower,0) >'" + server.Power +
-                           @"'and r.StatusCode!='STATUS20'";
+                            where r.MaximumPower*1000 - ISNULL(ri.UsedPower,0) >'" + server.Power + @"'
+except 
+select l.LocationCode, l.RackCode, l.RackUnit, s.StatusName,l.ServerCode, r.RackName 
+                            from rack as r left join
+	                            (select r.RackCode, sum(s.power / s.size) as UsedPower
+	                            from rack as r
+	                            join location as l
+		                            on r.RackCode = l.RackCode
+	                            join server as s
+		                            on l.ServerCode = s.ServerCode
+	                            group by r.RackCode) as ri
+                            on r.RackCode= ri.RackCode
+                            join Location as l
+                            on r.RackCode = l.RackCode
+	                        join Status as s 
+                            on s.StatusCode=l.StatusCode
+							join RackOfCustomer as roc
+							on roc.RackCode=l.RackCode
+                            where r.MaximumPower*1000 - ISNULL(ri.UsedPower,0) >'" + server.Power + @"'"
             ;
             return RawQuery<LocationViewModel>(query, new object[] { });
         }
@@ -101,7 +118,8 @@ namespace IMS.Data.Repository
 
         public List<LocationViewModel> GetRackValidPowerForChange(Server server)
         {
-            var query = @"select l.LocationCode, l.RackCode, l.RackUnit, s.StatusName,l.ServerCode,r.RackName
+            var rack = GetRackOfServer(server);
+            string query = @"select l.LocationCode, l.RackCode, l.RackUnit, s.StatusName,l.ServerCode,r.RackName
                             from rack as r left join
 	                            (select r.RackCode, sum(s.power / s.size) as UsedPower
 	                            from rack as r
@@ -114,14 +132,30 @@ namespace IMS.Data.Repository
                             join Location as l
                             on r.RackCode = l.RackCode
 	                        join Status as s on s.StatusCode=l.StatusCode
-                            where r.MaximumPower*1000 - ISNULL(ri.UsedPower,0) >'" + server.Power + @"'and r.StatusCode != 'STATUS20' or l.ServerCode = '" +
-                           server.ServerCode + @"'";
+                            where r.MaximumPower*1000 - ISNULL(ri.UsedPower,0) >'" + server.Power + @"'or r.RackCode = '" + rack.RackCode + @"'
+except select l.LocationCode, l.RackCode, l.RackUnit, s.StatusName,l.ServerCode,r.RackName
+                            from rack as r left join
+	                            (select r.RackCode, sum(s.power / s.size) as UsedPower
+	                            from rack as r
+	                            join location as l
+		                            on r.RackCode = l.RackCode
+	                            join server as s
+		                            on l.ServerCode = s.ServerCode
+	                            group by r.RackCode) as ri
+                            on r.RackCode= ri.RackCode
+                            join Location as l
+                            on r.RackCode = l.RackCode
+	                        join Status as s on s.StatusCode=l.StatusCode
+                            join RackOfCustomer as roc
+							on roc.RackCode=l.RackCode
+                            where r.MaximumPower*1000 - ISNULL(ri.UsedPower,0) >'" + server.Power + @"'or r.RackCode = '" + rack.RackCode + @"'";
             ;
             return RawQuery<LocationViewModel>(query, new object[] { });
         }
 
         public List<LocationViewModel> GetCustomerRackValidPowerForChange(Server server)
         {
+            var rack = GetRackOfServer(server);
             var query = @"select l.LocationCode, l.RackCode, l.RackUnit, s.StatusName, l.ServerCode,r.RackName
                             from rack as r left join
 	                            (select r.RackCode, sum(s.power / s.size) as UsedPower
@@ -138,7 +172,7 @@ namespace IMS.Data.Repository
                             join Location as l
                             on r.RackCode = l.RackCode
 	                        join Status as s on s.StatusCode=l.StatusCode
-                            where r.MaximumPower*1000 - ISNULL(ri.UsedPower,0) >'" + server.Power + @"'or l.ServerCode = '" + server.ServerCode + @"'";
+                            where r.MaximumPower*1000 - ISNULL(ri.UsedPower,0) >'" + server.Power + @"'or r.RackCode = '" + rack.RackCode + @"'";
             return RawQuery<LocationViewModel>(query, new object[] { });
         }
 
