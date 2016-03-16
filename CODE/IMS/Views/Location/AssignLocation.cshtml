@@ -22,8 +22,8 @@
         {
             <div class="row hide">
                 <div id="dropdown-template" class="col-xs-3">
-                    <label>Location of Datacenter: @Html.DropDownListFor(model => model.RackCode1, Model.Racks1,"--Select--", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
-                    <label>Location of Customer: @Html.DropDownListFor(model => model.RackCode, Model.Racks,"--Select--", new {@class = "form-control input-sm", style = "width: 150px"}) </label>
+                    <label>Rack of Datacenter: @Html.DropDownListFor(model => model.RackCode1, Model.Racks1,"--Select--", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
+                    <label>Rack of Customer: @Html.DropDownListFor(model => model.RackCode, Model.Racks,"--Select--", new {@class = "form-control input-sm", style = "width: 150px"}) </label>
 
                 </div>
                 
@@ -33,7 +33,7 @@
         {
             <div class="row hide">
                 <div id="dropdown-template" class="col-xs-3">
-                    <label>Location: @Html.DropDownListFor(model => model.RackCode, Model.Racks, new { @class = "form-control input-sm", style = "width: 150px" }) </label>
+                    <label>Rack: @Html.DropDownListFor(model => model.RackCode, Model.Racks, new { @class = "form-control input-sm", style = "width: 150px" }) </label>
                 </div>
             </div>
         }
@@ -68,18 +68,21 @@
         function(settings, data, dataIndex) {
             var rackCode = $('#RackCode').val();
             var rackCode1 = $('#RackCode1').val();
+            if (rackCode1 == data[0]) {
+                return true;
+            }
             if (rackCode == '') {
                 return false;
             }
             if (rackCode == data[0]) {
                 return true;
             }
-            if (rackCode1 == data[0]) {
-                return true;
-            }
+            
             if (rackCode1 == '') {
                 return false;
             }
+            
+            
 
         }
     );
@@ -88,7 +91,7 @@
 <script type="text/javascript">
     var table = $('#example1').DataTable({
         language: {
-            "zeroRecords": "<label style='color:coral'>Please select Rack to have respective Locations!</label>"
+            "zeroRecords": "<label style='color:coral'>DO NOT HAVE AVAILABLE LOCATION</label>"
         },
         dom: '<lf<t>ip>',
         processing: true,

@@ -75,6 +75,7 @@ namespace IMS.Controllers
             data.Size = Size;
             var server = ServerBLO.Current.GetServerByCode(ServerCode, Constants.StatusCode.SERVER_WAITING);
             var locationserver = LocationBLO.Current.GetLocationsOfServer(ServerCode);
+            //truong hop assign lan dau
             if (locationserver.Count == 0)
             {
                 var locations = LocationBLO.Current.GetNewLocation(server);
@@ -85,18 +86,22 @@ namespace IMS.Controllers
                     Value = x.RackCode,
                     Text = x.RackName
                 }).ToList();
-                if (RackOfCustomerDAO.Current.GetRackOfCustomer(server).Count > 0)
-                {
-                    var locations1 = LocationBLO.Current.GetNewLocation1(server);
-                    var listrack1 =
-                        locations1.OrderBy(x => x.RackName).GroupBy(x => x.RackName).Select(x => x.FirstOrDefault());
-                    data.Racks1 = listrack1.Select(x => new SelectListItem
+                if (locations.Count == 0)
+                { 
+                    if (RackOfCustomerDAO.Current.GetRackOfCustomer(server).Count > 0)
                     {
-                        Value = x.RackCode,
-                        Text = x.RackName
-                    }).ToList();
-                    data.Notice = "HaveRack";
+                        var locations1 = LocationBLO.Current.GetNewLocation1(server);
+                        var listrack1 =
+                            locations1.OrderBy(x => x.RackName).GroupBy(x => x.RackName).Select(x => x.FirstOrDefault());
+                        data.Racks1 = listrack1.Select(x => new SelectListItem
+                        {
+                            Value = x.RackCode,
+                            Text = x.RackName
+                        }).ToList();
+                        data.Notice = "HaveRack";
+                    }
                 }
+                
             }
             else
             {
@@ -108,6 +113,21 @@ namespace IMS.Controllers
                     Value = x.RackCode,
                     Text = x.RackName
                 }).ToList();
+                if (locations.Count == 0)
+                {
+                    if (RackOfCustomerDAO.Current.GetRackOfCustomer(server).Count > 0)
+                    {
+                        var locations1 = LocationBLO.Current.GetChangeLocation1(server);
+                        var listrack1 =
+                            locations1.OrderBy(x => x.RackName).GroupBy(x => x.RackName).Select(x => x.FirstOrDefault());
+                        data.Racks1 = listrack1.Select(x => new SelectListItem
+                        {
+                            Value = x.RackCode,
+                            Text = x.RackName
+                        }).ToList();
+                        data.Notice = "HaveRack";
+                    }
+                }
             }
             data.RequestCode = rCode;
             data.RequestType = rType;
