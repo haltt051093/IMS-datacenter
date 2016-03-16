@@ -150,20 +150,13 @@ namespace IMS.Data.Business
 
         }
 
-        public List<LocationViewModel> GetNewLocation(Server server)
+        public List<LocationViewModel> GetNewLocation1(Server server)
         {
             var allLocation = new List<LocationViewModel>();
-            if (RackOfCustomerDAO.Current.GetRackOfCustomer(server).Count > 0)
-            {
-                allLocation = dao.GetCustomerRackValidPowerForNew(server);
-            }
-            else
-            {
-                allLocation = dao.GetRackValidPowerForNew(server);
-            }
+            allLocation = dao.GetRackValidPowerForNew(server);
             allLocation = allLocation.OrderBy(x => x.RackCode)
-                .ThenBy(x => x.RackUnit)
-                .ToList();
+               .ThenBy(x => x.RackUnit)
+               .ToList();
             var allRackCode = allLocation.Select(x => x.RackCode).Distinct().ToList();
             var rackMaxSize = new Dictionary<string, int>();
             foreach (var rackCode in allRackCode)
@@ -207,6 +200,72 @@ namespace IMS.Data.Business
                 }
             }
             return result;
+        }
+        public List<LocationViewModel> GetNewLocation(Server server)
+        {
+            var allLocation = new List<LocationViewModel>();
+            if (RackOfCustomerDAO.Current.GetRackOfCustomer(server).Count > 0)
+            {
+                allLocation = dao.GetCustomerRackValidPowerForNew(server);
+            }
+            else
+            {
+                allLocation = dao.GetRackValidPowerForNew(server);
+            }
+            if (allLocation.Count ==0)
+            {
+                return allLocation;
+            }
+            else
+            {
+                allLocation = allLocation.OrderBy(x => x.RackCode)
+                .ThenBy(x => x.RackUnit)
+                .ToList();
+                var allRackCode = allLocation.Select(x => x.RackCode).Distinct().ToList();
+                var rackMaxSize = new Dictionary<string, int>();
+                foreach (var rackCode in allRackCode)
+                {
+                    rackMaxSize[rackCode] = 0;
+                }
+                var lastRackCode = string.Empty;
+                var maxRackSize = 0;
+                if (allLocation.Count > 0)
+                {
+                    lastRackCode = allLocation[0].RackCode;
+                }
+                foreach (var location in allLocation)
+                {
+                    if (lastRackCode != location.RackCode || !string.IsNullOrEmpty(location.ServerCode))
+                    {
+                        if (maxRackSize > rackMaxSize[lastRackCode])
+                        {
+                            rackMaxSize[lastRackCode] = maxRackSize;
+                        }
+                        lastRackCode = location.RackCode;
+                        maxRackSize = 0;
+                    }
+                    if (string.IsNullOrEmpty(location.ServerCode))
+                    {
+                        maxRackSize++;
+                    }
+                }
+                if (maxRackSize > rackMaxSize[lastRackCode])
+                {
+                    rackMaxSize[lastRackCode] = maxRackSize;
+                }
+
+                var result = new List<LocationViewModel>();
+                foreach (var rackCode in allRackCode)
+                {
+                    var maxSize = rackMaxSize[rackCode];
+                    if (maxSize >= server.Size.Value)
+                    {
+                        result.AddRange(allLocation.Where(x => x.RackCode == rackCode));
+                    }
+                }
+                return result;
+            }
+            return null;
         }
 
         public List<RackOfCustomerExtendedModel> GetLocationsOfServer(string serverCode)
