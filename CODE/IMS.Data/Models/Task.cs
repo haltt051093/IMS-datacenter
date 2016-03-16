@@ -5,8 +5,8 @@ using IMS.Data.Generic;
 
 namespace IMS.Data.Models
 {
-    [Table("StaffAssignment")]
-    public partial class StaffAssignment : BaseModel
+    [Table("Task")]
+    public partial class Task : BaseModel
     {
         [StringLength(50)]
         public string AssignedStaff { get; set; }
@@ -21,9 +21,9 @@ namespace IMS.Data.Models
         public string RequestCode { get; set; }
 
         [StringLength(50)]
-        public string AssignmentStatus { get; set; }
+        public string StatusCode { get; set; }
 
-        public DateTime? ChangedStatusTime { get; set; }
+        public DateTime? AssignedTime { get; set; }
 
         public string Comment { get; set; }
 

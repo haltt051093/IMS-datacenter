@@ -72,7 +72,7 @@
     <Compile Include="Business\ServerIPBLO.cs" />
     <Compile Include="Business\ShiftBLO.cs" />
     <Compile Include="Business\GroupBLO.cs" />
-    <Compile Include="Business\StaffAssignmentBLO.cs" />
+    <Compile Include="Business\TaskBLO.cs" />
     <Compile Include="Business\StatusBLO.cs" />
     <Compile Include="Business\NotificationBLO.cs" />
     <Compile Include="Business\TempRequestBLO.cs" />
@@ -104,7 +104,7 @@
     <Compile Include="Models\ServerAttribute.cs" />
     <Compile Include="Models\ServerIP.cs" />
     <Compile Include="Models\Shift.cs" />
-    <Compile Include="Models\StaffAssignment.cs" />
+    <Compile Include="Models\Task.cs" />
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\sysdiagrams.cs" />
     <Compile Include="Models\TypeOfLog.cs" />
@@ -127,7 +127,7 @@
     <Compile Include="Repository\ServerIPDAO.cs" />
     <Compile Include="Repository\ShiftDAO.cs" />
     <Compile Include="Repository\GroupDAO.cs" />
-    <Compile Include="Repository\StaffAssignmentDAO.cs" />
+    <Compile Include="Repository\TaskDAO.cs" />
     <Compile Include="Repository\StatusDAO.cs" />
     <Compile Include="Repository\NotificationDAO.cs" />
     <Compile Include="Repository\TempRequestDAO.cs" />
@@ -143,6 +143,7 @@
     <Compile Include="ViewModels\LogContentExtendedModel.cs" />
     <Compile Include="ViewModels\LogExtentedModel.cs" />
     <Compile Include="ViewModels\LogUsedIPExtendModel.cs" />
+    <Compile Include="ViewModels\TaskExtendedModel.cs" />
     <Compile Include="ViewModels\NotificationExtendedModel.cs" />
     <Compile Include="ViewModels\RackExtendedModel.cs" />
     <Compile Include="ViewModels\RackOfCustomerExtendedModel.cs" />

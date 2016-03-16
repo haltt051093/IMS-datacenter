@@ -77,6 +77,10 @@ namespace IMS.Data.Business
             return dao.GetRequestOfCustomer(customer);
         }
 
+        public List<LogExtentedModel> GetAllRequest()
+        {
+            return dao.GetAllRequest();
+        }
         public List<LogChangedContent> GetLogInfoByRequestCode(string requestCode, string Object)
         {
             return dao.GetLogInfoByRequestCode(requestCode, Object);
@@ -171,7 +175,7 @@ namespace IMS.Data.Business
                     //update and log rackofCustomer
                     RackOfCustomerBLO.Current.UpdateStatusRackOfCustomerANDLog(requestCode, rack,
                         Constants.TypeOfLog.LOG_RETURN_RACK, customer, null,
-                        Constants.StatusCode.RACKOFCUSTOMER_RETURNING, Constants.StatusCode.RACKOFCUSTOMER_CURRENT,null);
+                        Constants.StatusCode.RACKOFCUSTOMER_RETURNING, Constants.StatusCode.RACKOFCUSTOMER_CURRENT, null);
                 }
                 //update request status and log
                 RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
@@ -190,7 +194,7 @@ namespace IMS.Data.Business
                     //update and log rackofCustomer
                     RackOfCustomerBLO.Current.UpdateStatusRackOfCustomerANDLog(requestCode, rack,
                         Constants.TypeOfLog.LOG_RETURN_RACK, customer, null,
-                        Constants.StatusCode.RACKOFCUSTOMER_RETURNING, Constants.StatusCode.RACKOFCUSTOMER_CURRENT,null);
+                        Constants.StatusCode.RACKOFCUSTOMER_RETURNING, Constants.StatusCode.RACKOFCUSTOMER_CURRENT, null);
                 }
                 //update request status and log
                 RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_RACK,

@@ -43,7 +43,7 @@ namespace IMS.Data
             modelBuilder.Entity<Server>();
             modelBuilder.Entity<ServerIP>();
             modelBuilder.Entity<Shift>();
-            modelBuilder.Entity<StaffAssignment>();
+            modelBuilder.Entity<Task>();
             modelBuilder.Entity<ServerAttribute>();
             modelBuilder.Entity<Status>();
             modelBuilder.Entity<TypeOfLog>();

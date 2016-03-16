@@ -1,21 +1,21 @@
-﻿@model ProcessRequestReturnRackViewModel
+﻿@model ProcessRequestRentRackViewModel
+
 @{
-    ViewBag.Title = "RequestReturnRackInfo";
+    ViewBag.Title = "RequestRentRackInfo";
 }
 
 <section class="content-header">
     <h1>
-        Detail Request Return Rack
+        Detail Request Rent Rack
     </h1>
     <ol class="breadcrumb">
         <li><a href="@Url.Action("Index", "Schedule")">><i class="fa fa-dashboard"></i> Home</a></li>
-        Detail Request:
-        <li class="active">Return Rack</li>
+        <li class="active">Detail Request Rent Rack</li>
     </ol>
 </section>
-<section class="main-contentcontent">
-    @using (Html.BeginForm("CancelRequestReturnRack", "RequestDetail", FormMethod.Post))
-    {
+<section class="main-content">
+    @using (Html.BeginForm("CancelRequestRentRack", "Request", FormMethod.Post))
+            {
         <div class="row">
             <div class="col-xs-12">
                 <div class="row dl-horizontal">
@@ -23,7 +23,7 @@
                         Request Code
                     </div>
                     <div class="col-xs-8">
-                        @Html.DisplayFor(model => model.RequestInfo.RequestCode,new { @class = "form-control"})
+                        @Html.DisplayFor(model => model.RequestInfo.RequestCode, new { @class = "form-control" })
                     </div>
                 </div>
                 <div class="row">
@@ -31,7 +31,7 @@
                         Current Status
                     </div>
                     <div class="col-xs-8">
-                        @Html.DisplayFor(model => model.RequestInfo.StatusName, new { @class = "form-control" })
+                        @Html.DisplayFor(model => model.RequestInfo.StatusName,new { @class = "form-control" })
                     </div>
                 </div>
                 <div class="row">
@@ -46,29 +46,41 @@
         </div>
         <div class="row">
             <div class="col-xs-4">
-                Returned Racks
+                Amount of racks
             </div>
             <div class="col-xs-8">
-                @foreach (var item in Model.SelectedRacks)
-                {
-                    @Html.DisplayFor(model => item)
-                    <br />
-                }
+                @Html.DisplayFor(model => model.RackNumbers, new { @class = "form-control" })
             </div>
         </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        Note
+                    </div>
+                    <div class="col-xs-8">
+                        @Html.DisplayFor(model => model.RequestInfo.Description, new { @class = "form-control" })
+                    </div>
+                </div>
+        if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
+        {
+            <hr />
             <div class="row">
                 <div class="col-xs-4">
-                    Note
+                    Rented Rack(s)
                 </div>
                 <div class="col-xs-8">
-                    @Html.DisplayFor(model => model.RequestInfo.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @foreach (var item in Model.RentedRacks)
+                    {
+                        @Html.DisplayFor(model => item)
+                        <br />
+                    }
                 </div>
             </div>
+        }
         <div class="row">
             <div class="col-xs-12">
                 @Html.HiddenFor(model => model.RequestInfo.RequestCode)
+                @Html.HiddenFor(model => model.RequestInfo.RequestType)
                 @Html.HiddenFor(model => model.CustomerInfo.Customer)
-                @Html.HiddenFor(x => x.RequestInfo.RequestType)
                 @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
                 {
                     <button type="submit" id="btnAccept" name="@Constants.FormAction.CANCEL_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
@@ -79,3 +91,25 @@
         </div>
     }
 </section>
+<script type="text/javascript">
+    $('#masterTable').dataTable({
+        dom: 't',
+        ordering: false,
+        searching: false
+    });
+
+    $("#checkAll").change(function () {
+        var state = $('#checkAll').is(':checked');
+        $('tr.check input[type="checkbox"]').prop('checked', state);
+    });
+
+    $("#selectedRow").change(function () {
+        var rowCode = $("#selectedRow").val();
+        if (rowCode == null || rowCode == '') {
+            $('#masterTable tbody tr').show();
+        } else {
+            $('#masterTable tbody tr').hide();
+            $('#masterTable tbody tr[row-code="' + rowCode + '"]').show();
+        }
+    });
+</script>

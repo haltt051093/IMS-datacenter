@@ -45,13 +45,8 @@
                     <div class="col-xs-4">
                         Assignee
                     </div>
-                    @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
-                    {
-                        <div class="col-xs-8">
-                            @Html.DropDownListFor(model => model.RequestInfo.StaffCode, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                        </div>
-                    }
-                    @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                    @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING ||
+                    Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                     {
                         <div class="col-xs-8">
                             @Html.DropDownListFor(model => model.RequestInfo.StaffCode, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })

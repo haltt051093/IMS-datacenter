@@ -2,11 +2,12 @@
 
 @{
     var data = new List<SidebarItemModel>();
-    data.Add(new SidebarItemModel("Server", "Index", "Server") { Roles = new List<string>() { "Shift Head", "Customer" ,"Manager"} });
-    data.Add(new SidebarItemModel("Request History", "Index", "RequestDetail") { Roles = new List<string>() { "Customer" } });
-    data.Add(new SidebarItemModel("Location", "Index", "Location") { Roles = new List<string>() { "Shift Head" ,"Manager"} });
-    data.Add(new SidebarItemModel("IP Address", "Index", "IP") { Roles = new List<string>() { "Shift Head","Manager" } });
-    data.Add(new SidebarItemModel("Account", "Index", "Account") { Roles = new List<string>() { "Shift Head","Manager" } });
+    data.Add(new SidebarItemModel("Server", "Index", "Server") { Roles = new List<string>() { "Shift Head", "Customer", "Manager", "Staff" } });
+    data.Add(new SidebarItemModel("Request History", "Index", "Request") { Roles = new List<string>() { "Customer" } });
+    data.Add(new SidebarItemModel("Location", "Index", "Location") { Roles = new List<string>() { "Shift Head", "Manager", "Staff" } });
+    data.Add(new SidebarItemModel("IP Address", "Index", "IP") { Roles = new List<string>() { "Shift Head", "Manager", "Staff" } });
+    data.Add(new SidebarItemModel("Account", "Index", "Account") { Roles = new List<string>() { "Shift Head", "Manager", "Staff" } });
+    data.Add(new SidebarItemModel("Request", "Index", "Request") { Roles = new List<string>() { "Shift Head", "Manager", "Staff" } });
     data.Add(new SidebarItemModel("Rack", "Index", "Rack") { Roles = new List<string>() { "Customer" } });
     data.Add(new SidebarItemModel("Create request", "", "")
     {
@@ -45,7 +46,7 @@
     });
     data.Add(new SidebarItemModel("Report", "", "")
     {
-        Roles = new List<string>() { "Shift Head", "Customer" ,"Manager"},
+        Roles = new List<string>() { "Shift Head", "Customer", "Manager" },
         SubMenu = new List<SidebarItemModel>()
         {
             new SidebarItemModel("Server Moving", "", "") { Roles = new List<string>() { "Shift Head", "Customer" } },

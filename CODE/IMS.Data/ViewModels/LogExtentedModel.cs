@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using IMS.Core.Express;
 using IMS.Data.Models;
@@ -25,6 +26,7 @@ namespace IMS.Data.ViewModels
         public string RequestTypeName { get; set; }
         public string RequestTypeCode { get; set; }
         public string Customer { get; set; }
+        public int Priority { get; set; }
 
         public LogExtentedModel LastestStatusRequest { get; set; }
         public List<LogExtentedModel> OldStatusRequests { get; set; }
@@ -35,5 +37,17 @@ namespace IMS.Data.ViewModels
         public int ReturnLocationNumber { get; set; }
         //log return ip
         public List<string> listRacks { get; set; }
+
+        public int DaysFromNow
+        {
+            get
+            {
+                if (LogTime == null)
+                {
+                    return 0;
+                }
+                return (int) (DateTime.Now.Date - LogTime.Value.Date).TotalDays;
+            }
+        }
     }
 }

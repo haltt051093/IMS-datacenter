@@ -1,0 +1,163 @@
+﻿@model TaskIndexViewModel
+@{
+    ViewBag.Title = "Task";
+}
+<!-- Main content -->
+<section class="main-content">
+    @*<div class="row">
+        <div class="col-xs-4">
+            Request Type:
+        </div>
+        <div class="col-xs-8">
+            @Html.DropDownListFor(m => m.FilterByRequestType, Model.FilterByRequestType, "Select All")
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            Request Status:
+        </div>
+        <div class="col-xs-8">
+            @Html.DropDownListFor(m => m.FilterByStatus, Model.FilterByStatus, "Select All")
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            Time of Request:
+        </div>
+        <div class="col-xs-8">
+            @Html.DropDownListFor(m => m.FilterByPeriodOfTime, Model.FilterByPeriodOfTime)
+        </div>
+    </div>*@
+    <table id="example1" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Request Code
+                </th>
+                <th>
+                    Request Type
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Assignor
+                </th>
+                <th>
+                    Assigned Time
+                </th>
+            </tr>
+        </thead>
+
+        @for (int i = 0; i < Model.Tasks.Count; i++)
+        {
+            <tbody>
+                <tr>
+                    <td>
+                        @Html.ActionLink(Model.Tasks[i].RequestCode, "Detais", "ProcessRequest",
+                        new { rType = Model.Tasks[i].RequestTypeCode, rCode = Model.Tasks[i].RequestCode }, null)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Tasks[i].RequestTypeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Tasks[i].StatusName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Tasks[i].ShiftHeadName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Tasks[i].AssignedTime)
+                    </td>
+                </tr>
+            </tbody>
+        }
+    </table>
+</section><!-- /.content -->
+
+<script>
+    function filterRequest() {
+        var typeCode = $("#FilterByRequestType").val();
+        var statusCode = $("#FilterByStatus").val();
+        var duration = $('#FilterByPeriodOfTime').val();
+        if (typeCode == null) {
+            typeCode = '';
+        }
+        if (statusCode == null) {
+            statusCode = '';
+        }
+        if (duration == null || isNaN(duration)) {
+            duration = 99999;
+        }
+        duration = duration - 0;
+
+        //if (typeCode == '' && statusCode == '') {
+        //    $('#example1 tbody[type-code][status-code]').show();
+        //}
+        //else {
+        //$('#example1 tbody').hide();
+        //if (typeCode != '' && statusCode == '') {
+        //    $('#example1 tbody[type-code="' + typeCode + '"]').show();
+        //} else if (statusCode != '' && typeCode == '') {
+        //    $('#example1 tbody[status-code="' + statusCode + '"]').show();
+        //} else {
+        //    $('#example1 tbody[type-code="' + typeCode + '"][status-code="' + statusCode + '"]').show();
+        //}
+        //}
+        $('#example1 tbody[type-code][status-code]').each(function (i, e) {
+            var row = $(e);
+            var rowTypeCode = row.attr('type-code');
+            var rowStatusCode = row.attr('status-code');
+            var rowDuration = row.attr('duration');
+            var isShow = false;
+            if (typeCode == '' && statusCode == '' && duration >= rowDuration) {
+                isShow = true;
+            } else if (typeCode != '' && statusCode == '') {
+                if (rowTypeCode == typeCode && duration >= rowDuration) {
+                    isShow = true;
+                }
+            } else if (typeCode == '' && statusCode != '') {
+                if (rowStatusCode == statusCode && duration >= rowDuration) {
+                    isShow = true;
+                }
+            } else {
+                if (rowTypeCode == typeCode && rowStatusCode == statusCode && duration >= rowDuration) {
+                    isShow = true;
+                }
+            }
+            if (isShow) {
+                row.show();
+            } else {
+                row.hide();
+            }
+        });
+    }
+</script>
+
+<script type="text/javascript">
+    $(".clickmee").click(function () {
+        $(this).closest('tbody')
+            .next('.showhide')
+            .toggle('fast');
+    });
+
+    $("#example1").dataTable({
+        "iDisplayLength": -1,
+        "aaSorting": [[2, "desc"]] // Sort by first column descending
+    });
+
+    $("#FilterByRequestType").change(function () {
+        filterRequest();
+
+    });
+
+    $("#FilterByStatus").change(function () {
+        filterRequest();
+    });
+
+    $("#FilterByPeriodOfTime").change(function () {
+        filterRequest();
+    });
+
+    filterRequest();
+</script>

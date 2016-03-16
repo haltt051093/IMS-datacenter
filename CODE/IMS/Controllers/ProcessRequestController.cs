@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Web.Mvc;
 using IMS.Core;
 using IMS.Data.Business;
@@ -374,6 +373,11 @@ namespace IMS.Controllers
             if (Request.Form[Constants.FormAction.ACCEPT_ACTION] != null)
             {
                 var shifthead = GetCurrentUserName();
+                //assign
+                if (shifthead != viewmodel.RequestInfo.StaffCode)
+                {
+                    TaskBLO.Current.AssignTask(viewmodel.RequestInfo.RequestCode, shifthead, viewmodel.RequestInfo.StaffCode);
+                }
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
                     Constants.TypeOfLog.LOG_RENT_RACK, Constants.StatusCode.REQUEST_PROCESSING, viewmodel.RequestInfo.StaffCode, shifthead, null);
                 return RedirectToAction("Detais", "ProcessRequest",
@@ -414,6 +418,11 @@ namespace IMS.Controllers
             if (Request.Form[Constants.FormAction.ACCEPT_ACTION] != null)
             {
                 var shifthead = GetCurrentUserName();
+                //assign
+                if (shifthead != viewmodel.RequestInfo.StaffCode)
+                {
+                    TaskBLO.Current.AssignTask(viewmodel.RequestInfo.RequestCode, shifthead, viewmodel.RequestInfo.StaffCode);
+                }
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
                     Constants.TypeOfLog.LOG_RETURN_RACK, Constants.StatusCode.REQUEST_PROCESSING, viewmodel.RequestInfo.StaffCode, shifthead, null);
                 return RedirectToAction("Detais", "ProcessRequest",
@@ -685,6 +694,11 @@ namespace IMS.Controllers
             if (Request.Form[Constants.FormAction.ACCEPT_ACTION] != null)
             {
                 var shifthead = GetCurrentUserName();
+                //assign
+                if (shifthead != viewmodel.RequestInfo.StaffCode)
+                {
+                    TaskBLO.Current.AssignTask(viewmodel.RequestInfo.RequestCode, shifthead, viewmodel.RequestInfo.StaffCode);
+                }
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
                     Constants.TypeOfLog.LOG_ASSIGN_IP, Constants.StatusCode.REQUEST_PROCESSING, viewmodel.RequestInfo.StaffCode, shifthead, null);
                 return RedirectToAction("Detais", "ProcessRequest",
@@ -721,6 +735,11 @@ namespace IMS.Controllers
             if (Request.Form[Constants.FormAction.ACCEPT_ACTION] != null)
             {
                 var shifthead = GetCurrentUserName();
+                //assign
+                if (shifthead != viewmodel.RequestInfo.StaffCode)
+                {
+                    TaskBLO.Current.AssignTask(viewmodel.RequestInfo.RequestCode, shifthead, viewmodel.RequestInfo.StaffCode);
+                }
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
                     Constants.TypeOfLog.LOG_CHANGE_IP, Constants.StatusCode.REQUEST_PROCESSING, viewmodel.RequestInfo.StaffCode, shifthead, null);
                 return RedirectToAction("Detais", "ProcessRequest",
@@ -756,6 +775,11 @@ namespace IMS.Controllers
             if (Request.Form[Constants.FormAction.ACCEPT_ACTION] != null)
             {
                 var shifthead = GetCurrentUserName();
+                //assign
+                if (shifthead != viewmodel.RequestInfo.StaffCode)
+                {
+                    TaskBLO.Current.AssignTask(viewmodel.RequestInfo.RequestCode, shifthead, viewmodel.RequestInfo.StaffCode);
+                }
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
                     Constants.TypeOfLog.LOG_RETURN_IP, Constants.StatusCode.REQUEST_PROCESSING, viewmodel.RequestInfo.StaffCode, shifthead, null);
                 return RedirectToAction("Detais", "ProcessRequest",

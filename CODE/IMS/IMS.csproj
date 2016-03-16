@@ -917,11 +917,12 @@
     <Compile Include="App_Start\AppConfig.cs" />
     <Compile Include="Authentications\RolesAttribute.cs" />
     <Compile Include="Controllers\NotificationController.cs" />
+    <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\ProcessRequestController.cs" />
-    <Compile Include="Controllers\RequestDetailController.cs" />
     <Compile Include="Controllers\ValidateController.cs" />
     <Compile Include="Models\HomeHeaderViewModel.cs" />
     <Compile Include="Models\HomeSidebarViewModel.cs" />
+    <Compile Include="Models\TaskIndexViewModel.cs" />
     <Compile Include="Models\ProcessRequestAddServerViewModel.cs" />
     <Compile Include="Models\ProcessRequestReturnRackViewModel - Copy.cs" />
     <Compile Include="Models\ProcessRequestBringServerAwayViewModel.cs" />
@@ -1032,7 +1033,7 @@
     <Content Include="Views\ProcessRequest\BringServerAwayInfo.cshtml" />
     <Content Include="Views\Request\ChangeIP.cshtml" />
     <Content Include="Views\ProcessRequest\ChangeIPInfo.cshtml" />
-    <Content Include="Views\RequestDetail\Index.cshtml" />
+    <Content Include="Views\Request\Index.cshtml" />
     <Content Include="Views\Request\RentRack.cshtml" />
     <Content Include="Views\ProcessRequest\RentRackInfo.cshtml" />
     <Content Include="Views\Request\ReturnIP.cshtml" />
@@ -1044,14 +1045,15 @@
     <Content Include="Views\Report\ReportBlockIP.cshtml" />
     <Content Include="Views\ProcessRequest\Index.cshtml" />
     <Content Include="Views\Report\ReportUsedIP.cshtml" />
-    <Content Include="Views\RequestDetail\AddServerInfo.cshtml" />
-    <Content Include="Views\RequestDetail\AssignIPInfo.cshtml" />
-    <Content Include="Views\RequestDetail\BringServerAwayInfo.cshtml" />
-    <Content Include="Views\RequestDetail\ChangeIPInfo.cshtml" />
-    <Content Include="Views\RequestDetail\RentRackInfo.cshtml" />
-    <Content Include="Views\RequestDetail\ReturnIPInfo.cshtml" />
-    <Content Include="Views\RequestDetail\ReturnRackInfo.cshtml" />
+    <Content Include="Views\Request\AddServerDetail.cshtml" />
+    <Content Include="Views\Request\AssignIPDetail.cshtml" />
+    <Content Include="Views\Request\BringServerAwayDetail.cshtml" />
+    <Content Include="Views\Request\ChangeIPDetail.cshtml" />
+    <Content Include="Views\Request\RentRackDetail.cshtml" />
+    <Content Include="Views\Request\ReturnIPDetail.cshtml" />
+    <Content Include="Views\Request\ReturnRackDetail.cshtml" />
     <Content Include="Views\IP\AssignIP.cshtml" />
+    <Content Include="Views\Task\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

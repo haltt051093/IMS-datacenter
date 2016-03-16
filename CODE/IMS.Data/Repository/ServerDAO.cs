@@ -79,12 +79,6 @@ namespace IMS.Data.Repository
 
                         };
             return query.ToList();
-            //string query = @"select s.*,l.RackCode,l.RackUnit, st.Status from Server as s
-            //                left join Location as l
-            //                on s.LocationCode = l.LocationCode
-            //                left join Status as st
-            //                on s.StatusCode = st.StatusCode";
-            //return RawQuery<ServerExtendedModel>(query, new object[] { });
         }
 
         public List<ServerExtendedModel> GetServerOfCustomer(string customer)

@@ -15,7 +15,7 @@
             Request Type:
         </div>
         <div class="col-xs-8">
-            @Html.DropDownListFor(m => m.FilterByRequestType, Model.FilterByRequestType, "Select All", new { @id = "selectedType" })
+            @Html.DropDownListFor(m => m.FilterByRequestType, Model.FilterByRequestType, "Select All")
         </div>
     </div>
     <div class="row">
@@ -23,41 +23,41 @@
             Request Status:
         </div>
         <div class="col-xs-8">
-            @Html.DropDownListFor(m => m.FilterByStatus, Model.FilterByStatus, "Select All", new { @id = "selectedStatus" })
+            @Html.DropDownListFor(m => m.FilterByStatus, Model.FilterByStatus, "Select All")
         </div>
     </div>
-    @*<div class="row">
+    <div class="row">
         <div class="col-xs-4">
             Time of Request:
         </div>
         <div class="col-xs-8">
-            @Html.DropDownListFor(m => m.FilterByPeriodOfTime, Model.FilterByPeriodOfTime, "Today", new { @id = "selectedTime" })
+            @Html.DropDownListFor(m => m.FilterByPeriodOfTime, Model.FilterByPeriodOfTime)
         </div>
-    </div>*@
+    </div>
     <table id="example1" class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th>
-                    @Html.Raw("Request Code")
+                    Request Code
                 </th>
                 <th>
-                    @Html.Raw("Request Type")
+                    Request Type
                 </th>
                 <th>
-                    @Html.Raw("Requested Time")
+                    Requested Time
                 </th>
                 <th>
-                    @Html.Raw("Status")
+                    Status
                 </th>
             </tr>
         </thead>
 
         @for (int i = 0; i < Model.Requests.Count; i++)
         {
-            <tbody class="clickmee check" status-code="@Model.Requests[i].LastestStatusRequest.StatusCode" type-code="@Model.Requests[i].LastestStatusRequest.RequestTypeCode">
+            <tbody class="clickmee check" status-code="@Model.Requests[i].LastestStatusRequest.StatusCode" type-code="@Model.Requests[i].LastestStatusRequest.RequestTypeCode" duration="@Model.Requests[i].LastestStatusRequest.DaysFromNow">
                 <tr>
                     <td>
-                        @Html.ActionLink(Model.Requests[i].LastestStatusRequest.RequestCode, "Detais", "RequestDetail",
+                        @Html.ActionLink(Model.Requests[i].LastestStatusRequest.RequestCode, "Detais", "Request",
                         new { rType = Model.Requests[i].LastestStatusRequest.RequestTypeCode, rCode = Model.Requests[i].LastestStatusRequest.RequestCode }, null)
                     </td>
                     <td>
@@ -113,34 +113,89 @@
     </table>
 </section><!-- /.content -->
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $(".clickmee").click(function () {
-            $(this).closest('tbody')
-        .next('.showhide')
-        .toggle('fast');
+<script>
+    function filterRequest() {
+        var typeCode = $("#FilterByRequestType").val();
+        var statusCode = $("#FilterByStatus").val();
+        var duration = $('#FilterByPeriodOfTime').val();
+        if (typeCode == null) {
+            typeCode = '';
+        }
+        if (statusCode == null) {
+            statusCode = '';
+        }
+        if (duration == null || isNaN(duration)) {
+            duration = 99999;
+        }
+        duration = duration - 0;
+
+        //if (typeCode == '' && statusCode == '') {
+        //    $('#example1 tbody[type-code][status-code]').show();
+        //}
+        //else {
+        //$('#example1 tbody').hide();
+        //if (typeCode != '' && statusCode == '') {
+        //    $('#example1 tbody[type-code="' + typeCode + '"]').show();
+        //} else if (statusCode != '' && typeCode == '') {
+        //    $('#example1 tbody[status-code="' + statusCode + '"]').show();
+        //} else {
+        //    $('#example1 tbody[type-code="' + typeCode + '"][status-code="' + statusCode + '"]').show();
+        //}
+        //}
+        $('#example1 tbody[type-code][status-code]').each(function (i, e) {
+            var row = $(e);
+            var rowTypeCode = row.attr('type-code');
+            var rowStatusCode = row.attr('status-code');
+            var rowDuration = row.attr('duration');
+            var isShow = false;
+            if (typeCode == '' && statusCode == '' && duration >= rowDuration) {
+                isShow = true;
+            } else if (typeCode != '' && statusCode == '') {
+                if (rowTypeCode == typeCode && duration >= rowDuration) {
+                    isShow = true;
+                }
+            } else if (typeCode == '' && statusCode != '') {
+                if (rowStatusCode == statusCode && duration >= rowDuration) {
+                    isShow = true;
+                }
+            } else {
+                if (rowTypeCode == typeCode && rowStatusCode == statusCode && duration >= rowDuration) {
+                    isShow = true;
+                }
+            }
+            if (isShow) {
+                row.show();
+            } else {
+                row.hide();
+            }
         });
+    }
+</script>
+
+<script type="text/javascript">
+    $(".clickmee").click(function () {
+        $(this).closest('tbody')
+            .next('.showhide')
+            .toggle('fast');
     });
+
     $("#example1").dataTable({
         "iDisplayLength": -1,
         "aaSorting": [[2, "desc"]] // Sort by first column descending
     });
-    $("#selectedType").change(function () {
-        var typeCode = $("#selectedType").val();
-        if (typeCode == null || typeCode == '') {
-            $('#example1 tbody tr').show();
-        } else {
-            $('#example1 tbody tr').hide();
-            $('#example1 tbody tr[type-code="' + typeCode + '"]').show();
-        }
+
+    $("#FilterByRequestType").change(function () {
+        filterRequest();
+
     });
-    $("#selectedStatus").change(function () {
-        var statusCode = $("#selectedStatus").val();
-        if (statusCode == null || statusCode == '') {
-            $('#example1 tbody tr').show();
-        } else {
-            $('#example1 tbody tr').hide();
-            $('#example1 tbody tr[status-code="' + statusCode + '"]').show();
-        }
+
+    $("#FilterByStatus").change(function () {
+        filterRequest();
     });
+
+    $("#FilterByPeriodOfTime").change(function () {
+        filterRequest();
+    });
+
+    filterRequest();
 </script>

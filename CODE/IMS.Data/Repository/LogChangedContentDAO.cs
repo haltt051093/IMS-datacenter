@@ -183,6 +183,61 @@ namespace IMS.Data.Repository
             //return RawQuery<RequestExtendedModel>(query, new object[] { });
         }
 
+        public List<LogExtentedModel> GetAllRequest()
+        {
+            //lay list request co cung requestcode
+            var myList = Current.Table().ToList();
+            var getRequestCodes = myList.GroupBy(x => x.RequestCode).Select(y => y.First()).ToList();
+            var list = new List<LogExtentedModel>();
+            for (int i = 0; i < getRequestCodes.Count; i++)
+            {
+                var requestCode = getRequestCodes[i].RequestCode;
+
+                var allStatusOfRequest = from sr in Current.Table()
+                                         join rt in TypeOfLogDAO.Current.Table()
+                                             on sr.TypeOfLog equals rt.TypeCode into srt
+                                         from subsrt in srt.DefaultIfEmpty()
+                                         join st in StatusDAO.Current.Table()
+                                             on sr.ObjectStatus equals st.StatusCode into sstr
+                                         from subsstr in sstr.DefaultIfEmpty()
+                                         join r in RequestDAO.Current.Table()
+                                             on sr.RequestCode equals r.RequestCode into ssr
+                                         from subssr in ssr.DefaultIfEmpty()
+                                         where sr.RequestCode == requestCode && sr.Object == Constants.Object.OBJECT_REQUEST
+                                         orderby sr.LogTime descending
+                                         select new LogExtentedModel()
+                                         {
+                                             LogTime = sr.LogTime,
+                                             StatusName = subsstr.StatusName,
+                                             RequestTypeName = subsrt.TypeName,
+                                             RequestCode = sr.RequestCode,
+                                             RequestTypeCode = subsrt.TypeCode,
+                                             Customer = subssr.Customer,
+                                             StatusCode = subsstr.StatusCode
+                                         };
+                if (allStatusOfRequest.Any())
+                {
+                    var newest = allStatusOfRequest.First();
+                    var request = new LogExtentedModel();
+                    var others = new List<LogExtentedModel>();
+                    request.LastestStatusRequest = newest;
+                    if (allStatusOfRequest.Count() > 1)
+                    {
+                        others = allStatusOfRequest.ToList();
+                        others.RemoveAt(0);
+                        request.OldStatusRequests = others.ToList();
+                    }
+                    else
+                    {
+                        request.OldStatusRequests = null;
+                    }
+                    list.Add(request);
+                }
+            }
+            return list;
+            //return RawQuery<RequestExtendedModel>(query, new object[] { });
+        }
+
         public List<LogChangedContent> GetLogInfoByRequestCode(string requestCode, string Object)
         {
             var query = from l in Current.Table()
