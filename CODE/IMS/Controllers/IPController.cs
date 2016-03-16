@@ -166,7 +166,8 @@ namespace IMS.Controllers
         {
             if (icvm.NewIP == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                Alert("Please select IP Address!");
+                return RedirectToAction("AssignIP",new {rType = icvm.RequestType,rCode = icvm.RequestCode, OldIP = icvm.OldIP, ServerCode = icvm.ServerCode});
             }
 
             IPAddressPoolBLO.Current.UpdateIP(icvm.ServerCode, icvm.NewIP, icvm.RequestCode, icvm.OldIP);

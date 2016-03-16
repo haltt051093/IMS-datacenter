@@ -56,7 +56,7 @@ namespace IMS.Data.Repository
 
         public List<LocationViewModel> GetRackValidPowerForNew(Server server)
         {
-            var query = @"select l.LocationCode, l.RackCode, l.RackUnit, s.Status,l.ServerCode, r.RackName
+            var query = @"select l.LocationCode, l.RackCode, l.RackUnit, s.StatusName,l.ServerCode, r.RackName
                             from rack as r left join
 	                            (select r.RackCode, sum(s.power / s.size) as UsedPower
 	                            from rack as r
@@ -70,7 +70,7 @@ namespace IMS.Data.Repository
                             on r.RackCode = l.RackCode
 	                        join Status as s 
                             on s.StatusCode=l.StatusCode
-                            where r.MaximumPower - ISNULL(ri.UsedPower,0) >'" + server.Power +
+                            where r.MaximumPower*1000 - ISNULL(ri.UsedPower,0) >'" + server.Power +
                            @"'and r.StatusCode!='STATUS20'";
             ;
             return RawQuery<LocationViewModel>(query, new object[] { });
@@ -95,7 +95,7 @@ namespace IMS.Data.Repository
                             on r.RackCode = l.RackCode
 	                        join Status as s 
                             on s.StatusCode=l.StatusCode
-                            where r.MaximumPower - ISNULL(ri.UsedPower,0) >'" + server.Power + @"'";
+                            where r.MaximumPower*1000 - ISNULL(ri.UsedPower,0) >'" + server.Power + @"'";
             return RawQuery<LocationViewModel>(query, new object[] { });
         }
 
@@ -114,7 +114,7 @@ namespace IMS.Data.Repository
                             join Location as l
                             on r.RackCode = l.RackCode
 	                        join Status as s on s.StatusCode=l.StatusCode
-                            where r.MaximumPower - ISNULL(ri.UsedPower,0) >'" + server.Power + @"'and r.StatusCode != 'STATUS20' or l.ServerCode = '" +
+                            where r.MaximumPower*1000 - ISNULL(ri.UsedPower,0) >'" + server.Power + @"'and r.StatusCode != 'STATUS20' or l.ServerCode = '" +
                            server.ServerCode + @"'";
             ;
             return RawQuery<LocationViewModel>(query, new object[] { });
@@ -138,7 +138,7 @@ namespace IMS.Data.Repository
                             join Location as l
                             on r.RackCode = l.RackCode
 	                        join Status as s on s.StatusCode=l.StatusCode
-                            where r.MaximumPower - ISNULL(ri.UsedPower,0) >'" + server.Power + @"'or l.ServerCode = '" + server.ServerCode + @"'";
+                            where r.MaximumPower*1000 - ISNULL(ri.UsedPower,0) >'" + server.Power + @"'or l.ServerCode = '" + server.ServerCode + @"'";
             return RawQuery<LocationViewModel>(query, new object[] { });
         }
 

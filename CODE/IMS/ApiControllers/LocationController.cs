@@ -2,6 +2,7 @@
 using IMS.ApiModels;
 using IMS.Core;
 using IMS.Data.Business;
+using IMS.Data.Repository;
 using IMS.Data.ViewModels;
 
 namespace IMS.ApiControllers
@@ -30,17 +31,26 @@ namespace IMS.ApiControllers
             var server = ServerBLO.Current.GetServerByCode(code, Constants.StatusCode.SERVER_WAITING);
             var locationserver = LocationBLO.Current.GetLocationsOfServer(code);
             var locations = new List<LocationViewModel>();
+            var locations1 = new List<LocationViewModel>();
             if (locationserver.Count == 0)
             {
                 locations = LocationBLO.Current.GetNewLocation(server);
+                if (RackOfCustomerDAO.Current.GetRackOfCustomer(server).Count > 0)
+                {
+                    locations1 = LocationBLO.Current.GetNewLocation1(server);
+                }
+                    
             }
             else
             {
-                locations = LocationBLO.Current.GetNewLocation(server);
+                locations = LocationBLO.Current.GetChangeLocation(server);
             }
            
             var result = new DataTableModel<LocationViewModel>();
-            result.Data = locations;
+            var result1 = new List<LocationViewModel>();
+            result1.AddRange(locations);
+            result1.AddRange(locations1);
+            result.Data = result1;
             return result;
         }  
     }

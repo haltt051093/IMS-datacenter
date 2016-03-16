@@ -18,21 +18,36 @@
 
 
     <section class="content">
-        <div class="row hide">
-            <div id="dropdown-template" class="col-xs-3">
-                <label>Location: @Html.DropDownListFor(model => model.RackCode, Model.Racks, new { @class = "form-control input-sm", style = "width: 150px" }) </label>
+        @if (Model.Notice == "HaveRack")
+        {
+            <div class="row hide">
+                <div id="dropdown-template" class="col-xs-3">
+                    <label>Location of Datacenter: @Html.DropDownListFor(model => model.RackCode1, Model.Racks1,"--Select--", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
+                    <label>Location of Customer: @Html.DropDownListFor(model => model.RackCode, Model.Racks,"--Select--", new {@class = "form-control input-sm", style = "width: 150px"}) </label>
+
+                </div>
+                
             </div>
-        </div>
+        }
+        else
+        {
+            <div class="row hide">
+                <div id="dropdown-template" class="col-xs-3">
+                    <label>Location: @Html.DropDownListFor(model => model.RackCode, Model.Racks, new { @class = "form-control input-sm", style = "width: 150px" }) </label>
+                </div>
+            </div>
+        }
+
 
         <table id="example1" class="table table-bordered table-hover">
             <thead>
-                <tr style="background-color: #404040">
-                    <th><h4 style="color: ghostwhite">Rack Code</h4>
-                    <th><h4 style="color: ghostwhite">Rack Name</h4>
-                    <th><h4 style="color: ghostwhite">Rack Unit</h4></th>
-                    <th><h4 style="color: ghostwhite">Server Code</h4></th>
-                    <th></th>
-                </tr>
+            <tr style="background-color: #404040">
+                <th><h4 style="color: ghostwhite">Rack Code</h4>
+                <th><h4 style="color: ghostwhite">Rack Name</h4>
+                <th><h4 style="color: ghostwhite">Rack Unit</h4></th>
+                <th><h4 style="color: ghostwhite">Server Code</h4></th>
+                <th></th>
+            </tr>
             </thead>
         </table>
 
@@ -50,21 +65,31 @@
 }
 <script>
     $.fn.dataTable.ext.search.push(
-        function (settings, data, dataIndex) {
+        function(settings, data, dataIndex) {
             var rackCode = $('#RackCode').val();
+            var rackCode1 = $('#RackCode1').val();
             if (rackCode == '') {
-                return true;
+                return false;
             }
             if (rackCode == data[0]) {
                 return true;
             }
-            return false;
+            if (rackCode1 == data[0]) {
+                return true;
+            }
+            if (rackCode1 == '') {
+                return false;
+            }
+
         }
     );
 </script>
 
 <script type="text/javascript">
     var table = $('#example1').DataTable({
+        language: {
+            "zeroRecords": "<label style='color:coral'>Please select Rack to have respective Locations!</label>"
+        },
         dom: '<lf<t>ip>',
         processing: true,
         ajax: "@Url.Action("GetLocationForAssign", "Location", new {httproute = "", code = Model.ServerCode})",
@@ -76,10 +101,11 @@
             { data: "LocationCode" }
         ],
         iDisplayLength: 42,
-        bPaginate: false,
+        bLengthChange: false,
+      
         fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             var row = $(nRow);
-            var actionCell = $(nRow.cells[4]);
+            var actionCell = $(nRow.cells[3]);
             actionCell.html('');
             actionCell.append('<input type="hidden" name="Selected[' + iDisplayIndex + '].LocationCode" value="' + aData.LocationCode + '">');
             switch (aData.StatusName) {
@@ -92,19 +118,32 @@
                     break;
 
             }
-
+            switch (aData.ServerCode) {
+            case '@Model.ServerCode':
+                row.css('background-color', '#ffe6e6');              
+                break;
+            
+            }
         },
-        order: [[1, "acs"], [2, "desc"]]
-
+        order: [[1, "acs"], [2, "desc"]],
+        columnDefs: [{
+        targets: [0],
+        visible: false,
+        searchable: true
+        }]
+       
     });
 
     $('#example1_filter').append($('#dropdown-template').html());
     $('#dropdown-template').html('');
 
+    $('#RackCode1').change(function () {
+        table.draw();
+    });
     $('#RackCode').change(function () {
         table.draw();
     });
-
+   
 
 </script>
 

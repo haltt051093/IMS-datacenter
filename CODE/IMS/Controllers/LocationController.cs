@@ -10,6 +10,7 @@ using IMS.Core;
 using IMS.Data.Business;
 using IMS.Data.Models;
 using IMS.Data.Queries;
+using IMS.Data.Repository;
 using IMS.Models;
 
 namespace IMS.Controllers
@@ -74,74 +75,44 @@ namespace IMS.Controllers
             data.Size = Size;
             var server = ServerBLO.Current.GetServerByCode(ServerCode, Constants.StatusCode.SERVER_WAITING);
             var locationserver = LocationBLO.Current.GetLocationsOfServer(ServerCode);
-            if (locationserver.Count==0)
+            if (locationserver.Count == 0)
             {
                 var locations = LocationBLO.Current.GetNewLocation(server);
-                var listrack = locations.OrderBy(x => x.RackName).GroupBy(x => x.RackName).Select(x => x.FirstOrDefault());
+                var listrack =
+                    locations.OrderBy(x => x.RackName).GroupBy(x => x.RackName).Select(x => x.FirstOrDefault());
                 data.Racks = listrack.Select(x => new SelectListItem
                 {
                     Value = x.RackCode,
                     Text = x.RackName
                 }).ToList();
-
+                if (RackOfCustomerDAO.Current.GetRackOfCustomer(server).Count > 0)
+                {
+                    var locations1 = LocationBLO.Current.GetNewLocation1(server);
+                    var listrack1 =
+                        locations1.OrderBy(x => x.RackName).GroupBy(x => x.RackName).Select(x => x.FirstOrDefault());
+                    data.Racks1 = listrack1.Select(x => new SelectListItem
+                    {
+                        Value = x.RackCode,
+                        Text = x.RackName
+                    }).ToList();
+                    data.Notice = "HaveRack";
+                }
+            }
+            else
+            {
+                var locations = LocationBLO.Current.GetChangeLocation(server);
+                var listrack =
+                    locations.OrderBy(x => x.RackName).GroupBy(x => x.RackName).Select(x => x.FirstOrDefault());
+                data.Racks = listrack.Select(x => new SelectListItem
+                {
+                    Value = x.RackCode,
+                    Text = x.RackName
+                }).ToList();
             }
             data.RequestCode = rCode;
             data.RequestType = rType;
             data.ServerCode = ServerCode;
-            //if (request == "Change")
-            //{
-            //    var locations = LocationBLO.Current.GetChangeLocation(s);
-            //    data.Server = s;
-            //    data.Request = request;
-            //    var racks = new List<string>();
-            //    var currentrack = locations.OrderBy(x => x.RackName).Select(x => x.RackName).ToList();
-            //    racks.AddRange(currentrack.Distinct());
-            //    ViewBag.RackSearch = new SelectList(racks);
-            //    if (!String.IsNullOrWhiteSpace(RackSearch))
-            //    {
-            //        locations = locations.Where(r => r.RackName.Trim() == RackSearch.Trim()).ToList();
-            //    }
-            //    data.Locations = locations;
-            //    return View(data);
-            //}
-            ////Get locations available for new server
-            //else
-            //{
-            //    var locations = LocationBLO.Current.GetNewLocation(s);
-            //    data.Server = s;
-            //    data.Request = request;
-            //    var racks = new List<string>();
-            //    var currentrack = locations.OrderBy(x => x.RackName).Select(x => x.RackName).ToList();
-            //    racks.AddRange(currentrack.Distinct());
-            //    ViewBag.RackSearch = new SelectList(racks);
-            //    if (!String.IsNullOrWhiteSpace(RackSearch))
-            //    {
-            //        locations = locations.Where(r => r.RackName.Trim() == RackSearch.Trim()).ToList();
-            //    }
-            //    data.Locations = locations;
             return View(data);
-
-            // }
-            //}
-
-            //[HttpPost]
-            //public ActionResult AssignLocation(LocationIndexViewModel livm)
-            //{
-            //    if (livm.LocationCode == null)
-            //    {
-            //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //    }
-            //    bool x = LocationBLO.Current.UpdateLocation(livm.Server.Size, livm.Server.ServerCode, livm.LocationCode, livm.Request);
-            //    if (x)
-            //    {
-            //        return RedirectToAction("Index");
-            //    }
-            //    else
-            //    {
-            //        return RedirectToAction("AssignLocation");
-            //    }
-
-            //}
 
         }
 
@@ -185,7 +156,7 @@ namespace IMS.Controllers
             if ((endIndex - startIndex + 1) != livm.Size || (locations[startIndex].ServerCode != null) || (locations[endIndex].ServerCode != null))
             {
                 Alert("Assign Location Fail!");
-                return RedirectToAction("Detais","ProcessRequest", new { rType = livm.RequestType,rCode = livm.RequestCode });
+                return RedirectToAction("AssignLocation","Location", new { rType = livm.RequestType,rCode = livm.RequestCode,ServerCode = livm.ServerCode,Size = livm.Size });
             }
 
 

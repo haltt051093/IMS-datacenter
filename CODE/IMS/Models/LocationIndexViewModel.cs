@@ -23,7 +23,10 @@ namespace IMS.Models
         public Server Server { get; set; }
         public string LocationCode { get; set; }
         public List<SelectListItem> Racks { get; set; }
+        public List<SelectListItem> Racks1 { get; set; }
         public string RackCode { get; set; }
+        public string RackCode1 { get; set; }
+        public string Notice { get; set; }
         public int Size { get; set; }
         public List<SelectLocationViewModel> Selected { get; set; }
 
