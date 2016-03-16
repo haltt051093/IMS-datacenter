@@ -28,5 +28,7 @@ namespace IMS.Data.ViewModels
         public string RackStatus { get; set; }
         public string LocationCode { get; set; }
         public bool Checked { get; set; }
+        public int? Power { get; set; }
+        public int MaximumPower { get; set; }
     }
 }
