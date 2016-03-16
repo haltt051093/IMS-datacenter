@@ -73,9 +73,7 @@ namespace IMS.Controllers
                     list.Add(server);
                 }
                 viewmodel.Servers = list;
-                if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING ||
-                    viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
-                {
+             
                     var ips = IPAddressPoolBLO.Current.GetAvailableIPs();
                     var listNetworkIP =
                         ips.OrderBy(x => x.NetworkIP).GroupBy(x => x.NetworkIP).Select(x => x.FirstOrDefault());
@@ -84,7 +82,7 @@ namespace IMS.Controllers
                         Value = x.NetworkIP,
                         Text = "Network " + x.NetworkIP
                     }).ToList();
-                }
+                
                 return View("AddServerInfo", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.BRING_SERVER_AWAY))
@@ -796,7 +794,7 @@ namespace IMS.Controllers
 
             IPAddressPoolBLO.Current.UpdateIP(ivm.ServerCode, ivm.NewIP, ivm.RequestInfo.RequestCode, ivm.OldIP);
 
-            return RedirectToAction("Detais", new { rType = ivm.RequestInfo.RequestType, rCode = ivm.RequestInfo.RequestCode });
+            return RedirectToAction("Detais", new { rType = ivm.RequestType, rCode = ivm.RequestCode });
         }
     }
 
