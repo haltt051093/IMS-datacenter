@@ -142,7 +142,7 @@
                                     <td>
                                         @if (Model.RequestInfo.StatusCode != Constants.StatusCode.REQUEST_DONE)
                                         {
-                                            <label><a data-toggle="modal" class="open-blockIP-modal" href="#assignip-modal" data-id1="@Model.Servers[i].ServerCode" data-id2="@Model.RequestInfo.RequestCode" data-id3="@Model.RequestInfo.RequestType" data-id4="@Model.Servers[i].DefaultIP">Assign Default IP</a></label>
+                                            @Html.ActionLink("Assign Default IP","AssignIP","IP",new {rType = Model.RequestInfo.RequestType,rCode=Model.RequestInfo.RequestCode,OldIP = Model.Servers[i].DefaultIP,ServerCode = Model.Servers[i].ServerCode},null)
                                         }
                                         @Html.DisplayFor(model => Model.Servers[i].DefaultIP, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.HiddenFor(modelItem => modelItem.Servers[i].DefaultIP)
@@ -151,8 +151,19 @@
                                         <input type="hidden" value="true" name="location" />
                                         @if (Model.RequestInfo.StatusCode != Constants.StatusCode.REQUEST_DONE)
                                         {
-                                            <label><a href="#" data-toggle="modal" data-target="#assignlocation-modal">Assign Location</a></label>
+                                            
+                                                @Html.ActionLink("Assign Location", "AssignLocation", "Location", new { rType = Model.RequestInfo.RequestType, rCode = Model.RequestInfo.RequestCode, ServerCode = Model.Servers[i].ServerCode,Size = Model.Servers[i].Size }, null)
+                                              
+                                            
+
                                         }
+                                        @foreach (var item in Model.Servers[i].ServerLocation)
+                                        {<div>
+                                             @Html.DisplayFor(model => item.RackName) U @Html.DisplayFor(model => item.RackUnit)
+                                         </div>
+                                           
+                                        }
+                                        
                                     </td>
                                 }
                             </tr>
@@ -184,208 +195,3 @@ Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
         </div>
     }
 </section>
-<!-- ASSIGN IP MODAL -->
-<div id="assignip-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form action="AssignIP" method="POST">
-                <div class="modal-body">
-
-                    <section class="content-header">
-                        <h3>
-                            List of IP Available
-                        </h3>
-                    </section>
-
-                    <section class="content">
-                        <div class="row hide">
-                            <div id="dropdown-template">
-                                @*<label>@Html.DropDownListFor(model => model.NetworkIP, Model.NetworkIPs, "All IP Addresses", new { @class = "form-control input-sm", style = "width: 150px" }) </label>*@
-                            </div>
-                        </div>
-
-                        <table id="example1" class="table table-bordered table-hover">
-                            <thead>
-                                <tr style="background-color: #404040">
-                                    <th><span style="color: ghostwhite">Id</span>
-                                    <th><span style="color: ghostwhite">NetworkIP</span>
-                                    <th><span style="color: ghostwhite">IP Address</span>
-                                    <th><span style="color: ghostwhite">Gateway</span>
-                                    <th><span style="color: ghostwhite">Subnet mask</span>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                        </table>
-
-                    </section><!-- /.content -->
-                </div>
-                <div class="modal-footer">
-                    <input class="hidden" name="ServerCode" id="ipid" value="" />
-                    <input class="hidden" name="RequestCode" id="rcode" value="" />
-                    <input class="hidden" name="RequestType" id="rtype" value="" />
-                    <input class="hidden" name="OldIP" id="ipchange" value="" />
-                    <button type="submit" class="btn btn-primary">Assign</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-                </div>
-            </form>
-
-            <script>
-                $.fn.dataTable.ext.search.push(
-                    function (settings, data, dataIndex) {
-                        var networkIP = $('#NetworkIP').val();
-                        if (networkIP == '') {
-                            return true;
-                        }
-                        if (networkIP == data[1]) {
-                            return true;
-                        }
-                        return false;
-                    }
-                );
-            </script>
-
-            <script type="text/javascript">
-                var table = $('#example1').DataTable({
-                    dom: '<lf<t>ip>',
-                    processing: true,
-                    ajax: "@Url.Action("GetAvailableIP", "IP", new {httproute = ""})",
-                    columns: [
-                        { data: "Id" },
-                        { data: "NetworkIP" },
-                        { data: "IPAddress" },
-                        { data: "Gateway" },
-                        { data: "Subnetmask" },
-                        { data: "StatusCode" }
-                    ],
-                    iDisplayLength: 10,
-                    aLengthMenu: [[10, 20, 30], [10, 20, 30]],
-                    fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                        var row = $(nRow);
-                        var actionCell = $(nRow.cells[3]);
-
-                        switch (aData.StatusCode) {
-                            case '@Constants.StatusCode.IP_AVAILABLE':
-                                actionCell.html('<input type="radio" name="NewIP" value="' + aData.IPAddress + '"/>');
-
-                                break;
-
-                        }
-
-                    },
-                    order: [[0, "asc"]],
-                    columnDefs: [{
-                        targets: [0],
-                        visible: false,
-                        searchable: true
-                    }, {
-                        targets: [1],
-                        visible: false,
-                        searchable: true
-
-                    }]
-                });
-
-                $('#example1_filter').append($('#dropdown-template').html());
-                $('#dropdown-template').html('');
-
-                $('#NetworkIP').change(function () {
-                    table.draw();
-                });
-
-
-            </script>
-            <script>
-                $(document).on("click", ".open-blockIP-modal", function () {
-                    var myId = $(this).data('id1');
-                    var vcode = $(this).data('id2');
-                    var vtype = $(this).data('id3');
-                    var ipchange = $(this).data('id4');
-                    $(".modal-footer #ipid").val(myId);
-                    $(".modal-footer #rcode").val(vcode);
-                    $(".modal-footer #rtype").val(vtype);
-                    $(".modal-footer #ipchange").val(ipchange);
-
-
-                });
-            </script>
-            @section Styles {
-                <style>
-                </style>
-            }
-
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<!-- ASSIGN LOCATION MODAL -->
-<div class="modal fade" id="assignlocation-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" style="width: 1000px;height: 2000px">
-        <div class="modal-content">
-            <form action="#" method="POST">
-                <div class="modal-body">
-
-                    <section class="content-header">
-                        <h1>
-                            List of Location Available
-                        </h1>
-                    </section>
-                    <section class="content">
-                        <div class="box">
-                            <div class="box-body table-responsive">
-                                <table id="example3" class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>LocationCode</th>
-                                            <th>RackName</th>
-                                            <th>RackUnit</th>
-                                            <th>Status</th>
-                                            <th>ServerCode</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Trident</td>
-                                            <td>
-                                                Internet
-                                                Explorer 4.0
-                                            </td>
-                                            <td>Win 95+</td>
-                                            <td> 4</td>
-                                            <td>X</td>
-                                            <td>
-                                                <input type="radio" name="newloca" />
-                                            </td>
-                                        </tr>
-
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>LocationCode</th>
-                                            <th>RackName</th>
-                                            <th>RackUnit</th>
-                                            <th>Status</th>
-                                            <th>ServerCode</th>
-                                            <th></th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div><!-- /.box-body -->
-                        </div><!-- /.box -->
-
-                    </section><!-- /.content -->
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">Assign</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-
-
-                </div>
-            </form>
-            <script type="text/javascript">
-                $(function () {
-                    $("#example3").dataTable();
-                });
-            </script>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->

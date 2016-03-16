@@ -1,0 +1,110 @@
+﻿@model IPCreateViewModel
+@{
+    ViewBag.Title = "AssignIP";
+}
+
+
+<section class="content-header">
+    <h2>
+        List of IP Available
+    </h2>
+</section>
+<form action="#" method="POST">
+    <section class="content">
+        <div class="row hide">
+            <div id="dropdown-template">
+                <label>@Html.DropDownListFor(model => model.NetworkIP, Model.NetworkIPs, "All IP Addresses", new {@class = "form-control input-sm", style = "width: 150px"}) </label>
+            </div>
+        </div>
+
+        <table id="example1" class="table table-bordered table-hover">
+            <thead>
+            <tr style="background-color: #404040">
+                <th><span style="color: ghostwhite">Id</span>
+                <th><span style="color: ghostwhite">NetworkIP</span>
+                <th><span style="color: ghostwhite">IP Address</span>
+                <th><span style="color: ghostwhite">Gateway</span>
+                <th><span style="color: ghostwhite">Subnet mask</span>
+                <th></th>
+            </tr>
+            </thead>
+        </table>
+
+    </section><!-- /.content -->
+    <section class="content">
+        @Html.HiddenFor(model=>model.RequestCode)
+        @Html.HiddenFor(model=>model.RequestType)
+        @Html.ActionLink("Cancel", "Detais", "ProcessRequest", new {rType = Model.RequestType, rCode = Model.RequestCode}, htmlAttributes: new {@class = "btn btn-default pull-right"})
+        <button type="submit" class="btn btn-primary pull-right">Assign</button>
+
+    </section>
+</form>
+<script>
+                $.fn.dataTable.ext.search.push(
+                    function (settings, data, dataIndex) {
+                        var networkIP = $('#NetworkIP').val();
+                        if (networkIP == '') {
+                            return true;
+                        }
+                        if (networkIP == data[1]) {
+                            return true;
+                        }
+                        return false;
+                    }
+                );
+</script>
+
+<script type="text/javascript">
+                var table = $('#example1').DataTable({
+                    dom: '<lf<t>ip>',
+                    processing: true,
+                    ajax: "@Url.Action("GetAvailableIP", "IP", new {httproute = ""})",
+                    columns: [
+                        { data: "Id" },
+                        { data: "NetworkIP" },
+                        { data: "IPAddress" },
+                        { data: "Gateway" },
+                        { data: "Subnetmask" },
+                        { data: "StatusCode" }
+                    ],
+                    iDisplayLength: 10,
+                    aLengthMenu: [[10, 20, 30], [10, 20, 30]],
+                    fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                        var row = $(nRow);
+                        var actionCell = $(nRow.cells[3]);
+
+                        switch (aData.StatusCode) {
+                            case '@Constants.StatusCode.IP_AVAILABLE':
+                                actionCell.html('<input type="radio" name="NewIP" value="' + aData.IPAddress + '"/>');
+
+                                break;
+
+                        }
+
+                    },
+                    order: [[0, "asc"]],
+                    columnDefs: [{
+                        targets: [0],
+                        visible: false,
+                        searchable: true
+                    }, {
+                        targets: [1],
+                        visible: false,
+                        searchable: true
+
+                    }]
+                });
+
+                $('#example1_filter').append($('#dropdown-template').html());
+                $('#dropdown-template').html('');
+
+                $('#NetworkIP').change(function () {
+                    table.draw();
+                });
+
+
+</script>
+@section Styles {
+    <style>
+    </style>
+}

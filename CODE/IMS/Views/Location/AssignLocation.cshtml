@@ -5,116 +5,120 @@
     ViewBag.Title = "AssignLocation";
 }
 
-<h2>List of Location</h2>
-
-@using (Html.BeginForm("AssignLocation", "Location", FormMethod.Get))
-{
-    <b>Search By:</b>
-
-    <br />
-    <text>Rack</text>
-    @Html.DropDownList("RackSearch", "--Select--")
-    <br />
-    <input type="submit" value="Search" />
-}
 
 @using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Request)
-        @Html.HiddenFor(model => model.Server.ServerCode)
-        @Html.HiddenFor(model => model.Server.Size)
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.Raw("LocationCode")
-                </th>
-                <th>
-                    @Html.Raw("RackName")
-                </th>
-                <th>
-                    @Html.Raw("RackUnit")
-                </th>
-                <th>
-                    @Html.Raw("Status")
-                </th>
-                <th>
-                    @Html.Raw("ServerCode")
-                </th>
-                <th>
-
-                </th>
-            </tr>
-
-            @foreach (var item in Model.Locations)
-            {
-                <tr>
-                    @if (item.ServerCode == Model.Server.ServerCode)
-                    {
-                        <td>
-                            <label style="color: red">@Html.DisplayFor(modelItem => item.LocationCode)</label>
-                        </td>
-                        <td>
-                            <label style="color: red">@Html.DisplayFor(modelItem => item.RackName)</label>
-                        </td>
-                        <td>
-                            <label style="color: red">@Html.DisplayFor(modelItem => item.RackUnit)</label>
-                        </td>
-                        <td>
-                            <label style="color: red">@Html.DisplayFor(modelItem => item.StatusName)</label>
-                        </td>
-                        <td>
-                            @if (item.ServerCode == Model.Server.ServerCode)
-                            {
-                                <label style="color: red">@Html.DisplayFor(modelItem => item.ServerCode)</label>
-
-                            }
-                        </td>
-                        <td>
-                            @if (item.StatusName == "Free")
-                            {
-                                @Html.RadioButtonFor(model => model.LocationCode, item.LocationCode)
-                            }
-                        </td>
-                    }
-                    else
-                    {
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LocationCode)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.RackName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.RackUnit)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.StatusName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ServerCode)
-                        </td>
-                        <td>
-                            @if (item.StatusName == "Free")
-                        {
-                                @Html.RadioButtonFor(model => model.LocationCode, item.LocationCode)
-                            }
-
-                        </td>
-                    }
+    <section class="content-header">
+        <h1>
+            List of Location Available
+        </h1>
+    </section>
 
 
-                </tr>
-            }
 
-        </table>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+    <section class="content">
+        <div class="row hide">
+            <div id="dropdown-template" class="col-xs-3">
+                <label>Location: @Html.DropDownListFor(model => model.RackCode, Model.Racks, new { @class = "form-control input-sm", style = "width: 150px" }) </label>
             </div>
         </div>
-    </div>
+
+        <table id="example1" class="table table-bordered table-hover">
+            <thead>
+                <tr style="background-color: #404040">
+                    <th><h4 style="color: ghostwhite">Rack Code</h4>
+                    <th><h4 style="color: ghostwhite">Rack Name</h4>
+                    <th><h4 style="color: ghostwhite">Rack Unit</h4></th>
+                    <th><h4 style="color: ghostwhite">Server Code</h4></th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+
+    </section><!-- /.content -->
+
+    <section class="content">
+        @Html.HiddenFor(model=>model.RequestCode)
+        @Html.HiddenFor(model=>model.RequestType)
+        @Html.HiddenFor(model=>model.Size)
+        @Html.ActionLink("Cancel", "Detais", "ProcessRequest", new {rType = Model.RequestType, rCode = Model.RequestCode}, htmlAttributes: new {@class = "btn btn-default pull-right"})
+        <button type="submit" class="btn btn-primary pull-right">Assign</button>
+    </section>
+
+
 }
+<script>
+    $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            var rackCode = $('#RackCode').val();
+            if (rackCode == '') {
+                return true;
+            }
+            if (rackCode == data[0]) {
+                return true;
+            }
+            return false;
+        }
+    );
+</script>
+
+<script type="text/javascript">
+    var table = $('#example1').DataTable({
+        dom: '<lf<t>ip>',
+        processing: true,
+        ajax: "@Url.Action("GetLocationForAssign", "Location", new {httproute = "", code = Model.ServerCode})",
+        columns: [
+            { data: "RackCode" },
+            { data: "RackName" },
+            { data: "RackUnit" },
+            { data: "ServerCode" },
+            { data: "LocationCode" }
+        ],
+        iDisplayLength: 42,
+        bPaginate: false,
+        fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            var row = $(nRow);
+            var actionCell = $(nRow.cells[4]);
+            actionCell.html('');
+            actionCell.append('<input type="hidden" name="Selected[' + iDisplayIndex + '].LocationCode" value="' + aData.LocationCode + '">');
+            switch (aData.StatusName) {
+                case 'Free':
+                    actionCell.append('<input type="checkbox" name="Selected[' + iDisplayIndex + '].IsSelected" value="true"/>');
+
+                    break;
+                default:
+                    actionCell.append('<input type="checkbox" name="Selected[' + iDisplayIndex + '].IsSelected" value="true"/>');
+                    break;
+
+            }
+
+        },
+        order: [[1, "acs"], [2, "desc"]]
+
+    });
+
+    $('#example1_filter').append($('#dropdown-template').html());
+    $('#dropdown-template').html('');
+
+    $('#RackCode').change(function () {
+        table.draw();
+    });
+
+
+</script>
+
+<script>
+    $(document).on("click", ".open-blockIP-modal", function () {
+        var code = $(this).data('id');
+        var size = $(this).data('id1');
+
+        $(".modal-footer #servercode").val(code);
+        $(".modal-footer #size").val(size);
+
+
+
+    });
+</script>
+
+

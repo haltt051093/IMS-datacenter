@@ -63,37 +63,6 @@ namespace IMS.Data.Business
                
                 return true;
             }
-            //else
-            //{
-            //    var existing = dao.Query(x => x.ServerCode == ServerCode).ToList();
-            //    if (existing.Count > 0)
-            //    {
-            //        for (var i = 0; i < existing.Count; i++)
-            //        {
-            //            existing[i].StatusCode = Constants.StatusCode.LOCATION_FREE;
-            //            existing[i].ServerCode = null;
-            //        }
-
-            //        var locations = dao.GetAll();
-            //        var exist = locations.IndexOf(dao.Query(x => x.LocationCode == LocationCode).FirstOrDefault());
-            //        for (var i = exist; i < (exist + size); i++)
-            //        {
-            //            if (locations[i].StatusCode.Equals(Constants.StatusCode.LOCATION_FREE))
-            //            {
-            //                locations[i].ServerCode = ServerCode;
-            //                locations[i].StatusCode = Constants.StatusCode.LOCATION_USED;
-            //            }
-            //            else
-            //            {
-            //                return false;
-            //            }
-            //        }
-            //        dao.UpdateMany(existing);
-            //        dao.UpdateMany(locations);
-            //        return true;
-            //    }
-            //    return false;
-            //}
             return false;
         }
 
