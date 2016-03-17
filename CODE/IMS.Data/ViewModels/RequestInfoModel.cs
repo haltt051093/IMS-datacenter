@@ -7,8 +7,9 @@ namespace IMS.Data.ViewModels
     public class RequestInfoModel : Request
     {
         public string StaffName { get; set; }
-        public string StaffCode { get; set; }
         public string StatusName { get; set; }
         public string RejectReason { get; set; }
+        public string AssignedStaff { get; set; }
+        public string TaskStatus { get; set; }
     }
 }

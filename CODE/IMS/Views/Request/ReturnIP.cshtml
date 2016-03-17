@@ -83,7 +83,7 @@
                 success: function (data) {
                     $('#divPartialView').removeClass('hidden');
                     $(data.ServerIPs).each(function (index, item) {
-                        myTable.append('<tr><td>' + '<input type="checkbox" class="check" id="CheckBoxList"'
+                        myTable.append('<tr><td>' + '<input type="checkbox" id="CheckBoxList"'
                             + index + ' name="chk" value="' + item.CurrentIP + '" /></td><td>' + item.CurrentIP + '</td></tr>');
                     });
                 }
@@ -101,7 +101,7 @@
 
         $("#checkAll").change(function () {
             var state = $('#checkAll').is(':checked');
-            $('tr.check input[type="checkbox"]').prop('checked', state);
+            $('[id*=MyTable] input[type="checkbox"]').prop('checked', state);
         });
     });
 </script>

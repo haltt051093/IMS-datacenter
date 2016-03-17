@@ -670,7 +670,7 @@ namespace IMS.Controllers
             {
                 //update and log server
                 ServerBLO.Current.UpdateServerStatus(viewmodel.RequestInfo.RequestCode, server,
-                    Constants.TypeOfLog.LOG_ADD_SERVER, Constants.StatusCode.SERVER_DEACTIVATE, viewmodel.RequestInfo.StaffCode);
+                    Constants.TypeOfLog.LOG_ADD_SERVER, Constants.StatusCode.SERVER_DEACTIVATE, viewmodel.RequestInfo.Assignee);
             }
             //update request status and log
             RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_ADD_SERVER,

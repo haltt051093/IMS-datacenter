@@ -135,19 +135,27 @@ namespace IMS.Data.Business
         public RequestInfoModel GetRequestInfo(string requestCode)
         {
             var request = (from r in RequestDAO.Current.Table()
+                           join t in TaskDAO.Current.Table()
+                                on r.RequestCode equals t.RequestCode into rt
+                           from subrt in rt.DefaultIfEmpty()
                            where r.RequestCode == requestCode
                            select new RequestInfoModel()
                            {
                                StatusCode = r.StatusCode,
                                RequestCode = r.RequestCode,
-                               StaffCode = r.StatusCode,
+                               Assignee = r.Assignee,
                                Description = r.Description,
                                IsViewed = r.IsViewed,
                                RequestType = r.RequestType,
                                RequestedTime = r.RequestedTime,
-                               Customer = r.Customer
+                               Customer = r.Customer,
+                               AssignedStaff = subrt.AssignedStaff,
+                               TaskStatus = subrt.StatusCode
                            }).FirstOrDefault();
-            request.StatusName = StatusBLO.Current.GetStatusName(request.StatusCode);
+            if (request != null)
+            {
+                request.StatusName = StatusBLO.Current.GetStatusName(request.StatusCode);
+            }
             return request;
         }
 

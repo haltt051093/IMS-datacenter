@@ -37,7 +37,7 @@ namespace IMS.Data.Repository
                 RequestCode = requestCode,
                 ShiftHead = shifthead,
                 AssignedStaff = staff,
-                StatusCode = Constants.StatusCode.TASK_ACCEPTING,
+                StatusCode = Constants.StatusCode.TASK_DOING,
                 AssignedTime = DateTime.Now,
             };
             Add(task);
@@ -80,6 +80,18 @@ namespace IMS.Data.Repository
                 }
             }
             return list.ToList();
+        }
+
+        public void UpdateTaskStatus(string requestCode, string statusCode)
+        {
+            var query = (from t in Table()
+                         where t.RequestCode == requestCode
+                         select t).FirstOrDefault();
+            if (query != null)
+            {
+                query.StatusCode = statusCode;
+                Update(query);
+            }
         }
     }
 }

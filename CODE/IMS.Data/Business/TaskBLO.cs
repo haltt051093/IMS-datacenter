@@ -39,5 +39,10 @@ namespace IMS.Data.Business
         {
             return dao.ListTaskOfStaff(staff);
         }
+
+        public void UpdateTaskStatus(string requestCode, string statusCode)
+        {
+            dao.UpdateTaskStatus(requestCode, statusCode);
+        }
     }
 }

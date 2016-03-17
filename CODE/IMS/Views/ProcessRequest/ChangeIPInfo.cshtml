@@ -41,21 +41,24 @@
                 </div>
                 <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
                     <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                        @Html.LabelFor(model => model.RequestInfo.StaffCode)
+                        @Html.LabelFor(model => model.RequestInfo.Assignee)
                     </div>
-                    @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
+                    @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING && (User.IsInRole("Shift Head") || User.IsInRole("Manager")))
                     {
                         <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                            @Html.DropDownListFor(model => model.RequestInfo.StaffCode, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                            @Html.DropDownListFor(model => model.RequestInfo.Assignee, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                         </div>
                     }
                     else
                     {
-                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                            @Html.ActionLink(Model.RequestInfo.StaffName, "ViewProfile", "Account",
-                                new { username = Model.RequestInfo.StaffCode }, null)
-                            @Html.HiddenFor(model => model.RequestInfo.StaffCode, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                        </div>
+                        if (Model.RequestInfo.StaffName != null)
+                        {
+                            <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                                @Html.ActionLink(Model.RequestInfo.StaffName, "ViewProfile", "Account",
+                                    new {username = Model.RequestInfo.Assignee}, null)
+                                @Html.HiddenFor(model => model.RequestInfo.Assignee, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                            </div>
+                        }
                     }
                 </div>
             </div>
@@ -141,11 +144,11 @@
                 @Html.HiddenFor(model => model.RequestInfo.RequestCode)
                 @Html.HiddenFor(model => model.CustomerInfo.Customer)
                 @Html.HiddenFor(x => x.RequestInfo.RequestType)
-                @Html.HiddenFor(model => model.RequestInfo.StaffCode)
+                @Html.HiddenFor(model => model.RequestInfo.Assignee)
                 @Html.HiddenFor(x => x.SelectedServer)
                 @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                 {
-                    if (Model.RequestInfo.StaffCode == Model.CurrentUser)
+                    if (Model.RequestInfo.Assignee == Model.CurrentUser)
                     {
                         <button type="submit" id="btnApprove" name="@Constants.FormAction.APPROVE_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
                             @Labels.Approve
@@ -155,7 +158,7 @@
                         </button>
                     }
                 }
-                else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
+                else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING && (User.IsInRole("Shift Head") || User.IsInRole("Manager")))
                 {
                     <button type="submit" id="btnAccept" name="@Constants.FormAction.ACCEPT_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
                         @Labels.Accept
