@@ -4,68 +4,72 @@
 @model IMS.Models.AccountCreateViewModel
 
 @{
-    ViewBag.Title = "EditStaff";
+    ViewBag.Title = Pages.EditStaff;
+    ViewBag.PageTitle = Pages.EditStaff;
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("Account", "EditStaff", Pages.EditStaff)
+    };
 }
 
 <section class="main-content">
-    <h2>Edit Staff Profile</h2>
+ 
     @using (Html.BeginForm("EditStaff", "Account", FormMethod.Post))
     {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
-        <div class="form-group">
-            @Html.HiddenFor(model=>model.Username)
+        <div class="@Constants.HtmlFormat.FORM_FOR_PAGE">
+            @Html.HiddenFor(model => model.Username)
             @Html.LabelFor(model => model.Username)
-            @Html.EditorFor(model => model.Username, Model.Username, new {htmlAttributes = new {@class = "form-control", disabled = "disabled", style = "width:600px" } })
+            @Html.EditorFor(model => model.Username, Model.Username, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", style = "width:600px" } })
             @Html.ValidationMessageFor(model => model.Username)
         </div>
-        <div class="form-group">
+        <div class="@Constants.HtmlFormat.FORM_FOR_PAGE">
             @Html.LabelFor(model => model.GroupCode)
-            @Html.DropDownListFor(model => model.GroupCode, Model.Groups, "--Select Group--", new {@class = "form-control", style = "width:200px"})
+            @Html.DropDownListFor(model => model.GroupCode, Model.Groups, "--Select Group--", new { @class = "form-control", style = "width:200px" })
             @Html.ValidationMessageFor(model => model.GroupCode)
         </div>
-        <div class="form-group">
+        <div class="@Constants.HtmlFormat.FORM_FOR_PAGE">
             @Html.LabelFor(model => model.Role, "Role")
             @{
                 var roles = RoleBLO.Current.GetAll().Where(c => c.RoleName != "Customer").Where(c => c.RoleName != "Manager");
                 var myList = new SelectList(roles, "RoleName", "RoleName");
             }
-            @Html.DropDownListFor(model => model.Role, myList, "--Select Role--", new {@class = "form-control", style = "width:200px"})
+            @Html.DropDownListFor(model => model.Role, myList, "--Select Role--", new { @class = "form-control", style = "width:200px" })
             @Html.ValidationMessageFor(model => model.Role)
         </div>
 
-        <div class="form-group">
+        <div class="@Constants.HtmlFormat.FORM_FOR_PAGE">
             @Html.LabelFor(model => model.Fullname)
-            @Html.EditorFor(model => model.Fullname, Model.Fullname, new {htmlAttributes = new {@class = "form-control", style = "width:600px" } })
+            @Html.EditorFor(model => model.Fullname, Model.Fullname, new { htmlAttributes = new { @class = "form-control", style = "width:600px" } })
             @Html.ValidationMessageFor(model => model.Fullname)
         </div>
-        <div class="form-group">
+        <div class="@Constants.HtmlFormat.FORM_FOR_PAGE">
             @Html.LabelFor(model => model.Phone)
-            @Html.EditorFor(model => model.Phone, Model.Phone, new {htmlAttributes = new {@class = "form-control", style = "width:600px" } })
+            @Html.EditorFor(model => model.Phone, Model.Phone, new { htmlAttributes = new { @class = "form-control", style = "width:600px" } })
             @Html.ValidationMessageFor(model => model.Phone)
         </div>
-        <div class="form-group">
+        <div class="@Constants.HtmlFormat.FORM_FOR_PAGE">
             @Html.LabelFor(model => model.Email)
-            @Html.EditorFor(model => model.Email, Model.Email, new {htmlAttributes = new {@class = "form-control", style = "width:600px" } })
+            @Html.EditorFor(model => model.Email, Model.Email, new { htmlAttributes = new { @class = "form-control", style = "width:600px" } })
             @Html.ValidationMessageFor(model => model.Email)
         </div>
-        <div class="form-group">
+        <div class="@Constants.HtmlFormat.FORM_FOR_PAGE">
             @Html.LabelFor(model => model.Address)
-            @Html.EditorFor(model => model.Address, Model.Address, new {htmlAttributes = new {@class = "form-control", style = "width:600px" } })
+            @Html.EditorFor(model => model.Address, Model.Address, new { htmlAttributes = new { @class = "form-control", style = "width:600px" } })
             @Html.ValidationMessageFor(model => model.Address)
         </div>
-        <div class="form-group">
+        <div class="@Constants.HtmlFormat.FORM_FOR_PAGE">
             @Html.LabelFor(model => model.Identification)
-            @Html.EditorFor(model => model.Identification, Model.Identification, new {htmlAttributes = new {@class = "form-control", style = "width:600px" } })
+            @Html.EditorFor(model => model.Identification, Model.Identification, new { htmlAttributes = new { @class = "form-control", style = "width:600px" } })
             @Html.ValidationMessageFor(model => model.Identification)
         </div>
 
-        <div class="form-group">
+        <div class="@Constants.HtmlFormat.FORM_FOR_PAGE">
             <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-pencil"></i> Change</button>
-            @Html.ActionLink("Cancel", "ViewProfile", "Account", new {username = Model.Username}, htmlAttributes: new {@class = "btn btn-default pull-left"})
+            @Html.ActionLink("Cancel", "ViewProfile", "Account", new { username = Model.Username }, htmlAttributes: new { @class = "btn btn-default pull-left" })
 
         </div>
-    }
+                }
 
 </section>
 

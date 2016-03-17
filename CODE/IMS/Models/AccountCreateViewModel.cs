@@ -14,6 +14,7 @@ namespace IMS.Models
         [Remote("CheckUsername","Validate", ErrorMessage = "Username is existed", HttpMethod = "POST")]
         public string Username { get; set; }      
         public string Password { get; set; }
+        [Required]
         public string Role { get; set; }
         public bool Status { get; set; }  
         [Required]  
@@ -27,6 +28,7 @@ namespace IMS.Models
         public string Address { get; set; }   
         [Required]   
         public string Identification { get; set; }
+        [Required]
         public string GroupCode { get; set; }
         public string Company { get; set; }
         public  string UserLogin { get; set; }

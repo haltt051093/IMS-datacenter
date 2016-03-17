@@ -248,16 +248,16 @@ namespace IMS.Controllers
                 var newpw = AccountBLO.Current.GeneratePassword();
                 o.Password = newpw;
                 AccountBLO.Current.AddOrUpdate(o);
-                //AccountBLO.Current.SendPasswordInfo(o);
-                ViewBag.FGPW = "Reset password successfully";
+                AccountBLO.Current.SendAccountInfo(o);
+                Success("Reset passwork successfully! Please check your email!");
+                return View("Login");
             }
             else
             {
-                //email not exist
-                ViewBag.FGPW = "";
+                Alert("Email is not existed!");
+                return View("ForgotPassword");
             }
 
-            return View("ForgotPWSuccess");
         }
 
 
