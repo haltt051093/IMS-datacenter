@@ -88,6 +88,7 @@ select l.LocationCode, l.RackCode, l.RackUnit, s.StatusName,l.ServerCode, r.Rack
                             on s.StatusCode=l.StatusCode
 							join RackOfCustomer as roc
 							on roc.RackCode=l.RackCode
+                            and roc.StatusCode = 'STATUS26'
                             where r.MaximumPower*1000 - ISNULL(ri.UsedPower,0) >'" + server.Power + @"'"
             ;
             return RawQuery<LocationViewModel>(query, new object[] { });
@@ -108,6 +109,7 @@ select l.LocationCode, l.RackCode, l.RackUnit, s.StatusName,l.ServerCode, r.Rack
                             join RackOfCustomer as roc
 		                    on roc.Customer = '" + server.Customer + @"'
 		                    and roc.RackCode = r.RackCode
+                            and roc.StatusCode = 'STATUS26'
                             join Location as l
                             on r.RackCode = l.RackCode
 	                        join Status as s 
@@ -148,6 +150,7 @@ except select l.LocationCode, l.RackCode, l.RackUnit, s.StatusName,l.ServerCode,
 	                        join Status as s on s.StatusCode=l.StatusCode
                             join RackOfCustomer as roc
 							on roc.RackCode=l.RackCode
+                            and roc.StatusCode = 'STATUS26'
                             where r.MaximumPower*1000 - ISNULL(ri.UsedPower,0) >'" + server.Power + @"'or r.RackCode = '" + rack.RackCode + @"'";
             ;
             return RawQuery<LocationViewModel>(query, new object[] { });
@@ -169,6 +172,7 @@ except select l.LocationCode, l.RackCode, l.RackUnit, s.StatusName,l.ServerCode,
                             join RackOfCustomer as roc
 		                    on roc.Customer = '" + server.Customer + @"'
 		                    and roc.RackCode = r.RackCode
+                            and roc.StatusCode = 'STATUS26'
                             join Location as l
                             on r.RackCode = l.RackCode
 	                        join Status as s on s.StatusCode=l.StatusCode
