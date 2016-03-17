@@ -46,7 +46,7 @@
                         Assignee
                     </div>
                     @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING ||
-                Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+            Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                     {
                         <div class="col-xs-8">
                             @Html.DropDownListFor(model => model.RequestInfo.StaffCode, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
@@ -121,6 +121,7 @@
                                 <td>
                                     @Html.DisplayFor(model => Model.Servers[i].Power, new { htmlAttributes = new { @class = "form-control" } })W
                                     @Html.HiddenFor(modelItem => modelItem.Servers[i].Power)
+                                    @Html.HiddenFor(modelItem => modelItem.Servers[i].ServerCode)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(model => Model.Servers[i].Size, new { htmlAttributes = new { @class = "form-control" } })U
@@ -165,7 +166,7 @@
                                             foreach (var item in Model.Servers[i].ServerLocation)
                                             {<div>
                                             @Html.DisplayFor(model => item.RackName) U @Html.DisplayFor(model => item.RackUnit)
-                                            
+
                                         </div>
 
                                             }
@@ -190,11 +191,8 @@
                 @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING ||
 Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                 {
-                    if (Model.RequestInfo.StaffCode == Model.CurrentUser)
-                    {
-                        <button type="submit" class="btn btn-primary" name="Approve">Approve</button>
+                    <button type="submit" class="btn btn-primary" name="Approve">Approve</button>
                         <button type="submit" class="btn btn-danger" name="Reject">Reject</button>
-                    }
                 }
                 else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
                 {

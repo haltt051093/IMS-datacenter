@@ -47,7 +47,7 @@
                         Assignee
                     </div>
                     @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING ||
-                    Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                     {
                         <div class="col-xs-8">
                             @Html.DropDownListFor(model => model.RequestInfo.StaffCode, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
@@ -164,11 +164,8 @@
                 @Html.HiddenFor(model => model.RequestInfo.StaffCode)
                 @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                 {
-                    if (Model.RequestInfo.StaffCode == Model.CurrentUser)
-                    {
-                        <button type="submit" class="btn btn-primary" name="Approve">Approve</button>
+                    <button type="submit" class="btn btn-primary" name="Approve">Approve</button>
                         <button type="submit" class="btn btn-danger" name="Reject">Reject</button>
-                    }
                 }
                 else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
                 {
