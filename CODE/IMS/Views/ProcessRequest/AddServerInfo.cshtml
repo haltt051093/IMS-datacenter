@@ -46,7 +46,7 @@
                         Assignee
                     </div>
                     @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING ||
-                    Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                     {
                         <div class="col-xs-8">
                             @Html.DropDownListFor(model => model.RequestInfo.StaffCode, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
@@ -143,14 +143,14 @@
                                     <td>
                                         @if (Model.RequestInfo.StatusCode != Constants.StatusCode.REQUEST_DONE && Model.Servers[i].DefaultIP == null)
                                         {
-                                            @Html.ActionLink("Assign Default IP", "AssignIP", "IP", new {rType = Model.RequestInfo.RequestType, rCode = Model.RequestInfo.RequestCode, OldIP = Model.Servers[i].DefaultIP, ServerCode = Model.Servers[i].ServerCode}, null)
+                                            @Html.ActionLink("Assign Default IP", "AssignIP", "IP", new { rType = Model.RequestInfo.RequestType, rCode = Model.RequestInfo.RequestCode, OldIP = Model.Servers[i].DefaultIP, ServerCode = Model.Servers[i].ServerCode }, null)
                                         }
                                         else
                                         {
                                             @Html.DisplayFor(model => Model.Servers[i].DefaultIP, new { htmlAttributes = new { @class = "form-control" } })
                                             @Html.ActionLink(" Change Default IP", "AssignIP", "IP", new { rType = Model.RequestInfo.RequestType, rCode = Model.RequestInfo.RequestCode, OldIP = Model.Servers[i].DefaultIP, ServerCode = Model.Servers[i].ServerCode }, null)
                                         }
-                                        
+
                                         @Html.HiddenFor(modelItem => modelItem.Servers[i].DefaultIP)
                                     </td>
                                     <td>
@@ -158,7 +158,7 @@
                                         @if (Model.RequestInfo.StatusCode != Constants.StatusCode.REQUEST_DONE && Model.Servers[i].ServerLocation.Count == 0)
                                         {
 
-                                            @Html.ActionLink("Assign Location", "AssignLocation", "Location", new {rType = Model.RequestInfo.RequestType, rCode = Model.RequestInfo.RequestCode, ServerCode = Model.Servers[i].ServerCode, Size = Model.Servers[i].Size}, null)
+                                            @Html.ActionLink("Assign Location", "AssignLocation", "Location", new { rType = Model.RequestInfo.RequestType, rCode = Model.RequestInfo.RequestCode, ServerCode = Model.Servers[i].ServerCode, Size = Model.Servers[i].Size }, null)
                                         }
                                         else
                                         {
@@ -170,7 +170,7 @@
 
                                             }
                                         }
-                                       
+
 
                                     </td>
                                 }
@@ -189,11 +189,11 @@
                 @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING ||
 Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                 {
-                    //if (Model.StaffCode == Model.Username)
-                    //{
-                    <button type="submit" class="btn btn-primary" name="Approve">Approve</button>
-                    <button type="submit" class="btn btn-danger" name="Reject">Reject</button>
-                    //}
+                    if (Model.RequestInfo.StaffCode == Model.CurrentUser)
+                    {
+                        <button type="submit" class="btn btn-primary" name="Approve">Approve</button>
+                        <button type="submit" class="btn btn-danger" name="Reject">Reject</button>
+                    }
                 }
                 else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
                 {

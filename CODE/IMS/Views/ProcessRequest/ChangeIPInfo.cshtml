@@ -115,7 +115,7 @@
                 @for (int i = 0; i < Model.ReturningIPs.Count; i++)
                 {
                     <div class="col-xs-6">
-                        @Html.DisplayFor(model => Model.ReturningIPs[i])<br/>
+                        @Html.DisplayFor(model => Model.ReturningIPs[i])<br />
                         @Html.HiddenFor(model => model.ReturningIPs[i])
                     </div>
                     if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
@@ -145,12 +145,15 @@
                 @Html.HiddenFor(x => x.SelectedServer)
                 @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                 {
-                    <button type="submit" id="btnApprove" name="@Constants.FormAction.APPROVE_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                        @Labels.Approve
-                    </button>
-                    <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
-                        @Labels.Reject
-                    </button>
+                    if (Model.RequestInfo.StaffCode == Model.CurrentUser)
+                    {
+                        <button type="submit" id="btnApprove" name="@Constants.FormAction.APPROVE_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                            @Labels.Approve
+                        </button>
+                        <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
+                            @Labels.Reject
+                        </button>
+                    }
                 }
                 else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
                 {

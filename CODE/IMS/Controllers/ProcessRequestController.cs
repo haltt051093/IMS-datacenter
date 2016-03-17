@@ -39,6 +39,7 @@ namespace IMS.Controllers
             {
                 //Get request
                 ProcessRequestAddServerViewModel viewmodel = new ProcessRequestAddServerViewModel();
+                viewmodel.CurrentUser = GetCurrentUserName();
                 //request info
                 viewmodel.RequestInfo = RequestBLO.Current.GetRequestInfo(rCode);
                 //customer info
@@ -85,6 +86,7 @@ namespace IMS.Controllers
             if (rType.Equals(Constants.RequestTypeCode.BRING_SERVER_AWAY))
             {
                 ProcessRequestBringServerAwayViewModel viewmodel = new ProcessRequestBringServerAwayViewModel();
+                viewmodel.CurrentUser = GetCurrentUserName();
                 //request info
                 viewmodel.RequestInfo = RequestBLO.Current.GetRequestInfo(rCode);
                 //customer info
@@ -128,6 +130,7 @@ namespace IMS.Controllers
             if (rType.Equals(Constants.RequestTypeCode.ASSIGN_IP))
             {
                 ProcessRequestAssignIPViewModel viewmodel = new ProcessRequestAssignIPViewModel();
+                viewmodel.CurrentUser = GetCurrentUserName();
                 //request info
                 viewmodel.RequestInfo = RequestBLO.Current.GetRequestInfo(rCode);
                 //customer info
@@ -201,6 +204,7 @@ namespace IMS.Controllers
             if (rType.Equals(Constants.RequestTypeCode.CHANGE_IP))
             {
                 ProcessRequestChangeIPViewModel viewmodel = new ProcessRequestChangeIPViewModel();
+                viewmodel.CurrentUser = GetCurrentUserName();
                 //request info
                 viewmodel.RequestInfo = RequestBLO.Current.GetRequestInfo(rCode);
                 //customer info
@@ -253,6 +257,7 @@ namespace IMS.Controllers
             if (rType.Equals(Constants.RequestTypeCode.RETURN_IP))
             {
                 ProcessRequestReturnIPViewModel viewmodel = new ProcessRequestReturnIPViewModel();
+                viewmodel.CurrentUser = GetCurrentUserName();
                 //request info
                 viewmodel.RequestInfo = RequestBLO.Current.GetRequestInfo(rCode);
                 //customer info
@@ -287,6 +292,7 @@ namespace IMS.Controllers
             if (rType.Equals(Constants.RequestTypeCode.RENT_RACK))
             {
                 ProcessRequestRentRackViewModel viewmodel = new ProcessRequestRentRackViewModel();
+                viewmodel.CurrentUser = GetCurrentUserName();
                 //request info
                 viewmodel.RequestInfo = RequestBLO.Current.GetRequestInfo(rCode);
                 //customer info
@@ -335,6 +341,7 @@ namespace IMS.Controllers
             if (rType.Equals(Constants.RequestTypeCode.RETURN_RACK))
             {
                 ProcessRequestReturnRackViewModel viewmodel = new ProcessRequestReturnRackViewModel();
+                viewmodel.CurrentUser = GetCurrentUserName();
                 //request info
                 viewmodel.RequestInfo = RequestBLO.Current.GetRequestInfo(rCode);
                 //customer info

@@ -32,7 +32,9 @@
                         <thead>
                         <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
                             <th>
-                                <div>@Labels.IP</div>
+                                <div>
+                                    <input id="checkAll" type="checkbox" />
+                                </div>
                             </th>
                             <th>
                                 <div>@Labels.IP</div>
@@ -80,7 +82,7 @@
                 success: function (data) {
                     $('#divPartialView').removeClass('hidden');
                     $(data.ServerIPs).each(function (index, item) {
-                        myTable.append('<tr><td>' + '<input type="checkbox" id="CheckBoxList"' + index + ' name="chk" value="' + item.CurrentIP + '" /></td><td>' + item.CurrentIP + '</td></tr>');
+                        myTable.append('<tr><td>' + '<input type="checkbox" class="check" id="CheckBoxList"' + index + ' name="chk" value="' + item.CurrentIP + '" /></td><td>' + item.CurrentIP + '</td></tr>');
                     });
                 }
             });
@@ -92,6 +94,11 @@
                 selectedValues.push($(this).val());
             });
             $('#ips').val(selectedValues);
+        });
+
+        $("#checkAll").change(function () {
+            var state = $('#checkAll').is(':checked');
+            $('tr.check input[type="checkbox"]').prop('checked', state);
         });
     });
 </script>

@@ -15,9 +15,9 @@ namespace IMS.Models
         }
 
         // Common Info
-        public CustomerInfoModel CustomerInfo { get; set; }        
+        public CustomerInfoModel CustomerInfo { get; set; }
         public RequestInfoModel RequestInfo { get; set; }
-
+        public string CurrentUser { get; set; }
         // Specific Info
         public List<SelectListItem> NumberOfRackOptions { get; set; }
         public List<string> SelectedRacks { get; set; }

@@ -5,29 +5,29 @@
 <!-- Main content -->
 <section class="main-content">
     @*<div class="row">
-        <div class="col-xs-4">
-            Request Type:
+            <div class="col-xs-4">
+                Request Type:
+            </div>
+            <div class="col-xs-8">
+                @Html.DropDownListFor(m => m.FilterByRequestType, Model.FilterByRequestType, "Select All")
+            </div>
         </div>
-        <div class="col-xs-8">
-            @Html.DropDownListFor(m => m.FilterByRequestType, Model.FilterByRequestType, "Select All")
+        <div class="row">
+            <div class="col-xs-4">
+                Request Status:
+            </div>
+            <div class="col-xs-8">
+                @Html.DropDownListFor(m => m.FilterByStatus, Model.FilterByStatus, "Select All")
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-4">
-            Request Status:
-        </div>
-        <div class="col-xs-8">
-            @Html.DropDownListFor(m => m.FilterByStatus, Model.FilterByStatus, "Select All")
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-4">
-            Time of Request:
-        </div>
-        <div class="col-xs-8">
-            @Html.DropDownListFor(m => m.FilterByPeriodOfTime, Model.FilterByPeriodOfTime)
-        </div>
-    </div>*@
+        <div class="row">
+            <div class="col-xs-4">
+                Time of Request:
+            </div>
+            <div class="col-xs-8">
+                @Html.DropDownListFor(m => m.FilterByPeriodOfTime, Model.FilterByPeriodOfTime)
+            </div>
+        </div>*@
     <table id="example1" class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -64,7 +64,7 @@
                         @Html.DisplayFor(modelItem => Model.Tasks[i].StatusName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => Model.Tasks[i].ShiftHeadName)
+                        @Html.ActionLink(Model.Tasks[i].ShiftHeadName, "ViewProfile", "Account", new { username = Model.Tasks[i].ShiftHead }, null)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => Model.Tasks[i].AssignedTime)

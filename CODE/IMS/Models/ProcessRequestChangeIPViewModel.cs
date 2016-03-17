@@ -18,6 +18,7 @@ namespace IMS.Models
         // Common Info
         public CustomerInfoModel CustomerInfo { get; set; }        
         public RequestInfoModel RequestInfo { get; set; }
+        public string CurrentUser { get; set; }
 
         // Specific Info
         public string SelectedServer { get; set; }

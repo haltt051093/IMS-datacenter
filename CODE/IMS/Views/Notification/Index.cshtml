@@ -67,12 +67,6 @@
             {
                 <tr>
                     <td>
-                        @*@if (item.StatusCode == Constants.StatusCode.REQUEST_PENDING)
-                            {
-                                <a href="#" data-toggle="modal" class="btnRequestCode" data-target="#acceptrequest-modal"
-                                   data-requestCode="@item.RequestCode" data-requestType="@item.RequestType">@item.RequestCode</a>
-                            }
-                            else*@
                         @Html.ActionLink(item.RequestCode, "Detais", "ProcessRequest", new { rType = item.RequestType, rCode = item.RequestCode }, null)
                     </td>
                     <td>

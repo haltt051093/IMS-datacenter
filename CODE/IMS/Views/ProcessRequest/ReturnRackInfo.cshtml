@@ -130,11 +130,11 @@
                 @Html.HiddenFor(model => model.RequestInfo.StaffCode)
                 @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                 {
-                    //if (Model.StaffCode == Model.Username)
-                    //{
-                    <button type="submit" class="btn btn-primary" name="Approve">Approve</button>
-                    <button type="submit" class="btn btn-danger" name="Reject">Reject</button>
-                    //}
+                    if (Model.RequestInfo.StaffCode == Model.CurrentUser)
+                    {
+                        <button type="submit" class="btn btn-primary" name="Approve">Approve</button>
+                        <button type="submit" class="btn btn-danger" name="Reject">Reject</button>
+                    }
                 }
                 else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
                 {

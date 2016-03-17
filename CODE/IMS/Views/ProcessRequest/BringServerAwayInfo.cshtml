@@ -23,7 +23,7 @@
                         Request Code
                     </div>
                     <div class="col-xs-8">
-                        @Html.DisplayFor(model => model.RequestInfo.RequestCode, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.DisplayFor(model => model.RequestInfo.RequestCode, new { htmlAttributes = new { @class = "form-control" } })
                     </div>
                 </div>
                 <div class="row">
@@ -31,7 +31,7 @@
                         Current Status
                     </div>
                     <div class="col-xs-8">
-                        @Html.DisplayFor(model => model.RequestInfo.StatusName, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.DisplayFor(model => model.RequestInfo.StatusName, new { htmlAttributes = new { @class = "form-control" } })
                     </div>
                 </div>
                 <div class="row">
@@ -39,15 +39,15 @@
                         Requested Time
                     </div>
                     <div class="col-xs-8">
-                        @Html.DisplayFor(model => model.RequestInfo.RequestedTime, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.DisplayFor(model => model.RequestInfo.RequestedTime, new { htmlAttributes = new { @class = "form-control" } })
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
                         Assignee
                     </div>
-                    @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING || 
-                        Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                    @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING ||
+                    Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                     {
                         <div class="col-xs-8">
                             @Html.DropDownListFor(model => model.RequestInfo.StaffCode, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
@@ -69,7 +69,7 @@
                         Customer
                     </div>
                     <div class="col-xs-8">
-                        @Html.ActionLink(Model.CustomerInfo.CustomerName, "ViewProfile", "Account", new {username = Model.CustomerInfo.Customer }, null)
+                        @Html.ActionLink(Model.CustomerInfo.CustomerName, "ViewProfile", "Account", new { username = Model.CustomerInfo.Customer }, null)
                     </div>
                 </div>
                 @if (Model.CustomerInfo.Company != null)
@@ -79,7 +79,7 @@
                             Company Name
                         </div>
                         <div class="col-xs-8">
-                            @Html.DisplayFor(model => model.CustomerInfo.Customer, new {@class = "form-control"})
+                            @Html.DisplayFor(model => model.CustomerInfo.Customer, new { @class = "form-control" })
                         </div>
                     </div>
                 }
@@ -88,12 +88,12 @@
                         Phone Number
                     </div>
                     <div class="col-xs-8">
-                        @Html.DisplayFor(model => model.CustomerInfo.Phone, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.DisplayFor(model => model.CustomerInfo.Phone, new { htmlAttributes = new { @class = "form-control" } })
                     </div>
                 </div>
             </div>
         </div>
-        <hr/>
+        <hr />
         <div class="row">
             <div class="col-xs-4">Note</div>
             <div class="col-xs-8">
@@ -164,11 +164,11 @@
                 @Html.HiddenFor(model => model.RequestInfo.StaffCode)
                 @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                 {
-                    //if (Model.RequestInfo.StaffCode == Model.RequestInfo.Username)
-                    //{
+                    if (Model.RequestInfo.StaffCode == Model.CurrentUser)
+                    {
                         <button type="submit" class="btn btn-primary" name="Approve">Approve</button>
                         <button type="submit" class="btn btn-danger" name="Reject">Reject</button>
-                    //}
+                    }
                 }
                 else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
                 {

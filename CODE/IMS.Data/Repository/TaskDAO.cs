@@ -55,12 +55,14 @@ namespace IMS.Data.Repository
                         where t.AssignedStaff == staff
                         select new TaskExtendedModel()
                         {
-                            StaffName = subst.StatusName,
+                            StatusName = subst.StatusName,
                             RequestCode = t.RequestCode,
                             RequestTypeCode = subrtt.RequestType,
                             ShiftHead = t.ShiftHead,
                             AssignedTime = t.AssignedTime
                         };
+
+            var list = new List<TaskExtendedModel>();
             if (tasks != null)
             {
                 foreach (var task in tasks.ToList())
@@ -74,9 +76,10 @@ namespace IMS.Data.Repository
                     task.StaffName = staffName;
                     //requesttype name
                     task.RequestTypeName = RequestTypeBLO.Current.GetTypeName(task.RequestTypeCode);
+                    list.Add(task);
                 }
             }
-            return tasks.ToList();
+            return list.ToList();
         }
     }
 }

@@ -43,7 +43,7 @@ namespace IMS.Controllers
             //var serverattributes = ServerBLO.Current.GetServerAttributes(serverCode);
             data.CurrentIPs = ServerBLO.Current.GetCurrentIP(code);
             //them list location
-            //data.Locations = LocationBLO.Current.GetLocationsOfServer(data.Server.ServerCode);
+            data.Locations = LocationBLO.Current.GetLocationsOfServer(data.Server.ServerCode);
             //var locations = LocationBLO.Current.GetChangeLocation(data.Server);
             //var listrack = locations.OrderBy(x => x.RackName).GroupBy(x => x.RackName).Select(x => x.FirstOrDefault());
             //data.Racks = listrack.Select(x => new SelectListItem

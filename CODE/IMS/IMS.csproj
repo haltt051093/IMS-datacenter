@@ -924,7 +924,7 @@
     <Compile Include="Models\HomeSidebarViewModel.cs" />
     <Compile Include="Models\TaskIndexViewModel.cs" />
     <Compile Include="Models\ProcessRequestAddServerViewModel.cs" />
-    <Compile Include="Models\ProcessRequestReturnRackViewModel - Copy.cs" />
+    <Compile Include="Models\ProcessRequestReturnRackViewModel.cs" />
     <Compile Include="Models\ProcessRequestBringServerAwayViewModel.cs" />
     <Compile Include="Models\ProcessRequestRentRackViewModel.cs" />
     <Compile Include="Models\ProcessRequestAssignIPViewModel.cs" />
