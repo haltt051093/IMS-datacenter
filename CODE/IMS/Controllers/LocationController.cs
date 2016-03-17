@@ -34,7 +34,7 @@ namespace IMS.Controllers
             }).ToList();
 
             var listpow = new List<SelectListItem>();
-            int[] listp = new int[] {3, 4, 5, 6, 7, 8, 9, 10};
+            int[] listp = new int[] {10,11,12,13,14,15,16,17,18,19,20};
             foreach (var i in listp)
             {
                 string num = (i).ToString();
@@ -176,14 +176,25 @@ namespace IMS.Controllers
             if ((endIndex - startIndex + 1) != livm.Size || (locations[startIndex].ServerCode != null) || (locations[endIndex].ServerCode != null))
             {
                 Alert("Assign Location Fail!");
-                return RedirectToAction("AssignLocation","Location", new { rType = livm.RequestType,rCode = livm.RequestCode,ServerCode = livm.ServerCode,Size = livm.Size });
+
+                    return RedirectToAction("AssignLocation", "Location", new { rType = livm.RequestType, rCode = livm.RequestCode, ServerCode = livm.ServerCode, Size = livm.Size });
+                
+
             }
 
 
             bool result = LocationBLO.Current.UpdateLocation(livm.ServerCode, selectedLocationCodes, "Change");
             if (result)
             {
-                return RedirectToAction("Detais", "ProcessRequest", new { rType = livm.RequestType, rCode = livm.RequestCode });
+                if (livm.RequestType == "Change")
+                {
+                    return RedirectToAction("Detail", "Server", new {code = livm.ServerCode});
+                }
+                else
+                {
+                    return RedirectToAction("Detais", "ProcessRequest",
+                        new {rType = livm.RequestType, rCode = livm.RequestCode});
+                }
             }
             else
             {
