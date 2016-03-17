@@ -57,6 +57,13 @@ namespace IMS.Data.Business
                             locations[j].StatusCode = Constants.StatusCode.LOCATION_USED;
                             locations[j].ServerCode = ServerCode;
                             dao.Update(locations[j]);
+                            var rack = locations[j].RackCode;
+                            var data = RackDAO.Current.GetByKeys(new Rack {RackCode = rack});
+                            if (data.StatusCode == Constants.StatusCode.RACK_AVAILABLE)
+                            {
+                                data.StatusCode = Constants.StatusCode.RACK_USED;
+                                RackDAO.Current.Update(data);
+                            }
                         }
                     }
                 }
