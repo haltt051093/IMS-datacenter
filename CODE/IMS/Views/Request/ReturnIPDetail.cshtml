@@ -15,58 +15,65 @@
 <section class="main-content">
     @using (Html.BeginForm("CancelRequestReturnIp", "Request", FormMethod.Post))
             {
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="row dl-horizontal">
-                    <div class="col-xs-4">
-                        Request Code
-                    </div>
-                    <div class="col-xs-8">
-                        @Html.DisplayFor(model => model.RequestInfo.RequestCode, new { @class = "form-control" })
-                    </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    @Html.LabelFor(model => model.RequestInfo.RequestCode)
                 </div>
-                <div class="row">
-                    <div class="col-xs-4">
-                        Current Status
-                    </div>
-                    <div class="col-xs-8">
-                        @Html.DisplayFor(model => model.RequestInfo.StatusName, new { @class = "form-control" })
-                    </div>
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.DisplayFor(model => model.RequestInfo.RequestCode, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                 </div>
-                <div class="row">
-                    <div class="col-xs-4">
-                        Requested Time
-                    </div>
-                    <div class="col-xs-8">
-                        @Html.DisplayFor(model => model.RequestInfo.RequestedTime,new { @class = "form-control"})
-                    </div>
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    @Html.LabelFor(model => model.RequestInfo.StatusName)
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.DisplayFor(model => model.RequestInfo.StatusName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                </div>
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    @Html.LabelFor(model => model.RequestInfo.RequestedTime)
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.DisplayFor(model => model.RequestInfo.RequestedTime, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                </div>
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    @Html.LabelFor(model => model.RequestInfo.Description)
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.DisplayFor(model => model.RequestInfo.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-4">
-                Selected Server
+        <hr />
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.SelectedServer)
             </div>
-            <div class="col-xs-8">
-                @Html.DisplayFor(model => model.SelectedServer, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-4">
-                Description
-            </div>
-            <div class="col-xs-8">
-                @Html.DisplayFor(model => model.RequestInfo.Description, new { @class = "form-control" })
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.DisplayFor(model => model.SelectedServer, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-4">
-                Returned IPs
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.RequestInfo.Description)
             </div>
-            <div class="col-xs-8">
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.DisplayFor(model => model.RequestInfo.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+            </div>
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.ReturningIPs)
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                 @for (int i = 0; i < Model.ReturningIPs.Count; i++)
                 {
-                    @Html.DisplayFor(model => Model.ReturningIPs[i], new { @class = "form-control" })
+                    @Html.DisplayFor(model => Model.ReturningIPs[i], new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                     @Html.HiddenFor(model => Model.ReturningIPs[i])
                     <br />
                 }
@@ -79,10 +86,9 @@
                 @Html.HiddenFor(model => model.RequestInfo.RequestCode)
                 @Html.HiddenFor(model => model.CustomerInfo.Customer)
                 @Html.HiddenFor(x => x.RequestInfo.RequestType)
-                @Html.HiddenFor(x => x.SelectedServer)
                 @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
                 {
-                    <button type="submit" id="btnAccept" name="@Constants.FormAction.CANCEL_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                    <button type="submit" id="btnCancel" name="@Constants.FormAction.CANCEL_ACTION" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
                         @Labels.Cancel
                     </button>
                 }

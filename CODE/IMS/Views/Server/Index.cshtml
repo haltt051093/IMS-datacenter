@@ -3,89 +3,89 @@
 @{
     ViewBag.Title = Pages.ServerIndex;
     ViewBag.PageTitle = Pages.ServerIndex;
-    ViewBag.Role = "Shift Head";
     ViewBag.Breadcrumbs = new List<BreadcrumbModel>
     {
         new BreadcrumbModel("Home", "Index", Pages.Home),
         new BreadcrumbModel("Server", "Index", Pages.ServerIndex)
     };
 }
-
 <div class="main-content">
-    <div class="row">
-        <div class="col-xs-4">
-            Server Status
+    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+        <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+            @Html.LabelFor(model => model.SelectedStatus)
         </div>
-        <div class="col-xs-8">
-            @Html.DropDownListFor(m => m.SelectedStatus, Model.ServerStatus, "Show all", new { @id = "selectedStatus" })
+        <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+            @Html.DropDownListFor(m => m.SelectedStatus, Model.ServerStatus, "Show all", new { @id = "selectedStatus", @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+            @Html.ValidationMessageFor(model => model.SelectedStatus)
         </div>
     </div>
-
-    <table id="example1" class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>@Labels.ServerCode</th>
-                <th>@Labels.Customer</th>
-                <th>@Labels.Status</th>
-                <th>@Labels.DefaultIP</th>
-                <th>@Labels.Location</th>
-                <th>@Labels.CurrentRequest</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (int i = 0; i < Model.Servers.Count; i++)
-            {
-                <tr class="check" status-code="@Model.Servers[i].StatusCode">
-                    <td>
-                        @Html.ActionLink(Model.Servers[i].ServerCode, "Detail", "Server",
-                       new { code = @Model.Servers[i].ServerCode }, null)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => Model.Servers[i].CustomerName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.Servers[i].Status)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.Servers[i].DefaultIP)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.Servers[i].RackName)U
-                        @Html.DisplayFor(modelItem => Model.Servers[i].RackUnit)
-                    </td>
-                    <td class="sidebar-menu">
-                        @if (Model.Servers[i].Requests.Count > 0)
-                        {
-                            <dl>
-                                @foreach (var request in Model.Servers[i].Requests)
-                                {
-                                    if (request.StatusCode == Constants.StatusCode.REQUEST_PENDING ||
-                                        request.StatusCode == Constants.StatusCode.REQUEST_WAITING ||
-                                        request.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
-                                    {
-                                        <dt>
-                                            @Html.ActionLink(@request.RequestTypeName, "Detais", "ProcessRequest",
-                                            new { rType = request.RequestType, rCode = request.RequestCode }, new { @class = "fa fa-angle-double-right" })
-                                        </dt>
-                                    }
-                                }
-                            </dl>
-                        }
-                    </td>
+    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+        <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS">
+            <thead>
+                <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
+                    <th>@Labels.ServerCode</th>
+                    <th>@Labels.Customer</th>
+                    <th>@Labels.Status</th>
+                    <th>@Labels.DefaultIP</th>
+                    <th>@Labels.Location</th>
+                    <th>@Labels.CurrentRequest</th>
                 </tr>
-            }
-        </tbody>
-        <tfoot>
-            <tr>
-                <th>@Labels.ServerCode</th>
-                <th>@Labels.Customer</th>
-                <th>@Labels.Status</th>
-                <th>@Labels.DefaultIP</th>
-                <th>@Labels.Location</th>
-                <th>@Labels.CurrentRequest</th>
-            </tr>
-        </tfoot>
-    </table>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Servers.Count; i++)
+            {
+                    <tr class="check" status-code="@Model.Servers[i].StatusCode">
+                        <td>
+                            @Html.ActionLink(Model.Servers[i].ServerCode, "Detail", "Server",
+                            new { code = @Model.Servers[i].ServerCode }, null)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => Model.Servers[i].CustomerName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Servers[i].Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Servers[i].DefaultIP)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Servers[i].RackName)U
+                            @Html.DisplayFor(modelItem => Model.Servers[i].RackUnit)
+                        </td>
+                        <td class="sidebar-menu">
+                            @if (Model.Servers[i].Requests.Count > 0)
+                            {
+                                <dl>
+                                    @foreach (var request in Model.Servers[i].Requests)
+                                    {
+                                        if (request.StatusCode == Constants.StatusCode.REQUEST_PENDING ||
+                                            request.StatusCode == Constants.StatusCode.REQUEST_WAITING ||
+                                            request.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                                        {
+                                            <dt>
+                                                @Html.ActionLink(@request.RequestTypeName, "Detais", "ProcessRequest",
+                                                new { rType = request.RequestType, rCode = request.RequestCode }, new { @class = "fa fa-angle-double-right" })
+                                            </dt>
+                                        }
+                                    }
+                                </dl>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>@Labels.ServerCode</th>
+                    <th>@Labels.Customer</th>
+                    <th>@Labels.Status</th>
+                    <th>@Labels.DefaultIP</th>
+                    <th>@Labels.Location</th>
+                    <th>@Labels.CurrentRequest</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
 </div>
 
 <!-- page script -->

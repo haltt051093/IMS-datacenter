@@ -16,45 +16,49 @@
 <section class="main-content">
     @using (Html.BeginForm("CancelRequestBringServerAway", "Request", FormMethod.Post))
     {
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="row dl-horizontal">
-                    <div class="col-xs-4">
-                        Request Code
-                    </div>
-                    <div class="col-xs-8">
-                        @Html.DisplayFor(model => model.RequestInfo.RequestCode, new { @class = "form-control" })
-                    </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    @Html.LabelFor(model => model.RequestInfo.RequestCode)
                 </div>
-                <div class="row">
-                    <div class="col-xs-4">
-                        Current Status
-                    </div>
-                    <div class="col-xs-8">
-                        @Html.DisplayFor(model => model.RequestInfo.StatusName, new { @class = "form-control" })
-                    </div>
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.DisplayFor(model => model.RequestInfo.RequestCode, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                 </div>
-                <div class="row">
-                    <div class="col-xs-4">
-                        Requested Time
-                    </div>
-                    <div class="col-xs-8">
-                        @Html.DisplayFor(model => model.RequestInfo.RequestedTime, new { @class = "form-control" })
-                    </div>
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    @Html.LabelFor(model => model.RequestInfo.StatusName)
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.DisplayFor(model => model.RequestInfo.StatusName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                </div>
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    @Html.LabelFor(model => model.RequestInfo.RequestedTime)
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.DisplayFor(model => model.RequestInfo.RequestedTime, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                </div>
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    @Html.LabelFor(model => model.RequestInfo.Description)
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.DisplayFor(model => model.RequestInfo.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-4">Note</div>
-            <div class="col-xs-8">
-                @Html.DisplayFor(model => model.RequestInfo.Description, new { htmlAttributes = new { @class = "form-control" } })
+        <hr />
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.Servers)
             </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <table id="" class="table table-bordered table-striped">
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                <table id="" class="@Constants.HtmlFormat.DATATABLE_CLASS">
                     <thead>
-                        <tr>
+                        <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
                             <th>Server</th>
                             <th>IP Address</th>
                             <th>Location</th>
@@ -66,7 +70,7 @@
                             <tr>
 
                                 <td>
-                                    @Html.DisplayFor(model => Model.ServerOfCustomer[i].ServerCode, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.DisplayFor(model => Model.ServerOfCustomer[i].ServerCode, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                                     @Html.HiddenFor(modelItem => modelItem.ServerOfCustomer[i].ServerCode)
                                 </td>
                                 <td>
@@ -74,8 +78,8 @@
                                         @for (int j = 0; j < Model.ServerOfCustomer[i].ServerIps.Count; j++)
                                         {
                                             <dt>
-                                                @Html.DisplayFor(model => Model.ServerOfCustomer[i].ServerIps[j].CurrentIP, new { htmlAttributes = new { @class = "form-control" } })
-                                                @Html.HiddenFor(model => Model.ServerOfCustomer[i].ServerIps[j].CurrentIP, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.DisplayFor(model => Model.ServerOfCustomer[i].ServerIps[j].CurrentIP, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                                @Html.HiddenFor(model => Model.ServerOfCustomer[i].ServerIps[j].CurrentIP, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                                             </dt>
                                         }
                                     </dl>
@@ -85,7 +89,7 @@
                                         @for (int l = 0; l < Model.ServerOfCustomer[i].locations.Count; l++)
                                         {
                                             <dt>
-                                                @Html.DisplayFor(model => Model.ServerOfCustomer[i].locations[l], new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.DisplayFor(model => Model.ServerOfCustomer[i].locations[l], new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                                             </dt>
                                         }
                                     </dl>
@@ -94,31 +98,33 @@
                         }
                         <tr>
                             <td>
-                                @Html.DisplayFor(model => model.SelectedServerNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.DisplayFor(model => model.SelectedServerNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                             </td>
                             <td>
-                                @Html.DisplayFor(model => model.ReturnIpNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.DisplayFor(model => model.ReturnIpNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                             </td>
                             <td>
-                                @Html.DisplayFor(model => model.ReturnLocationNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.DisplayFor(model => model.ReturnLocationNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    @Html.HiddenFor(model => model.RequestInfo.RequestCode)
-                    @Html.HiddenFor(model => model.RequestInfo.RequestType)
-                    @Html.HiddenFor(model => model.CustomerInfo.Customer)
-                    @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
-                    {
-                        <button type="submit" id="btnCancel" name="@Constants.FormAction.CANCEL_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                            @Labels.Cancel
-                        </button>
-                    }
-                </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
             </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.HiddenFor(model => model.RequestInfo.RequestCode)
+                @Html.HiddenFor(model => model.CustomerInfo.Customer)
+                @Html.HiddenFor(x => x.RequestInfo.RequestType)
+                @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
+                {
+                    <button type="submit" id="btnCancel" name="@Constants.FormAction.CANCEL_ACTION" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
+                        @Labels.Cancel
+                    </button>
+                }
+            </div>
+        </div>
     }
 </section>

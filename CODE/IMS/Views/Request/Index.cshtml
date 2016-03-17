@@ -10,107 +10,111 @@
 }
 <!-- Main content -->
 <section class="main-content">
-    <div class="row">
-        <div class="col-xs-4">
-            Request Type:
+    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+        <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+            @Html.LabelFor(model => model.FilterByRequestType)
         </div>
-        <div class="col-xs-8">
-            @Html.DropDownListFor(m => m.FilterByRequestType, Model.FilterByRequestType, "Select All")
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-4">
-            Request Status:
-        </div>
-        <div class="col-xs-8">
-            @Html.DropDownListFor(m => m.FilterByStatus, Model.FilterByStatus, "Select All")
+        <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+            @Html.DropDownListFor(m => m.FilterByRequestType, Model.FilterByRequestType, "Select All", new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+            @Html.ValidationMessageFor(model => model.FilterByRequestType)
         </div>
     </div>
-    <div class="row">
-        <div class="col-xs-4">
-            Time of Request:
+    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+        <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+            @Html.LabelFor(model => model.FilterByStatus)
         </div>
-        <div class="col-xs-8">
-            @Html.DropDownListFor(m => m.FilterByPeriodOfTime, Model.FilterByPeriodOfTime)
+        <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+            @Html.DropDownListFor(m => m.FilterByStatus, Model.FilterByStatus, "Select All", new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+            @Html.ValidationMessageFor(model => model.FilterByStatus)
         </div>
     </div>
-    <table id="example1" class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>
-                    Request Code
-                </th>
-                <th>
-                    Request Type
-                </th>
-                <th>
-                    Requested Time
-                </th>
-                <th>
-                    Status
-                </th>
-            </tr>
-        </thead>
-
-        @for (int i = 0; i < Model.Requests.Count; i++)
-        {
-            <tbody class="clickmee check" status-code="@Model.Requests[i].LastestStatusRequest.StatusCode" type-code="@Model.Requests[i].LastestStatusRequest.RequestTypeCode" duration="@Model.Requests[i].LastestStatusRequest.DaysFromNow">
-                <tr>
-                    <td>
-                        @Html.ActionLink(Model.Requests[i].LastestStatusRequest.RequestCode, "Detais", "Request",
-                        new { rType = Model.Requests[i].LastestStatusRequest.RequestTypeCode, rCode = Model.Requests[i].LastestStatusRequest.RequestCode }, null)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.RequestTypeName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.LogTime)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.StatusName)
-                    </td>
+    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+        <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+            @Html.LabelFor(model => model.FilterByPeriodOfTime)
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+            @Html.DropDownListFor(m => m.FilterByPeriodOfTime, Model.FilterByPeriodOfTime, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+            @Html.ValidationMessageFor(model => model.FilterByPeriodOfTime)
+        </div>
+    </div>
+    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+        <table id="example1" class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <thead>
+                <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
+                    <th>
+                        Request Code
+                    </th>
+                    <th>
+                        Request Type
+                    </th>
+                    <th>
+                        Requested Time
+                    </th>
+                    <th>
+                        Status
+                    </th>
                 </tr>
-            </tbody>
-            <tbody class="showhide" style="display: none; background-color: lightgrey;">
-                @if (Model.Requests[i].OldStatusRequests != null)
-                {
-                    foreach (var old in Model.Requests[i].OldStatusRequests)
+            </thead>
+            @for (int i = 0; i < Model.Requests.Count; i++)
+            {
+                <tbody class="clickmee check" status-code="@Model.Requests[i].LastestStatusRequest.StatusCode" type-code="@Model.Requests[i].LastestStatusRequest.RequestTypeCode" duration="@Model.Requests[i].LastestStatusRequest.DaysFromNow">
+                    <tr>
+                        <td>
+                            @Html.ActionLink(Model.Requests[i].LastestStatusRequest.RequestCode, "Detais", "Request",
+                        new { rType = Model.Requests[i].LastestStatusRequest.RequestTypeCode, rCode = Model.Requests[i].LastestStatusRequest.RequestCode }, null)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.RequestTypeName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.LogTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.StatusName)
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody class="showhide" style="display: none; background-color: lightgrey;">
+                    @if (Model.Requests[i].OldStatusRequests != null)
                     {
-                        <tr style="background-color: lightgrey;">
-                            <td>
-                                @Html.DisplayFor(modelItem => old.RequestCode)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => old.RequestTypeName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => old.LogTime)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => old.StatusName)
-                            </td>
-                        </tr>
+                        foreach (var old in Model.Requests[i].OldStatusRequests)
+                        {
+                            <tr style="background-color: lightgrey;">
+                                <td>
+                                    @Html.DisplayFor(modelItem => old.RequestCode)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => old.RequestTypeName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => old.LogTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => old.StatusName)
+                                </td>
+                            </tr>
+                        }
                     }
-                }
-            </tbody>
-        }
-        <tfoot>
-            <tr>
-                <th>
-                    @Html.Raw("RequestCode")
-                </th>
-                <th>
-                    @Html.Raw("RequestType")
-                </th>
-                <th>
-                    @Html.Raw("RequestedTime")
-                </th>
-                <th>
-                    @Html.Raw("Status")
-                </th>
-            </tr>
-        </tfoot>
-    </table>
+                </tbody>
+            }
+            <tfoot>
+                <tr>
+                    <th>
+                        RequestCode
+                    </th>
+                    <th>
+                        RequestType
+                    </th>
+                    <th>
+                        RequestedTime
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
 </section><!-- /.content -->
 
 <script>

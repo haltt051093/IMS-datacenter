@@ -10,128 +10,127 @@
         new BreadcrumbModel("Server", "ServerDetails", Pages.ServerDetail)
     };
 }
-
 <section class="main-content">
-    <div class="row">
+    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
         <div class="col-xs-6">
-            <div class="row">
-                <div class="col-xs-4">
-                    Server Code
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    @Html.LabelFor(model => model.Server.ServerCode)
                 </div>
-                <div class="col-xs-8">
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                     @Html.HiddenFor(model => model.Server.Customer, new { @id = "customer" })
                     @Html.HiddenFor(model => model.Server.ServerCode, new { @id = "servercode" })
                     @Html.HiddenFor(model => model.Server.Power, new { @id = "power" })
-                    @Html.DisplayFor(model => model.Server.ServerCode)
+                    @Html.DisplayFor(model => model.Server.ServerCode, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xs-4">
-                    Status
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    @Html.LabelFor(model => model.Server.Status)
                 </div>
-                <div class="col-xs-8">
-                    @Html.DisplayFor(model => model.Server.Status)
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.DisplayFor(model => model.Server.Status, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                 </div>
             </div>
             @if (Model.Server.PartNumber != null)
             {
-                <div class="row">
-                    <div class="col-xs-4">
-                        Part Number
+                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                        @Html.LabelFor(model => model.Server.PartNumber)
                     </div>
-                    <div class="col-xs-8">
-                        @Html.DisplayFor(model => model.Server.ServerCode)
+                    <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                        @Html.DisplayFor(model => model.Server.PartNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                     </div>
                 </div>
             }
             @if (Model.Server.SerialNumber != null)
             {
-                <div class="row">
-                    <div class="col-xs-4">
-                        Serial Number
+                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                        @Html.LabelFor(model => model.Server.SerialNumber)
                     </div>
-                    <div class="col-xs-8">
-                        @Html.DisplayFor(model => model.Server.ServerCode)
+                    <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                        @Html.DisplayFor(model => model.Server.SerialNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                     </div>
                 </div>
             }
-            <div class="row">
-                <div class="col-xs-4">
-                    Power
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    @Html.LabelFor(model => model.Server.Power)
                 </div>
-                <div class="col-xs-8">
-                    @Html.DisplayFor(model => model.Server.Power)W
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-4">
-                    Size
-                </div>
-                <div class="col-xs-8">
-                    @Html.DisplayFor(model => model.Server.Size)U
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.DisplayFor(model => model.Server.Power, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })W
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xs-4">
-                    Using Bandwidth
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    @Html.LabelFor(model => model.Server.Size)
                 </div>
-                <div class="col-xs-8">
-                    @Html.DisplayFor(model => model.Server.Bandwidth)
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.DisplayFor(model => model.Server.Size, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })U
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xs-4">
-                    Brought in day
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    @Html.LabelFor(model => model.Server.Bandwidth)
                 </div>
-                <div class="col-xs-8">
-                    @Html.DisplayFor(model => model.Server.RegisteredDate)
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.DisplayFor(model => model.Server.Bandwidth, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                </div>
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    @Html.LabelFor(model => model.Server.RegisteredDate)
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.DisplayFor(model => model.Server.RegisteredDate, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                 </div>
             </div>
         </div>
         <div class="col-xs-6">
             @if (Model.CustomerInfo.Company != null)
             {
-                <div class="row">
-                    <div class="col-xs-4">
-                        Comapny
+                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                        @Html.LabelFor(model => model.CustomerInfo.Company)
                     </div>
-                    <div class="col-xs-8">
-                        @Html.DisplayFor(model => model.CustomerInfo.Company)
+                    <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                        @Html.DisplayFor(model => model.CustomerInfo.Company, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-xs-4">
-                        Representative
+                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                        @Html.LabelFor(model => model.CustomerInfo.Fullname)
                     </div>
-                    <div class="col-xs-8">
+                    <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                         @Html.ActionLink(Model.CustomerInfo.Fullname, "ViewProfile", "Account",
-                       new { username = Model.CustomerInfo.Username }, null)
+                       new { username = Model.CustomerInfo.Username }, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                     </div>
                 </div>
             }
             else
             {
-                <div class="row">
-                    <div class="col-xs-4">
-                        Customer
+                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                        @Html.LabelFor(model => model.CustomerInfo.Fullname)
                     </div>
-                    <div class="col-xs-8">
+                    <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                         @Html.ActionLink(Model.CustomerInfo.Fullname, "ViewProfile", "Account",
-                       new { username = Model.CustomerInfo.Username }, null)
+                       new { username = Model.CustomerInfo.Username }, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                     </div>
                 </div>
             }
         </div>
     </div>
-    <div class="row">
+    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
         <div class="col-xs-6">
-            <div class="col-xs-4">
-                Current IP
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.CurrentIPs)
             </div>
-            <div class="col-xs-8">
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                 @if (Model.CurrentIPs.Count == 0)
                 {
-                    @Html.Raw("No IP")
+                    @Html.Display("No IP", new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                 }
                 else
                 {
@@ -141,38 +140,39 @@
                             if (item.CurrentIP == Model.Server.DefaultIP)
                             {
                                 <li class="list-group-item">
-                                    <b style="color:blue;">@item.CurrentIP</b>
+                                    <b style="color: blue;">
+                                        @Html.DisplayFor(model => item.CurrentIP, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                    </b>
                                 </li>
                             }
                             else
                             {
                                 <li class="list-group-item">
-                                    @item.CurrentIP
+                                    @Html.DisplayFor(model => item.CurrentIP, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                                 </li>
                             }
-
                         }
                     </ul>
                 }
             </div>
         </div>
         <div class="col-xs-6">
-            <div class="col-xs-4">
-                Location
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.Locations)
             </div>
             @if (Model.Locations != null)
             {
-                <div class="col-xs-8">
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                     @foreach (var item in Model.Locations)
-                {
-                        <div>
-                            @item.RackName U @item.RackUnit
-                        </div>
+                    {
+                        @Html.DisplayFor(model => item.RackName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        <span>U</span>
+                        @Html.DisplayFor(model => item.RackUnit, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                     }
                     <label>
                         @*<a data-toggle="modal" class="open-blockIP-modal" href="#changelocation-modal"
                             data-id="@Model.Server.ServerCode" data-id1="@Model.Server.Size">Change Location?</a>*@
-                        @Html.ActionLink("Change Location", "AssignLocation", "Location", new { ServerCode = Model.Server.ServerCode, rType = "Change",rCode="",Size=Model.Server.Size }, null)
+                        @Html.ActionLink("Change Location", "AssignLocation", "Location", new { ServerCode = Model.Server.ServerCode, rType = "Change", rCode = "", Size = Model.Server.Size }, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                     </label>
                 </div>
             }
@@ -228,77 +228,77 @@
                 </div>
             </form>
             @*<script>*@
-                @*$.fn.dataTable.ext.search.push(
-                    function (settings, data, dataIndex) {
-                        var rackCode = $('#RackCode').val();
-                        if (rackCode == '') {
-                            return true;
+            @*$.fn.dataTable.ext.search.push(
+                        function (settings, data, dataIndex) {
+                            var rackCode = $('#RackCode').val();
+                            if (rackCode == '') {
+                                return true;
+                            }
+                            if (rackCode == data[0]) {
+                                return true;
+                            }
+                            return false;
                         }
-                        if (rackCode == data[0]) {
-                            return true;
-                        }
-                        return false;
-                    }
-                );
-            </script>
+                    );
+                </script>
 
-            <script type="text/javascript">
-                var table = $('#example1').DataTable({
-                    dom: '<lf<t>ip>',
-                    processing: true,
-                    ajax: "@Url.Action("GetLocationForChange", "Location", new {httproute = "", code = Model.ServerCode})",
-                    columns: [
-                        { data: "RackCode" },
-                        { data: "RackName" },
-                        { data: "RackUnit" },
-                        { data: "ServerCode" },
-                        { data: "LocationCode" }
-                    ],
-                    iDisplayLength: 42,
+                <script type="text/javascript">
+                    var table = $('#example1').DataTable({
+                        dom: '<lf<t>ip>',
+                        processing: true,
+                        ajax: "@Url.Action("GetLocationForChange", "Location", new {httproute = "", code = Model.ServerCode})",
+                        columns: [
+                            { data: "RackCode" },
+                            { data: "RackName" },
+                            { data: "RackUnit" },
+                            { data: "ServerCode" },
+                            { data: "LocationCode" }
+                        ],
+                        iDisplayLength: 42,
 
-                    fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                        var row = $(nRow);
-                        var actionCell = $(nRow.cells[4]);
-                        actionCell.html('');
-                        actionCell.append('<input type="hidden" name="Selected['  + iDisplayIndex + '].LocationCode" value="'+aData.LocationCode+'">');
-                        switch (aData.StatusName) {
-                            case 'Free':
-                                actionCell.append('<input type="checkbox" name="Selected['  + iDisplayIndex + '].IsSelected" value="true"/>');
+                        fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                            var row = $(nRow);
+                            var actionCell = $(nRow.cells[4]);
+                            actionCell.html('');
+                            actionCell.append('<input type="hidden" name="Selected['  + iDisplayIndex + '].LocationCode" value="'+aData.LocationCode+'">');
+                            switch (aData.StatusName) {
+                                case 'Free':
+                                    actionCell.append('<input type="checkbox" name="Selected['  + iDisplayIndex + '].IsSelected" value="true"/>');
 
-                                break;
-                            default:
-                                actionCell.append('<input type="checkbox" name="Selected['  + iDisplayIndex + '].IsSelected" value="true"/>');
-                                break;
+                                    break;
+                                default:
+                                    actionCell.append('<input type="checkbox" name="Selected['  + iDisplayIndex + '].IsSelected" value="true"/>');
+                                    break;
 
-                        }
+                            }
 
-                    },
-                    order: [[1, "acs"], [2, "desc"]]
+                        },
+                        order: [[1, "acs"], [2, "desc"]]
 
-                });
+                    });
 
-                $('#example1_filter').append($('#dropdown-template').html());
-                $('#dropdown-template').html('');
+                    $('#example1_filter').append($('#dropdown-template').html());
+                    $('#dropdown-template').html('');
 
-                $('#RackCode').change(function() {
-                    table.draw();
-                });
+                    $('#RackCode').change(function() {
+                        table.draw();
+                    });
 
 
-            </script>
+                </script>
 
-            <script>
-                $(document).on("click", ".open-blockIP-modal", function () {
-                    var code  = $(this).data('id');
-                    var size = $(this).data('id1');
+                <script>
+                    $(document).on("click", ".open-blockIP-modal", function () {
+                        var code  = $(this).data('id');
+                        var size = $(this).data('id1');
 
-                    $(".modal-footer #servercode").val(code);
-                    $(".modal-footer #size").val(size);
+                        $(".modal-footer #servercode").val(code);
+                        $(".modal-footer #size").val(size);
 
 
 
-                });
-            </script>*@
+                    });
+                </script>*@
             <script type="text/javascript">
                 $(function() {
 

@@ -15,77 +15,77 @@
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.Username)
         @Html.HiddenFor(model => model.Password)
-        <div class="row">
-            <div class="col-xs-4">
-                @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.Username)
             </div>
-            <div class="col-xs-8">
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                 @Html.DisplayFor(model => model.Username, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                 @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
             </div>
         </div>
         @if (Model.Company != null)
         {
-            <div class="row">
-                <div class="col-xs-4">
-                    @Html.LabelFor(model => model.Company, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    @Html.LabelFor(model => model.Company)
                 </div>
-                <div class="col-xs-8">
-                    @Html.DisplayFor(model => model.Company, new { htmlAttributes = new { @class = "form-control" } })
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.DisplayFor(model => model.Company, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                     @Html.ValidationMessageFor(model => model.Company, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xs-4">
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
                     @Html.Label("Representative")
                 </div>
-                <div class="col-xs-8">
-                    @Html.DisplayFor(model => model.Fullname, new { htmlAttributes = new { @class = "form-control" } })
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.DisplayFor(model => model.Fullname, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                     @Html.ValidationMessageFor(model => model.Fullname, "", new { @class = "text-danger" })
                 </div>
             </div>
         }
         else
         {
-            <div class="row">
-                <div class="col-xs-4">
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
                     @Html.Label("Full name")
                 </div>
-                <div class="col-xs-8">
-                    @Html.DisplayFor(model => model.Fullname, new { htmlAttributes = new { @class = "form-control" } })
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.DisplayFor(model => model.Fullname, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                     @Html.ValidationMessageFor(model => model.Fullname, "", new { @class = "text-danger" })
                 </div>
             </div>
         }
         @if (Model.Role != Constants.Role.CUSTOMER)
         {
-            <div class="row">
-                <div class="col-xs-4">
-                    @Html.LabelFor(model => model.Role, new { @class = "control-label col-md-2" })
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    @Html.LabelFor(model => model.Role)
                 </div>
-                <div class="col-xs-8">
-                    @Html.DisplayFor(model => model.Role, new { htmlAttributes = new { @class = "form-control" } })
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.DisplayFor(model => model.Role, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                     @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
                 </div>
             </div>
             if (Model.Role != Constants.Role.MANAGER)
             {
-                <div class="row">
-                    <div class="col-xs-4">
-                        @Html.LabelFor(model => model.GroupCode, new { @class = "control-label col-md-2" })
+                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                        @Html.LabelFor(model => model.GroupCode)
                     </div>
-                    <div class="col-xs-8">
-                        @Html.DisplayFor(model => model.GroupCode, new { htmlAttributes = new { @class = "form-control" } })
+                    <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                        @Html.DisplayFor(model => model.GroupCode, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                         @Html.ValidationMessageFor(model => model.GroupCode, "", new { @class = "text-danger" })
                     </div>
                 </div>
             }
         }
-        <div class="row">
-            <div class="col-xs-4">
-                @Html.LabelFor(model => model.Status, new { @class = "control-label col-md-2" })
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.Status)
             </div>
-            <div class="col-xs-8">
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                 @if (Model.Status)
                 {
                     @Html.Raw("Activate")
@@ -96,49 +96,49 @@
                 }
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-4">
-                @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.Phone)
             </div>
-            <div class="col-xs-8">
-                @Html.DisplayFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.DisplayFor(model => model.Phone, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                 @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-4">
-                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.Email)
             </div>
-            <div class="col-xs-8">
-                @Html.DisplayFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.DisplayFor(model => model.Email, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-4">
-                @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.Address)
             </div>
-            <div class="col-xs-8">
-                @Html.DisplayFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.DisplayFor(model => model.Address, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                 @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-4">
-                @Html.LabelFor(model => model.Identification, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.Identification)
             </div>
-            <div class="col-xs-8">
-                @Html.DisplayFor(model => model.Identification, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.DisplayFor(model => model.Identification, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                 @Html.ValidationMessageFor(model => model.Identification, "", new { @class = "text-danger" })
             </div>
         </div>
         @if (Model.Role == "Customer" || Model.Role == "Manager" || Model.Username==Model.UserLogin)
         {
-            @Html.ActionLink("Edit Profile", "EditCustomer", "Account", new { username = Model.Username }, htmlAttributes: new { @class = "btn btn-primary" })
+            @Html.ActionLink("Edit Profile", "EditCustomer", "Account", new { username = Model.Username }, new { @class = "btn btn-primary" })
         }
         else if (Model.Role == "Staff" || Model.Role == "Shift Head")
         {
-            @Html.ActionLink("Edit Profile", "EditStaff", "Account", new { username = Model.Username }, htmlAttributes: new { @class = "btn btn-primary" })
+            @Html.ActionLink("Edit Profile", "EditStaff", "Account", new { username = Model.Username }, new { @class = "btn btn-primary" })
         }
         @if (Model.Username != Model.UserLogin)
         {
