@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using IMS.Core;
+using IMS.Data.Business;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.ViewModels;
@@ -44,7 +45,7 @@ namespace IMS.Data.Repository
 
         public List<TaskExtendedModel> ListTaskOfStaff(string staff)
         {
-            var query = from t in Table()
+            var tasks = from t in Table()
                         join s in StatusDAO.Current.Table()
                             on t.StatusCode equals s.StatusCode into st
                         from subst in st.DefaultIfEmpty()
@@ -60,8 +61,22 @@ namespace IMS.Data.Repository
                             ShiftHead = t.ShiftHead,
                             AssignedTime = t.AssignedTime
                         };
-            //shifthead name, staff name, requesttype name
-            return query.ToList();
+            if (tasks != null)
+            {
+                foreach (var task in tasks.ToList())
+                {
+                    //shifthead name
+                    var shifthead = task.ShiftHead;
+                    var shiftheadName = AccountBLO.Current.GetAccountByCode(shifthead).Fullname;
+                    task.ShiftHeadName = shiftheadName;
+                    //staff name
+                    var staffName = AccountBLO.Current.GetAccountByCode(staff).Fullname;
+                    task.StaffName = staffName;
+                    //requesttype name
+                    task.RequestTypeName = RequestTypeBLO.Current.GetTypeName(task.RequestTypeCode);
+                }
+            }
+            return tasks.ToList();
         }
     }
 }

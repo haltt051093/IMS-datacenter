@@ -1,4 +1,5 @@
-﻿using IMS.Data.Generic;
+﻿using System.Linq;
+using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.Repository;
 
@@ -28,5 +29,17 @@ namespace IMS.Data.Business
             dao = RequestTypeDAO.Current;
         }
 
+
+        public string GetTypeName(string typeCode)
+        {
+            var query = RequestTypeDAO.Current.Query(x => x.RequestTypeCode == typeCode).
+                Select(x => x.RequestTypeName).FirstOrDefault();
+            if (query != null)
+            {
+                return query;
+            }
+            return null;
+        }
     }
 }
+
