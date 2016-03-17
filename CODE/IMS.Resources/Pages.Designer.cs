@@ -70,11 +70,56 @@ namespace IMS.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add new Customer.
+        /// </summary>
+        public static string CreateCustomer {
+            get {
+                return ResourceManager.GetString("CreateCustomer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new Staff.
+        /// </summary>
+        public static string CreateStaff {
+            get {
+                return ResourceManager.GetString("CreateStaff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to List of Customers.
         /// </summary>
         public static string Customer {
             get {
                 return ResourceManager.GetString("Customer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Customer Profile.
+        /// </summary>
+        public static string EditCustomer {
+            get {
+                return ResourceManager.GetString("EditCustomer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Staff Profile.
+        /// </summary>
+        public static string EditStaff {
+            get {
+                return ResourceManager.GetString("EditStaff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forgot Password.
+        /// </summary>
+        public static string ForgotPassword {
+            get {
+                return ResourceManager.GetString("ForgotPassword", resourceCulture);
             }
         }
         
@@ -300,6 +345,15 @@ namespace IMS.Resources {
         public static string ServerIndex {
             get {
                 return ResourceManager.GetString("ServerIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Profile.
+        /// </summary>
+        public static string ViewProfile {
+            get {
+                return ResourceManager.GetString("ViewProfile", resourceCulture);
             }
         }
     }

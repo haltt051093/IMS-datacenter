@@ -1,15 +1,17 @@
 ﻿@model AccountCreateViewModel
 @{
-    ViewBag.Title = "ViewProfile";
+    ViewBag.Title = Pages.ViewProfile;
+    ViewBag.PageTitle = Pages.ViewProfile;
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("Account", "ViewProfile", Pages.ViewProfile)
+    };
 }
 
 
-
-
-@Html.AntiForgeryToken()
 <form action="#" method="POST">
     <section class="main-content">
-        <h2>View Profile</h2>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
