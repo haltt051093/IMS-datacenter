@@ -165,10 +165,11 @@
                                             foreach (var item in Model.Servers[i].ServerLocation)
                                             {<div>
                                             @Html.DisplayFor(model => item.RackName) U @Html.DisplayFor(model => item.RackUnit)
-                                            @Html.ActionLink("Change Location", "AssignLocation", "Location", new { rType = Model.RequestInfo.RequestType, rCode = Model.RequestInfo.RequestCode, ServerCode = Model.Servers[i].ServerCode, Size = Model.Servers[i].Size }, null)
+                                            
                                         </div>
 
                                             }
+                                            @Html.ActionLink("Change Location", "AssignLocation", "Location", new { rType = Model.RequestInfo.RequestType, rCode = Model.RequestInfo.RequestCode, ServerCode = Model.Servers[i].ServerCode, Size = Model.Servers[i].Size }, null)
                                         }
 
 
