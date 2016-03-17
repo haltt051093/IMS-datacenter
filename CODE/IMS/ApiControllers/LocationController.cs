@@ -29,6 +29,10 @@ namespace IMS.ApiControllers
         public DataTableModel<LocationViewModel> GetLocationForAssign(string code)
         {
             var server = ServerBLO.Current.GetServerByCode(code, Constants.StatusCode.SERVER_WAITING);
+            if (server == null)
+            {
+                server = server = ServerBLO.Current.GetServerByCode(code, Constants.StatusCode.SERVER_RUNNING);
+            }
             var locationserver = LocationBLO.Current.GetLocationsOfServer(code);
             var locations = new List<LocationViewModel>();
             var locations1 = new List<LocationViewModel>();

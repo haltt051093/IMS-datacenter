@@ -74,6 +74,11 @@ namespace IMS.Controllers
             var data = new LocationIndexViewModel();
             data.Size = Size;
             var server = ServerBLO.Current.GetServerByCode(ServerCode, Constants.StatusCode.SERVER_WAITING);
+            if (rType == "Change")
+            {
+                server = ServerBLO.Current.GetServerByCode(ServerCode, Constants.StatusCode.SERVER_RUNNING);
+            }
+            
             var locationserver = LocationBLO.Current.GetLocationsOfServer(ServerCode);
             //truong hop assign lan dau
             if (locationserver.Count == 0)
