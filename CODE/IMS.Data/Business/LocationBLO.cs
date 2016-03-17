@@ -40,13 +40,24 @@ namespace IMS.Data.Business
             {
 
                 var locations = dao.GetAll();
+                string rack1 = "";
+                string server = "";
                 for (int i = 0; i < locations.Count; i++)
                 {
                     if (locations[i].ServerCode == ServerCode)
                     {
                         locations[i].ServerCode = null;
                         locations[i].StatusCode = Constants.StatusCode.LOCATION_FREE;
+                        rack1 = locations[i].RackCode;                    
                     }
+                }
+                var loca = locations.Select(x => x).Where(x => x.RackCode == rack1);
+                var has = loca.Select(x => x).Where(x => x.ServerCode == ServerCode).Distinct();
+                if (has.Count()<1)
+                {
+                    var data = RackDAO.Current.GetByKeys(new Rack { RackCode = rack1 });
+                    data.StatusCode = Constants.StatusCode.RACK_AVAILABLE;
+                    RackDAO.Current.Update(data);
                 }
                 for (int i = 0; i < Locations.Count; i++)
                 {
