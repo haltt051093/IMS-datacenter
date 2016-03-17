@@ -30,7 +30,7 @@
                         Current Status
                     </div>
                     <div class="col-xs-8">
-                        @Html.DisplayFor(model => model.RequestInfo.StatusName, new { @class = "form-control"})
+                        @Html.DisplayFor(model => model.RequestInfo.StatusName, new { @class = "form-control" })
                     </div>
                 </div>
                 <div class="row">
@@ -38,7 +38,7 @@
                         Requested Time
                     </div>
                     <div class="col-xs-8">
-                        @Html.DisplayFor(model => model.RequestInfo.RequestedTime,new { @class = "form-control" })
+                        @Html.DisplayFor(model => model.RequestInfo.RequestedTime, new { @class = "form-control" })
                     </div>
                 </div>
                 <div class="row">
@@ -47,17 +47,17 @@
                     </div>
                     @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
                     {
-                    <div class="col-xs-8">
-                        @Html.DropDownListFor(model => model.RequestInfo.StaffCode, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                    </div>
+                        <div class="col-xs-8">
+                            @Html.DropDownListFor(model => model.RequestInfo.StaffCode, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        </div>
                     }
                     else
                     {
-                    <div class="col-xs-8">
-                        @Html.ActionLink(Model.RequestInfo.StaffName, "ViewProfile", "Account",
+                        <div class="col-xs-8">
+                            @Html.ActionLink(Model.RequestInfo.StaffName, "ViewProfile", "Account",
                                 new { username = Model.RequestInfo.StaffCode }, null)
-                        @Html.HiddenFor(model => model.RequestInfo.StaffCode, new { @class = "form-control" })
-                    </div>
+                            @Html.HiddenFor(model => model.RequestInfo.StaffCode, new { @class = "form-control" })
+                        </div>
                     }
                 </div>
             </div>
@@ -72,14 +72,14 @@
                 </div>
                 @if (Model.CustomerInfo.Company != null)
                 {
-                <div class="row">
-                    <div class="col-xs-4">
-                        Company Name
+                    <div class="row">
+                        <div class="col-xs-4">
+                            Company Name
+                        </div>
+                        <div class="col-xs-8">
+                            @Html.DisplayFor(model => model.CustomerInfo.Company, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
                     </div>
-                    <div class="col-xs-8">
-                        @Html.DisplayFor(model => model.CustomerInfo.Company, new { htmlAttributes = new { @class = "form-control" } })
-                    </div>
-                </div>
                 }
                 <div class="row">
                     <div class="col-xs-4">
@@ -173,15 +173,15 @@
                 @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING ||
                     Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                 {
-                    if (Model.RequestInfo.StaffCode == Model.CurrentUser)
-                    {
+                    //if (Model.RequestInfo.StaffCode == Model.CurrentUser)
+                    //{
                     <button type="submit" id="btnApprove" name="@Constants.FormAction.APPROVE_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
                         @Labels.Approve
                     </button>
                     <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
                         @Labels.Reject
                     </button>
-                    }
+                    //}
 
                 }
                 else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
@@ -201,6 +201,7 @@
     $(function () {
         $('#btnApprove').on('click', function () {
             $('#selectedIps').find('option').attr('selected', true);
+            $('#IPs').find('option').attr('selected', true);
         });
         $('#availableIps').dblclick(function () {
             var pass = $('#availableIps').val();
