@@ -61,7 +61,7 @@
                                         var item = Model.Schedules[i];
                                         <div class="panel panel-default">
                                             <div class="panel-heading" id="">
-                                                @Html.ActionLink(item.RequestTypeName+"--"+item.StatusName, "Detais","ProcessRequest",new {rType=item.RequestType,rCode = item.RequestCode},null)
+                                                @Html.ActionLink(item.Customer+"--"+item.RequestTypeName+"--"+item.StatusName, "Detais","ProcessRequest",new {rType=item.RequestType,rCode = item.RequestCode},null)
                                                 
 
                                             </div>
@@ -119,7 +119,7 @@
                     {
                         <div class="panel panel-default">
                             <div class="panel-heading" id="">
-                                @Html.ActionLink(item.RequestTypeName + "--" + item.StatusName, "Detais", "ProcessRequest", new { rType = item.RequestType, rCode = item.RequestCode }, null)
+                                @Html.ActionLink(item.Customer+"--"+item.RequestTypeName + "--" + item.StatusName, "Detais", "ProcessRequest", new { rType = item.RequestType, rCode = item.RequestCode }, null)
                             </div>
                             
                              
