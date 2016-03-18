@@ -81,12 +81,23 @@
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header bg-light-blue">
-                            <img src="@Url.Content("~/img/user.png")" class="img-circle" alt="User Image" />
-                            <p>
-                                @account.Fullname
+                            <img src="@Url.Content("~/img/user.png")" class="img-circle" alt="User Image"/>
+                            @if (role == "Manager" || role == "Customer")
+                            {
+                                <p>
+                                    @account.Fullname - @role
 
-                            </p>
-                            <p>@role - @group</p>
+                                </p>
+                            }
+                            else
+                            {
+                                <p>
+                                    @account.Fullname
+
+                                </p>
+                                <p>@role - @group</p>
+                            }
+                            
                         </li>
 
                         <!-- Menu Footer-->

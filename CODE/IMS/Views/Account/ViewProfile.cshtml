@@ -134,11 +134,11 @@
                 @Html.ValidationMessageFor(model => model.Identification, "", new { @class = "text-danger" })
             </div>
         </div>
-        @if (Model.Role == "Customer" || Model.Role == "Manager" || Model.Username == Model.UserLogin)
+        @if ((Model.Role == "Customer" && Model.RoleLogin=="Manager") || Model.Username == Model.UserLogin)
         {
             @Html.ActionLink("Edit Profile", "EditCustomer", "Account", new { username = Model.Username }, new { @class = "btn btn-primary" })           
         }
-        else if (Model.Role == "Staff" || Model.Role == "Shift Head")
+        else if ((Model.Role == "Staff" || Model.Role == "Shift Head")&&Model.RoleLogin=="Manager")
         {
             @Html.ActionLink("Edit Profile", "EditStaff", "Account", new { username = Model.Username }, new { @class = "btn btn-primary" })         
         }
@@ -146,7 +146,7 @@
         {
             @Html.ActionLink("Change Password", "GetChangePW", "Account", new { @class = "btn btn-primary col-xs-offset-1" })
         }
-        @if (Model.Username != Model.UserLogin)
+        @if (Model.Username != Model.UserLogin && Model.RoleLogin=="Manager")
         {
 
             if (Model.Status)

@@ -209,6 +209,7 @@ namespace IMS.Controllers
             }
             var accountviewmodel = Mapper.Map<Account, AccountCreateViewModel>(account);
             accountviewmodel.UserLogin = GetCurrentUserName();
+            accountviewmodel.RoleLogin = GetCurrentUserRole();
             return View(accountviewmodel);
         }
 

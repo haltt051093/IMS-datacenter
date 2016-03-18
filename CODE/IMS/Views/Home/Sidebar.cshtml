@@ -2,12 +2,12 @@
 
 @{
     var data = new List<SidebarItemModel>();
-    data.Add(new SidebarItemModel("Server", "Index", "Server") { Roles = new List<string>() { "Shift Head", "Customer", "Manager", "Staff" } });
+    data.Add(new SidebarItemModel("Request", "Index", "Request") { Roles = new List<string>() { "Shift Head", "Manager", "Staff" } });
     data.Add(new SidebarItemModel("Request History", "Index", "Request") { Roles = new List<string>() { "Customer" } });
+    data.Add(new SidebarItemModel("Server", "Index", "Server") {Roles = new List<string>() {"Shift Head", "Customer", "Manager", "Staff"}});
     data.Add(new SidebarItemModel("Location", "Index", "Location") { Roles = new List<string>() { "Shift Head", "Manager", "Staff" } });
     data.Add(new SidebarItemModel("IP Address", "Index", "IP") { Roles = new List<string>() { "Shift Head", "Manager", "Staff" } });
     data.Add(new SidebarItemModel("Account", "Index", "Account") { Roles = new List<string>() { "Shift Head", "Manager", "Staff" } });
-    data.Add(new SidebarItemModel("Request", "Index", "Request") { Roles = new List<string>() { "Shift Head", "Manager", "Staff" } });
     data.Add(new SidebarItemModel("Rack", "Index", "Rack") { Roles = new List<string>() { "Customer" } });
     data.Add(new SidebarItemModel("Create request", "", "")
     {
@@ -46,12 +46,10 @@
     });
     data.Add(new SidebarItemModel("Report", "", "")
     {
-        Roles = new List<string>() { "Shift Head", "Customer", "Manager" },
+        Roles = new List<string>() { "Shift Head", "Staff", "Manager" },
         SubMenu = new List<SidebarItemModel>()
         {
-            new SidebarItemModel("Server Moving", "", "") { Roles = new List<string>() { "Shift Head", "Customer" } },
-            new SidebarItemModel("Blocked IP Address", "ReportBlockIP", "Report") { Roles = new List<string>() { "Shift Head", "Customer" } },
-            new SidebarItemModel("Free IP Address", "", "") { Roles = new List<string>() { "Shift Head", "Customer" } }
+            new SidebarItemModel("Blocked IP Address", "ReportBlockIP", "Report") { Roles = new List<string>() { "Shift Head", "Staff", "Manager" } },
         }
     });
 
@@ -83,9 +81,44 @@
         }
         if (menu.SubMenu.Count == 0)
         {
-            <li>
-                <a href="@Url.Action(menu.Action, menu.Controller, menu.RouteValue)"><i class="fa fa-table"></i><span>@menu.Title</span></a>
-            </li>
+            if (menu.Title == "Request")
+            {
+                <li>
+                    <a href="@Url.Action(menu.Action, menu.Controller, menu.RouteValue)"><i class="fa fa-mail-reply-all"></i><span>@menu.Title</span></a>
+                </li>
+            }
+            if (menu.Title == "Server")
+            {
+                <li>
+                    <a href="@Url.Action(menu.Action, menu.Controller, menu.RouteValue)"><i class="fa fa-hdd-o"></i><span>@menu.Title</span></a>
+                </li>
+            }
+            if (menu.Title == "Location" || menu.Title=="Rack")
+            {
+                <li>
+                    <a href="@Url.Action(menu.Action, menu.Controller, menu.RouteValue)"><i class="fa fa-th-list"></i><span>@menu.Title</span></a>
+                </li>
+            }
+            if (menu.Title == "IP Address")
+            {
+                <li>
+                    <a href="@Url.Action(menu.Action, menu.Controller, menu.RouteValue)"><i class="fa fa-info-circle"></i><span>@menu.Title</span></a>
+                </li>
+            }
+            if (menu.Title == "Account")
+            {
+                <li>
+                    <a href="@Url.Action(menu.Action, menu.Controller, menu.RouteValue)"><i class="fa fa-users"></i><span>@menu.Title</span></a>
+                </li>
+            }
+            if (menu.Title == "Request History")
+            {
+                <li>
+                    <a href="@Url.Action(menu.Action, menu.Controller, menu.RouteValue)"><i class="fa fa-mail-forward"></i><span>@menu.Title</span></a>
+                </li>
+            }
+            
+
         }
         else
         {
