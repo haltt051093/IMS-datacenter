@@ -170,9 +170,19 @@ namespace IMS.Controllers
                 return RedirectToAction("AssignIP",new {rType = icvm.RequestType,rCode = icvm.RequestCode, OldIP = icvm.OldIP, ServerCode = icvm.ServerCode});
             }
 
-            IPAddressPoolBLO.Current.UpdateIP(icvm.ServerCode, icvm.NewIP, icvm.RequestCode, icvm.OldIP);
+            var x = IPAddressPoolBLO.Current.UpdateIP(icvm.ServerCode, icvm.NewIP, icvm.RequestCode, icvm.OldIP);
+            if (x == false)
+            {
+                Alert("IP Address was selected already!");
+                return RedirectToAction("Detais", "ProcessRequest",
+                    new {rType = icvm.RequestType, rCode = icvm.RequestCode});
+            }
+            else
+            {
+                return RedirectToAction("Detais", "ProcessRequest", new { rType = icvm.RequestType, rCode = icvm.RequestCode });
+            }
 
-            return RedirectToAction("Detais","ProcessRequest", new { rType = icvm.RequestType, rCode = icvm.RequestCode });
+            
         }
     }
 }

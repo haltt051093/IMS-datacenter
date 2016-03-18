@@ -278,7 +278,7 @@ namespace IMS.Controllers
                         o.Password = cpvm.NewPassword;
                         AccountBLO.Current.AddOrUpdate(o);
                         Success("Change Password Successfully!");
-                        return View("ChangePassword");
+                        return RedirectToAction("ViewProfile",new {username = obj.Username});
                     }
                     else
                     {
@@ -295,15 +295,6 @@ namespace IMS.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        private Boolean CheckExistUsername(string username)
-        {
-            List<Account> lstall = AccountDAO.Current.GetAll();
-            var count = lstall.Where(c => c.Username == username).Count();
-            if (count > 0)
-            {
-                return true;
-            }
-            return false;
-        }
+       
     }
 }

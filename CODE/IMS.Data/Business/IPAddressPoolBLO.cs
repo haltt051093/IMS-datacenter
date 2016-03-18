@@ -85,54 +85,70 @@ namespace IMS.Data.Business
             return dao.GetGatewayByServerCode(q);
         }
 
-        public void UpdateIP(string serverCode, string newIP, string requestCode, string oldIP)
+        public bool UpdateIP(string serverCode, string newIP, string requestCode, string oldIP)
         {
             if (oldIP == null)
             {
-                var server = ServerBLO.Current.GetByServerCode(serverCode);
-                server.DefaultIP = newIP;
-                ServerBLO.Current.Update(server);
-                var si = new ServerIP();
-                si.CurrentIP = newIP;
-                si.ServerCode = serverCode;
-                si.AssignedDate = DateTime.Now;
-                si.StatusCode = Constants.StatusCode.SERVERIP_CURRENT;
-                ServerIPBLO.Current.Add(si);
-                var ip = dao.GetByKeys(new IPAddressPool {IPAddress = newIP});
-                ip.IsDefault = true;
-                ip.StatusCode = Constants.StatusCode.IP_USED;
-                dao.Update(ip);
-                var log = new LogChangedContent();
-                log.TypeOfLog = Constants.TypeOfLog.LOG_ASSIGN_DEFAULT_IP;
-                log.Object = Constants.Object.OBJECT_IP;
-                log.ChangedValueOfObject = newIP;
-                log.ObjectStatus = Constants.StatusCode.IP_USED;
-                log.ServerCode = serverCode;
-                log.LogTime = DateTime.Now;
-                log.RequestCode = requestCode;
-                LogChangedContentBLO.Current.Add(log);
+                var ip = dao.GetByKeys(new IPAddressPool { IPAddress = newIP });
+                if (ip.StatusCode == Constants.StatusCode.IP_AVAILABLE)
+                {
+                    ip.IsDefault = true;
+                    ip.StatusCode = Constants.StatusCode.IP_USED;
+                    dao.Update(ip);
+                    var server = ServerBLO.Current.GetByServerCode(serverCode);
+                    server.DefaultIP = newIP;
+                    ServerBLO.Current.Update(server);
+                    var si = new ServerIP();
+                    si.CurrentIP = newIP;
+                    si.ServerCode = serverCode;
+                    si.AssignedDate = DateTime.Now;
+                    si.StatusCode = Constants.StatusCode.SERVERIP_CURRENT;
+                    ServerIPBLO.Current.Add(si);
+                    var log = new LogChangedContent();
+                    log.TypeOfLog = Constants.TypeOfLog.LOG_ASSIGN_DEFAULT_IP;
+                    log.Object = Constants.Object.OBJECT_IP;
+                    log.ChangedValueOfObject = newIP;
+                    log.ObjectStatus = Constants.StatusCode.IP_USED;
+                    log.ServerCode = serverCode;
+                    log.LogTime = DateTime.Now;
+                    log.RequestCode = requestCode;
+                    LogChangedContentBLO.Current.Add(log);
+                    return true;
+                }
+                else
+                { return false;}
+
             }
             else
             {
-                var server = ServerBLO.Current.GetByServerCode(serverCode);
-                server.DefaultIP = newIP;
-                ServerBLO.Current.Update(server);
-                var serverip = ServerIPBLO.Current.GetByServerCode(serverCode);
-                serverip.CurrentIP = newIP;
-                serverip.AssignedDate = DateTime.Now;
-                ServerIPBLO.Current.Update(serverip);
-                var ip = dao.GetByKeys(new IPAddressPool { IPAddress = oldIP });
-                ip.StatusCode = Constants.StatusCode.IP_AVAILABLE;
-                ip.IsDefault = false;
-                dao.Update(ip);
-                var ip1 = dao.GetByKeys(new IPAddressPool {IPAddress = newIP});
-                ip1.StatusCode = Constants.StatusCode.IP_USED;
-                ip1.IsDefault = true;
-                dao.Update(ip1);
-                var log = LogChangedContentBLO.Current.GetByServerCode(serverCode);
-                log.LogTime = DateTime.Now;
-                log.ChangedValueOfObject = newIP;
-                LogChangedContentBLO.Current.Update(log);
+                var ip1 = dao.GetByKeys(new IPAddressPool { IPAddress = newIP });
+                if (ip1.StatusCode == Constants.StatusCode.IP_AVAILABLE)
+                {
+                    ip1.StatusCode = Constants.StatusCode.IP_USED;
+                    ip1.IsDefault = true;
+                    dao.Update(ip1);
+                    var server = ServerBLO.Current.GetByServerCode(serverCode);
+                    server.DefaultIP = newIP;
+                    ServerBLO.Current.Update(server);
+                    var serverip = ServerIPBLO.Current.GetByServerCode(serverCode);
+                    serverip.CurrentIP = newIP;
+                    serverip.AssignedDate = DateTime.Now;
+                    ServerIPBLO.Current.Update(serverip);
+                    var ip = dao.GetByKeys(new IPAddressPool {IPAddress = oldIP});
+                    ip.StatusCode = Constants.StatusCode.IP_AVAILABLE;
+                    ip.IsDefault = false;
+                    dao.Update(ip);
+                    var log = LogChangedContentBLO.Current.GetByServerCode(serverCode);
+                    log.LogTime = DateTime.Now;
+                    log.ChangedValueOfObject = newIP;
+                    LogChangedContentBLO.Current.Update(log);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
 
             }
            
