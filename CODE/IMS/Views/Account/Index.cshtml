@@ -35,10 +35,6 @@
         </div>
 
     }
-    @if (User.IsInRole("Shift Head") || User.IsInRole("Staff"))
-    {
-        @Html.ActionLink("Add new customer", "CreateCustomer", "Account", htmlAttributes: new {@class = "btn btn-primary"})
-    }
 
     <table id="example1" class="table table-bordered table-hover">
         

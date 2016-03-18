@@ -2,6 +2,7 @@
 @{
     var account = Model.Account;
     var role = Model.Role;
+    var group = Model.Group;
 }
 
 <a href="@Url.Action("Index", "Home")" class="logo">
@@ -82,9 +83,10 @@
                         <li class="user-header bg-light-blue">
                             <img src="@Url.Content("~/img/user.png")" class="img-circle" alt="User Image" />
                             <p>
-                                @account.Fullname - @role
-                              
+                                @account.Fullname
+
                             </p>
+                            <p>@role - @group</p>
                         </li>
 
                         <!-- Menu Footer-->
