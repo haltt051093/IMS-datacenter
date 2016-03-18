@@ -23,18 +23,42 @@
         <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS">
             <thead>
                 <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
-                    <th>@Labels.ServerCode</th>
-                    <th>@Labels.Customer</th>
-                    <th>@Labels.Status</th>
-                    <th>@Labels.DefaultIP</th>
-                    <th>@Labels.Location</th>
-                    <th>@Labels.CurrentRequest</th>
+                    @if (User.IsInRole("Customer"))
+                    {
+                        <th>@Labels.ServerCode</th>
+                        <th>@Labels.Status</th>
+                        <th>@Labels.DefaultIP</th>
+                    }
+                    else
+                    {
+                        <th>@Labels.ServerCode</th>
+                        <th>@Labels.Customer</th>
+                        <th>@Labels.Status</th>
+                        <th>@Labels.DefaultIP</th>
+                        <th>@Labels.Location</th>
+                        <th>@Labels.CurrentRequest</th>
+                    }
                 </tr>
             </thead>
             <tbody>
                 @for (int i = 0; i < Model.Servers.Count; i++)
             {
-                    <tr class="check" status-code="@Model.Servers[i].StatusCode">
+                <tr class="check" status-code="@Model.Servers[i].StatusCode">
+                    @if (User.IsInRole("Customer"))
+                    {
+                        <td>
+                            @Html.ActionLink(Model.Servers[i].ServerCode, "Detail", "Server",
+                            new { code = @Model.Servers[i].ServerCode }, null)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Servers[i].Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Servers[i].DefaultIP)
+                        </td>
+                    }
+                    else
+                    {
                         <td>
                             @Html.ActionLink(Model.Servers[i].ServerCode, "Detail", "Server",
                             new { code = @Model.Servers[i].ServerCode }, null)
@@ -71,18 +95,28 @@
                                 </dl>
                             }
                         </td>
-                    </tr>
+                    }
+                </tr>
                 }
             </tbody>
             <tfoot>
-                <tr>
+            <tr>
+                @if (User.IsInRole("Customer"))
+                {
+                    <th>@Labels.ServerCode</th>
+                    <th>@Labels.Status</th>
+                    <th>@Labels.DefaultIP</th>
+                }
+                else
+                {
                     <th>@Labels.ServerCode</th>
                     <th>@Labels.Customer</th>
                     <th>@Labels.Status</th>
                     <th>@Labels.DefaultIP</th>
                     <th>@Labels.Location</th>
                     <th>@Labels.CurrentRequest</th>
-                </tr>
+                }
+            </tr>
             </tfoot>
         </table>
     </div>

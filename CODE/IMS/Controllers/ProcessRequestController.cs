@@ -408,7 +408,8 @@ namespace IMS.Controllers
                 //Change request status, task
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_RENT_RACK,
                     Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.Assignee, null);
-                
+                //update task
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_DONE);
                 Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
@@ -416,6 +417,8 @@ namespace IMS.Controllers
                 //Change request status
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_RENT_RACK,
                     Constants.StatusCode.REQUEST_REJECTED, null, viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.RejectReason);
+                //update task
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_DONE);
             }
             return RedirectToAction("Index", "Notification");
         }
@@ -451,6 +454,8 @@ namespace IMS.Controllers
                 //add and log request
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
                     Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.Assignee, null);
+                //update task
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_DONE);
                 Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
@@ -468,6 +473,8 @@ namespace IMS.Controllers
                 //add and log request
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
                     Constants.StatusCode.REQUEST_REJECTED, null, viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.RejectReason);
+                //update task
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_DONE);
             }
             return RedirectToAction("Index", "Notification");
 
@@ -723,7 +730,7 @@ namespace IMS.Controllers
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_ASSIGN_IP,
                     Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.RequestCode, null);
                 //update task
-                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.REQUEST_DONE);
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_DONE);
                 Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
@@ -732,7 +739,7 @@ namespace IMS.Controllers
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_ASSIGN_IP,
                     Constants.StatusCode.REQUEST_REJECTED, null, viewmodel.RequestInfo.RequestCode, viewmodel.RequestInfo.RejectReason);
                 //update task
-                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.REQUEST_DONE);
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_DONE);
             }
             return RedirectToAction("Index", "Notification");
         }
@@ -759,7 +766,7 @@ namespace IMS.Controllers
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
                     Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.Assignee, null);
                 //update task
-                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.REQUEST_DONE);
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_DONE);
                 Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
@@ -773,7 +780,7 @@ namespace IMS.Controllers
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
                     Constants.StatusCode.REQUEST_REJECTED, null, viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.RejectReason);
                 //update task
-                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.REQUEST_DONE);
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_DONE);
             }
             return RedirectToAction("Index", "Notification");
         }
@@ -806,7 +813,7 @@ namespace IMS.Controllers
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_RETURN_IP,
                     Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.Assignee, null);
                 //update task
-                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.REQUEST_DONE);
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_DONE);
                 Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
@@ -821,7 +828,7 @@ namespace IMS.Controllers
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_RETURN_IP,
                     Constants.StatusCode.REQUEST_REJECTED, null, viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.RejectReason);
                 //update task
-                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.REQUEST_DONE);
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_DONE);
             }
             return RedirectToAction("Index", "Notification");
         }

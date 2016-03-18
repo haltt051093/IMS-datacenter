@@ -14,76 +14,78 @@
     <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
         <div class="col-xs-6">
             <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                    @Html.LabelFor(model => model.Server.ServerCode)
-                </div>
-                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                    @Html.HiddenFor(model => model.Server.Customer, new { @id = "customer" })
-                    @Html.HiddenFor(model => model.Server.ServerCode, new { @id = "servercode" })
-                    @Html.HiddenFor(model => model.Server.Power, new { @id = "power" })
-                    @Html.DisplayFor(model => model.Server.ServerCode, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                </div>
-            </div>
-            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                    @Html.LabelFor(model => model.Server.Status)
-                </div>
-                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                    @Html.DisplayFor(model => model.Server.Status, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                </div>
-            </div>
-            @if (Model.Server.PartNumber != null)
-            {
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                     <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                        @Html.LabelFor(model => model.Server.PartNumber)
+                        @Html.LabelFor(model => model.Server.ServerCode)
                     </div>
                     <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                        @Html.DisplayFor(model => model.Server.PartNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        @Html.HiddenFor(model => model.Server.Customer, new {@id = "customer"})
+                        @Html.HiddenFor(model => model.Server.ServerCode, new {@id = "servercode"})
+                        @Html.HiddenFor(model => model.Server.Power, new {@id = "power"})
+                        @Html.DisplayFor(model => model.Server.ServerCode, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
                     </div>
                 </div>
-            }
-            @if (Model.Server.SerialNumber != null)
-            {
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                     <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                        @Html.LabelFor(model => model.Server.SerialNumber)
+                        @Html.LabelFor(model => model.Server.Status)
                     </div>
                     <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                        @Html.DisplayFor(model => model.Server.SerialNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        @Html.DisplayFor(model => model.Server.Status, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
                     </div>
                 </div>
-            }
-            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                    @Html.LabelFor(model => model.Server.Power)
+                @if (Model.Server.PartNumber != null)
+                {
+                    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                            @Html.LabelFor(model => model.Server.PartNumber)
+                        </div>
+                        <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                            @Html.DisplayFor(model => model.Server.PartNumber, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                        </div>
+                    </div>
+                }
+                @if (Model.Server.SerialNumber != null)
+                {
+                    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                            @Html.LabelFor(model => model.Server.SerialNumber)
+                        </div>
+                        <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                            @Html.DisplayFor(model => model.Server.SerialNumber, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                        </div>
+                    </div>
+                }
+                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                        @Html.LabelFor(model => model.Server.Power)
+                    </div>
+                    <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                        @Html.DisplayFor(model => model.Server.Power, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})W
+                    </div>
                 </div>
-                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                    @Html.DisplayFor(model => model.Server.Power, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })W
+                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                        @Html.LabelFor(model => model.Server.Size)
+                    </div>
+                    <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                        @Html.DisplayFor(model => model.Server.Size, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})U
+                    </div>
                 </div>
-            </div>
-            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                    @Html.LabelFor(model => model.Server.Size)
+                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                        @Html.LabelFor(model => model.Server.Bandwidth)
+                    </div>
+                    <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                        @Html.DisplayFor(model => model.Server.Bandwidth, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                    </div>
                 </div>
-                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                    @Html.DisplayFor(model => model.Server.Size, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })U
-                </div>
-            </div>
-            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                    @Html.LabelFor(model => model.Server.Bandwidth)
-                </div>
-                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                    @Html.DisplayFor(model => model.Server.Bandwidth, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                </div>
-            </div>
-            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                    @Html.LabelFor(model => model.Server.RegisteredDate)
-                </div>
-                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                    @Html.DisplayFor(model => model.Server.RegisteredDate, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                        @Html.LabelFor(model => model.Server.RegisteredDate)
+                    </div>
+                    <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                        @Html.DisplayFor(model => model.Server.RegisteredDate, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                    </div>
                 </div>
             </div>
         </div>
@@ -104,7 +106,7 @@
                     </div>
                     <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                         @Html.ActionLink(Model.CustomerInfo.Fullname, "ViewProfile", "Account",
-                       new { username = Model.CustomerInfo.Username }, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                       new { username = Model.CustomerInfo.Username }, null)
                     </div>
                 </div>
             }
@@ -116,7 +118,7 @@
                     </div>
                     <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                         @Html.ActionLink(Model.CustomerInfo.Fullname, "ViewProfile", "Account",
-                       new { username = Model.CustomerInfo.Username }, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                       new { username = Model.CustomerInfo.Username }, null)
                     </div>
                 </div>
             }
@@ -172,7 +174,7 @@
                     <label>
                         @*<a data-toggle="modal" class="open-blockIP-modal" href="#changelocation-modal"
                             data-id="@Model.Server.ServerCode" data-id1="@Model.Server.Size">Change Location?</a>*@
-                        @Html.ActionLink("Change Location", "AssignLocation", "Location", new { ServerCode = Model.Server.ServerCode, rType = "Change", rCode = "", Size = Model.Server.Size }, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        @Html.ActionLink("Change Location", "AssignLocation", "Location", new { ServerCode = Model.Server.ServerCode, rType = "Change", rCode = "", Size = Model.Server.Size }, null)
                     </label>
                 </div>
             }

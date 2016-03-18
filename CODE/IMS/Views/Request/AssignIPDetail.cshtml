@@ -9,7 +9,8 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="@Url.Action("Index", "Schedule")"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Detail Request Assign IP Address</li>
+        <li>Detail Request</li>
+        <li class="active">Assign IP Address</li>
     </ol>
 </section>
 <section class="main-content">
@@ -65,7 +66,7 @@
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                 @Html.ActionLink(Model.SelectedServer, "Detail", "Server",
-                    new { code = Model.SelectedServer }, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    new { code = Model.SelectedServer }, null)
                 @Html.HiddenFor(model => model.SelectedServer)
             </div>
         </div>

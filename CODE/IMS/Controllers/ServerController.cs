@@ -19,19 +19,32 @@ namespace IMS.Controllers
     {
         public ActionResult Index()
         {
-            var servers = ServerBLO.Current.GetAllServer();
-            //get requests cua server
+            var role = GetCurrentUserRole();
             var data = new ServerIndexViewModel();
-            foreach (var item in servers)
-            {
-                item.Requests = LogChangedContentBLO.Current.ListWaitingRequestOfServer(item.ServerCode);
-            }
+            var customer = GetCurrentUserName();
             var listStatus = StatusBLO.Current.GetStatusByObject(Constants.Object.OBJECT_SERVER);
             data.ServerStatus = listStatus
                         .Select(x => new SelectListItem { Value = x.StatusCode, Text = x.StatusName })
                         .ToList();
-            data.Servers = servers;
-            data.Server = new ServerExtendedModel();
+            if (role == Constants.Role.CUSTOMER)
+            {
+                var servers = ServerBLO.Current.GetServerOfCustomer(customer);
+                foreach (var item in servers)
+                {
+                    item.Requests = LogChangedContentBLO.Current.ListWaitingRequestOfServer(item.ServerCode);
+                }
+                data.Servers = servers;
+            }
+            else
+            {
+                //get all servers
+                var servers = ServerBLO.Current.GetAllServer();
+                foreach (var item in servers)
+                {
+                    item.Requests = LogChangedContentBLO.Current.ListWaitingRequestOfServer(item.ServerCode);
+                }
+                data.Servers = servers;
+            }
             return View(data);
         }
 

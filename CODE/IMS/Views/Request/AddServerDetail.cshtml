@@ -52,11 +52,12 @@
         <hr />
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.Servers)
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                 <table id="" class="@Constants.HtmlFormat.DATATABLE_CLASS">
-                    <thead class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
-                        <tr>
+                    <thead>
+                        <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
                             <th>No</th>
                             <th>Power</th>
                             <th>Size</th>

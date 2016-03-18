@@ -38,12 +38,18 @@
         </div>
     </div>
     <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-        <table id="example1" class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+        <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS">
             <thead>
                 <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
                     <th>
                         Request Code
                     </th>
+                    @if (!User.IsInRole("Customer"))
+                    {
+                        <th>
+                            Customer
+                        </th>
+                    }
                     <th>
                         Request Type
                     </th>
@@ -61,8 +67,14 @@
                     <tr>
                         <td>
                             @Html.ActionLink(Model.Requests[i].LastestStatusRequest.RequestCode, "Detais", "Request",
-                        new { rType = Model.Requests[i].LastestStatusRequest.RequestTypeCode, rCode = Model.Requests[i].LastestStatusRequest.RequestCode }, null)
+                                new { rType = Model.Requests[i].LastestStatusRequest.RequestTypeCode, rCode = Model.Requests[i].LastestStatusRequest.RequestCode }, null)
                         </td>
+                        @if (!User.IsInRole("Customer"))
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.Customer)
+                            </td>
+                        }
                         <td>
                             @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.RequestTypeName)
                         </td>
@@ -83,6 +95,12 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => old.RequestCode)
                                 </td>
+                                @if (!User.IsInRole("Customer"))
+                                {
+                                    <td>
+                                        @Html.DisplayFor(modelItem => old.Customer)
+                                    </td>
+                                }
                                 <td>
                                     @Html.DisplayFor(modelItem => old.RequestTypeName)
                                 </td>
@@ -102,6 +120,12 @@
                     <th>
                         RequestCode
                     </th>
+                    @if (!User.IsInRole("Customer"))
+                    {
+                        <th>
+                            Customer
+                        </th>
+                    }
                     <th>
                         RequestType
                     </th>

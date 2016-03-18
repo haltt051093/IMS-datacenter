@@ -57,7 +57,7 @@ Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                     {
                         <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                             @Html.ActionLink(Model.RequestInfo.StaffName, "ViewProfile", "Account",
-                                new { username = Model.RequestInfo.Assignee }, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                new { username = Model.RequestInfo.Assignee }, null)
                             @Html.HiddenFor(model => model.RequestInfo.Assignee)
                         </div>
                     }
@@ -69,7 +69,7 @@ Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                         @Html.LabelFor(model => model.CustomerInfo.Customer)
                     </div>
                     <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                        @Html.ActionLink(Model.CustomerInfo.CustomerName, "ViewProfile", "Account", new { username = Model.CustomerInfo.Customer }, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        @Html.ActionLink(Model.CustomerInfo.CustomerName, "ViewProfile", "Account", new { username = Model.CustomerInfo.Customer }, null)
                     </div>
                 </div>
                 @if (Model.CustomerInfo.Company != null)

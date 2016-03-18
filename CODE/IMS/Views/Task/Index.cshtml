@@ -1,35 +1,19 @@
 ﻿@model TaskIndexViewModel
 @{
-    ViewBag.Title = "Task";
+    ViewBag.Title = Pages.RequestIndex;
+    ViewBag.PageTitle = Pages.RequestIndex;
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("Request", "Index", Pages.Request)
+    };
 }
 <!-- Main content -->
 <section class="main-content">
-    @*<div class="row">
-            <div class="col-xs-4">
-                Request Type:
-            </div>
-            <div class="col-xs-8">
-                @Html.DropDownListFor(m => m.FilterByRequestType, Model.FilterByRequestType, "Select All")
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-4">
-                Request Status:
-            </div>
-            <div class="col-xs-8">
-                @Html.DropDownListFor(m => m.FilterByStatus, Model.FilterByStatus, "Select All")
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-4">
-                Time of Request:
-            </div>
-            <div class="col-xs-8">
-                @Html.DropDownListFor(m => m.FilterByPeriodOfTime, Model.FilterByPeriodOfTime)
-            </div>
-        </div>*@
-    <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS">
-        <thead>
+    @using (Html.BeginForm("UpdateTaskStatus", "Task", FormMethod.Post))
+    {
+        <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS">
+            <thead>
             <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
                 <th>
                     Request Code
@@ -46,35 +30,58 @@
                 <th>
                     Assigned Time
                 </th>
+                <th>
+                    Action
+                </th>
             </tr>
-        </thead>
+            </thead>
 
-        @for (int i = 0; i < Model.Tasks.Count; i++)
-        {
-            <tbody>
+            @for (int i = 0; i < Model.Tasks.Count; i++)
+            {
+                <tbody>
                 <tr>
                     <td>
                         @Html.ActionLink(Model.Tasks[i].RequestCode, "Detais", "ProcessRequest",
-                        new { rType = Model.Tasks[i].RequestTypeCode, rCode = Model.Tasks[i].RequestCode }, null)
+                            new {rType = Model.Tasks[i].RequestTypeCode, rCode = Model.Tasks[i].RequestCode}, null)
+                        @Html.HiddenFor(modelItem => modelItem.Tasks[i].RequestCode)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => Model.Tasks[i].RequestTypeName)
+                        @Html.HiddenFor(modelItem => modelItem.Tasks[i].RequestTypeName)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => Model.Tasks[i].StatusName)
+                        @Html.HiddenFor(modelItem => modelItem.Tasks[i].StatusCode)
                     </td>
                     <td>
-                        @Html.ActionLink(Model.Tasks[i].ShiftHeadName, "ViewProfile", "Account", new { username = Model.Tasks[i].ShiftHead }, null)
+                        @Html.ActionLink(Model.Tasks[i].ShiftHeadName, "ViewProfile", "Account", new {username = Model.Tasks[i].ShiftHead}, null)
+                        @Html.HiddenFor(modelItem => modelItem.Tasks[i].ShiftHead)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => Model.Tasks[i].AssignedTime)
+                        @Html.HiddenFor(modelItem => modelItem.Tasks[i].AssignedTime)
+                    </td>
+                    <td>
+                        @Html.HiddenFor(modelItem => modelItem.Tasks[i].TaskCode)
+                        @if (Model.Tasks[i].StatusCode == Constants.StatusCode.TASK_ACCEPTING)
+                        {
+                            <button type="submit" id="btnAccept" name="Accept" value="@Model.Tasks[i].TaskCode" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                                @Labels.Accept
+                            </button>
+                        }
+                        @if (Model.Tasks[i].StatusCode == Constants.StatusCode.TASK_DOING)
+                        {
+                            <button type="submit" id="btnCancel" name="Cancel" value="@Model.Tasks[i].TaskCode" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                                Not Finished
+                            </button>
+                        }
                     </td>
                 </tr>
-            </tbody>
-        }
-    </table>
+                </tbody>
+            }
+        </table>
+    }
 </section><!-- /.content -->
-
 <script>
     function filterRequest() {
         var typeCode = $("#FilterByRequestType").val();

@@ -94,19 +94,33 @@ namespace IMS.Data.Repository
                               ServerCode = l.ServerCode,
                               RackCode = l.RackCode,
                               RackName = r.RackName,
+                              RackUnit = l.RackUnit,
                           };
             var query = from s in Table()
                         join l in rackDis
                             on s.ServerCode equals l.ServerCode into sl
                         from subl in sl.DefaultIfEmpty()
-                        where s.Customer == customer && s.StatusCode == Constants.StatusCode.SERVER_RUNNING
+                        join st in StatusDAO.Current.Table()
+                            on s.StatusCode equals st.StatusCode into stsl
+                        from subst in stsl.DefaultIfEmpty()
+                        join a in AccountDAO.Current.Table()
+                            on s.Customer equals a.Username into astsl
+                        from suba in astsl.DefaultIfEmpty()
+                        where s.Customer == customer
                         select new ServerExtendedModel
                         {
                             RackCode = subl.RackCode,
                             RackName = subl.RackName,
                             DefaultIP = s.DefaultIP,
                             ServerCode = s.ServerCode,
-                            Customer = s.Customer
+                            Customer = s.Customer,
+                            RackUnit = subl.RackUnit,
+                            Status = subst.StatusName,
+                            CustomerName = suba.Fullname,
+                            Id = s.Id,
+                            Maker = s.Maker,
+                            Model = s.Model,
+                            StatusCode = s.StatusCode
                         };
             return query.ToList();
         }
@@ -162,18 +176,18 @@ namespace IMS.Data.Repository
         public List<AttributeExtendedModel> GetServerAttributes(int id)
         {
             var query = from sa in ServerAttributeDAO.Current.Table()
-                join a in AttributeDAO.Current.Table()
-                    on sa.AttributeCode equals a.AttributeCode into saa
-                from subsaa in saa.DefaultIfEmpty()
-                join s in Table()
-                    on sa.ServerCode equals s.ServerCode into ssa
-                from subssa in ssa.DefaultIfEmpty()
-                where subssa.Id == id
-                select new AttributeExtendedModel
-                {
-                    AttributeName = subsaa.AttributeName,
-                    AttributeValue = sa.AttributeValue
-                };
+                        join a in AttributeDAO.Current.Table()
+                            on sa.AttributeCode equals a.AttributeCode into saa
+                        from subsaa in saa.DefaultIfEmpty()
+                        join s in Table()
+                            on sa.ServerCode equals s.ServerCode into ssa
+                        from subssa in ssa.DefaultIfEmpty()
+                        where subssa.Id == id
+                        select new AttributeExtendedModel
+                        {
+                            AttributeName = subsaa.AttributeName,
+                            AttributeValue = sa.AttributeValue
+                        };
             return query.ToList();
         }
 

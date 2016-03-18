@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using IMS.Core;
+using IMS.Core.Express;
 using IMS.Data.Business;
 using IMS.Data.Generic;
 using IMS.Data.Models;
@@ -32,12 +33,15 @@ namespace IMS.Data.Repository
 
         public void AssignTask(string requestCode, string shifthead, string staff)
         {
+            var taskCode = GenerateCode(); ;
+
             var task = new Task()
             {
+                TaskCode = taskCode,
                 RequestCode = requestCode,
                 ShiftHead = shifthead,
                 AssignedStaff = staff,
-                StatusCode = Constants.StatusCode.TASK_DOING,
+                StatusCode = Constants.StatusCode.TASK_ACCEPTING,
                 AssignedTime = DateTime.Now,
             };
             Add(task);
@@ -59,7 +63,9 @@ namespace IMS.Data.Repository
                             RequestCode = t.RequestCode,
                             RequestTypeCode = subrtt.RequestType,
                             ShiftHead = t.ShiftHead,
-                            AssignedTime = t.AssignedTime
+                            AssignedTime = t.AssignedTime,
+                            StatusCode = subst.StatusCode,
+                            TaskCode = t.TaskCode
                         };
 
             var list = new List<TaskExtendedModel>();
@@ -92,6 +98,18 @@ namespace IMS.Data.Repository
                 query.StatusCode = statusCode;
                 Update(query);
             }
+        }
+
+        public string GenerateCode()
+        {
+            var code = "T" + TextExpress.Randomize(9, TextExpress.NUMBER + TextExpress.NUMBER);
+            var existing = Query(x => x.RequestCode == code).FirstOrDefault();
+            while (existing != null)
+            {
+                code = "T" + TextExpress.Randomize(9, TextExpress.NUMBER + TextExpress.NUMBER);
+                existing = Query(x => x.RequestCode == code).FirstOrDefault();
+            }
+            return code;
         }
     }
 }

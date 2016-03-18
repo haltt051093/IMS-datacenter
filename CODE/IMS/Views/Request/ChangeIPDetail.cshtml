@@ -69,22 +69,28 @@
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
                 @Html.LabelFor(model => model.ReturningIPs)
             </div>
-            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                @for (int i = 0; i < Model.ReturningIPs.Count; i++)
+            @for (int i = 0; i < Model.ReturningIPs.Count; i++)
                 {
-                    <div class="col-xs-6">
-                        @Html.DisplayFor(model => Model.ReturningIPs[i], new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })<br />
-                        @Html.HiddenFor(model => model.ReturningIPs[i])
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.DisplayFor(model => Model.ReturningIPs[i], new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })<br />
+                    @Html.HiddenFor(model => model.ReturningIPs[i])
+                </div>
+            }
+        </div>
+        if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
+        {
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    @Html.LabelFor(model => model.NewIPs)
+                </div>
+                @for (int i = 0; i < Model.NewIPs.Count; i++)
+                {
+                    <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                        @Html.DisplayFor(model => Model.NewIPs[i], new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })<br />
                     </div>
-                    if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
-                    {
-                        <div class="col-xs-6">
-                            @Html.DisplayFor(model => Model.NewIPs[i], new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })<br />
-                        </div>
-                    }
                 }
             </div>
-        </div>
+        }
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
             </div>

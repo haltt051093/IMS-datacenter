@@ -8,6 +8,7 @@ namespace IMS.Data.Models
     [Table("Task")]
     public partial class Task : BaseModel
     {
+        public string TaskCode { get; set; }
         [StringLength(50)]
         public string AssignedStaff { get; set; }
 

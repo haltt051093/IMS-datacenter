@@ -252,7 +252,6 @@ namespace IMS.Data.Repository
                 Description = description
             };
             LogChangedContentBLO.Current.AddLog(logRequest);
-            
         }
 
         public string AddRequest(string requestCode, string requestType, string newStatus, string customer,
