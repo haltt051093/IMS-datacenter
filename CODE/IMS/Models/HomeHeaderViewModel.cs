@@ -20,5 +20,6 @@ namespace IMS.Models
                 }
             }
         }
+        public string Group { get; set; }
     }
 }

@@ -25,19 +25,15 @@
     {
         if (Model.Count < 12)
         {
-            @Html.ActionLink("Add new staff", "CreateStaff", "Account", htmlAttributes: new { @class = "btn btn-primary" })
+            <a href="@Url.Action("CreateStaff", "Account")" class="btn btn-primary"><i class="fa fa-plus"></i> Add new Staff</a>
         }
-        @Html.ActionLink("Add new customer", "CreateCustomer", "Account", htmlAttributes: new { @class = "btn btn-primary" })
+        <a href="@Url.Action("CreateCustomer", "Account")" class="btn btn-primary"><i class="fa fa-plus"></i> Add new Customer</a>
         <div class="row hide">
             <div id="dropdown-template" class="col-xs-3">
                 <label>Filter: @Html.DropDownListFor(model => model.RoleSearch, Model.Roles, "All Roles", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
             </div>
         </div>
 
-    }
-    @if (User.IsInRole("Shift Head") || User.IsInRole("Staff"))
-    {
-        @Html.ActionLink("Add new customer", "CreateCustomer", "Account", htmlAttributes: new {@class = "btn btn-primary"})
     }
 
     <table id="example1" class="table table-bordered table-hover">

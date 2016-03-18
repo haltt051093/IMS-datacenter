@@ -209,6 +209,7 @@ namespace IMS.Controllers
             }
             var accountviewmodel = Mapper.Map<Account, AccountCreateViewModel>(account);
             accountviewmodel.UserLogin = GetCurrentUserName();
+            accountviewmodel.RoleLogin = GetCurrentUserRole();
             return View(accountviewmodel);
         }
 
@@ -240,9 +241,9 @@ namespace IMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult PostForgotPassword(Account account)
+        public ActionResult PostForgotPassword(ForgotPasswordViewModel fpvm)
         {
-            Account o = AccountDAO.Current.Query(x => x.Email == account.Email).FirstOrDefault();
+            Account o = AccountDAO.Current.Query(x => x.Email == fpvm.Email).FirstOrDefault();
             if (o != null)
             {
                 var newpw = AccountBLO.Current.GeneratePassword();
@@ -263,7 +264,9 @@ namespace IMS.Controllers
 
         public ActionResult GetChangePW()
         {
-            return View("ChangePassword");
+            var data = new ChangePasswordViewModel();
+            data.UserLogin = GetCurrentUserName();
+            return View("ChangePassword",data);
         }
 
         [HttpPost]

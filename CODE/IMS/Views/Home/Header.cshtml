@@ -2,6 +2,7 @@
 @{
     var account = Model.Account;
     var role = Model.Role;
+    var group = Model.Group;
 }
 
 <a href="@Url.Action("Index", "Home")" class="logo">
@@ -23,26 +24,29 @@
             <!-- Messages: style can be found in dropdown.less-->
             @if (Model.Account != null)
             {
-                <li class="dropdown notifications-menu">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-warning"></i>
-                        <span class="label label-warning">10</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li class="header">You have 10 notifications</li>
-                        <li>
-                            <!-- inner menu: contains the actual data -->
-                            <ul class="menu">
-                                <li>
-                                    <a href="#" data-toggle="modal" data-target="#requestinfo-modal">
-                                        <i class="ion ion-ios7-people info"></i> Request add server
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="footer"><a href="@Url.Action("Index", "Notification")">View all</a></li>
-                    </ul>
-                </li>
+                if (!User.IsInRole(Constants.Role.STAFF))
+                {
+                    <li class="dropdown notifications-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-bell-o"></i>
+                            <span class="label label-warning">10</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="header">You have 10 notifications</li>
+                            <li>
+                                <!-- inner menu: contains the actual data -->
+                                <ul class="menu">
+                                    <li>
+                                        <a href="#" data-toggle="modal" data-target="#requestinfo-modal">
+                                            <i class="ion ion-ios7-people info"></i> Request add server
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="footer"><a href="@Url.Action("Index", "Notification")">View all</a></li>
+                        </ul>
+                    </li>
+                }
                 <!-- Tasks: style can be found in dropdown.less -->
                 if (User.IsInRole(Constants.Role.STAFF))
                 {
@@ -80,11 +84,23 @@
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header bg-light-blue">
-                            <img src="@Url.Content("~/img/user.png")" class="img-circle" alt="User Image" />
-                            <p>
-                                @account.Fullname - @role
-                              
-                            </p>
+                            <img src="@Url.Content("~/img/user.png")" class="img-circle" alt="User Image"/>
+                            @if (role == "Manager" || role == "Customer")
+                            {
+                                <p>
+                                    @account.Fullname - @role
+
+                                </p>
+                            }
+                            else
+                            {
+                                <p>
+                                    @account.Fullname
+
+                                </p>
+                                <p>@role - @group</p>
+                            }
+                            
                         </li>
 
                         <!-- Menu Footer-->

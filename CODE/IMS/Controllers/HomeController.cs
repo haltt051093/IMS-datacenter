@@ -18,6 +18,7 @@ namespace IMS.Controllers
         {
             var data = new HomeHeaderViewModel();
             data.Account = GetCurrentAccount();
+            data.Group = GetCurrentUserGroup();
             return PartialView(data);
         }
 

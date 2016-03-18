@@ -14,9 +14,17 @@
     <div>
         <a class="btn btn-primary pull-left" data-toggle="modal" data-target="#addip-modal"><i class="fa fa-plus"></i> @Labels.AddIP</a>
     </div>
-   
+
     <div>
-        <a id="deactivateip" class="btn btn-danger pull-left"><i class="fa fa-minus"></i> @Labels.DeactivateIP</a>
+        @if (Model.NetIPAvai.Count > 0)
+        {
+            <a id="deactivateip" class="btn btn-danger pull-left"><i class="fa fa-minus"></i> @Labels.DeactivateIP</a>
+        }
+        else
+        {
+            <a id="deactivateip" class="btn btn-danger pull-left disabled"><i class="fa fa-minus"></i> @Labels.DeactivateIP</a>
+        }
+
     </div>
     <div class="clearfix"></div>
     <div style="height: 10px"></div>
@@ -103,7 +111,7 @@
             @using (Html.BeginForm())
             {
                 <div class="modal-header">
-                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i> @Labels.DeactivateIP</div>
+                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-minus"></i> @Labels.DeactivateIP</div>
                 </div>
                 <div class="modal-body">
                     <div class="pull-left">
