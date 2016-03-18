@@ -13,6 +13,7 @@ namespace IMS
                 //account
                 config.CreateMap<Account, AccountIndexViewModel>();
                 config.CreateMap<AccountCreateViewModel, Account>();
+                config.CreateMap<CreateCustomerViewModel, Account>();
                 config.CreateMap<Account, AccountCreateViewModel>();
                 //server
                 config.CreateMap<Server, ServerDetailsViewModel> ();

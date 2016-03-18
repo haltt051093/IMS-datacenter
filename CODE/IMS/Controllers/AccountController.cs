@@ -105,12 +105,12 @@ namespace IMS.Controllers
         }
         
         [HttpPost]
-        public ActionResult CreateCustomer(AccountCreateViewModel accountCreateViewModel)
+        public ActionResult CreateCustomer(CreateCustomerViewModel accountCreateViewModel)
         {
             if (ModelState.IsValid)
             {
                 // su dung mapping cho list
-                var account = Mapper.Map<AccountCreateViewModel, Account>(accountCreateViewModel);
+                var account = Mapper.Map<CreateCustomerViewModel, Account>(accountCreateViewModel);
                 account.Role = Constants.Role.CUSTOMER;
                 account.GroupCode = Constants.GroupName.CUSTOMER;
                 account.Status = true;
@@ -267,32 +267,25 @@ namespace IMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult PostChangePW(string oldpassword, string newpassword, string confirmpassword)
+        public ActionResult PostChangePW(ChangePasswordViewModel cpvm)
         {
-            if (newpassword.Equals(confirmpassword))
-            {
-                if (Session[Constants.Session.USER_LOGIN] != null)
-                {
-                    var obj = Session[Constants.Session.USER_LOGIN];
-                    Account a = (Account)obj;
 
-                    if (oldpassword.Equals(a.Password))
+            var obj = GetCurrentAccount();
+            Account o = AccountDAO.Current.Query(x => x.Username ==obj.Username).FirstOrDefault();
+
+                    if (cpvm.Password.Equals(o.Password))
                     {
-                        a.Password = newpassword;
-                        AccountBLO.Current.AddOrUpdate(a);
+                        o.Password = cpvm.NewPassword;
+                        AccountBLO.Current.AddOrUpdate(o);
+                        Success("Change Password Successfully!");
+                        return View("ChangePassword");
                     }
                     else
                     {
-                        ViewBag.password = "Old password wrong.";
-                    }
-                }
-            }
-            else
-            {
-                ViewBag.confirm = "Confirm Password not match with new password";
-            }
-
-            return View("ChangePassword");
+                        Alert("Old password wrong!!");
+                        return View("ChangePassword");
+                    }     
+            
         }
 
         public ActionResult Logout()

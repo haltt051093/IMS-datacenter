@@ -216,4 +216,7 @@
   <data name="ViewProfile" xml:space="preserve">
     <value>View Profile</value>
   </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Change Password</value>
+  </data>
 </root>

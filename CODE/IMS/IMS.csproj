@@ -920,6 +920,8 @@
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\ProcessRequestController.cs" />
     <Compile Include="Controllers\ValidateController.cs" />
+    <Compile Include="Models\ChangePasswordViewModel.cs" />
+    <Compile Include="Models\CreateCustomerViewModel.cs" />
     <Compile Include="Models\HomeHeaderViewModel.cs" />
     <Compile Include="Models\HomeSidebarViewModel.cs" />
     <Compile Include="Models\TaskIndexViewModel.cs" />
@@ -1023,9 +1025,7 @@
     <Content Include="Views\Server\Detail.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\ProcessRequest\AddServerInfo.cshtml" />
-    <Content Include="Views\Account\ViewAccount.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPWSuccess.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Home\Sidebar.cshtml" />
     <Content Include="Views\Notification\Index.cshtml" />

@@ -83,19 +83,21 @@
                             <img src="@Url.Content("~/img/avatar3.png")" class="img-circle" alt="User Image" />
                             <p>
                                 @account.Fullname - @role
-                                <small>Member since Nov. 2012</small>
+                              
                             </p>
                         </li>
 
                         <!-- Menu Footer-->
-                        <li class="user-footer">
-                            <div class="pull-left">
+                        <li class="user-footer form-inline">
+                           
                                 <a href="@Url.Action("ViewProfile", "Account", new {username = @account.Username}, null)"
-                                   class="btn btn-default btn-flat">Profile</a>
-                            </div>
-                            <div class="pull-right">
-                                <a href="@Url.Action("Logout", "Account")" class="btn btn-default btn-flat">Sign out</a>
-                            </div>
+                                   class="btn btn-default">Profile</a>
+                           
+                                <a href="@Url.Action("GetChangePW", "Account")"
+                                   class="btn btn-default">Change Password</a>
+                            
+                                <a href="@Url.Action("Logout", "Account")" class="btn btn-default">Log out</a>
+                           
                         </li>
                     </ul>
                 </li>
