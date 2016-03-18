@@ -11,5 +11,7 @@ namespace IMS.Data.ViewModels
         public string RejectReason { get; set; }
         public string AssignedStaff { get; set; }
         public string TaskStatus { get; set; }
+        public string TaskStatusName { get; set; }
+        public string TaskCode { get; set; }
     }
 }

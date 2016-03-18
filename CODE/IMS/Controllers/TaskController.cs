@@ -22,31 +22,20 @@ namespace IMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateTaskStatus(string code)
+        public ActionResult UpdateTaskStatus(TaskIndexViewModel viewmodel)
         {
-            if (Request.Form[Constants.FormAction.ACCEPT_ACTION] != null)
+            if (viewmodel.Action == Constants.FormAction.ACCEPT_ACTION)
             {
-                //foreach (var item in viewmodel.Tasks)
-                //{
-                //    if (item != null)
-                //    {
-                        //update task
-                        TaskBLO.Current.UpdateTaskStatus(code, Constants.StatusCode.TASK_DOING);
-                //    }
-                //}
+                //update task
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.TaskCode, Constants.StatusCode.TASK_DOING);
+                //khi task la doing thi shifthead
             }
-            if (Request.Form[Constants.FormAction.CANCEL_ACTION] != null)
+            if (viewmodel.Action == Constants.FormAction.CANCEL_ACTION)
             {
                 //DOING
                 //co note ghi ly do not finished --> note nay gui den shifthead o dau? ntn
-                //foreach (var item in viewmodel.Tasks)
-                //{
-                //    if (item != null)
-                //    {
-                //        //update task
-                //        TaskBLO.Current.UpdateTaskStatus(item.RequestCode, Constants.StatusCode.TASK_NOTFINISH);
-                //    }
-                //}
+                //update task
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.TaskCode, Constants.StatusCode.TASK_NOTFINISH);
             }
             return RedirectToAction("Index");
         }

@@ -31,7 +31,7 @@ namespace IMS.Data.Repository
             return Query(x => x.Id == entry.Id).FirstOrDefault();
         }
 
-        public void AssignTask(string requestCode, string shifthead, string staff)
+        public void AssignTask(string requestCode, string shifthead, string staff, string preStaff)
         {
             var taskCode = GenerateCode(); ;
 
@@ -43,6 +43,7 @@ namespace IMS.Data.Repository
                 AssignedStaff = staff,
                 StatusCode = Constants.StatusCode.TASK_ACCEPTING,
                 AssignedTime = DateTime.Now,
+                PreAssignedStaff = preStaff
             };
             Add(task);
         }
@@ -88,10 +89,10 @@ namespace IMS.Data.Repository
             return list.ToList();
         }
 
-        public void UpdateTaskStatus(string requestCode, string statusCode)
+        public void UpdateTaskStatus(string taskCode, string statusCode)
         {
             var query = (from t in Table()
-                         where t.RequestCode == requestCode
+                         where t.TaskCode == taskCode
                          select t).FirstOrDefault();
             if (query != null)
             {

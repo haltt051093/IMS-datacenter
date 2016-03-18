@@ -120,7 +120,7 @@ Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(model => i + 1, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                    @Html.Raw(i + 1)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(model => Model.Servers[i].Power, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })W

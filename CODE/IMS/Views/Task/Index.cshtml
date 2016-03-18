@@ -10,10 +10,9 @@
 }
 <!-- Main content -->
 <section class="main-content">
-    @using (Html.BeginForm("UpdateTaskStatus", "Task", FormMethod.Post))
-    {
-        <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS">
-            <thead>
+
+    <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS">
+        <thead>
             <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
                 <th>
                     Request Code
@@ -34,15 +33,15 @@
                     Action
                 </th>
             </tr>
-            </thead>
+        </thead>
 
-            @for (int i = 0; i < Model.Tasks.Count; i++)
+        @for (int i = 0; i < Model.Tasks.Count; i++)
             {
-                <tbody>
+            <tbody>
                 <tr>
                     <td>
                         @Html.ActionLink(Model.Tasks[i].RequestCode, "Detais", "ProcessRequest",
-                            new {rType = Model.Tasks[i].RequestTypeCode, rCode = Model.Tasks[i].RequestCode}, null)
+                            new { rType = Model.Tasks[i].RequestTypeCode, rCode = Model.Tasks[i].RequestCode }, null)
                         @Html.HiddenFor(modelItem => modelItem.Tasks[i].RequestCode)
                     </td>
                     <td>
@@ -54,7 +53,7 @@
                         @Html.HiddenFor(modelItem => modelItem.Tasks[i].StatusCode)
                     </td>
                     <td>
-                        @Html.ActionLink(Model.Tasks[i].ShiftHeadName, "ViewProfile", "Account", new {username = Model.Tasks[i].ShiftHead}, null)
+                        @Html.DisplayFor(modelItem => Model.Tasks[i].ShiftHeadName)
                         @Html.HiddenFor(modelItem => modelItem.Tasks[i].ShiftHead)
                     </td>
                     <td>
@@ -62,25 +61,27 @@
                         @Html.HiddenFor(modelItem => modelItem.Tasks[i].AssignedTime)
                     </td>
                     <td>
-                        @Html.HiddenFor(modelItem => modelItem.Tasks[i].TaskCode)
-                        @if (Model.Tasks[i].StatusCode == Constants.StatusCode.TASK_ACCEPTING)
+                        @using (Html.BeginForm("UpdateTaskStatus", "Task", FormMethod.Post))
                         {
-                            <button type="submit" id="btnAccept" name="Accept" value="@Model.Tasks[i].TaskCode" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                                @Labels.Accept
-                            </button>
-                        }
-                        @if (Model.Tasks[i].StatusCode == Constants.StatusCode.TASK_DOING)
-                        {
-                            <button type="submit" id="btnCancel" name="Cancel" value="@Model.Tasks[i].TaskCode" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                                Not Finished
-                            </button>
+                            <input name="TaskCode" type="hidden" value="@Model.Tasks[i].TaskCode" />
+                            if (Model.Tasks[i].StatusCode == Constants.StatusCode.TASK_ACCEPTING)
+                            {
+                                <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.ACCEPT_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                                    @Labels.Accept
+                                </button>
+                            }
+                            if (Model.Tasks[i].StatusCode == Constants.StatusCode.TASK_DOING)
+                            {
+                                <button type="submit" id="btnCancel" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                                    Not Finished
+                                </button>
+                            }
                         }
                     </td>
                 </tr>
-                </tbody>
-            }
-        </table>
-    }
+            </tbody>
+        }
+    </table>
 </section><!-- /.content -->
 <script>
     function filterRequest() {

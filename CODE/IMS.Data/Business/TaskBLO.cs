@@ -30,9 +30,9 @@ namespace IMS.Data.Business
             dao = TaskDAO.Current;
         }
 
-        public void AssignTask(string requestCode, string shifthead, string staff)
+        public void AssignTask(string requestCode, string shifthead, string staff, string preStaff)
         {
-            dao.AssignTask(requestCode, shifthead, staff);
+            dao.AssignTask(requestCode, shifthead, staff, preStaff);
         }
 
         public List<TaskExtendedModel> ListTaskOfStaff(string staff)
@@ -40,9 +40,9 @@ namespace IMS.Data.Business
             return dao.ListTaskOfStaff(staff);
         }
 
-        public void UpdateTaskStatus(string requestCode, string statusCode)
+        public void UpdateTaskStatus(string taskCode, string statusCode)
         {
-            dao.UpdateTaskStatus(requestCode, statusCode);
+            dao.UpdateTaskStatus(taskCode, statusCode);
         }
 
         public string GenerateCode()

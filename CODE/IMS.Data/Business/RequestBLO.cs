@@ -134,8 +134,23 @@ namespace IMS.Data.Business
 
         public RequestInfoModel GetRequestInfo(string requestCode)
         {
+            var task = from t in TaskDAO.Current.Table()
+                       join s in StatusDAO.Current.Table()
+                            on t.StatusCode equals s.StatusCode into st
+                       from subst in st.DefaultIfEmpty()
+                       where t.RequestCode == requestCode
+                       orderby t.AssignedTime descending
+                       select new TaskExtendedModel()
+                       {
+                           StatusCode = t.StatusCode,
+                           AssignedStaff = t.AssignedStaff,
+                           StatusName = subst.StatusName,
+                           RequestCode = t.RequestCode,
+                           TaskCode = t.TaskCode
+                       };
+
             var request = (from r in RequestDAO.Current.Table()
-                           join t in TaskDAO.Current.Table()
+                           join t in task
                                 on r.RequestCode equals t.RequestCode into rt
                            from subrt in rt.DefaultIfEmpty()
                            where r.RequestCode == requestCode
@@ -150,7 +165,9 @@ namespace IMS.Data.Business
                                RequestedTime = r.RequestedTime,
                                Customer = r.Customer,
                                AssignedStaff = subrt.AssignedStaff,
-                               TaskStatus = subrt.StatusCode
+                               TaskStatus = subrt.StatusCode,
+                               TaskCode = subrt.TaskCode,
+                               TaskStatusName = subrt.StatusName
                            }).FirstOrDefault();
             if (request != null)
             {
