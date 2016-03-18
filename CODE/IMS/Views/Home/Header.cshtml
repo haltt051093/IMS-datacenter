@@ -88,17 +88,19 @@
                         </li>
 
                         <!-- Menu Footer-->
-                        <li class="user-footer form-inline">
-                           
+                        
+
+                        <li class="user-footer">
+                            <div class="pull-left">
                                 <a href="@Url.Action("ViewProfile", "Account", new {username = @account.Username}, null)"
-                                   class="btn btn-default">Profile</a>
-                           
-                                <a href="@Url.Action("GetChangePW", "Account")"
-                                   class="btn btn-default">Change Password</a>
-                            
-                                <a href="@Url.Action("Logout", "Account")" class="btn btn-default">Log out</a>
-                           
+                                   class="btn btn-default btn-flat">Profile</a>
+                            </div>
+                            <div class="pull-right">
+                                <a href="@Url.Action("Logout", "Account")" class="btn btn-default btn-flat">Sign out</a>
+                            </div>
                         </li>
+                           
+                       
                     </ul>
                 </li>
             }
