@@ -52,11 +52,19 @@ namespace IMS.Controllers
         public ActionResult Detail(string code)
         {
             var data = new ServerDetailsViewModel();
-            data.Server = ServerBLO.Current.GetServerByCode(code, Constants.StatusCode.SERVER_RUNNING);
+            data.Server = ServerBLO.Current.GetAllServerInfo(code);
             //var serverattributes = ServerBLO.Current.GetServerAttributes(serverCode);
-            data.CurrentIPs = ServerBLO.Current.GetCurrentIP(code);
+            var ips = ServerBLO.Current.GetCurrentIP(code);
+            if (ips != null)
+            {
+                data.CurrentIPs = ips;
+            }
             //them list location
-            data.Locations = LocationBLO.Current.GetLocationsOfServer(data.Server.ServerCode);
+            var locations = LocationBLO.Current.GetLocationsOfServer(data.Server.ServerCode);
+            if (locations != null)
+            {
+                data.Locations = locations;
+            }
             //var locations = LocationBLO.Current.GetChangeLocation(data.Server);
             //var listrack = locations.OrderBy(x => x.RackName).GroupBy(x => x.RackName).Select(x => x.FirstOrDefault());
             //data.Racks = listrack.Select(x => new SelectListItem

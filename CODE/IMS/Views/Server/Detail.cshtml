@@ -132,7 +132,7 @@
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                 @if (Model.CurrentIPs.Count == 0)
                 {
-                    @Html.Display("No IP", new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    @Html.Display("Not Assigned Yet", new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                 }
                 else
                 {
@@ -162,7 +162,7 @@
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
                 @Html.LabelFor(model => model.Locations)
             </div>
-            @if (Model.Locations != null)
+            @if (Model.Locations.Count > 0)
             {
                 <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                     @foreach (var item in Model.Locations)

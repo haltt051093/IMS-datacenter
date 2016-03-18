@@ -63,20 +63,21 @@
                 }
             </div>
         </div>
-            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                </div>
-                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                    @Html.HiddenFor(model => model.RequestInfo.RequestCode)
-                    @Html.HiddenFor(model => model.CustomerInfo.Customer)
-                    @Html.HiddenFor(x => x.RequestInfo.RequestType)
-                    @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
-                {
-                        <button type="submit" id="btnCancel" name="@Constants.FormAction.CANCEL_ACTION" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
-                            @Labels.Cancel
-                        </button>
-                    }
-                </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
             </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.HiddenFor(model => model.RequestInfo.RequestCode)
+                @Html.HiddenFor(model => model.CustomerInfo.Customer)
+                @Html.HiddenFor(x => x.RequestInfo.RequestType)
+                @if ((Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING ||
+                Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING) && User.IsInRole("Customer"))
+                {
+                    <button type="submit" id="btnCancel" name="@Constants.FormAction.CANCEL_ACTION" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
+                        @Labels.Cancel
+                    </button>
+                }
+            </div>
+        </div>
     }
 </section>

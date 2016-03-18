@@ -12,7 +12,6 @@ namespace IMS.Core
             public const string RENT_RACK = "RT011";
             public const string RETURN_IP = "RT010";
             public const string RETURN_RACK = "RT012";
-            public const string UPGRADE_SERVER = "RT006";
         }
 
         public class StatusCode
@@ -67,7 +66,7 @@ namespace IMS.Core
             public const string GROUP_2 = "Group 2";
             public const string GROUP_3 = "Group 3";
             public const string GROUP_4 = "Group 4";
-            public const string NO_GROUP = "No Group";
+            public const string ADMIN = "Admin";
             public const string CUSTOMER = "Customer";
         }
 
@@ -75,13 +74,11 @@ namespace IMS.Core
         {
             public const string SERVER_ADD = "Add Server";
             public const string IP_ASSIGN = "Assign new IP address";
-            public const string SERVER_BRINGIN = "Bring server in";
-            public const string SERVER_BRINGOUT = "Bring server out";
+            public const string SERVER_BRINGAWAY = "Bring server away";
             public const string IP_CHANGE = "Change IP address";
             public const string RACK_RENT = "Rent rack";
             public const string IP_RETURN = "Return IP address";
             public const string RACK_RETURN = "Return rack";
-            public const string UPGRADE_SERVER = "Upgrade server at center";
         }
 
         public class StatusName

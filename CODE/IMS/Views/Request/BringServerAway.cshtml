@@ -20,7 +20,7 @@
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                 <div class='input-group date' id='datetimepicker1'>
-                    @Html.TextBoxFor(model => model.RequestInfo.AppointmentTime, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                    @Html.TextBoxFor(model => model.RequestInfo.AppointmentTime, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                     @Html.ValidationMessageFor(model => model.RequestInfo.AppointmentTime)
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
@@ -39,42 +39,45 @@
                     {
                         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                             <div class="@Constants.HtmlFormat.FORM_MESSAGE_CLASS">
-                                @Html.DropDownListFor(m => m.SelectedRack, Model.RackOfCustomer, "Show all", new {@id = "selectedRack", @class = @Constants.HtmlFormat.FORM_INNER_CLASS})
+                                @Html.DropDownListFor(m => m.SelectedRack, Model.RackOfCustomer, "Show all", new { @id = "selectedRack", @class = @Constants.HtmlFormat.FORM_INNER_CLASS })
                             </div>
                         </div>
                     }
                 }
                 <table id="masterTable" class="@Constants.HtmlFormat.DATATABLE_CLASS">
                     <thead>
-                    <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
-                        <th>
-                            <input id="checkAll" type="checkbox"/>
-                        </th>
-                        <th>
-                            @Labels.ServerCode
-                        </th>
-                        <th>
-                            @Labels.DefaultIP
-                        </th>
-                    </tr>
+                        <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
+                            <th>
+                                <input id="checkAll" type="checkbox" />
+                            </th>
+                            <th>
+                                @Labels.ServerCode
+                            </th>
+                            <th>
+                                @Labels.DefaultIP
+                            </th>
+                        </tr>
                     </thead>
                     <tbody>
-                    @for (var i = 0; i < Model.ServerOfCustomer.Count; i++)
-                    {
-                        <tr class="check" rack-code="@Model.ServerOfCustomer[i].RackCode">
-                            <td>
-                                @Html.CheckBoxFor(modelItem => Model.ServerOfCustomer[i].Checked)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => Model.ServerOfCustomer[i].ServerCode)
-                                @Html.HiddenFor(modelItem => Model.ServerOfCustomer[i].ServerCode)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => Model.ServerOfCustomer[i].DefaultIP)
-                                @Html.HiddenFor(modelItem => Model.ServerOfCustomer[i].DefaultIP)
-                            </td>
-                        </tr>
-                    }
+                        @if (Model.ServerOfCustomer != null)
+                        {
+                            for (var i = 0; i < Model.ServerOfCustomer.Count; i++)
+                            {
+                                <tr class="check" rack-code="@Model.ServerOfCustomer[i].RackCode">
+                                    <td>
+                                        @Html.CheckBoxFor(modelItem => Model.ServerOfCustomer[i].Checked)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => Model.ServerOfCustomer[i].ServerCode)
+                                        @Html.HiddenFor(modelItem => Model.ServerOfCustomer[i].ServerCode)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => Model.ServerOfCustomer[i].DefaultIP)
+                                        @Html.HiddenFor(modelItem => Model.ServerOfCustomer[i].DefaultIP)
+                                    </td>
+                                </tr>
+                            }
+                        }
                     </tbody>
                 </table>
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
@@ -84,24 +87,24 @@
                 </div>
             </div>
         </div>
-        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                @Html.LabelFor(model => model.RequestInfo.Description)
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    @Html.LabelFor(model => model.RequestInfo.Description)
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.TextAreaFor(model => model.RequestInfo.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    @Html.ValidationMessageFor(model => model.RequestInfo.Description)
+                </div>
             </div>
-            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                @Html.TextAreaFor(model => model.RequestInfo.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                @Html.ValidationMessageFor(model => model.RequestInfo.Description)
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        Send Request
+                    </button>
+                </div>
             </div>
-        </div>
-        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-            </div>
-            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                    Send Request
-                </button>
-            </div>
-        </div>
     }
 </section>
 

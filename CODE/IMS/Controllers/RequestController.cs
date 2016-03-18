@@ -87,32 +87,35 @@ namespace IMS.Controllers
                     var data = new RequestBringServerAwayViewModel();
                     //lay server cua customer
                     var serverOfCustomer = ServerBLO.Current.GetServersOfCustomerByStatus(customer, Constants.StatusCode.SERVER_RUNNING);
-                    //Muon hien thi number of server trong rack tuy theo viec lua chon dropdownlist
-                    data.ServerNumber = serverOfCustomer.Count();
-                    //rack cua server, select all va list cua rack, neu ko co thi ko hien
-                    var rackOfCustomer = RackOfCustomerBLO.Current.GetRacksOfCustomer(customer,
-                        Constants.StatusCode.RACKOFCUSTOMER_CURRENT);
-                    if (rackOfCustomer.Count > 0)
+                    if (serverOfCustomer.Count > 0)
                     {
-                        if (q.RackCode != null)
+                        //Muon hien thi number of server trong rack tuy theo viec lua chon dropdownlist
+                        data.ServerNumber = serverOfCustomer.Count();
+                        //rack cua server, select all va list cua rack, neu ko co thi ko hien
+                        var rackOfCustomer = RackOfCustomerBLO.Current.GetRacksOfCustomer(customer,
+                            Constants.StatusCode.RACKOFCUSTOMER_CURRENT);
+                        if (rackOfCustomer.Count > 0)
                         {
-                            var list = new List<ServerExtendedModel>();
-                            foreach (var server in serverOfCustomer)
+                            if (q.RackCode != null)
                             {
-                                server.Checked = true;
-                                list.Add(server);
+                                var list = new List<ServerExtendedModel>();
+                                foreach (var server in serverOfCustomer)
+                                {
+                                    server.Checked = true;
+                                    list.Add(server);
+                                }
+                                data.ServerOfCustomer = list;
+                                data.RackOfCustomer = rackOfCustomer
+                                .Select(x => new SelectListItem { Value = x.RackCode, Text = x.RackName, Selected = x.RackCode == q.RackCode })
+                                .ToList();
                             }
-                            data.ServerOfCustomer = list;
-                            data.RackOfCustomer = rackOfCustomer
-                            .Select(x => new SelectListItem { Value = x.RackCode, Text = x.RackName, Selected = x.RackCode == q.RackCode })
-                            .ToList();
-                        }
-                        else
-                        {
-                            data.ServerOfCustomer = serverOfCustomer;
-                            data.RackOfCustomer = rackOfCustomer
-                            .Select(x => new SelectListItem { Value = x.RackCode, Text = x.RackName })
-                            .ToList();
+                            else
+                            {
+                                data.ServerOfCustomer = serverOfCustomer;
+                                data.RackOfCustomer = rackOfCustomer
+                                .Select(x => new SelectListItem { Value = x.RackCode, Text = x.RackName })
+                                .ToList();
+                            }
                         }
                     }
                     return View("BringServerAway", data);
@@ -215,7 +218,7 @@ namespace IMS.Controllers
         [HttpGet]
         public ActionResult Detais(string rType, string rCode)
         {
-            if (rType.Equals(Constants.TypeOfLog.LOG_ADD_SERVER))
+            if (rType.Equals(Constants.RequestTypeCode.ADD_SERVER))
             {
                 //Get request
                 ProcessRequestAddServerViewModel viewmodel = new ProcessRequestAddServerViewModel();
@@ -232,7 +235,7 @@ namespace IMS.Controllers
                 viewmodel.Servers = list;
                 return View("AddServerDetail", viewmodel);
             }
-            if (rType.Equals(Constants.TypeOfLog.LOG_BRING_SERVER_AWAY))
+            if (rType.Equals(Constants.RequestTypeCode.BRING_SERVER_AWAY))
             {
                 ProcessRequestBringServerAwayViewModel viewmodel = new ProcessRequestBringServerAwayViewModel();
                 //request info
@@ -245,7 +248,7 @@ namespace IMS.Controllers
                 viewmodel.ServerOfCustomer = returnValues.Servers;
                 return View("BringServerAwayDetail", viewmodel);
             }
-            if (rType.Equals(Constants.TypeOfLog.LOG_ASSIGN_IP))
+            if (rType.Equals(Constants.RequestTypeCode.ASSIGN_IP))
             {
                 ProcessRequestAssignIPViewModel viewmodel = new ProcessRequestAssignIPViewModel();
                 //request info
@@ -263,7 +266,7 @@ namespace IMS.Controllers
                 }
                 return View("AssignIPDetail", viewmodel);
             }
-            if (rType.Equals(Constants.TypeOfLog.LOG_CHANGE_IP))
+            if (rType.Equals(Constants.RequestTypeCode.CHANGE_IP))
             {
                 ProcessRequestChangeIPViewModel viewmodel = new ProcessRequestChangeIPViewModel();
                 //request info
@@ -283,7 +286,7 @@ namespace IMS.Controllers
                 return View("ChangeIPDetail", viewmodel);
             }
 
-            if (rType.Equals(Constants.TypeOfLog.LOG_RETURN_IP))
+            if (rType.Equals(Constants.RequestTypeCode.RETURN_IP))
             {
                 ProcessRequestReturnIPViewModel viewmodel = new ProcessRequestReturnIPViewModel();
                 //request info
@@ -296,7 +299,7 @@ namespace IMS.Controllers
                 return View("ReturnIPDetail", viewmodel);
             }
 
-            if (rType.Equals(Constants.TypeOfLog.LOG_RENT_RACK))
+            if (rType.Equals(Constants.RequestTypeCode.RENT_RACK))
             {
                 ProcessRequestRentRackViewModel viewmodel = new ProcessRequestRentRackViewModel();
                 //request info
@@ -322,7 +325,7 @@ namespace IMS.Controllers
                 ViewBag.Message = "Request Deny";
                 return View("RentRackDetail", viewmodel);
             }
-            if (rType.Equals(Constants.TypeOfLog.LOG_RETURN_RACK))
+            if (rType.Equals(Constants.RequestTypeCode.RETURN_RACK))
             {
                 ProcessRequestReturnRackViewModel viewmodel = new ProcessRequestReturnRackViewModel();
                 //request info
@@ -334,7 +337,6 @@ namespace IMS.Controllers
             }
             return RedirectToAction("Index", "Notification");
         }
-
 
         #region Process Request
         [HttpPost]

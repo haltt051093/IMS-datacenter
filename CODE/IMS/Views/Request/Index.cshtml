@@ -66,8 +66,16 @@
                 <tbody class="clickmee check" status-code="@Model.Requests[i].LastestStatusRequest.StatusCode" type-code="@Model.Requests[i].LastestStatusRequest.RequestTypeCode" duration="@Model.Requests[i].LastestStatusRequest.DaysFromNow">
                     <tr>
                         <td>
-                            @Html.ActionLink(Model.Requests[i].LastestStatusRequest.RequestCode, "Detais", "Request",
+                            @if (User.IsInRole("Customer"))
+                            {
+                                @Html.ActionLink(Model.Requests[i].LastestStatusRequest.RequestCode, "Detais", "Request",
                                 new { rType = Model.Requests[i].LastestStatusRequest.RequestTypeCode, rCode = Model.Requests[i].LastestStatusRequest.RequestCode }, null)
+                            }
+                            else
+                            {
+                                @Html.ActionLink(Model.Requests[i].LastestStatusRequest.RequestCode, "Detais", "ProcessRequest",
+                                new { rType = Model.Requests[i].LastestStatusRequest.RequestTypeCode, rCode = Model.Requests[i].LastestStatusRequest.RequestCode }, null)
+                            }
                         </td>
                         @if (!User.IsInRole("Customer"))
                         {

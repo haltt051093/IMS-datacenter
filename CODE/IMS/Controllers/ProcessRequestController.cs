@@ -48,6 +48,12 @@ namespace IMS.Controllers
                 if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING ||
                     viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING)
                 {
+                    var role = GetCurrentUserRole();
+                    if (role == Constants.Role.MANAGER)
+                    {
+                        //DOING
+                        //Lay group dang lam trong ca hien tai ?!
+                    }
                     var group = GetCurrentUserGroup();
                     var listStaff = AccountBLO.Current.GetAccountsByGroup(group);
                     viewmodel.StaffCodeOptions = listStaff
