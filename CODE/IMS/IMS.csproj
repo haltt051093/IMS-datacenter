@@ -998,7 +998,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\CreateCustomer.cshtml" />
     <Content Include="Views\Account\CreateStaff.cshtml" />
-    <Content Include="Views\Account\EditCustomer.cshtml" />
+    <Content Include="Views\Account\EditAccount.cshtml" />
     <Content Include="Views\Account\EditStaff.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\ViewProfile.cshtml" />

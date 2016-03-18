@@ -204,11 +204,8 @@
   <data name="CreateStaff" xml:space="preserve">
     <value>Add new Staff</value>
   </data>
-  <data name="EditCustomer" xml:space="preserve">
-    <value>Edit Customer Profile</value>
-  </data>
-  <data name="EditStaff" xml:space="preserve">
-    <value>Edit Staff Profile</value>
+  <data name="EditProfile" xml:space="preserve">
+    <value>Edit Profile</value>
   </data>
   <data name="ForgotPassword" xml:space="preserve">
     <value>Forgot Password</value>

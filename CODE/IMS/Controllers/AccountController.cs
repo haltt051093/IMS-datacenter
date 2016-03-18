@@ -126,7 +126,7 @@ namespace IMS.Controllers
 
 
         [Authorize(Roles = "Staff,Shift Head,Manager")]
-        public ActionResult EditCustomer(string username)
+        public ActionResult EditAccount(string username)
         {
             Account account = AccountBLO.Current.GetAccountByCode(username);
             if (account == null)
@@ -139,7 +139,7 @@ namespace IMS.Controllers
         }
         // POST: Account/Edit/5
         [HttpPost]
-        public ActionResult EditCustomer(AccountCreateViewModel acvm)
+        public ActionResult EditAccount(AccountCreateViewModel acvm)
         {
             var account = AccountBLO.Current.GetAccountByCode(acvm.Username);
             account.Address = acvm.Address;
@@ -275,7 +275,7 @@ namespace IMS.Controllers
 
             var obj = GetCurrentAccount();
             Account o = AccountDAO.Current.Query(x => x.Username ==obj.Username).FirstOrDefault();
-
+          
                     if (cpvm.Password.Equals(o.Password))
                     {
                         o.Password = cpvm.NewPassword;
@@ -285,8 +285,10 @@ namespace IMS.Controllers
                     }
                     else
                     {
+                var data = new ChangePasswordViewModel();
+                        data.UserLogin = GetCurrentUserName();
                         Alert("Old password wrong!!");
-                        return View("ChangePassword");
+                        return View("ChangePassword",data);
                     }     
             
         }

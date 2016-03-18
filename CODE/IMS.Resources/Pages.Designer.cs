@@ -106,20 +106,11 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit Customer Profile.
+        ///   Looks up a localized string similar to Edit Profile.
         /// </summary>
-        public static string EditCustomer {
+        public static string EditProfile {
             get {
-                return ResourceManager.GetString("EditCustomer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit Staff Profile.
-        /// </summary>
-        public static string EditStaff {
-            get {
-                return ResourceManager.GetString("EditStaff", resourceCulture);
+                return ResourceManager.GetString("EditProfile", resourceCulture);
             }
         }
         

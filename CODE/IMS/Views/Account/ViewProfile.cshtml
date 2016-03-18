@@ -136,7 +136,7 @@
         </div>
         @if ((Model.Role == "Customer" && Model.RoleLogin=="Manager") || Model.Username == Model.UserLogin)
         {
-            <a href="@Url.Action("EditCustomer", "Account", new {username = Model.Username})" class="btn btn-primary"><i class="fa fa-edit"></i> Edit Profile</a>
+            <a href="@Url.Action("EditAccount", "Account", new {username = Model.Username})" class="btn btn-primary"><i class="fa fa-edit"></i> Edit Profile</a>
         }
         else if ((Model.Role == "Staff" || Model.Role == "Shift Head") && Model.RoleLogin == "Manager")
         {

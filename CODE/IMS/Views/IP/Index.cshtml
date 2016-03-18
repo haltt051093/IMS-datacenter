@@ -20,10 +20,7 @@
         {
             <a id="deactivateip" class="btn btn-danger pull-left"><i class="fa fa-minus"></i> @Labels.DeactivateIP</a>
         }
-        else
-        {
-            <a id="deactivateip" class="btn btn-danger pull-left disabled"><i class="fa fa-minus"></i> @Labels.DeactivateIP</a>
-        }
+       
 
     </div>
     <div class="clearfix"></div>
@@ -118,16 +115,17 @@
                         <h3>Select Network IP to deactivate:</h3>
                     </div>
                     <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-
-                        @for (int i = 0; i < Model.NetIPAvai.Count; i++)
+                        @if (Model.NetIPAvai.Count > 0)
                         {
-                            <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                                @Html.HiddenFor(model => model.NetIPAvai[i].Value)
-                                @Html.CheckBoxFor(model => model.NetIPAvai[i].Selected)
-                                @Html.DisplayFor(model => model.NetIPAvai[i].Text)
-                            </div>
-                        }
-
+                            for (int i = 0; i < Model.NetIPAvai.Count; i++)
+                            {
+                                <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                                    @Html.HiddenFor(model => model.NetIPAvai[i].Value)
+                                    @Html.CheckBoxFor(model => model.NetIPAvai[i].Selected)
+                                    @Html.DisplayFor(model => model.NetIPAvai[i].Text)
+                                </div>
+                            }
+                        }                       
                     </div>
 
                     <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
