@@ -110,5 +110,10 @@ namespace IMS.Data.Business
         {
             return dao.GetAllServerInfo(serverCode);
         }
+
+        public List<ServerExtendedModel> GetServersOfCustomerByStatus(string customer, string statusCode)
+        {
+            return dao.GetServersOfCustomerByStatus(customer, statusCode);
+        }
     }
 }

@@ -125,6 +125,64 @@ namespace IMS.Data.Repository
             return query.ToList();
         }
 
+        public List<ServerExtendedModel> GetServersOfCustomerByStatus(string customer, string statusCode)
+        {
+            var distinct = LocationDAO.Current.Table().GroupBy(item => item.ServerCode)
+                .Select(e => e.FirstOrDefault());
+            var rackDis = from r in RackDAO.Current.Table()
+                          join l in distinct
+                              on r.RackCode equals l.RackCode
+                          select new RackOfCustomerExtendedModel
+                          {
+                              LocationCode = l.LocationCode,
+                              ServerCode = l.ServerCode,
+                              RackCode = l.RackCode,
+                              RackName = r.RackName,
+                              RackUnit = l.RackUnit,
+                          };
+            var query = from s in Table()
+                        join l in rackDis
+                            on s.ServerCode equals l.ServerCode into sl
+                        from subl in sl.DefaultIfEmpty()
+                        join st in StatusDAO.Current.Table()
+                            on s.StatusCode equals st.StatusCode into stsl
+                        from subst in stsl.DefaultIfEmpty()
+                        join a in AccountDAO.Current.Table()
+                            on s.Customer equals a.Username into astsl
+                        from suba in astsl.DefaultIfEmpty()
+                        where s.Customer == customer && s.StatusCode == statusCode
+                        select new ServerExtendedModel
+                        {
+                            RackCode = subl.RackCode,
+                            RackName = subl.RackName,
+                            DefaultIP = s.DefaultIP,
+                            ServerCode = s.ServerCode,
+                            Customer = s.Customer,
+                            RackUnit = subl.RackUnit,
+                            Status = subst.StatusName,
+                            CustomerName = suba.Fullname,
+                            Id = s.Id,
+                            Maker = s.Maker,
+                            Model = s.Model,
+                            StatusCode = s.StatusCode
+                        };
+            var list = new List<ServerExtendedModel>();
+            foreach (var server in query.ToList())
+            {
+                if (server.DefaultIP != null)
+                {
+                    var item = server.ServerCode + " - Default IP: " + server.DefaultIP;
+                    server.ServerDefaultIP = item;
+                    list.Add(server);
+                }
+                else
+                {
+                    list.Add(server);
+                }
+            }
+            return list.ToList();
+        }
+
         //a server with full fields
         public ServerExtendedModel GetServerByCode(string serverCode, string status)
         {

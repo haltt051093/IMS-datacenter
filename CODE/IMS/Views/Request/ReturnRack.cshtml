@@ -50,14 +50,14 @@
                                 <td>
                                     @Html.DisplayFor(model => Model.AllRacks[i].RackName)
                                     @Html.HiddenFor(model => Model.AllRacks[i].RackName)
-                                    @Html.HiddenFor(model => Model.AllRacks[i].RackCode)
+                                    @Html.HiddenFor(model => Model.AllRacks[i].RackCode, new { @class = "rackCode" })
                                 </td>
                                 <td class="cannotclick">
                                     @Html.DisplayFor(model => Model.AllRacks[i].ServerNum)
                                     @if (Model.AllRacks[i].ServerNum != 0)
                                     {
                                         @Html.ActionLink("Return all servers", "ReturnRackByBringServerAway", "Request",
-                                       new { rackCode = Model.AllRacks[i].RackCode }, null)
+                                       new { RackCode = Model.AllRacks[i].RackCode }, new { @class = "returnallservers" })
                                     }
                                 </td>
                             </tr>
@@ -81,7 +81,7 @@
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                 @Html.HiddenFor(model => model.SelectedRacks, new { id = "selectedRacks" })
                 <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                    @Labels.DialogOK
+                    Send Request
                 </button>
             </div>
         </div>
@@ -92,5 +92,24 @@
     $("#checkAll").change(function () {
         var state = $('#checkAll').is(':checked');
         $('tr.check input[type="checkbox"]:not(:disabled)').prop('checked', state);
+    });
+
+
+    $('.returnallservers').on('click', function () {
+        var rackCode = $('.rackCode').val();
+
+        $.ajax({
+            cache: false,
+            url: '@(Url.Action("Create", "Request"))',
+            type: 'post',
+            data: {
+                "Type": "RT007",
+                "RackCode": rackCode
+            },
+            dataType: "json",
+            success: function (result) {
+                alert('Save Successful');
+            }
+        });
     });
 </script>

@@ -51,6 +51,6 @@ namespace IMS.Data.ViewModels
 
         public string btnAction { get; set; }
 
-
+        public string ServerDefaultIP { get; set; }
     }
 }

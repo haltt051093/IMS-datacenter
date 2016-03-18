@@ -116,24 +116,34 @@
                 </tbody>
             }
             <tfoot>
-                <tr>
+                <tr style="background-color: #404040">
                     <th>
-                        RequestCode
+                        <span style="color: ghostwhite">
+                            RequestCode
+                        </span>
                     </th>
                     @if (!User.IsInRole("Customer"))
                     {
                         <th>
-                            Customer
+                            <span style="color: ghostwhite">
+                                Customer
+                            </span>
                         </th>
                     }
                     <th>
-                        RequestType
+                        <span style="color: ghostwhite">
+                            RequestType
+                        </span>
                     </th>
                     <th>
-                        RequestedTime
+                        <span style="color: ghostwhite">
+                            RequestedTime
+                        </span>
                     </th>
                     <th>
-                        Status
+                        <span style="color: ghostwhite">
+                            Status
+                        </span>
                     </th>
                 </tr>
             </tfoot>

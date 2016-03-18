@@ -12,6 +12,7 @@ namespace IMS.Models
         }
 
         public string Type { get; set; }
+        public string RackCode { get; set; }
 
         public List<RequestType> RequestTypes { get; set; }
     }

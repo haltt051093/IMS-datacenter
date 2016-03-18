@@ -16,20 +16,34 @@
     {
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.RequestInfo.AppointmentTime)
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                <div class='input-group date' id='datetimepicker1'>
+                    @Html.TextBoxFor(model => model.RequestInfo.AppointmentTime, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                    @Html.ValidationMessageFor(model => model.RequestInfo.AppointmentTime)
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
                 @Html.Label("Select Servers")
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                    @if (Model.RackOfCustomer != null)
+                @if (Model.RackOfCustomer != null)
+                {
+                    if (Model.RackOfCustomer.Count > 0)
                     {
-                        if (Model.RackOfCustomer.Count > 0)
-                        {
-                            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                                <div class="@Constants.HtmlFormat.FORM_MESSAGE_CLASS">
-                                    @Html.DropDownListFor(m => m.SelectedRack, Model.RackOfCustomer, "Show all", new { @id = "selectedRack", @class = @Constants.HtmlFormat.FORM_INNER_CLASS })
-                                </div>
+                        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                            <div class="@Constants.HtmlFormat.FORM_MESSAGE_CLASS">
+                                @Html.DropDownListFor(m => m.SelectedRack, Model.RackOfCustomer, "Show all", new {@id = "selectedRack", @class = @Constants.HtmlFormat.FORM_INNER_CLASS})
                             </div>
-                        }
+                        </div>
                     }
+                }
                 <table id="masterTable" class="@Constants.HtmlFormat.DATATABLE_CLASS">
                     <thead>
                     <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
@@ -84,7 +98,7 @@
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                 <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                    @Labels.DialogOK
+                    Send Request
                 </button>
             </div>
         </div>
@@ -97,6 +111,14 @@
         ordering: false,
         searching: false
     });
+
+    //$('#datetimepicker1').datetimepicker({
+    //    "disabledHours": [0, 1, 2, 3, 4, 5, 6, 7, 21, 22, 23, 24],
+    //    "enabledHours": [8, 9, 10, 12, 12, 14, 15, 16, 17, 18, 19, 20],
+    //    "stepping": '30',
+    //    "minDate": 'moment',
+    //    "locale": 'vi'
+    //});
 
     function countSelected() {
         var count = 0;

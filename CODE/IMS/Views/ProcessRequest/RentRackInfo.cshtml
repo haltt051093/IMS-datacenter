@@ -14,200 +14,259 @@
     </ol>
 </section>
 <section class="main-content">
-    @using (Html.BeginForm("ProcessRequestRentRack", "ProcessRequest", FormMethod.Post))
+@using (Html.BeginForm("ProcessRequestRentRack", "ProcessRequest", FormMethod.Post))
+{
+    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+        <div class="col-xs-6">
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    @Html.LabelFor(model => model.RequestInfo.RequestCode)
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.DisplayFor(model => model.RequestInfo.RequestCode, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                </div>
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    @Html.LabelFor(model => model.RequestInfo.StatusName)
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.DisplayFor(model => model.RequestInfo.StatusName, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                </div>
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    @Html.LabelFor(model => model.RequestInfo.RequestedTime)
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.DisplayFor(model => model.RequestInfo.RequestedTime, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                </div>
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    @Html.LabelFor(model => model.RequestInfo.Assignee)
+                </div>
+                @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING && (User.IsInRole("Shift Head") || User.IsInRole("Manager")))
+                {
+                    <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                        @Html.DropDownListFor(model => model.RequestInfo.Assignee, Model.StaffCodeOptions, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                        @Html.ValidationMessageFor(model => model.RequestInfo.Assignee)
+                    </div>
+                }
+                else
+                {
+                    if (Model.RequestInfo.StaffName != null)
+                    {
+                        <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                            @Html.ActionLink(Model.RequestInfo.StaffName, "ViewProfile", "Account",
+                                new {username = Model.RequestInfo.Assignee}, null)
+                            @Html.HiddenFor(model => model.RequestInfo.Assignee)
+                        </div>
+                    }
+                }
+                @if ((Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_ACCEPTING ||
+                      Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_NOTFINISH) && (User.IsInRole("Shift Head") || User.IsInRole("Manager")))
+                {
+                    <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                        <a class="btn btn-primary pull-left" data-toggle="modal" data-target="#Reassigntask"><i class="fa fa-plus"></i>Reassign Task</a>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    @Html.LabelFor(model => model.CustomerInfo.Customer)
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.ActionLink(Model.CustomerInfo.CustomerName, "ViewProfile", "Account", new {username = Model.CustomerInfo.Customer}, null)
+                </div>
+            </div>
+            @if (Model.CustomerInfo.Company != null)
             {
-        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-            <div class="col-xs-6">
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                     <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                        @Html.LabelFor(model => model.RequestInfo.RequestCode)
+                        @Html.LabelFor(model => model.CustomerInfo.Company)
                     </div>
                     <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                        @Html.DisplayFor(model => model.RequestInfo.RequestCode, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        @Html.DisplayFor(model => model.CustomerInfo.Company, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
                     </div>
                 </div>
-                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                        @Html.LabelFor(model => model.RequestInfo.StatusName)
-                    </div>
-                    <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                        @Html.DisplayFor(model => model.RequestInfo.StatusName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                    </div>
-                </div>
-                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                        @Html.LabelFor(model => model.RequestInfo.RequestedTime)
-                    </div>
-                    <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                        @Html.DisplayFor(model => model.RequestInfo.RequestedTime, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                    </div>
-                </div>
-                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                        @Html.LabelFor(model => model.RequestInfo.Assignee)
-                    </div>
-                    @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING && (User.IsInRole("Shift Head") || User.IsInRole("Manager")))
-                    {
-                        <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                            @Html.DropDownListFor(model => model.RequestInfo.Assignee, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                            @Html.ValidationMessageFor(model => model.RequestInfo.Assignee)
-                        </div>
-                    }
-                    else
-                    {
-                        if (Model.RequestInfo.StaffName != null)
-                        {
-                            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                                @Html.ActionLink(Model.RequestInfo.StaffName, "ViewProfile", "Account",
-                                    new { username = Model.RequestInfo.Assignee }, null)
-                                @Html.HiddenFor(model => model.RequestInfo.Assignee)
-                            </div>
-                        }
-                    }
-                </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                        @Html.LabelFor(model => model.CustomerInfo.Customer)
-                    </div>
-                    <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                        @Html.ActionLink(Model.CustomerInfo.CustomerName, "ViewProfile", "Account", new { username = Model.CustomerInfo.Customer }, null)
-                    </div>
-                </div>
-                @if (Model.CustomerInfo.Company != null)
-                {
-                    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                        <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                            @Html.LabelFor(model => model.CustomerInfo.Company)
-                        </div>
-                        <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                            @Html.DisplayFor(model => model.CustomerInfo.Company, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                        </div>
-                    </div>
-                }
-                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                        @Html.LabelFor(model => model.CustomerInfo.Phone)
-                    </div>
-                    <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                        @Html.DisplayFor(model => model.CustomerInfo.Phone, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                    </div>
-                </div>
-            </div>
-        </div>
-        <hr />
-        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                @Html.LabelFor(model => model.RackNumbers)
-            </div>
-            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                @Html.DisplayFor(model => model.RackNumbers, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-            </div>
-        </div>
-        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                @Html.LabelFor(model => model.RequestInfo.Description)
-            </div>
-            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                @Html.DisplayFor(model => model.RequestInfo.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-            </div>
-        </div>
-        if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
-        {
+            }
             <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                 <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                    @Html.LabelFor(model => model.SelectedRow)
+                    @Html.LabelFor(model => model.CustomerInfo.Phone)
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                    @Html.DropDownListFor(m => m.SelectedRow, Model.ListRows, "Select All", new { @id = "selectedRow", @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                    @Html.ValidationMessageFor(model => model.SelectedRow)
+                    @Html.DisplayFor(model => model.CustomerInfo.Phone, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
                 </div>
             </div>
-            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                <table id="masterTable" class="@Constants.HtmlFormat.DATATABLE_CLASS">
-                    <thead>
-                        <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
-                            <th>
-                                <input id="checkAll" type="checkbox" />
-                            </th>
-                            <th>@Labels.Rack</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for (int i = 0; i < Model.listRackByRows.Count; i++)
-                        {
-                            <tr class="check" row-code="@Model.listRackByRows[i].RowName">
-                                <td>
-                                    @Html.CheckBoxFor(modelItem => modelItem.listRackByRows[i].Checked)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(model => Model.listRackByRows[i].RackName, new { @class = "form-control" })
-                                    @Html.HiddenFor(model => Model.listRackByRows[i].RackName, new { @class = "form-control" })
-                                    @Html.HiddenFor(model => Model.listRackByRows[i].RackCode, new { @class = "form-control" })
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        }
-        if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
-        {
-            <hr />
-            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                    @Html.LabelFor(model => model.RentedRacks)
-                </div>
-                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                    @foreach (var item in Model.RentedRacks)
-                    {
-                        @Html.DisplayFor(model => item, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                        <br />
-                    }
-                </div>
-            </div>
-        }
-        if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_CANCELLED)
-        {
-            @ViewBag.Message
-        }
-        if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_REJECTED)
-        {
-            @ViewBag.Message
-        }
+        </div>
+    </div>
+    <hr/>
+    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+        <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+            @Html.LabelFor(model => model.RackNumbers)
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+            @Html.DisplayFor(model => model.RackNumbers, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+        </div>
+    </div>
+    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+        <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+            @Html.LabelFor(model => model.RequestInfo.Description)
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+            @Html.DisplayFor(model => model.RequestInfo.Description, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+        </div>
+    </div>
+    if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+    {
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.SelectedRow)
             </div>
-            @Html.HiddenFor(model => model.RequestInfo.RequestCode)
-            @Html.HiddenFor(model => model.CustomerInfo.Customer)
-            @Html.HiddenFor(model => model.RequestInfo.Assignee)
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                @Html.DropDownListFor(m => m.SelectedRow, Model.ListRows, "Select All", new {@id = "selectedRow", @class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                @Html.ValidationMessageFor(model => model.SelectedRow)
+            </div>
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <table id="masterTable" class="@Constants.HtmlFormat.DATATABLE_CLASS">
+                <thead>
+                <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
+                    <th>
+                        <input id="checkAll" type="checkbox"/>
+                    </th>
+                    <th>@Labels.Rack</th>
+                </tr>
+                </thead>
+                <tbody>
+                @for (int i = 0; i < Model.listRackByRows.Count; i++)
                 {
-                    if (Model.RequestInfo.Assignee == Model.CurrentUser)
-                    {
-                        <button type="submit" id="btnApprove" name="@Constants.FormAction.APPROVE_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                            @Labels.Approve
-                        </button>
-                        <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
-                            @Labels.Reject
-                        </button>
-                    }
+                    <tr class="check" row-code="@Model.listRackByRows[i].RowName">
+                        <td>
+                            @Html.CheckBoxFor(modelItem => modelItem.listRackByRows[i].Checked)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => Model.listRackByRows[i].RackName, new {@class = "form-control"})
+                            @Html.HiddenFor(model => Model.listRackByRows[i].RackName, new {@class = "form-control"})
+                            @Html.HiddenFor(model => Model.listRackByRows[i].RackCode, new {@class = "form-control"})
+                        </td>
+                    </tr>
                 }
-                else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING && (User.IsInRole("Shift Head") || User.IsInRole("Manager")))
+                </tbody>
+            </table>
+        </div>
+    }
+    if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
+    {
+        <hr/>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.RentedRacks)
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @foreach (var item in Model.RentedRacks)
                 {
-                    <button type="submit" id="btnAccept" name="@Constants.FormAction.ACCEPT_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                        @Labels.Accept
+                    @Html.DisplayFor(model => item, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                    <br/>
+                }
+            </div>
+        </div>
+    }
+    if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_CANCELLED)
+    {
+        @ViewBag.Message
+    }
+    if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_REJECTED)
+    {
+        @ViewBag.Message
+    }
+    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+        <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+        </div>
+        @Html.HiddenFor(model => model.RequestInfo.RequestCode)
+        @Html.HiddenFor(model => model.CustomerInfo.Customer)
+        @Html.HiddenFor(model => model.RequestInfo.Assignee)
+        <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+            @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+            {
+                if (Model.RequestInfo.Assignee == Model.CurrentUser)
+                {
+                    <button type="submit" id="btnApprove" name="@Constants.FormAction.APPROVE_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        @Labels.Approve
                     </button>
                     <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
                         @Labels.Reject
                     </button>
                 }
-            </div>
+            }
+            else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING && (User.IsInRole("Shift Head") || User.IsInRole("Manager")))
+            {
+                <button type="submit" id="btnAccept" name="@Constants.FormAction.ACCEPT_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                    @Labels.Accept
+                </button>
+                <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
+                    @Labels.Reject
+                </button>
+            }
         </div>
-    }
+    </div>
+}
 </section>
+<!-- Reassign IP MODAL -->
+<div id="Reassigntask" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm("ProcessRequestAssignIp", "ProcessRequest", FormMethod.Post))
+            {
+                <div class="modal-header">
+                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i> @Labels.AddIP</div>
+                </div>
+                <div class="modal-body">
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                            @Html.LabelFor(model => model.RequestInfo.StaffName)
+                            @Html.HiddenFor(model => model.RequestInfo.Assignee)
+                            @Html.HiddenFor(model => model.RequestInfo.RequestCode)
+                        </div>
+                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                            @Html.DisplayFor(model => model.RequestInfo.StaffName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        </div>
+                    </div>
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                            @Html.LabelFor(model => model.RequestInfo.TaskStatusName)
+                        </div>
+                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                            @Html.DisplayFor(model => model.RequestInfo.TaskStatusName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        </div>
+                    </div>
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                            @Html.LabelFor(model => model.RequestInfo.AssignedStaff)
+                        </div>
+                        <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                            @Html.DropDownListFor(model => model.RequestInfo.AssignedStaff, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                            @Html.ValidationMessageFor(model => model.RequestInfo.AssignedStaff)
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" name="@Constants.FormAction.REASSIGN_ACTION" value="@Constants.FormAction.REASSIGN_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        @Labels.DialogOK
+                    </button>
+                    <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
+                            data-dismiss="modal">
+                        @Labels.DialogCancel
+                    </button>
+
+                </div>
+            }
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <script type="text/javascript">
     $('#masterTable').dataTable({
         dom: 't',

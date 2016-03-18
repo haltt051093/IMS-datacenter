@@ -19,7 +19,7 @@
                 @Html.LabelFor(model => model.SelectedServer)
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                @Html.DropDownListFor(m => m.SelectedServer, Model.ServerOptions, new { @id = "servercode", @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.DropDownListFor(m => m.SelectedServer, Model.ServerOptions, "Select your server", new { @id = "servercode", @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                 @Html.ValidationMessageFor(model => model.SelectedServer)
             </div>
         </div>
@@ -63,7 +63,7 @@
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                 <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                    @Labels.DialogOK
+                   Send Request
                 </button>
             </div>
         </div>
@@ -74,6 +74,7 @@
         $('#servercode').change(function () {
             var pass = $('#servercode').val();
             var myTable = $('#MyTable > tbody');
+            $('#tbodyid').empty();
             $.ajax({
                 cache: false,
                 type: "GET",

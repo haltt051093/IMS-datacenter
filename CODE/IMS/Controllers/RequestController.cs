@@ -32,7 +32,7 @@ namespace IMS.Controllers
                 var request = LogChangedContentBLO.Current.GetAllRequest();
                 data.Requests = request;
             }
-            
+
             data.FilterByRequestType = TypeOfLogBLO.Current
                 .GetLogTypeOfRequest()
                 .Select(x => new SelectListItem { Value = x.TypeCode, Text = x.TypeName })
@@ -86,19 +86,35 @@ namespace IMS.Controllers
                     var customer = GetCurrentUserName();
                     var data = new RequestBringServerAwayViewModel();
                     //lay server cua customer
-                    data.ServerOfCustomer = ServerBLO.Current.GetServerOfCustomer(customer);
+                    var serverOfCustomer = ServerBLO.Current.GetServersOfCustomerByStatus(customer, Constants.StatusCode.SERVER_RUNNING);
                     //Muon hien thi number of server trong rack tuy theo viec lua chon dropdownlist
-                    data.ServerNumber = data.ServerOfCustomer.Count();
+                    data.ServerNumber = serverOfCustomer.Count();
                     //rack cua server, select all va list cua rack, neu ko co thi ko hien
                     var rackOfCustomer = RackOfCustomerBLO.Current.GetRacksOfCustomer(customer,
                         Constants.StatusCode.RACKOFCUSTOMER_CURRENT);
                     if (rackOfCustomer.Count > 0)
                     {
-                        data.RackOfCustomer = rackOfCustomer
-                        .Select(x => new SelectListItem { Value = x.RackCode, Text = x.RackName })
-                        .ToList();
+                        if (q.RackCode != null)
+                        {
+                            var list = new List<ServerExtendedModel>();
+                            foreach (var server in serverOfCustomer)
+                            {
+                                server.Checked = true;
+                                list.Add(server);
+                            }
+                            data.ServerOfCustomer = list;
+                            data.RackOfCustomer = rackOfCustomer
+                            .Select(x => new SelectListItem { Value = x.RackCode, Text = x.RackName, Selected = x.RackCode == q.RackCode })
+                            .ToList();
+                        }
+                        else
+                        {
+                            data.ServerOfCustomer = serverOfCustomer;
+                            data.RackOfCustomer = rackOfCustomer
+                            .Select(x => new SelectListItem { Value = x.RackCode, Text = x.RackName })
+                            .ToList();
+                        }
                     }
-
                     return View("BringServerAway", data);
                 }
                 else if (requestTypeCode == Constants.RequestTypeCode.ASSIGN_IP)
@@ -113,9 +129,9 @@ namespace IMS.Controllers
                     data.NumberOfIPOptions = listNumbers
                         .Select(x => new SelectListItem { Value = x, Text = x })
                         .ToList();
-                    var listServers = ServerDAO.Current.GetServerOfCustomer(customer);
+                    var listServers = ServerBLO.Current.GetServersOfCustomerByStatus(customer, Constants.StatusCode.SERVER_RUNNING);
                     data.ServerOptions = listServers
-                        .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.ServerCode })
+                        .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.ServerDefaultIP })
                         .ToList();
                     return View("AssignIP", data);
                 }
@@ -124,9 +140,9 @@ namespace IMS.Controllers
                     var customer = GetCurrentUserName();
                     //co the change duoc nhieu IP--> bo sung t
                     var data = new RequestChangeIPViewModel();
-                    var listServers = ServerDAO.Current.GetServerOfCustomer(customer);
+                    var listServers = ServerBLO.Current.GetServersOfCustomerByStatus(customer, Constants.StatusCode.SERVER_RUNNING);
                     data.ServerOptions = listServers
-                        .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.ServerCode })
+                        .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.ServerDefaultIP })
                         .ToList();
                     return View("ChangeIP", data);
                 }
@@ -134,9 +150,9 @@ namespace IMS.Controllers
                 {
                     var customer = GetCurrentUserName();
                     var data = new RequestReturnIPViewModel();
-                    var listServers = ServerDAO.Current.GetServerOfCustomer(customer);
+                    var listServers = ServerBLO.Current.GetServersOfCustomerByStatus(customer, Constants.StatusCode.SERVER_RUNNING);
                     data.ServerOptions = listServers
-                        .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.ServerCode })
+                        .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.ServerDefaultIP })
                         .ToList();
                     return View("ReturnIP", data);
                 }
@@ -322,62 +338,6 @@ namespace IMS.Controllers
 
         #region Process Request
         [HttpPost]
-        public ActionResult ReturnRack(RequestReturnRackViewModel viewmodel)
-        {
-            var customer = GetCurrentUserName();
-            var listRacks = viewmodel.AllRacks;
-            //Add and log request
-            var requestCode = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.RETURN_RACK,
-                Constants.StatusCode.REQUEST_PENDING, customer, viewmodel.RequestInfo.Description,
-                null, null, Constants.TypeOfLog.LOG_RETURN_RACK, null);
-            foreach (var item in listRacks)
-            {
-                if (item.Checked)
-                {
-                    //update and log rackofCustomer
-                    RackOfCustomerBLO.Current.UpdateStatusRackOfCustomerANDLog(requestCode, item.RackCode,
-                        Constants.TypeOfLog.LOG_RETURN_RACK, customer, null
-                        , Constants.StatusCode.RACKOFCUSTOMER_CURRENT, Constants.StatusCode.RACKOFCUSTOMER_RETURNING, item.RackName);
-                }
-            }
-            //Notification
-            var notif = Mapper.Map<RequestReturnRackViewModel, NotificationExtendedModel>(viewmodel);
-            notif.RequestTypeName = Constants.RequestTypeName.RACK_RETURN;
-            notif.StatusName = Constants.StatusName.REQUEST_PENDING;
-            notif.RequestCode = requestCode;
-            //dang ky ham cho client
-            NotifRegister(notif);
-            Toast(Constants.AlertType.SUCCESS, "RequestReturnRack", null, true);
-            return RedirectToAction("Index", "Home");
-        }
-
-        [HttpPost]
-        public ActionResult RentRack(RequestRentRackViewModel viewmodel)
-        {
-            var customer = GetCurrentUserName();
-            //Edit description
-            var requestDetail = new RequestDetailViewModel();
-            requestDetail.NumberOfRack = viewmodel.RackNumbers;
-            requestDetail.Description = viewmodel.RequestInfo.Description;
-            viewmodel.RequestInfo.Description = JsonConvert.SerializeObject(requestDetail);
-
-            //Add and log request
-            var result = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.RENT_RACK,
-                Constants.StatusCode.REQUEST_PENDING, customer, viewmodel.RequestInfo.Description,
-                null, null, Constants.TypeOfLog.LOG_RENT_RACK, null);
-
-            //Notification
-            var notif = Mapper.Map<RequestRentRackViewModel, NotificationExtendedModel>(viewmodel);
-            notif.RequestTypeName = Constants.RequestTypeName.RACK_RENT;
-            notif.StatusName = Constants.StatusName.REQUEST_PENDING;
-            notif.RequestCode = result;
-            //dang ky ham cho client
-            NotifRegister(notif);
-            Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
-            return RedirectToAction("Index", "Home");
-        }
-
-        [HttpPost]
         public ActionResult AddServer(RequestAddServerViewModel viewmodel)
         {
             var customer = GetCurrentUserName();
@@ -430,7 +390,7 @@ namespace IMS.Controllers
             //dang ky ham cho client
             NotifRegister(notif);
             Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -490,7 +450,7 @@ namespace IMS.Controllers
                 }
             }
             Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -520,7 +480,7 @@ namespace IMS.Controllers
                 //dang ky ham cho client
                 NotifRegister(notif);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -553,7 +513,7 @@ namespace IMS.Controllers
                 //dang ky ham cho client
                 NotifRegister(notif);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -588,8 +548,65 @@ namespace IMS.Controllers
                 NotifRegister(notif);
             }
             Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public ActionResult RentRack(RequestRentRackViewModel viewmodel)
+        {
+            var customer = GetCurrentUserName();
+            //Edit description
+            var requestDetail = new RequestDetailViewModel();
+            requestDetail.NumberOfRack = viewmodel.RackNumbers;
+            requestDetail.Description = viewmodel.RequestInfo.Description;
+            viewmodel.RequestInfo.Description = JsonConvert.SerializeObject(requestDetail);
+
+            //Add and log request
+            var result = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.RENT_RACK,
+                Constants.StatusCode.REQUEST_PENDING, customer, viewmodel.RequestInfo.Description,
+                null, null, Constants.TypeOfLog.LOG_RENT_RACK, null);
+
+            //Notification
+            var notif = Mapper.Map<RequestRentRackViewModel, NotificationExtendedModel>(viewmodel);
+            notif.RequestTypeName = Constants.RequestTypeName.RACK_RENT;
+            notif.StatusName = Constants.StatusName.REQUEST_PENDING;
+            notif.RequestCode = result;
+            //dang ky ham cho client
+            NotifRegister(notif);
+            Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult ReturnRack(RequestReturnRackViewModel viewmodel)
+        {
+            var customer = GetCurrentUserName();
+            var listRacks = viewmodel.AllRacks;
+            //Add and log request
+            var requestCode = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.RETURN_RACK,
+                Constants.StatusCode.REQUEST_PENDING, customer, viewmodel.RequestInfo.Description,
+                null, null, Constants.TypeOfLog.LOG_RETURN_RACK, null);
+            foreach (var item in listRacks)
+            {
+                if (item.Checked)
+                {
+                    //update and log rackofCustomer
+                    RackOfCustomerBLO.Current.UpdateStatusRackOfCustomerANDLog(requestCode, item.RackCode,
+                        Constants.TypeOfLog.LOG_RETURN_RACK, customer, null
+                        , Constants.StatusCode.RACKOFCUSTOMER_CURRENT, Constants.StatusCode.RACKOFCUSTOMER_RETURNING, item.RackName);
+                }
+            }
+            //Notification
+            var notif = Mapper.Map<RequestReturnRackViewModel, NotificationExtendedModel>(viewmodel);
+            notif.RequestTypeName = Constants.RequestTypeName.RACK_RETURN;
+            notif.StatusName = Constants.StatusName.REQUEST_PENDING;
+            notif.RequestCode = requestCode;
+            //dang ky ham cho client
+            NotifRegister(notif);
+            Toast(Constants.AlertType.SUCCESS, "RequestReturnRack", null, true);
+            return RedirectToAction("Index");
+        }
+
 
         [HttpGet]
         public ActionResult FetchChangedIPs(RequestChangeIPViewModel model)
@@ -740,7 +757,7 @@ namespace IMS.Controllers
             return RedirectToAction("Detais",
                 new { rType = Constants.TypeOfLog.LOG_RETURN_RACK, rCode = viewmodel.RequestInfo.RequestCode });
         }
-#endregion
+        #endregion
 
     }
 }

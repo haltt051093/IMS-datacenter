@@ -43,80 +43,80 @@
             <tbody>
                 @for (int i = 0; i < Model.Servers.Count; i++)
             {
-                <tr class="check" status-code="@Model.Servers[i].StatusCode">
-                    @if (User.IsInRole("Customer"))
-                    {
-                        <td>
-                            @Html.ActionLink(Model.Servers[i].ServerCode, "Detail", "Server",
+                    <tr class="check" status-code="@Model.Servers[i].StatusCode">
+                        @if (User.IsInRole("Customer"))
+                        {
+                            <td>
+                                @Html.ActionLink(Model.Servers[i].ServerCode, "Detail", "Server",
                             new { code = @Model.Servers[i].ServerCode }, null)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Servers[i].Status)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Servers[i].DefaultIP)
-                        </td>
-                    }
-                    else
-                    {
-                        <td>
-                            @Html.ActionLink(Model.Servers[i].ServerCode, "Detail", "Server",
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Servers[i].Status)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Servers[i].DefaultIP)
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @Html.ActionLink(Model.Servers[i].ServerCode, "Detail", "Server",
                             new { code = @Model.Servers[i].ServerCode }, null)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => Model.Servers[i].CustomerName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Servers[i].Status)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Servers[i].DefaultIP)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Servers[i].RackName)U
-                            @Html.DisplayFor(modelItem => Model.Servers[i].RackUnit)
-                        </td>
-                        <td class="sidebar-menu">
-                            @if (Model.Servers[i].Requests.Count > 0)
-                            {
-                                <dl>
-                                    @foreach (var request in Model.Servers[i].Requests)
-                                    {
-                                        if (request.StatusCode == Constants.StatusCode.REQUEST_PENDING ||
-                                            request.StatusCode == Constants.StatusCode.REQUEST_WAITING ||
-                                            request.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => Model.Servers[i].CustomerName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Servers[i].Status)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Servers[i].DefaultIP)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Servers[i].RackName)U
+                                @Html.DisplayFor(modelItem => Model.Servers[i].RackUnit)
+                            </td>
+                            <td class="sidebar-menu">
+                                @if (Model.Servers[i].Requests.Count > 0)
+                                {
+                                    <dl>
+                                        @foreach (var request in Model.Servers[i].Requests)
                                         {
-                                            <dt>
-                                                @Html.ActionLink(@request.RequestTypeName, "Detais", "ProcessRequest",
+                                            if (request.StatusCode == Constants.StatusCode.REQUEST_PENDING ||
+                                                request.StatusCode == Constants.StatusCode.REQUEST_WAITING ||
+                                                request.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                                            {
+                                                <dt>
+                                                    @Html.ActionLink(@request.RequestTypeName, "Detais", "ProcessRequest",
                                                 new { rType = request.RequestType, rCode = request.RequestCode }, new { @class = "fa fa-angle-double-right" })
-                                            </dt>
+                                                </dt>
+                                            }
                                         }
-                                    }
-                                </dl>
-                            }
-                        </td>
-                    }
-                </tr>
+                                    </dl>
+                                }
+                            </td>
+                        }
+                    </tr>
                 }
             </tbody>
             <tfoot>
-            <tr>
-                @if (User.IsInRole("Customer"))
-                {
-                    <th>@Labels.ServerCode</th>
-                    <th>@Labels.Status</th>
-                    <th>@Labels.DefaultIP</th>
-                }
-                else
-                {
-                    <th>@Labels.ServerCode</th>
-                    <th>@Labels.Customer</th>
-                    <th>@Labels.Status</th>
-                    <th>@Labels.DefaultIP</th>
-                    <th>@Labels.Location</th>
-                    <th>@Labels.CurrentRequest</th>
-                }
-            </tr>
+                <tr style="background-color: #404040">
+                    @if (User.IsInRole("Customer"))
+                    {
+                        <th><span style="color: ghostwhite">@Labels.ServerCode</span></th>
+                        <th><span style="color: ghostwhite">@Labels.Status</span></th>
+                        <th><span style="color: ghostwhite">@Labels.DefaultIP</span></th>
+                    }
+                    else
+                    {
+                        <th><span style="color: ghostwhite">@Labels.ServerCode</span></th>
+                        <th><span style="color: ghostwhite">@Labels.Customer</span></th>
+                        <th><span style="color: ghostwhite">@Labels.Status</span></th>
+                        <th><span style="color: ghostwhite">@Labels.DefaultIP</span></th>
+                        <th><span style="color: ghostwhite">@Labels.Location</span></th>
+                        <th><span style="color: ghostwhite">@Labels.CurrentRequest</span></th>
+                    }
+                </tr>
             </tfoot>
         </table>
     </div>
