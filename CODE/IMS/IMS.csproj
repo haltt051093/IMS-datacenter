@@ -920,6 +920,8 @@
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\ProcessRequestController.cs" />
     <Compile Include="Controllers\ValidateController.cs" />
+    <Compile Include="Models\ChangePasswordViewModel.cs" />
+    <Compile Include="Models\CreateCustomerViewModel.cs" />
     <Compile Include="Models\HomeHeaderViewModel.cs" />
     <Compile Include="Models\HomeSidebarViewModel.cs" />
     <Compile Include="Models\TaskIndexViewModel.cs" />
