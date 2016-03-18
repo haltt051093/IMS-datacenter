@@ -136,15 +136,15 @@
         </div>
         @if ((Model.Role == "Customer" && Model.RoleLogin=="Manager") || Model.Username == Model.UserLogin)
         {
-            @Html.ActionLink("Edit Profile", "EditCustomer", "Account", new { username = Model.Username }, new { @class = "btn btn-primary" })           
+            <a href="@Url.Action("EditCustomer", "Account", new {username = Model.Username})" class="btn btn-primary"><i class="fa fa-edit"></i> Edit Profile</a>
         }
-        else if ((Model.Role == "Staff" || Model.Role == "Shift Head")&&Model.RoleLogin=="Manager")
+        else if ((Model.Role == "Staff" || Model.Role == "Shift Head") && Model.RoleLogin == "Manager")
         {
-            @Html.ActionLink("Edit Profile", "EditStaff", "Account", new { username = Model.Username }, new { @class = "btn btn-primary" })         
+            <a href="@Url.Action("EditStaff", "Account", new {username = Model.Username})" class="btn btn-primary"><i class="fa fa-edit"></i> Edit Profile</a>
         }
         @if (Model.Username == Model.UserLogin)
         {
-            @Html.ActionLink("Change Password", "GetChangePW", "Account", new { @class = "btn btn-primary col-xs-offset-1" })
+            <a href="@Url.Action("GetChangePW", "Account", new {username = Model.Username})" class="btn btn-primary"><i class="fa fa-edit"></i> Change Password</a>
         }
         @if (Model.Username != Model.UserLogin && Model.RoleLogin=="Manager")
         {

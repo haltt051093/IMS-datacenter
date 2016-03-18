@@ -18,5 +18,6 @@ namespace IMS.Models
         [DataType(DataType.Password)]
         [Compare("NewPassword")]
         public string ConfirmPassword { get; set; }
+        public string UserLogin { get; set; }
     }
 }
