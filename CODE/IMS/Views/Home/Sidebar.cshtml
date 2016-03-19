@@ -92,7 +92,7 @@
             <li class="treeview ">
                 @{
                     <a href="@Url.Action(menu.Action, menu.Controller, menu.RouteValue)">
-                        @if (!string.IsNullOrEmpty(menu.Icon)) { <text><i class="@menu.Icon"></i></text> } <span>@menu.Title</span>
+                        @if (!string.IsNullOrEmpty(menu.Icon)) { <text><i class="@menu.Icon"></i></text> } <span>@menu.Title<i class="fa fa-angle-left pull-right"></i></span>
                     </a>
                 }
                 <ul class="treeview-menu">
