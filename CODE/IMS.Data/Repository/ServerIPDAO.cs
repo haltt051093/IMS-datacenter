@@ -77,13 +77,5 @@ namespace IMS.Data.Repository
             };
             LogChangedContentBLO.Current.AddLog(logServerIp);
         }
-
-        public List<string> GetIpByStatus(string serverCode, string status)
-        {
-            var query =
-                Current.Query(x => x.ServerCode == serverCode && x.StatusCode == status)
-                .Select(x => x.CurrentIP);
-            return query.ToList();
-        }
     }
 }

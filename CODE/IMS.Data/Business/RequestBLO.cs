@@ -139,8 +139,8 @@ namespace IMS.Data.Business
 
         public RequestInfoModel GetRequestInfo(string requestCode)
         {
-            var task = from t in TaskDAO.Current.Table()
-                       join s in StatusDAO.Current.Table()
+            var task = from t in TaskDAO.Current.Table
+                       join s in StatusDAO.Current.Table
                             on t.StatusCode equals s.StatusCode into st
                        from subst in st.DefaultIfEmpty()
                        where t.RequestCode == requestCode
@@ -156,7 +156,7 @@ namespace IMS.Data.Business
                            AssignedTime = t.AssignedTime
                        };
 
-            var request = (from r in RequestDAO.Current.Table()
+            var request = (from r in RequestDAO.Current.Table
                            join t in task
                                 on r.RequestCode equals t.RequestCode into rt
                            from subrt in rt.DefaultIfEmpty()
@@ -192,7 +192,7 @@ namespace IMS.Data.Business
 
         public Account GetAssignee(string requestCode)
         {
-            var query1 = (from r in RequestDAO.Current.Table()
+            var query1 = (from r in RequestDAO.Current.Table
                           where r.RequestCode == requestCode
                           select r).FirstOrDefault();
             if (query1 != null)
@@ -200,7 +200,7 @@ namespace IMS.Data.Business
                 var assignee = query1.Assignee;
                 if (assignee != null)
                 {
-                    var query = from a in AccountDAO.Current.Table()
+                    var query = from a in AccountDAO.Current.Table
                                 where a.Username == assignee
                                 select a;
                     return query.FirstOrDefault();

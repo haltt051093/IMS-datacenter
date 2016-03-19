@@ -67,9 +67,9 @@ namespace IMS.Data.Business
             return dao.GetAddingServers(requestCode);
         }
 
-        public List<RequestExtendedModel> ListWaitingRequestOfServer(string serverCode)
+        public List<RequestExtendedModel> GetWaitingRequestOfServer(string serverCode)
         {
-            return dao.ListWaitingRequestOfServer(serverCode);
+            return dao.GetWaitingRequestOfServer(serverCode);
         }
 
         public List<LogExtentedModel> GetRequestOfCustomer(string customer)
@@ -147,7 +147,7 @@ namespace IMS.Data.Business
                         customer);
                 }
             }
-            var servers = (from l in LogChangedContentDAO.Current.Table()
+            var servers = (from l in LogChangedContentDAO.Current.Table
                            where l.RequestCode == requestCode && l.Object == Constants.Object.OBJECT_SERVER
                                  && l.ObjectStatus == Constants.StatusCode.SERVER_BRINGING_AWAY
                            select l).ToList();
@@ -245,8 +245,8 @@ namespace IMS.Data.Business
 
         public List<LocationViewModel> GetLocationOfServer(string serverCode)
         {
-            var serverlocation = from l in LocationDAO.Current.Table()
-                                 join r in RackDAO.Current.Table()
+            var serverlocation = from l in LocationDAO.Current.Table
+                                 join r in RackDAO.Current.Table
                                      on l.RackCode equals r.RackCode into lr
                                  from sublr in lr.DefaultIfEmpty()
                                  where l.ServerCode == serverCode
@@ -261,7 +261,7 @@ namespace IMS.Data.Business
         public LogExtentedModel RequestDetailsReturnRack(string requestCode)
         {
             LogExtentedModel data = new LogExtentedModel();
-            var query = from l in LogChangedContentDAO.Current.Table()
+            var query = from l in LogChangedContentDAO.Current.Table
                         where l.RequestCode == requestCode && l.Object == Constants.Object.OBJECT_RACKOFCUSTOMER
                         && l.ObjectStatus == Constants.StatusCode.RACKOFCUSTOMER_RETURNING
                         select l.ChangedValueOfObject;
@@ -271,7 +271,7 @@ namespace IMS.Data.Business
 
         public List<string> GetChangedValueOfObject(string requestCode, string obj, string objStatus)
         {
-            var query = from l in LogChangedContentDAO.Current.Table()
+            var query = from l in LogChangedContentDAO.Current.Table
                         where l.RequestCode == requestCode && l.Object == obj && l.ObjectStatus == objStatus
                         select l.ChangedValueOfObject;
             return query.ToList();

@@ -32,7 +32,10 @@ namespace IMS.Data.Business
 
         public List<string> GetIpByStatus(string serverCode, string status)
         {
-            return dao.GetIpByStatus(serverCode, status);
+            var result = dao.Query(x => x.ServerCode == serverCode && x.StatusCode == status)
+                .Select(x => x.CurrentIP)
+                .ToList();
+            return result;
         }
 
         public void AddServerIpAndLog(string requestCode, string serverCode, string updatedIp,
@@ -57,7 +60,7 @@ namespace IMS.Data.Business
 
         public List<ServerIP> GetIPtoFetch(string serverCode, string status)
         {
-            var query = from si in ServerIPDAO.Current.Table()
+            var query = from si in ServerIPDAO.Current.Table
                         where si.ServerCode == serverCode && si.StatusCode == status
                         select si;
             return query.OrderBy(x => x.CurrentIP).ToList();

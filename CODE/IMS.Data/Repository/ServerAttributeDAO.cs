@@ -29,8 +29,8 @@ namespace IMS.Data.Repository
 
         public List<AttributeExtendedModel> GetServerAttributes(string serverCode, string status)
         {
-            var query = from sa in Table()
-                        join a in AttributeDAO.Current.Table()
+            var query = from sa in Table
+                        join a in AttributeDAO.Current.Table
                             on sa.AttributeCode equals a.AttributeCode into saa
                         from suba in saa.DefaultIfEmpty()
                         where sa.ServerCode == serverCode && sa.StatusCode == status

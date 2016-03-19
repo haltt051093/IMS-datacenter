@@ -190,8 +190,8 @@ except select l.LocationCode, l.RackCode, l.RackUnit, s.StatusName,l.ServerCode,
 
         public List<RackOfCustomerExtendedModel> GetLocationsOfServer(string serverCode)
         {
-            var locations = from r in RackDAO.Current.Table()
-                            join l in Table()
+            var locations = from r in RackDAO.Current.Table
+                            join l in Table
                                 on r.RackCode equals l.RackCode into lr
                             from subl in lr.DefaultIfEmpty()
                             where subl.ServerCode == serverCode

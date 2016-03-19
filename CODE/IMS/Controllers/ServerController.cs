@@ -31,7 +31,7 @@ namespace IMS.Controllers
                 var servers = ServerBLO.Current.GetServerOfCustomer(customer);
                 foreach (var item in servers)
                 {
-                    item.Requests = LogChangedContentBLO.Current.ListWaitingRequestOfServer(item.ServerCode);
+                    item.Requests = LogChangedContentBLO.Current.GetWaitingRequestOfServer(item.ServerCode);
                 }
                 data.Servers = servers;
             }
@@ -41,7 +41,7 @@ namespace IMS.Controllers
                 var servers = ServerBLO.Current.GetAllServer();
                 foreach (var item in servers)
                 {
-                    item.Requests = LogChangedContentBLO.Current.ListWaitingRequestOfServer(item.ServerCode);
+                    item.Requests = LogChangedContentBLO.Current.GetWaitingRequestOfServer(item.ServerCode);
                 }
                 data.Servers = servers;
             }

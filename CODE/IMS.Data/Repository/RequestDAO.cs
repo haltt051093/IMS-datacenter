@@ -120,11 +120,11 @@ namespace IMS.Data.Repository
 
         public List<NotificationExtendedModel> ListServerSideNotification()
         {
-            var query = from r in Table()
-                        join rt in RequestTypeDAO.Current.Table()
+            var query = from r in Table
+                        join rt in RequestTypeDAO.Current.Table
                             on r.RequestType equals rt.RequestTypeCode into rrt
                         from subr in rrt.DefaultIfEmpty()
-                        join st in StatusDAO.Current.Table()
+                        join st in StatusDAO.Current.Table
                             on r.StatusCode equals st.StatusCode into stsl
                         from subst in stsl.DefaultIfEmpty()
                         select new NotificationExtendedModel
@@ -145,11 +145,11 @@ namespace IMS.Data.Repository
 
         public List<NotificationExtendedModel> ListClientSideNotification(string customer)
         {
-            var query = from r in Table()
-                        join rt in RequestTypeDAO.Current.Table()
+            var query = from r in Table
+                        join rt in RequestTypeDAO.Current.Table
                             on r.RequestType equals rt.RequestTypeCode into rrt
                         from subr in rrt.DefaultIfEmpty()
-                        join st in StatusDAO.Current.Table()
+                        join st in StatusDAO.Current.Table
                             on r.StatusCode equals st.StatusCode into stsl
                         from subst in stsl.DefaultIfEmpty()
                         where
@@ -231,7 +231,7 @@ namespace IMS.Data.Repository
 
         public void UpdateRequestStatusANDLog(string requestCode, string typeOfLog, string newStatus, string assignee, string staffCode, string description)
         {
-            var request = (from r in Current.Table()
+            var request = (from r in Current.Table
                            where r.RequestCode == requestCode
                            select r).FirstOrDefault();
             request.StatusCode = newStatus;
@@ -287,7 +287,7 @@ namespace IMS.Data.Repository
 
         public void UpdateRequestAssignee(string requestCode, string assignee)
         {
-            var request = (from r in Current.Table()
+            var request = (from r in Current.Table
                            where r.RequestCode == requestCode
                            select r).FirstOrDefault();
             if (assignee != null)

@@ -55,8 +55,8 @@ namespace IMS.Data.Repository
 
         public string GetGatewayByServerCode(string q)
         {
-            var query = from ip in Table()
-                        join s in ServerDAO.Current.Table()
+            var query = from ip in Table
+                        join s in ServerDAO.Current.Table
                             on ip.IPAddress equals s.DefaultIP
                         select ip.Gateway;
             var result = query.FirstOrDefault();
@@ -74,8 +74,8 @@ namespace IMS.Data.Repository
 
         public List<IPAddressPoolExtendedModel> GetIPAvailable()
         {
-            var query = from ip in Table()
-                        join st in StatusDAO.Current.Table()
+            var query = from ip in Table
+                        join st in StatusDAO.Current.Table
                             on ip.StatusCode equals st.StatusCode into ipst
                         from subIpst in ipst.DefaultIfEmpty()
                         where subIpst.StatusCode == Constants.StatusCode.IP_AVAILABLE
@@ -105,7 +105,7 @@ namespace IMS.Data.Repository
                 return result;
             }
 
-            var query = from ips in Table()
+            var query = from ips in Table
                         where ips.Gateway == ip.Gateway && ips.StatusCode == Constants.StatusCode.IP_AVAILABLE
                         select new IPAddressPoolExtendedModel
                         {

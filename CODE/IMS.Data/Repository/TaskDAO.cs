@@ -36,11 +36,11 @@ namespace IMS.Data.Repository
 
         public List<TaskExtendedModel> ListTaskOfStaff(string staff)
         {
-            var tasksQuery = from t in Table()
-                             join s in StatusDAO.Current.Table()
+            var tasksQuery = from t in Table
+                             join s in StatusDAO.Current.Table
                                  on t.StatusCode equals s.StatusCode into st
                              from subst in st.DefaultIfEmpty()
-                             join rt in RequestDAO.Current.Table()
+                             join rt in RequestDAO.Current.Table
                                  on t.RequestCode equals rt.RequestCode into rtt
                              from subrtt in rtt.DefaultIfEmpty()
                              where t.AssignedStaff == staff
@@ -73,7 +73,7 @@ namespace IMS.Data.Repository
 
         public void CancelWaitingTask(string taskCode)
         {
-            var query = from t in Table()
+            var query = from t in Table
                         where t.TaskCode == taskCode
                         select t;
             if (query != null)

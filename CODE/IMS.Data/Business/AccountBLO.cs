@@ -87,7 +87,7 @@ namespace IMS.Data.Business
 
         public CustomerInfoModel GeCustomerInfo(string username)
         {
-            var account = from a in AccountDAO.Current.Table()
+            var account = from a in AccountDAO.Current.Table
                           where a.Username == username
                           select new CustomerInfoModel()
                           {

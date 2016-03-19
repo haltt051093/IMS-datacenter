@@ -35,7 +35,7 @@ namespace IMS.Data.Repository
 
         public List<string> GetAllRowsOfRack()
         {
-            var allRacks = from r in Table()
+            var allRacks = from r in Table
                            select r.RackName;
             var listRows = new List<string>();
             foreach (var item in allRacks)
@@ -49,7 +49,7 @@ namespace IMS.Data.Repository
 
         public List<RackExtendedModel> GetRackByRow(string rowName)
         {
-            var query = from r in Table()
+            var query = from r in Table
                         where r.RackName.StartsWith(rowName) && r.StatusCode == Constants.StatusCode.RACK_AVAILABLE
                         select new RackExtendedModel()
                         {

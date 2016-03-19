@@ -145,9 +145,9 @@ namespace IMS.Data.Generic
             IMSContext.Current.SaveChanges();
         }
 
-        public virtual IQueryable<TModel> Table()
+        public virtual IQueryable<TModel> Table
         {
-            return IMSContext.Current.Set<TModel>();
+            get { return IMSContext.Current.Set<TModel>(); }
         }
 
         public virtual List<TModel> Query(Expression<Func<TModel, bool>> predicate, int page = 0, int pageSize = 0, bool includeDeleted = false)

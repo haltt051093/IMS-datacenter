@@ -30,15 +30,9 @@ namespace IMS.Data.Repository
             return existing;
         }
 
-        public override void Add(LogChangedContent entry)
-        {
-            entry.LogTime = DateTime.Now;
-            base.Add(entry);
-        }
-
         public List<string> GetIpRequestReturnIp(string requestCode)
         {
-            var query = from log in Table()
+            var query = from log in Table
                         where log.RequestCode == requestCode && log.Object == Constants.Object.OBJECT_IP
                         select log.ChangedValueOfObject;
             return query.ToList();
@@ -62,7 +56,7 @@ namespace IMS.Data.Repository
             return serverCodes.ToList();
         }
 
-        public List<RequestExtendedModel> ListWaitingRequestOfServer(string serverCode)
+        public List<RequestExtendedModel> GetWaitingRequestOfServer(string serverCode)
         {
             //list tat ca hang co serverCode, lay ra list requestcode
             var query =
@@ -70,8 +64,8 @@ namespace IMS.Data.Repository
                 && (x.ObjectStatus == Constants.StatusCode.REQUEST_PENDING
                 || x.ObjectStatus == Constants.StatusCode.REQUEST_WAITING
                 || x.ObjectStatus == Constants.StatusCode.REQUEST_PROCESSING)).Select(x => x.RequestCode);
-            return query.Select(item => (from re in RequestDAO.Current.Table()
-                                         join rt in RequestTypeDAO.Current.Table() on re.RequestType equals rt.RequestTypeCode
+            return query.Select(item => (from re in RequestDAO.Current.Table
+                                         join rt in RequestTypeDAO.Current.Table on re.RequestType equals rt.RequestTypeCode
                                          where re.RequestCode == item
                                          select new RequestExtendedModel()
                                          {
@@ -80,17 +74,6 @@ namespace IMS.Data.Repository
                                              RequestCode = re.RequestCode,
                                              StatusCode = re.StatusCode
                                          })).Select(query1 => Queryable.FirstOrDefault<RequestExtendedModel>(query1)).ToList();
-        }
-
-        public List<LogChangedContent> GetBlockedIP(string IP)
-        {
-            var query = @"select * from LogChangedContent as l, 
-                            (
-                            select MAX(l.LogTime)as maxtime from LogChangedContent as l where l.ChangedValueOfObject ='" + IP + @"'and l.TypeOfLog='BLOCKIP'
-                            group by l.ChangedValueOfObject
-                            )as k 
-                            where l.ChangedValueOfObject ='" + IP + @"'and l.TypeOfLog='BLOCKIP' and l.LogTime=k.maxtime";
-            return RawQuery<LogChangedContent>(query, new object[] { });
         }
 
         public List<LogContentExtendedModel> GetAllLogIP()
@@ -120,21 +103,21 @@ namespace IMS.Data.Repository
         public List<LogExtentedModel> GetRequestOfCustomer(string customer)
         {
             //lay list request co cung requestcode
-            var myList = Current.Table().ToList();
+            var myList = Current.Table.ToList();
             var getRequestCodes = myList.GroupBy(x => x.RequestCode).Select(y => y.First()).ToList();
             var list = new List<LogExtentedModel>();
             for (int i = 0; i < getRequestCodes.Count; i++)
             {
                 var requestCode = getRequestCodes[i].RequestCode;
 
-                var allStatusOfRequest = from sr in Current.Table()
-                                         join rt in TypeOfLogDAO.Current.Table()
+                var allStatusOfRequest = from sr in Current.Table
+                                         join rt in TypeOfLogDAO.Current.Table
                                              on sr.TypeOfLog equals rt.TypeCode into srt
                                          from subsrt in srt.DefaultIfEmpty()
-                                         join st in StatusDAO.Current.Table()
+                                         join st in StatusDAO.Current.Table
                                              on sr.ObjectStatus equals st.StatusCode into sstr
                                          from subsstr in sstr.DefaultIfEmpty()
-                                         join r in RequestDAO.Current.Table()
+                                         join r in RequestDAO.Current.Table
                                              on sr.RequestCode equals r.RequestCode into ssr
                                          from subssr in ssr.DefaultIfEmpty()
                                          where sr.RequestCode == requestCode && sr.Object == Constants.Object.OBJECT_REQUEST
@@ -176,21 +159,21 @@ namespace IMS.Data.Repository
         public List<LogExtentedModel> GetAllRequest()
         {
             //lay list request co cung requestcode
-            var myList = Current.Table().ToList();
+            var myList = Current.Table.ToList();
             var getRequestCodes = myList.GroupBy(x => x.RequestCode).Select(y => y.First()).ToList();
             var list = new List<LogExtentedModel>();
             for (int i = 0; i < getRequestCodes.Count; i++)
             {
                 var requestCode = getRequestCodes[i].RequestCode;
 
-                var allStatusOfRequest = from sr in Current.Table()
-                                         join rt in TypeOfLogDAO.Current.Table()
+                var allStatusOfRequest = from sr in Current.Table
+                                         join rt in TypeOfLogDAO.Current.Table
                                              on sr.TypeOfLog equals rt.TypeCode into srt
                                          from subsrt in srt.DefaultIfEmpty()
-                                         join st in StatusDAO.Current.Table()
+                                         join st in StatusDAO.Current.Table
                                              on sr.ObjectStatus equals st.StatusCode into sstr
                                          from subsstr in sstr.DefaultIfEmpty()
-                                         join r in RequestDAO.Current.Table()
+                                         join r in RequestDAO.Current.Table
                                              on sr.RequestCode equals r.RequestCode into ssr
                                          from subssr in ssr.DefaultIfEmpty()
                                          where sr.RequestCode == requestCode && sr.Object == Constants.Object.OBJECT_REQUEST
@@ -226,6 +209,17 @@ namespace IMS.Data.Repository
             }
             return list;
             //return RawQuery<RequestExtendedModel>(query, new object[] { });
+        }
+
+        public List<LogChangedContent> GetBlockedIP(string IP)
+        {
+            var query = @"select * from LogChangedContent as l, 
+                            (
+                            select MAX(l.LogTime)as maxtime from LogChangedContent as l where l.ChangedValueOfObject ='" + IP + @"'and l.TypeOfLog='BLOCKIP'
+                            group by l.ChangedValueOfObject
+                            )as k 
+                            where l.ChangedValueOfObject ='" + IP + @"'and l.TypeOfLog='BLOCKIP' and l.LogTime=k.maxtime";
+            return RawQuery<LogChangedContent>(query, new object[] { });
         }
 
         public List<LogExtentedModel> ParseTypeLogToRequestType(List<LogExtentedModel> list)
@@ -276,10 +270,16 @@ namespace IMS.Data.Repository
 
         public List<LogChangedContent> GetLogInfoByRequestCode(string requestCode, string Object)
         {
-            var query = from l in Current.Table()
+            var query = from l in Current.Table
                         where l.RequestCode == requestCode && l.Object == Object
                         select l;
             return query.ToList();
+        }
+
+        public override void Add(LogChangedContent entry)
+        {
+            entry.LogTime = DateTime.Now;
+            base.Add(entry);
         }
     }
 }

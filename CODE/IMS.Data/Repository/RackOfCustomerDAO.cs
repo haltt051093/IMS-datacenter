@@ -78,8 +78,8 @@ namespace IMS.Data.Repository
 
         public List<RackOfCustomerExtendedModel> GetRacksOfCustomer(string customer, string status)
         {
-            var query = from rc in Table()
-                join r in RackDAO.Current.Table()
+            var query = from rc in Table
+                join r in RackDAO.Current.Table
                     on rc.RackCode equals r.RackCode into rrc
                 from subr in rrc.DefaultIfEmpty()
                 where rc.Customer == customer && rc.StatusCode == status
