@@ -71,11 +71,10 @@ namespace IMS.Data.Repository
             return tasks;
         }
 
-        public void CancelWaitingTask(string requestCode, string staff)
+        public void CancelWaitingTask(string taskCode)
         {
             var query = from t in Table()
-                        where t.RequestCode == requestCode && t.AssignedStaff == staff
-                              && t.StatusCode == Constants.StatusCode.TASK_WAITING
+                        where t.TaskCode == taskCode
                         select t;
             if (query != null)
             {

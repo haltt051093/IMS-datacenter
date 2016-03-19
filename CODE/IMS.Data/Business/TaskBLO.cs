@@ -94,9 +94,9 @@ namespace IMS.Data.Business
             return code;
         }
 
-        public void CancelWaitingTask(string requestCode, string staff)
+        public void CancelWaitingTask(string taskCode)
         {
-            dao.CancelWaitingTask(requestCode, staff);
+            dao.CancelWaitingTask(taskCode);
         }
     }
 }

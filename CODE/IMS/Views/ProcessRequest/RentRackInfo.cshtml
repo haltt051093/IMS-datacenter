@@ -64,7 +64,9 @@
                     }
                 }
                 @if ((Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING ||
-                      Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_NOTFINISH) && (User.IsInRole("Shift Head") || User.IsInRole("Manager")))
+                      Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_NOTFINISH) && (User.IsInRole("Shift Head") || User.IsInRole("Manager")) ||
+                      (Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING && Model.RequestInfo.IsShifthead)
+                      )
                 {
                     <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                         <a class="btn btn-primary pull-left" data-toggle="modal" data-target="#Reassigntask"><i class="fa fa-plus"></i>Reassign Task</a>
@@ -188,6 +190,7 @@
         @Html.HiddenFor(model => model.RequestInfo.RequestCode)
         @Html.HiddenFor(model => model.CustomerInfo.Customer)
         @Html.HiddenFor(model => model.RequestInfo.Assignee)
+        @Html.HiddenFor(model => model.RequestInfo.TaskCode)
         <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
             @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
             {
@@ -229,8 +232,6 @@
                     <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
                         <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
                             @Html.LabelFor(model => model.RequestInfo.AssigneeName)
-                            @Html.HiddenFor(model => model.RequestInfo.Assignee)
-                            @Html.HiddenFor(model => model.RequestInfo.RequestCode)
                         </div>
                         <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
                             @Html.DisplayFor(model => model.RequestInfo.AssigneeName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
@@ -255,6 +256,9 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                    @Html.HiddenFor(model => model.RequestInfo.Assignee)
+                    @Html.HiddenFor(model => model.RequestInfo.RequestCode)
+                    @Html.HiddenFor(model => model.RequestInfo.TaskCode)
                     <button type="submit" name="@Constants.FormAction.REASSIGN_ACTION" value="@Constants.FormAction.REASSIGN_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
                         @Labels.DialogOK
                     </button>

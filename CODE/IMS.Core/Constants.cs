@@ -56,7 +56,7 @@ namespace IMS.Core
 
             public const string TASK_WAITING = "STATUS15";
             public const string TASK_DOING = "STATUS16";
-            public const string TASK_DONE = "STATUS17";
+            public const string TASK_COMPLETED = "STATUS17";
             public const string TASK_NOTFINISH = "STATUS18";
             public const string TASK_CANCEL = "STATUS37";
         }

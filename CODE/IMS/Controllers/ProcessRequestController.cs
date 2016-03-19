@@ -668,7 +668,7 @@ namespace IMS.Controllers
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_ASSIGN_IP,
                     Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.RequestCode, null);
                 //update task
-                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_DONE);
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_COMPLETED);
                 Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
@@ -677,7 +677,7 @@ namespace IMS.Controllers
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_ASSIGN_IP,
                     Constants.StatusCode.REQUEST_REJECTED, null, viewmodel.RequestInfo.RequestCode, viewmodel.RequestInfo.RejectReason);
                 //update task
-                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_DONE);
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_COMPLETED);
             }
             if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
             {
@@ -714,7 +714,7 @@ namespace IMS.Controllers
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
                     Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.Assignee, null);
                 //update task
-                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_DONE);
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_COMPLETED);
                 Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
@@ -728,7 +728,7 @@ namespace IMS.Controllers
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
                     Constants.StatusCode.REQUEST_REJECTED, null, viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.RejectReason);
                 //update task
-                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_DONE);
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_COMPLETED);
             }
             if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
             {
@@ -771,7 +771,7 @@ namespace IMS.Controllers
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_RETURN_IP,
                     Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.Assignee, null);
                 //update task
-                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_DONE);
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_COMPLETED);
                 Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
@@ -786,7 +786,7 @@ namespace IMS.Controllers
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_RETURN_IP,
                     Constants.StatusCode.REQUEST_REJECTED, null, viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.RejectReason);
                 //update task
-                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_DONE);
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_COMPLETED);
             }
             if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
             {
@@ -831,10 +831,10 @@ namespace IMS.Controllers
                     }
                 }
                 //Change request status, task
-                RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.TaskCode, Constants.TypeOfLog.LOG_RENT_RACK,
+                RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_RENT_RACK,
                     Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.Assignee, null);
                 //update task
-                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_DONE);
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_COMPLETED);
                 Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
@@ -843,7 +843,7 @@ namespace IMS.Controllers
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_RENT_RACK,
                     Constants.StatusCode.REQUEST_REJECTED, null, viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.RejectReason);
                 //update task
-                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_DONE);
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_COMPLETED);
             }
             if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
             {
@@ -851,7 +851,7 @@ namespace IMS.Controllers
                 var preAssignedStaff = viewmodel.RequestInfo.Assignee;
                 var newAssignedStaff = viewmodel.RequestInfo.AssignedStaff;
                 //cancel task của thang truoc do, neu trang thai task la Waiting
-                TaskBLO.Current.CancelWaitingTask(viewmodel.RequestInfo.RequestCode, preAssignedStaff);
+                TaskBLO.Current.CancelWaitingTask(viewmodel.RequestInfo.TaskCode);
                 var shifthead = GetCurrentUserName();
                 TaskBLO.Current.AssignTask(viewmodel.RequestInfo.RequestCode, shifthead, newAssignedStaff, preAssignedStaff);
                 RequestBLO.Current.UpdateRequestAssignee(viewmodel.RequestInfo.RequestCode, newAssignedStaff);
@@ -893,7 +893,7 @@ namespace IMS.Controllers
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
                     Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.Assignee, null);
                 //update task
-                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_DONE);
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_COMPLETED);
                 Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
@@ -912,7 +912,7 @@ namespace IMS.Controllers
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
                     Constants.StatusCode.REQUEST_REJECTED, null, viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.RejectReason);
                 //update task
-                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_DONE);
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_COMPLETED);
             }
             if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
             {

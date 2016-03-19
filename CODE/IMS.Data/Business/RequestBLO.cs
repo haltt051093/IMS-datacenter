@@ -151,7 +151,9 @@ namespace IMS.Data.Business
                            AssignedStaff = t.AssignedStaff,
                            StatusName = subst.StatusName,
                            RequestCode = t.RequestCode,
-                           TaskCode = t.TaskCode
+                           TaskCode = t.TaskCode,
+                           ShiftHead = t.ShiftHead,
+                           AssignedTime = t.AssignedTime
                        };
 
             var request = (from r in RequestDAO.Current.Table()
@@ -159,6 +161,7 @@ namespace IMS.Data.Business
                                 on r.RequestCode equals t.RequestCode into rt
                            from subrt in rt.DefaultIfEmpty()
                            where r.RequestCode == requestCode
+                           orderby subrt.AssignedTime descending 
                            select new RequestInfoModel()
                            {
                                StatusCode = r.StatusCode,
@@ -172,11 +175,16 @@ namespace IMS.Data.Business
                                AssignedStaff = subrt.AssignedStaff,
                                TaskStatus = subrt.StatusCode,
                                TaskCode = subrt.TaskCode,
-                               TaskStatusName = subrt.StatusName
+                               TaskStatusName = subrt.StatusName,
+                               ShiftHead = subrt.ShiftHead
                            }).FirstOrDefault();
             if (request != null)
             {
                 request.StatusName = StatusBLO.Current.GetStatusName(request.StatusCode);
+                if (request.AssignedStaff == request.ShiftHead)
+                {
+                    request.IsShifthead = true;
+                }
             }
             return request;
         }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using IMS.Data.Models;
 
 namespace IMS.Data.ViewModels
@@ -13,5 +14,8 @@ namespace IMS.Data.ViewModels
         public string TaskStatus { get; set; }
         public string TaskStatusName { get; set; }
         public string TaskCode { get; set; }
+        public bool IsShifthead { get; set; }
+        public string ShiftHead { get; set; }
+        public DateTime? AssignedTime { get; set; }
     }
 }
