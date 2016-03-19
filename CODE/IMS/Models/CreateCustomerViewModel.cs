@@ -22,7 +22,7 @@ namespace IMS.Models
         [Required]
         public string Phone { get; set; }
         [Required]
-        [DataType(DataType.EmailAddress, ErrorMessage = "Email format is incorrect")]
+        [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "Email is not valid")]
         public string Email { get; set; }
         [Required]
         public string Address { get; set; }

@@ -69,7 +69,7 @@ namespace IMS.Controllers
             for (int i = 0; i < count.Count; i++)
             {
                 var list = new SelectListItem();
-                if (count[i].CountMember < 3)
+                if (count[i].CountMember < 3 && count[i].GroupCode!="Admin")
                 {
                     list.Value = count[i].GroupCode;
                     list.Text = count[i].GroupCode;
@@ -124,8 +124,6 @@ namespace IMS.Controllers
             return View(accountCreateViewModel);
         }
 
-
-        [Authorize(Roles = "Staff,Shift Head,Manager")]
         public ActionResult EditAccount(string username)
         {
             Account account = AccountBLO.Current.GetAccountByCode(username);
