@@ -44,12 +44,6 @@
                     <th>
                         Request Code
                     </th>
-                    @if (!User.IsInRole("Customer"))
-                    {
-                        <th>
-                            Customer
-                        </th>
-                    }
                     <th>
                         Request Type
                     </th>
@@ -66,23 +60,9 @@
                 <tbody class="clickmee check" status-code="@Model.Requests[i].LastestStatusRequest.StatusCode" type-code="@Model.Requests[i].LastestStatusRequest.RequestTypeCode" duration="@Model.Requests[i].LastestStatusRequest.DaysFromNow">
                     <tr>
                         <td>
-                            @if (User.IsInRole("Customer"))
-                            {
-                                @Html.ActionLink(Model.Requests[i].LastestStatusRequest.RequestCode, "Detais", "Request",
+                            @Html.ActionLink(Model.Requests[i].LastestStatusRequest.RequestCode, "Detais", "Request",
                                 new { rType = Model.Requests[i].LastestStatusRequest.RequestTypeCode, rCode = Model.Requests[i].LastestStatusRequest.RequestCode }, null)
-                            }
-                            else
-                            {
-                                @Html.ActionLink(Model.Requests[i].LastestStatusRequest.RequestCode, "Detais", "ProcessRequest",
-                                new { rType = Model.Requests[i].LastestStatusRequest.RequestTypeCode, rCode = Model.Requests[i].LastestStatusRequest.RequestCode }, null)
-                            }
                         </td>
-                        @if (!User.IsInRole("Customer"))
-                        {
-                            <td>
-                                @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.Customer)
-                            </td>
-                        }
                         <td>
                             @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.RequestTypeName)
                         </td>
@@ -103,12 +83,6 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => old.RequestCode)
                                 </td>
-                                @if (!User.IsInRole("Customer"))
-                                {
-                                    <td>
-                                        @Html.DisplayFor(modelItem => old.Customer)
-                                    </td>
-                                }
                                 <td>
                                     @Html.DisplayFor(modelItem => old.RequestTypeName)
                                 </td>
@@ -130,14 +104,6 @@
                             RequestCode
                         </span>
                     </th>
-                    @if (!User.IsInRole("Customer"))
-                    {
-                        <th>
-                            <span style="color: ghostwhite">
-                                Customer
-                            </span>
-                        </th>
-                    }
                     <th>
                         <span style="color: ghostwhite">
                             RequestType

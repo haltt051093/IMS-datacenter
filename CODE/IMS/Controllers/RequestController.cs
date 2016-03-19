@@ -20,19 +20,8 @@ namespace IMS.Controllers
         public ActionResult Index()
         {
             var data = new RequestIndexViewModel();
-            var role = GetCurrentUserRole();
             var username = GetCurrentUserName();
-            if (role == Constants.Role.CUSTOMER)
-            {
-                var request = LogChangedContentBLO.Current.GetRequestOfCustomer(username);
-                data.Requests = request;
-            }
-            else
-            {
-                var request = LogChangedContentBLO.Current.GetAllRequest();
-                data.Requests = request;
-            }
-
+            data.Requests = LogChangedContentBLO.Current.GetRequestOfCustomer(username);
             data.FilterByRequestType = TypeOfLogBLO.Current
                 .GetLogTypeOfRequest()
                 .Select(x => new SelectListItem { Value = x.TypeCode, Text = x.TypeName })
@@ -335,7 +324,7 @@ namespace IMS.Controllers
                 viewmodel.SelectedRacks = listRacks.listRacks;
                 return View("ReturnRackDetail", viewmodel);
             }
-            return RedirectToAction("Index", "Notification");
+            return RedirectToAction("Index");
         }
 
         #region Process Request

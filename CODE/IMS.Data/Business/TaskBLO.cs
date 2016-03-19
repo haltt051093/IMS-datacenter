@@ -36,18 +36,35 @@ namespace IMS.Data.Business
 
         public void AssignTask(string requestCode, string shifthead, string staff, string preStaff)
         {
-            var taskCode = GenerateCode(); ;
-            var task = new Task()
+            var taskCode = GenerateCode();
+            if (shifthead == staff)
             {
-                TaskCode = taskCode,
-                RequestCode = requestCode,
-                ShiftHead = shifthead,
-                AssignedStaff = staff,
-                StatusCode = Constants.StatusCode.TASK_WAITING,
-                AssignedTime = DateTime.Now,
-                PreAssignedStaff = preStaff
-            };
-            dao.Add(task);
+                var task = new Task()
+                {
+                    TaskCode = taskCode,
+                    RequestCode = requestCode,
+                    ShiftHead = shifthead,
+                    AssignedStaff = staff,
+                    StatusCode = Constants.StatusCode.TASK_DOING,
+                    AssignedTime = DateTime.Now,
+                    PreAssignedStaff = preStaff
+                };
+                dao.Add(task);
+            }
+            else
+            {
+                var task = new Task()
+                {
+                    TaskCode = taskCode,
+                    RequestCode = requestCode,
+                    ShiftHead = shifthead,
+                    AssignedStaff = staff,
+                    StatusCode = Constants.StatusCode.TASK_WAITING,
+                    AssignedTime = DateTime.Now,
+                    PreAssignedStaff = preStaff
+                };
+                dao.Add(task);
+            }
         }
 
         public List<TaskExtendedModel> ListTaskOfStaff(string staff)

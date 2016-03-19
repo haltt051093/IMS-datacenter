@@ -144,21 +144,21 @@ namespace IMS.Data.Repository
                                          {
                                              LogTime = sr.LogTime,
                                              StatusName = subsstr.StatusName,
-                                             RequestTypeName = subsrt.TypeName,
+                                             TypeOfLog = subsrt.TypeCode,
                                              RequestCode = sr.RequestCode,
-                                             RequestTypeCode = subsrt.TypeCode,
                                              Customer = subssr.Customer,
-                                             StatusCode = subsstr.StatusCode
+                                             StatusCode = subsstr.StatusCode,
                                          };
                 if (allStatusOfRequest.Any())
                 {
-                    var newest = allStatusOfRequest.First();
+                    var requests = ParseTypeLogToRequestType(allStatusOfRequest.ToList());
+                    var newest = requests.First();
                     var request = new LogExtentedModel();
                     var others = new List<LogExtentedModel>();
                     request.LastestStatusRequest = newest;
-                    if (allStatusOfRequest.Count() > 1)
+                    if (requests.Count() > 1)
                     {
-                        others = allStatusOfRequest.ToList();
+                        others = requests.ToList();
                         others.RemoveAt(0);
                         request.OldStatusRequests = others.ToList();
                     }
@@ -206,47 +206,7 @@ namespace IMS.Data.Repository
                                          };
                 if (allStatusOfRequest.Any())
                 {
-                    var requests = new List<LogExtentedModel>();
-                    //doi typeOfLog --> requestType
-                    foreach (var item in allStatusOfRequest.ToList())
-                    {
-                        if (item.TypeOfLog == Constants.TypeOfLog.LOG_ADD_SERVER)
-                        {
-                            item.RequestTypeCode = Constants.RequestTypeCode.ADD_SERVER;
-                            item.RequestTypeName = Constants.RequestTypeName.SERVER_ADD;
-                        }
-                        if (item.TypeOfLog == Constants.TypeOfLog.LOG_BRING_SERVER_AWAY)
-                        {
-                            item.RequestTypeCode = Constants.RequestTypeCode.BRING_SERVER_AWAY;
-                            item.RequestTypeName = Constants.RequestTypeName.SERVER_BRINGAWAY;
-                        }
-                        if (item.TypeOfLog == Constants.TypeOfLog.LOG_ASSIGN_IP)
-                        {
-                            item.RequestTypeCode = Constants.RequestTypeCode.ASSIGN_IP;
-                            item.RequestTypeName = Constants.RequestTypeName.IP_ASSIGN;
-                        }
-                        if (item.TypeOfLog == Constants.TypeOfLog.LOG_CHANGE_IP)
-                        {
-                            item.RequestTypeCode = Constants.RequestTypeCode.CHANGE_IP;
-                            item.RequestTypeName = Constants.RequestTypeName.IP_CHANGE;
-                        }
-                        if (item.TypeOfLog == Constants.TypeOfLog.LOG_RETURN_IP)
-                        {
-                            item.RequestTypeCode = Constants.RequestTypeCode.RETURN_IP;
-                            item.RequestTypeName = Constants.RequestTypeName.IP_RETURN;
-                        }
-                        if (item.TypeOfLog == Constants.TypeOfLog.LOG_RENT_RACK)
-                        {
-                            item.RequestTypeCode = Constants.RequestTypeCode.RENT_RACK;
-                            item.RequestTypeName = Constants.RequestTypeName.RACK_RENT;
-                        }
-                        if (item.TypeOfLog == Constants.TypeOfLog.LOG_RETURN_RACK)
-                        {
-                            item.RequestTypeCode = Constants.RequestTypeCode.RETURN_RACK;
-                            item.RequestTypeName = Constants.RequestTypeName.RACK_RETURN;
-                        }
-                        requests.Add(item);
-                    }
+                    var requests = ParseTypeLogToRequestType(allStatusOfRequest.ToList());
                     var newest = requests.First();
                     var request = new LogExtentedModel();
                     var others = new List<LogExtentedModel>();
@@ -266,6 +226,52 @@ namespace IMS.Data.Repository
             }
             return list;
             //return RawQuery<RequestExtendedModel>(query, new object[] { });
+        }
+
+        public List<LogExtentedModel> ParseTypeLogToRequestType(List<LogExtentedModel> list)
+        {
+            var requests = new List<LogExtentedModel>();
+            //doi typeOfLog --> requestType
+            foreach (var item in list.ToList())
+            {
+                if (item.TypeOfLog == Constants.TypeOfLog.LOG_ADD_SERVER)
+                {
+                    item.RequestTypeCode = Constants.RequestTypeCode.ADD_SERVER;
+                    item.RequestTypeName = Constants.RequestTypeName.SERVER_ADD;
+                }
+                if (item.TypeOfLog == Constants.TypeOfLog.LOG_BRING_SERVER_AWAY)
+                {
+                    item.RequestTypeCode = Constants.RequestTypeCode.BRING_SERVER_AWAY;
+                    item.RequestTypeName = Constants.RequestTypeName.SERVER_BRINGAWAY;
+                }
+                if (item.TypeOfLog == Constants.TypeOfLog.LOG_ASSIGN_IP)
+                {
+                    item.RequestTypeCode = Constants.RequestTypeCode.ASSIGN_IP;
+                    item.RequestTypeName = Constants.RequestTypeName.IP_ASSIGN;
+                }
+                if (item.TypeOfLog == Constants.TypeOfLog.LOG_CHANGE_IP)
+                {
+                    item.RequestTypeCode = Constants.RequestTypeCode.CHANGE_IP;
+                    item.RequestTypeName = Constants.RequestTypeName.IP_CHANGE;
+                }
+                if (item.TypeOfLog == Constants.TypeOfLog.LOG_RETURN_IP)
+                {
+                    item.RequestTypeCode = Constants.RequestTypeCode.RETURN_IP;
+                    item.RequestTypeName = Constants.RequestTypeName.IP_RETURN;
+                }
+                if (item.TypeOfLog == Constants.TypeOfLog.LOG_RENT_RACK)
+                {
+                    item.RequestTypeCode = Constants.RequestTypeCode.RENT_RACK;
+                    item.RequestTypeName = Constants.RequestTypeName.RACK_RENT;
+                }
+                if (item.TypeOfLog == Constants.TypeOfLog.LOG_RETURN_RACK)
+                {
+                    item.RequestTypeCode = Constants.RequestTypeCode.RETURN_RACK;
+                    item.RequestTypeName = Constants.RequestTypeName.RACK_RETURN;
+                }
+                requests.Add(item);
+            }
+            return requests;
         }
 
         public List<LogChangedContent> GetLogInfoByRequestCode(string requestCode, string Object)

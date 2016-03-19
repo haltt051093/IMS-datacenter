@@ -1,17 +1,227 @@
-﻿
+﻿@model RequestIndexViewModel
 @{
-    Layout = null;
+    ViewBag.Title = Pages.RequestIndex;
+    ViewBag.PageTitle = Pages.RequestIndex;
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("Request", "Index", Pages.Request)
+    };
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-    <div> 
+<!-- Main content -->
+<section class="main-content">
+    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+        <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+            @Html.LabelFor(model => model.FilterByRequestType)
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+            @Html.DropDownListFor(m => m.FilterByRequestType, Model.FilterByRequestType, "Select All", new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+            @Html.ValidationMessageFor(model => model.FilterByRequestType)
+        </div>
     </div>
-</body>
-</html>
+    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+        <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+            @Html.LabelFor(model => model.FilterByStatus)
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+            @Html.DropDownListFor(m => m.FilterByStatus, Model.FilterByStatus, "Select All", new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+            @Html.ValidationMessageFor(model => model.FilterByStatus)
+        </div>
+    </div>
+    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+        <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+            @Html.LabelFor(model => model.FilterByPeriodOfTime)
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+            @Html.DropDownListFor(m => m.FilterByPeriodOfTime, Model.FilterByPeriodOfTime, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+            @Html.ValidationMessageFor(model => model.FilterByPeriodOfTime)
+        </div>
+    </div>
+    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+        <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS">
+            <thead>
+                <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
+                    <th>
+                        Request Code
+                    </th>
+                    <th>
+                        Customer
+                    </th>
+                    <th>
+                        Request Type
+                    </th>
+                    <th>
+                        Requested Time
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                </tr>
+            </thead>
+            @for (int i = 0; i < Model.Requests.Count; i++)
+            {
+                <tbody class="clickmee check" status-code="@Model.Requests[i].LastestStatusRequest.StatusCode" type-code="@Model.Requests[i].LastestStatusRequest.RequestTypeCode" duration="@Model.Requests[i].LastestStatusRequest.DaysFromNow">
+                    <tr>
+                        <td>
+                            @Html.ActionLink(Model.Requests[i].LastestStatusRequest.RequestCode, "Detais", "ProcessRequest",
+                                new { rType = Model.Requests[i].LastestStatusRequest.RequestTypeCode, rCode = Model.Requests[i].LastestStatusRequest.RequestCode }, null)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.Customer)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.RequestTypeName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.LogTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.StatusName)
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody class="showhide" style="display: none; background-color: lightgrey;">
+                    @if (Model.Requests[i].OldStatusRequests != null)
+                    {
+                        foreach (var old in Model.Requests[i].OldStatusRequests)
+                        {
+                            <tr style="background-color: lightgrey;">
+                                <td>
+                                    @Html.DisplayFor(modelItem => old.RequestCode)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => old.Customer)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => old.RequestTypeName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => old.LogTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => old.StatusName)
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            }
+            <tfoot>
+                <tr style="background-color: #404040">
+                    <th>
+                        <span style="color: ghostwhite">
+                            RequestCode
+                        </span>
+                    </th>
+                    <th>
+                        <span style="color: ghostwhite">
+                            Customer
+                        </span>
+                    </th>
+                    <th>
+                        <span style="color: ghostwhite">
+                            RequestType
+                        </span>
+                    </th>
+                    <th>
+                        <span style="color: ghostwhite">
+                            RequestedTime
+                        </span>
+                    </th>
+                    <th>
+                        <span style="color: ghostwhite">
+                            Status
+                        </span>
+                    </th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</section><!-- /.content -->
+
+<script>
+    function filterRequest() {
+        var typeCode = $("#FilterByRequestType").val();
+        var statusCode = $("#FilterByStatus").val();
+        var duration = $('#FilterByPeriodOfTime').val();
+        if (typeCode == null) {
+            typeCode = '';
+        }
+        if (statusCode == null) {
+            statusCode = '';
+        }
+        if (duration == null || isNaN(duration)) {
+            duration = 99999;
+        }
+        duration = duration - 0;
+
+        //if (typeCode == '' && statusCode == '') {
+        //    $('#example1 tbody[type-code][status-code]').show();
+        //}
+        //else {
+        //$('#example1 tbody').hide();
+        //if (typeCode != '' && statusCode == '') {
+        //    $('#example1 tbody[type-code="' + typeCode + '"]').show();
+        //} else if (statusCode != '' && typeCode == '') {
+        //    $('#example1 tbody[status-code="' + statusCode + '"]').show();
+        //} else {
+        //    $('#example1 tbody[type-code="' + typeCode + '"][status-code="' + statusCode + '"]').show();
+        //}
+        //}
+        $('#example1 tbody[type-code][status-code]').each(function (i, e) {
+            var row = $(e);
+            var rowTypeCode = row.attr('type-code');
+            var rowStatusCode = row.attr('status-code');
+            var rowDuration = row.attr('duration');
+            var isShow = false;
+            if (typeCode == '' && statusCode == '' && duration >= rowDuration) {
+                isShow = true;
+            } else if (typeCode != '' && statusCode == '') {
+                if (rowTypeCode == typeCode && duration >= rowDuration) {
+                    isShow = true;
+                }
+            } else if (typeCode == '' && statusCode != '') {
+                if (rowStatusCode == statusCode && duration >= rowDuration) {
+                    isShow = true;
+                }
+            } else {
+                if (rowTypeCode == typeCode && rowStatusCode == statusCode && duration >= rowDuration) {
+                    isShow = true;
+                }
+            }
+            if (isShow) {
+                row.show();
+            } else {
+                row.hide();
+            }
+        });
+    }
+</script>
+
+<script type="text/javascript">
+    $(".clickmee").dblclick(function () {
+        $(this).closest('tbody')
+            .next('.showhide')
+            .toggle('fast');
+    });
+
+    $("#example1").dataTable({
+        "iDisplayLength": -1,
+        "aaSorting": [[2, "desc"]] // Sort by first column descending
+    });
+
+    $("#FilterByRequestType").change(function () {
+        filterRequest();
+
+    });
+
+    $("#FilterByStatus").change(function () {
+        filterRequest();
+    });
+
+    $("#FilterByPeriodOfTime").change(function () {
+        filterRequest();
+    });
+
+    filterRequest();
+</script>

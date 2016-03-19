@@ -17,18 +17,23 @@ namespace IMS.Controllers
     {
         public ActionResult Index(string code)
         {
-            var role = GetCurrentUserRole();
-            var customer = GetCurrentUserName();
-
-            var data = new NotificationViewModel();
-            data.FilterByRequestType = RequestTypeBLO.Current.GetAll()
-                .Select(x => new SelectListItem { Value = x.RequestTypeCode, Text = x.RequestTypeName })
+            var data = new RequestIndexViewModel();
+            data.Requests = LogChangedContentBLO.Current.GetAllRequest();
+            data.FilterByRequestType = TypeOfLogBLO.Current
+                .GetLogTypeOfRequest()
+                .Select(x => new SelectListItem { Value = x.TypeCode, Text = x.TypeName })
                 .ToList();
-            data.FilterByStatus = StatusBLO.Current.GetStatusByObject(Constants.Object.OBJECT_REQUEST)
+            data.FilterByStatus = StatusBLO.Current
+                .GetStatusByObject(Constants.Object.OBJECT_REQUEST)
                 .Select(x => new SelectListItem { Value = x.StatusCode, Text = x.StatusName })
                 .ToList();
-
-            data.NotificationList = RequestBLO.Current.ListNotification(role, customer);
+            data.FilterByPeriodOfTime = new List<SelectListItem>
+            {
+                new SelectListItem() {Value = "0", Text = "Today", Selected = true },
+                new SelectListItem() {Value = "7", Text = "One Week"},
+                new SelectListItem() {Value = "30", Text = "One Month"},
+                new SelectListItem() {Value = "99999", Text = "All"}
+            };
             return View(data);
         }
 
@@ -70,13 +75,13 @@ namespace IMS.Controllers
                     var shifthead = GetCurrentUserName();
                     var account = AccountBLO.Current.GetAccountByCode(shifthead);
                     viewmodel.RequestInfo.Assignee = account.Username;
-                    viewmodel.RequestInfo.StaffName = account.Fullname;
+                    viewmodel.RequestInfo.AssigneeName = account.Fullname;
                 }
                 else
                 {
                     var staff = RequestBLO.Current.GetAssignee(rCode);
                     viewmodel.RequestInfo.Assignee = staff.Username;
-                    viewmodel.RequestInfo.StaffName = staff.Fullname;
+                    viewmodel.RequestInfo.AssigneeName = staff.Fullname;
                 }
 
                 //lay list servers
@@ -118,13 +123,13 @@ namespace IMS.Controllers
                     var shifthead = GetCurrentUserName();
                     var account = AccountBLO.Current.GetAccountByCode(shifthead);
                     viewmodel.RequestInfo.Assignee = account.Username;
-                    viewmodel.RequestInfo.StaffName = account.Fullname;
+                    viewmodel.RequestInfo.AssigneeName = account.Fullname;
                 }
                 else
                 {
                     var staff = RequestBLO.Current.GetAssignee(rCode);
                     viewmodel.RequestInfo.Assignee = staff.Username;
-                    viewmodel.RequestInfo.StaffName = staff.Fullname;
+                    viewmodel.RequestInfo.AssigneeName = staff.Fullname;
                 }
                 //main info
                 var returnValues = LogChangedContentBLO.Current.RequestDetailsBringServerAway(rCode);
@@ -139,7 +144,7 @@ namespace IMS.Controllers
                 ProcessRequestAssignIPViewModel viewmodel = new ProcessRequestAssignIPViewModel();
                 viewmodel.CurrentUser = GetCurrentUserName();
                 //request info, task status
-                //assignee la staff luu trong request, staffName di chung voi assignee
+                //assignee la staff luu trong request, AssigneeName di chung voi assignee
                 //assignedStaff la staff dang lam task do, luu trong bang task
                 viewmodel.RequestInfo = RequestBLO.Current.GetRequestInfo(rCode);
                 //customer info
@@ -170,7 +175,7 @@ namespace IMS.Controllers
                 if (staff != null)
                 {
                     viewmodel.RequestInfo.Assignee = staff.Username;
-                    viewmodel.RequestInfo.StaffName = staff.Fullname;
+                    viewmodel.RequestInfo.AssigneeName = staff.Fullname;
                 }
                 //}
                 if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
@@ -245,7 +250,7 @@ namespace IMS.Controllers
                 if (staff != null)
                 {
                     viewmodel.RequestInfo.Assignee = staff.Username;
-                    viewmodel.RequestInfo.StaffName = staff.Fullname;
+                    viewmodel.RequestInfo.AssigneeName = staff.Fullname;
                 }
                 //}
                 if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
@@ -300,7 +305,7 @@ namespace IMS.Controllers
                 if (staff != null)
                 {
                     viewmodel.RequestInfo.Assignee = staff.Username;
-                    viewmodel.RequestInfo.StaffName = staff.Fullname;
+                    viewmodel.RequestInfo.AssigneeName = staff.Fullname;
                 }
                 //}
                 return View("ReturnIPInfo", viewmodel);
@@ -318,9 +323,6 @@ namespace IMS.Controllers
                 var desc = JsonConvert.DeserializeObject<RequestDetailViewModel>(viewmodel.RequestInfo.Description);
                 viewmodel.RackNumbers = desc.NumberOfRack;
                 viewmodel.RequestInfo.Description = desc.Description;
-                // assignee la dropdownlist
-                //if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
-                //{
                 var group = GetCurrentUserGroup();
                 var listStaff = AccountBLO.Current.GetAccountsByGroup(group);
                 viewmodel.StaffCodeOptions = listStaff
@@ -331,16 +333,13 @@ namespace IMS.Controllers
                         Selected = x.Role == Constants.Role.SHIFT_HEAD
                     })
                     .ToList();
-                //}
-                //else
-                //{
+                //ng dang lam request
                 var staff = RequestBLO.Current.GetAssignee(rCode);
                 if (staff != null)
                 {
                     viewmodel.RequestInfo.Assignee = staff.Username;
-                    viewmodel.RequestInfo.StaffName = staff.Fullname;
+                    viewmodel.RequestInfo.AssigneeName = staff.Fullname;
                 }
-                //}
                 if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
                 {
                     viewmodel.RentedRacks = LogChangedContentBLO.Current.GetChangedValueOfObject(rCode,
@@ -389,7 +388,7 @@ namespace IMS.Controllers
                 if (staff != null)
                 {
                     viewmodel.RequestInfo.Assignee = staff.Username;
-                    viewmodel.RequestInfo.StaffName = staff.Fullname;
+                    viewmodel.RequestInfo.AssigneeName = staff.Fullname;
                 }
                 //}
                 //lay status cua task 
@@ -398,7 +397,6 @@ namespace IMS.Controllers
             }
             return RedirectToAction("Index", "Notification");
         }
-
 
         [HttpPost]
         public ActionResult ProcessRequestAddServer(ProcessRequestAddServerViewModel viewmodel)
@@ -811,9 +809,9 @@ namespace IMS.Controllers
             {
                 var shifthead = GetCurrentUserName();
                 //assign
-                TaskBLO.Current.AssignTask(viewmodel.RequestInfo.RequestCode, shifthead, viewmodel.RequestInfo.AssignedStaff, null);
+                TaskBLO.Current.AssignTask(viewmodel.RequestInfo.RequestCode, shifthead, viewmodel.RequestInfo.Assignee, null);
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
-                    Constants.TypeOfLog.LOG_RENT_RACK, Constants.StatusCode.REQUEST_PROCESSING, viewmodel.RequestInfo.AssignedStaff, shifthead, null);
+                    Constants.TypeOfLog.LOG_RENT_RACK, Constants.StatusCode.REQUEST_PROCESSING, viewmodel.RequestInfo.Assignee, shifthead, null);
                 return RedirectToAction("Detais", "ProcessRequest",
                     new { rType = Constants.RequestTypeCode.RENT_RACK, rCode = viewmodel.RequestInfo.RequestCode });
             }
@@ -833,7 +831,7 @@ namespace IMS.Controllers
                     }
                 }
                 //Change request status, task
-                RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_RENT_RACK,
+                RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.TaskCode, Constants.TypeOfLog.LOG_RENT_RACK,
                     Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.Assignee, null);
                 //update task
                 TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_DONE);

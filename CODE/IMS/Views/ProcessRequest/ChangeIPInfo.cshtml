@@ -52,10 +52,10 @@
                     }
                     else
                     {
-                        if (Model.RequestInfo.StaffName != null)
+                        if (Model.RequestInfo.AssigneeName != null)
                         {
                             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                                @Html.DisplayFor(model => model.RequestInfo.StaffName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                @Html.DisplayFor(model => model.RequestInfo.AssigneeName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                                 @Html.HiddenFor(model => model.RequestInfo.Assignee)
                             </div>
                         }
@@ -154,7 +154,7 @@
                 @Html.HiddenFor(x => x.SelectedServer)
                 @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                 {
-                    if (Model.RequestInfo.Assignee == Model.CurrentUser)
+                    if (Model.RequestInfo.Assignee == Model.CurrentUser && Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
                     {
                         <button type="submit" id="btnApprove" name="@Constants.FormAction.APPROVE_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
                             @Labels.Approve
@@ -191,12 +191,12 @@
                 <div class="modal-body">
                     <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
                         <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                            @Html.LabelFor(model => model.RequestInfo.StaffName)
+                            @Html.LabelFor(model => model.RequestInfo.AssigneeName)
                             @Html.HiddenFor(model => model.RequestInfo.Assignee)
                             @Html.HiddenFor(model => model.RequestInfo.RequestCode)
                         </div>
                         <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                            @Html.DisplayFor(model => model.RequestInfo.StaffName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                            @Html.DisplayFor(model => model.RequestInfo.AssigneeName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                         </div>
                     </div>
                     <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">

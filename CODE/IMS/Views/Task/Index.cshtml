@@ -64,7 +64,7 @@
                         @using (Html.BeginForm("UpdateTaskStatus", "Task", FormMethod.Post))
                         {
                             <input name="TaskCode" type="hidden" value="@Model.Tasks[i].TaskCode" />
-                            if (Model.Tasks[i].StatusCode == Constants.StatusCode.TASK_ACCEPTING)
+                            if (Model.Tasks[i].StatusCode == Constants.StatusCode.TASK_WAITING)
                             {
                                 <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.ACCEPT_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
                                     @Labels.Accept
