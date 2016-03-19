@@ -360,7 +360,7 @@ namespace IMS.Controllers
             {
                 var shifthead = GetCurrentUserName();
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
-                    Constants.TypeOfLog.LOG_ADD_SERVER, Constants.StatusCode.REQUEST_WAITING, viewmodel.RequestInfo.Assignee, shifthead, null);
+                    Constants.TypeOfLog.LOG_ADD_SERVER, Constants.StatusCode.REQUEST_WAITING, null, shifthead, null);
                 return RedirectToAction("Detais", "ProcessRequest",
                     new { rType = Constants.RequestTypeCode.ADD_SERVER, rCode = viewmodel.RequestInfo.RequestCode });
             }
@@ -479,9 +479,6 @@ namespace IMS.Controllers
                         //update and log server
                         ServerBLO.Current.UpdateServerStatus(viewmodel.RequestInfo.RequestCode, server.ServerCode,
                             Constants.TypeOfLog.LOG_ADD_SERVER, Constants.StatusCode.SERVER_RUNNING, viewmodel.RequestInfo.Assignee);
-                        //DOING
-                        //luu IP address
-                        //Luu location
                     }
                     //Add and log request
                     RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_ADD_SERVER,
@@ -501,6 +498,16 @@ namespace IMS.Controllers
                 //Add and log request
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_ADD_SERVER,
                     Constants.StatusCode.REQUEST_REJECTED, null, viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.RejectReason);
+            }
+            if (Request.Form[Constants.FormAction.PROCESS_ACTION] != null)
+            {
+                var shifthead = GetCurrentUserName();
+                //assign
+                TaskBLO.Current.AssignTask(viewmodel.RequestInfo.RequestCode, shifthead, viewmodel.RequestInfo.Assignee, null);
+                RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
+                    Constants.TypeOfLog.LOG_ADD_SERVER, Constants.StatusCode.REQUEST_PROCESSING, viewmodel.RequestInfo.Assignee, shifthead, null);
+                return RedirectToAction("Detais", "ProcessRequest",
+                    new { rType = Constants.RequestTypeCode.ADD_SERVER, rCode = viewmodel.RequestInfo.RequestCode });
             }
             if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
             {
@@ -583,6 +590,16 @@ namespace IMS.Controllers
                 //Add and log request
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_ADD_SERVER,
                     Constants.StatusCode.REQUEST_REJECTED, null, viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.RejectReason);
+            }
+            if (Request.Form[Constants.FormAction.PROCESS_ACTION] != null)
+            {
+                var shifthead = GetCurrentUserName();
+                //assign
+                TaskBLO.Current.AssignTask(viewmodel.RequestInfo.RequestCode, shifthead, viewmodel.RequestInfo.Assignee, null);
+                RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
+                    Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.REQUEST_PROCESSING, viewmodel.RequestInfo.Assignee, shifthead, null);
+                return RedirectToAction("Detais", "ProcessRequest",
+                    new { rType = Constants.RequestTypeCode.BRING_SERVER_AWAY, rCode = viewmodel.RequestInfo.RequestCode });
             }
             if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
             {

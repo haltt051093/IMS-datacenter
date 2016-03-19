@@ -324,6 +324,7 @@ namespace IMS.Core
             public const string APPROVE_ACTION = "Approve";
             public const string ACCEPT_ACTION = "Accept";
             public const string REASSIGN_ACTION = "Reassign";
+            public const string PROCESS_ACTION = "Process";
         }
 
         public class ServerAttributeCode

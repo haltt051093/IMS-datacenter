@@ -180,33 +180,38 @@
                 </tbody>
             </table>
         </div>
-        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-            </div>
-            @Html.HiddenFor(model => model.RequestInfo.RequestCode)
-            @Html.HiddenFor(model => model.CustomerInfo.Customer)
-            @Html.HiddenFor(model => model.RequestInfo.Assignee)
-            @Html.HiddenFor(model => model.RequestInfo.TaskCode)
-            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+        <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+
+            @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                 {
+                    if (Model.RequestInfo.Assignee == Model.CurrentUser && Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
+                    {
                     <button type="submit" id="btnApprove" name="@Constants.FormAction.APPROVE_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
                         @Labels.Approve
                     </button>
+                        <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
+                            @Labels.Reject
+                        </button>
+                }
+            }
+            else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING)
+            {
+                <button type="submit" id="btnProcess" name="@Constants.FormAction.PROCESS_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                    Process
+                </button>
                     <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
                         @Labels.Reject
                     </button>
-                }
-                else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
-                {
-                    <button type="submit" id="btnAccept" name="@Constants.FormAction.ACCEPT_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                        @Labels.Accept
-                    </button>
+            }
+            else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING && (User.IsInRole("Shift Head") || User.IsInRole("Manager")))
+            {
+                <button type="submit" id="btnAccept" name="@Constants.FormAction.ACCEPT_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                    @Labels.Accept
+                </button>
                     <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
                         @Labels.Reject
                     </button>
-                }
-            </div>
+            }
         </div>
     }
 </section>

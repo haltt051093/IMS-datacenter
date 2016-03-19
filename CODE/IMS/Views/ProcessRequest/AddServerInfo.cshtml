@@ -38,7 +38,7 @@
                         @Html.LabelFor(model => model.RequestInfo.RequestedTime)
                     </div>
                     <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                        @Html.DisplayFor(model => model.RequestInfo.RequestedTime, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                        @Html.DisplayFor(model => model.RequestInfo.RequestedTime, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                     </div>
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
@@ -74,13 +74,15 @@
                         }
                         @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                         {
-                            if ((Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING || Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_NOTFINISH) &&
-                                (User.IsInRole("Shift Head") || User.IsInRole("Manager")) ||
-                                (Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING && Model.RequestInfo.IsShifthead))
+                            if (User.IsInRole("Shift Head") || User.IsInRole("Manager"))
                             {
-                                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                                    <a class="btn btn-primary pull-left" data-toggle="modal" data-target="#Reassigntask"><i class="fa fa-plus"></i>Reassign Task</a>
-                                </div>
+                                if ((Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING || Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_NOTFINISH) &&
+                               (Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING && Model.RequestInfo.IsShifthead))
+                                {
+                                    <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                                        <a class="btn btn-primary pull-left" data-toggle="modal" data-target="#Reassigntask"><i class="fa fa-plus"></i>Reassign Task</a>
+                                    </div>
+                                }
                             }
                         }
                     </div>
@@ -221,24 +223,35 @@
             @Html.HiddenFor(model => model.RequestInfo.TaskCode)
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
 
-                @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING ||
-                 Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                 {
-                    <button type="submit" id="btnApprove" name="@Constants.FormAction.APPROVE_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                        @Labels.Approve
-                    </button>
-                    <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
-                        @Labels.Reject
-                    </button>
+                    if (Model.RequestInfo.Assignee == Model.CurrentUser && Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
+                    {
+                <button type="submit" id="btnApprove" name="@Constants.FormAction.APPROVE_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                    @Labels.Approve
+                </button>
+                <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
+                    @Labels.Reject
+                </button>
+                    }
                 }
-                else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
+                else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING)
                 {
-                    <button type="submit" id="btnAccept" name="@Constants.FormAction.ACCEPT_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                        @Labels.Accept
-                    </button>
-                    <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
-                        @Labels.Reject
-                    </button>
+                <button type="submit" id="btnProcess" name="@Constants.FormAction.PROCESS_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                    Process
+                </button>
+                <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
+                    @Labels.Reject
+                </button>
+                }
+                else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING && (User.IsInRole("Shift Head") || User.IsInRole("Manager")))
+                {
+                <button type="submit" id="btnAccept" name="@Constants.FormAction.ACCEPT_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                    @Labels.Accept
+                </button>
+                <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
+                    @Labels.Reject
+                </button>
                 }
             </div>
         </div>
