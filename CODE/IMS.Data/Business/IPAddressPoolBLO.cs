@@ -127,10 +127,10 @@ namespace IMS.Data.Business
                     ip1.StatusCode = Constants.StatusCode.IP_USED;
                     ip1.IsDefault = true;
                     dao.Update(ip1);
-                    var server = ServerBLO.Current.GetByServerCode(serverCode);
+                    var server = ServerBLO.Current.GetByKeys(new Server {ServerCode = serverCode});
                     server.DefaultIP = newIP;
                     ServerBLO.Current.Update(server);
-                    var serverip = ServerIPBLO.Current.GetByServerCode(serverCode);
+                    var serverip = ServerIPBLO.Current.GetByKeys(new ServerIP { ServerCode = serverCode});
                     serverip.CurrentIP = newIP;
                     serverip.AssignedDate = DateTime.Now;
                     ServerIPBLO.Current.Update(serverip);

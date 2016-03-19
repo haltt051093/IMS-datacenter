@@ -29,14 +29,6 @@ namespace IMS.Data.Repository
             return Query(x => x.Id == entry.Id).FirstOrDefault();
         }
 
-        public List<string> GetIpByServer(string serverCode, string statusCode)
-        {
-            var query =
-                Current.Query(x => x.ServerCode == serverCode && x.StatusCode == statusCode)
-                .Select(x => x.CurrentIP);
-            return query.ToList();
-        }
-
         public void AddServerIpAndLog(string requestCode, string serverCode, string updatedIp,
             string typeOfLog, string newStatus, string username)
         {

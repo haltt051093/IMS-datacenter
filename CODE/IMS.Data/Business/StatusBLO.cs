@@ -32,15 +32,15 @@ namespace IMS.Data.Business
 
         public string GetStatusName(string statusCode)
         {
-            return dao.GetStatusName(statusCode);
+            var status = dao.Query(x => x.StatusCode == statusCode)
+                .FirstOrDefault();
+            return status?.StatusName;
         }
 
         public List<Status> GetStatusByObject(string obj)
         {
-            var query = dao.Query(x => x.Object == obj);
-            return query.ToList();
+            var result = dao.Query(x => x.Object == obj);
+            return result;
         }
-
-
     }
 }

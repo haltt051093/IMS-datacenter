@@ -23,13 +23,12 @@ namespace IMS.Data.Repository
 
         public override Status GetByKeys(Status entry)
         {
-            return Query(x => x.Id == entry.Id).FirstOrDefault();
-        }
-
-        public string GetStatusName(string statusCode)
-        {
-            var statusName = Current.Query(x => x.StatusCode == statusCode).Select(x => x.StatusName).FirstOrDefault();
-            return statusName;
+            var existing = Query(x => x.Id == entry.Id).FirstOrDefault();
+            if (existing == null)
+            {
+                existing = Query(x => x.StatusCode == entry.StatusCode).FirstOrDefault();
+            }
+            return existing;
         }
     }
 }
