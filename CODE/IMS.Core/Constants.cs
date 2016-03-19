@@ -303,7 +303,7 @@ namespace IMS.Core
             public const string FORM_INNER_CLASS = "form-control";
             public const string FORM_LABEL = "tf-form-label";
             public const string FORM_FOR_PAGE = "form-group col-xs-offset-3";
-
+            public const string FORM_TEXTBOX_CLASS = "col-xs-6 tf-form-control";
 
             public const string MODAL_CLASS = "modal fade tf-modal";
             public const string MODAL_HEADER_CLASS = "h4";
