@@ -137,7 +137,7 @@ namespace IMS.Core.Extensions
 
         public static long? ToLong(this string str)
         {
-            var result = 0l;
+            var result = 0L;
             if (long.TryParse(str, out result) == false)
             {
                 return null;

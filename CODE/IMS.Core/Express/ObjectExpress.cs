@@ -81,7 +81,7 @@ namespace IMS.Core.Express
             }
         }
 
-        public static bool Equals(object item1, object item2)
+        public new static bool Equals(object item1, object item2)
         {
             if (item1 == null && item2 == null)
             {

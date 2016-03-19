@@ -41,7 +41,6 @@ namespace IMS.Data.Business
 
                 var locations = dao.GetAll();
                 string rack1 = "";
-                string server = "";
                 for (int i = 0; i < locations.Count; i++)
                 {
                     if (locations[i].ServerCode == ServerCode)
@@ -363,7 +362,6 @@ namespace IMS.Data.Business
                 }
                 return result;
             }
-            return null;
         }
 
         public List<RackOfCustomerExtendedModel> GetLocationsOfServer(string serverCode)
