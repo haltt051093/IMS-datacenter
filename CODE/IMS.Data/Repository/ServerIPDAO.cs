@@ -51,7 +51,7 @@ namespace IMS.Data.Repository
                 ObjectStatus = newStatus,
                 ServerCode = serverCode
             };
-            LogChangedContentBLO.Current.AddLog(logServerIp);
+            LogChangedContentBLO.Current.Add(logServerIp);
         }
 
         public void UpdateServerIpANDLog(string requestCode, string serverCode, string updatedIp,
@@ -75,7 +75,7 @@ namespace IMS.Data.Repository
                 ServerCode = serverCode,
                 Username = username
             };
-            LogChangedContentBLO.Current.AddLog(logServerIp);
+            LogChangedContentBLO.Current.Add(logServerIp);
         }
     }
 }

@@ -225,7 +225,7 @@ namespace IMS.Data.Repository
                 ServerCode = serverCode,
                 Description = description
             };
-            LogChangedContentBLO.Current.AddLog(logRequest);
+            LogChangedContentBLO.Current.Add(logRequest);
             return requestCode;
         }
 
@@ -251,7 +251,7 @@ namespace IMS.Data.Repository
                 Username = staffCode,
                 Description = description
             };
-            LogChangedContentBLO.Current.AddLog(logRequest);
+            LogChangedContentBLO.Current.Add(logRequest);
         }
 
         public string AddRequest(string requestCode, string requestType, string newStatus, string customer,

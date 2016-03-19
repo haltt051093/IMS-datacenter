@@ -92,7 +92,7 @@ namespace IMS.Data.Business
                 ObjectStatus = newStatus,
                 Username = staff
             };
-            LogChangedContentBLO.Current.AddLog(logRack);
+            LogChangedContentBLO.Current.Add(logRack);
         }
 
         public List<string> GetAllRowsOfRack()

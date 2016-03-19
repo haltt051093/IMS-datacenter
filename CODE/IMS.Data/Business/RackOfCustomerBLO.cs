@@ -86,7 +86,7 @@ namespace IMS.Data.Business
                 ObjectStatus = Constants.StatusCode.RACKOFCUSTOMER_CURRENT,
                 Username = staff
             };
-            LogChangedContentBLO.Current.AddLog(logRackOfCustomer);
+            LogChangedContentBLO.Current.Add(logRackOfCustomer);
         }
 
         public void UpdateStatusRackOfCustomerANDLog(string requestCode, string rackCode, string typeOfLog,
@@ -110,7 +110,7 @@ namespace IMS.Data.Business
                 ObjectStatus = newStatus,
                 Username = staff
             };
-            LogChangedContentBLO.Current.AddLog(logRackOfCustomer);
+            LogChangedContentBLO.Current.Add(logRackOfCustomer);
         }
     }
 }

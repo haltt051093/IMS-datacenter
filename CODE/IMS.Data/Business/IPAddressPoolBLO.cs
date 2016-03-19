@@ -174,7 +174,7 @@ namespace IMS.Data.Business
                 ServerCode = serverCode,
                 Username = username
             };
-            LogChangedContentBLO.Current.AddLog(logIp);
+            LogChangedContentBLO.Current.Add(logIp);
         }
 
         public List<IPAddressPoolExtendedModel> GetAvailableIpsSameGateway(string serverCode)

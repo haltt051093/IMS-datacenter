@@ -103,7 +103,7 @@ namespace IMS.Data.Business
                 ChangedValueOfObject = serverCode,
                 ObjectStatus = newStatus,
             };
-            LogChangedContentBLO.Current.AddLog(logServer);
+            LogChangedContentBLO.Current.Add(logServer);
         }
 
         public ServerExtendedModel GetAllServerInfo(string serverCode)

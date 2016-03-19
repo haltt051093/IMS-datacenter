@@ -355,7 +355,7 @@ namespace IMS.Controllers
                     ObjectStatus = Constants.StatusCode.SERVER_WAITING,
                     ServerCode = serverCode
                 };
-                LogChangedContentBLO.Current.AddLog(logServer);
+                LogChangedContentBLO.Current.Add(logServer);
             }
             //log request status
             var logRequest = new LogChangedContent
@@ -367,7 +367,7 @@ namespace IMS.Controllers
                 ChangedValueOfObject = requestCode,
                 Username = customer
             };
-            LogChangedContentBLO.Current.AddLog(logRequest);
+            LogChangedContentBLO.Current.Add(logRequest);
             //Xoa session server
             if (Session[Constants.Session.REQUEST_CODE] != null)
             {
@@ -403,7 +403,7 @@ namespace IMS.Controllers
                 ChangedValueOfObject = requestCode,
                 Username = customer
             };
-            LogChangedContentBLO.Current.AddLog(logRequest);
+            LogChangedContentBLO.Current.Add(logRequest);
             foreach (var item in listServer)
             {
                 if (item.Checked)
@@ -425,7 +425,7 @@ namespace IMS.Controllers
                             ServerCode = item.ServerCode,
                             Username = customer
                         };
-                        LogChangedContentBLO.Current.AddLog(logLocation);
+                        LogChangedContentBLO.Current.Add(logLocation);
                     }
                     foreach (var ip in currentIps)
                     {

@@ -281,5 +281,7 @@ namespace IMS.Data.Repository
             entry.LogTime = DateTime.Now;
             base.Add(entry);
         }
+
+
     }
 }

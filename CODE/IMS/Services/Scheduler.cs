@@ -16,7 +16,7 @@ namespace IMS.Services
             {
                 //lay ngay cuoi trong assigndate tru cho ngay hien tai. neu con 3 ngay thi genarate tiep thang sau, cong 1, cong 30 de ra end date
                 DateTime today = DateTime.Now;
-                var lastAssign = AssignedShiftDAO.Current.Table().OrderByDescending(x => x.StartedTime).FirstOrDefault();
+                var lastAssign = AssignedShiftDAO.Current.Table.OrderByDescending(x => x.StartedTime).FirstOrDefault();
                 var lastDate = ((lastAssign == null || !lastAssign.StartedTime.HasValue) ? DateTime.Now.Date.AddDays(-1) : lastAssign.StartedTime.Value);
                 //var lastGroup = AssignedShiftDAO.Current.Table().OrderByDescending(x => x.Date).Select(x => x.GroupCode).FirstOrDefault();
                 if ((lastDate - today).Days < 3)
@@ -31,10 +31,9 @@ namespace IMS.Services
         {
             public static void Start()
             {
-                IScheduler scheduler = StdSchedulerFactory.GetDefaultScheduler();
-                scheduler.Start();
-                IJobDetail job = JobBuilder.Create<TestJob>().Build();
-                ITrigger trigger = TriggerBuilder.Create()
+                var scheduler = StdSchedulerFactory.GetDefaultScheduler();
+                var job = JobBuilder.Create<TestJob>().Build();
+                var trigger = TriggerBuilder.Create()
                     .WithDailyTimeIntervalSchedule
                       (s =>
                          s.WithIntervalInHours(24)
@@ -42,8 +41,8 @@ namespace IMS.Services
                         .StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(0, 0))
                       )
                     .Build();
-
                 scheduler.ScheduleJob(job, trigger);
+                scheduler.Start();
             }
         }
     }
