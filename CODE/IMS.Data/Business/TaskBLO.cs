@@ -43,7 +43,7 @@ namespace IMS.Data.Business
                 RequestCode = requestCode,
                 ShiftHead = shifthead,
                 AssignedStaff = staff,
-                StatusCode = Constants.StatusCode.TASK_ACCEPTING,
+                StatusCode = Constants.StatusCode.TASK_WAITING,
                 AssignedTime = DateTime.Now,
                 PreAssignedStaff = preStaff
             };
@@ -57,7 +57,7 @@ namespace IMS.Data.Business
 
         public void UpdateTaskStatus(string taskCode, string statusCode)
         {
-            var existing = dao.GetByKeys(new Task {TaskCode = taskCode});
+            var existing = dao.GetByKeys(new Task { TaskCode = taskCode });
             if (existing != null)
             {
                 existing.StatusCode = statusCode;
@@ -75,6 +75,11 @@ namespace IMS.Data.Business
                 existing = dao.Query(x => x.RequestCode == code).FirstOrDefault();
             }
             return code;
+        }
+
+        public void CancelWaitingTask(string requestCode, string staff)
+        {
+            dao.CancelWaitingTask(requestCode, staff);
         }
     }
 }

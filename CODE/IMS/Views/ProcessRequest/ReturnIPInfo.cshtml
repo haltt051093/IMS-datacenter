@@ -62,7 +62,7 @@
                             </div>
                         }
                     }
-                    @if ((Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_ACCEPTING ||
+                    @if ((Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING ||
                      Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_NOTFINISH) && (User.IsInRole("Shift Head") || User.IsInRole("Manager")))
                     {
                         <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">

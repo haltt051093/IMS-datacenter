@@ -853,6 +853,7 @@ namespace IMS.Controllers
                 var preAssignedStaff = viewmodel.RequestInfo.Assignee;
                 var newAssignedStaff = viewmodel.RequestInfo.AssignedStaff;
                 //cancel task của thang truoc do, neu trang thai task la Waiting
+                TaskBLO.Current.CancelWaitingTask(viewmodel.RequestInfo.RequestCode, preAssignedStaff);
                 var shifthead = GetCurrentUserName();
                 TaskBLO.Current.AssignTask(viewmodel.RequestInfo.RequestCode, shifthead, newAssignedStaff, preAssignedStaff);
                 RequestBLO.Current.UpdateRequestAssignee(viewmodel.RequestInfo.RequestCode, newAssignedStaff);
