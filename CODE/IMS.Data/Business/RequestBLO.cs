@@ -176,7 +176,8 @@ namespace IMS.Data.Business
                                TaskStatus = subrt.StatusCode,
                                TaskCode = subrt.TaskCode,
                                TaskStatusName = subrt.StatusName,
-                               ShiftHead = subrt.ShiftHead
+                               ShiftHead = subrt.ShiftHead,
+                               AppointmentTime = r.AppointmentTime
                            }).FirstOrDefault();
             if (request != null)
             {

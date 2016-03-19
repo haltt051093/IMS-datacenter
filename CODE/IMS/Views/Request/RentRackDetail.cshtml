@@ -82,6 +82,7 @@
                 @Html.HiddenFor(model => model.RequestInfo.RequestCode)
                 @Html.HiddenFor(model => model.CustomerInfo.Customer)
                 @Html.HiddenFor(x => x.RequestInfo.RequestType)
+                @Html.HiddenFor(model => model.RequestInfo.TaskCode)
                 @if ((Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING ||
                     Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)&& User.IsInRole("Customer"))
                 {

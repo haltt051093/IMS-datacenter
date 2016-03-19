@@ -19,9 +19,9 @@ namespace IMS.Controllers
         {
             var data = new RequestIndexViewModel();
             data.Requests = LogChangedContentBLO.Current.GetAllRequest();
-            data.FilterByRequestType = TypeOfLogBLO.Current
-                .GetLogTypeOfRequest()
-                .Select(x => new SelectListItem { Value = x.TypeCode, Text = x.TypeName })
+            data.FilterByRequestType = RequestTypeBLO.Current
+                .GetAll()
+                .Select(x => new SelectListItem { Value = x.RequestTypeCode, Text = x.RequestTypeName })
                 .ToList();
             data.FilterByStatus = StatusBLO.Current
                 .GetStatusByObject(Constants.Object.OBJECT_REQUEST)
@@ -49,41 +49,24 @@ namespace IMS.Controllers
                 viewmodel.RequestInfo = RequestBLO.Current.GetRequestInfo(rCode);
                 //customer info
                 viewmodel.CustomerInfo = AccountBLO.Current.GeCustomerInfo(viewmodel.RequestInfo.Customer);
-                // assignee la dropdownlist
-                if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING ||
-                    viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING)
-                {
-                    var role = GetCurrentUserRole();
-                    if (role == Constants.Role.MANAGER)
+                //assign task
+                var group = GetCurrentUserGroup();
+                var listStaff = AccountBLO.Current.GetAccountsByGroup(group);
+                viewmodel.StaffCodeOptions = listStaff
+                    .Select(x => new SelectListItem
                     {
-                        //DOING
-                        //Lay group dang lam trong ca hien tai ?!
-                    }
-                    var group = GetCurrentUserGroup();
-                    var listStaff = AccountBLO.Current.GetAccountsByGroup(group);
-                    viewmodel.StaffCodeOptions = listStaff
-                        .Select(x => new SelectListItem
-                        {
-                            Value = x.Username,
-                            Text = x.Fullname,
-                            Selected = x.Role == Constants.Role.SHIFT_HEAD
-                        })
-                        .ToList();
-                }
-                else if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
+                        Value = x.Username,
+                        Text = x.Fullname,
+                        Selected = x.Role == Constants.Role.SHIFT_HEAD
+                    })
+                    .ToList();
+                //ng dang lam request
+                var staff = RequestBLO.Current.GetAssignee(rCode);
+                if (staff != null)
                 {
-                    var shifthead = GetCurrentUserName();
-                    var account = AccountBLO.Current.GetAccountByCode(shifthead);
-                    viewmodel.RequestInfo.Assignee = account.Username;
-                    viewmodel.RequestInfo.AssigneeName = account.Fullname;
-                }
-                else
-                {
-                    var staff = RequestBLO.Current.GetAssignee(rCode);
                     viewmodel.RequestInfo.Assignee = staff.Username;
                     viewmodel.RequestInfo.AssigneeName = staff.Fullname;
                 }
-
                 //lay list servers
                 var serverCodes = LogChangedContentBLO.Current.GetAddingServers(rCode);
                 List<ServerExtendedModel> list = new List<ServerExtendedModel>();
@@ -103,31 +86,21 @@ namespace IMS.Controllers
                 viewmodel.RequestInfo = RequestBLO.Current.GetRequestInfo(rCode);
                 //customer info
                 viewmodel.CustomerInfo = AccountBLO.Current.GeCustomerInfo(viewmodel.RequestInfo.Customer);
-                // assignee la dropdownlist
-                if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING ||
-                    viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING)
+                //assign task
+                var group = GetCurrentUserGroup();
+                var listStaff = AccountBLO.Current.GetAccountsByGroup(group);
+                viewmodel.StaffCodeOptions = listStaff
+                    .Select(x => new SelectListItem
+                    {
+                        Value = x.Username,
+                        Text = x.Fullname,
+                        Selected = x.Role == Constants.Role.SHIFT_HEAD
+                    })
+                    .ToList();
+                //ng dang lam request
+                var staff = RequestBLO.Current.GetAssignee(rCode);
+                if (staff != null)
                 {
-                    var group = GetCurrentUserGroup();
-                    var listStaff = AccountBLO.Current.GetAccountsByGroup(group);
-                    viewmodel.StaffCodeOptions = listStaff
-                        .Select(x => new SelectListItem
-                        {
-                            Value = x.Username,
-                            Text = x.Fullname,
-                            Selected = x.Role == Constants.Role.SHIFT_HEAD
-                        })
-                        .ToList();
-                }
-                else if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
-                {
-                    var shifthead = GetCurrentUserName();
-                    var account = AccountBLO.Current.GetAccountByCode(shifthead);
-                    viewmodel.RequestInfo.Assignee = account.Username;
-                    viewmodel.RequestInfo.AssigneeName = account.Fullname;
-                }
-                else
-                {
-                    var staff = RequestBLO.Current.GetAssignee(rCode);
                     viewmodel.RequestInfo.Assignee = staff.Username;
                     viewmodel.RequestInfo.AssigneeName = staff.Fullname;
                 }
@@ -155,9 +128,7 @@ namespace IMS.Controllers
                 viewmodel.RequestInfo.Description = reqDetail.Description;
                 //lay servercode, roi lay ip cua server do, tim nhung ip cung vung con lai
                 viewmodel.SelectedServer = LogChangedContentBLO.Current.GetServerCodeByRequestCode(rCode).FirstOrDefault();
-                // assignee la dropdownlist
-                //if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
-                //{
+                //assign task
                 var group = GetCurrentUserGroup();
                 var listStaff = AccountBLO.Current.GetAccountsByGroup(group);
                 viewmodel.StaffCodeOptions = listStaff
@@ -168,16 +139,13 @@ namespace IMS.Controllers
                         Selected = x.Role == Constants.Role.SHIFT_HEAD
                     })
                     .ToList();
-                //}
-                //else
-                //{
+                //ng dang lam request
                 var staff = RequestBLO.Current.GetAssignee(rCode);
                 if (staff != null)
                 {
                     viewmodel.RequestInfo.Assignee = staff.Username;
                     viewmodel.RequestInfo.AssigneeName = staff.Fullname;
                 }
-                //}
                 if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                 {
                     //Lay list available ip cung vung
@@ -230,9 +198,7 @@ namespace IMS.Controllers
                     Constants.StatusCode.SERVERIP_CHANGING);
                 //lay servercode, roi lay ip cua server do, tim nhung ip cung vung con lai
                 viewmodel.SelectedServer = LogChangedContentBLO.Current.GetServerCodeByRequestCode(rCode).FirstOrDefault();
-                // assignee la dropdownlist
-                //if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
-                //{
+                //assign task
                 var group = GetCurrentUserGroup();
                 var listStaff = AccountBLO.Current.GetAccountsByGroup(group);
                 viewmodel.StaffCodeOptions = listStaff
@@ -243,16 +209,13 @@ namespace IMS.Controllers
                         Selected = x.Role == Constants.Role.SHIFT_HEAD
                     })
                     .ToList();
-                //}
-                //else
-                //{
+                //ng dang lam request
                 var staff = RequestBLO.Current.GetAssignee(rCode);
                 if (staff != null)
                 {
                     viewmodel.RequestInfo.Assignee = staff.Username;
                     viewmodel.RequestInfo.AssigneeName = staff.Fullname;
                 }
-                //}
                 if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                 {
                     //Lay list available ip cung vung
@@ -286,43 +249,7 @@ namespace IMS.Controllers
                 //List returning IPs
                 viewmodel.ReturningIPs = LogChangedContentBLO.Current.GetChangedValueOfObject(rCode, Constants.Object.OBJECT_SERVERIP,
                     Constants.StatusCode.SERVERIP_RETURNING);
-                //if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
-                //{
-                var group = GetCurrentUserGroup();
-                var listStaff = AccountBLO.Current.GetAccountsByGroup(group);
-                viewmodel.StaffCodeOptions = listStaff
-                    .Select(x => new SelectListItem
-                    {
-                        Value = x.Username,
-                        Text = x.Fullname,
-                        Selected = x.Role == Constants.Role.SHIFT_HEAD
-                    })
-                    .ToList();
-                //}
-                //else
-                //{
-                var staff = RequestBLO.Current.GetAssignee(rCode);
-                if (staff != null)
-                {
-                    viewmodel.RequestInfo.Assignee = staff.Username;
-                    viewmodel.RequestInfo.AssigneeName = staff.Fullname;
-                }
-                //}
-                return View("ReturnIPInfo", viewmodel);
-            }
-
-            if (rType.Equals(Constants.RequestTypeCode.RENT_RACK))
-            {
-                ProcessRequestRentRackViewModel viewmodel = new ProcessRequestRentRackViewModel();
-                viewmodel.CurrentUser = GetCurrentUserName();
-                //request info
-                viewmodel.RequestInfo = RequestBLO.Current.GetRequestInfo(rCode);
-                //customer info
-                viewmodel.CustomerInfo = AccountBLO.Current.GeCustomerInfo(viewmodel.RequestInfo.Customer);
-                //Lay so luong rack muon thue
-                var desc = JsonConvert.DeserializeObject<RequestDetailViewModel>(viewmodel.RequestInfo.Description);
-                viewmodel.RackNumbers = desc.NumberOfRack;
-                viewmodel.RequestInfo.Description = desc.Description;
+                //assign task
                 var group = GetCurrentUserGroup();
                 var listStaff = AccountBLO.Current.GetAccountsByGroup(group);
                 viewmodel.StaffCodeOptions = listStaff
@@ -340,6 +267,40 @@ namespace IMS.Controllers
                     viewmodel.RequestInfo.Assignee = staff.Username;
                     viewmodel.RequestInfo.AssigneeName = staff.Fullname;
                 }
+                return View("ReturnIPInfo", viewmodel);
+            }
+
+            if (rType.Equals(Constants.RequestTypeCode.RENT_RACK))
+            {
+                ProcessRequestRentRackViewModel viewmodel = new ProcessRequestRentRackViewModel();
+                viewmodel.CurrentUser = GetCurrentUserName();
+                //request info
+                viewmodel.RequestInfo = RequestBLO.Current.GetRequestInfo(rCode);
+                //customer info
+                viewmodel.CustomerInfo = AccountBLO.Current.GeCustomerInfo(viewmodel.RequestInfo.Customer);
+                //Lay so luong rack muon thue
+                var desc = JsonConvert.DeserializeObject<RequestDetailViewModel>(viewmodel.RequestInfo.Description);
+                viewmodel.RackNumbers = desc.NumberOfRack;
+                viewmodel.RequestInfo.Description = desc.Description;
+                //assign task
+                var group = GetCurrentUserGroup();
+                var listStaff = AccountBLO.Current.GetAccountsByGroup(group);
+                viewmodel.StaffCodeOptions = listStaff
+                    .Select(x => new SelectListItem
+                    {
+                        Value = x.Username,
+                        Text = x.Fullname,
+                        Selected = x.Role == Constants.Role.SHIFT_HEAD
+                    })
+                    .ToList();
+                //ng dang lam request
+                var staff = RequestBLO.Current.GetAssignee(rCode);
+                if (staff != null)
+                {
+                    viewmodel.RequestInfo.Assignee = staff.Username;
+                    viewmodel.RequestInfo.AssigneeName = staff.Fullname;
+                }
+                //select rack
                 if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
                 {
                     viewmodel.RentedRacks = LogChangedContentBLO.Current.GetChangedValueOfObject(rCode,
@@ -368,9 +329,7 @@ namespace IMS.Controllers
                 //Lay so luong rack muon return
                 var listRacks = LogChangedContentBLO.Current.RequestDetailsReturnRack(rCode);
                 viewmodel.SelectedRacks = listRacks.listRacks;
-                // assignee la dropdownlist
-                //if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
-                //{
+                //assign task
                 var group = GetCurrentUserGroup();
                 var listStaff = AccountBLO.Current.GetAccountsByGroup(group);
                 viewmodel.StaffCodeOptions = listStaff
@@ -381,18 +340,13 @@ namespace IMS.Controllers
                         Selected = x.Role == Constants.Role.SHIFT_HEAD
                     })
                     .ToList();
-                //}
-                //else
-                //{
+                //ng dang lam request
                 var staff = RequestBLO.Current.GetAssignee(rCode);
                 if (staff != null)
                 {
                     viewmodel.RequestInfo.Assignee = staff.Username;
                     viewmodel.RequestInfo.AssigneeName = staff.Fullname;
                 }
-                //}
-                //lay status cua task 
-
                 return View("ReturnRackInfo", viewmodel);
             }
             return RedirectToAction("Index", "Notification");
@@ -553,8 +507,11 @@ namespace IMS.Controllers
                 //add cot moi, assignee la old, assignedStaff la new
                 var preAssignedStaff = viewmodel.RequestInfo.Assignee;
                 var newAssignedStaff = viewmodel.RequestInfo.AssignedStaff;
+                //cancel task của thang truoc do, neu trang thai task la Waiting
+                TaskBLO.Current.CancelWaitingTask(viewmodel.RequestInfo.TaskCode);
                 var shifthead = GetCurrentUserName();
                 TaskBLO.Current.AssignTask(viewmodel.RequestInfo.RequestCode, shifthead, newAssignedStaff, preAssignedStaff);
+                RequestBLO.Current.UpdateRequestAssignee(viewmodel.RequestInfo.RequestCode, newAssignedStaff);
                 return RedirectToAction("Detais", "ProcessRequest",
                     new { rType = Constants.RequestTypeCode.ADD_SERVER, rCode = viewmodel.RequestInfo.RequestCode });
             }
@@ -632,8 +589,11 @@ namespace IMS.Controllers
                 //add cot moi, assignee la old, assignedStaff la new
                 var preAssignedStaff = viewmodel.RequestInfo.Assignee;
                 var newAssignedStaff = viewmodel.RequestInfo.AssignedStaff;
+                //cancel task của thang truoc do, neu trang thai task la Waiting
+                TaskBLO.Current.CancelWaitingTask(viewmodel.RequestInfo.TaskCode);
                 var shifthead = GetCurrentUserName();
                 TaskBLO.Current.AssignTask(viewmodel.RequestInfo.RequestCode, shifthead, newAssignedStaff, preAssignedStaff);
+                RequestBLO.Current.UpdateRequestAssignee(viewmodel.RequestInfo.RequestCode, newAssignedStaff);
                 return RedirectToAction("Detais", "ProcessRequest",
                     new { rType = Constants.RequestTypeCode.BRING_SERVER_AWAY, rCode = viewmodel.RequestInfo.RequestCode });
             }
@@ -647,9 +607,9 @@ namespace IMS.Controllers
             {
                 var shifthead = GetCurrentUserName();
                 //assign
-                TaskBLO.Current.AssignTask(viewmodel.RequestInfo.RequestCode, shifthead, viewmodel.RequestInfo.AssignedStaff, null);
+                TaskBLO.Current.AssignTask(viewmodel.RequestInfo.RequestCode, shifthead, viewmodel.RequestInfo.Assignee, null);
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
-                    Constants.TypeOfLog.LOG_ASSIGN_IP, Constants.StatusCode.REQUEST_PROCESSING, viewmodel.RequestInfo.AssignedStaff, shifthead, null);
+                    Constants.TypeOfLog.LOG_ASSIGN_IP, Constants.StatusCode.REQUEST_PROCESSING, viewmodel.RequestInfo.Assignee, shifthead, null);
                 return RedirectToAction("Detais", "ProcessRequest",
                     new { rType = Constants.RequestTypeCode.ASSIGN_IP, rCode = viewmodel.RequestInfo.RequestCode });
             }
@@ -668,7 +628,7 @@ namespace IMS.Controllers
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_ASSIGN_IP,
                     Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.RequestCode, null);
                 //update task
-                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_COMPLETED);
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_COMPLETED);
                 Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
@@ -677,15 +637,18 @@ namespace IMS.Controllers
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_ASSIGN_IP,
                     Constants.StatusCode.REQUEST_REJECTED, null, viewmodel.RequestInfo.RequestCode, viewmodel.RequestInfo.RejectReason);
                 //update task
-                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_COMPLETED);
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_COMPLETED);
             }
             if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
             {
                 //add cot moi, assignee la old, assignedStaff la new
                 var preAssignedStaff = viewmodel.RequestInfo.Assignee;
                 var newAssignedStaff = viewmodel.RequestInfo.AssignedStaff;
+                //cancel task của thang truoc do, neu trang thai task la Waiting
+                TaskBLO.Current.CancelWaitingTask(viewmodel.RequestInfo.TaskCode);
                 var shifthead = GetCurrentUserName();
                 TaskBLO.Current.AssignTask(viewmodel.RequestInfo.RequestCode, shifthead, newAssignedStaff, preAssignedStaff);
+                RequestBLO.Current.UpdateRequestAssignee(viewmodel.RequestInfo.RequestCode, newAssignedStaff);
                 return RedirectToAction("Detais", "ProcessRequest",
                     new { rType = Constants.RequestTypeCode.ASSIGN_IP, rCode = viewmodel.RequestInfo.RequestCode });
             }
@@ -699,9 +662,9 @@ namespace IMS.Controllers
             {
                 var shifthead = GetCurrentUserName();
                 //assign
-                TaskBLO.Current.AssignTask(viewmodel.RequestInfo.RequestCode, shifthead, viewmodel.RequestInfo.AssignedStaff, null);
+                TaskBLO.Current.AssignTask(viewmodel.RequestInfo.RequestCode, shifthead, viewmodel.RequestInfo.Assignee, null);
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
-                    Constants.TypeOfLog.LOG_CHANGE_IP, Constants.StatusCode.REQUEST_PROCESSING, viewmodel.RequestInfo.AssignedStaff, shifthead, null);
+                    Constants.TypeOfLog.LOG_CHANGE_IP, Constants.StatusCode.REQUEST_PROCESSING, viewmodel.RequestInfo.Assignee, shifthead, null);
                 return RedirectToAction("Detais", "ProcessRequest",
                     new { rType = Constants.RequestTypeCode.CHANGE_IP, rCode = viewmodel.RequestInfo.RequestCode });
             }
@@ -714,7 +677,7 @@ namespace IMS.Controllers
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
                     Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.Assignee, null);
                 //update task
-                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_COMPLETED);
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_COMPLETED);
                 Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
@@ -728,15 +691,18 @@ namespace IMS.Controllers
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
                     Constants.StatusCode.REQUEST_REJECTED, null, viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.RejectReason);
                 //update task
-                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_COMPLETED);
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_COMPLETED);
             }
             if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
             {
                 //add cot moi, assignee la old, assignedStaff la new
                 var preAssignedStaff = viewmodel.RequestInfo.Assignee;
                 var newAssignedStaff = viewmodel.RequestInfo.AssignedStaff;
+                //cancel task của thang truoc do, neu trang thai task la Waiting
+                TaskBLO.Current.CancelWaitingTask(viewmodel.RequestInfo.TaskCode);
                 var shifthead = GetCurrentUserName();
                 TaskBLO.Current.AssignTask(viewmodel.RequestInfo.RequestCode, shifthead, newAssignedStaff, preAssignedStaff);
+                RequestBLO.Current.UpdateRequestAssignee(viewmodel.RequestInfo.RequestCode, newAssignedStaff);
                 return RedirectToAction("Detais", "ProcessRequest",
                     new { rType = Constants.RequestTypeCode.CHANGE_IP, rCode = viewmodel.RequestInfo.RequestCode });
             }
@@ -750,9 +716,9 @@ namespace IMS.Controllers
             {
                 var shifthead = GetCurrentUserName();
                 //assign
-                TaskBLO.Current.AssignTask(viewmodel.RequestInfo.RequestCode, shifthead, viewmodel.RequestInfo.AssignedStaff, null);
+                TaskBLO.Current.AssignTask(viewmodel.RequestInfo.RequestCode, shifthead, viewmodel.RequestInfo.Assignee, null);
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
-                    Constants.TypeOfLog.LOG_RETURN_IP, Constants.StatusCode.REQUEST_PROCESSING, viewmodel.RequestInfo.AssignedStaff, shifthead, null);
+                    Constants.TypeOfLog.LOG_RETURN_IP, Constants.StatusCode.REQUEST_PROCESSING, viewmodel.RequestInfo.Assignee, shifthead, null);
                 return RedirectToAction("Detais", "ProcessRequest",
                     new { rType = Constants.RequestTypeCode.RETURN_IP, rCode = viewmodel.RequestInfo.RequestCode });
             }
@@ -771,7 +737,7 @@ namespace IMS.Controllers
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_RETURN_IP,
                     Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.Assignee, null);
                 //update task
-                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_COMPLETED);
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_COMPLETED);
                 Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
@@ -786,21 +752,23 @@ namespace IMS.Controllers
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_RETURN_IP,
                     Constants.StatusCode.REQUEST_REJECTED, null, viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.RejectReason);
                 //update task
-                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_COMPLETED);
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_COMPLETED);
             }
             if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
             {
                 //add cot moi, assignee la old, assignedStaff la new
                 var preAssignedStaff = viewmodel.RequestInfo.Assignee;
                 var newAssignedStaff = viewmodel.RequestInfo.AssignedStaff;
+                //cancel task của thang truoc do, neu trang thai task la Waiting
+                TaskBLO.Current.CancelWaitingTask(viewmodel.RequestInfo.TaskCode);
                 var shifthead = GetCurrentUserName();
                 TaskBLO.Current.AssignTask(viewmodel.RequestInfo.RequestCode, shifthead, newAssignedStaff, preAssignedStaff);
+                RequestBLO.Current.UpdateRequestAssignee(viewmodel.RequestInfo.RequestCode, newAssignedStaff);
                 return RedirectToAction("Detais", "ProcessRequest",
                     new { rType = Constants.RequestTypeCode.RETURN_IP, rCode = viewmodel.RequestInfo.RequestCode });
             }
             return RedirectToAction("Index");
         }
-
 
         [HttpPost]
         public ActionResult ProcessRequestRentRack(ProcessRequestRentRackViewModel viewmodel)
@@ -868,9 +836,9 @@ namespace IMS.Controllers
             {
                 var shifthead = GetCurrentUserName();
                 //assign
-                TaskBLO.Current.AssignTask(viewmodel.RequestInfo.RequestCode, shifthead, viewmodel.RequestInfo.AssignedStaff, null);
+                TaskBLO.Current.AssignTask(viewmodel.RequestInfo.RequestCode, shifthead, viewmodel.RequestInfo.Assignee, null);
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
-                    Constants.TypeOfLog.LOG_RETURN_RACK, Constants.StatusCode.REQUEST_PROCESSING, viewmodel.RequestInfo.AssignedStaff, shifthead, null);
+                    Constants.TypeOfLog.LOG_RETURN_RACK, Constants.StatusCode.REQUEST_PROCESSING, viewmodel.RequestInfo.Assignee, shifthead, null);
                 return RedirectToAction("Detais", "ProcessRequest",
                     new { rType = Constants.RequestTypeCode.RETURN_RACK, rCode = viewmodel.RequestInfo.RequestCode });
             }
@@ -893,7 +861,7 @@ namespace IMS.Controllers
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
                     Constants.StatusCode.REQUEST_DONE, null, viewmodel.RequestInfo.Assignee, null);
                 //update task
-                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_COMPLETED);
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_COMPLETED);
                 Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
@@ -912,15 +880,18 @@ namespace IMS.Controllers
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
                     Constants.StatusCode.REQUEST_REJECTED, null, viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.RejectReason);
                 //update task
-                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.RequestCode, Constants.StatusCode.TASK_COMPLETED);
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_COMPLETED);
             }
             if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
             {
                 //add cot moi, assignee la old, assignedStaff la new
                 var preAssignedStaff = viewmodel.RequestInfo.Assignee;
                 var newAssignedStaff = viewmodel.RequestInfo.AssignedStaff;
+                //cancel task của thang truoc do, neu trang thai task la Waiting
+                TaskBLO.Current.CancelWaitingTask(viewmodel.RequestInfo.TaskCode);
                 var shifthead = GetCurrentUserName();
                 TaskBLO.Current.AssignTask(viewmodel.RequestInfo.RequestCode, shifthead, newAssignedStaff, preAssignedStaff);
+                RequestBLO.Current.UpdateRequestAssignee(viewmodel.RequestInfo.RequestCode, newAssignedStaff);
                 return RedirectToAction("Detais", "ProcessRequest",
                     new { rType = Constants.RequestTypeCode.RETURN_RACK, rCode = viewmodel.RequestInfo.RequestCode });
             }

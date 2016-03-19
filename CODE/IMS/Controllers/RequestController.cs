@@ -22,9 +22,9 @@ namespace IMS.Controllers
             var data = new RequestIndexViewModel();
             var username = GetCurrentUserName();
             data.Requests = LogChangedContentBLO.Current.GetRequestOfCustomer(username);
-            data.FilterByRequestType = TypeOfLogBLO.Current
-                .GetLogTypeOfRequest()
-                .Select(x => new SelectListItem { Value = x.TypeCode, Text = x.TypeName })
+            data.FilterByRequestType = RequestTypeBLO.Current
+                .GetAll()
+                .Select(x => new SelectListItem { Value = x.RequestTypeCode, Text = x.RequestTypeName })
                 .ToList();
             data.FilterByStatus = StatusBLO.Current
                 .GetStatusByObject(Constants.Object.OBJECT_REQUEST)
@@ -683,6 +683,8 @@ namespace IMS.Controllers
             //update request status and log
             RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_ADD_SERVER,
             Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
+            //update task
+            TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_CANCEL);
             return RedirectToAction("Detais",
                 new { rType = Constants.TypeOfLog.LOG_ADD_SERVER, rCode = viewmodel.RequestInfo.RequestCode });
         }
@@ -694,6 +696,8 @@ namespace IMS.Controllers
             var customer = GetCurrentUserName();
             //Update lai serverip, server, request
             LogChangedContentBLO.Current.CancelRequestBringServerAway(viewmodel.RequestInfo.RequestCode, customer);
+            //update task
+            TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_CANCEL);
             return RedirectToAction("Detais",
                new { rType = Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, rCode = viewmodel.RequestInfo.RequestCode });
         }
@@ -705,6 +709,8 @@ namespace IMS.Controllers
             //update request status and log
             RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_ASSIGN_IP,
             Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
+            //update task
+            TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_CANCEL);
             return RedirectToAction("Detais",
                 new { rType = Constants.TypeOfLog.LOG_ASSIGN_IP, rCode = viewmodel.RequestInfo.RequestCode });
         }
@@ -715,6 +721,8 @@ namespace IMS.Controllers
             var customer = GetCurrentUserName();
             //Update and log serverip, request
             LogChangedContentBLO.Current.CancelRequestChangeIp(viewmodel.RequestInfo.RequestCode, customer);
+            //update task
+            TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_CANCEL);
             return RedirectToAction("Detais",
                new { rType = Constants.TypeOfLog.LOG_CHANGE_IP, rCode = viewmodel.RequestInfo.RequestCode });
         }
@@ -725,6 +733,8 @@ namespace IMS.Controllers
             var customer = GetCurrentUserName();
             //Update va log serverip, request
             LogChangedContentBLO.Current.CancelRequestReturnIp(viewmodel.RequestInfo.RequestCode, customer);
+            //update task
+            TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_CANCEL);
             return RedirectToAction("Detais",
                 new { rType = Constants.TypeOfLog.LOG_RETURN_IP, rCode = viewmodel.RequestInfo.RequestCode });
         }
@@ -736,6 +746,8 @@ namespace IMS.Controllers
             //update request status and log
             RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
                 Constants.TypeOfLog.LOG_RENT_RACK, Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
+            //update task
+            TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_CANCEL);
             return RedirectToAction("Detais",
                 new { rType = Constants.TypeOfLog.LOG_RENT_RACK, rCode = viewmodel.RequestInfo.RequestCode });
         }
@@ -745,6 +757,8 @@ namespace IMS.Controllers
         {
             var customer = GetCurrentUserName();
             LogChangedContentBLO.Current.CancelRequestReturnRack(viewmodel.RequestInfo.RequestCode, customer);
+            //update task
+            TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_CANCEL);
             return RedirectToAction("Detais",
                 new { rType = Constants.TypeOfLog.LOG_RETURN_RACK, rCode = viewmodel.RequestInfo.RequestCode });
         }
