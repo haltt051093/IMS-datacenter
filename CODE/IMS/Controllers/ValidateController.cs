@@ -16,14 +16,14 @@ namespace IMS.Controllers
         [HttpPost]
         public JsonResult CheckIPAddress(string Address)
         {
-            var existing = IPAddressPoolBLO.Current.GetByModel(new IPAddressPool {IPAddress = Address});
+            var existing = IPAddressPoolBLO.Current.GetByKeys(new IPAddressPool {IPAddress = Address});
             return Json(existing == null);
         }
 
         [HttpPost]
         public JsonResult CheckUsername(string username)
         {
-            var existing = AccountBLO.Current.GetByModel(new Account {Username = username});
+            var existing = AccountBLO.Current.GetByKeys(new Account {Username = username});
             return Json(existing == null);
         }
     }

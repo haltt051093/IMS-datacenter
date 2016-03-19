@@ -29,9 +29,16 @@ namespace IMS.Data.Business
             dao = NotificationDAO.Current;
         }
 
-        public Notification GetByCode(string tempCode)
+        public List<Notification> GetByUser(string username, int page = 0, int pageSize = 20)
         {
-            return dao.GetByCode(tempCode);
+            var result = dao.Query(x => x.Username == username, page, pageSize);
+            return result;
+        }
+
+        public int CountUserUnread(string username)
+        {
+            var result = dao.Query(x => x.Username == username && x.IsViewed == false);
+            return result.Count;
         }
     }
 }

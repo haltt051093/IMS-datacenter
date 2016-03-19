@@ -31,10 +31,5 @@ namespace IMS.Data.Repository
             }
             return existing;
         }
-
-        public Notification GetByCode(string notificationCode)
-        {
-            return Query(x => x.NotificationCode == notificationCode).FirstOrDefault();
-        }
     }
 }

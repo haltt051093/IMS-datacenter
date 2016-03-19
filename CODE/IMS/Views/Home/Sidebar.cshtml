@@ -2,54 +2,54 @@
 
 @{
     var data = new List<SidebarItemModel>();
-    data.Add(new SidebarItemModel("Request", "Index", "Request") { Roles = new List<string>() { "Shift Head", "Manager", "Staff" } });
-    data.Add(new SidebarItemModel("Request History", "Index", "Request") { Roles = new List<string>() { "Customer" } });
-    data.Add(new SidebarItemModel("Server", "Index", "Server") {Roles = new List<string>() {"Shift Head", "Customer", "Manager", "Staff"}});
-    data.Add(new SidebarItemModel("Location", "Index", "Location") { Roles = new List<string>() { "Shift Head", "Manager", "Staff" } });
-    data.Add(new SidebarItemModel("IP Address", "Index", "IP") { Roles = new List<string>() { "Shift Head", "Manager", "Staff" } });
-    data.Add(new SidebarItemModel("Account", "Index", "Account") { Roles = new List<string>() { "Shift Head", "Manager", "Staff" } });
-    data.Add(new SidebarItemModel("Rack", "Index", "Rack") { Roles = new List<string>() { "Customer" } });
-    data.Add(new SidebarItemModel("Create request", "", "")
+    data.Add(new SidebarItemModel("fa fa-share", "Request", "Index", "Request") { Roles = new List<string>() { "Shift Head", "Manager", "Staff" } });
+    data.Add(new SidebarItemModel("fa fa-reply-all", "Request History", "Index", "Request") { Roles = new List<string>() { "Customer" } });
+    data.Add(new SidebarItemModel("fa fa-hdd-o", "Server", "Index", "Server") {Roles = new List<string>() {"Shift Head", "Customer", "Manager", "Staff"}});
+    data.Add(new SidebarItemModel("fa fa-th-list", "Location", "Index", "Location") { Roles = new List<string>() { "Shift Head", "Manager", "Staff" } });
+    data.Add(new SidebarItemModel("fa fa-info-circle", "IP Address", "Index", "IP") { Roles = new List<string>() { "Shift Head", "Manager", "Staff" } });
+    data.Add(new SidebarItemModel("fa fa-users", "Account", "Index", "Account") { Roles = new List<string>() { "Shift Head", "Manager", "Staff" } });
+    data.Add(new SidebarItemModel("fa fa-th-list", "Rack", "Index", "Rack") { Roles = new List<string>() { "Customer" } });
+    data.Add(new SidebarItemModel("fa fa-pencil-square-o", "Create request", "", "")
     {
         Roles = new List<string>() { "Customer" },
         SubMenu = new List<SidebarItemModel>()
         {
-            new SidebarItemModel("Add New Server", "Create", "Request", new { Type = Constants.RequestTypeCode.ADD_SERVER})
+            new SidebarItemModel("fa fa-angle-double-right", "Add New Server", "Create", "Request", new { Type = Constants.RequestTypeCode.ADD_SERVER})
             {
                 Roles = new List<string>() { "Customer" }
             },
-            new SidebarItemModel("Bring Away Server", "Create", "Request", new { Type = Constants.RequestTypeCode.BRING_SERVER_AWAY})
+            new SidebarItemModel("fa fa-angle-double-right", "Bring Away Server", "Create", "Request", new { Type = Constants.RequestTypeCode.BRING_SERVER_AWAY})
             {
                 Roles = new List<string>() { "Customer" }
             },
-            new SidebarItemModel("Assign IP Address", "Create", "Request", new { Type = Constants.RequestTypeCode.ASSIGN_IP})
+            new SidebarItemModel("fa fa-angle-double-right", "Assign IP Address", "Create", "Request", new { Type = Constants.RequestTypeCode.ASSIGN_IP})
             {
                 Roles = new List<string>() { "Customer" }
             },
-            new SidebarItemModel("Change IP Address", "Create", "Request", new { Type = Constants.RequestTypeCode.CHANGE_IP})
+            new SidebarItemModel("fa fa-angle-double-right", "Change IP Address", "Create", "Request", new { Type = Constants.RequestTypeCode.CHANGE_IP})
             {
                 Roles = new List<string>() { "Customer" }
             },
-            new SidebarItemModel("Return IP Address", "Create", "Request", new { Type = Constants.RequestTypeCode.RETURN_IP})
+            new SidebarItemModel("fa fa-angle-double-right", "Return IP Address", "Create", "Request", new { Type = Constants.RequestTypeCode.RETURN_IP})
             {
                 Roles = new List<string>() { "Customer" }
             },
-            new SidebarItemModel("Rent Rack", "Create", "Request", new { Type = Constants.RequestTypeCode.RENT_RACK})
+            new SidebarItemModel("fa fa-angle-double-right", "Rent Rack", "Create", "Request", new { Type = Constants.RequestTypeCode.RENT_RACK})
             {
                 Roles = new List<string>() { "Customer" }
             },
-            new SidebarItemModel("Return Rack", "Create", "Request", new { Type = Constants.RequestTypeCode.RETURN_RACK})
+            new SidebarItemModel("fa fa-angle-double-right", "Return Rack", "Create", "Request", new { Type = Constants.RequestTypeCode.RETURN_RACK})
             {
                 Roles = new List<string>() { "Customer" }
             }
         }
     });
-    data.Add(new SidebarItemModel("Report", "", "")
+    data.Add(new SidebarItemModel("fa fa-bar-chart-o", "Report", "", "")
     {
         Roles = new List<string>() { "Shift Head", "Staff", "Manager" },
         SubMenu = new List<SidebarItemModel>()
         {
-            new SidebarItemModel("Blocked IP Address", "ReportBlockIP", "Report") { Roles = new List<string>() { "Shift Head", "Staff", "Manager" } },
+            new SidebarItemModel("fa fa-angle-double-right", "Blocked IP Address", "ReportBlockIP", "Report") { Roles = new List<string>() { "Shift Head", "Staff", "Manager" } },
         }
     });
 
@@ -81,57 +81,19 @@
         }
         if (menu.SubMenu.Count == 0)
         {
-            if (menu.Title == "Request")
-            {
-                <li>
-                    <a href="@Url.Action(menu.Action, menu.Controller, menu.RouteValue)"><i class="fa fa-share"></i><span>@menu.Title</span></a>
-                </li>
-            }
-            if (menu.Title == "Server")
-            {
-                <li>
-                    <a href="@Url.Action(menu.Action, menu.Controller, menu.RouteValue)"><i class="fa fa-hdd-o"></i><span>@menu.Title</span></a>
-                </li>
-            }
-            if (menu.Title == "Location" || menu.Title=="Rack")
-            {
-                <li>
-                    <a href="@Url.Action(menu.Action, menu.Controller, menu.RouteValue)"><i class="fa fa-th-list"></i><span>@menu.Title</span></a>
-                </li>
-            }
-            if (menu.Title == "IP Address")
-            {
-                <li>
-                    <a href="@Url.Action(menu.Action, menu.Controller, menu.RouteValue)"><i class="fa fa-info-circle"></i><span>@menu.Title</span></a>
-                </li>
-            }
-            if (menu.Title == "Account")
-            {
-                <li>
-                    <a href="@Url.Action(menu.Action, menu.Controller, menu.RouteValue)"><i class="fa fa-users"></i><span>@menu.Title</span></a>
-                </li>
-            }
-            if (menu.Title == "Request History")
-            {
-                <li>
-                    <a href="@Url.Action(menu.Action, menu.Controller, menu.RouteValue)"><i class="fa fa-reply-all"></i><span>@menu.Title</span></a>
-                </li>
-            }
-            
-
+            <li>
+                <a href="@Url.Action(menu.Action, menu.Controller, menu.RouteValue)">
+                    @if (!string.IsNullOrEmpty(menu.Icon)) { <text><i class="@menu.Icon"></i></text> } <span>@menu.Title</span>
+                </a>
+            </li>
         }
         else
         {
             <li class="treeview ">
                 @{
-                    if (menu.Title == "Create request")
-                    {
-                        <a href="#"><i class="fa fa-pencil-square-o"></i><span>@menu.Title</span><i class="fa fa-angle-left pull-right"></i></a>
-                    }
-                    else
-                    {
-                        <a href="#"><i class="fa fa-bar-chart-o"></i><span>@menu.Title</span><i class="fa fa-angle-left pull-right"></i></a>
-                    }
+                    <a href="@Url.Action(menu.Action, menu.Controller, menu.RouteValue)">
+                        @if (!string.IsNullOrEmpty(menu.Icon)) { <text><i class="@menu.Icon"></i></text> } <span>@menu.Title</span>
+                    </a>
                 }
                 <ul class="treeview-menu">
                     @foreach (var subMenu in menu.SubMenu)
@@ -140,10 +102,14 @@
                         {
                             continue;
                         }
-                        <li><a href="@Url.Action(subMenu.Action, subMenu.Controller, subMenu.RouteValue)"><i class="fa fa-angle-double-right"></i>@subMenu.Title</a></li>
+                        <li>
+                            <a href="@Url.Action(subMenu.Action, subMenu.Controller, subMenu.RouteValue)">
+                                @if (!string.IsNullOrEmpty(subMenu.Icon)) { <text><i class="@subMenu.Icon"></i></text> } <span>@subMenu.Title</span>
+                            </a>
+                        </li>
                     }
                 </ul>
             </li>
-                        }
-                    }
+        }
+    }
 </ul>

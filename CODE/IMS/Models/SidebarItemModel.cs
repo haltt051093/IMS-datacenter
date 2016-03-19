@@ -9,8 +9,9 @@ namespace IMS.Models
             SubMenu = new List<SidebarItemModel>();
         }
 
-        public SidebarItemModel(string title, string action, string controller, object routeValue = null)
+        public SidebarItemModel(string icon, string title, string action, string controller, object routeValue = null)
         {
+            Icon = icon;
             Title = title;
             Action = action;
             Controller = controller;
@@ -18,6 +19,7 @@ namespace IMS.Models
             SubMenu = new List<SidebarItemModel>();
         }
 
+        public string Icon { get; set; }
         public string Title { get; set; }
         public string Action { get; set; }
         public string Controller { get; set; }

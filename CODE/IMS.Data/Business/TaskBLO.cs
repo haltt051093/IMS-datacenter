@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
+using IMS.Core;
+using IMS.Core.Express;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.Repository;
@@ -32,7 +36,18 @@ namespace IMS.Data.Business
 
         public void AssignTask(string requestCode, string shifthead, string staff, string preStaff)
         {
-            dao.AssignTask(requestCode, shifthead, staff, preStaff);
+            var taskCode = GenerateCode(); ;
+            var task = new Task()
+            {
+                TaskCode = taskCode,
+                RequestCode = requestCode,
+                ShiftHead = shifthead,
+                AssignedStaff = staff,
+                StatusCode = Constants.StatusCode.TASK_ACCEPTING,
+                AssignedTime = DateTime.Now,
+                PreAssignedStaff = preStaff
+            };
+            dao.Add(task);
         }
 
         public List<TaskExtendedModel> ListTaskOfStaff(string staff)
@@ -42,12 +57,24 @@ namespace IMS.Data.Business
 
         public void UpdateTaskStatus(string taskCode, string statusCode)
         {
-            dao.UpdateTaskStatus(taskCode, statusCode);
+            var existing = dao.GetByKeys(new Task {TaskCode = taskCode});
+            if (existing != null)
+            {
+                existing.StatusCode = statusCode;
+                dao.Update(existing);
+            }
         }
 
         public string GenerateCode()
         {
-            return dao.GenerateCode();
+            var code = "T" + TextExpress.Randomize(9, TextExpress.NUMBER + TextExpress.NUMBER);
+            var existing = dao.Query(x => x.RequestCode == code).FirstOrDefault();
+            while (existing != null)
+            {
+                code = "T" + TextExpress.Randomize(9, TextExpress.NUMBER + TextExpress.NUMBER);
+                existing = dao.Query(x => x.RequestCode == code).FirstOrDefault();
+            }
+            return code;
         }
     }
 }

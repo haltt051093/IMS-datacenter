@@ -658,7 +658,7 @@ namespace IMS.Controllers
         public ActionResult DeleteTempServer(string code)
         {
             //delete temp server
-            var temp = TempRequestBLO.Current.GetByModel(new TempRequest { TempCode = code });
+            var temp = TempRequestBLO.Current.GetByKeys(new TempRequest { TempCode = code });
             TempRequestBLO.Current.Remove(temp);
             //quay lai trang cu
             var rt = new RequestType();
