@@ -20,9 +20,7 @@ namespace IMS.Data.Generic
                 {
                     _prop.SetValue(target, _prop.GetValue(this, null), null);
                 }
-                    
-            
-        }
+            }
 
             return target as TResult;
         }

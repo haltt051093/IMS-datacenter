@@ -7,7 +7,7 @@ namespace IMS.Data.Generic
         protected BaseDAO<TModel> baseDao;
         
 
-        public virtual TModel GetByModel(TModel entry)
+        public virtual TModel GetByKeys(TModel entry)
         {
             var result = baseDao.GetByKeys(entry);
             return result == null ? null : result.DuplicateProperties<TModel>();

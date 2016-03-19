@@ -12,7 +12,7 @@ namespace IMS.ApiControllers
         [HttpGet]
         public TempRequestResponse GetTempServer(string code)
         {
-            var tempInfo = TempRequestBLO.Current.GetByModel(new TempRequest {TempCode = code});
+            var tempInfo = TempRequestBLO.Current.GetByKeys(new TempRequest {TempCode = code});
             if (tempInfo != null)
             {
                 var result = new TempRequestResponse();
@@ -27,7 +27,7 @@ namespace IMS.ApiControllers
         [HttpGet]
         public bool DeleteTempServer(string code)
         {
-            var tempInfo = TempRequestBLO.Current.GetByModel(new TempRequest { TempCode = code });
+            var tempInfo = TempRequestBLO.Current.GetByKeys(new TempRequest { TempCode = code });
             if (tempInfo != null)
             {
                 TempRequestBLO.Current.Remove(tempInfo);

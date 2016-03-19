@@ -152,7 +152,7 @@ namespace IMS.Controllers
             {
                 return View(livm);
             }
-            var location = LocationBLO.Current.GetByModel(new Location { LocationCode = selectedLocationCodes[0] });
+            var location = LocationBLO.Current.GetByKeys(new Location { LocationCode = selectedLocationCodes[0] });
             if (location == null)
             {
                 return View(livm);

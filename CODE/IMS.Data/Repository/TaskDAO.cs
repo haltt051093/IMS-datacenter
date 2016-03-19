@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using IMS.Core;
-using IMS.Core.Express;
 using IMS.Data.Business;
 using IMS.Data.Generic;
 using IMS.Data.Models;
@@ -28,29 +25,17 @@ namespace IMS.Data.Repository
 
         public override Task GetByKeys(Task entry)
         {
-            return Query(x => x.Id == entry.Id).FirstOrDefault();
-        }
-
-        public void AssignTask(string requestCode, string shifthead, string staff, string preStaff)
-        {
-            var taskCode = GenerateCode(); ;
-
-            var task = new Task()
+            var existing = Query(x => x.Id == entry.Id).FirstOrDefault();
+            if (existing == null)
             {
-                TaskCode = taskCode,
-                RequestCode = requestCode,
-                ShiftHead = shifthead,
-                AssignedStaff = staff,
-                StatusCode = Constants.StatusCode.TASK_ACCEPTING,
-                AssignedTime = DateTime.Now,
-                PreAssignedStaff = preStaff
-            };
-            Add(task);
+                existing = Query(x => x.TaskCode == entry.TaskCode).FirstOrDefault();
+            }
+            return existing;
         }
 
         public List<TaskExtendedModel> ListTaskOfStaff(string staff)
         {
-            var tasks = from t in Table()
+            var tasksQuery = from t in Table()
                         join s in StatusDAO.Current.Table()
                             on t.StatusCode equals s.StatusCode into st
                         from subst in st.DefaultIfEmpty()
@@ -69,48 +54,20 @@ namespace IMS.Data.Repository
                             TaskCode = t.TaskCode
                         };
 
-            var list = new List<TaskExtendedModel>();
-            if (tasks != null)
+            var tasks = tasksQuery.ToList();
+            foreach (var task in tasks)
             {
-                foreach (var task in tasks.ToList())
-                {
-                    //shifthead name
-                    var shifthead = task.ShiftHead;
-                    var shiftheadName = AccountBLO.Current.GetAccountByCode(shifthead).Fullname;
-                    task.ShiftHeadName = shiftheadName;
-                    //staff name
-                    var staffName = AccountBLO.Current.GetAccountByCode(staff).Fullname;
-                    task.StaffName = staffName;
-                    //requesttype name
-                    task.RequestTypeName = RequestTypeBLO.Current.GetTypeName(task.RequestTypeCode);
-                    list.Add(task);
-                }
+                //shifthead name
+                var shifthead = task.ShiftHead;
+                var shiftheadName = AccountBLO.Current.GetAccountByCode(shifthead).Fullname;
+                task.ShiftHeadName = shiftheadName;
+                //staff name
+                var staffName = AccountBLO.Current.GetAccountByCode(staff).Fullname;
+                task.StaffName = staffName;
+                //requesttype name
+                task.RequestTypeName = RequestTypeBLO.Current.GetTypeName(task.RequestTypeCode);
             }
-            return list.ToList();
-        }
-
-        public void UpdateTaskStatus(string taskCode, string statusCode)
-        {
-            var query = (from t in Table()
-                         where t.TaskCode == taskCode
-                         select t).FirstOrDefault();
-            if (query != null)
-            {
-                query.StatusCode = statusCode;
-                Update(query);
-            }
-        }
-
-        public string GenerateCode()
-        {
-            var code = "T" + TextExpress.Randomize(9, TextExpress.NUMBER + TextExpress.NUMBER);
-            var existing = Query(x => x.RequestCode == code).FirstOrDefault();
-            while (existing != null)
-            {
-                code = "T" + TextExpress.Randomize(9, TextExpress.NUMBER + TextExpress.NUMBER);
-                existing = Query(x => x.RequestCode == code).FirstOrDefault();
-            }
-            return code;
+            return tasks;
         }
     }
 }

@@ -39,7 +39,7 @@ namespace IMS.ApiControllers
         public List<string> GetAvailableRoles(GetAvailableRolesQuery q)
         {
             var result = new List<string>();
-            var group = GroupBLO.Current.GetByModel(new Group {GroupCode = q.GroupCode});
+            var group = GroupBLO.Current.GetByKeys(new Group {GroupCode = q.GroupCode});
             if (group == null)
             {
                 return result;

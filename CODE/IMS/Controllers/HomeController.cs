@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using IMS.Authentications;
+using IMS.Data.Business;
 using IMS.Models;
 
 namespace IMS.Controllers
@@ -16,9 +17,11 @@ namespace IMS.Controllers
         [ChildActionOnly]
         public PartialViewResult Header()
         {
+            var username = GetCurrentUserName();
             var data = new HomeHeaderViewModel();
             data.Account = GetCurrentAccount();
-            data.Group = GetCurrentUserGroup();
+            data.Notifications = NotificationBLO.Current.GetByUser(username);
+            data.NumberOfUnread = NotificationBLO.Current.CountUserUnread(username);
             return PartialView(data);
         }
 
