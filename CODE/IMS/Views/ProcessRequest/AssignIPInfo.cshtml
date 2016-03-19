@@ -53,8 +53,7 @@
                         if (Model.RequestInfo.StaffName != null)
                         {
                             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                                @Html.ActionLink(Model.RequestInfo.StaffName, "ViewProfile", "Account",
-                                    new {username = Model.RequestInfo.Assignee}, null)
+                                @Html.DisplayFor(model => model.RequestInfo.StaffName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                                 @Html.HiddenFor(model => model.RequestInfo.Assignee)
                             </div>
                         }
@@ -214,7 +213,9 @@
             @using (Html.BeginForm("ProcessRequestAssignIp", "ProcessRequest", FormMethod.Post))
             {
                 <div class="modal-header">
-                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i> @Labels.AddIP</div>
+                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i>
+                    Reassign Task
+                    </div>
                 </div>
                 <div class="modal-body">
                     <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">

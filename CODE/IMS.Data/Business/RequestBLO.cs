@@ -99,6 +99,11 @@ namespace IMS.Data.Business
             dao.UpdateRequestStatusANDLog(requestCode, typeOfLog, newStatus, assignee, staffCode, description);
         }
 
+        public void UpdateRequestAssignee(string requestCode, string assignee)
+        {
+            dao.UpdateRequestAssignee(requestCode, assignee);
+        }
+
         public string GenerateCode()
         {
             return dao.GenerateCode();
