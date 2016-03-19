@@ -15,57 +15,111 @@
 
     @using (Html.BeginForm("CreateStaff", "Account", FormMethod.Post))
     {
-
-        <div class="@Constants.HtmlFormat.FORM_FOR_PAGE">
-            @Html.LabelFor(model => model.Username)
-            @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", style = "width:600px" } })
-            @Html.ValidationMessageFor(model => model.Username)
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.Username)
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_TEXTBOX_CLASS">
+                @Html.TextBoxFor(model => model.Username, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.ValidationMessageFor(model => model.Username)
+            </div>
+            <div>
+                <label style="color: red">(*)</label>
+            </div>
         </div>
-        <div class="@Constants.HtmlFormat.FORM_FOR_PAGE">
-            @Html.LabelFor(model => model.GroupCode, "Group")
-            @Html.DropDownListFor(model => model.GroupCode, Model.Groups, "--Select Group--", new { @class = "form-control", style = "width:200px" })
-            @Html.ValidationMessageFor(model => model.GroupCode)
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.GroupCode, "Group")
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_TEXTBOX_CLASS">
+                @Html.DropDownListFor(model => model.GroupCode, Model.Groups, "--Select Group--", new {@class = Constants.HtmlFormat.FORM_INNER_CLASS, style = "width:200px"})
+                @Html.ValidationMessageFor(model => model.GroupCode)
+            </div>
+            <div>
+                <label style="color: red">(*)</label>
+            </div>
         </div>
-        <div class="@Constants.HtmlFormat.FORM_FOR_PAGE">
-            @Html.LabelFor(model => model.Role, "Role")
-            @{
-                var roles = RoleBLO.Current.GetAll().Where(c => c.RoleName != "Customer").Where(c => c.RoleName != "Manager");
-                var myList = new SelectList(roles, "RoleName", "RoleName");
-            }
-            @Html.DropDownListFor(model => model.Role, myList, "--Select Role--", new { @class = "form-control", style = "width:200px" })
-            @Html.ValidationMessageFor(model => model.Role)
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.Role)
+                @{
+                    var roles = RoleBLO.Current.GetAll().Where(c => c.RoleName != "Customer").Where(c => c.RoleName != "Manager");
+                    var myList = new SelectList(roles, "RoleName", "RoleName");
+                }
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_TEXTBOX_CLASS">
+                @Html.DropDownListFor(model => model.Role, myList, "--Select Role--", new { @class = Constants.HtmlFormat.FORM_INNER_CLASS, style = "width:200px" })
+                @Html.ValidationMessageFor(model => model.Role)
+            </div>
+            <div>
+                <label style="color: red">(*)</label>
+            </div>
         </div>
-
-        <div class="@Constants.HtmlFormat.FORM_FOR_PAGE">
-            @Html.LabelFor(model => model.Fullname)
-            @Html.EditorFor(model => model.Fullname, new { htmlAttributes = new { @class = "form-control", style = "width:600px" } })
-            @Html.ValidationMessageFor(model => model.Fullname)
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.Fullname)
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_TEXTBOX_CLASS">
+                @Html.TextBoxFor(model => model.Fullname, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.ValidationMessageFor(model => model.Fullname)
+            </div>
+            <div>
+                <label style="color: red">(*)</label>
+            </div>
         </div>
-        <div class="@Constants.HtmlFormat.FORM_FOR_PAGE">
-            @Html.LabelFor(model => model.Phone)
-            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", style = "width:600px" } })
-            @Html.ValidationMessageFor(model => model.Phone)
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.Phone)
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_TEXTBOX_CLASS">
+                @Html.TextBoxFor(model => model.Phone, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.ValidationMessageFor(model => model.Phone)
+            </div>
+            <div>
+                <label style="color: red">(*)</label>
+            </div>
         </div>
-        <div class="@Constants.HtmlFormat.FORM_FOR_PAGE">
-            @Html.LabelFor(model => model.Email)
-            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", style = "width:600px" } })
-            @Html.ValidationMessageFor(model => model.Email)
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.Email)
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_TEXTBOX_CLASS">
+                @Html.TextBoxFor(model => model.Email, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+            <div>
+                <label style="color: red">(*)</label>
+            </div>
         </div>
-        <div class="@Constants.HtmlFormat.FORM_FOR_PAGE">
-            @Html.LabelFor(model => model.Address)
-            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", style = "width:600px" } })
-            @Html.ValidationMessageFor(model => model.Address)
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.Address)
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_TEXTBOX_CLASS">
+                @Html.TextBoxFor(model => model.Address, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.ValidationMessageFor(model => model.Address)
+            </div>
+            <div>
+                <label style="color: red">(*)</label>
+            </div>
         </div>
-        <div class="@Constants.HtmlFormat.FORM_FOR_PAGE">
-            @Html.LabelFor(model => model.Identification)
-            @Html.EditorFor(model => model.Identification, new { htmlAttributes = new { @class = "form-control", style = "width:600px" } })
-            @Html.ValidationMessageFor(model => model.Identification)
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.Identification)
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_TEXTBOX_CLASS">
+                @Html.TextBoxFor(model => model.Identification, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                @Html.ValidationMessageFor(model => model.Identification)
+            </div>
+            <div>
+                <label style="color: red">(*)</label>
+            </div>
         </div>
-
-        <div class="@Constants.HtmlFormat.FORM_FOR_PAGE">
-            <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
-            @Html.ActionLink("Cancel", "Index", "Account", htmlAttributes: new { @class = "btn btn-default pull-left" })
-
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_TEXTBOX_CLASS col-xs-offset-2">
+                <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Add</button>
+                @Html.ActionLink("Cancel", "Index", "Account", htmlAttributes: new { @class = "btn btn-default pull-left" })
+            </div>
         </div>
                 }
 
