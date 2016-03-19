@@ -54,10 +54,11 @@ namespace IMS.Core
             public const string RACKOFCUSTOMER_RETURNING = "STATUS27";
             public const string RACKOFCUSTOMER_OLD = "STATUS28";
 
-            public const string TASK_ACCEPTING = "STATUS15";
+            public const string TASK_WAITING = "STATUS15";
             public const string TASK_DOING = "STATUS16";
             public const string TASK_DONE = "STATUS17";
             public const string TASK_NOTFINISH = "STATUS18";
+            public const string TASK_CANCEL = "STATUS37";
         }
 
         public class GroupName

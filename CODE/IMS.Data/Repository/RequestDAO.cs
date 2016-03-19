@@ -284,5 +284,17 @@ namespace IMS.Data.Repository
             IMSContext.Current.SaveChanges();
             return requestCode;
         }
+
+        public void UpdateRequestAssignee(string requestCode, string assignee)
+        {
+            var request = (from r in Current.Table()
+                           where r.RequestCode == requestCode
+                           select r).FirstOrDefault();
+            if (assignee != null)
+            {
+                request.Assignee = assignee;
+            }
+            Update(request);
+        }
     }
 }
