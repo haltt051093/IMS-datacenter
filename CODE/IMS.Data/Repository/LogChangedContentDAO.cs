@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using IMS.Core;
-using IMS.Data.Business;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.ViewModels;
@@ -27,23 +26,14 @@ namespace IMS.Data.Repository
 
         public override LogChangedContent GetByKeys(LogChangedContent entry)
         {
-            return Query(x => x.Id == entry.Id).FirstOrDefault();
+            var existing = Query(x => x.Id == entry.Id).FirstOrDefault();
+            return existing;
         }
 
-        public void AddLog(LogChangedContent viewmodel)
+        public override void Add(LogChangedContent entry)
         {
-            var log = viewmodel;
-            log.LogTime = DateTime.Now;
-            var existing = GetByKeys(log);
-            if (existing == null)
-            {
-                IMSContext.Current.Set<LogChangedContent>().Add(log);
-            }
-            else
-            {
-                CopyValues(log, existing);
-            }
-            IMSContext.Current.SaveChanges();
+            entry.LogTime = DateTime.Now;
+            base.Add(entry);
         }
 
         public List<string> GetIpRequestReturnIp(string requestCode)

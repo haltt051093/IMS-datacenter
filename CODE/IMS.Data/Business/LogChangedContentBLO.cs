@@ -47,9 +47,9 @@ namespace IMS.Data.Business
             return dao.GetLogUsedIP();
         }
 
-        public void AddLog(LogChangedContent viewmodel)
+        public void AddLog(LogChangedContent entry)
         {
-            dao.AddLog(viewmodel);
+            dao.Add(entry);
         }
 
         public List<string> GetIpRequestReturnIp(string requestCode)

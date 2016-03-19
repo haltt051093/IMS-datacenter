@@ -49,12 +49,10 @@ namespace IMS.Data.Business
 
         public List<string> GetIpByServer(string serverCode, string statusCode)
         {
-            return dao.GetIpByServer(serverCode, statusCode);
-        }
-        public ServerIP GetByServerCode(string servercode)
-        {
-            var query = @"select s.* from ServerIP as s where s.ServerCode='" + servercode + @"'";
-            return dao.RawQuery<ServerIP>(query, new object[] { }).FirstOrDefault();
+            var result = dao.Query(x => x.ServerCode == serverCode && x.StatusCode == statusCode)
+                .Select(x => x.CurrentIP)
+                .ToList();
+            return result;
         }
 
         public List<ServerIP> GetIPtoFetch(string serverCode, string status)

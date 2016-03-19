@@ -43,7 +43,11 @@ namespace IMS.Data.Business
                 RequestCode = requestCode,
                 ShiftHead = shifthead,
                 AssignedStaff = staff,
+<<<<<<< HEAD
                 StatusCode = Constants.StatusCode.TASK_WAITING,
+=======
+                StatusCode = Constants.StatusCode.TASK_DOING,
+>>>>>>> aa39a190d66f19c6cb4f2f2b400ff4a453cbbf2a
                 AssignedTime = DateTime.Now,
                 PreAssignedStaff = preStaff
             };
