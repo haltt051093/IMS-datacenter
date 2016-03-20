@@ -31,7 +31,7 @@ namespace IMS.Controllers
                 var servers = ServerBLO.Current.GetServerOfCustomer(customer);
                 foreach (var item in servers)
                 {
-                    item.Requests = LogChangedContentBLO.Current.GetWaitingRequestOfServer(item.ServerCode);
+                    item.Requests = RequestBLO.Current.GetWaitingRequestOfServer(item.ServerCode);
                 }
                 data.Servers = servers;
             }
@@ -41,7 +41,7 @@ namespace IMS.Controllers
                 var servers = ServerBLO.Current.GetAllServer();
                 foreach (var item in servers)
                 {
-                    item.Requests = LogChangedContentBLO.Current.GetWaitingRequestOfServer(item.ServerCode);
+                    item.Requests = RequestBLO.Current.GetWaitingRequestOfServer(item.ServerCode);
                 }
                 data.Servers = servers;
             }
@@ -54,17 +54,18 @@ namespace IMS.Controllers
             var data = new ServerDetailsViewModel();
             data.Server = ServerBLO.Current.GetAllServerInfo(code);
             //var serverattributes = ServerBLO.Current.GetServerAttributes(serverCode);
-            var ips = ServerBLO.Current.GetCurrentIP(code);
+            var ips = ServerIPBLO.Current.GetCurrentIP(code);
             if (ips != null)
             {
                 data.CurrentIPs = ips;
             }
+            //DOING
             //them list location
-            var locations = LocationBLO.Current.GetLocationsOfServer(data.Server.ServerCode);
-            if (locations != null)
-            {
-                data.Locations = locations;
-            }
+            var locations = LocationBLO.Current.GetLocationOfServer(data.Server.ServerCode);
+            //if (locations != null)
+            //{
+            //    data.Locations = locations;
+            //}
             //var locations = LocationBLO.Current.GetChangeLocation(data.Server);
             //var listrack = locations.OrderBy(x => x.RackName).GroupBy(x => x.RackName).Select(x => x.FirstOrDefault());
             //data.Racks = listrack.Select(x => new SelectListItem

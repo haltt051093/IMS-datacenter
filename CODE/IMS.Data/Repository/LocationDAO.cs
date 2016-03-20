@@ -187,32 +187,5 @@ except select l.LocationCode, l.RackCode, l.RackUnit, s.StatusName,l.ServerCode,
                 server.ServerCode + @"'";
             return RawQuery<LocationViewModel>(query, new object[] { }).FirstOrDefault();
         }
-
-        public List<RackOfCustomerExtendedModel> GetLocationsOfServer(string serverCode)
-        {
-            var locations = from r in RackDAO.Current.Table
-                            join l in Table
-                                on r.RackCode equals l.RackCode into lr
-                            from subl in lr.DefaultIfEmpty()
-                            where subl.ServerCode == serverCode
-                            select new RackOfCustomerExtendedModel
-                            {
-                                LocationCode = subl.LocationCode,
-                                ServerCode = subl.ServerCode,
-                                RackUnit = subl.RackUnit,
-                                RackCode = subl.RackCode,
-                                RackName = r.RackName
-                            };
-            if (locations != null)
-            {
-                return locations.ToList();
-            }
-            return null;
-        }
-
-        public void SetLocationAvailable(string serverCode)
-        {
-
-        }
     }
 }

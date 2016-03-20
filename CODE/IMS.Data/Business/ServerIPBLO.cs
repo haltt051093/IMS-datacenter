@@ -38,18 +38,6 @@ namespace IMS.Data.Business
             return result;
         }
 
-        public void AddServerIpAndLog(string requestCode, string serverCode, string updatedIp,
-            string typeOfLog, string newStatus, string username)
-        {
-            dao.AddServerIpAndLog(requestCode, serverCode, updatedIp, typeOfLog, newStatus, username);
-        }
-
-        public void UpdateServerIpANDLog(string requestCode, string serverCode, string updatedIp,
-             string typeOfLog, string newStatus, string username)
-        {
-            dao.UpdateServerIpANDLog(requestCode, serverCode, updatedIp, typeOfLog, newStatus, username);
-        }
-
         public List<string> GetIpByServer(string serverCode, string statusCode)
         {
             var result = dao.Query(x => x.ServerCode == serverCode && x.StatusCode == statusCode)
@@ -64,6 +52,34 @@ namespace IMS.Data.Business
                         where si.ServerCode == serverCode && si.StatusCode == status
                         select si;
             return query.OrderBy(x => x.CurrentIP).ToList();
+        }
+
+        public List<ServerIP> GetCurrentIP(string serverCode)
+        {
+            var query = from s in ServerDAO.Current.Table
+                        join si in ServerIPDAO.Current.Table
+                            on s.ServerCode equals si.ServerCode
+                        where s.ServerCode == serverCode
+                        select si;
+            return query.ToList();
+        }
+
+        public ServerIP GetByIP(string ip)
+        {
+            var query = @"select s.* from ServerIP as s where s.CurrentIP='" + ip + @"'";
+            return dao.RawQuery<ServerIP>(query, new object[] { }).FirstOrDefault();
+        }
+
+        public void AddServerIpAndLog(string requestCode, string serverCode, string updatedIp,
+           string typeOfLog, string newStatus, string username)
+        {
+            dao.AddServerIpAndLog(requestCode, serverCode, updatedIp, typeOfLog, newStatus, username);
+        }
+
+        public void UpdateServerIpANDLog(string requestCode, string serverCode, string updatedIp,
+             string typeOfLog, string newStatus, string username)
+        {
+            dao.UpdateServerIpANDLog(requestCode, serverCode, updatedIp, typeOfLog, newStatus, username);
         }
     }
 }

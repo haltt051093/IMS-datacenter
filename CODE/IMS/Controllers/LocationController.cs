@@ -79,7 +79,7 @@ namespace IMS.Controllers
                 server = ServerBLO.Current.GetServerByCode(ServerCode, Constants.StatusCode.SERVER_RUNNING);
             }
             
-            var locationserver = LocationBLO.Current.GetLocationsOfServer(ServerCode);
+            var locationserver = LocationBLO.Current.GetLocationOfServer(ServerCode);
             //truong hop assign lan dau
             if (locationserver.Count == 0)
             {

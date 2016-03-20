@@ -33,7 +33,7 @@ namespace IMS.ApiControllers
             {
                 server = server = ServerBLO.Current.GetServerByCode(code, Constants.StatusCode.SERVER_RUNNING);
             }
-            var locationserver = LocationBLO.Current.GetLocationsOfServer(code);
+            var locationserver = LocationBLO.Current.GetLocationOfServer(code);
             var locations = new List<LocationViewModel>();
             var locations1 = new List<LocationViewModel>();
             if (locationserver.Count == 0)

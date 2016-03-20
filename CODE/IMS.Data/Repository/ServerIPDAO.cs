@@ -49,7 +49,8 @@ namespace IMS.Data.Repository
                 Object = Constants.Object.OBJECT_SERVERIP,
                 ChangedValueOfObject = updatedIp,
                 ObjectStatus = newStatus,
-                ServerCode = serverCode
+                ServerCode = serverCode,
+                Username = username
             };
             LogChangedContentBLO.Current.Add(logServerIp);
         }

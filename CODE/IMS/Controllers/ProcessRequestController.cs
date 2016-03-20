@@ -477,7 +477,7 @@ namespace IMS.Controllers
                     foreach (var server in listServer)
                     {
                         //update and log server
-                        ServerBLO.Current.UpdateServerStatus(viewmodel.RequestInfo.RequestCode, server.ServerCode,
+                        ServerBLO.Current.UpdateServerANDLog(viewmodel.RequestInfo.RequestCode, server.ServerCode,
                             Constants.TypeOfLog.LOG_ADD_SERVER, Constants.StatusCode.SERVER_RUNNING, viewmodel.RequestInfo.Assignee);
                     }
                     //Add and log request
@@ -492,7 +492,7 @@ namespace IMS.Controllers
                 foreach (var server in serverCodes)
                 {
                     //update and log server
-                    ServerBLO.Current.UpdateServerStatus(viewmodel.RequestInfo.RequestCode, server,
+                    ServerBLO.Current.UpdateServerANDLog(viewmodel.RequestInfo.RequestCode, server,
                         Constants.TypeOfLog.LOG_ADD_SERVER, Constants.StatusCode.SERVER_DEACTIVATE, viewmodel.RequestInfo.Assignee);
                     //update lai ip va location neu co
                 }
@@ -555,7 +555,7 @@ namespace IMS.Controllers
                             Constants.TypeOfLog.LOG_RETURN_IP, Constants.StatusCode.SERVERIP_OLD, viewmodel.RequestInfo.Assignee);
                     }
                     //update and log server
-                    ServerBLO.Current.UpdateServerStatus(viewmodel.RequestInfo.RequestCode, server.ServerCode,
+                    ServerBLO.Current.UpdateServerANDLog(viewmodel.RequestInfo.RequestCode, server.ServerCode,
                         Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.SERVER_DEACTIVATE,
                         viewmodel.RequestInfo.Assignee);
                     //add and log request
@@ -582,7 +582,7 @@ namespace IMS.Controllers
                             Constants.TypeOfLog.LOG_RETURN_IP, Constants.StatusCode.SERVERIP_CURRENT, viewmodel.RequestInfo.Assignee);
                     }
                     //update and log server
-                    ServerBLO.Current.UpdateServerStatus(viewmodel.RequestInfo.RequestCode, server.ServerCode,
+                    ServerBLO.Current.UpdateServerANDLog(viewmodel.RequestInfo.RequestCode, server.ServerCode,
                         Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.SERVER_RUNNING,
                         viewmodel.RequestInfo.Assignee);
                 }

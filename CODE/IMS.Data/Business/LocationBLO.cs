@@ -33,6 +33,17 @@ namespace IMS.Data.Business
             dao = LocationDAO.Current;
         }
 
+        public string GenerateCode()
+        {
+            var code = "L" + TextExpress.Randomize(6, TextExpress.NUMBER + TextExpress.NUMBER);
+            var existing = dao.Query(x => x.LocationCode == code).FirstOrDefault();
+            while (existing != null)
+            {
+                code = "L" + TextExpress.Randomize(6, TextExpress.NUMBER + TextExpress.NUMBER);
+                existing = dao.Query(x => x.LocationCode == code).FirstOrDefault();
+            }
+            return code;
+        }
 
         public bool UpdateLocation(string ServerCode, List<string> Locations, string request)
         {
@@ -230,7 +241,6 @@ namespace IMS.Data.Business
 
 
         }
-
         public List<LocationViewModel> GetNewLocation1(Server server)
         {
             var allLocation = new List<LocationViewModel>();
@@ -348,11 +358,6 @@ namespace IMS.Data.Business
             }
         }
 
-        public List<RackOfCustomerExtendedModel> GetLocationsOfServer(string serverCode)
-        {
-            return dao.GetLocationsOfServer(serverCode);
-        }
-
         public void SetLocationAvailable(string serverCode)
         {
             var query = dao.Query(x => x.ServerCode == serverCode);
@@ -364,17 +369,22 @@ namespace IMS.Data.Business
                 Update(location);
             }
         }
-
-        public string GenerateCode()
+        public List<LocationViewModel> GetLocationOfServer(string serverCode)
         {
-            var code = "L" + TextExpress.Randomize(6, TextExpress.NUMBER + TextExpress.NUMBER);
-            var existing = dao.Query(x => x.LocationCode == code).FirstOrDefault();
-            while (existing != null)
-            {
-                code = "L" + TextExpress.Randomize(6, TextExpress.NUMBER + TextExpress.NUMBER);
-                existing = dao.Query(x => x.LocationCode == code).FirstOrDefault();
-            }
-            return code;
+            var serverlocation = from l in LocationDAO.Current.Table
+                                 join r in RackDAO.Current.Table
+                                     on l.RackCode equals r.RackCode into lr
+                                 from sublr in lr.DefaultIfEmpty()
+                                 where l.ServerCode == serverCode
+                                 select new LocationViewModel
+                                 {
+                                     RackName = sublr.RackName,
+                                     RackUnit = l.RackUnit,
+                                     RackCode = sublr.RackCode,
+                                     LocationCode = l.LocationCode,
+                                     ServerCode = l.ServerCode
+                                 };
+            return serverlocation.ToList();
         }
     }
 }

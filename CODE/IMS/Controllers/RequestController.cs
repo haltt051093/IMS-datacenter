@@ -6,7 +6,6 @@ using IMS.Authentications;
 using IMS.Core;
 using IMS.Data.Business;
 using IMS.Data.Models;
-using IMS.Data.Repository;
 using IMS.Data.ViewModels;
 using IMS.Models;
 using IMS.Services;
@@ -203,6 +202,7 @@ namespace IMS.Controllers
         }
         #endregion
 
+        #region request details
         [Authorize]
         [HttpGet]
         public ActionResult Detais(string rType, string rCode)
@@ -326,6 +326,7 @@ namespace IMS.Controllers
             }
             return RedirectToAction("Index");
         }
+        #endregion
 
         #region Process Request
         [HttpPost]
@@ -333,41 +334,9 @@ namespace IMS.Controllers
         {
             var customer = GetCurrentUserName();
             var requestCode = Session[Constants.Session.REQUEST_CODE].ToString();
-            //lay thong tin server tu bang temp
-            var temps = TempRequestBLO.Current.GetByRequestCode(requestCode);
             //Add request and log
-            RequestBLO.Current.AddRequest(requestCode, Constants.RequestTypeCode.ADD_SERVER,
-                Constants.StatusCode.REQUEST_PENDING, customer, viewmodel.RequestInfo.Description,
-                viewmodel.RequestInfo.AppointmentTime);
-            foreach (var temp in temps)
-            {
-                var server = JsonConvert.DeserializeObject<Server>(temp.Data);
-                server.Customer = GetCurrentUserName();
-                var serverCode = ServerDAO.Current.AddServer(server);
-                // log object server
-                var logServer = new LogChangedContent
-                {
-                    RequestCode = requestCode,
-                    TypeOfLog = Constants.TypeOfLog.LOG_ADD_SERVER,
-                    Object = Constants.Object.OBJECT_SERVER,
-                    ChangedValueOfObject = serverCode,
-                    //object status
-                    ObjectStatus = Constants.StatusCode.SERVER_WAITING,
-                    ServerCode = serverCode
-                };
-                LogChangedContentBLO.Current.Add(logServer);
-            }
-            //log request status
-            var logRequest = new LogChangedContent
-            {
-                RequestCode = requestCode,
-                TypeOfLog = Constants.TypeOfLog.LOG_ADD_SERVER,
-                Object = Constants.Object.OBJECT_REQUEST,
-                ObjectStatus = Constants.StatusCode.REQUEST_PENDING,
-                ChangedValueOfObject = requestCode,
-                Username = customer
-            };
-            LogChangedContentBLO.Current.Add(logRequest);
+            RequestBLO.Current.AddRequestAddServer(customer, viewmodel.RequestInfo.Description,
+                viewmodel.RequestInfo.AppointmentTime, requestCode);
             //Xoa session server
             if (Session[Constants.Session.REQUEST_CODE] != null)
             {
@@ -389,57 +358,8 @@ namespace IMS.Controllers
         {
             var customer = GetCurrentUserName();
             //update lai trang thai server, trang thai serverIP
-            var listServer = viewmodel.ServerOfCustomer;
-            var requestCode = RequestBLO.Current.AddRequest(null, Constants.RequestTypeCode.BRING_SERVER_AWAY,
-                Constants.StatusCode.REQUEST_PENDING, customer, viewmodel.RequestInfo.Description,
-                viewmodel.RequestInfo.AppointmentTime);
-            //Add and log request
-            var logRequest = new LogChangedContent
-            {
-                RequestCode = requestCode,
-                TypeOfLog = Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
-                Object = Constants.Object.OBJECT_REQUEST,
-                ObjectStatus = Constants.StatusCode.REQUEST_PENDING,
-                ChangedValueOfObject = requestCode,
-                Username = customer
-            };
-            LogChangedContentBLO.Current.Add(logRequest);
-            foreach (var item in listServer)
-            {
-                if (item.Checked)
-                {
-                    //get currentIps
-                    var currentIps = ServerIPBLO.Current.GetIpByServer(item.ServerCode, Constants.StatusCode.SERVERIP_CURRENT);
-                    //log location
-                    var serverLocation = LogChangedContentBLO.Current.GetLocationOfServer(item.ServerCode);
-                    foreach (var item1 in serverLocation)
-                    {
-                        var lc = item1.RackName + "U" + item1.RackUnit;
-                        var logLocation = new LogChangedContent
-                        {
-                            RequestCode = requestCode,
-                            TypeOfLog = Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
-                            Object = Constants.Object.OBJECT_LOCATION,
-                            ObjectStatus = Constants.StatusCode.LOCATION_USED,
-                            ChangedValueOfObject = lc,
-                            ServerCode = item.ServerCode,
-                            Username = customer
-                        };
-                        LogChangedContentBLO.Current.Add(logLocation);
-                    }
-                    foreach (var ip in currentIps)
-                    {
-                        //update and log status ip bang serverip
-                        ServerIPBLO.Current.UpdateServerIpANDLog(requestCode, item.ServerCode, ip,
-                            Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.SERVERIP_RETURNING,
-                            customer);
-                    }
-                    //update and log server
-                    ServerBLO.Current.UpdateServerStatus(requestCode, item.ServerCode,
-                        Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.SERVER_BRINGING_AWAY,
-                        customer);
-                }
-            }
+            var requestCode = RequestBLO.Current.AddRequestBringServerAway(customer, viewmodel.RequestInfo.Description,
+                viewmodel.ServerOfCustomer, viewmodel.RequestInfo.AppointmentTime);
             Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
             return RedirectToAction("Index");
         }
@@ -452,17 +372,14 @@ namespace IMS.Controllers
             {
                 //Edit description
                 var requestDetail = new RequestDetailViewModel();
+                requestDetail.NumberOfIp = viewmodel.NumberOfIP;
                 if (!string.IsNullOrWhiteSpace(viewmodel.RequestInfo.Description))
                 {
-                    requestDetail.NumberOfIp = viewmodel.NumberOfIP;
                     requestDetail.Description = viewmodel.RequestInfo.Description;
                 }
                 viewmodel.RequestInfo.Description = JsonConvert.SerializeObject(requestDetail);
                 //Add request and log
-                var result = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.ASSIGN_IP,
-                    Constants.StatusCode.REQUEST_PENDING, customer, viewmodel.RequestInfo.Description,
-                    null, viewmodel.SelectedServer, Constants.TypeOfLog.LOG_ASSIGN_IP, null);
-
+                var result = RequestBLO.Current.AddRequestAssignIP(customer, viewmodel.RequestInfo.Description, viewmodel.SelectedServer);
                 //Notification
                 var notif = Mapper.Map<RequestAssignIPViewModel, NotificationExtendedModel>(viewmodel);
                 notif.RequestTypeName = Constants.RequestTypeName.IP_ASSIGN;
@@ -478,24 +395,10 @@ namespace IMS.Controllers
         public ActionResult ChangeIp(RequestChangeIPViewModel viewmodel)
         {
             var customer = GetCurrentUserName();
-            var selected = viewmodel.ReturningIPs;
-            if (selected.Count > 0)
+            if (viewmodel.ReturningIPs.Count > 0)
             {
                 //Add request and log
-                var result = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.CHANGE_IP,
-                    Constants.StatusCode.REQUEST_PENDING, customer, viewmodel.RequestInfo.Description,
-                    null, viewmodel.SelectedServer, Constants.TypeOfLog.LOG_CHANGE_IP, null);
-                //update and log tat ca ip muon change --> chi co serverip
-                var last = selected[0];
-                var ips = last.Split(',').ToList<string>();
-                ips.Reverse();
-                foreach (var item in ips)
-                {
-                    //update and log status ip bang serverip
-                    ServerIPBLO.Current.UpdateServerIpANDLog(result, viewmodel.SelectedServer, item,
-                        Constants.TypeOfLog.LOG_CHANGE_IP, Constants.StatusCode.SERVERIP_CHANGING,
-                        customer);
-                }
+                var result = RequestBLO.Current.AddRequestChangeIP(customer, viewmodel.RequestInfo.Description, viewmodel.SelectedServer, viewmodel.ReturningIPs);
                 //Notification
                 var notif = Mapper.Map<RequestChangeIPViewModel, NotificationExtendedModel>(viewmodel);
                 notif.RequestTypeName = Constants.RequestTypeName.IP_CHANGE;
@@ -511,25 +414,10 @@ namespace IMS.Controllers
         public ActionResult ReturnIp(RequestReturnIPViewModel viewmodel)
         {
             var customer = GetCurrentUserName();
-            var selected = viewmodel.ReturningIPs;
-            if (selected.Count > 0)
+            if (viewmodel.ReturningIPs.Count > 0)
             {
                 //Add and log request
-                var result = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.RETURN_IP,
-                    Constants.StatusCode.REQUEST_PENDING, customer, viewmodel.RequestInfo.Description,
-                    null, viewmodel.SelectedServer, Constants.TypeOfLog.LOG_RETURN_IP, null);
-
-                //update and log serverip muon return
-                var last = selected[0];
-                var ips = last.Split(',').ToList<string>();
-                ips.Reverse();
-                foreach (var item in ips)
-                {
-                    //update and log status ip bang serverip
-                    ServerIPBLO.Current.UpdateServerIpANDLog(result, viewmodel.SelectedServer, item,
-                        Constants.TypeOfLog.LOG_RETURN_IP, Constants.StatusCode.SERVERIP_RETURNING,
-                        customer);
-                }
+                var result = RequestBLO.Current.AddRequestReturnIP(customer, viewmodel.RequestInfo.Description, viewmodel.SelectedServer, viewmodel.ReturningIPs);
                 //Notification
                 var notif = Mapper.Map<RequestReturnIPViewModel, NotificationExtendedModel>(viewmodel);
                 notif.RequestTypeName = Constants.RequestTypeName.IP_RETURN;
@@ -549,14 +437,13 @@ namespace IMS.Controllers
             //Edit description
             var requestDetail = new RequestDetailViewModel();
             requestDetail.NumberOfRack = viewmodel.RackNumbers;
-            requestDetail.Description = viewmodel.RequestInfo.Description;
+            if (!string.IsNullOrWhiteSpace(viewmodel.RequestInfo.Description))
+            {
+                requestDetail.Description = viewmodel.RequestInfo.Description;
+            }
             viewmodel.RequestInfo.Description = JsonConvert.SerializeObject(requestDetail);
-
             //Add and log request
-            var result = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.RENT_RACK,
-                Constants.StatusCode.REQUEST_PENDING, customer, viewmodel.RequestInfo.Description,
-                null, null, Constants.TypeOfLog.LOG_RENT_RACK, null);
-
+            var result = RequestBLO.Current.AddRequestRentRack(customer, viewmodel.RequestInfo.Description);
             //Notification
             var notif = Mapper.Map<RequestRentRackViewModel, NotificationExtendedModel>(viewmodel);
             notif.RequestTypeName = Constants.RequestTypeName.RACK_RENT;
@@ -572,21 +459,8 @@ namespace IMS.Controllers
         public ActionResult ReturnRack(RequestReturnRackViewModel viewmodel)
         {
             var customer = GetCurrentUserName();
-            var listRacks = viewmodel.AllRacks;
             //Add and log request
-            var requestCode = RequestBLO.Current.AddRequestANDLog(Constants.RequestTypeCode.RETURN_RACK,
-                Constants.StatusCode.REQUEST_PENDING, customer, viewmodel.RequestInfo.Description,
-                null, null, Constants.TypeOfLog.LOG_RETURN_RACK, null);
-            foreach (var item in listRacks)
-            {
-                if (item.Checked)
-                {
-                    //update and log rackofCustomer
-                    RackOfCustomerBLO.Current.UpdateStatusRackOfCustomerANDLog(requestCode, item.RackCode,
-                        Constants.TypeOfLog.LOG_RETURN_RACK, customer, null
-                        , Constants.StatusCode.RACKOFCUSTOMER_CURRENT, Constants.StatusCode.RACKOFCUSTOMER_RETURNING, item.RackName);
-                }
-            }
+            var requestCode = RequestBLO.Current.AddRequestReturnRack(customer, viewmodel.RequestInfo.Description, viewmodel.AllRacks);
             //Notification
             var notif = Mapper.Map<RequestReturnRackViewModel, NotificationExtendedModel>(viewmodel);
             notif.RequestTypeName = Constants.RequestTypeName.RACK_RETURN;
@@ -596,6 +470,75 @@ namespace IMS.Controllers
             NotifRegister(notif);
             Toast(Constants.AlertType.SUCCESS, "RequestReturnRack", null, true);
             return RedirectToAction("Index");
+        }
+        #endregion
+
+        #region cancel request
+        [Roles(Constants.Role.CUSTOMER)]
+        [HttpPost]
+        public ActionResult CancelRequestAddServer(ProcessRequestAddServerViewModel viewmodel)
+        {
+            var customer = GetCurrentUserName();
+            RequestBLO.Current.CancelRequestAddServer(viewmodel.RequestInfo.RequestCode, customer,
+                viewmodel.RequestInfo.TaskCode);
+            return RedirectToAction("Detais",
+                new { rType = Constants.TypeOfLog.LOG_ADD_SERVER, rCode = viewmodel.RequestInfo.RequestCode });
+        }
+
+        [Roles(Constants.Role.CUSTOMER)]
+        [HttpPost]
+        public ActionResult CancelRequestBringServerAway(ProcessRequestBringServerAwayViewModel viewmodel)
+        {
+            var customer = GetCurrentUserName();
+            //Update lai serverip, server, request
+            RequestBLO.Current.CancelRequestBringServerAway(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
+            return RedirectToAction("Detais",
+               new { rType = Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, rCode = viewmodel.RequestInfo.RequestCode });
+        }
+        [Roles(Constants.Role.CUSTOMER)]
+        [HttpPost]
+        public ActionResult CancelRequestAssignIp(ProcessRequestAssignIPViewModel viewmodel)
+        {
+            var customer = GetCurrentUserName();
+            RequestBLO.Current.CancelRequestAssignIP(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
+            return RedirectToAction("Detais",
+                new { rType = Constants.TypeOfLog.LOG_ASSIGN_IP, rCode = viewmodel.RequestInfo.RequestCode });
+        }
+        [Roles(Constants.Role.CUSTOMER)]
+        [HttpPost]
+        public ActionResult CancelRequestChangeIp(ProcessRequestChangeIPViewModel viewmodel)
+        {
+            var customer = GetCurrentUserName();
+            RequestBLO.Current.CancelRequestChangeIp(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
+            return RedirectToAction("Detais",
+               new { rType = Constants.TypeOfLog.LOG_CHANGE_IP, rCode = viewmodel.RequestInfo.RequestCode });
+        }
+        [Roles(Constants.Role.CUSTOMER)]
+        [HttpPost]
+        public ActionResult CancelRequestReturnIp(ProcessRequestReturnIPViewModel viewmodel)
+        {
+            var customer = GetCurrentUserName();
+            RequestBLO.Current.CancelRequestReturnIp(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
+            return RedirectToAction("Detais",
+                new { rType = Constants.TypeOfLog.LOG_RETURN_IP, rCode = viewmodel.RequestInfo.RequestCode });
+        }
+        [Roles(Constants.Role.CUSTOMER)]
+        [HttpPost]
+        public ActionResult CancelRequestRentRack(ProcessRequestRentRackViewModel viewmodel)
+        {
+            var customer = GetCurrentUserName();
+            RequestBLO.Current.CancelRequestRentRack(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
+            return RedirectToAction("Detais",
+                new { rType = Constants.TypeOfLog.LOG_RENT_RACK, rCode = viewmodel.RequestInfo.RequestCode });
+        }
+        [Roles(Constants.Role.CUSTOMER)]
+        [HttpPost]
+        public ActionResult CancelRequestReturnRack(ProcessRequestReturnRackViewModel viewmodel)
+        {
+            var customer = GetCurrentUserName();
+            RequestBLO.Current.CancelRequestReturnRack(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
+            return RedirectToAction("Detais",
+                new { rType = Constants.TypeOfLog.LOG_RETURN_RACK, rCode = viewmodel.RequestInfo.RequestCode });
         }
         #endregion
 
@@ -667,103 +610,6 @@ namespace IMS.Controllers
                 model.AppointmentTime,
                 model.StatusName);
         }
-
-        #region cancel request
-        [Roles(Constants.Role.CUSTOMER)]
-        [HttpPost]
-        public ActionResult CancelRequestAddServer(ProcessRequestAddServerViewModel viewmodel)
-        {
-            var customer = GetCurrentUserName();
-            var serverCodes = LogChangedContentBLO.Current.GetAddingServers(viewmodel.RequestInfo.RequestCode);
-            foreach (var server in serverCodes)
-            {
-                //update and log server
-                ServerBLO.Current.UpdateServerStatus(viewmodel.RequestInfo.RequestCode, server,
-                    Constants.TypeOfLog.LOG_ADD_SERVER, Constants.StatusCode.SERVER_DEACTIVATE, viewmodel.RequestInfo.Assignee);
-            }
-            //update request status and log
-            RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_ADD_SERVER,
-            Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
-            //update task
-            TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_CANCEL);
-            return RedirectToAction("Detais",
-                new { rType = Constants.TypeOfLog.LOG_ADD_SERVER, rCode = viewmodel.RequestInfo.RequestCode });
-        }
-
-        [Roles(Constants.Role.CUSTOMER)]
-        [HttpPost]
-        public ActionResult CancelRequestBringServerAway(ProcessRequestBringServerAwayViewModel viewmodel)
-        {
-            var customer = GetCurrentUserName();
-            //Update lai serverip, server, request
-            LogChangedContentBLO.Current.CancelRequestBringServerAway(viewmodel.RequestInfo.RequestCode, customer);
-            //update task
-            TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_CANCEL);
-            return RedirectToAction("Detais",
-               new { rType = Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, rCode = viewmodel.RequestInfo.RequestCode });
-        }
-        [Roles(Constants.Role.CUSTOMER)]
-        [HttpPost]
-        public ActionResult CancelRequestAssignIp(ProcessRequestAssignIPViewModel viewmodel)
-        {
-            var customer = GetCurrentUserName();
-            //update request status and log
-            RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_ASSIGN_IP,
-            Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
-            //update task
-            TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_CANCEL);
-            return RedirectToAction("Detais",
-                new { rType = Constants.TypeOfLog.LOG_ASSIGN_IP, rCode = viewmodel.RequestInfo.RequestCode });
-        }
-        [Roles(Constants.Role.CUSTOMER)]
-        [HttpPost]
-        public ActionResult CancelRequestChangeIp(ProcessRequestChangeIPViewModel viewmodel)
-        {
-            var customer = GetCurrentUserName();
-            //Update and log serverip, request
-            LogChangedContentBLO.Current.CancelRequestChangeIp(viewmodel.RequestInfo.RequestCode, customer);
-            //update task
-            TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_CANCEL);
-            return RedirectToAction("Detais",
-               new { rType = Constants.TypeOfLog.LOG_CHANGE_IP, rCode = viewmodel.RequestInfo.RequestCode });
-        }
-        [Roles(Constants.Role.CUSTOMER)]
-        [HttpPost]
-        public ActionResult CancelRequestReturnIp(ProcessRequestReturnIPViewModel viewmodel)
-        {
-            var customer = GetCurrentUserName();
-            //Update va log serverip, request
-            LogChangedContentBLO.Current.CancelRequestReturnIp(viewmodel.RequestInfo.RequestCode, customer);
-            //update task
-            TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_CANCEL);
-            return RedirectToAction("Detais",
-                new { rType = Constants.TypeOfLog.LOG_RETURN_IP, rCode = viewmodel.RequestInfo.RequestCode });
-        }
-        [Roles(Constants.Role.CUSTOMER)]
-        [HttpPost]
-        public ActionResult CancelRequestRentRack(ProcessRequestRentRackViewModel viewmodel)
-        {
-            var customer = GetCurrentUserName();
-            //update request status and log
-            RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
-                Constants.TypeOfLog.LOG_RENT_RACK, Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
-            //update task
-            TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_CANCEL);
-            return RedirectToAction("Detais",
-                new { rType = Constants.TypeOfLog.LOG_RENT_RACK, rCode = viewmodel.RequestInfo.RequestCode });
-        }
-        [Roles(Constants.Role.CUSTOMER)]
-        [HttpPost]
-        public ActionResult CancelRequestReturnRack(ProcessRequestReturnRackViewModel viewmodel)
-        {
-            var customer = GetCurrentUserName();
-            LogChangedContentBLO.Current.CancelRequestReturnRack(viewmodel.RequestInfo.RequestCode, customer);
-            //update task
-            TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_CANCEL);
-            return RedirectToAction("Detais",
-                new { rType = Constants.TypeOfLog.LOG_RETURN_RACK, rCode = viewmodel.RequestInfo.RequestCode });
-        }
-        #endregion
 
     }
 }

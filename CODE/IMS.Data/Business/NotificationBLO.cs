@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using IMS.Core;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.Repository;
+using IMS.Data.ViewModels;
 
 namespace IMS.Data.Business
 {
@@ -39,6 +41,35 @@ namespace IMS.Data.Business
         {
             var result = dao.Query(x => x.Username == username && x.IsViewed == false);
             return result.Count;
+        }
+
+        public void AddNotification(string refCode, string refType, string username, string description)
+        {
+            dao.AddNotification(refCode, refType, username, description);
+        }
+
+        public List<NotificationExtendedModel> ListServerSideNotification()
+        {
+            return dao.ListServerSideNotification();
+        }
+
+        public List<NotificationExtendedModel> ListClientSideNotification(string customer)
+        {
+            return dao.ListClientSideNotification(customer);
+        }
+
+        public List<NotificationExtendedModel> ListNotification(string role, string customer)
+        {
+            var list = new List<NotificationExtendedModel>();
+            if (role == Constants.Role.CUSTOMER && customer != null)
+            {
+                list = ListClientSideNotification(customer);
+            }
+            else if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.STAFF || role == Constants.Role.MANAGER)
+            {
+                list = ListServerSideNotification();
+            }
+            return list;
         }
     }
 }

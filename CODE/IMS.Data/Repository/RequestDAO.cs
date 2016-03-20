@@ -118,62 +118,6 @@ namespace IMS.Data.Repository
             return RawQuery<ScheduleExtendedModel>(query, new object[] { });
         }
 
-        public List<NotificationExtendedModel> ListServerSideNotification()
-        {
-            var query = from r in Table
-                        join rt in RequestTypeDAO.Current.Table
-                            on r.RequestType equals rt.RequestTypeCode into rrt
-                        from subr in rrt.DefaultIfEmpty()
-                        join st in StatusDAO.Current.Table
-                            on r.StatusCode equals st.StatusCode into stsl
-                        from subst in stsl.DefaultIfEmpty()
-                        select new NotificationExtendedModel
-                        {
-                            RequestCode = r.RequestCode,
-                            RequestTypeName = subr.RequestTypeName,
-                            Customer = r.Customer,
-                            AppointmentTime = r.AppointmentTime,
-                            Description = r.Description,
-                            StatusName = subst.StatusName,
-                            RequestType = r.RequestType,
-                            StatusCode = subst.StatusCode,
-                            RequestedTime = r.RequestedTime,
-                            Priority = subst.Priority
-                        };
-            return query.ToList();
-        }
-
-        public List<NotificationExtendedModel> ListClientSideNotification(string customer)
-        {
-            var query = from r in Table
-                        join rt in RequestTypeDAO.Current.Table
-                            on r.RequestType equals rt.RequestTypeCode into rrt
-                        from subr in rrt.DefaultIfEmpty()
-                        join st in StatusDAO.Current.Table
-                            on r.StatusCode equals st.StatusCode into stsl
-                        from subst in stsl.DefaultIfEmpty()
-                        where
-                            r.Customer == customer &&
-                            (r.StatusCode == Constants.StatusCode.REQUEST_WAITING ||
-                             r.StatusCode == Constants.StatusCode.REQUEST_PROCESSING ||
-                             r.StatusCode == Constants.StatusCode.REQUEST_DONE ||
-                             r.StatusCode == Constants.StatusCode.REQUEST_REJECTED)
-                        select new NotificationExtendedModel
-                        {
-                            RequestCode = r.RequestCode,
-                            RequestTypeName = subr.RequestTypeName,
-                            Customer = r.Customer,
-                            AppointmentTime = r.AppointmentTime,
-                            Description = r.Description,
-                            StatusName = subst.StatusName,
-                            RequestType = r.RequestType,
-                            StatusCode = subst.StatusCode,
-                            RequestedTime = r.RequestedTime,
-                            Priority = subst.Priority
-                        };
-            return query.ToList();
-        }
-
         public List<RequestExtendedModel> GetAllRequest()
         {
             var query = @"select i.*,s.StatusName, r.RequestTypeName from Request as i
@@ -223,7 +167,8 @@ namespace IMS.Data.Repository
                 ObjectStatus = Constants.StatusCode.REQUEST_PENDING,
                 ChangedValueOfObject = requestCode,
                 ServerCode = serverCode,
-                Description = description
+                Description = description,
+                Username = customer
             };
             LogChangedContentBLO.Current.Add(logRequest);
             return requestCode;
@@ -254,37 +199,6 @@ namespace IMS.Data.Repository
             LogChangedContentBLO.Current.Add(logRequest);
         }
 
-        public string AddRequest(string requestCode, string requestType, string newStatus, string customer,
-            string description, DateTime? appointmenTime)
-        {
-            if (requestCode == null)
-            {
-                requestCode = GenerateCode();
-            }
-            var request = new Request()
-            {
-                RequestCode = requestCode,
-                RequestType = requestType,
-                StatusCode = newStatus,
-                Customer = customer,
-                Description = description,
-                AppointmentTime = appointmenTime,
-                RequestedTime = DateTime.Now,
-            };
-
-            var existing = GetByKeys(request);
-            if (existing == null)
-            {
-                IMSContext.Current.Set<Request>().Add(request);
-            }
-            else
-            {
-                CopyValues(request, existing);
-            }
-            IMSContext.Current.SaveChanges();
-            return requestCode;
-        }
-
         public void UpdateRequestAssignee(string requestCode, string assignee)
         {
             var request = (from r in Current.Table
@@ -295,6 +209,26 @@ namespace IMS.Data.Repository
                 request.Assignee = assignee;
             }
             Update(request);
+        }
+
+        public List<RequestExtendedModel> GetWaitingRequestOfServer(string serverCode)
+        {
+            //list tat ca hang co serverCode, lay ra list requestcode
+            var query = LogChangedContentDAO.Current.Query(x => x.ServerCode == serverCode
+                && x.Object == Constants.Object.OBJECT_REQUEST
+                && (x.ObjectStatus == Constants.StatusCode.REQUEST_PENDING
+                || x.ObjectStatus == Constants.StatusCode.REQUEST_WAITING
+                || x.ObjectStatus == Constants.StatusCode.REQUEST_PROCESSING)).Select(x => x.RequestCode);
+            return query.Select(item => (from re in RequestDAO.Current.Table
+                                         join rt in RequestTypeDAO.Current.Table on re.RequestType equals rt.RequestTypeCode
+                                         where re.RequestCode == item
+                                         select new RequestExtendedModel()
+                                         {
+                                             RequestType = re.RequestType,
+                                             RequestTypeName = rt.RequestTypeName,
+                                             RequestCode = re.RequestCode,
+                                             StatusCode = re.StatusCode
+                                         })).Select(query1 => Queryable.FirstOrDefault<RequestExtendedModel>(query1)).ToList();
         }
     }
 }

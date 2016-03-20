@@ -37,6 +37,18 @@ namespace IMS.Data.Repository
             return existing;
         }
 
+        public string GenerateCode()
+        {
+            var code = "S" + TextExpress.Randomize(9, TextExpress.NUMBER + TextExpress.NUMBER);
+            var existing = Query(x => x.ServerCode == code).FirstOrDefault();
+            while (existing != null)
+            {
+                code = "S" + TextExpress.Randomize(9, TextExpress.NUMBER + TextExpress.NUMBER);
+                existing = Query(x => x.ServerCode == code).FirstOrDefault();
+            }
+            return code;
+        }
+
         public List<ServerExtendedModel> GetAllServer()
         {
             var distinct = LocationDAO.Current.Table.GroupBy(item => item.ServerCode)
@@ -285,38 +297,8 @@ namespace IMS.Data.Repository
             return server;
         }
 
-        //get attribute of a server
-        public List<AttributeExtendedModel> GetServerAttributes(int id)
-        {
-            var query = from sa in ServerAttributeDAO.Current.Table
-                        join a in AttributeDAO.Current.Table
-                            on sa.AttributeCode equals a.AttributeCode into saa
-                        from subsaa in saa.DefaultIfEmpty()
-                        join s in Table
-                            on sa.ServerCode equals s.ServerCode into ssa
-                        from subssa in ssa.DefaultIfEmpty()
-                        where subssa.Id == id
-                        select new AttributeExtendedModel
-                        {
-                            AttributeName = subsaa.AttributeName,
-                            AttributeValue = sa.AttributeValue
-                        };
-            return query.ToList();
-        }
-
-        //get current IPs of a server
-        public List<ServerIP> GetCurrentIP(string serverCode)
-        {
-            var query = from s in Table
-                        join si in ServerIPDAO.Current.Table
-                            on s.ServerCode equals si.ServerCode
-                        where s.ServerCode == serverCode
-                        select si;
-            return query.ToList();
-        }
-
         //add new server
-        public string AddServer(Server passServer)
+        public string AddServerANDLog(Server passServer, string requestCode)
         {
             var server = passServer;
             server.ServerCode = GenerateCode();
@@ -332,21 +314,41 @@ namespace IMS.Data.Repository
                 CopyValues(server, existing);
             }
             IMSContext.Current.SaveChanges();
+            //log server
+            var logServer = new LogChangedContent
+            {
+                RequestCode = requestCode,
+                TypeOfLog = Constants.TypeOfLog.LOG_ADD_SERVER,
+                Object = Constants.Object.OBJECT_SERVER,
+                ChangedValueOfObject = server.ServerCode,
+                ObjectStatus = Constants.StatusCode.SERVER_WAITING,
+                ServerCode = server.ServerCode,
+                Username = server.Customer
+            };
+            LogChangedContentBLO.Current.Add(logServer);
             return server.ServerCode;
         }
 
-        public string GenerateCode()
+        public void UpdateServerANDLog(string requestCode, string serverCode,
+             string typeOfLog, string newStatus, string username)
         {
-            var code = "S" + TextExpress.Randomize(9, TextExpress.NUMBER + TextExpress.NUMBER);
-            var existing = Query(x => x.ServerCode == code).FirstOrDefault();
-            while (existing != null)
+            var server = Query(x => x.ServerCode == serverCode).FirstOrDefault();
+            if (server != null)
             {
-                code = "S" + TextExpress.Randomize(9, TextExpress.NUMBER + TextExpress.NUMBER);
-                existing = Query(x => x.ServerCode == code).FirstOrDefault();
+                server.StatusCode = newStatus;
+                Update(server);
             }
-            return code;
+            //log server
+            LogChangedContent logServer = new LogChangedContent
+            {
+                RequestCode = requestCode,
+                TypeOfLog = typeOfLog,
+                Object = Constants.Object.OBJECT_SERVER,
+                ChangedValueOfObject = serverCode,
+                ObjectStatus = newStatus,
+                Username = username
+            };
+            LogChangedContentBLO.Current.Add(logServer);
         }
-
-       
     }
 }

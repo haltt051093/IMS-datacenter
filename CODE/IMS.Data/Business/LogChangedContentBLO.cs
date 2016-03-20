@@ -5,7 +5,6 @@ using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.Repository;
 using IMS.Data.ViewModels;
-using IMS.Data.Queries;
 
 namespace IMS.Data.Business
 {
@@ -62,11 +61,6 @@ namespace IMS.Data.Business
             return dao.GetAddingServers(requestCode);
         }
 
-        public List<RequestExtendedModel> GetWaitingRequestOfServer(string serverCode)
-        {
-            return dao.GetWaitingRequestOfServer(serverCode);
-        }
-
         public List<LogExtentedModel> GetRequestOfCustomer(string customer)
         {
             return dao.GetRequestOfCustomer(customer);
@@ -86,116 +80,6 @@ namespace IMS.Data.Business
         {
             var query = @"select s.* from LogChangedContent as s where s.ServerCode='" + servercode + @"'and s.TypeOfLog='ASSIGNDEFAULTIP'";
             return dao.RawQuery<LogChangedContent>(query, new object[] { }).FirstOrDefault();
-        }
-
-        public void CancelRequestChangeIp(string requestCode, string customer)
-        {
-            var listServerIp = GetLogInfoByRequestCode(requestCode, Constants.Object.OBJECT_SERVERIP);
-            if (listServerIp != null && listServerIp.Count > 0)
-            {
-                var serverCode = listServerIp[0].ServerCode;
-                for (int i = 0; i < listServerIp.Count; i++)
-                {
-                    var ip = listServerIp[i].ChangedValueOfObject;
-                    //update and log serverip
-                    ServerIPBLO.Current.UpdateServerIpANDLog(requestCode, serverCode, ip,
-                        Constants.TypeOfLog.LOG_CHANGE_IP, Constants.StatusCode.SERVERIP_CURRENT,
-                        customer);
-                }
-                //update request status and log
-                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
-                    Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
-            }
-        }
-
-        public void CancelRequestReturnIp(string requestCode, string customer)
-        {
-            var listServerIp = GetLogInfoByRequestCode(requestCode, Constants.Object.OBJECT_SERVERIP);
-            if (listServerIp != null && listServerIp.Count > 0)
-            {
-                var serverCode = listServerIp[0].ServerCode;
-                for (int i = 0; i < listServerIp.Count; i++)
-                {
-                    var ip = listServerIp[i].ChangedValueOfObject;
-                    //update and log serverip
-                    ServerIPBLO.Current.UpdateServerIpANDLog(requestCode, serverCode, ip,
-                        Constants.TypeOfLog.LOG_RETURN_IP, Constants.StatusCode.SERVERIP_CURRENT,
-                        customer);
-                }
-                //update request status and log
-                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_IP,
-                    Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
-            }
-        }
-
-        public void CancelRequestBringServerAway(string requestCode, string customer)
-        {
-            var listServerIp = GetLogInfoByRequestCode(requestCode, Constants.Object.OBJECT_SERVERIP);
-            if (listServerIp != null && listServerIp.Count > 0)
-            {
-                var serverCode = listServerIp[0].ServerCode;
-                for (int i = 0; i < listServerIp.Count; i++)
-                {
-                    var ip = listServerIp[i].ChangedValueOfObject;
-                    //update and log serverip
-                    ServerIPBLO.Current.UpdateServerIpANDLog(requestCode, serverCode, ip,
-                        Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.SERVERIP_CURRENT,
-                        customer);
-                }
-            }
-            var servers = (from l in LogChangedContentDAO.Current.Table
-                           where l.RequestCode == requestCode && l.Object == Constants.Object.OBJECT_SERVER
-                                 && l.ObjectStatus == Constants.StatusCode.SERVER_BRINGING_AWAY
-                           select l).ToList();
-            foreach (var server in servers)
-            {
-                var serverCode = server.ChangedValueOfObject;
-                //update and log server
-                ServerBLO.Current.UpdateServerStatus(requestCode, serverCode,
-                    Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.SERVER_RUNNING,
-                    customer);
-            }
-            //update request status and log
-            RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
-                Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
-        }
-
-        public void CancelRequestReturnRack(string requestCode, string customer)
-        {
-            var listRacks = GetLogInfoByRequestCode(requestCode, Constants.Object.OBJECT_RACKOFCUSTOMER);
-            if (listRacks != null && listRacks.Count > 0)
-            {
-                for (int i = 0; i < listRacks.Count; i++)
-                {
-                    var rack = listRacks[i].ChangedValueOfObject;
-                    //update and log rackofCustomer
-                    RackOfCustomerBLO.Current.UpdateStatusRackOfCustomerANDLog(requestCode, rack,
-                        Constants.TypeOfLog.LOG_RETURN_RACK, customer, null,
-                        Constants.StatusCode.RACKOFCUSTOMER_RETURNING, Constants.StatusCode.RACKOFCUSTOMER_CURRENT, null);
-                }
-                //update request status and log
-                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
-                    Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
-            }
-        }
-
-        public void CancelRequestAddServer(string requestCode, string customer)
-        {
-            var listRacks = GetLogInfoByRequestCode(requestCode, Constants.Object.OBJECT_RACKOFCUSTOMER);
-            if (listRacks != null && listRacks.Count > 0)
-            {
-                for (int i = 0; i < listRacks.Count; i++)
-                {
-                    var rack = listRacks[i].ChangedValueOfObject;
-                    //update and log rackofCustomer
-                    RackOfCustomerBLO.Current.UpdateStatusRackOfCustomerANDLog(requestCode, rack,
-                        Constants.TypeOfLog.LOG_RETURN_RACK, customer, null,
-                        Constants.StatusCode.RACKOFCUSTOMER_RETURNING, Constants.StatusCode.RACKOFCUSTOMER_CURRENT, null);
-                }
-                //update request status and log
-                RequestBLO.Current.UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
-                    Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
-            }
         }
 
         public LogExtentedModel RequestDetailsBringServerAway(string requestCode)
@@ -239,21 +123,6 @@ namespace IMS.Data.Business
             return data;
         }
 
-        public List<LocationViewModel> GetLocationOfServer(string serverCode)
-        {
-            var serverlocation = from l in LocationDAO.Current.Table
-                                 join r in RackDAO.Current.Table
-                                     on l.RackCode equals r.RackCode into lr
-                                 from sublr in lr.DefaultIfEmpty()
-                                 where l.ServerCode == serverCode
-                                 select new LocationViewModel
-                                 {
-                                     RackName = sublr.RackName,
-                                     RackUnit = l.RackUnit
-                                 };
-            return serverlocation.ToList();
-        }
-
         public LogExtentedModel RequestDetailsReturnRack(string requestCode)
         {
             LogExtentedModel data = new LogExtentedModel();
@@ -271,46 +140,6 @@ namespace IMS.Data.Business
                         where l.RequestCode == requestCode && l.Object == obj && l.ObjectStatus == objStatus
                         select l.ChangedValueOfObject;
             return query.ToList();
-        }
-
-        public override void Add(LogChangedContent entry)
-        {
-            base.Add(entry);
-        }
-
-        public void LogAddServers(LogAddServersQuery q)
-        {
-            
-        }
-
-        public void LogAssignIPs(LogAssignIPsQuery q)
-        {
-            
-        }
-
-        public void LogBringServersAway(LogBringServerAwayQuery q)
-        {
-            
-        }
-
-        public void LogChangeIPs(LogChangeIPsQuery q)
-        {
-            
-        }
-
-        public void LogRentRack(LogRentRackQuery q)
-        {
-            
-        }
-
-        public void LogReturnIPs(LogReturnIPsQuery q)
-        {
-            
-        }
-
-        public void LogReturnRack(LogReturnRackQuery q)
-        {
-            
         }
     }
 }

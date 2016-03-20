@@ -27,7 +27,7 @@ namespace IMS.Controllers
             //    .GetStatusByObject(Constants.Object.OBJECT_REQUEST)
             //    .Select(x => new SelectListItem { Value = x.StatusCode, Text = x.StatusName })
             //    .ToList();
-            data.NotificationList = RequestBLO.Current.ListNotification(role, userName);
+            data.NotificationList = NotificationBLO.Current.ListNotification(role, userName);
             return View(data);
         }
 

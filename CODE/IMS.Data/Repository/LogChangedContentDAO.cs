@@ -56,25 +56,7 @@ namespace IMS.Data.Repository
             return serverCodes.ToList();
         }
 
-        public List<RequestExtendedModel> GetWaitingRequestOfServer(string serverCode)
-        {
-            //list tat ca hang co serverCode, lay ra list requestcode
-            var query =
-                Current.Query(x => x.ServerCode == serverCode && x.Object == Constants.Object.OBJECT_REQUEST
-                && (x.ObjectStatus == Constants.StatusCode.REQUEST_PENDING
-                || x.ObjectStatus == Constants.StatusCode.REQUEST_WAITING
-                || x.ObjectStatus == Constants.StatusCode.REQUEST_PROCESSING)).Select(x => x.RequestCode);
-            return query.Select(item => (from re in RequestDAO.Current.Table
-                                         join rt in RequestTypeDAO.Current.Table on re.RequestType equals rt.RequestTypeCode
-                                         where re.RequestCode == item
-                                         select new RequestExtendedModel()
-                                         {
-                                             RequestType = re.RequestType,
-                                             RequestTypeName = rt.RequestTypeName,
-                                             RequestCode = re.RequestCode,
-                                             StatusCode = re.StatusCode
-                                         })).Select(query1 => Queryable.FirstOrDefault<RequestExtendedModel>(query1)).ToList();
-        }
+        
 
         public List<LogContentExtendedModel> GetAllLogIP()
         {
