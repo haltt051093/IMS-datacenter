@@ -34,7 +34,7 @@ namespace IMS.Data
             modelBuilder.Entity<Group>();
             modelBuilder.Entity<IPAddressPool>();
             modelBuilder.Entity<Location>();
-            modelBuilder.Entity<LogChangedContent>();
+            modelBuilder.Entity<Log>();
             modelBuilder.Entity<Object>();
             modelBuilder.Entity<Rack>();
             modelBuilder.Entity<Request>();

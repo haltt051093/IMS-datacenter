@@ -20,12 +20,13 @@ namespace IMS.Models
         public string CurrentUser { get; set; }
         // Specific Info
         public List<RackExtendedModel> listRackByRows { get; set; }
-        public List<SelectListItem> ListRows { get; set; }
         public string SelectedRow { get; set; }
         public List<string> RentedRacks { get; set; }
         public int RackNumbers { get; set; }
 
         //DropdownList
         public List<SelectListItem> StaffCodeOptions { get; set; }
+        public List<SelectListItem> ListRows { get; set; }
+
     }
 }

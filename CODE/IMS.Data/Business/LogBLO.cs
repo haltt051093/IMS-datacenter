@@ -8,30 +8,30 @@ using IMS.Data.ViewModels;
 
 namespace IMS.Data.Business
 {
-    public class LogChangedContentBLO : BaseBLO<LogChangedContent>
+    public class LogBLO : BaseBLO<Log>
     {
-        protected LogChangedContentDAO dao;
-        private static LogChangedContentBLO instance;
+        protected LogDAO dao;
+        private static LogBLO instance;
 
-        public static LogChangedContentBLO Current
+        public static LogBLO Current
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new LogChangedContentBLO();
+                    instance = new LogBLO();
                 }
                 return instance;
             }
         }
 
-        private LogChangedContentBLO()
+        private LogBLO()
         {
-            baseDao = LogChangedContentDAO.Current;
-            dao = LogChangedContentDAO.Current;
+            baseDao = LogDAO.Current;
+            dao = LogDAO.Current;
         }
 
-        public List<LogChangedContent> GetBlockedIP(string IP)
+        public List<Log> GetBlockedIP(string IP)
         {
             return dao.GetBlockedIP(IP);
         }
@@ -71,15 +71,15 @@ namespace IMS.Data.Business
             return dao.GetAllRequest();
         }
 
-        public List<LogChangedContent> GetLogInfoByRequestCode(string requestCode, string Object)
+        public List<Log> GetLogInfoByRequestCode(string requestCode, string Object)
         {
             return dao.GetLogInfoByRequestCode(requestCode, Object);
         }
 
-        public LogChangedContent GetByServerCode(string servercode)
+        public Log GetByServerCode(string servercode)
         {
             var query = @"select s.* from LogChangedContent as s where s.ServerCode='" + servercode + @"'and s.TypeOfLog='ASSIGNDEFAULTIP'";
-            return dao.RawQuery<LogChangedContent>(query, new object[] { }).FirstOrDefault();
+            return dao.RawQuery<Log>(query, new object[] { }).FirstOrDefault();
         }
 
         public LogExtentedModel RequestDetailsBringServerAway(string requestCode)
@@ -126,7 +126,7 @@ namespace IMS.Data.Business
         public LogExtentedModel RequestDetailsReturnRack(string requestCode)
         {
             LogExtentedModel data = new LogExtentedModel();
-            var query = from l in LogChangedContentDAO.Current.Table
+            var query = from l in LogDAO.Current.Table
                         where l.RequestCode == requestCode && l.Object == Constants.Object.OBJECT_RACKOFCUSTOMER
                         && l.ObjectStatus == Constants.StatusCode.RACKOFCUSTOMER_RETURNING
                         select l.ChangedValueOfObject;
@@ -136,7 +136,7 @@ namespace IMS.Data.Business
 
         public List<string> GetChangedValueOfObject(string requestCode, string obj, string objStatus)
         {
-            var query = from l in LogChangedContentDAO.Current.Table
+            var query = from l in LogDAO.Current.Table
                         where l.RequestCode == requestCode && l.Object == obj && l.ObjectStatus == objStatus
                         select l.ChangedValueOfObject;
             return query.ToList();

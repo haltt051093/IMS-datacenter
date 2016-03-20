@@ -23,8 +23,6 @@ namespace IMS.Models
         //Specific Info
         public ServerExtendedModel Server { get; set; }
         public List<ServerExtendedModel> Servers { get; set; }
-        public List<SelectListItem> NetworkIPs { get; set; }
-        public List<SelectListItem> RackAssign { get; set; } 
         public string RackCodeAssign { get; set; }
         public string NetworkIP { get; set; }
         public string NewIP { get; set; }
@@ -36,5 +34,7 @@ namespace IMS.Models
 
         //DropdownList
         public List<SelectListItem> StaffCodeOptions { get; set; }
+        public List<SelectListItem> NetworkIPs { get; set; }
+        public List<SelectListItem> RackAssign { get; set; }
     }
 }

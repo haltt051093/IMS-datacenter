@@ -44,6 +44,14 @@ namespace IMS
                 //process assign, change, return ip
                 config.CreateMap<Request, ProcessRequestChangeIPViewModel>();
                 config.CreateMap<ServerExtendedModel, Server>();
+                //process
+                config.CreateMap<ProcessRequestExtendedModel, ProcessRequestAddServerViewModel>();
+                config.CreateMap<ProcessRequestExtendedModel, ProcessRequestBringServerAwayViewModel>();
+                config.CreateMap<ProcessRequestExtendedModel, ProcessRequestAssignIPViewModel>();
+                config.CreateMap<ProcessRequestExtendedModel, ProcessRequestChangeIPViewModel>();
+                config.CreateMap<ProcessRequestExtendedModel, ProcessRequestReturnIPViewModel>();
+                config.CreateMap<ProcessRequestExtendedModel, ProcessRequestRentRackViewModel>();
+                config.CreateMap<ProcessRequestExtendedModel, ProcessRequestReturnRackViewModel>();
             });
         }
     }

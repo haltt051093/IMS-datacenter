@@ -8,7 +8,7 @@ namespace IMS.ApiControllers
     {
         public DataTableModel<LogContentExtendedModel> GetAll()
         {
-            var list = LogChangedContentBLO.Current.GetAllLogIP();
+            var list = LogBLO.Current.GetAllLogIP();
             var result = new DataTableModel<LogContentExtendedModel>();
             result.Data = list;
             return result;
@@ -16,7 +16,7 @@ namespace IMS.ApiControllers
 
         public DataTableModel<LogUsedIPExtendModel> GetUsedIP()
         {
-            var list = LogChangedContentBLO.Current.GetLogUsedIP();
+            var list = LogBLO.Current.GetLogUsedIP();
             var result = new DataTableModel<LogUsedIPExtendModel>();
             result.Data = list;
             return result;

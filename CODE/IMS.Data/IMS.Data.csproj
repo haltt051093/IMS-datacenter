@@ -60,7 +60,7 @@
     <Compile Include="Business\AttributeBLO.cs" />
     <Compile Include="Business\IPAddressPoolBLO.cs" />
     <Compile Include="Business\LocationBLO.cs" />
-    <Compile Include="Business\LogChangedContentBLO.cs" />
+    <Compile Include="Business\LogBLO.cs" />
     <Compile Include="Business\ObjectBLO.cs" />
     <Compile Include="Business\RackBLO.cs" />
     <Compile Include="Business\RackOfCustomerBLO.cs" />
@@ -93,7 +93,7 @@
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\IPAddressPool.cs" />
     <Compile Include="Models\Location.cs" />
-    <Compile Include="Models\LogChangedContent.cs" />
+    <Compile Include="Models\Log.cs" />
     <Compile Include="Models\Object.cs" />
     <Compile Include="Models\Rack.cs" />
     <Compile Include="Models\RackOfCustomer.cs" />
@@ -123,7 +123,7 @@
     <Compile Include="Repository\AttributeDAO.cs" />
     <Compile Include="Repository\IPAddressPoolDAO.cs" />
     <Compile Include="Repository\LocationDAO.cs" />
-    <Compile Include="Repository\LogChangedContentDAO.cs" />
+    <Compile Include="Repository\LogDAO.cs" />
     <Compile Include="Repository\ObjectDAO.cs" />
     <Compile Include="Repository\RackDAO.cs" />
     <Compile Include="Repository\RackOfCustomerDAO.cs" />
@@ -151,6 +151,7 @@
     <Compile Include="ViewModels\LogContentExtendedModel.cs" />
     <Compile Include="ViewModels\LogExtentedModel.cs" />
     <Compile Include="ViewModels\LogUsedIPExtendModel.cs" />
+    <Compile Include="ViewModels\ProcessRequestExtendedModel.cs" />
     <Compile Include="ViewModels\TaskExtendedModel.cs" />
     <Compile Include="ViewModels\NotificationExtendedModel.cs" />
     <Compile Include="ViewModels\RackExtendedModel.cs" />

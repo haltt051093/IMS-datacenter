@@ -159,7 +159,7 @@ namespace IMS.Data.Repository
             }
             IMSContext.Current.SaveChanges();
             // log request status
-            LogChangedContent logRequest = new LogChangedContent
+            Log logRequest = new Log
             {
                 RequestCode = requestCode,
                 TypeOfLog = typeOfLog,
@@ -170,7 +170,7 @@ namespace IMS.Data.Repository
                 Description = description,
                 Username = customer
             };
-            LogChangedContentBLO.Current.Add(logRequest);
+            LogBLO.Current.Add(logRequest);
             return requestCode;
         }
 
@@ -186,7 +186,7 @@ namespace IMS.Data.Repository
             }
             Update(request);
             // log request status
-            LogChangedContent logRequest = new LogChangedContent
+            Log logRequest = new Log
             {
                 RequestCode = requestCode,
                 TypeOfLog = typeOfLog,
@@ -196,7 +196,7 @@ namespace IMS.Data.Repository
                 Username = staffCode,
                 Description = description
             };
-            LogChangedContentBLO.Current.Add(logRequest);
+            LogBLO.Current.Add(logRequest);
         }
 
         public void UpdateRequestAssignee(string requestCode, string assignee)
@@ -214,7 +214,7 @@ namespace IMS.Data.Repository
         public List<RequestExtendedModel> GetWaitingRequestOfServer(string serverCode)
         {
             //list tat ca hang co serverCode, lay ra list requestcode
-            var query = LogChangedContentDAO.Current.Query(x => x.ServerCode == serverCode
+            var query = LogDAO.Current.Query(x => x.ServerCode == serverCode
                 && x.Object == Constants.Object.OBJECT_REQUEST
                 && (x.ObjectStatus == Constants.StatusCode.REQUEST_PENDING
                 || x.ObjectStatus == Constants.StatusCode.REQUEST_WAITING

@@ -315,7 +315,7 @@ namespace IMS.Data.Repository
             }
             IMSContext.Current.SaveChanges();
             //log server
-            var logServer = new LogChangedContent
+            var logServer = new Log
             {
                 RequestCode = requestCode,
                 TypeOfLog = Constants.TypeOfLog.LOG_ADD_SERVER,
@@ -325,7 +325,7 @@ namespace IMS.Data.Repository
                 ServerCode = server.ServerCode,
                 Username = server.Customer
             };
-            LogChangedContentBLO.Current.Add(logServer);
+            LogBLO.Current.Add(logServer);
             return server.ServerCode;
         }
 
@@ -339,7 +339,7 @@ namespace IMS.Data.Repository
                 Update(server);
             }
             //log server
-            LogChangedContent logServer = new LogChangedContent
+            Log logServer = new Log
             {
                 RequestCode = requestCode,
                 TypeOfLog = typeOfLog,
@@ -348,7 +348,7 @@ namespace IMS.Data.Repository
                 ObjectStatus = newStatus,
                 Username = username
             };
-            LogChangedContentBLO.Current.Add(logServer);
+            LogBLO.Current.Add(logServer);
         }
     }
 }

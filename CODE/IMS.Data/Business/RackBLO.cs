@@ -83,7 +83,7 @@ namespace IMS.Data.Business
                 Update(query);
             }
             //log rack
-            LogChangedContent logRack = new LogChangedContent
+            Log logRack = new Log
             {
                 RequestCode = requestCode,
                 TypeOfLog = typeOfLog,
@@ -92,7 +92,7 @@ namespace IMS.Data.Business
                 ObjectStatus = newStatus,
                 Username = staff
             };
-            LogChangedContentBLO.Current.Add(logRack);
+            LogBLO.Current.Add(logRack);
         }
 
         public List<string> GetAllRowsOfRack()

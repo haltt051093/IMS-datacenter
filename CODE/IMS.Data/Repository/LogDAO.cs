@@ -8,23 +8,23 @@ using IMS.Data.ViewModels;
 
 namespace IMS.Data.Repository
 {
-    public class LogChangedContentDAO : BaseDAO<LogChangedContent>
+    public class LogDAO : BaseDAO<Log>
     {
-        public static LogChangedContentDAO instance;
+        public static LogDAO instance;
 
-        public static LogChangedContentDAO Current
+        public static LogDAO Current
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new LogChangedContentDAO();
+                    instance = new LogDAO();
                 }
                 return instance;
             }
         }
 
-        public override LogChangedContent GetByKeys(LogChangedContent entry)
+        public override Log GetByKeys(Log entry)
         {
             var existing = Query(x => x.Id == entry.Id).FirstOrDefault();
             return existing;
@@ -193,7 +193,7 @@ namespace IMS.Data.Repository
             //return RawQuery<RequestExtendedModel>(query, new object[] { });
         }
 
-        public List<LogChangedContent> GetBlockedIP(string IP)
+        public List<Log> GetBlockedIP(string IP)
         {
             var query = @"select * from LogChangedContent as l, 
                             (
@@ -201,7 +201,7 @@ namespace IMS.Data.Repository
                             group by l.ChangedValueOfObject
                             )as k 
                             where l.ChangedValueOfObject ='" + IP + @"'and l.TypeOfLog='BLOCKIP' and l.LogTime=k.maxtime";
-            return RawQuery<LogChangedContent>(query, new object[] { });
+            return RawQuery<Log>(query, new object[] { });
         }
 
         public List<LogExtentedModel> ParseTypeLogToRequestType(List<LogExtentedModel> list)
@@ -250,7 +250,7 @@ namespace IMS.Data.Repository
             return requests;
         }
 
-        public List<LogChangedContent> GetLogInfoByRequestCode(string requestCode, string Object)
+        public List<Log> GetLogInfoByRequestCode(string requestCode, string Object)
         {
             var query = from l in Current.Table
                         where l.RequestCode == requestCode && l.Object == Object
@@ -258,13 +258,13 @@ namespace IMS.Data.Repository
             return query.ToList();
         }
 
-        public override void Add(LogChangedContent entry)
+        public override void Add(Log entry)
         {
             entry.LogTime = DateTime.Now;
             base.Add(entry);
         }
 
-        public override void AddMany(IEnumerable<LogChangedContent> entries)
+        public override void AddMany(IEnumerable<Log> entries)
         {
             foreach (var entry in entries)
             {

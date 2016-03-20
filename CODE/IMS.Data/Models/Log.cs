@@ -5,8 +5,8 @@ using IMS.Data.Generic;
 
 namespace IMS.Data.Models
 {
-    [Table("LogChangedContent")]
-    public partial class LogChangedContent : BaseModel
+    [Table("Log")]
+    public partial class Log : BaseModel
     {
         [StringLength(50)]
         public string RequestCode { get; set; }

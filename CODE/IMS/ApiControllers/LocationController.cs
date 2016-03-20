@@ -46,8 +46,6 @@ namespace IMS.ApiControllers
                         locations1 = LocationBLO.Current.GetNewLocation1(server);
                     }
                 }
-                
-                    
             }
             else
             {

@@ -47,7 +47,7 @@ namespace IMS.Controllers
             listtime.Add(item3);
             var data = new ReportBlockIPViewModel();
             data.TimeRange = listtime;
-            var list = LogChangedContentBLO.Current.GetAllLogIP();
+            var list = LogBLO.Current.GetAllLogIP();
             int count = 0;
             for (int i = 0; i < list.Count; i++)
             {
@@ -70,7 +70,7 @@ namespace IMS.Controllers
                 Text = "Used and Using IP"
             };
             uselist.Add(item);
-            var list = LogChangedContentBLO.Current.GetLogUsedIP();
+            var list = LogBLO.Current.GetLogUsedIP();
             var listNetworkIP = list.OrderBy(x => x.NetworkIP).GroupBy(x => x.NetworkIP).Select(x => x.FirstOrDefault()).Where(x => x.NetworkIP != null);
             var listnet = listNetworkIP.Select(x => new SelectListItem
             {

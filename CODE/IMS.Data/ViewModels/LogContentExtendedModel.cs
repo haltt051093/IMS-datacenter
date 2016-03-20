@@ -6,9 +6,9 @@ using IMS.Data.Models;
 namespace IMS.Data.ViewModels
 {
     [NotMapped]
-    public class LogContentExtendedModel: LogChangedContent
+    public class LogContentExtendedModel: Log
     {
-        public LogChangedContent _LogChangedContent
+        public Log _LogChangedContent
         {
             set
             {

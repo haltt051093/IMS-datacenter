@@ -42,7 +42,7 @@ namespace IMS.Data.Repository
             };
             Add(serverip);
             //log ip, object la serverip
-            LogChangedContent logServerIp = new LogChangedContent
+            Log logServerIp = new Log
             {
                 RequestCode = requestCode,
                 TypeOfLog = typeOfLog,
@@ -52,7 +52,7 @@ namespace IMS.Data.Repository
                 ServerCode = serverCode,
                 Username = username
             };
-            LogChangedContentBLO.Current.Add(logServerIp);
+            LogBLO.Current.Add(logServerIp);
         }
 
         public void UpdateServerIpANDLog(string requestCode, string serverCode, string updatedIp,
@@ -66,7 +66,7 @@ namespace IMS.Data.Repository
                 Update(query);
             }
             //log ip, object la serverip
-            LogChangedContent logServerIp = new LogChangedContent
+            Log logServerIp = new Log
             {
                 RequestCode = requestCode,
                 TypeOfLog = typeOfLog,
@@ -76,7 +76,7 @@ namespace IMS.Data.Repository
                 ServerCode = serverCode,
                 Username = username
             };
-            LogChangedContentBLO.Current.Add(logServerIp);
+            LogBLO.Current.Add(logServerIp);
         }
 
         //public void UpdateIPStatusOfServer(string serverCode, )

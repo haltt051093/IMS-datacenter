@@ -20,7 +20,7 @@ namespace IMS.Controllers
         {
             var data = new RequestIndexViewModel();
             var username = GetCurrentUserName();
-            data.Requests = LogChangedContentBLO.Current.GetRequestOfCustomer(username);
+            data.Requests = LogBLO.Current.GetRequestOfCustomer(username);
             data.FilterByRequestType = RequestTypeBLO.Current
                 .GetAll()
                 .Select(x => new SelectListItem { Value = x.RequestTypeCode, Text = x.RequestTypeName })
@@ -210,118 +210,52 @@ namespace IMS.Controllers
             if (rType.Equals(Constants.RequestTypeCode.ADD_SERVER))
             {
                 //Get request
-                ProcessRequestAddServerViewModel viewmodel = new ProcessRequestAddServerViewModel();
-                //request info
-                viewmodel.RequestInfo = RequestBLO.Current.GetRequestInfo(rCode);
-                //lay list servers
-                var serverCodes = LogChangedContentBLO.Current.GetAddingServers(rCode);
-                List<ServerExtendedModel> list = new List<ServerExtendedModel>();
-                foreach (var servercode in serverCodes)
-                {
-                    var server = ServerBLO.Current.GetAllServerInfo(servercode);
-                    list.Add(server);
-                }
-                viewmodel.Servers = list;
+                var request = RequestBLO.Current.DetailProcessRequestAddServer(rCode, null);
+                var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestAddServerViewModel>(request);
                 return View("AddServerDetail", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.BRING_SERVER_AWAY))
             {
-                ProcessRequestBringServerAwayViewModel viewmodel = new ProcessRequestBringServerAwayViewModel();
-                //request info
-                viewmodel.RequestInfo = RequestBLO.Current.GetRequestInfo(rCode);
-                //main info
-                var returnValues = LogChangedContentBLO.Current.RequestDetailsBringServerAway(rCode);
-                viewmodel.ReturnIpNumber = returnValues.ReturnIpNumber;
-                viewmodel.ReturnLocationNumber = returnValues.ReturnLocationNumber;
-                viewmodel.SelectedServerNumber = returnValues.ReturnServerNumber;
-                viewmodel.ServerOfCustomer = returnValues.Servers;
+                //Get request
+                var request = RequestBLO.Current.DetailProcessRequestBringServerAway(rCode, null);
+                var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestBringServerAwayViewModel>(request);
                 return View("BringServerAwayDetail", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.ASSIGN_IP))
             {
-                ProcessRequestAssignIPViewModel viewmodel = new ProcessRequestAssignIPViewModel();
-                //request info
-                viewmodel.RequestInfo = RequestBLO.Current.GetRequestInfo(rCode);
-                //Lay so luong IP muon assign
-                var reqDetail = JsonConvert.DeserializeObject<RequestDetailViewModel>(viewmodel.RequestInfo.Description);
-                viewmodel.NumberOfIP = reqDetail.NumberOfIp;
-                viewmodel.RequestInfo.Description = reqDetail.Description;
-                //lay servercode, roi lay ip cua server do, tim nhung ip cung vung con lai
-                viewmodel.SelectedServer = LogChangedContentBLO.Current.GetServerCodeByRequestCode(rCode).FirstOrDefault();
-                if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
-                {
-                    viewmodel.IPs = LogChangedContentBLO.Current.GetChangedValueOfObject(rCode,
-                        Constants.Object.OBJECT_IP, Constants.StatusCode.IP_USED);
-                }
+                //Get request
+                var request = RequestBLO.Current.DetailProcessRequestAssignIP(rCode, null);
+                var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestAssignIPViewModel>(request);
                 return View("AssignIPDetail", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.CHANGE_IP))
             {
-                ProcessRequestChangeIPViewModel viewmodel = new ProcessRequestChangeIPViewModel();
-                //request info
-                viewmodel.RequestInfo = RequestBLO.Current.GetRequestInfo(rCode);
-                //lay ip muon change
-                viewmodel.ReturningIPs = LogChangedContentBLO.Current.GetChangedValueOfObject(rCode, Constants.Object.OBJECT_SERVERIP,
-                    Constants.StatusCode.SERVERIP_CHANGING);
-                //lay servercode, roi lay ip cua server do, tim nhung ip cung vung con lai
-                viewmodel.SelectedServer = LogChangedContentBLO.Current.GetServerCodeByRequestCode(rCode).FirstOrDefault();
-                if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
-                {
-                    viewmodel.ReturningIPs = LogChangedContentBLO.Current.GetChangedValueOfObject(rCode, Constants.Object.OBJECT_IP,
-                    Constants.StatusCode.IP_AVAILABLE);
-                    viewmodel.NewIPs = LogChangedContentBLO.Current.GetChangedValueOfObject(rCode, Constants.Object.OBJECT_IP,
-                    Constants.StatusCode.IP_USED);
-                }
+                //Get request
+                var request = RequestBLO.Current.DetailProcessRequestChangeIP(rCode, null);
+                var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestChangeIPViewModel>(request);
                 return View("ChangeIPDetail", viewmodel);
             }
 
             if (rType.Equals(Constants.RequestTypeCode.RETURN_IP))
             {
-                ProcessRequestReturnIPViewModel viewmodel = new ProcessRequestReturnIPViewModel();
-                //request info
-                viewmodel.RequestInfo = RequestBLO.Current.GetRequestInfo(rCode);
-                //get servercode = requestcode
-                viewmodel.SelectedServer = LogChangedContentBLO.Current.GetServerCodeByRequestCode(rCode).FirstOrDefault();
-                //List returning IPs
-                viewmodel.ReturningIPs = LogChangedContentBLO.Current.GetChangedValueOfObject(rCode, Constants.Object.OBJECT_SERVERIP,
-                    Constants.StatusCode.SERVERIP_RETURNING);
+                //Get request
+                var request = RequestBLO.Current.DetailProcessRequestReturnIP(rCode, null);
+                var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestReturnIPViewModel>(request);
                 return View("ReturnIPDetail", viewmodel);
             }
 
             if (rType.Equals(Constants.RequestTypeCode.RENT_RACK))
             {
-                ProcessRequestRentRackViewModel viewmodel = new ProcessRequestRentRackViewModel();
-                //request info
-                viewmodel.RequestInfo = RequestBLO.Current.GetRequestInfo(rCode);
-                //Lay so luong rack muon thue
-                var desc = JsonConvert.DeserializeObject<RequestDetailViewModel>(viewmodel.RequestInfo.Description);
-                viewmodel.RackNumbers = desc.NumberOfRack;
-                viewmodel.RequestInfo.Description = desc.Description;
-                if (viewmodel.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
-                {
-                    viewmodel.RentedRacks = LogChangedContentBLO.Current.GetChangedValueOfObject(rCode,
-                        Constants.Object.OBJECT_RACK, Constants.StatusCode.RACK_RENTED);
-                }
-                else
-                {
-                    //list cot rows
-                    var rows = RackBLO.Current.GetAllRowsOfRack();
-                    var listRacks = rows.SelectMany(item => RackBLO.Current.GetRackByRow(item)).ToList();
-                    viewmodel.listRackByRows = listRacks;
-                    //list row
-                    viewmodel.ListRows = rows.Select(x => new SelectListItem { Value = x, Text = x }).ToList();
-                }
-                ViewBag.Message = "Request Deny";
+                //Get request
+                var request = RequestBLO.Current.DetailProcessRequestRentRack(rCode, null);
+                var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestRentRackViewModel>(request);
                 return View("RentRackDetail", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.RETURN_RACK))
             {
-                ProcessRequestReturnRackViewModel viewmodel = new ProcessRequestReturnRackViewModel();
-                //request info
-                viewmodel.RequestInfo = RequestBLO.Current.GetRequestInfo(rCode);
-                //Lay so luong rack muon return
-                var listRacks = LogChangedContentBLO.Current.RequestDetailsReturnRack(rCode);
-                viewmodel.SelectedRacks = listRacks.listRacks;
+                //Get request
+                var request = RequestBLO.Current.DetailProcessRequestReturnRack(rCode, null);
+                var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestReturnRackViewModel>(request);
                 return View("ReturnRackDetail", viewmodel);
             }
             return RedirectToAction("Index");

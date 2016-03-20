@@ -104,7 +104,7 @@ namespace IMS.Data.Business
                     si.AssignedDate = DateTime.Now;
                     si.StatusCode = Constants.StatusCode.SERVERIP_CURRENT;
                     ServerIPBLO.Current.Add(si);
-                    var log = new LogChangedContent();
+                    var log = new Log();
                     log.TypeOfLog = Constants.TypeOfLog.LOG_ASSIGN_DEFAULT_IP;
                     log.Object = Constants.Object.OBJECT_IP;
                     log.ChangedValueOfObject = newIP;
@@ -112,7 +112,7 @@ namespace IMS.Data.Business
                     log.ServerCode = serverCode;
                     log.LogTime = DateTime.Now;
                     log.RequestCode = requestCode;
-                    LogChangedContentBLO.Current.Add(log);
+                    LogBLO.Current.Add(log);
                     return true;
                 }
                 else
@@ -138,10 +138,10 @@ namespace IMS.Data.Business
                     ip.StatusCode = Constants.StatusCode.IP_AVAILABLE;
                     ip.IsDefault = false;
                     dao.Update(ip);
-                    var log = LogChangedContentBLO.Current.GetByServerCode(serverCode);
+                    var log = LogBLO.Current.GetByServerCode(serverCode);
                     log.LogTime = DateTime.Now;
                     log.ChangedValueOfObject = newIP;
-                    LogChangedContentBLO.Current.Update(log);
+                    LogBLO.Current.Update(log);
                     return true;
                 }
                 else
@@ -164,7 +164,7 @@ namespace IMS.Data.Business
                 dao.Update(existing);
             }
             //Add log trang thai IP
-            LogChangedContent logIp = new LogChangedContent
+            Log logIp = new Log
             {
                 RequestCode = requestCode,
                 TypeOfLog = typeOfLog,
@@ -174,7 +174,7 @@ namespace IMS.Data.Business
                 ServerCode = serverCode,
                 Username = username
             };
-            LogChangedContentBLO.Current.Add(logIp);
+            LogBLO.Current.Add(logIp);
         }
 
         public List<IPAddressPoolExtendedModel> GetAvailableIpsSameGateway(string serverCode)
