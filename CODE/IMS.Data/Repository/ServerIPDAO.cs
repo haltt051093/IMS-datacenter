@@ -77,5 +77,7 @@ namespace IMS.Data.Repository
             };
             LogChangedContentBLO.Current.Add(logServerIp);
         }
+
+        //public void UpdateIPStatusOfServer(string serverCode, )
     }
 }
