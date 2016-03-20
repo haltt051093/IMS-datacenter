@@ -23,6 +23,8 @@
     @Scripts.Render(Constants.ScriptBundle.BOOTSTRAP_DATETIMEPICKER)
     @Scripts.Render(Constants.ScriptBundle.ALERTIFY)
     @Scripts.Render(Constants.ScriptBundle.DATATABLE)
+    @Scripts.Render(Constants.ScriptBundle.SIGNALR)
+    <script src="@Url.Content("~/signalr/hubs")"></script>
     @Scripts.Render(Constants.ScriptBundle.ADMINLTE)
     @Scripts.Render(Constants.ScriptBundle.APPLICATION)
     @RenderSection("Scripts", false)

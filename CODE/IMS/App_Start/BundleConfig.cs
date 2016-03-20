@@ -47,6 +47,10 @@ namespace IMS
                 "~/Scripts/respond.js",
                 "~/Scripts/respond.matchmedia.addListener.js"
             ));
+            builder.Add(new ScriptBundle(Constants.ScriptBundle.SIGNALR).Include(
+                "~/Scripts/jquery.signalR-2.2.0.js",
+                "~/signalr/hubs"
+            ));
             builder.Add(new ScriptBundle(Constants.ScriptBundle.ADMINLTE).Include(
                 "~/Scripts/AdminLTE/app.js"
             ));

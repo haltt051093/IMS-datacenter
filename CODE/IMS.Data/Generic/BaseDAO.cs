@@ -150,6 +150,12 @@ namespace IMS.Data.Generic
             get { return IMSContext.Current.Set<TModel>(); }
         }
 
+        public virtual int Count(Expression<Func<TModel, bool>> predicate)
+        {
+            var result = IMSContext.Current.Set<TModel>().Count(predicate);
+            return result;
+        }
+
         public virtual List<TModel> Query(Expression<Func<TModel, bool>> predicate, int page = 0, int pageSize = 0, bool includeDeleted = false)
         {
             var query = IMSContext.Current.Set<TModel>().Where(predicate);

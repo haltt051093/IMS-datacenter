@@ -1,8 +1,11 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Web.Mvc;
 using IMS.Core;
 using IMS.Data.Business;
 using IMS.Data.Generic;
 using IMS.Data.Models;
+using IMS.Services;
 
 namespace IMS.Controllers
 {
@@ -107,6 +110,19 @@ namespace IMS.Controllers
                     return Constants.AlertType.WARNING;
             }
             return Constants.AlertType.DANGER;
+        }
+
+        protected void Notify(IEnumerable<string> notificationCodes)
+        {
+            foreach (var notiCode in notificationCodes)
+            {
+                var noti = NotificationBLO.Current.GetByKeys(new Notification {NotificationCode = notiCode});
+                if (noti == null)
+                {
+                    continue;
+                }
+                RemoteControllerHub.Current.Clients.User(noti.Username).Notify(noti);
+            }
         }
     }
 }

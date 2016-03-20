@@ -927,6 +927,7 @@
     <Compile Include="Models\ForgotPasswordViewModel.cs" />
     <Compile Include="Models\HomeHeaderViewModel.cs" />
     <Compile Include="Models\HomeSidebarViewModel.cs" />
+    <Compile Include="Models\NotificationNotifyViewModel.cs" />
     <Compile Include="Models\TaskIndexViewModel.cs" />
     <Compile Include="Models\ProcessRequestAddServerViewModel.cs" />
     <Compile Include="Models\ProcessRequestReturnRackViewModel.cs" />

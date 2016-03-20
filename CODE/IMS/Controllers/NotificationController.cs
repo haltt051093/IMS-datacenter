@@ -7,6 +7,7 @@ using IMS.Core;
 using IMS.Data.Business;
 using IMS.Data.Models;
 using IMS.Models;
+using IMS.Services;
 
 namespace IMS.Controllers
 {
@@ -31,6 +32,12 @@ namespace IMS.Controllers
             return View(data);
         }
 
-        
+        [HttpPost]
+        public JsonResult Notify(NotificationNotifyViewModel q)
+        {
+            RemoteControllerHub.Current.Clients.User(q.Username).Notify(q.Message);
+            //RemoteControllerHub.Current.Clients.All.Notify(q.Message);
+            return Json(true);
+        }
     }
 }

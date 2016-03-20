@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.SignalR;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNet.SignalR;
 
 namespace IMS.Services
 {
@@ -15,6 +16,11 @@ namespace IMS.Services
                 }
                 return instance;
             }
+        }
+
+        public override Task OnConnected()
+        {
+            return base.OnConnected();
         }
     }
 }

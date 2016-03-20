@@ -24,63 +24,37 @@
             <!-- Messages: style can be found in dropdown.less-->
             @if (Model.Account != null)
             {
-                if (!User.IsInRole(Constants.Role.STAFF))
-                {
-                    <li class="dropdown notifications-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-bell-o"></i>
-                            @if (Model.NumberOfUnread > 0)
-                            {
-                                <span class="label label-warning">@Model.NumberOfUnread</span>
-                            }
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">You have @Model.NumberOfUnread unread notifications</li>
-                            <li>
-                                <!-- inner menu: contains the actual data -->
-                                <ul class="menu">
-                                    @foreach (var notification in Model.Notifications)
-                                    {
-                                        <li>
-                                            <a href="#">
-                                                <i class="ion ion-ios7-people info"></i> @notification.Description
-                                            </a>
-                                        </li>
-                                    }
-                                </ul>
-                            </li>
-                            <li class="footer"><a href="@Url.Action("Index", "Notification")">View all</a></li>
-                        </ul>
-                    </li>
-                }
-                <!-- Tasks: style can be found in dropdown.less -->
-                if (User.IsInRole(Constants.Role.STAFF))
-                {
-                    <li class="dropdown tasks-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-tasks"></i>
-                            <span class="label label-danger">9</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">You have 2 tasks</li>
-                            <li>
-                                <!-- inner menu: contains the actual data -->
-                                <ul class="menu">
+                <li class="dropdown notifications-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-bell-o"></i>
+                        @if (Model.NumberOfUnread > 0)
+                        {
+                            <span id="noty_count" class="label label-warning">@Model.NumberOfUnread</span>
+                        }
+                        else
+                        {
+                            <span id="noty_count" class="label label-warning" style="display: none">@Model.NumberOfUnread</span>
+                        }
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header">You have @Model.NumberOfUnread unread notifications</li>
+                        <li>
+                            <!-- inner menu: contains the actual data -->
+                            <ul id="noty_menu" class="menu">
+                                @foreach (var notification in Model.Notifications)
+                                {
                                     <li>
-                                        <!-- Task item -->
-                                        <a href="@Url.Action("Index", "Task")">
-                                            <h3>
-                                                Request add server
-                                                <small class="pull-right">Pending</small>
-                                            </h3>
+                                        <a href="#">
+                                            <i class="ion ion-ios7-people info"></i> @notification.Description
                                         </a>
-                                    </li><!-- end task item -->
-                                </ul>
-                            </li>
-                            <li class="footer"><a href="@Url.Action("Index", "Task")">View all</a></li>
-                        </ul>
-                    </li>
-                }
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                        <li class="footer"><a href="@Url.Action("Index", "Notification")">View all</a></li>
+                    </ul>
+                </li>
+
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -106,12 +80,10 @@
                                 </p>
                                 <p>@role - @group</p>
                             }
-                            
+
                         </li>
 
                         <!-- Menu Footer-->
-                        
-
                         <li class="user-footer">
                             <div class="pull-left">
                                 <a href="@Url.Action("ViewProfile", "Account", new {username = @account.Username}, null)"
@@ -121,8 +93,6 @@
                                 <a href="@Url.Action("Logout", "Account")" class="btn btn-default btn-flat">Sign out</a>
                             </div>
                         </li>
-                           
-                       
                     </ul>
                 </li>
             }
@@ -130,45 +100,23 @@
     </div>
 </nav>
 
-<!-- REQUEST INFO MODAL -->
-<div class="modal fade" id="requestinfo-modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" style="width: 400px">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"><i class="fa fa-info"></i> Request Information</h4>
-            </div>
-            <form action="#" method="post">
-                <div class="modal-body">
+@if (Model.Account != null)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var hub = $.connection.remoteControllerHub;
+            hub.client.notify = function (noty) {
+                $('#noty_count').text($('#noty_count').text() - -1);
+                $('#noty_count').css('display', '');
 
-                    <dl class="dl-horizontal">
-                        <dt>Request Code</dt>
-                        <dd><a href="@Url.Action("RequestAddServerInfo2","Request")">R123456</a></dd>
-                        <dt>Customer Name</dt>
-                        <dd>Lê Thị Thu Hà</dd>
-                        <dt>Request Type Name</dt>
-                        <dd>Rent rack</dd>
-                        <dt>Requested Time</dt>
-                        <dd>22-Feb-16 00:03:00</dd>
-                        <dt>Status</dt>
-                        <dd>Sending</dd>
-                        <dt>Assign Name</dt>
-                        <dd>
-                            <select>
-                                <option>You</option>
-                                <option>tienhlh</option>
-                                <option>namch</option>
-                            </select>
-                        </dd>
-                    </dl>
-                </div>
-                <div class="modal-footer clearfix">
-
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-
-                    <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Accept</button>
-                </div>
-            </form>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+                var icon = $('<i></i>').attr('class', 'ion ion-ios7-people info');
+                var description = 'You have an notification';
+                var link = $('<a></a>').attr('href', '#').append(icon);
+                link.append(description);
+                var block = $('<li></li>').html(link);
+                $('#noty_menu').prepend(block);
+            }
+            $.connection.hub.start();
+        });
+    </script>
+}
