@@ -35,7 +35,7 @@ namespace IMS.Controllers
         [HttpPost]
         public JsonResult Notify(NotificationNotifyViewModel q)
         {
-            RemoteControllerHub.Current.Clients.User(q.Username).Notify(q.Message);
+            RemoteControllerHub.Current.Clients.User(q.Username).NotifyTest(q.Message);
             //RemoteControllerHub.Current.Clients.All.Notify(q.Message);
             return Json(true);
         }

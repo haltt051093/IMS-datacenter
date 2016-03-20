@@ -37,7 +37,7 @@
                         }
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="header">You have @Model.NumberOfUnread unread notifications</li>
+                        <li class="header">You have <span id="noty_count2">@Model.NumberOfUnread</span> unread notifications</li>
                         <li>
                             <!-- inner menu: contains the actual data -->
                             <ul id="noty_menu" class="menu">
@@ -106,11 +106,26 @@
         $(document).ready(function () {
             var hub = $.connection.remoteControllerHub;
             hub.client.notify = function (noty) {
-                $('#noty_count').text($('#noty_count').text() - -1);
+                var noty_count = $('#noty_count').text() - -1;
+                $('#noty_count').text(noty_count);
+                $('#noty_count2').text(noty_count);
                 $('#noty_count').css('display', '');
 
                 var icon = $('<i></i>').attr('class', 'ion ion-ios7-people info');
-                var description = 'You have an notification';
+                var description = noty.Description;
+                var link = $('<a></a>').attr('href', '#').append(icon);
+                link.append(description);
+                var block = $('<li></li>').html(link);
+                $('#noty_menu').prepend(block);
+            }
+            hub.client.notifyTest = function (noty) {
+                var noty_count = $('#noty_count').text() - -1;
+                $('#noty_count').text(noty_count);
+                $('#noty_count2').text(noty_count);
+                $('#noty_count').css('display', '');
+
+                var icon = $('<i></i>').attr('class', 'ion ion-ios7-people info');
+                var description = noty;
                 var link = $('<a></a>').attr('href', '#').append(icon);
                 link.append(description);
                 var block = $('<li></li>').html(link);
