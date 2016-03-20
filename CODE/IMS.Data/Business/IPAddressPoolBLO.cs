@@ -48,9 +48,38 @@ namespace IMS.Data.Business
                 item.NetworkIP = entry[i].NetworkIP;
                 ip.Add(item);
             }
-            IPAddressPoolBLO.Current.AddMany(ip);
+            IPAddressPoolDAO.Current.AddMany(ip);
         }
 
+        public void BlockIP(IPAddressPool ip, string Description)
+        {
+            ip.StatusCode = Constants.StatusCode.IP_BLOCKED;
+            IPAddressPoolBLO.Current.Update(ip);
+            var log = new LogChangedContent();
+            log.TypeOfLog = Constants.TypeOfLog.LOG_BLOCK_IP;
+            log.Object = Constants.Object.OBJECT_IP;
+            log.ChangedValueOfObject = ip.IPAddress;
+            log.ObjectStatus = Constants.StatusCode.IP_BLOCKED;
+            log.LogTime = DateTime.Now;
+            log.Description = Description;
+            LogChangedContentBLO.Current.Add(log);
+        }
+
+        public void UnblockIP(IPAddressPool ip, string Description)
+        {
+            ip.StatusCode = Constants.StatusCode.IP_AVAILABLE;
+            IPAddressPoolDAO.Current.Update(ip);
+            var blockip = LogChangedContentBLO.Current.GetBlockedIP(ip.IPAddress).FirstOrDefault();
+            var log = new LogChangedContent();
+            log.TypeOfLog = Constants.TypeOfLog.LOG_UNBLOCK_IP;
+            log.Object = Constants.Object.OBJECT_IP;
+            log.ChangedValueOfObject = ip.IPAddress;
+            log.ObjectStatus = Constants.StatusCode.IP_AVAILABLE;
+            log.Description = Description;
+            log.LogTime = DateTime.Now;
+            log.PreviousId = blockip.Id;
+            LogChangedContentDAO.Current.Add(log);
+        }
         public List<IPAddressPoolExtendedModel> GetAllIP()
         {
             return dao.GetAllIP();

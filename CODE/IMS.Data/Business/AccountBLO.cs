@@ -33,6 +33,10 @@ namespace IMS.Data.Business
             dao = AccountDAO.Current;
         }
 
+        public List<AccountExtendedModel> GetCountMemberOfGroup()
+        {
+            return dao.GetCountMemberOfGroup();
+        }
         public string GeneratePassword()
         {
             var password = TextExpress.Randomize(10);
