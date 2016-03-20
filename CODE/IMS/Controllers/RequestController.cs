@@ -597,8 +597,9 @@ namespace IMS.Controllers
             Toast(Constants.AlertType.SUCCESS, "RequestReturnRack", null, true);
             return RedirectToAction("Index");
         }
+        #endregion
 
-
+        #region other functions
         [HttpGet]
         public ActionResult FetchChangedIPs(RequestChangeIPViewModel model)
         {

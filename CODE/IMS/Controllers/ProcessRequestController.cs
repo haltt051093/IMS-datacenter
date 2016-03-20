@@ -360,7 +360,7 @@ namespace IMS.Controllers
             {
                 var shifthead = GetCurrentUserName();
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
-                    Constants.TypeOfLog.LOG_ADD_SERVER, Constants.StatusCode.REQUEST_WAITING, null, shifthead, null);
+                    Constants.TypeOfLog.LOG_ADD_SERVER, Constants.StatusCode.REQUEST_WAITING, shifthead, shifthead, null);
                 return RedirectToAction("Detais", "ProcessRequest",
                     new { rType = Constants.RequestTypeCode.ADD_SERVER, rCode = viewmodel.RequestInfo.RequestCode });
             }
@@ -534,7 +534,7 @@ namespace IMS.Controllers
             {
                 var shifthead = GetCurrentUserName();
                 RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode,
-                    Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.REQUEST_WAITING, viewmodel.RequestInfo.Assignee, shifthead, null);
+                    Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.REQUEST_WAITING, shifthead, shifthead, null);
                 return RedirectToAction("Detais", "ProcessRequest",
                     new { rType = Constants.RequestTypeCode.BRING_SERVER_AWAY, rCode = viewmodel.RequestInfo.RequestCode });
             }
@@ -564,8 +564,6 @@ namespace IMS.Controllers
 
                     //giai phong location, co can log ko?
                     LocationBLO.Current.SetLocationAvailable(server.ServerCode);
-
-                    //DOING   giai phong ip
                     Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
                 }
             }
@@ -589,8 +587,10 @@ namespace IMS.Controllers
                         viewmodel.RequestInfo.Assignee);
                 }
                 //Add and log request
-                RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_ADD_SERVER,
+                RequestBLO.Current.UpdateRequestStatusANDLog(viewmodel.RequestInfo.RequestCode, Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
                     Constants.StatusCode.REQUEST_REJECTED, null, viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.RejectReason);
+                //update task
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_COMPLETED);
             }
             if (Request.Form[Constants.FormAction.PROCESS_ACTION] != null)
             {

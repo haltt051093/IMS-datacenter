@@ -35,7 +35,6 @@
                         <th>@Labels.Customer</th>
                         <th>@Labels.Status</th>
                         <th>@Labels.DefaultIP</th>
-                        <th>@Labels.Location</th>
                         <th>@Labels.CurrentRequest</th>
                     }
                 </tr>
@@ -71,10 +70,6 @@
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => Model.Servers[i].DefaultIP)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => Model.Servers[i].RackName)U
-                                @Html.DisplayFor(modelItem => Model.Servers[i].RackUnit)
                             </td>
                             <td class="sidebar-menu">
                                 @if (Model.Servers[i].Requests.Count > 0)
@@ -113,7 +108,6 @@
                         <th><span style="color: ghostwhite">@Labels.Customer</span></th>
                         <th><span style="color: ghostwhite">@Labels.Status</span></th>
                         <th><span style="color: ghostwhite">@Labels.DefaultIP</span></th>
-                        <th><span style="color: ghostwhite">@Labels.Location</span></th>
                         <th><span style="color: ghostwhite">@Labels.CurrentRequest</span></th>
                     }
                 </tr>
