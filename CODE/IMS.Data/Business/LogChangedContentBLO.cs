@@ -5,6 +5,7 @@ using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.Repository;
 using IMS.Data.ViewModels;
+using IMS.Data.Queries;
 
 namespace IMS.Data.Business
 {
@@ -24,7 +25,6 @@ namespace IMS.Data.Business
                 return instance;
             }
         }
-
 
         private LogChangedContentBLO()
         {
@@ -46,11 +46,6 @@ namespace IMS.Data.Business
         {
             return dao.GetLogUsedIP();
         }
-
-        //public void AddLog(LogChangedContent entry)
-        //{
-        //    dao.Add(entry);
-        //}
 
         public List<string> GetIpRequestReturnIp(string requestCode)
         {
@@ -81,6 +76,7 @@ namespace IMS.Data.Business
         {
             return dao.GetAllRequest();
         }
+
         public List<LogChangedContent> GetLogInfoByRequestCode(string requestCode, string Object)
         {
             return dao.GetLogInfoByRequestCode(requestCode, Object);
@@ -277,5 +273,44 @@ namespace IMS.Data.Business
             return query.ToList();
         }
 
+        public override void Add(LogChangedContent entry)
+        {
+            base.Add(entry);
+        }
+
+        public void LogAddServers(LogAddServersQuery q)
+        {
+            
+        }
+
+        public void LogAssignIPs(LogAssignIPsQuery q)
+        {
+            
+        }
+
+        public void LogBringServersAway(LogBringServerAwayQuery q)
+        {
+            
+        }
+
+        public void LogChangeIPs(LogChangeIPsQuery q)
+        {
+            
+        }
+
+        public void LogRentRack(LogRentRackQuery q)
+        {
+            
+        }
+
+        public void LogReturnIPs(LogReturnIPsQuery q)
+        {
+            
+        }
+
+        public void LogReturnRack(LogReturnRackQuery q)
+        {
+            
+        }
     }
 }

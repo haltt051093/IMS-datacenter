@@ -282,6 +282,13 @@ namespace IMS.Data.Repository
             base.Add(entry);
         }
 
-
+        public override void AddMany(IEnumerable<LogChangedContent> entries)
+        {
+            foreach (var entry in entries)
+            {
+                entry.LogTime = DateTime.Now;
+            }
+            base.AddMany(entries);
+        }
     }
 }
