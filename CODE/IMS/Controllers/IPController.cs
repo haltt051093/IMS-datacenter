@@ -66,7 +66,7 @@ namespace IMS.Controllers
                                 if (listip[j].NetworkIP == item.Value)
                                 {
                                     listip[j].StatusCode = Constants.StatusCode.IP_DEACTIVATE;
-                                    IPAddressPoolDAO.Current.Update(listip[j]);
+                                    IPAddressPoolBLO.Current.Update(listip[j]);
                                 }
                             }
                             
@@ -108,35 +108,14 @@ namespace IMS.Controllers
             ip = IPAddressPoolBLO.Current.GetById(iivm.Id);
             if (ip.StatusCode == Constants.StatusCode.IP_AVAILABLE)
             {
-                ip.StatusCode = Constants.StatusCode.IP_BLOCKED;
-                IPAddressPoolDAO.Current.Update(ip);
-                var log = new LogChangedContent();
-                log.TypeOfLog = Constants.TypeOfLog.LOG_BLOCK_IP;
-                log.Object = Constants.Object.OBJECT_IP;
-                log.ChangedValueOfObject = ip.IPAddress;
-                log.ObjectStatus = Constants.StatusCode.IP_BLOCKED;
-                log.LogTime = DateTime.Now;
-                log.Description = iivm.Description;
-                LogChangedContentDAO.Current.Add(log);
+                IPAddressPoolBLO.Current.BlockIP(ip,iivm.Description);
                 Success("Block IP successfully");
                 return RedirectToAction("Index");
             }
             else
             if (ip.StatusCode == Constants.StatusCode.IP_BLOCKED)
             {
-                ip.StatusCode = Constants.StatusCode.IP_AVAILABLE;
-                IPAddressPoolDAO.Current.Update(ip);
-                var blockip = LogChangedContentBLO.Current.GetBlockedIP(ip.IPAddress).FirstOrDefault();
-                
-                var log = new LogChangedContent();
-                log.TypeOfLog = Constants.TypeOfLog.LOG_UNBLOCK_IP;
-                log.Object = Constants.Object.OBJECT_IP;
-                log.ChangedValueOfObject = ip.IPAddress;
-                log.ObjectStatus = Constants.StatusCode.IP_AVAILABLE;
-                log.Description = iivm.Description;
-                log.LogTime = DateTime.Now;
-                log.PreviousId = blockip.Id;
-                LogChangedContentDAO.Current.Add(log);
+                IPAddressPoolBLO.Current.UnblockIP(ip,iivm.Description);
                 Success("Unblock IP successfully");
                 return RedirectToAction("Index");
             }
