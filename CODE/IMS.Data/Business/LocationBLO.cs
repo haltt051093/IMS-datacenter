@@ -225,23 +225,7 @@ namespace IMS.Data.Business
                         result.AddRange(allLocation.Where(x => x.RackCode == rackCode));
                     }
                 }
-                var r = 0;
-                for (var i = 0; i < result.Count; i++)
-                {
-                    if (result[i].RackCode.Equals(dao.GetRackOfServer(server).RackCode))
-                    {
-                        r++;
-                    }
-                }
-                if (r > 0)
-                {
-                    return result;
-                }
-                else
-                {
-                    result.Add(dao.GetRackOfServer(server));
-                    return result;
-                }
+                return result;
             }
 
 
