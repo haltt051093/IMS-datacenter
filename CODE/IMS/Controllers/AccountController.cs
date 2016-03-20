@@ -146,7 +146,7 @@ namespace IMS.Controllers
             account.Company = acvm.Company;
             account.Identification = acvm.Identification;
             account.Phone = acvm.Phone;
-            AccountDAO.Current.Update(account);
+            AccountBLO.Current.Update(account);
             Success("Update Profile Successfully!");
             return RedirectToAction("ViewProfile", new {username = acvm.Username});
         }
@@ -163,7 +163,7 @@ namespace IMS.Controllers
             accountviewmodel.UserLogin = GetCurrentUserName();
             var listgroup = new List<SelectListItem>();
 
-            var count = AccountDAO.Current.GetCountMemberOfGroup();
+            var count = AccountBLO.Current.GetCountMemberOfGroup();
             for (int i = 0; i < count.Count; i++)
             {
                 var list = new SelectListItem();
@@ -190,7 +190,7 @@ namespace IMS.Controllers
             account.Address = viewmodel.Address;
             account.Identification = viewmodel.Identification;
             account.Email = viewmodel.Email;
-            AccountDAO.Current.Update(account);
+            AccountBLO.Current.Update(account);
             Success("Update Profile Successfully!");
             return RedirectToAction("ViewProfile", new { username = viewmodel.Username });
         }
@@ -219,14 +219,14 @@ namespace IMS.Controllers
             
                 var account = AccountBLO.Current.GetAccountByCode(acvm.Username);
                 account.Status = false;
-                AccountDAO.Current.Update(account);
+                AccountBLO.Current.Update(account);
                 Success("Deactiave Account Successfully!");
             }
             if (acvm.Button == "Activate")
             {
                 var account = AccountBLO.Current.GetAccountByCode(acvm.Username);
                 account.Status = true;
-                AccountDAO.Current.Update(account);
+                AccountBLO.Current.Update(account);
                 Success("Activate Account Successfully!");
             }
 
