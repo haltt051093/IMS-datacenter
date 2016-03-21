@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Mime;
-using System.Security.Cryptography.X509Certificates;
 using System.Web.Mvc;
 using IMS.Core;
 using IMS.Data.Business;
 using IMS.Data.Models;
 using IMS.Data.Queries;
-using IMS.Data.Repository;
-using IMS.Data.ViewModels;
 using IMS.Models;
 
 namespace IMS.Controllers
