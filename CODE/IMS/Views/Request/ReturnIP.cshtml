@@ -63,14 +63,16 @@
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                 <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                   Send Request
+                    Send Request
                 </button>
             </div>
         </div>
     }
 </section>
+
 <script type="text/javascript">
     $(function () {
+        var selectedChkCount = 0;
         $('#servercode').change(function () {
             var pass = $('#servercode').val();
             var myTable = $('#MyTable > tbody');
@@ -84,20 +86,45 @@
                 success: function (data) {
                     $('#divPartialView').removeClass('hidden');
                     $(data.ServerIPs).each(function (index, item) {
-                        myTable.append('<tr><td>' + '<input type="checkbox" id="CheckBoxList"'
+                        myTable.append('<tr><td>' + '<input type="checkbox" class="chknull" id="CheckBoxList"'
                             + index + ' name="chk" value="' + item.CurrentIP + '" /></td><td>' + item.CurrentIP + '</td></tr>');
                     });
+                    selectedChkCount = 0;
                 }
             });
         });
 
+        $('#tbodyid').on('click', '.chknull', function () {
+            var selectedChk = $('.chknull:checked');
+            //alert(selectedChk.length);
+            selectedChkCount = selectedChk.length;
+        });
+
         //Get value of selected items
         $("#btnAccept").click(function () {
-            var selectedValues = [];
-            $("[id*=MyTable] input:checked").each(function () {
-                selectedValues.push($(this).val());
-            });
-            $('#ips').val(selectedValues);
+            if (selectedChkCount <= 0) {
+                notif({
+                    msg: "<b>Oops!</b> A wild error appeared!",
+                    type: "error",
+                    position: "center"
+                });
+                return false;
+            } else {
+
+                notif({
+                    msg: "<b>Oops!</b> A wild error appeared!",
+                    type: "info",
+                    position: "center"
+                });
+
+                setTimeout(function () {
+                    var selectedValues = [];
+                    $("[id*=MyTable] input:checked").each(function () {
+                        selectedValues.push($(this).val());
+                    });
+                    $('#ips').val(selectedValues);
+                }, 4000);
+            }
         });
 
         $("#checkAll").change(function () {

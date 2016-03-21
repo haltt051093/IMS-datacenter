@@ -103,9 +103,15 @@ namespace IMS.Controllers
                         Text = x
                     }).ToList();
                     //cho hien thi multiple list, ko bao gom randomList
+
                     for (int i = 0; i < listAvailableIps.Count; i++)
                     {
-                        for (int j = 0; j < randomList.Count; j++)
+                        int num = randomList.Count;
+                        if (listAvailableIps.Count < num)
+                        {
+                            num = listAvailableIps.Count;
+                        }
+                        for (int j = 0; j < num; j++)
                         {
                             var item = listAvailableIps[i];
                             if (item.IPAddress.Equals(randomList[j]))
@@ -114,6 +120,7 @@ namespace IMS.Controllers
                             }
                         }
                     }
+
                     viewmodel.IpSelectListItems = listAvailableIps.Select(x => new SelectListItem
                     {
                         Value = x.IPAddress,

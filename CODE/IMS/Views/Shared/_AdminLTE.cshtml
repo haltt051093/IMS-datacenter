@@ -27,15 +27,18 @@
     <script src="@Url.Content("~/signalr/hubs")"></script>
     @Scripts.Render(Constants.ScriptBundle.ADMINLTE)
     @Scripts.Render(Constants.ScriptBundle.APPLICATION)
+    <script src="~/Content/Notify/notifIt.js"></script>
     @RenderSection("Scripts", false)
     @Styles.Render(Constants.StyleBundle.BOOTSTRAP)
     @Styles.Render(Constants.StyleBundle.BOOTSTRAP_DATETIMEPICKER)
+    <link href="~/Content/Notify/notifIt.css" rel="stylesheet" />
     @Styles.Render(Constants.StyleBundle.JQUERY_UI)
     @Styles.Render(Constants.StyleBundle.JQUERY_VALIDATE)
     @Styles.Render(Constants.StyleBundle.ALERTIFY)
     @Styles.Render(Constants.StyleBundle.DATATABLE)
     @Styles.Render(Constants.StyleBundle.ADMINLTE)
     @Styles.Render(Constants.StyleBundle.APPLICATION)
+
     @RenderSection("Styles", false)
 
 </head>
