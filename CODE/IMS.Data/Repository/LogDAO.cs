@@ -61,7 +61,7 @@ namespace IMS.Data.Repository
         public List<LogContentExtendedModel> GetAllLogIP()
         {
             var query = @"select l.*,m.LogTime as Unblocktime, datediff(day,l.LogTime,m.LogTime)as blockedtime, datediff(day,l.LogTime,CURRENT_TIMESTAMP) as blockedtimetonow
-                            from LogChangedContent as l
+                            from Log as l
                             left join 
                             (select l.PreviousId,l.LogTime from LogChangedContent as l,(select l.Id from LogChangedContent as l) as k
                              where l.PreviousId = k.Id)as m
@@ -74,7 +74,7 @@ namespace IMS.Data.Repository
         {
             var query =
                 @"select ip.IPAddress,ip.NetworkIP,l.LogTime,l.ServerCode,ty.TypeName,s.StatusName from IPAddressPool as ip
-                        LEFT JOIN LogChangedContent as l on l.ChangedValueOfObject = ip.IPAddress and l.Object = 'IPAddress' and l.TypeOfLog != 'UNBLOCKIP' AND l.TypeOfLog!= 'BLOCKIP'
+                        LEFT JOIN Log as l on l.ChangedValueOfObject = ip.IPAddress and l.Object = 'IPAddress' and l.TypeOfLog != 'UNBLOCKIP' AND l.TypeOfLog!= 'BLOCKIP'
                         left join Status as s on l.ObjectStatus = s.StatusCode
                         left join TypeOfLog as ty on ty.TypeCode = l.TypeOfLog
                         where ip.StatusCode != 'STATUS32' and ip.StatusCode !='STATUS35'";

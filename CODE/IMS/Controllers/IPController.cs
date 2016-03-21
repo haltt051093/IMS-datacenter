@@ -109,7 +109,7 @@ namespace IMS.Controllers
             if (ip.StatusCode == Constants.StatusCode.IP_AVAILABLE)
             {
                 ip.StatusCode = Constants.StatusCode.IP_BLOCKED;
-                IPAddressPoolDAO.Current.Update(ip);
+                IPAddressPoolDAO.Current.AddOrUpdate(ip);
                 var log = new Log();
                 log.TypeOfLog = Constants.TypeOfLog.LOG_BLOCK_IP;
                 log.Object = Constants.Object.OBJECT_IP;
@@ -117,7 +117,7 @@ namespace IMS.Controllers
                 log.ObjectStatus = Constants.StatusCode.IP_BLOCKED;
                 log.LogTime = DateTime.Now;
                 log.Description = iivm.Description;
-                LogDAO.Current.Add(log);
+                LogBLO.Current.Add(log);
                 Success("Block IP successfully");
                 return RedirectToAction("Index");
             }
@@ -136,7 +136,7 @@ namespace IMS.Controllers
                 log.Description = iivm.Description;
                 log.LogTime = DateTime.Now;
                 log.PreviousId = blockip.Id;
-                LogDAO.Current.Add(log);
+                LogBLO.Current.Add(log);
                 Success("Unblock IP successfully");
                 return RedirectToAction("Index");
             }
