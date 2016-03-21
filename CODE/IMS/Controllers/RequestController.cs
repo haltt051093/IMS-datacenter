@@ -337,9 +337,8 @@ namespace IMS.Controllers
                 var notif = Mapper.Map<RequestChangeIPViewModel, NotificationExtendedModel>(viewmodel);
                 notif.RequestTypeName = Constants.RequestTypeName.IP_CHANGE;
                 notif.StatusName = Constants.StatusName.REQUEST_PENDING;
-                notif.RequestCode = result;
                 //dang ky ham cho client
-                NotifRegister(notif);
+                Notify(result.NotificationCodes);
             }
             return RedirectToAction("Index");
         }
