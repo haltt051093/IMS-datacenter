@@ -103,7 +103,7 @@ namespace IMS.Controllers
             }
 
 
-            bool result = LocationBLO.Current.UpdateLocation(sdvm.ServerCode, selectedLocationCodes, "Change");
+            bool result = LocationBLO.Current.UpdateLocation(sdvm.ServerCode, selectedLocationCodes);
             if (result)
             {
                 Success("Change Location Successfully!");

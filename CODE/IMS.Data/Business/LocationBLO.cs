@@ -45,10 +45,8 @@ namespace IMS.Data.Business
             return code;
         }
 
-        public bool UpdateLocation(string ServerCode, List<string> Locations, string request)
+        public bool UpdateLocation(string ServerCode, List<string> Locations)
         {
-            if (request.Equals("Change"))
-            {
 
                 var locations = dao.GetAll();
                 string rack1 = "";
@@ -80,22 +78,28 @@ namespace IMS.Data.Business
                     {
                         if (Locations[i] == locations[j].LocationCode)
                         {
-                            locations[j].StatusCode = Constants.StatusCode.LOCATION_USED;
-                            locations[j].ServerCode = ServerCode;
-                            dao.Update(locations[j]);
-                            var rack = locations[j].RackCode;
-                            var data = RackDAO.Current.GetByKeys(new Rack {RackCode = rack});
-                            if (data.StatusCode == Constants.StatusCode.RACK_AVAILABLE)
+                            if (locations[j].StatusCode == Constants.StatusCode.LOCATION_FREE)
                             {
-                                data.StatusCode = Constants.StatusCode.RACK_USED;
-                                RackDAO.Current.Update(data);
+                                locations[j].StatusCode = Constants.StatusCode.LOCATION_USED;
+                                locations[j].ServerCode = ServerCode;
+                                dao.Update(locations[j]);
+                                var rack = locations[j].RackCode;
+                                var data = RackDAO.Current.GetByKeys(new Rack {RackCode = rack});
+                                if (data.StatusCode == Constants.StatusCode.RACK_AVAILABLE)
+                                {
+                                    data.StatusCode = Constants.StatusCode.RACK_USED;
+                                    RackDAO.Current.Update(data);
+                                }
+                                return true;
                             }
+                            else
+                            {
+                                return false;
+                            }
+                            
                         }
                     }
                 }
-               
-                return true;
-            }
             return false;
         }
 

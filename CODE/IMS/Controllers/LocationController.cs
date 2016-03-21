@@ -188,7 +188,7 @@ namespace IMS.Controllers
             }
 
 
-            bool result = LocationBLO.Current.UpdateLocation(livm.ServerCode, selectedLocationCodes, "Change");
+            bool result = LocationBLO.Current.UpdateLocation(livm.ServerCode, selectedLocationCodes);
             if (result)
             {
                 if (livm.RequestType == "Change")
