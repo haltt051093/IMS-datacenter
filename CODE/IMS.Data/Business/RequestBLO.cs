@@ -600,6 +600,7 @@ namespace IMS.Data.Business
             {
                 //list cot rows
                 var rows = RackBLO.Current.GetAllRowsOfRack();
+                request.rows = rows;
                 var listRacks = rows.SelectMany(item => RackBLO.Current.GetRackByRow(item)).ToList();
                 request.listRackByRows = listRacks;
             }

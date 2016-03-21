@@ -237,6 +237,10 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
+                if (viewmodel.RequestInfo.Assignee == null)
+                {
+                    viewmodel.RequestInfo.Assignee = GetCurrentUserName();
+                }
                 RequestBLO.Current.RejectRequestAddServer(viewmodel.RequestInfo.RequestCode, viewmodel.Servers,
                         viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RejectReason);
             }
@@ -279,6 +283,10 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
+                if (viewmodel.RequestInfo.Assignee == null)
+                {
+                    viewmodel.RequestInfo.Assignee = GetCurrentUserName();
+                }
                 RequestBLO.Current.RejectRequestBringServerAway(viewmodel.RequestInfo.RequestCode, viewmodel.ServerOfCustomer,
                     viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RejectReason);
             }
@@ -318,6 +326,10 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
+                if (viewmodel.RequestInfo.Assignee == null)
+                {
+                    viewmodel.RequestInfo.Assignee = GetCurrentUserName();
+                }
                 RequestBLO.Current.RejectRequestAssignIP(viewmodel.RequestInfo.RequestCode,
                     viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.RejectReason);
             }
@@ -351,6 +363,10 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
+                if (viewmodel.RequestInfo.Assignee == null)
+                {
+                    viewmodel.RequestInfo.Assignee = GetCurrentUserName();
+                }
                 RequestBLO.Current.RejectRequestChangeIP(viewmodel.RequestInfo.RequestCode, viewmodel.ReturningIPs,
                     viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode,
                     viewmodel.SelectedServer, viewmodel.RequestInfo.RejectReason);
@@ -384,6 +400,10 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
+                if (viewmodel.RequestInfo.Assignee == null)
+                {
+                    viewmodel.RequestInfo.Assignee = GetCurrentUserName();
+                }
                 RequestBLO.Current.RejectRequestReturnIP(viewmodel.RequestInfo.RequestCode, viewmodel.ReturningIPs,
                     viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode, viewmodel.SelectedServer, viewmodel.RequestInfo.RejectReason);
             }
@@ -416,6 +436,10 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
+                if (viewmodel.RequestInfo.Assignee == null)
+                {
+                    viewmodel.RequestInfo.Assignee = GetCurrentUserName();
+                }
                 RequestBLO.Current.RejectRequestRentRack(viewmodel.RequestInfo.RequestCode,
                     viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RejectReason);
             }
@@ -448,6 +472,10 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
+                if (viewmodel.RequestInfo.Assignee == null)
+                {
+                    viewmodel.RequestInfo.Assignee = GetCurrentUserName();
+                }
                 RequestBLO.Current.RejectRequestReturnRack(viewmodel.RequestInfo.RequestCode, viewmodel.RequestInfo.Assignee,
                     viewmodel.RequestInfo.TaskCode, viewmodel.CustomerInfo.Customer, viewmodel.RequestInfo.RejectReason);
             }
