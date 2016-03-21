@@ -173,11 +173,15 @@
                         <br/>
                     }
                     <br/>
-                    <label>
-                        @*<a data-toggle="modal" class="open-blockIP-modal" href="#changelocation-modal"
-                            data-id="@Model.Server.ServerCode" data-id1="@Model.Server.Size">Change Location?</a>*@
-                        @Html.ActionLink("Change Location", "AssignLocation", "Location", new { ServerCode = Model.Server.ServerCode, rType = "Change", rCode = "", Size = Model.Server.Size }, null)
-                    </label>
+                    @if (Model.Server.Status == Constants.StatusName.SERVER_RUNNING)
+                    {
+                        <label>
+                            @*<a data-toggle="modal" class="open-blockIP-modal" href="#changelocation-modal"
+                                data-id="@Model.Server.ServerCode" data-id1="@Model.Server.Size">Change Location?</a>*@
+                            @Html.ActionLink("Change Location", "AssignLocation", "Location", new { ServerCode = Model.Server.ServerCode, rType = "Change", rCode = "", Size = Model.Server.Size }, null)
+                        </label>
+                    }
+                  
                 </div>
             }
         </div>

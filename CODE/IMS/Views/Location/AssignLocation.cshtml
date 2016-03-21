@@ -57,7 +57,15 @@
         @Html.HiddenFor(model=>model.RequestCode)
         @Html.HiddenFor(model=>model.RequestType)
         @Html.HiddenFor(model=>model.Size)
-        @Html.ActionLink("Cancel", "Detais", "ProcessRequest", new {rType = Model.RequestType, rCode = Model.RequestCode}, htmlAttributes: new {@class = "btn btn-default pull-right"})
+        @if (Model.RequestType == "Change")
+        {
+            @Html.ActionLink("Cancel", "Detail", "Server", new { code = Model.ServerCode }, htmlAttributes: new { @class = "btn btn-default pull-right" })
+        }
+        else
+        {
+            @Html.ActionLink("Cancel", "Detais", "ProcessRequest", new { rType = Model.RequestType, rCode = Model.RequestCode }, htmlAttributes: new { @class = "btn btn-default pull-right" })
+        }
+        
         <button type="submit" class="btn btn-primary pull-right">Assign</button>
     </section>
 
