@@ -17,10 +17,5 @@ namespace IMS.Services
                 return instance;
             }
         }
-
-        public override Task OnConnected()
-        {
-            return base.OnConnected();
-        }
     }
 }

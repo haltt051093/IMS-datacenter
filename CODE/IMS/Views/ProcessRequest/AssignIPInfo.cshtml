@@ -14,36 +14,36 @@
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="col-xs-6">
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
                         @Html.LabelFor(model => model.RequestInfo.RequestCode)
                     </div>
-                    <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                         @Html.DisplayFor(model => model.RequestInfo.RequestCode, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                     </div>
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
                         @Html.LabelFor(model => model.RequestInfo.StatusName)
                     </div>
-                    <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                         @Html.DisplayFor(model => model.RequestInfo.StatusName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                     </div>
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
                         @Html.LabelFor(model => model.RequestInfo.RequestedTime)
                     </div>
-                    <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                         @Html.DisplayFor(model => model.RequestInfo.RequestedTime, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                     </div>
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
                         @Html.LabelFor(model => model.RequestInfo.Assignee)
                     </div>
                     @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING && (User.IsInRole("Shift Head") || User.IsInRole("Manager")))
                 {
-                        <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                        <div class="@Constants.HtmlFormat.FORM_CONTROL_X2_CLASS">
                             @Html.DropDownListFor(model => model.RequestInfo.Assignee, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                             @Html.ValidationMessageFor(model => model.RequestInfo.Assignee)
                         </div>
@@ -52,7 +52,7 @@
                     {
                         if (Model.RequestInfo.AssigneeName != null)
                         {
-                            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                            <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                                 @Html.DisplayFor(model => model.RequestInfo.AssigneeName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                                 @Html.HiddenFor(model => model.RequestInfo.Assignee)
                             </div>
@@ -69,34 +69,33 @@
                             </div>
                         }
                     }
-
                 </div>
             </div>
             <div class="col-xs-6">
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
                         @Html.LabelFor(model => model.CustomerInfo.Customer)
                     </div>
-                    <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                         @Html.ActionLink(Model.CustomerInfo.CustomerName, "ViewProfile", "Account", new { username = Model.CustomerInfo.Customer }, null)
                     </div>
                 </div>
                 @if (Model.CustomerInfo.Company != null)
                 {
                     <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                        <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                        <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
                             @Html.LabelFor(model => model.CustomerInfo.Company)
                         </div>
-                        <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                        <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                             @Html.DisplayFor(model => model.CustomerInfo.Company, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                         </div>
                     </div>
                 }
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
                         @Html.LabelFor(model => model.CustomerInfo.Phone)
                     </div>
-                    <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                         @Html.DisplayFor(model => model.CustomerInfo.Phone, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                     </div>
                 </div>
@@ -107,7 +106,7 @@
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
                 @Html.LabelFor(model => model.NumberOfIP)
             </div>
-            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_DETAIL_CLASS">
                 @Html.DisplayFor(model => model.NumberOfIP, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
                 @Html.HiddenFor(model => model.NumberOfIP)
             </div>
@@ -116,7 +115,7 @@
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
                 @Html.LabelFor(model => model.SelectedServer)
             </div>
-            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_DETAIL_CLASS">
                 @Html.ActionLink(Model.SelectedServer, "Detail", "Server",
                     new {code = Model.SelectedServer}, null)
                 @Html.HiddenFor(model => model.SelectedServer)
@@ -126,7 +125,7 @@
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
                 @Html.LabelFor(model => model.RequestInfo.Description)
             </div>
-            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_DETAIL_CLASS">
                 @Html.DisplayFor(model => model.RequestInfo.Description, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
             </div>
         </div>
@@ -160,7 +159,7 @@
                 <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
                     @Html.LabelFor(model => model.IPs)
                 </div>
-                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_DETAIL_CLASS">
                     @foreach (var item in Model.IPs)
                     {
                         @Html.DisplayFor(model => item, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})

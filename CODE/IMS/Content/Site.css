@@ -3,11 +3,15 @@
 }
 
 .tf-form-label {
-    padding-top: 7px;
+    padding-top: 4px;
     text-align: right;
 }
 
 .tf-form-input {
+}
+
+.tf-form-info {
+    padding-top: 4px;
 }
 
 .tf-modal {
@@ -88,4 +92,8 @@ h6 {
     margin-left: 0;
     margin-right: 0;
     font-weight: bold;
+}
+
+.form-group {
+    margin-bottom: 10px;
 }

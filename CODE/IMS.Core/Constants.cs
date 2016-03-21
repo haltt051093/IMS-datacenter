@@ -300,9 +300,13 @@ namespace IMS.Core
             public const string FORM_MESSAGE_CLASS = "col-xs-12";
             public const string FORM_LABEL_CLASS = "col-xs-2 tf-form-label";
             public const string FORM_CONTROL_CLASS = "col-xs-10 tf-form-control";
+            public const string FORM_DETAIL_CLASS = "col-xs-10 tf-form-info";
+            public const string FORM_LABEL_X2_CLASS = "col-xs-4 tf-form-label";
+            public const string FORM_CONTROL_X2_CLASS = "col-xs-8 tf-form-control";
+            public const string FORM_DETAIL_X2_CLASS = "col-xs-8 tf-form-info";
             public const string FORM_INNER_CLASS = "form-control";
-            public const string FORM_LABEL = "tf-form-label";
-            public const string FORM_FOR_PAGE = "form-group col-xs-offset-3";
+            //public const string FORM_LABEL = "tf-form-label";
+            //public const string FORM_FOR_PAGE = "form-group col-xs-offset-3";
             public const string FORM_TEXTBOX_CLASS = "col-xs-6 tf-form-control";
 
             public const string MODAL_CLASS = "modal fade tf-modal";
