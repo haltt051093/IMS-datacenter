@@ -62,18 +62,6 @@ namespace IMS.Controllers
             //DOING
             //them list location
             var locations = LocationBLO.Current.GetLocationOfServer(data.Server.ServerCode);
-            //if (locations != null)
-            //{
-            //    data.Locations = locations;
-            //}
-            //var locations = LocationBLO.Current.GetChangeLocation(data.Server);
-            //var listrack = locations.OrderBy(x => x.RackName).GroupBy(x => x.RackName).Select(x => x.FirstOrDefault());
-            //data.Racks = listrack.Select(x => new SelectListItem
-            //{
-            //    Value = x.RackCode,
-            //    Text = x.RackName
-            //}).ToList();
-            //data.Locations1 = locations;
             data.ServerCode = code;
             //get customer
             data.CustomerInfo = AccountBLO.Current.GetAccountByCode(data.Server.Customer);
