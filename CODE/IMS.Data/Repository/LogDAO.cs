@@ -63,7 +63,7 @@ namespace IMS.Data.Repository
             var query = @"select l.*,m.LogTime as Unblocktime, datediff(day,l.LogTime,m.LogTime)as blockedtime, datediff(day,l.LogTime,CURRENT_TIMESTAMP) as blockedtimetonow
                             from Log as l
                             left join 
-                            (select l.PreviousId,l.LogTime from LogChangedContent as l,(select l.Id from LogChangedContent as l) as k
+                            (select l.PreviousId,l.LogTime from Log as l,(select l.Id from Log as l) as k
                              where l.PreviousId = k.Id)as m
                              on m.PreviousId=l.Id
                              where l.TypeOfLog = 'BLOCKIP' ";
@@ -195,9 +195,9 @@ namespace IMS.Data.Repository
 
         public List<Log> GetBlockedIP(string IP)
         {
-            var query = @"select * from LogChangedContent as l, 
+            var query = @"select * from Log as l, 
                             (
-                            select MAX(l.LogTime)as maxtime from LogChangedContent as l where l.ChangedValueOfObject ='" + IP + @"'and l.TypeOfLog='BLOCKIP'
+                            select MAX(l.LogTime)as maxtime from Log as l where l.ChangedValueOfObject ='" + IP + @"'and l.TypeOfLog='BLOCKIP'
                             group by l.ChangedValueOfObject
                             )as k 
                             where l.ChangedValueOfObject ='" + IP + @"'and l.TypeOfLog='BLOCKIP' and l.LogTime=k.maxtime";

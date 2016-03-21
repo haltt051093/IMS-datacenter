@@ -8,7 +8,7 @@ namespace IMS.Data.ViewModels
     [NotMapped]
     public class LogContentExtendedModel: Log
     {
-        public Log _LogChangedContent
+        public Log _Log
         {
             set
             {
