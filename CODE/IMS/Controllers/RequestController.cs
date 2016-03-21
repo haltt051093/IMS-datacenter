@@ -210,28 +210,28 @@ namespace IMS.Controllers
             if (rType.Equals(Constants.RequestTypeCode.ADD_SERVER))
             {
                 //Get request
-                var request = RequestBLO.Current.DetailProcessRequestAddServer(rCode, null);
+                var request = RequestBLO.Current.DetailProcessRequestAddServer(rCode, null, null);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestAddServerViewModel>(request);
                 return View("AddServerDetail", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.BRING_SERVER_AWAY))
             {
                 //Get request
-                var request = RequestBLO.Current.DetailProcessRequestBringServerAway(rCode, null);
+                var request = RequestBLO.Current.DetailProcessRequestBringServerAway(rCode, null, null);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestBringServerAwayViewModel>(request);
                 return View("BringServerAwayDetail", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.ASSIGN_IP))
             {
                 //Get request
-                var request = RequestBLO.Current.DetailProcessRequestAssignIP(rCode, null);
+                var request = RequestBLO.Current.DetailProcessRequestAssignIP(rCode, null, null);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestAssignIPViewModel>(request);
                 return View("AssignIPDetail", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.CHANGE_IP))
             {
                 //Get request
-                var request = RequestBLO.Current.DetailProcessRequestChangeIP(rCode, null);
+                var request = RequestBLO.Current.DetailProcessRequestChangeIP(rCode, null, null);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestChangeIPViewModel>(request);
                 return View("ChangeIPDetail", viewmodel);
             }
@@ -239,7 +239,7 @@ namespace IMS.Controllers
             if (rType.Equals(Constants.RequestTypeCode.RETURN_IP))
             {
                 //Get request
-                var request = RequestBLO.Current.DetailProcessRequestReturnIP(rCode, null);
+                var request = RequestBLO.Current.DetailProcessRequestReturnIP(rCode, null, null);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestReturnIPViewModel>(request);
                 return View("ReturnIPDetail", viewmodel);
             }
@@ -247,14 +247,14 @@ namespace IMS.Controllers
             if (rType.Equals(Constants.RequestTypeCode.RENT_RACK))
             {
                 //Get request
-                var request = RequestBLO.Current.DetailProcessRequestRentRack(rCode, null);
+                var request = RequestBLO.Current.DetailProcessRequestRentRack(rCode, null, null);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestRentRackViewModel>(request);
                 return View("RentRackDetail", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.RETURN_RACK))
             {
                 //Get request
-                var request = RequestBLO.Current.DetailProcessRequestReturnRack(rCode, null);
+                var request = RequestBLO.Current.DetailProcessRequestReturnRack(rCode, null, null);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestReturnRackViewModel>(request);
                 return View("ReturnRackDetail", viewmodel);
             }

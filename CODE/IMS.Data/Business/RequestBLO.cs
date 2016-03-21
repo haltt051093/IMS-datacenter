@@ -497,9 +497,13 @@ namespace IMS.Data.Business
             return request;
         }
 
-        public ProcessRequestExtendedModel DetailProcessRequestAddServer(string requestCode, string group)
+        public ProcessRequestExtendedModel DetailProcessRequestAddServer(string requestCode, string group, string role)
         {
             var request = GetCommonProcessRequest(requestCode, group);
+            if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.MANAGER)
+            {
+                request.RequestInfo.IsShifthead = true;
+            }
             //lay list servers
             var serverCodes = LogBLO.Current.GetAddingServers(requestCode);
             List<ServerExtendedModel> list = new List<ServerExtendedModel>();
@@ -512,9 +516,13 @@ namespace IMS.Data.Business
             return request;
         }
 
-        public ProcessRequestExtendedModel DetailProcessRequestBringServerAway(string requestCode, string group)
+        public ProcessRequestExtendedModel DetailProcessRequestBringServerAway(string requestCode, string group, string role)
         {
             var request = GetCommonProcessRequest(requestCode, group);
+            if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.MANAGER)
+            {
+                request.RequestInfo.IsShifthead = true;
+            }
             //main info
             var returnValues = LogBLO.Current.RequestDetailsBringServerAway(requestCode);
             request.ReturnIpNumber = returnValues.ReturnIpNumber;
@@ -524,9 +532,13 @@ namespace IMS.Data.Business
             return request;
         }
 
-        public ProcessRequestExtendedModel DetailProcessRequestAssignIP(string requestCode, string group)
+        public ProcessRequestExtendedModel DetailProcessRequestAssignIP(string requestCode, string group, string role)
         {
             var request = GetCommonProcessRequest(requestCode, group);
+            if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.MANAGER)
+            {
+                request.RequestInfo.IsShifthead = true;
+            }
             //Lay so luong IP muon assign
             var reqDetail = JsonConvert.DeserializeObject<RequestDetailViewModel>(request.RequestInfo.Description);
             request.NumberOfIP = reqDetail.NumberOfIp;
@@ -552,9 +564,13 @@ namespace IMS.Data.Business
             return request;
         }
 
-        public ProcessRequestExtendedModel DetailProcessRequestChangeIP(string requestCode, string group)
+        public ProcessRequestExtendedModel DetailProcessRequestChangeIP(string requestCode, string group, string role)
         {
             var request = GetCommonProcessRequest(requestCode, group);
+            if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.MANAGER)
+            {
+                request.RequestInfo.IsShifthead = true;
+            }
             //lay ip muon change
             request.ReturningIPs = LogBLO.Current.GetChangedValueOfObject(requestCode,
                 Constants.Object.OBJECT_SERVERIP, Constants.StatusCode.SERVERIP_CHANGING);
@@ -575,18 +591,27 @@ namespace IMS.Data.Business
             return request;
         }
 
-        public ProcessRequestExtendedModel DetailProcessRequestReturnIP(string requestCode, string group)
+        public ProcessRequestExtendedModel DetailProcessRequestReturnIP(string requestCode, string group, string role)
         {
             var request = GetCommonProcessRequest(requestCode, group);
+            if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.MANAGER)
+            {
+                request.RequestInfo.IsShifthead = true;
+            }
             request.SelectedServer = LogBLO.Current.GetServerCodeByRequestCode(requestCode).FirstOrDefault();
             //List returning IPs
             request.ReturningIPs = LogBLO.Current.GetChangedValueOfObject(requestCode, Constants.Object.OBJECT_SERVERIP,
                 Constants.StatusCode.SERVERIP_RETURNING);
             return request;
         }
-        public ProcessRequestExtendedModel DetailProcessRequestRentRack(string requestCode, string group)
+
+        public ProcessRequestExtendedModel DetailProcessRequestRentRack(string requestCode, string group, string role)
         {
             var request = GetCommonProcessRequest(requestCode, group);
+            if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.MANAGER)
+            {
+                request.RequestInfo.IsShifthead = true;
+            }
             var desc = JsonConvert.DeserializeObject<RequestDetailViewModel>(request.RequestInfo.Description);
             request.RackNumbers = desc.NumberOfRack;
             request.RequestInfo.Description = desc.Description;
@@ -607,9 +632,13 @@ namespace IMS.Data.Business
             return request;
         }
 
-        public ProcessRequestExtendedModel DetailProcessRequestReturnRack(string requestCode, string group)
+        public ProcessRequestExtendedModel DetailProcessRequestReturnRack(string requestCode, string group, string role)
         {
             var request = GetCommonProcessRequest(requestCode, group);
+            if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.MANAGER)
+            {
+                request.RequestInfo.IsShifthead = true;
+            }
             //Lay so luong rack muon return
             var listRacks = LogBLO.Current.RequestDetailsReturnRack(requestCode);
             request.SelectedRacks = listRacks.listRacks;
@@ -786,7 +815,7 @@ namespace IMS.Data.Business
             }
             //Add and log request
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ADD_SERVER,
-                Constants.StatusCode.REQUEST_REJECTED, null, assignee, reason);
+                Constants.StatusCode.REQUEST_REJECTED, assignee, null, reason);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
         }
@@ -810,7 +839,7 @@ namespace IMS.Data.Business
                     assignee);
                 //add and log request
                 UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
-                    Constants.StatusCode.REQUEST_REJECTED, null, assignee, reason);
+                    Constants.StatusCode.REQUEST_REJECTED, assignee, null, reason);
 
                 //giai phong location, co can log ko?
                 LocationBLO.Current.SetLocationAvailable(server.ServerCode);
@@ -823,7 +852,7 @@ namespace IMS.Data.Business
         {
             //Add Log and update request status
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ASSIGN_IP,
-                Constants.StatusCode.REQUEST_REJECTED, null, assignee, reason);
+                Constants.StatusCode.REQUEST_REJECTED, assignee, null, reason);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
         }
@@ -838,7 +867,7 @@ namespace IMS.Data.Business
             }
             //update and log request
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
-                 Constants.StatusCode.REQUEST_REJECTED, null, assignee, reason);
+                 Constants.StatusCode.REQUEST_REJECTED, assignee, null, reason);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
         }
@@ -865,7 +894,7 @@ namespace IMS.Data.Business
         {
             //Change request status
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RENT_RACK,
-                Constants.StatusCode.REQUEST_REJECTED, null, assignee, reason);
+                Constants.StatusCode.REQUEST_REJECTED, assignee, null, reason);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
         }
@@ -885,7 +914,7 @@ namespace IMS.Data.Business
             }
             //add and log request
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
-                Constants.StatusCode.REQUEST_REJECTED, null, assignee, reason);
+                Constants.StatusCode.REQUEST_REJECTED, assignee, null, reason);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
         }

@@ -43,8 +43,9 @@ namespace IMS.Controllers
             if (rType.Equals(Constants.RequestTypeCode.ADD_SERVER))
             {
                 var group = GetCurrentUserGroup();
+                var role = GetCurrentUserRole();
                 //Get request
-                var request = RequestBLO.Current.DetailProcessRequestAddServer(rCode, group);
+                var request = RequestBLO.Current.DetailProcessRequestAddServer(rCode, group, role);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestAddServerViewModel>(request);
                 viewmodel.CurrentUser = GetCurrentUserName();
                 viewmodel.StaffCodeOptions = request.listStaff
@@ -60,8 +61,9 @@ namespace IMS.Controllers
             if (rType.Equals(Constants.RequestTypeCode.BRING_SERVER_AWAY))
             {
                 var group = GetCurrentUserGroup();
+                var role = GetCurrentUserRole();
                 //Get request
-                var request = RequestBLO.Current.DetailProcessRequestBringServerAway(rCode, group);
+                var request = RequestBLO.Current.DetailProcessRequestBringServerAway(rCode, group, role);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestBringServerAwayViewModel>(request);
                 viewmodel.CurrentUser = GetCurrentUserName();
                 viewmodel.StaffCodeOptions = request.listStaff
@@ -77,8 +79,9 @@ namespace IMS.Controllers
             if (rType.Equals(Constants.RequestTypeCode.ASSIGN_IP))
             {
                 var group = GetCurrentUserGroup();
+                var role = GetCurrentUserRole();
                 //Get request
-                var request = RequestBLO.Current.DetailProcessRequestAssignIP(rCode, group);
+                var request = RequestBLO.Current.DetailProcessRequestAssignIP(rCode, group, role);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestAssignIPViewModel>(request);
                 viewmodel.CurrentUser = GetCurrentUserName();
                 viewmodel.StaffCodeOptions = request.listStaff
@@ -122,8 +125,9 @@ namespace IMS.Controllers
             if (rType.Equals(Constants.RequestTypeCode.CHANGE_IP))
             {
                 var group = GetCurrentUserGroup();
+                var role = GetCurrentUserRole();
                 //Get request
-                var request = RequestBLO.Current.DetailProcessRequestChangeIP(rCode, group);
+                var request = RequestBLO.Current.DetailProcessRequestChangeIP(rCode, group, role);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestChangeIPViewModel>(request);
                 viewmodel.CurrentUser = GetCurrentUserName();
                 viewmodel.StaffCodeOptions = request.listStaff
@@ -148,8 +152,9 @@ namespace IMS.Controllers
             if (rType.Equals(Constants.RequestTypeCode.RETURN_IP))
             {
                 var group = GetCurrentUserGroup();
+                var role = GetCurrentUserRole();
                 //Get request
-                var request = RequestBLO.Current.DetailProcessRequestReturnIP(rCode, group);
+                var request = RequestBLO.Current.DetailProcessRequestReturnIP(rCode, group, role);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestReturnIPViewModel>(request);
                 viewmodel.CurrentUser = GetCurrentUserName();
                 viewmodel.StaffCodeOptions = request.listStaff
@@ -166,8 +171,9 @@ namespace IMS.Controllers
             if (rType.Equals(Constants.RequestTypeCode.RENT_RACK))
             {
                 var group = GetCurrentUserGroup();
+                var role = GetCurrentUserRole();
                 //Get request
-                var request = RequestBLO.Current.DetailProcessRequestRentRack(rCode, group);
+                var request = RequestBLO.Current.DetailProcessRequestRentRack(rCode, group, role);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestRentRackViewModel>(request);
                 viewmodel.CurrentUser = GetCurrentUserName();
                 viewmodel.StaffCodeOptions = request.listStaff
@@ -189,8 +195,9 @@ namespace IMS.Controllers
             if (rType.Equals(Constants.RequestTypeCode.RETURN_RACK))
             {
                 var group = GetCurrentUserGroup();
+                var role = GetCurrentUserRole();
                 //Get request
-                var request = RequestBLO.Current.DetailProcessRequestReturnRack(rCode, group);
+                var request = RequestBLO.Current.DetailProcessRequestReturnRack(rCode, group, role);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestReturnRackViewModel>(request);
                 viewmodel.CurrentUser = GetCurrentUserName();
                 viewmodel.StaffCodeOptions = request.listStaff
@@ -237,10 +244,6 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
-                if (viewmodel.RequestInfo.Assignee == null)
-                {
-                    viewmodel.RequestInfo.Assignee = GetCurrentUserName();
-                }
                 RequestBLO.Current.RejectRequestAddServer(viewmodel.RequestInfo.RequestCode, viewmodel.Servers,
                         viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RejectReason);
             }
@@ -283,10 +286,6 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
-                if (viewmodel.RequestInfo.Assignee == null)
-                {
-                    viewmodel.RequestInfo.Assignee = GetCurrentUserName();
-                }
                 RequestBLO.Current.RejectRequestBringServerAway(viewmodel.RequestInfo.RequestCode, viewmodel.ServerOfCustomer,
                     viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RejectReason);
             }
@@ -326,10 +325,6 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
-                if (viewmodel.RequestInfo.Assignee == null)
-                {
-                    viewmodel.RequestInfo.Assignee = GetCurrentUserName();
-                }
                 RequestBLO.Current.RejectRequestAssignIP(viewmodel.RequestInfo.RequestCode,
                     viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.RejectReason);
             }
@@ -363,10 +358,6 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
-                if (viewmodel.RequestInfo.Assignee == null)
-                {
-                    viewmodel.RequestInfo.Assignee = GetCurrentUserName();
-                }
                 RequestBLO.Current.RejectRequestChangeIP(viewmodel.RequestInfo.RequestCode, viewmodel.ReturningIPs,
                     viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode,
                     viewmodel.SelectedServer, viewmodel.RequestInfo.RejectReason);
@@ -400,10 +391,6 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
-                if (viewmodel.RequestInfo.Assignee == null)
-                {
-                    viewmodel.RequestInfo.Assignee = GetCurrentUserName();
-                }
                 RequestBLO.Current.RejectRequestReturnIP(viewmodel.RequestInfo.RequestCode, viewmodel.ReturningIPs,
                     viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode, viewmodel.SelectedServer, viewmodel.RequestInfo.RejectReason);
             }
@@ -436,10 +423,6 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
-                if (viewmodel.RequestInfo.Assignee == null)
-                {
-                    viewmodel.RequestInfo.Assignee = GetCurrentUserName();
-                }
                 RequestBLO.Current.RejectRequestRentRack(viewmodel.RequestInfo.RequestCode,
                     viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RejectReason);
             }
@@ -472,10 +455,6 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
-                if (viewmodel.RequestInfo.Assignee == null)
-                {
-                    viewmodel.RequestInfo.Assignee = GetCurrentUserName();
-                }
                 RequestBLO.Current.RejectRequestReturnRack(viewmodel.RequestInfo.RequestCode, viewmodel.RequestInfo.Assignee,
                     viewmodel.RequestInfo.TaskCode, viewmodel.CustomerInfo.Customer, viewmodel.RequestInfo.RejectReason);
             }
