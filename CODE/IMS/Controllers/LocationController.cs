@@ -203,7 +203,7 @@ namespace IMS.Controllers
             }
             else
             {
-                Alert("Assign Location Fail!");
+                Alert("Assign Location Fail! Try again!");
                 return RedirectToAction("Detais", "ProcessRequest", new { rType = livm.RequestType, rCode = livm.RequestCode });
             }
         }

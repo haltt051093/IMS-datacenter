@@ -261,8 +261,9 @@ namespace IMS.Data.Business
             return requestCode;
         }
 
-        public string AddRequestChangeIP(string customer, string description, string serverCode, List<string> returningIPs)
+        public NotificationResultModel AddRequestChangeIP(string customer, string description, string serverCode, List<string> returningIPs)
         {
+            var result = new NotificationResultModel();
             var requestCode = AddRequestANDLog(Constants.RequestTypeCode.CHANGE_IP,
                     Constants.StatusCode.REQUEST_PENDING, customer, description,
                     null, serverCode, Constants.TypeOfLog.LOG_CHANGE_IP, null);
@@ -278,8 +279,18 @@ namespace IMS.Data.Business
                     customer);
             }
             //luu notification
-            var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.CHANGE_IP, customer, description);
-            return requestCode;
+            var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
+            var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
+                .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
+                .ToList();
+            var desc = "Request Change IP from " + customer;
+            foreach (var shiftHead in activeStaff)
+            {
+                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.CHANGE_IP, shiftHead.Username, desc);
+                result.NotificationCodes.Add(notifCode);
+            }
+            
+            return result;
         }
 
         public string AddRequestReturnIP(string customer, string description, string serverCode, List<string> returningIPs)
