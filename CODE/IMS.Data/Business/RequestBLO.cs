@@ -257,7 +257,7 @@ namespace IMS.Data.Business
                     Constants.StatusCode.REQUEST_PENDING, customer, description,
                     null, serverCode, Constants.TypeOfLog.LOG_ASSIGN_IP, null);
             //luu notification
-            NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.ASSIGN_IP, customer, description);
+            var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.ASSIGN_IP, customer, description);
             return requestCode;
         }
 
@@ -278,7 +278,7 @@ namespace IMS.Data.Business
                     customer);
             }
             //luu notification
-            NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.CHANGE_IP, customer, description);
+            var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.CHANGE_IP, customer, description);
             return requestCode;
         }
 
@@ -299,7 +299,7 @@ namespace IMS.Data.Business
                     customer);
             }
             //luu notification
-            NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.RETURN_IP, customer, description);
+            var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.RETURN_IP, customer, description);
             return requestCode;
         }
 
@@ -310,7 +310,7 @@ namespace IMS.Data.Business
                 Constants.StatusCode.REQUEST_PENDING, customer, description,
                 null, null, Constants.TypeOfLog.LOG_RENT_RACK, null);
             //luu notification
-            NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.RENT_RACK, customer, description);
+            var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.RENT_RACK, customer, description);
             return requestCode;
         }
 
@@ -331,7 +331,7 @@ namespace IMS.Data.Business
                 }
             }
             //luu notification
-            NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.RENT_RACK, customer, description);
+            var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.RENT_RACK, customer, description);
             return requestCode;
         }
         #endregion

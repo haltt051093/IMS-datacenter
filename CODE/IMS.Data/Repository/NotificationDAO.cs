@@ -35,43 +35,6 @@ namespace IMS.Data.Repository
             return existing;
         }
 
-        public string GenerateCode()
-        {
-            var code = "N" + TextExpress.Randomize(9, TextExpress.NUMBER + TextExpress.NUMBER);
-            var existing = Query(x => x.NotificationCode == code).FirstOrDefault();
-            while (existing != null)
-            {
-                code = "N" + TextExpress.Randomize(9, TextExpress.NUMBER + TextExpress.NUMBER);
-                existing = Query(x => x.NotificationCode == code).FirstOrDefault();
-            }
-            return code;
-        }
-
-        public void AddNotification(string refCode, string refType, string username, string description)
-        {
-            var notifCode = GenerateCode();
-            var notif = new Notification()
-            {
-                NotificationCode = notifCode,
-                RefCode = refCode,
-                RefType = refType,
-                Username = username,
-                Description = description,
-                IsViewed = false
-            };
-            
-            var existing = GetByKeys(notif);
-            if (existing == null)
-            {
-                IMSContext.Current.Set<Notification>().Add(notif);
-            }
-            else
-            {
-                CopyValues(notif, existing);
-            }
-            IMSContext.Current.SaveChanges();
-        }
-
         //DOING
         public List<NotificationExtendedModel> ListServerSideNotification()
         {

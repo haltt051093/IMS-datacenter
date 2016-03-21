@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using IMS.Core;
+using IMS.Core.Express;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.Repository;
@@ -43,9 +45,21 @@ namespace IMS.Data.Business
             return result.Count;
         }
 
-        public void AddNotification(string refCode, string refType, string username, string description)
+        public string AddNotification(string refCode, string refType, string username, string description)
         {
-            dao.AddNotification(refCode, refType, username, description);
+            var notifCode = GenerateCode();
+            var notif = new Notification()
+            {
+                NotificationCode = notifCode,
+                RefCode = refCode,
+                RefType = refType,
+                Username = username,
+                Description = description,
+                IsViewed = false
+            };
+
+            dao.Add(notif);
+            return notifCode;
         }
 
         public List<NotificationExtendedModel> ListServerSideNotification()
@@ -70,6 +84,20 @@ namespace IMS.Data.Business
                 list = ListServerSideNotification();
             }
             return list;
+        }
+
+
+
+        private string GenerateCode()
+        {
+            var code = "N" + TextExpress.Randomize(9, TextExpress.NUMBER + TextExpress.NUMBER);
+            var existing = dao.Query(x => x.NotificationCode == code).FirstOrDefault();
+            while (existing != null)
+            {
+                code = "N" + TextExpress.Randomize(9, TextExpress.NUMBER + TextExpress.NUMBER);
+                existing = dao.Query(x => x.NotificationCode == code).FirstOrDefault();
+            }
+            return code;
         }
     }
 }
