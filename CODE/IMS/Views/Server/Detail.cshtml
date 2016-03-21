@@ -160,12 +160,12 @@
         </div>
         <div class="col-xs-6">
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                @Html.LabelFor(model => model.Locations)
+                @Html.LabelFor(model => model.Server.ServerLocation)
             </div>
-            @if (Model.Locations.Count > 0)
+            @if (Model.Server.ServerLocation.Count > 0)
             {
                 <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                    @foreach (var item in Model.Locations)
+                    @foreach (var item in Model.Server.ServerLocation)
                     {
                         @Html.DisplayFor(model => item.RackName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                         <span>U</span>
