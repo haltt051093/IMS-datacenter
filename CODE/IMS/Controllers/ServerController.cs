@@ -59,10 +59,6 @@ namespace IMS.Controllers
             {
                 data.CurrentIPs = ips;
             }
-            //DOING
-            //them list location
-            var locations = LocationBLO.Current.GetLocationOfServer(data.Server.ServerCode);
-            data.ServerCode = code;
             //get customer
             data.CustomerInfo = AccountBLO.Current.GetAccountByCode(data.Server.Customer);
             return View(data);
