@@ -113,8 +113,8 @@
 
                 var icon = $('<i></i>').attr('class', 'ion ion-ios7-people info');
                 var description = noty.Description;
-                var link = $('<a></a>').attr('href', '@Url.Action("Detail", "Notification")'+ '/' + noty.NotificationCode).append(icon);
-                link.append(description);
+                var link = $('<a></a>').attr('href', '@Url.Action("Detail", "Notification")' + '/' + noty.NotificationCode).prepend(icon);
+                link.prepend(description);
                 var block = $('<li></li>').html(link);
                 $('#noty_menu').prepend(block);
             }
@@ -126,8 +126,8 @@
 
                 var icon = $('<i></i>').attr('class', 'ion ion-ios7-people info');
                 var description = noty;
-                var link = $('<a></a>').attr('href', '#').append(icon);
-                link.append(description);
+                var link = $('<a></a>').attr('href', '#').prepend(icon);
+                link.prepend(description);
                 var block = $('<li></li>').html(link);
                 $('#noty_menu').prepend(block);
             }

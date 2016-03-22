@@ -450,7 +450,7 @@ namespace IMS.Controllers
             //Update lai serverip, server, request
             RequestBLO.Current.CancelRequestBringServerAway(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
             return RedirectToAction("Detail",
-               new { rType = Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, code = viewmodel.RequestInfo.RequestCode });
+               new {code = viewmodel.RequestInfo.RequestCode });
         }
         [Roles(Constants.Role.CUSTOMER)]
         [HttpPost]
@@ -459,16 +459,16 @@ namespace IMS.Controllers
             var customer = GetCurrentUserName();
             RequestBLO.Current.CancelRequestAssignIP(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
             return RedirectToAction("Detail",
-                new { rType = Constants.TypeOfLog.LOG_ASSIGN_IP, code = viewmodel.RequestInfo.RequestCode });
+                new {code = viewmodel.RequestInfo.RequestCode });
         }
         [Roles(Constants.Role.CUSTOMER)]
         [HttpPost]
-        public ActionResult CancelRequestChangeIp(string requestCode, string taskCode)
+        public ActionResult CancelRequestChangeIp(ProcessRequestChangeIPViewModel viewmodel)
         {
             var customer = GetCurrentUserName();
-            RequestBLO.Current.CancelRequestChangeIp(requestCode, customer, taskCode);
+            RequestBLO.Current.CancelRequestChangeIp(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
             return RedirectToAction("Detail",
-               new { rType = Constants.TypeOfLog.LOG_CHANGE_IP, code = requestCode });
+               new { code = viewmodel.RequestInfo.RequestCode });
         }
         [Roles(Constants.Role.CUSTOMER)]
         [HttpPost]
@@ -477,7 +477,7 @@ namespace IMS.Controllers
             var customer = GetCurrentUserName();
             RequestBLO.Current.CancelRequestReturnIp(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
             return RedirectToAction("Detail",
-                new { rType = Constants.TypeOfLog.LOG_RETURN_IP, code = viewmodel.RequestInfo.RequestCode });
+                new {code = viewmodel.RequestInfo.RequestCode });
         }
         [Roles(Constants.Role.CUSTOMER)]
         [HttpPost]
@@ -486,7 +486,7 @@ namespace IMS.Controllers
             var customer = GetCurrentUserName();
             RequestBLO.Current.CancelRequestRentRack(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
             return RedirectToAction("Detail",
-                new { rType = Constants.TypeOfLog.LOG_RENT_RACK, code = viewmodel.RequestInfo.RequestCode });
+                new {code = viewmodel.RequestInfo.RequestCode });
         }
         [Roles(Constants.Role.CUSTOMER)]
         [HttpPost]
@@ -495,7 +495,7 @@ namespace IMS.Controllers
             var customer = GetCurrentUserName();
             RequestBLO.Current.CancelRequestReturnRack(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
             return RedirectToAction("Detail",
-                new { rType = Constants.TypeOfLog.LOG_RETURN_RACK, code = viewmodel.RequestInfo.RequestCode });
+                new { code = viewmodel.RequestInfo.RequestCode });
         }
         #endregion
 

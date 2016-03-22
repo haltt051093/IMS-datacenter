@@ -497,8 +497,6 @@ namespace IMS.Data.Business
             Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
-            //update task
-            TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
             //luu notification
             var result = new NotificationResultModel();
             var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
@@ -532,8 +530,6 @@ namespace IMS.Data.Business
                 UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
                      Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
             }
-            //update task
-            TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
             //luu notification
@@ -571,8 +567,6 @@ namespace IMS.Data.Business
             }
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
-            //update task
-            TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
             //luu notification
             var result = new NotificationResultModel();
             var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
@@ -592,8 +586,6 @@ namespace IMS.Data.Business
         {
             //update request status and log
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RENT_RACK, Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
-            //update task
-            TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
             //luu notification
@@ -619,8 +611,9 @@ namespace IMS.Data.Business
                 for (int i = 0; i < listRacks.Count; i++)
                 {
                     var rack = listRacks[i].ChangedValueOfObject;
+                    var rackCode = RackBLO.Current.GetByName(new Rack() {RackName = rack}).RackCode;
                     //update and log rackofCustomer
-                    RackOfCustomerBLO.Current.UpdateStatusRackOfCustomerANDLog(requestCode, rack,
+                    RackOfCustomerBLO.Current.UpdateStatusRackOfCustomerANDLog(requestCode, rackCode,
                         Constants.TypeOfLog.LOG_RETURN_RACK, customer, null,
                         Constants.StatusCode.RACKOFCUSTOMER_RETURNING, Constants.StatusCode.RACKOFCUSTOMER_CURRENT, null);
                 }
@@ -628,8 +621,6 @@ namespace IMS.Data.Business
                 UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
                     Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
             }
-            //update task
-            TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
             //luu notification

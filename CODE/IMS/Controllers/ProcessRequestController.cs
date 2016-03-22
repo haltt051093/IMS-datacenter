@@ -258,8 +258,7 @@ namespace IMS.Controllers
                     Constants.TypeOfLog.LOG_ADD_SERVER, true);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
-                return RedirectToAction("Detail", "ProcessRequest",
-                    new { rType = Constants.RequestTypeCode.ADD_SERVER, rCode = viewmodel.RequestInfo.RequestCode });
+                return RedirectToAction("Detail", "ProcessRequest", new { code = viewmodel.RequestInfo.RequestCode });
             }
             if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
@@ -267,11 +266,7 @@ namespace IMS.Controllers
                 {
                     RequestBLO.Current.ExportProcedure(viewmodel.Servers, viewmodel.CustomerInfo.Customer);
                     Success("Export Procedure Successfully!");
-                    return RedirectToAction("Detail", new
-                    {
-                        rType = viewmodel.RequestInfo.RequestType,
-                        rCode = viewmodel.RequestInfo.RequestCode
-                    });
+                    return RedirectToAction("Detail", "ProcessRequest", new { code = viewmodel.RequestInfo.RequestCode });
                 }
                 else
                 {
@@ -301,8 +296,7 @@ namespace IMS.Controllers
                 {
                     Notify(task.NotificationCodes);
                 }
-                return RedirectToAction("Detail", "ProcessRequest",
-                    new { rType = Constants.RequestTypeCode.ADD_SERVER, rCode = viewmodel.RequestInfo.RequestCode });
+                return RedirectToAction("Detail", "ProcessRequest", new {code = viewmodel.RequestInfo.RequestCode });
             }
             if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
             {
@@ -337,8 +331,7 @@ namespace IMS.Controllers
                    Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, true);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
-                return RedirectToAction("Detail", "ProcessRequest",
-                    new { rType = Constants.RequestTypeCode.BRING_SERVER_AWAY, rCode = viewmodel.RequestInfo.RequestCode });
+                return RedirectToAction("Detail", "ProcessRequest", new { code = viewmodel.RequestInfo.RequestCode });
             }
             if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
@@ -367,8 +360,7 @@ namespace IMS.Controllers
                 {
                     Notify(task.NotificationCodes);
                 }
-                return RedirectToAction("Detail", "ProcessRequest",
-                    new { rType = Constants.RequestTypeCode.BRING_SERVER_AWAY, rCode = viewmodel.RequestInfo.RequestCode });
+                return RedirectToAction("Detail", "ProcessRequest", new { code = viewmodel.RequestInfo.RequestCode });
             }
             if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
             {
@@ -408,8 +400,7 @@ namespace IMS.Controllers
                 {
                     Notify(task.NotificationCodes);
                 }
-                return RedirectToAction("Detail", "ProcessRequest",
-                    new { rType = Constants.RequestTypeCode.ASSIGN_IP, rCode = viewmodel.RequestInfo.RequestCode });
+                return RedirectToAction("Detail", "ProcessRequest", new { code = viewmodel.RequestInfo.RequestCode });
             }
             if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
@@ -463,8 +454,7 @@ namespace IMS.Controllers
                 {
                     Notify(task.NotificationCodes);
                 }
-                return RedirectToAction("Detail", "ProcessRequest",
-                    new { rType = Constants.RequestTypeCode.CHANGE_IP, rCode = viewmodel.RequestInfo.RequestCode });
+                return RedirectToAction("Detail", "ProcessRequest", new { code = viewmodel.RequestInfo.RequestCode });
             }
             if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
@@ -520,8 +510,7 @@ namespace IMS.Controllers
                 {
                     Notify(task.NotificationCodes);
                 }
-                return RedirectToAction("Detail", "ProcessRequest",
-                    new { rType = Constants.RequestTypeCode.RETURN_IP, rCode = viewmodel.RequestInfo.RequestCode });
+                return RedirectToAction("Detail", "ProcessRequest", new { code = viewmodel.RequestInfo.RequestCode });
             }
             if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
@@ -576,8 +565,7 @@ namespace IMS.Controllers
                 {
                     Notify(task.NotificationCodes);
                 }
-                return RedirectToAction("Detail", "ProcessRequest",
-                    new { rType = Constants.RequestTypeCode.RENT_RACK, rCode = viewmodel.RequestInfo.RequestCode });
+                return RedirectToAction("Detail", "ProcessRequest", new { code = viewmodel.RequestInfo.RequestCode });
             }
             if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
@@ -631,8 +619,7 @@ namespace IMS.Controllers
                 {
                     Notify(task.NotificationCodes);
                 }
-                return RedirectToAction("Detail", "ProcessRequest",
-                    new { rType = Constants.RequestTypeCode.RETURN_RACK, rCode = viewmodel.RequestInfo.RequestCode });
+                return RedirectToAction("Detail", "ProcessRequest", new { code = viewmodel.RequestInfo.RequestCode });
             }
             if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
