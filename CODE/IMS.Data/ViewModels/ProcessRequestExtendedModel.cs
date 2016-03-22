@@ -21,6 +21,8 @@ namespace IMS.Data.ViewModels
         public List<ServerExtendedModel> ServerOfCustomer { get; set; }
         //assign ip
         public int NumberOfIP { get; set; }
+        public int NumberOfAvailableIP { get; set; }
+        public int NumberOfSelectedIP { get; set; }
         public string SelectedServer { get; set; }
         public List<string> randomList { get; set; }
         public List<string> IPs { get; set; }

@@ -23,6 +23,8 @@ namespace IMS.Models
         // Specific Info
         public string SelectedServer { get; set; }
         public int NumberOfIP { get; set; }
+        public int NumberOfAvailableIP { get; set; }
+        public int NumberOfSelectedIP { get; set; }
         public List<string> IPs { get; set; } 
        
 

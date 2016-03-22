@@ -96,7 +96,18 @@ namespace IMS.Data.Business
 
         public List<IPAddressPoolExtendedModel> GetAvailableIPs()
         {
-            return dao.GetIPAvailable();
+            var query = from ip in IPAddressPoolDAO.Current.Table
+                        join st in StatusDAO.Current.Table
+                            on ip.StatusCode equals st.StatusCode into ipst
+                        from subIpst in ipst.DefaultIfEmpty()
+                        where subIpst.StatusCode == Constants.StatusCode.IP_AVAILABLE
+                        select new IPAddressPoolExtendedModel
+                        {
+                            _IPAddressPool = ip,
+                            StatusCode = subIpst.StatusCode
+                        };
+            var result = query.ToList();
+            return result;
         }
 
         public string GetGatewayByIP(string q)
@@ -111,7 +122,12 @@ namespace IMS.Data.Business
 
         public string GetGatewayByServerCode(string q)
         {
-            return dao.GetGatewayByServerCode(q);
+            var query = from ip in IPAddressPoolDAO.Current.Table
+                        join s in ServerDAO.Current.Table
+                            on ip.IPAddress equals s.DefaultIP
+                        select ip.Gateway;
+            var result = query.FirstOrDefault();
+            return result;
         }
 
         public bool UpdateIP(string serverCode, string newIP, string requestCode, string oldIP)
@@ -208,12 +224,41 @@ namespace IMS.Data.Business
 
         public List<IPAddressPoolExtendedModel> GetAvailableIpsSameGateway(string serverCode)
         {
-            return dao.GetAvailableIpsSameGateway(serverCode);
+            var result = new List<IPAddressPoolExtendedModel>();
+            //get default IP
+            var defaultIp = ServerDAO.Current.Query(x => x.ServerCode == serverCode).Select(x => x.DefaultIP).FirstOrDefault();
+            if (string.IsNullOrEmpty(defaultIp))
+            {
+                return result;
+            }
+            //select available IPs in the same range with default IP
+            var ip = GetByKeys(new IPAddressPool { IPAddress = defaultIp });
+            if (ip == null)
+            {
+                return result;
+            }
+
+            var query = from ips in IPAddressPoolDAO.Current.Table
+                        where ips.Gateway == ip.Gateway && ips.StatusCode == Constants.StatusCode.IP_AVAILABLE
+                        select new IPAddressPoolExtendedModel
+                        {
+                            _IPAddressPool = ips,
+                            IPAddress = ips.IPAddress
+                        };
+            result = query.ToList();
+            return result;
         }
 
         public List<string> GetRandomIPs(List<IPAddressPoolExtendedModel> list, int number)
         {
-            return dao.GetRandomIPs(list, number);
+            var random = new Random();
+
+            var query = from item in list
+                        orderby random.Next()
+                        select item.IPAddress;
+            var result = query.Take(number)
+                            .ToList();
+            return result;
         }
 
         //public void SetIpAvailable(string serverCode)

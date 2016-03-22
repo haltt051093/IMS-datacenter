@@ -103,29 +103,34 @@ namespace IMS.Controllers
                         Text = x
                     }).ToList();
                     //cho hien thi multiple list, ko bao gom randomList
-
-                    for (int i = 0; i < listAvailableIps.Count; i++)
+                    if (listAvailableIps != null)
                     {
-                        int num = randomList.Count;
-                        if (listAvailableIps.Count < num)
+                        for (int i = 0; i < listAvailableIps.Count; i++)
                         {
-                            num = listAvailableIps.Count;
-                        }
-                        for (int j = 0; j < num; j++)
-                        {
-                            var item = listAvailableIps[i];
-                            if (item.IPAddress.Equals(randomList[j]))
+                            for (int j = 0; j < randomList.Count; j++)
                             {
-                                listAvailableIps.Remove(item);
+                                var item = listAvailableIps[i];
+                                if (item.IPAddress.Equals(randomList[j]))
+                                {
+                                    listAvailableIps.Remove(item);
+                                }
                             }
                         }
+                        viewmodel.IpSelectListItems = listAvailableIps.Select(x => new SelectListItem
+                        {
+                            Value = x.IPAddress,
+                            Text = x.IPAddress
+                        }).ToList();
                     }
-
-                    viewmodel.IpSelectListItems = listAvailableIps.Select(x => new SelectListItem
+                    else
                     {
-                        Value = x.IPAddress,
-                        Text = x.IPAddress
-                    }).ToList();
+                        //listAvailableIps = [];
+                        //viewmodel.IpSelectListItems = listAvailableIps.Select(x => new SelectListItem
+                        //{
+                        //    Value = "",
+                        //    Text = ""
+                        //}).ToList();
+                    }
                 }
                 return View("AssignIPInfo", viewmodel);
             }
