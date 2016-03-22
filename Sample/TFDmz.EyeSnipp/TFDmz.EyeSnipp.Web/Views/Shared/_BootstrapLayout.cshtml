@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    
+<meta charset="utf-8"/>
+<title>@ViewBag.Title - @Labels.ApplicationName</title>
+<script type="text/javascript">
+    var SITE_ROOT = "@Url.Content("~")";
+</script>
+
+@Scripts.Render(TFAspNetConstants.ScriptBundle.JQUERY)
+@Scripts.Render(TFAspNetConstants.ScriptBundle.BOOTSTRAP)
+@Scripts.Render(TFAspNetConstants.ScriptBundle.DDLEVELSMENU)
+@Scripts.Render(Constants.ScriptBundle.APP_BOOTSTRAP)
+@RenderSection("Scripts", false)
+
+@Styles.Render(TFAspNetConstants.StyleBundle.BOOTSTRAP)
+@Styles.Render(TFAspNetConstants.StyleBundle.DDLEVELSMENU)
+@Styles.Render(Constants.StyleBundle.APP_BOOTSTRAP)
+@RenderSection("Styles", false)
+
+</head>
+<body>
+    <div id="div-main" class="global-master-div">
+        <div class="global-header-div">
+            <div id="divGlobalHeaderMenu" class="global-header-menu mattblackmenu">
+                <ul>
+                    <li>@Html.ActionLink(Pages.Home, "Index", "Home", new { }, new { })</li>
+                </ul>
+            </div>
+        </div>
+        <div class="global-main-div">
+            <div class="global-sidebar-left-div"></div>
+            <div class="global-sidebar-left-div"></div>
+            <div class="global-content-div">
+                <div class="global-breadcumbs-div">
+                    @RenderSection("Breadcumbs", false)
+                </div>
+                @if (ViewBag.PageTitle != null)
+                {
+                    <div class="global-title-div">
+                        <div>
+                            <label class="h2">@ViewBag.PageTitle</label>
+                            @if (@ViewBag.Source != null)
+                            {
+                                @:[<a href="@ViewBag.Source" target="_blank">@Labels.ViewSource</a>]
+                            }
+                        </div>
+                    </div>
+                }
+                <div class="global-dynamic-div">
+                    @if (TempData["AlertType"] != null)
+                    {
+                        <div class="alert alert-@TempData["AlertType"] alert-dismissible" role="alert">
+                            @if (TempData["AlertDismiss"] != null && (bool)TempData["AlertDismiss"])
+                            {
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            }
+                            <div>@TempData["AlertLine1"]</div>
+                            <div>@TempData["AlertLine2"]</div>
+                        </div>
+                    }
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+        <div class="global-footer-div">
+            @Labels.ApplicationName <br />
+            Copyright (c) 2015 @Labels.CompanyName
+        </div>
+    </div>
+</body>
+</html>

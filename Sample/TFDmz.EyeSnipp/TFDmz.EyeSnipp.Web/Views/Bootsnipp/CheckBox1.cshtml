@@ -1,0 +1,288 @@
+﻿@{
+    Layout = Constants.HtmlLayout.BOOTSTRAP;
+    ViewBag.Title = Pages.BootSnippCheckBox1;
+    ViewBag.PageTitle = Pages.BootSnippCheckBox1;
+    ViewBag.Source = "http://bootsnipp.com/snippets/z1q18";
+}
+
+
+
+@section Scripts {
+    @*@Scripts.Render(TFAspNetConstants.ScriptBundle.JQUERY)*@
+    @*<script type="text/javascript"></script>*@
+}
+
+<h2>Checkboxes</h2>
+
+<h3>Default example</h3>
+
+<div class="col-sm-12">
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" value="">
+            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+            Option one is this and that — be sure to include why it's great
+        </label>
+    </div>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" value="" checked>
+            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+            Option two is checked by default
+        </label>
+    </div>
+    <div class="checkbox disabled">
+        <label>
+            <input type="checkbox" value="" disabled>
+            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+            Option three is disabled
+        </label>
+    </div>
+</div>
+
+<h3>Default example (other icon)</h3>
+
+<div class="col-sm-12">
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" value="">
+            <span class="cr"><i class="cr-icon glyphicon glyphicon-arrow-right"></i></span>
+            Option one is this and that — be sure to include why it's great
+        </label>
+    </div>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" value="" checked>
+            <span class="cr"><i class="cr-icon glyphicon glyphicon-arrow-right"></i></span>
+            Option two is checked by default
+        </label>
+    </div>
+    <div class="checkbox disabled">
+        <label>
+            <input type="checkbox" value="" disabled>
+            <span class="cr"><i class="cr-icon glyphicon glyphicon-arrow-right"></i></span>
+            Option three is disabled
+        </label>
+    </div>
+</div>
+
+<h3>Any size you want depending on label font-size</h3>
+
+<div class="col-sm-12">
+    <div class="checkbox">
+        <label style="font-size: 2.5em">
+            <input type="checkbox" value="" checked>
+            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+            Huge
+        </label>
+    </div>
+    <div class="checkbox">
+        <label style="font-size: 2em">
+            <input type="checkbox" value="" checked>
+            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+            Big
+        </label>
+    </div>
+    <div class="checkbox">
+        <label style="font-size: 1.5em">
+            <input type="checkbox" value="" checked>
+            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+            Bigger
+        </label>
+    </div>
+    <div class="checkbox">
+        <label style="font-size: 1em">
+            <input type="checkbox" value="" checked>
+            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+            Default
+        </label>
+    </div>
+    <div class="checkbox">
+        <label style="font-size: .8em">
+            <input type="checkbox" value="" checked>
+            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+            Smaller
+        </label>
+    </div>
+    <div class="checkbox">
+        <label style="font-size: .5em">
+            <input type="checkbox" value="" checked>
+            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+            Small
+        </label>
+    </div>
+</div>
+
+<div class="clearfix">
+</div>
+
+<hr />
+
+<h2>Radio</h2>
+
+<h3>Default example</h3>
+
+<div class="col-sm-12">
+    <div class="radio">
+        <label>
+            <input type="radio" name="o1" value="">
+            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+            Option one is this and that — be sure to include why it's great
+        </label>
+    </div>
+    <div class="radio">
+        <label>
+            <input type="radio" name="o1" value="" checked>
+            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+            Option two is checked by default
+        </label>
+    </div>
+    <div class="radio disabled">
+        <label>
+            <input type="radio" name="o1" value="" disabled>
+            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+            Option three is disabled
+        </label>
+    </div>
+</div>
+
+<h3>Default example (other icon)</h3>
+
+<div class="col-sm-12">
+    <div class="radio">
+        <label>
+            <input type="radio" name="o2" value="">
+            <span class="cr"><i class="cr-icon glyphicon glyphicon-arrow-right"></i></span>
+            Option one is this and that — be sure to include why it's great
+        </label>
+    </div>
+    <div class="radio">
+        <label>
+            <input type="radio" name="o2" value="" checked>
+            <span class="cr"><i class="cr-icon glyphicon glyphicon-arrow-right"></i></span>
+            Option two is checked by default
+        </label>
+    </div>
+    <div class="radio disabled">
+        <label>
+            <input type="radio" name="o2" value="" disabled>
+            <span class="cr"><i class="cr-icon glyphicon glyphicon-arrow-right"></i></span>
+            Option three is disabled
+        </label>
+    </div>
+</div>
+
+<h3>Any size you want depending on label font-size</h3>
+
+<div class="col-sm-12">
+    <div class="radio">
+        <label style="font-size: 2.5em">
+            <input type="radio" name="o5" value="" checked>
+            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+            Huge
+        </label>
+    </div>
+    <div class="radio">
+        <label style="font-size: 2em">
+            <input type="radio" name="o5" value="">
+            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+            Big
+        </label>
+    </div>
+    <div class="radio">
+        <label style="font-size: 1.5em">
+            <input type="radio" name="o5" value="">
+            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+            Bigger
+        </label>
+    </div>
+    <div class="radio">
+        <label style="font-size: 1em">
+            <input type="radio" name="o5" value="">
+            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+            Default
+        </label>
+    </div>
+    <div class="radio">
+        <label style="font-size: .8em">
+            <input type="radio" name="o5" value="">
+            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+            Smaller
+        </label>
+    </div>
+    <div class="radio">
+        <label style="font-size: .5em">
+            <input type="radio" name="o5" value="">
+            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+            Small
+        </label>
+    </div>
+</div>
+
+@section Styles {
+    @*@Styles.Render(TFAspNetConstants.StyleBundle.FONTAWESOME)*@
+    <style>
+        .checkbox label:after, 
+        .radio label:after {
+            content: '';
+            display: inline-block;
+        }
+
+        .checkbox .cr,
+        .radio .cr {
+            position: relative;
+            display: inline-block;
+            border: 1px solid #a9a9a9;
+            border-radius: .25em;
+            width: 1.3em;
+            height: 1.3em;
+            margin-right: .5em;
+        }
+
+        .radio .cr {
+            border-radius: 50%;
+        }
+
+        .checkbox .cr .cr-icon,
+        .radio .cr .cr-icon {
+            position: absolute;
+            font-size: .8em;
+            line-height: 0;
+            top: 50%;
+            left: 17%;
+        }
+
+        .checkbox label input[type="checkbox"],
+        .radio label input[type="radio"] {
+            display: none;
+        }
+
+        .checkbox label input[type="checkbox"] + .cr > .cr-icon,
+        .radio label input[type="radio"] + .cr > .cr-icon {
+            opacity: 0;
+        }
+
+        .checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
+        .radio label input[type="radio"]:checked + .cr > .cr-icon {
+            opacity: 1;
+        }
+
+        .checkbox label input[type="checkbox"]:disabled + .cr,
+        .radio label input[type="radio"]:disabled + .cr {
+            opacity: .5;
+        }
+
+        /* IE8: Disable custom styling. */
+
+        .ie8 .checkbox label input[type="checkbox"],
+        .ie8 .radio label input[type="radio"] {
+            display: inline-block;
+        }
+
+        .ie8 .checkbox .cr,
+        .ie8 .radio .cr {
+            display: none;
+        }
+
+    </style>
+}

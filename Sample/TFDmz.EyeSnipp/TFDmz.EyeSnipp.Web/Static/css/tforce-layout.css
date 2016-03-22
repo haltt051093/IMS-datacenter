@@ -1,0 +1,53 @@
+﻿div.global-master-div {
+    width: 100%;
+    min-width: 1000px;
+}
+
+div.global-header-div {
+    background: green;
+}
+
+div.global-main-div {
+    
+}
+
+div.global-sidebar-left-div {
+    display: none;
+}
+
+div.global-sidebar-right-div {
+    display: none;
+}
+
+div.global-content-div {
+    min-height: 300px;
+}
+
+div.global-breadcumbs-div {
+    background: #e0e0e0;
+}
+
+div.global-title-div {
+    padding: 0px 15px 7px 15px;
+    background: #e0e0e0;
+}
+
+div.global-dynamic-div {
+    overflow: auto;
+    padding: 0px 15px;
+}
+
+div.global-footer-div {
+    margin: 20px 0;
+    padding: 10px;
+    border-top: 1px solid #778899;
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+}
+
+
+div .row-spectator {
+    margin-top: 4px;
+    margin-bottom: 8px;
+}

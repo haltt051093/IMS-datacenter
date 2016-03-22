@@ -1,0 +1,9 @@
+﻿.mattblackmenu li input {
+    float: left;
+    display: block;
+    text-decoration: none;
+    margin: 0;
+    padding: 1px 8px; /*padding inside each tab*/
+    margin: 4px 5px;
+    border-right: 1px solid white; /*right divider between tabs*/
+}
