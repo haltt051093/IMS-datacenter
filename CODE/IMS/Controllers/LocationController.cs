@@ -63,7 +63,6 @@ namespace IMS.Controllers
                 rack.MaximumPower = livm.MaximumPower;
                 RackBLO.Current.AddRackAndLocation(rack);
                 return RedirectToAction("Index", new {Message ="New Rack was added!"});
-
             }
             return RedirectToAction("Index");
         }
@@ -192,7 +191,7 @@ namespace IMS.Controllers
             {
                 if (livm.RequestType == "Change")
                 {
-                    return RedirectToAction("Detail", "Server", new {code = livm.ServerCode});
+                    return RedirectToAction("Detail", "Server", new {code = livm.ServerCode, Message ="Location was changed!"});
                 }
                 else
                 {

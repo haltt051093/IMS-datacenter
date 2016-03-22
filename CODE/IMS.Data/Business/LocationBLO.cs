@@ -78,8 +78,7 @@ namespace IMS.Data.Business
                     {
                         if (Locations[i] == locations[j].LocationCode)
                         {
-                            if (locations[j].StatusCode == Constants.StatusCode.LOCATION_FREE)
-                            {
+                            
                                 locations[j].StatusCode = Constants.StatusCode.LOCATION_USED;
                                 locations[j].ServerCode = ServerCode;
                                 dao.Update(locations[j]);
@@ -90,17 +89,13 @@ namespace IMS.Data.Business
                                     data.StatusCode = Constants.StatusCode.RACK_USED;
                                     RackDAO.Current.Update(data);
                                 }
-                                return true;
-                            }
-                            else
-                            {
-                                return false;
-                            }
+                                
                             
                         }
                     }
-                }
-            return false;
+             
+            }
+            return true;
         }
 
         public List<LocationViewModel> GetAllLocation(GetLocationQuery q = null)

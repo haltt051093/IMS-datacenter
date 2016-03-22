@@ -43,9 +43,10 @@ namespace IMS.Controllers
         }
 
         // GET: Server/Details
-        public ActionResult Detail(string code)
+        public ActionResult Detail(string code, string Message)
         {
             var data = new ServerDetailsViewModel();
+            data.SuccessMessage = Message;
             data.Server = ServerBLO.Current.GetAllServerInfo(code);
             //var serverattributes = ServerBLO.Current.GetServerAttributes(serverCode);
             var ips = ServerIPBLO.Current.GetCurrentIP(code);

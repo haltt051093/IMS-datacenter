@@ -11,6 +11,9 @@
     };
 }
 <section class="main-content">
+    <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS hidden">
+        @Html.HiddenFor(model => model.SuccessMessage)
+    </div>
     <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
         <div class="col-xs-6">
             <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
@@ -97,7 +100,7 @@
                         @Html.LabelFor(model => model.CustomerInfo.Company)
                     </div>
                     <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                        @Html.DisplayFor(model => model.CustomerInfo.Company, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        @Html.DisplayFor(model => model.CustomerInfo.Company, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
                     </div>
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
@@ -106,7 +109,7 @@
                     </div>
                     <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                         @Html.ActionLink(Model.CustomerInfo.Fullname, "ViewProfile", "Account",
-                       new { username = Model.CustomerInfo.Username }, null)
+                            new {username = Model.CustomerInfo.Username}, null)
                     </div>
                 </div>
             }
@@ -118,7 +121,7 @@
                     </div>
                     <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                         @Html.ActionLink(Model.CustomerInfo.Fullname, "ViewProfile", "Account",
-                       new { username = Model.CustomerInfo.Username }, null)
+                            new {username = Model.CustomerInfo.Username}, null)
                     </div>
                 </div>
             }
@@ -132,7 +135,7 @@
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                 @if (Model.CurrentIPs.Count == 0)
                 {
-                    @Html.Display("Not Assigned Yet", new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    @Html.Display("Not Assigned Yet", new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
                 }
                 else
                 {
@@ -143,14 +146,14 @@
                             {
                                 <li class="list-group-item">
                                     <b style="color: blue;">
-                                        @Html.DisplayFor(model => item.CurrentIP, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                        @Html.DisplayFor(model => item.CurrentIP, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
                                     </b>
                                 </li>
                             }
                             else
                             {
                                 <li class="list-group-item">
-                                    @Html.DisplayFor(model => item.CurrentIP, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                    @Html.DisplayFor(model => item.CurrentIP, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
                                 </li>
                             }
                         }
@@ -167,9 +170,9 @@
                 <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                     @foreach (var item in Model.Server.ServerLocation)
                     {
-                        @Html.DisplayFor(model => item.RackName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        @Html.DisplayFor(model => item.RackName, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
                         <span>U</span>
-                        @Html.DisplayFor(model => item.RackUnit, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        @Html.DisplayFor(model => item.RackUnit, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
                         <br/>
                     }
                     <br/>
@@ -178,10 +181,10 @@
                         <label>
                             @*<a data-toggle="modal" class="open-blockIP-modal" href="#changelocation-modal"
                                 data-id="@Model.Server.ServerCode" data-id1="@Model.Server.Size">Change Location?</a>*@
-                            @Html.ActionLink("Change Location", "AssignLocation", "Location", new { ServerCode = Model.Server.ServerCode, rType = "Change", rCode = "", Size = Model.Server.Size }, null)
+                            @Html.ActionLink("Change Location", "AssignLocation", "Location", new {ServerCode = Model.Server.ServerCode, rType = "Change", rCode = "", Size = Model.Server.Size}, null)
                         </label>
                     }
-                  
+
                 </div>
             }
         </div>
@@ -307,7 +310,19 @@
 
                     });
                 </script>*@
+            <script>
+                var message = $('#SuccessMessage').val();
+                if (message) {
+                    notif({
+                        msg: "<b>Success! </b>" + message,
+                        type: "info",
+                        position: "center"
+                    });
+                    $('#SuccessMessage').val("");
+                }
+            </script>
             <script type="text/javascript">
+   
                 $(function() {
 
                     //DOING
