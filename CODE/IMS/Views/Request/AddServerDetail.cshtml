@@ -42,6 +42,14 @@
                 </div>
             </div>
             <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
+                    @Html.LabelFor(model => model.RequestInfo.AppointmentTime)
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                    @Html.DisplayFor(model => model.RequestInfo.AppointmentTime, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                </div>
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                 <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
                     @Html.LabelFor(model => model.RequestInfo.Description)
                 </div>

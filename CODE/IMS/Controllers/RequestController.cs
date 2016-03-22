@@ -520,6 +520,10 @@ namespace IMS.Controllers
 
         public ActionResult SaveTempData(ServerExtendedModel server)
         {
+            var pass = new RequestAddServerViewModel()
+            {
+                Server = server
+            };
             if (server.btnAction == Constants.FormAction.OK_ACTION)
             {
                 var temp = new TempRequest();
@@ -528,6 +532,7 @@ namespace IMS.Controllers
                 temp.Data = JsonConvert.SerializeObject(server);
                 temp.TempCode = TempRequestBLO.Current.GenerateCode();
                 TempRequestBLO.Current.Add(temp);
+                pass.TempCode = temp.TempCode;
             }
             else if (server.btnAction == Constants.FormAction.EDIT_ACTION)
             {
@@ -537,11 +542,8 @@ namespace IMS.Controllers
                     Data = JsonConvert.SerializeObject(server)
                 };
                 TempRequestBLO.Current.Update(temp);
+                pass.TempCode = temp.TempCode;
             }
-            var pass = new RequestAddServerViewModel()
-            {
-                Server = server
-            };
             return Json(pass, JsonRequestBehavior.AllowGet);
         }
 
