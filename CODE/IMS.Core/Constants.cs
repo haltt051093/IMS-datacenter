@@ -146,6 +146,7 @@ namespace IMS.Core
             public const string OBJECT_IP = "IPAddress";
             public const string OBJECT_LOCATION = "Location";
             public const string OBJECT_REQUEST = "Request";
+            public const string OBJECT_TASK = "Task";
             public const string OBJECT_SERVER = "Server";
             public const string OBJECT_ACCOUNT = "Account";
             public const string OBJECT_NOTE = "Note";

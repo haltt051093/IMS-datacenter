@@ -1061,6 +1061,7 @@
     <Content Include="Views\Request\ReturnRackDetail.cshtml" />
     <Content Include="Views\IP\AssignIP.cshtml" />
     <Content Include="Views\Task\Index.cshtml" />
+    <Content Include="Views\Notification\Detail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

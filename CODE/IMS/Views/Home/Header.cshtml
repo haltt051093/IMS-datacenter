@@ -44,22 +44,9 @@
                                 @foreach (var notification in Model.Notifications)
                                 {
                                     <li>
-                                        @if (User.IsInRole("Customer"))
-                                        {
-                                            <a href="@Url.Action("Detais", "Request", new {rType = notification.RefType, rCode = notification.RefCode})">
-                                                <i class="ion ion-ios7-people info"></i> @notification.Description
-                                            </a>
-                                        }
-                                        @if (User.IsInRole("Staff"))
-                                        {
-
-                                        }
-                                        else
-                                        {
-                                            <a href="@Url.Action("Detais", "ProcessRequest", new {rType = notification.RefType, rCode = notification.RefCode})">
-                                                <i class="ion ion-ios7-people info"></i> @notification.Description
-                                            </a>
-                                        }
+                                        <a href="@Url.Action("Detail", "Notification", new { code = notification.NotificationCode})">
+                                            <i class="ion ion-ios7-people info"></i> @notification.Description
+                                        </a>
                                     </li>
                                 }
                             </ul>
@@ -126,7 +113,7 @@
 
                 var icon = $('<i></i>').attr('class', 'ion ion-ios7-people info');
                 var description = noty.Description;
-                var link = $('<a></a>').attr('href', '#').append(icon);
+                var link = $('<a></a>').attr('href', '@Url.Action("Detail", "Notification")'+ '/' + noty.NotificationCode).append(icon);
                 link.append(description);
                 var block = $('<li></li>').html(link);
                 $('#noty_menu').prepend(block);

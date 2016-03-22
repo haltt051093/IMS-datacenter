@@ -35,7 +35,7 @@ namespace IMS.Data.Business
 
         public List<Notification> GetByUser(string username, int page = 0, int pageSize = 20)
         {
-            var result = dao.Query(x => x.Username == username, page, pageSize);
+            var result = dao.Query(x => x.Username == username && x.IsViewed == false, page, pageSize);
             return result;
         }
 

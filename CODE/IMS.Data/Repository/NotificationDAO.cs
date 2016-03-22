@@ -35,7 +35,6 @@ namespace IMS.Data.Repository
             return existing;
         }
 
-        //DOING
         public List<NotificationExtendedModel> ListServerSideNotification()
         {
             var query = from r in RequestDAO.Current.Table
@@ -61,7 +60,6 @@ namespace IMS.Data.Repository
             return query.ToList();
         }
 
-        //DOING
         public List<NotificationExtendedModel> ListClientSideNotification(string customer)
         {
             var query = from r in RequestDAO.Current.Table

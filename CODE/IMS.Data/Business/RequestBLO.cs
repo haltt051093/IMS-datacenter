@@ -210,7 +210,7 @@ namespace IMS.Data.Business
             var desc = "Request Add Server from " + customer;
             foreach (var shiftHead in activeStaff)
             {
-                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.ADD_SERVER, shiftHead.Username, desc);
+                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
                 result.NotificationCodes.Add(notifCode);
             }
             return result;
@@ -250,7 +250,7 @@ namespace IMS.Data.Business
             var desc = "Request Bring Server Away from " + customer;
             foreach (var shiftHead in activeStaff)
             {
-                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.BRING_SERVER_AWAY, shiftHead.Username, desc);
+                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
                 result.NotificationCodes.Add(notifCode);
             }
             return result;
@@ -290,7 +290,7 @@ namespace IMS.Data.Business
             var desc = "Request Assign IP from " + customer;
             foreach (var shiftHead in activeStaff)
             {
-                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.ASSIGN_IP, shiftHead.Username, desc);
+                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
                 result.NotificationCodes.Add(notifCode);
             }
             return result;
@@ -321,7 +321,7 @@ namespace IMS.Data.Business
             var desc = "Request Change IP from " + customer;
             foreach (var shiftHead in activeStaff)
             {
-                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.CHANGE_IP, shiftHead.Username, desc);
+                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
                 result.NotificationCodes.Add(notifCode);
             }
             return result;
@@ -352,7 +352,7 @@ namespace IMS.Data.Business
             var desc = "Request Return IP from " + customer;
             foreach (var shiftHead in activeStaff)
             {
-                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.RETURN_IP, shiftHead.Username, desc);
+                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
                 result.NotificationCodes.Add(notifCode);
             }
             return result;
@@ -373,7 +373,7 @@ namespace IMS.Data.Business
             var desc = "Request Rent Rack from " + customer;
             foreach (var shiftHead in activeStaff)
             {
-                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.RENT_RACK, shiftHead.Username, desc);
+                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
                 result.NotificationCodes.Add(notifCode);
             }
             return result;
@@ -404,7 +404,7 @@ namespace IMS.Data.Business
             var desc = "Request Return Rack from " + customer;
             foreach (var shiftHead in activeStaff)
             {
-                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.RETURN_RACK, shiftHead.Username, desc);
+                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
                 result.NotificationCodes.Add(notifCode);
             }
             return result;
@@ -413,7 +413,7 @@ namespace IMS.Data.Business
 
         #region cancel request
 
-        public void CancelRequestAddServer(string requestCode, string customer, string taskCode)
+        public NotificationResultModel CancelRequestAddServer(string requestCode, string customer, string taskCode)
         {
             var serverCodes = LogBLO.Current.GetAddingServers(requestCode);
             foreach (var server in serverCodes)
@@ -427,9 +427,22 @@ namespace IMS.Data.Business
             Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
+            //luu notification
+            var result = new NotificationResultModel();
+            var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
+            var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
+                .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
+                .ToList();
+            var desc = "Customer " + customer + " cancelled Request Add Server";
+            foreach (var shiftHead in activeStaff)
+            {
+                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
+                result.NotificationCodes.Add(notifCode);
+            }
+            return result;
         }
 
-        public void CancelRequestBringServerAway(string requestCode, string customer, string taskCode)
+        public NotificationResultModel CancelRequestBringServerAway(string requestCode, string customer, string taskCode)
         {
             var listServerIp = LogBLO.Current.GetLogInfoByRequestCode(requestCode, Constants.Object.OBJECT_SERVERIP);
             if (listServerIp != null && listServerIp.Count > 0)
@@ -461,18 +474,48 @@ namespace IMS.Data.Business
                 Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
+            //update task
+            TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
+            //luu notification
+            var result = new NotificationResultModel();
+            var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
+            var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
+                .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
+                .ToList();
+            var desc = "Customer " + customer + " cancelled Request Bring Server Away";
+            foreach (var shiftHead in activeStaff)
+            {
+                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
+                result.NotificationCodes.Add(notifCode);
+            }
+            return result;
         }
 
-        public void CancelRequestAssignIP(string requestCode, string customer, string taskCode)
+        public NotificationResultModel CancelRequestAssignIP(string requestCode, string customer, string taskCode)
         {
             //update request status and log
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ASSIGN_IP,
             Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
+            //update task
+            TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
+            //luu notification
+            var result = new NotificationResultModel();
+            var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
+            var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
+                .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
+                .ToList();
+            var desc = "Customer " + customer + " cancelled Request Assign IP";
+            foreach (var shiftHead in activeStaff)
+            {
+                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
+                result.NotificationCodes.Add(notifCode);
+            }
+            return result;
         }
 
-        public void CancelRequestChangeIp(string requestCode, string customer, string taskCode)
+        public NotificationResultModel CancelRequestChangeIp(string requestCode, string customer, string taskCode)
         {
             var listServerIp = LogBLO.Current.GetLogInfoByRequestCode(requestCode, Constants.Object.OBJECT_SERVERIP);
             if (listServerIp != null && listServerIp.Count > 0)
@@ -492,9 +535,24 @@ namespace IMS.Data.Business
             }
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
+            //update task
+            TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
+            //luu notification
+            var result = new NotificationResultModel();
+            var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
+            var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
+                .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
+                .ToList();
+            var desc = "Customer " + customer + " cancelled Request Change IP";
+            foreach (var shiftHead in activeStaff)
+            {
+                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
+                result.NotificationCodes.Add(notifCode);
+            }
+            return result;
         }
 
-        public void CancelRequestReturnIp(string requestCode, string customer, string taskCode)
+        public NotificationResultModel CancelRequestReturnIp(string requestCode, string customer, string taskCode)
         {
             var listServerIp = LogBLO.Current.GetLogInfoByRequestCode(requestCode, Constants.Object.OBJECT_SERVERIP);
             if (listServerIp != null && listServerIp.Count > 0)
@@ -514,17 +572,47 @@ namespace IMS.Data.Business
             }
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
+            //update task
+            TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
+            //luu notification
+            var result = new NotificationResultModel();
+            var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
+            var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
+                .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
+                .ToList();
+            var desc = "Customer " + customer + " cancelled Request Return IP";
+            foreach (var shiftHead in activeStaff)
+            {
+                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
+                result.NotificationCodes.Add(notifCode);
+            }
+            return result;
         }
 
-        public void CancelRequestRentRack(string requestCode, string customer, string taskCode)
+        public NotificationResultModel CancelRequestRentRack(string requestCode, string customer, string taskCode)
         {
             //update request status and log
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RENT_RACK, Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
+            //update task
+            TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
+            //luu notification
+            var result = new NotificationResultModel();
+            var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
+            var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
+                .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
+                .ToList();
+            var desc = "Customer " + customer + " cancelled Request Rent Rack";
+            foreach (var shiftHead in activeStaff)
+            {
+                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
+                result.NotificationCodes.Add(notifCode);
+            }
+            return result;
         }
 
-        public void CancelRequestReturnRack(string requestCode, string customer, string taskCode)
+        public NotificationResultModel CancelRequestReturnRack(string requestCode, string customer, string taskCode)
         {
             var listRacks = LogBLO.Current.GetLogInfoByRequestCode(requestCode, Constants.Object.OBJECT_RACKOFCUSTOMER);
             if (listRacks != null && listRacks.Count > 0)
@@ -543,6 +631,21 @@ namespace IMS.Data.Business
             }
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
+            //update task
+            TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
+            //luu notification
+            var result = new NotificationResultModel();
+            var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
+            var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
+                .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
+                .ToList();
+            var desc = "Customer " + customer + " cancelled Request Return Rack";
+            foreach (var shiftHead in activeStaff)
+            {
+                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
+                result.NotificationCodes.Add(notifCode);
+            }
+            return result;
         }
 
         #endregion

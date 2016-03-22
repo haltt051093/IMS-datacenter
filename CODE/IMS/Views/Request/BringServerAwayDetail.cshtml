@@ -20,6 +20,7 @@
             <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                 <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
                     @Html.LabelFor(model => model.RequestInfo.RequestCode)
+                    @Html.HiddenFor(model => model.SuccessMessage)
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                     @Html.DisplayFor(model => model.RequestInfo.RequestCode, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
@@ -131,3 +132,16 @@
         </div>
     }
 </section>
+<script type="text/javascript">
+    $(function () {
+        var message = $('#SuccessMessage').val();
+        if (message) {
+            notif({
+                msg: "<b>Success! </b>" + message,
+                type: "info",
+                position: "center"
+            });
+            $('#SuccessMessage').val("");
+        }
+    });
+</script>

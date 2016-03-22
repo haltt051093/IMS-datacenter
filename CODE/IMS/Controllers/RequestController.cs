@@ -55,8 +55,8 @@ namespace IMS.Controllers
                         var requestCode = RequestBLO.Current.GenerateCode();
                         Session[Constants.Session.REQUEST_CODE] = requestCode;
                     }
-                    var rCode = Session[Constants.Session.REQUEST_CODE].ToString();
-                    var serverInfos = TempRequestBLO.Current.GetByRequestCode(rCode);
+                    var code = Session[Constants.Session.REQUEST_CODE].ToString();
+                    var serverInfos = TempRequestBLO.Current.GetByRequestCode(code);
                     foreach (var serverInfo in serverInfos)
                     {
                         var server = JsonConvert.DeserializeObject<ServerExtendedModel>(serverInfo.Data);
@@ -205,57 +205,70 @@ namespace IMS.Controllers
         #region request details
         [Authorize]
         [HttpGet]
-        public ActionResult Detais(string rType, string rCode)
+        public ActionResult Detail(string code, string msg)
         {
+            var r = RequestBLO.Current.GetByKeys(new Request {RequestCode = code});
+            var rType = string.Empty;
+            if (r != null)
+            {
+                rType = r.RequestType;
+            }
             if (rType.Equals(Constants.RequestTypeCode.ADD_SERVER))
             {
                 //Get request
-                var request = RequestBLO.Current.DetailProcessRequestAddServer(rCode, null, null);
+                var request = RequestBLO.Current.DetailProcessRequestAddServer(code, null, null);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestAddServerViewModel>(request);
+                viewmodel.SuccessMessage = msg;
                 return View("AddServerDetail", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.BRING_SERVER_AWAY))
             {
                 //Get request
-                var request = RequestBLO.Current.DetailProcessRequestBringServerAway(rCode, null, null);
+                var request = RequestBLO.Current.DetailProcessRequestBringServerAway(code, null, null);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestBringServerAwayViewModel>(request);
+                viewmodel.SuccessMessage = msg;
                 return View("BringServerAwayDetail", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.ASSIGN_IP))
             {
                 //Get request
-                var request = RequestBLO.Current.DetailProcessRequestAssignIP(rCode, null, null);
+                var request = RequestBLO.Current.DetailProcessRequestAssignIP(code, null, null);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestAssignIPViewModel>(request);
+                viewmodel.SuccessMessage = msg;
                 return View("AssignIPDetail", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.CHANGE_IP))
             {
                 //Get request
-                var request = RequestBLO.Current.DetailProcessRequestChangeIP(rCode, null, null);
+                var request = RequestBLO.Current.DetailProcessRequestChangeIP(code, null, null);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestChangeIPViewModel>(request);
+                viewmodel.SuccessMessage = msg;
                 return View("ChangeIPDetail", viewmodel);
             }
 
             if (rType.Equals(Constants.RequestTypeCode.RETURN_IP))
             {
                 //Get request
-                var request = RequestBLO.Current.DetailProcessRequestReturnIP(rCode, null, null);
+                var request = RequestBLO.Current.DetailProcessRequestReturnIP(code, null, null);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestReturnIPViewModel>(request);
+                viewmodel.SuccessMessage = msg;
                 return View("ReturnIPDetail", viewmodel);
             }
 
             if (rType.Equals(Constants.RequestTypeCode.RENT_RACK))
             {
                 //Get request
-                var request = RequestBLO.Current.DetailProcessRequestRentRack(rCode, null, null);
+                var request = RequestBLO.Current.DetailProcessRequestRentRack(code, null, null);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestRentRackViewModel>(request);
+                viewmodel.SuccessMessage = msg;
                 return View("RentRackDetail", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.RETURN_RACK))
             {
                 //Get request
-                var request = RequestBLO.Current.DetailProcessRequestReturnRack(rCode, null, null);
+                var request = RequestBLO.Current.DetailProcessRequestReturnRack(code, null, null);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestReturnRackViewModel>(request);
+                viewmodel.SuccessMessage = msg;
                 return View("ReturnRackDetail", viewmodel);
             }
             return RedirectToAction("Index");
@@ -409,10 +422,12 @@ namespace IMS.Controllers
         public ActionResult CancelRequestAddServer(ProcessRequestAddServerViewModel viewmodel)
         {
             var customer = GetCurrentUserName();
-            RequestBLO.Current.CancelRequestAddServer(viewmodel.RequestInfo.RequestCode, customer,
+            var result = RequestBLO.Current.CancelRequestAddServer(viewmodel.RequestInfo.RequestCode, customer,
                 viewmodel.RequestInfo.TaskCode);
-            return RedirectToAction("Detais",
-                new { rType = Constants.TypeOfLog.LOG_ADD_SERVER, rCode = viewmodel.RequestInfo.RequestCode });
+            //dang ky ham cho client
+            Notify(result.NotificationCodes);
+            return RedirectToAction("Detail",
+                new { code = viewmodel.RequestInfo.RequestCode, msg = "You've cancelled Request Add Server" });
         }
 
         [Roles(Constants.Role.CUSTOMER)]
@@ -422,8 +437,8 @@ namespace IMS.Controllers
             var customer = GetCurrentUserName();
             //Update lai serverip, server, request
             RequestBLO.Current.CancelRequestBringServerAway(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
-            return RedirectToAction("Detais",
-               new { rType = Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, rCode = viewmodel.RequestInfo.RequestCode });
+            return RedirectToAction("Detail",
+               new { rType = Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, code = viewmodel.RequestInfo.RequestCode });
         }
         [Roles(Constants.Role.CUSTOMER)]
         [HttpPost]
@@ -431,8 +446,8 @@ namespace IMS.Controllers
         {
             var customer = GetCurrentUserName();
             RequestBLO.Current.CancelRequestAssignIP(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
-            return RedirectToAction("Detais",
-                new { rType = Constants.TypeOfLog.LOG_ASSIGN_IP, rCode = viewmodel.RequestInfo.RequestCode });
+            return RedirectToAction("Detail",
+                new { rType = Constants.TypeOfLog.LOG_ASSIGN_IP, code = viewmodel.RequestInfo.RequestCode });
         }
         [Roles(Constants.Role.CUSTOMER)]
         [HttpPost]
@@ -440,8 +455,8 @@ namespace IMS.Controllers
         {
             var customer = GetCurrentUserName();
             RequestBLO.Current.CancelRequestChangeIp(requestCode, customer, taskCode);
-            return RedirectToAction("Detais",
-               new { rType = Constants.TypeOfLog.LOG_CHANGE_IP, rCode = requestCode });
+            return RedirectToAction("Detail",
+               new { rType = Constants.TypeOfLog.LOG_CHANGE_IP, code = requestCode });
         }
         [Roles(Constants.Role.CUSTOMER)]
         [HttpPost]
@@ -449,8 +464,8 @@ namespace IMS.Controllers
         {
             var customer = GetCurrentUserName();
             RequestBLO.Current.CancelRequestReturnIp(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
-            return RedirectToAction("Detais",
-                new { rType = Constants.TypeOfLog.LOG_RETURN_IP, rCode = viewmodel.RequestInfo.RequestCode });
+            return RedirectToAction("Detail",
+                new { rType = Constants.TypeOfLog.LOG_RETURN_IP, code = viewmodel.RequestInfo.RequestCode });
         }
         [Roles(Constants.Role.CUSTOMER)]
         [HttpPost]
@@ -458,8 +473,8 @@ namespace IMS.Controllers
         {
             var customer = GetCurrentUserName();
             RequestBLO.Current.CancelRequestRentRack(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
-            return RedirectToAction("Detais",
-                new { rType = Constants.TypeOfLog.LOG_RENT_RACK, rCode = viewmodel.RequestInfo.RequestCode });
+            return RedirectToAction("Detail",
+                new { rType = Constants.TypeOfLog.LOG_RENT_RACK, code = viewmodel.RequestInfo.RequestCode });
         }
         [Roles(Constants.Role.CUSTOMER)]
         [HttpPost]
@@ -467,8 +482,8 @@ namespace IMS.Controllers
         {
             var customer = GetCurrentUserName();
             RequestBLO.Current.CancelRequestReturnRack(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
-            return RedirectToAction("Detais",
-                new { rType = Constants.TypeOfLog.LOG_RETURN_RACK, rCode = viewmodel.RequestInfo.RequestCode });
+            return RedirectToAction("Detail",
+                new { rType = Constants.TypeOfLog.LOG_RETURN_RACK, code = viewmodel.RequestInfo.RequestCode });
         }
         #endregion
 

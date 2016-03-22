@@ -20,6 +20,7 @@
             <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                 <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
                     @Html.LabelFor(model => model.RequestInfo.RequestCode)
+                    @Html.HiddenFor(model => model.SuccessMessage)
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                     @Html.DisplayFor(model => model.RequestInfo.RequestCode, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
@@ -105,7 +106,15 @@
         var state = $('#checkAll').is(':checked');
         $('tr.check input[type="checkbox"]').prop('checked', state);
     });
-
+    var message = $('#SuccessMessage').val();
+    if (message) {
+        notif({
+            msg: "<b>Success! </b>" + message,
+            type: "info",
+            position: "center"
+        });
+        $('#SuccessMessage').val("");
+    }
     $("#selectedRow").change(function () {
         var rowCode = $("#selectedRow").val();
         if (rowCode == null || rowCode == '') {
