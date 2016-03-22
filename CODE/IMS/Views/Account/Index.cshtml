@@ -119,7 +119,7 @@
         aLengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
 
         fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-            $(nRow).click(function() {
+            $(nRow).dblclick(function() {
                 if (aData.Fullname != null) {
                     var url = CONSTANT.authority + '@Url.Action("ViewProfile", "Account")' + '?username=' + aData.Username;
                     window.location.assign(url);
