@@ -58,14 +58,14 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tbodyid">
                         @if (Model.ServerOfCustomer != null)
                         {
                             for (var i = 0; i < Model.ServerOfCustomer.Count; i++)
                             {
                                 <tr class="check" rack-code="@Model.ServerOfCustomer[i].RackCode">
                                     <td>
-                                        @Html.CheckBoxFor(modelItem => Model.ServerOfCustomer[i].Checked)
+                                        @Html.CheckBoxFor(modelItem => Model.ServerOfCustomer[i].Checked, new { @class = "chknull" })
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => Model.ServerOfCustomer[i].ServerCode)
@@ -87,15 +87,15 @@
                 </div>
             </div>
         </div>
-            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                    @Html.LabelFor(model => model.RequestInfo.Description)
-                </div>
-                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                    @Html.TextAreaFor(model => model.RequestInfo.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                    @Html.ValidationMessageFor(model => model.RequestInfo.Description)
-                </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.RequestInfo.Description)
             </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.TextAreaFor(model => model.RequestInfo.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.ValidationMessageFor(model => model.RequestInfo.Description)
+            </div>
+        </div>
             <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                 <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
                 </div>
@@ -109,6 +109,7 @@
 </section>
 
 <script type="text/javascript">
+
     $('#masterTable').dataTable({
         dom: 't',
         ordering: false,
@@ -133,7 +134,24 @@
         });
         $("#selectedNumber").text(count);
     }
+    var selectedChkCount = 0;
+    $('#tbodyid').on('click', '.chknull', function () {
+        var selectedChk = $('.chknull:checked');
+        //alert(selectedChk.length);
+        selectedChkCount = selectedChk.length;
+    });
 
+    //Get value of selected items
+    $("#btnAccept").click(function () {
+        if (selectedChkCount <= 0) {
+            notif({
+                msg: "<b>Error! Please select at least one server!",
+                type: "error",
+                position: "center"
+            });
+            return false;
+        } 
+    });
     $("#checkAll").change(function () {
         var state = $('#checkAll').is(':checked');
         $('tr.check input[type="checkbox"]').prop('checked', state);

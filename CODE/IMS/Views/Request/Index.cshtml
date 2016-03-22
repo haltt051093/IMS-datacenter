@@ -61,8 +61,8 @@
                 <tbody class="clickmee check" status-code="@Model.Requests[i].LastestStatusRequest.StatusCode" type-code="@Model.Requests[i].LastestStatusRequest.RequestTypeCode" duration="@Model.Requests[i].LastestStatusRequest.DaysFromNow">
                     <tr>
                         <td>
-                            @Html.ActionLink(Model.Requests[i].LastestStatusRequest.RequestCode, "Detais", "Request",
-                                new { rType = Model.Requests[i].LastestStatusRequest.RequestTypeCode, rCode = Model.Requests[i].LastestStatusRequest.RequestCode }, null)
+                            @Html.ActionLink(Model.Requests[i].LastestStatusRequest.RequestCode, "Detail", "Request",
+                                new { code = Model.Requests[i].LastestStatusRequest.RequestCode }, null)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.RequestTypeName)
