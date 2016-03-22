@@ -1,39 +1,41 @@
 ﻿@using IMS.Data.Models
 @using IMS.Data.ViewModels
 @model IMS.Models.LocationIndexViewModel
+
 @{
-    ViewBag.Title = "AssignLocation";
+    ViewBag.Title = Pages.LocationAvai;
+    ViewBag.PageTitle = Pages.LocationAvai;
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("Location", "AssignLocation", Pages.LocationAvai)
+    };
 }
 
 
 @using (Html.BeginForm())
 {
 
-    <section class="content-header">
-        <h1>
-            List of Location Available
-        </h1>
-    </section>
-
-
-
     <section class="content">
+        <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS hidden">
+            @Html.HiddenFor(model => model.FailMessage)
+        </div>
         @if (Model.Notice == "HaveRack")
         {
             <div class="row hide">
                 <div id="dropdown-template" class="col-xs-3">
-                    <label>Rack of Datacenter: @Html.DropDownListFor(model => model.RackCode1, Model.Racks1,"--Select--", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
-                    <label>Rack of Customer: @Html.DropDownListFor(model => model.RackCode, Model.Racks,"--Select--", new {@class = "form-control input-sm", style = "width: 150px"}) </label>
+                    <label>Rack of Datacenter: @Html.DropDownListFor(model => model.RackCode1, Model.Racks1, "--Select--", new {@class = "form-control input-sm", style = "width: 150px"}) </label>
+                    <label>Rack of Customer: @Html.DropDownListFor(model => model.RackCode, Model.Racks, "--Select--", new {@class = "form-control input-sm", style = "width: 150px"}) </label>
 
                 </div>
-                
+
             </div>
         }
         else
         {
             <div class="row hide">
                 <div id="dropdown-template" class="col-xs-3">
-                    <label>Rack: @Html.DropDownListFor(model => model.RackCode, Model.Racks, new { @class = "form-control input-sm", style = "width: 150px" }) </label>
+                    <label>Rack: @Html.DropDownListFor(model => model.RackCode, Model.Racks, new {@class = "form-control input-sm", style = "width: 150px"}) </label>
                 </div>
             </div>
         }
@@ -60,18 +62,29 @@
         @if (Model.RequestType == "Change")
         {
             @Html.ActionLink("Cancel", "Detail", "Server", new { code = Model.ServerCode }, htmlAttributes: new { @class = "btn btn-default pull-right" })
+            <button type="submit" id="change" class="btn btn-primary pull-right">Change</button>
         }
         else
         {
-            @Html.ActionLink("Cancel", "Detais", "ProcessRequest", new { rType = Model.RequestType, rCode = Model.RequestCode }, htmlAttributes: new { @class = "btn btn-default pull-right" })
+            @Html.ActionLink("Cancel", "Detail", "ProcessRequest", new { rType = Model.RequestType, rCode = Model.RequestCode }, htmlAttributes: new { @class = "btn btn-default pull-right" })
+            <button type="submit" id="assign" class="btn btn-primary pull-right">Assign</button>
         }
         
-        <button type="submit" class="btn btn-primary pull-right">Assign</button>
+       
     </section>
 
 
 }
 <script>
+    var message = $('#FailMessage').val();
+    if (message) {
+        notif({
+            msg: "<b>Fail! </b>" + message,
+            type: "error",
+            position: "center"
+        });
+        $('#FailMessage').val("");
+    };
     $.fn.dataTable.ext.search.push(
         function(settings, data, dataIndex) {
             var rackCode = $('#RackCode').val();
@@ -97,6 +110,34 @@
 </script>
 
 <script type="text/javascript">
+    var selectedChkCount = 0;
+    $('#example1').on('click', '.chknull', function () {
+        var selectedChk = $('.chknull:checked');
+        //alert(selectedChk.length);
+        selectedChkCount = selectedChk.length;
+    });
+
+    //Get value of selected items
+    $("#assign").click(function () {
+        if (selectedChkCount <= 0) {
+            notif({
+                msg: "Select location to assign!",
+                type: "error",
+                position: "center"
+            });
+            return false;
+        }
+    });
+    $("#change").click(function () {
+        if (selectedChkCount <= 0) {
+            notif({
+                msg: "Select location to change!",
+                type: "error",
+                position: "center"
+            });
+            return false;
+        }
+    });
     var table = $('#example1').DataTable({
         language: {
             "zeroRecords": "<label style='color:coral'>DO NOT HAVE AVAILABLE LOCATION</label>"
@@ -118,15 +159,15 @@
             var row = $(nRow);
             var actionCell = $(nRow.cells[3]);
             actionCell.html('');
-            actionCell.append('<input type="hidden" name="Selected[' + iDisplayIndex + '].LocationCode" value="' + aData.LocationCode + '">');
+            actionCell.append('<input type="hidden" class="chknull" name="Selected[' + iDisplayIndex + '].LocationCode" value="' + aData.LocationCode + '">');
             switch (aData.StatusName) {
-                case 'Free':
-                    actionCell.append('<input type="checkbox" name="Selected[' + iDisplayIndex + '].IsSelected" value="true"/>');
+            case 'Free':
+                actionCell.append('<input type="checkbox" class="chknull" name="Selected[' + iDisplayIndex + '].IsSelected" value="true"/>');
 
-                    break;
-                default:
-                    actionCell.append('<input type="checkbox" name="Selected[' + iDisplayIndex + '].IsSelected" value="true"/>');
-                    break;
+                break;
+            default:
+                actionCell.append('<input type="checkbox" class="chknull" name="Selected[' + iDisplayIndex + '].IsSelected" value="true"/>');
+                break;
 
             }
             switch (aData.ServerCode) {
@@ -138,9 +179,9 @@
         },
         order: [[1, "acs"], [2, "desc"]],
         columnDefs: [{
-        targets: [0],
-        visible: false,
-        searchable: true
+            targets: [0],
+            visible: false,
+            searchable: true
         }]
        
     });
@@ -154,7 +195,7 @@
     $('#RackCode').change(function () {
         table.draw();
     });
-   
+
 
 </script>
 

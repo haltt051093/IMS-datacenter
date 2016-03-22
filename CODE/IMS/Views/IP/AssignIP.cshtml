@@ -1,16 +1,19 @@
 ﻿@model IPCreateViewModel
+
 @{
-    ViewBag.Title = "AssignIP";
+    ViewBag.Title = Pages.IPAvai;
+    ViewBag.PageTitle = Pages.IPAvai;
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("IP", "AssignIP", Pages.IPAvai)
+    };
 }
-
-
-<section class="content-header">
-    <h2>
-        List of IP Available
-    </h2>
-</section>
 <form action="#" method="POST">
     <section class="content">
+        <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS hidden">
+            @Html.HiddenFor(model => model.FailMessage)
+        </div>
         <div class="row hide">
             <div id="dropdown-template">
                 <label>@Html.DropDownListFor(model => model.NetworkIP, Model.NetworkIPs, "All IP Addresses", new {@class = "form-control input-sm", style = "width: 150px"}) </label>
@@ -33,8 +36,7 @@
     </section><!-- /.content -->
     <section class="content">
         @Html.HiddenFor(model=>model.RequestCode)
-        @Html.HiddenFor(model=>model.RequestType)
-        @Html.ActionLink("Cancel", "Detais", "ProcessRequest", new {rType = Model.RequestType, rCode = Model.RequestCode}, htmlAttributes: new {@class = "btn btn-default pull-right"})
+        @Html.ActionLink("Cancel", "Detail", "ProcessRequest", new {code = Model.RequestCode}, htmlAttributes: new {@class = "btn btn-default pull-right"})
         <button type="submit" class="btn btn-primary pull-right">Assign</button>
 
     </section>
@@ -52,6 +54,15 @@
                         return false;
                     }
                 );
+                var message = $('#FailMessage').val();
+                if (message) {
+                    notif({
+                        msg: "<b>Fail! </b>" + message,
+                        type: "error",
+                        position: "center"
+                    });
+                    $('#FailMessage').val("");
+                }
 </script>
 
 <script type="text/javascript">

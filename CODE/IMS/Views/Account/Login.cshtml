@@ -6,6 +6,9 @@
 <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS hidden">
     @Html.HiddenFor(model => model.SuccessMessage)
 </div>
+<div class="@Constants.HtmlFormat.FORM_LABEL_CLASS hidden">
+    @Html.HiddenFor(model => model.FailMessage)
+</div>
 <body class="bg-black">
 <div class="form-box" id="login-box">
     <div class="header">Log In</div>
@@ -78,5 +81,14 @@
             position: "center"
         });
         $('#SuccessMessage').val("");
+    };
+    var message = $('#FailMessage').val();
+    if (message) {
+        notif({
+            msg: "<b>Fail! </b>" + message,
+            type: "error",
+            position: "center"
+        });
+        $('#FailMessage').val("");
     }
 </script>

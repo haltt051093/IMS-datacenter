@@ -142,6 +142,15 @@ namespace IMS.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to List of IP Available.
+        /// </summary>
+        public static string IPAvai {
+            get {
+                return ResourceManager.GetString("IPAvai", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to List of IP Addresses.
         /// </summary>
         public static string IPIndex {
@@ -156,6 +165,15 @@ namespace IMS.Resources {
         public static string Location {
             get {
                 return ResourceManager.GetString("Location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of Locations Available.
+        /// </summary>
+        public static string LocationAvai {
+            get {
+                return ResourceManager.GetString("LocationAvai", resourceCulture);
             }
         }
         

@@ -33,12 +33,13 @@ namespace IMS.Controllers
             return View(data);
         }
 
-        public ActionResult Login(string Message)
+        public ActionResult Login(string Message, string FailMessage)
         {
             var returnUrl = Request.QueryString["ReturnUrl"];
             var data = new AccountLoginViewModel();
             data.SuccessMessage = Message;
             data.ReturnUrl = returnUrl;
+            data.FailMessage = FailMessage;
             return View(data);
         }
 
@@ -257,17 +258,18 @@ namespace IMS.Controllers
             }
             else
             {
-                Alert("Email is not existed! Try again!");
-                return View("Login");
+               
+                return RedirectToAction("Login", new { FailMessage = "Email is not existed!" });
             }
 
         }
 
 
-        public ActionResult GetChangePW()
+        public ActionResult GetChangePW(string FailMessage)
         {
             var data = new ChangePasswordViewModel();
             data.UserLogin = GetCurrentUserName();
+            data.FailMessage = FailMessage;
             return View("ChangePassword",data);
         }
 
@@ -286,10 +288,8 @@ namespace IMS.Controllers
                     }
                     else
                     {
-                var data = new ChangePasswordViewModel();
-                        data.UserLogin = GetCurrentUserName();
-                        Alert("Old password wrong!!");
-                        return View("ChangePassword",data);
+                                     
+                        return RedirectToAction("GetChangePW",new {FailMessage = "Old password wrong!!!" });
                     }     
             
         }

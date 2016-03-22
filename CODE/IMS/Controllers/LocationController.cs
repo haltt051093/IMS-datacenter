@@ -67,10 +67,11 @@ namespace IMS.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult AssignLocation(string ServerCode, string rType, string rCode, int Size)
+        public ActionResult AssignLocation(string ServerCode, string rType, string rCode, int Size, string FailMessage)
         {
             var data = new LocationIndexViewModel();
             data.Size = Size;
+            data.FailMessage = FailMessage;
             var server = ServerBLO.Current.GetServerByCode(ServerCode, Constants.StatusCode.SERVER_WAITING);
             if (rType == "Change")
             {
@@ -177,12 +178,8 @@ namespace IMS.Controllers
             }
 
             if ((endIndex - startIndex + 1) != livm.Size || (locations[startIndex].ServerCode != null) || (locations[endIndex].ServerCode != null))
-            {
-                Alert("Assign Location Fail!");
-
-                    return RedirectToAction("AssignLocation", "Location", new { rType = livm.RequestType, rCode = livm.RequestCode, ServerCode = livm.ServerCode, Size = livm.Size });
-                
-
+            { 
+                    return RedirectToAction("AssignLocation", "Location", new {FailMessage = "Assign Location Fail! Try again!", rType = livm.RequestType, rCode = livm.RequestCode, ServerCode = livm.ServerCode, Size = livm.Size });
             }
 
 
@@ -195,14 +192,13 @@ namespace IMS.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Detais", "ProcessRequest",
-                        new {rType = livm.RequestType, rCode = livm.RequestCode});
+                    return RedirectToAction("Detail", "ProcessRequest",
+                        new {code = livm.RequestCode});
                 }
             }
             else
             {
-                Alert("Assign Location Fail! Try again!");
-                return RedirectToAction("Detais", "ProcessRequest", new { rType = livm.RequestType, rCode = livm.RequestCode });
+                return RedirectToAction("Detail", "ProcessRequest", new { code = livm.RequestCode });
             }
         }
     }

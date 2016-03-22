@@ -219,4 +219,10 @@
   <data name="Notification" xml:space="preserve">
     <value>Notification</value>
   </data>
+  <data name="IPAvai" xml:space="preserve">
+    <value>List of IP Available</value>
+  </data>
+  <data name="LocationAvai" xml:space="preserve">
+    <value>List of Locations Available</value>
+  </data>
 </root>
