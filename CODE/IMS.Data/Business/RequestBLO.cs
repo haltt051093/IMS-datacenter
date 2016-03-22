@@ -187,7 +187,8 @@ namespace IMS.Data.Business
         }
 
         #region create request
-        public NotificationResultModel AddRequestAddServer(string customer, string description, DateTime? appointmentTime, string uniqueRequestCode)
+        public NotificationResultModel AddRequestAddServer(string customer, string description,
+            DateTime? appointmentTime, string uniqueRequestCode)
         {
             //request
             var requestCode = AddRequestANDLog(Constants.RequestTypeCode.ADD_SERVER,
@@ -847,19 +848,109 @@ namespace IMS.Data.Business
 
         #region accept request
 
-        public void AcceptRequest(string requestCode, string shifthead, string assignee, string typeOfLog)
+        public NotificationResultModel AcceptRequest(string requestCode, string shifthead,
+            string assignee, string status, string typeOfLog, bool isNotifed)
+        {
+            UpdateRequestStatusANDLog(requestCode,
+                typeOfLog, status, assignee, shifthead, null);
+            if (isNotifed)
+            {
+                //luu notification
+                var result = new NotificationResultModel();
+                var request = GetByKeys(new Request() { RequestCode = requestCode });
+                var desc = "";
+                if (typeOfLog == Constants.TypeOfLog.LOG_ADD_SERVER)
+                {
+                    desc = "Request Add Server is accepted!";
+                }
+                if (typeOfLog == Constants.TypeOfLog.LOG_BRING_SERVER_AWAY)
+                {
+                    desc = "Request Bring Server Away is accepted!";
+                }
+                if (typeOfLog == Constants.TypeOfLog.LOG_ASSIGN_IP)
+                {
+                    desc = "Request Assign IP is accepted!";
+                }
+                if (typeOfLog == Constants.TypeOfLog.LOG_CHANGE_IP)
+                {
+                    desc = "Request Change IP is accepted!";
+                }
+                if (typeOfLog == Constants.TypeOfLog.LOG_RETURN_IP)
+                {
+                    desc = "Request Return IP is accepted!";
+                }
+                if (typeOfLog == Constants.TypeOfLog.LOG_RENT_RACK)
+                {
+                    desc = "Request Rent Rack is accepted!";
+                }
+                if (typeOfLog == Constants.TypeOfLog.LOG_RETURN_RACK)
+                {
+                    desc = "Request Return Rack is accepted!";
+                }
+                var customer = request.Customer;
+                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
+                    customer, desc);
+                result.NotificationCodes.Add(notifCode);
+                return result;
+            }
+            return null;
+        }
+        #endregion
+
+        #region Assign task
+        public NotificationResultModel AssignTask(string requestCode, string shifthead, string assignee)
         {
             //assign
             TaskBLO.Current.AssignTask(requestCode, shifthead, assignee, null);
-            UpdateRequestStatusANDLog(requestCode,
-                typeOfLog, Constants.StatusCode.REQUEST_PROCESSING, assignee, shifthead, null);
+            if (shifthead != assignee)
+            {
+                //luu notification
+                var result = new NotificationResultModel();
+                var desc = "You have a new task";
+                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_TASK,
+                    assignee, desc);
+                result.NotificationCodes.Add(notifCode);
+                return result;
+            }
+            return null;
+        }
+        #endregion
+
+        #region reassign
+
+        public NotificationResultModel CancelTask(string taskCode, string requestCode, string preAssignedStaff)
+        {
+            //cancel task của thang truoc do, neu trang thai task la Waiting
+            TaskBLO.Current.CancelWaitingTask(taskCode);
+            //luu notification
+            var result = new NotificationResultModel();
+            var desc = "Your task is CANCELLED!";
+            var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_TASK,
+                preAssignedStaff, desc);
+            result.NotificationCodes.Add(notifCode);
+            return result;
+        }
+
+        public NotificationResultModel ReAssignTask(string taskCode, string requestCode, string preAssignedStaff,
+            string newAssignedStaff, string shifthead)
+        {
+            //cancel task của thang truoc do, neu trang thai task la Waiting
+            TaskBLO.Current.AssignTask(requestCode, shifthead, newAssignedStaff, preAssignedStaff);
+            UpdateRequestAssignee(requestCode, newAssignedStaff);
+            //luu notification
+            var result = new NotificationResultModel();
+            var desc = "You has a new task";
+            var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_TASK,
+                newAssignedStaff, desc);
+            result.NotificationCodes.Add(notifCode);
+            return result;
         }
         #endregion
 
         #region approve request
 
-        public void ApproveRequestAddServer(string requestCode, List<ServerExtendedModel> servers, string assignee,
-            string taskCode)
+        public NotificationResultModel ApproveRequestAddServer(string requestCode, List<ServerExtendedModel> servers,
+            string assignee, string taskCode)
         {
             foreach (var server in servers)
             {
@@ -872,10 +963,19 @@ namespace IMS.Data.Business
                  Constants.StatusCode.REQUEST_DONE, null, assignee, null);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
+            //luu notification
+            var result = new NotificationResultModel();
+            var request = GetByKeys(new Request() { RequestCode = requestCode });
+            var desc = "Request Add Server is DONE!";
+            var customer = request.Customer;
+            var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
+                customer, desc);
+            result.NotificationCodes.Add(notifCode);
+            return result;
         }
 
-        public void ApproveRequestBringServerAway(string requestCode, List<ServerExtendedModel> serverOfCustomers, string assignee,
-            string taskCode)
+        public NotificationResultModel ApproveRequestBringServerAway(string requestCode,
+            List<ServerExtendedModel> serverOfCustomers, string assignee, string taskCode)
         {
             foreach (var server in serverOfCustomers)
             {
@@ -903,9 +1003,18 @@ namespace IMS.Data.Business
             }
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
+            //luu notification
+            var result = new NotificationResultModel();
+            var request = GetByKeys(new Request() { RequestCode = requestCode });
+            var desc = "Request Bring Server Away is DONE!";
+            var customer = request.Customer;
+            var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
+                customer, desc);
+            result.NotificationCodes.Add(notifCode);
+            return result;
         }
 
-        public void ApproveRequestAssignIP(string requestCode, List<string> IPs, string assignee,
+        public NotificationResultModel ApproveRequestAssignIP(string requestCode, List<string> IPs, string assignee,
             string taskCode, string selectedServer)
         {
             foreach (var item in IPs)
@@ -922,9 +1031,18 @@ namespace IMS.Data.Business
                 Constants.StatusCode.REQUEST_DONE, null, assignee, null);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
+            //luu notification
+            var result = new NotificationResultModel();
+            var request = GetByKeys(new Request() { RequestCode = requestCode });
+            var desc = "Request Assign IP is DONE!";
+            var customer = request.Customer;
+            var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
+                customer, desc);
+            result.NotificationCodes.Add(notifCode);
+            return result;
         }
 
-        public void ApproveRequestChangeIP(string requestCode, List<string> returningIPs, List<string> newIPs, string assignee,
+        public NotificationResultModel ApproveRequestChangeIP(string requestCode, List<string> returningIPs, List<string> newIPs, string assignee,
            string taskCode, string selectedServer, string statusCode)
         {
             //update and log ServerIP and IpAddress
@@ -934,9 +1052,18 @@ namespace IMS.Data.Business
                 Constants.StatusCode.REQUEST_DONE, null, assignee, null);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
+            //luu notification
+            var result = new NotificationResultModel();
+            var request = GetByKeys(new Request() { RequestCode = requestCode });
+            var desc = "Request Change IP is DONE!";
+            var customer = request.Customer;
+            var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
+                customer, desc);
+            result.NotificationCodes.Add(notifCode);
+            return result;
         }
 
-        public void ApproveRequestReturnIP(string requestCode, List<string> returningIPs, string assignee,
+        public NotificationResultModel ApproveRequestReturnIP(string requestCode, List<string> returningIPs, string assignee,
            string taskCode, string selectedServer)
         {
             foreach (var item in returningIPs)
@@ -953,9 +1080,18 @@ namespace IMS.Data.Business
                 Constants.StatusCode.REQUEST_DONE, null, assignee, null);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
+            //luu notification
+            var result = new NotificationResultModel();
+            var request = GetByKeys(new Request() { RequestCode = requestCode });
+            var desc = "Request Return IP is DONE!";
+            var customer = request.Customer;
+            var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
+                customer, desc);
+            result.NotificationCodes.Add(notifCode);
+            return result;
         }
 
-        public void ApproveRequestRentRack(string requestCode, List<RackExtendedModel> listRackByRows, string assignee,
+        public NotificationResultModel ApproveRequestRentRack(string requestCode, List<RackExtendedModel> listRackByRows, string assignee,
            string taskCode, string customer)
         {
             foreach (var item in listRackByRows)
@@ -975,9 +1111,16 @@ namespace IMS.Data.Business
                 Constants.StatusCode.REQUEST_DONE, null, assignee, null);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
+            //luu notification
+            var result = new NotificationResultModel();
+            var desc = "Request Rent Rack is DONE!";
+            var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
+                customer, desc);
+            result.NotificationCodes.Add(notifCode);
+            return result;
         }
 
-        public void ApproveRequestReturnRack(string requestCode, List<string> SelectedRacks, string assignee,
+        public NotificationResultModel ApproveRequestReturnRack(string requestCode, List<string> SelectedRacks, string assignee,
           string taskCode, string customer)
         {
             //update status rackofcustomer
@@ -997,11 +1140,18 @@ namespace IMS.Data.Business
                 Constants.StatusCode.REQUEST_DONE, null, assignee, null);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
+            //luu notification
+            var result = new NotificationResultModel();
+            var desc = "Request Return Rack is DONE!";
+            var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
+                customer, desc);
+            result.NotificationCodes.Add(notifCode);
+            return result;
         }
         #endregion
 
         #region reject request
-        public void RejectRequestAddServer(string requestCode, List<ServerExtendedModel> servers, string assignee,
+        public NotificationResultModel RejectRequestAddServer(string requestCode, List<ServerExtendedModel> servers, string assignee,
            string taskCode, string reason)
         {
             var serverCodes = LogBLO.Current.GetServerCodeByRequestCode(requestCode);
@@ -1017,9 +1167,18 @@ namespace IMS.Data.Business
                 Constants.StatusCode.REQUEST_REJECTED, assignee, null, reason);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
+            //luu notification
+            var result = new NotificationResultModel();
+            var request = GetByKeys(new Request() { RequestCode = requestCode });
+            var desc = "Request Add Server is REJECTED! Because " + reason;
+            var customer = request.Customer;
+            var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
+                customer, desc);
+            result.NotificationCodes.Add(notifCode);
+            return result;
         }
 
-        public void RejectRequestBringServerAway(string requestCode, List<ServerExtendedModel> serverOfCustomers, string assignee,
+        public NotificationResultModel RejectRequestBringServerAway(string requestCode, List<ServerExtendedModel> serverOfCustomers, string assignee,
            string taskCode, string reason)
         {
             foreach (var server in serverOfCustomers)
@@ -1045,18 +1204,36 @@ namespace IMS.Data.Business
             }
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
+            //luu notification
+            var result = new NotificationResultModel();
+            var request = GetByKeys(new Request() { RequestCode = requestCode });
+            var desc = "Request Bring Server Away is REJECTED! Because " + reason;
+            var customer = request.Customer;
+            var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
+                customer, desc);
+            result.NotificationCodes.Add(notifCode);
+            return result;
         }
 
-        public void RejectRequestAssignIP(string requestCode, string assignee, string taskCode, string reason)
+        public NotificationResultModel RejectRequestAssignIP(string requestCode, string assignee, string taskCode, string reason)
         {
             //Add Log and update request status
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ASSIGN_IP,
                 Constants.StatusCode.REQUEST_REJECTED, assignee, null, reason);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
+            //luu notification
+            var result = new NotificationResultModel();
+            var request = GetByKeys(new Request() { RequestCode = requestCode });
+            var desc = "Request Assign IP is REJECTED! Because: " + reason;
+            var customer = request.Customer;
+            var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
+                customer, desc);
+            result.NotificationCodes.Add(notifCode);
+            return result;
         }
 
-        public void RejectRequestChangeIP(string requestCode, List<string> returningIPs, string assignee,
+        public NotificationResultModel RejectRequestChangeIP(string requestCode, List<string> returningIPs, string assignee,
            string taskCode, string selectedServer, string reason)
         {
             foreach (var item in returningIPs)
@@ -1069,9 +1246,18 @@ namespace IMS.Data.Business
                  Constants.StatusCode.REQUEST_REJECTED, assignee, null, reason);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
+            //luu notification
+            var result = new NotificationResultModel();
+            var request = GetByKeys(new Request() { RequestCode = requestCode });
+            var desc = "Request Change IP is REJECTED! Because: " + reason;
+            var customer = request.Customer;
+            var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
+                customer, desc);
+            result.NotificationCodes.Add(notifCode);
+            return result;
         }
 
-        public void RejectRequestReturnIP(string requestCode, List<string> returningIPs, string assignee,
+        public NotificationResultModel RejectRequestReturnIP(string requestCode, List<string> returningIPs, string assignee,
            string taskCode, string selectedServer, string reason)
         {
             foreach (var item in returningIPs)
@@ -1085,20 +1271,36 @@ namespace IMS.Data.Business
                 Constants.StatusCode.REQUEST_REJECTED, null, assignee, reason);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
-            //update task
-            TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
+            //luu notification
+            var result = new NotificationResultModel();
+            var request = GetByKeys(new Request() { RequestCode = requestCode });
+            var desc = "Request Return IP is REJECTED! Because: " + reason;
+            var customer = request.Customer;
+            var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
+                customer, desc);
+            result.NotificationCodes.Add(notifCode);
+            return result;
         }
 
-        public void RejectRequestRentRack(string requestCode, string assignee, string taskCode, string reason)
+        public NotificationResultModel RejectRequestRentRack(string requestCode, string assignee, string taskCode, string reason)
         {
             //Change request status
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RENT_RACK,
                 Constants.StatusCode.REQUEST_REJECTED, assignee, null, reason);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
+            //luu notification
+            var result = new NotificationResultModel();
+            var request = GetByKeys(new Request() { RequestCode = requestCode });
+            var desc = "Request Rent Rack is REJECTED! Because: " + reason;
+            var customer = request.Customer;
+            var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
+                customer, desc);
+            result.NotificationCodes.Add(notifCode);
+            return result;
         }
 
-        public void RejectRequestReturnRack(string requestCode, string assignee, string taskCode, string customer,
+        public NotificationResultModel RejectRequestReturnRack(string requestCode, string assignee, string taskCode, string customer,
             string reason)
         {
             //Lay so luong rack muon return
@@ -1116,19 +1318,17 @@ namespace IMS.Data.Business
                 Constants.StatusCode.REQUEST_REJECTED, assignee, null, reason);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
+            //luu notification
+            var result = new NotificationResultModel();
+            var desc = "Request Return Rack is REJECTED! Because: " + reason;
+            var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
+                customer, desc);
+            result.NotificationCodes.Add(notifCode);
+            return result;
         }
         #endregion
 
-        #region reassign
 
-        public void ReAssignTask(string taskCode, string requestCode, string preAssignedStaff, string newAssignedStaff, string shifthead)
-        {
-            //cancel task của thang truoc do, neu trang thai task la Waiting
-            TaskBLO.Current.CancelWaitingTask(taskCode);
-            TaskBLO.Current.AssignTask(requestCode, shifthead, newAssignedStaff, preAssignedStaff);
-            UpdateRequestAssignee(requestCode, newAssignedStaff);
-        }
-        #endregion
 
         #region export procedure
 
