@@ -8,6 +8,7 @@ using IMS.Data.Models;
 using IMS.Data.Repository;
 using IMS.Data.ViewModels;
 using Newtonsoft.Json;
+using Microsoft.Office.Interop.Word;
 
 namespace IMS.Data.Business
 {
@@ -976,95 +977,95 @@ namespace IMS.Data.Business
 
                 System.Object oTemplatePath = "E:/ProcedureOfDatacenter.dotx";
 
-                //MediaTypeNames.Application wordApp = new MediaTypeNames.Application();
-                //Document wordDoc = new Document();
+                Application wordApp = new Application();
+                Document wordDoc = new Document();
 
-                //wordDoc = wordApp.Documents.Add(ref oTemplatePath, ref oMissing, ref oMissing, ref oMissing);
+                wordDoc = wordApp.Documents.Add(ref oTemplatePath, ref oMissing, ref oMissing, ref oMissing);
 
-                //foreach (Field myMergeField in wordDoc.Fields)
-                //{
-                //    Range rngFieldCode = myMergeField.Code;
+                foreach (Field myMergeField in wordDoc.Fields)
+                {
+                    Range rngFieldCode = myMergeField.Code;
 
-                //    String fieldText = rngFieldCode.Text;
-                //    if (fieldText.StartsWith(" MERGEFIELD"))
-                //    {
-                //        Int32 endMerge = fieldText.IndexOf("\\");
+                    String fieldText = rngFieldCode.Text;
+                    if (fieldText.StartsWith(" MERGEFIELD"))
+                    {
+                        Int32 endMerge = fieldText.IndexOf("\\");
 
-                //        Int32 fieldNameLength = fieldText.Length - endMerge;
+                        Int32 fieldNameLength = fieldText.Length - endMerge;
 
-                //        String fieldName = fieldText.Substring(11, endMerge - 11);
+                        String fieldName = fieldText.Substring(11, endMerge - 11);
 
-                //        fieldName = fieldName.Trim();
+                        fieldName = fieldName.Trim();
 
-                //        if (fieldName == "PartA")
-                //        {
+                        if (fieldName == "PartA")
+                        {
 
-                //            myMergeField.Select();
+                            myMergeField.Select();
 
-                //            wordApp.Selection.TypeText(acc.Fullname);
+                            wordApp.Selection.TypeText(acc.Fullname);
 
-                //        }
-                //        if (fieldName == "Representative")
-                //        {
-                //            myMergeField.Select();
-                //            wordApp.Selection.TypeText(acc.Username);
-                //        }
-                //        if (fieldName == "Address")
-                //        {
-                //            myMergeField.Select();
-                //            wordApp.Selection.TypeText(acc.Address);
-                //        }
-                //        if (fieldName == "Tel")
-                //        {
-                //            myMergeField.Select();
-                //            wordApp.Selection.TypeText(acc.Phone);
-                //        }
-                //        if (fieldName == "Model")
-                //        {
-                //            myMergeField.Select();
-                //            wordApp.Selection.TypeText(item.Model);
-                //        }
-                //        if (fieldName == "Memory")
-                //        {
-                //            myMergeField.Select();
-                //            wordApp.Selection.TypeText(item.Memory);
-                //        }
-                //        if (fieldName == "PartNumber")
-                //        {
-                //            myMergeField.Select();
-                //            wordApp.Selection.TypeText(item.PartNumber);
-                //        }
-                //        if (fieldName == "SerialNumber")
-                //        {
-                //            myMergeField.Select();
-                //            wordApp.Selection.TypeText(item.SerialNumber);
-                //        }
-                //        if (fieldName == "IPAddress")
-                //        {
-                //            myMergeField.Select();
-                //            wordApp.Selection.TypeText(item.DefaultIP);
-                //        }
-                //        if (fieldName == "SubnetMask")
-                //        {
-                //            myMergeField.Select();
-                //            wordApp.Selection.TypeText(ip.Subnetmask);
-                //        }
-                //        if (fieldName == "Gateway")
-                //        {
-                //            myMergeField.Select();
-                //            wordApp.Selection.TypeText(ip.Gateway);
-                //        }
-                //        if (fieldName == "Bandwidth")
-                //        {
-                //            myMergeField.Select();
-                //            wordApp.Selection.TypeText(item.Bandwidth);
-                //        }
-                //    }
-                //}
-                //var name = item.ServerCode + ".doc";
-                //wordDoc.SaveAs(name);
-                //wordApp.Documents.Open(name);
-                //wordApp.Application.Quit();
+                        }
+                        if (fieldName == "Representative")
+                        {
+                            myMergeField.Select();
+                            wordApp.Selection.TypeText(acc.Username);
+                        }
+                        if (fieldName == "Address")
+                        {
+                            myMergeField.Select();
+                            wordApp.Selection.TypeText(acc.Address);
+                        }
+                        if (fieldName == "Tel")
+                        {
+                            myMergeField.Select();
+                            wordApp.Selection.TypeText(acc.Phone);
+                        }
+                        if (fieldName == "Model")
+                        {
+                            myMergeField.Select();
+                            wordApp.Selection.TypeText(item.Model);
+                        }
+                        if (fieldName == "Memory")
+                        {
+                            myMergeField.Select();
+                            wordApp.Selection.TypeText(item.Memory);
+                        }
+                        if (fieldName == "PartNumber")
+                        {
+                            myMergeField.Select();
+                            wordApp.Selection.TypeText(item.PartNumber);
+                        }
+                        if (fieldName == "SerialNumber")
+                        {
+                            myMergeField.Select();
+                            wordApp.Selection.TypeText(item.SerialNumber);
+                        }
+                        if (fieldName == "IPAddress")
+                        {
+                            myMergeField.Select();
+                            wordApp.Selection.TypeText(item.DefaultIP);
+                        }
+                        if (fieldName == "SubnetMask")
+                        {
+                            myMergeField.Select();
+                            wordApp.Selection.TypeText(ip.Subnetmask);
+                        }
+                        if (fieldName == "Gateway")
+                        {
+                            myMergeField.Select();
+                            wordApp.Selection.TypeText(ip.Gateway);
+                        }
+                        if (fieldName == "Bandwidth")
+                        {
+                            myMergeField.Select();
+                            wordApp.Selection.TypeText(item.Bandwidth);
+                        }
+                    }
+                }
+                var name = item.ServerCode + ".doc";
+                wordDoc.SaveAs(name);
+                wordApp.Documents.Open(name);
+                wordApp.Application.Quit();
             }
         }
         #endregion
