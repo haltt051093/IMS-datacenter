@@ -21,6 +21,9 @@
 }
 
 <section class="main-content">
+    <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS hidden">
+        @Html.HiddenFor(model => model.SuccessMessage)
+    </div>
     @if (User.IsInRole("Manager"))
     {
         if (Model.Count < 12)
@@ -30,42 +33,42 @@
         <a href="@Url.Action("CreateCustomer", "Account")" class="btn btn-primary"><i class="fa fa-plus"></i> Add new Customer</a>
         <div class="row hide">
             <div id="dropdown-template" class="col-xs-3">
-                <label>Filter: @Html.DropDownListFor(model => model.RoleSearch, Model.Roles, "All Roles", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
+                <label>Filter: @Html.DropDownListFor(model => model.RoleSearch, Model.Roles, "All Roles", new {@class = "form-control input-sm", style = "width: 150px"}) </label>
             </div>
         </div>
 
     }
 
     <table id="example1" class="table table-bordered table-hover">
-        
-            <thead>
-                <tr style="background-color: #404040">
-                    <th><span style="color: ghostwhite">Username</span>
-                    <th><span style="color: ghostwhite">Fullname</span>
-                    <th><span style="color: ghostwhite">Role</span>
-                    <th><span style="color: ghostwhite">Phone</span>
-                    <th><span style="color: ghostwhite">Email</span>
-                    <th><span style="color: ghostwhite">Address</span>
-                    <th><span style="color: ghostwhite">Group</span>
 
-                </tr>
-            </thead>
-            <tfoot>
-                <tr style="background-color: #404040">
-                    <th><span style="color: ghostwhite">Username</span>
-                    <th><span style="color: ghostwhite">Fullname</span>
-                    <th><span style="color: ghostwhite">Role</span>
-                    <th><span style="color: ghostwhite">Phone</span>
-                    <th><span style="color: ghostwhite">Email</span>
-                    <th><span style="color: ghostwhite">Address</span>
-                    <th><span style="color: ghostwhite">Group</span>
-                </tr>
-            </tfoot>
-        
+        <thead>
+        <tr style="background-color: #404040">
+            <th><span style="color: ghostwhite">Username</span>
+            <th><span style="color: ghostwhite">Fullname</span>
+            <th><span style="color: ghostwhite">Role</span>
+            <th><span style="color: ghostwhite">Phone</span>
+            <th><span style="color: ghostwhite">Email</span>
+            <th><span style="color: ghostwhite">Address</span>
+            <th><span style="color: ghostwhite">Group</span>
+
+        </tr>
+        </thead>
+        <tfoot>
+        <tr style="background-color: #404040">
+            <th><span style="color: ghostwhite">Username</span>
+            <th><span style="color: ghostwhite">Fullname</span>
+            <th><span style="color: ghostwhite">Role</span>
+            <th><span style="color: ghostwhite">Phone</span>
+            <th><span style="color: ghostwhite">Email</span>
+            <th><span style="color: ghostwhite">Address</span>
+            <th><span style="color: ghostwhite">Group</span>
+        </tr>
+        </tfoot>
+
 
 
     </table>
-       
+
 </section>
 
 
@@ -86,6 +89,15 @@
             return false;
         }
     );
+    var message = $('#SuccessMessage').val();
+    if (message) {
+        notif({
+            msg: "<b>Success! </b>" + message,
+            type: "info",
+            position: "center"
+        });
+        $('#SuccessMessage').val("");
+    }
 </script>
 
 <script type="text/javascript">

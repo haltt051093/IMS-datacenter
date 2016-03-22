@@ -34,6 +34,7 @@ namespace IMS.Models
         public  string UserLogin { get; set; }
         public string RoleLogin { get; set; }
         public string Button { get; set; }
+        public string SuccessMessage { get; set; }
 
         public List<SelectListItem> Roles { get; set; }
         public List<SelectListItem> Statuses { get; set; }

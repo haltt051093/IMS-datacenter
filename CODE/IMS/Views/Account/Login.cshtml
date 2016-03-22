@@ -3,7 +3,9 @@
 @{
     ViewBag.Title = "Login";
 }
-
+<div class="@Constants.HtmlFormat.FORM_LABEL_CLASS hidden">
+    @Html.HiddenFor(model => model.SuccessMessage)
+</div>
 <body class="bg-black">
 <div class="form-box" id="login-box">
     <div class="header">Log In</div>
@@ -67,3 +69,14 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<script>
+    var message = $('#SuccessMessage').val();
+    if (message) {
+        notif({
+            msg: "<b>Success! </b>" + message,
+            type: "info",
+            position: "center"
+        });
+        $('#SuccessMessage').val("");
+    }
+</script>

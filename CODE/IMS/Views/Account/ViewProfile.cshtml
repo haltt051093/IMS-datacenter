@@ -12,8 +12,10 @@
 
 <form action="#" method="POST">
     <section class="main-content">
-
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS hidden">
+            @Html.HiddenFor(model => model.SuccessMessage)
+        </div>
+        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.Username)
         @Html.HiddenFor(model => model.Password)
@@ -22,7 +24,7 @@
                 @Html.LabelFor(model => model.Username)
             </div>
             <div class="@Constants.HtmlFormat.FORM_DETAIL_CLASS">
-                @Html.DisplayFor(model => model.Username, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.DisplayFor(model => model.Username, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
                 @Html.ValidationMessageFor(model => model.Username)
             </div>
         </div>
@@ -33,7 +35,7 @@
                     @Html.LabelFor(model => model.Company)
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_DETAIL_CLASS">
-                    @Html.DisplayFor(model => model.Company, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    @Html.DisplayFor(model => model.Company, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
                 </div>
             </div>
             <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
@@ -41,7 +43,7 @@
                     @Html.Label("Representative")
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_DETAIL_CLASS">
-                    @Html.DisplayFor(model => model.Fullname, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    @Html.DisplayFor(model => model.Fullname, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
                 </div>
             </div>
         }
@@ -52,7 +54,7 @@
                     @Html.Label("Full name")
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_DETAIL_CLASS">
-                    @Html.DisplayFor(model => model.Fullname, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    @Html.DisplayFor(model => model.Fullname, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
                 </div>
             </div>
         }
@@ -63,7 +65,7 @@
                     @Html.LabelFor(model => model.Role)
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_DETAIL_CLASS">
-                    @Html.DisplayFor(model => model.Role, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    @Html.DisplayFor(model => model.Role, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
                 </div>
             </div>
             if (Model.Role != Constants.Role.MANAGER)
@@ -73,7 +75,7 @@
                         @Html.LabelFor(model => model.GroupCode)
                     </div>
                     <div class="@Constants.HtmlFormat.FORM_DETAIL_CLASS">
-                        @Html.DisplayFor(model => model.GroupCode, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        @Html.DisplayFor(model => model.GroupCode, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
                     </div>
                 </div>
             }
@@ -98,7 +100,7 @@
                 @Html.LabelFor(model => model.Phone)
             </div>
             <div class="@Constants.HtmlFormat.FORM_DETAIL_CLASS">
-                @Html.DisplayFor(model => model.Phone, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.DisplayFor(model => model.Phone, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
             </div>
         </div>
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
@@ -106,7 +108,7 @@
                 @Html.LabelFor(model => model.Email)
             </div>
             <div class="@Constants.HtmlFormat.FORM_DETAIL_CLASS">
-                @Html.DisplayFor(model => model.Email, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.DisplayFor(model => model.Email, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
             </div>
         </div>
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
@@ -114,7 +116,7 @@
                 @Html.LabelFor(model => model.Address)
             </div>
             <div class="@Constants.HtmlFormat.FORM_DETAIL_CLASS">
-                @Html.DisplayFor(model => model.Address, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.DisplayFor(model => model.Address, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
             </div>
         </div>
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
@@ -122,10 +124,10 @@
                 @Html.LabelFor(model => model.Identification)
             </div>
             <div class="@Constants.HtmlFormat.FORM_DETAIL_CLASS">
-                @Html.DisplayFor(model => model.Identification, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.DisplayFor(model => model.Identification, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
             </div>
         </div>
-        @if ((Model.Role == "Customer" && Model.RoleLogin=="Manager") || Model.Username == Model.UserLogin)
+        @if ((Model.Role == "Customer" && Model.RoleLogin == "Manager") || Model.Username == Model.UserLogin)
         {
             <a href="@Url.Action("EditAccount", "Account", new {username = Model.Username})" class="btn btn-primary"><i class="fa fa-edit"></i> Edit Profile</a>
         }
@@ -137,7 +139,7 @@
         {
             <a href="@Url.Action("GetChangePW", "Account", new {username = Model.Username})" class="btn btn-primary"><i class="fa fa-edit"></i> Change Password</a>
         }
-        @if (Model.Username != Model.UserLogin && Model.RoleLogin=="Manager")
+        @if (Model.Username != Model.UserLogin && Model.RoleLogin == "Manager")
         {
 
             if (Model.Status)
@@ -157,21 +159,21 @@
             <div class="modal-content">
 
 
-                    <div class="modal-body">
-                        <h4>Are you sure to deativate this account?</h4>
-                        @Html.HiddenFor(model=>model.Username)
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" name="Button" value="Deactivate" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                            @Labels.DialogOK
-                        </button>
-                        <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
-                                data-dismiss="modal">
-                            @Labels.DialogCancel
-                        </button>
+                <div class="modal-body">
+                    <h4>Are you sure to deativate this account?</h4>
+                    @Html.HiddenFor(model => model.Username)
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" name="Button" value="Deactivate" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        @Labels.DialogOK
+                    </button>
+                    <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
+                            data-dismiss="modal">
+                        @Labels.DialogCancel
+                    </button>
 
-                    </div>
-            
+                </div>
+
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
@@ -199,3 +201,14 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </form>
+<script>
+    var message = $('#SuccessMessage').val();
+    if (message) {
+        notif({
+            msg: "<b>Success! </b>" + message,
+            type: "info",
+            position: "center"
+        });
+        $('#SuccessMessage').val("");
+    }
+</script>

@@ -19,5 +19,6 @@ namespace IMS.Models
         [Compare("NewPassword")]
         public string ConfirmPassword { get; set; }
         public string UserLogin { get; set; }
+
     }
 }

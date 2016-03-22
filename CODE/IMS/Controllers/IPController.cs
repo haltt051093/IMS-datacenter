@@ -14,9 +14,10 @@ namespace IMS.Controllers
     public class IPController : CoreController
     {
         [Authorize(Roles = "Staff,Shift Head,Manager")]
-        public ActionResult Index()
+        public ActionResult Index(string Message)
         {
             var data = new IPIndexViewModel();
+            data.SuccessMessage = Message;
             var ips = IPAddressPoolBLO.Current.GetAllIP();
             var ipuse = ips.Select(x => x).Where(x => x.StatusCode != Constants.StatusCode.IP_DEACTIVATE);
             var listnet1 = IPAddressPoolBLO.Current.GetNetworkIPToDeact();
@@ -72,8 +73,8 @@ namespace IMS.Controllers
                             
                         }
                     }
-                    Success("Deactivate IP Address Range Successfully!");
-                return RedirectToAction("Index");
+                   
+                return RedirectToAction("Index", new { Message = "IP Addresses were deativated!" });
             }
                 else
                 {
@@ -94,8 +95,8 @@ namespace IMS.Controllers
                         }
                     }
                         IPAddressPoolBLO.Current.AddIP(ips);
-                        Success("New IP Addresses added successfully!");
-                        return RedirectToAction("Index");    
+               
+                        return RedirectToAction("Index",new {Message = "New IP Addresses were added!" });    
                 }
         }
 
@@ -117,9 +118,8 @@ namespace IMS.Controllers
                 log.ObjectStatus = Constants.StatusCode.IP_BLOCKED;
                 log.LogTime = DateTime.Now;
                 log.Description = iivm.Description;
-                LogBLO.Current.Add(log);
-                Success("Block IP successfully");
-                return RedirectToAction("Index");
+                LogBLO.Current.Add(log);              
+                return RedirectToAction("Index",  new { Message = "IP Address was blocked!" });
             }
             else
             if (ip.StatusCode == Constants.StatusCode.IP_BLOCKED)
@@ -137,8 +137,7 @@ namespace IMS.Controllers
                 log.LogTime = DateTime.Now;
                 log.PreviousId = blockip.Id;
                 LogBLO.Current.Add(log);
-                Success("Unblock IP successfully");
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { Message = "IP Address was unblocked!" });
             }
             return RedirectToAction("Index");
         }

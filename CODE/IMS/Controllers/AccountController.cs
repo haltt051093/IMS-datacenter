@@ -18,7 +18,7 @@ namespace IMS.Controllers
     public class AccountController : CoreController
     {
         [Authorize(Roles = "Staff,Shift Head,Manager")]
-        public ActionResult Index(string role, string roleSearch, string message)
+        public ActionResult Index(string role, string roleSearch, string Message)
         {
             var data = new AccountIndexViewModel();
             var accounts = AccountBLO.Current.GetAll();
@@ -29,13 +29,15 @@ namespace IMS.Controllers
             data.Roles = roles.Select(x => new SelectListItem {Value = x, Text = x}).ToList();
             data.UserLogin = GetCurrentUserName();
             data.RoleLogin = GetCurrentUserRole();
+            data.SuccessMessage = Message;
             return View(data);
         }
 
-        public ActionResult Login()
+        public ActionResult Login(string Message)
         {
             var returnUrl = Request.QueryString["ReturnUrl"];
             var data = new AccountLoginViewModel();
+            data.SuccessMessage = Message;
             data.ReturnUrl = returnUrl;
             return View(data);
         }
@@ -92,8 +94,8 @@ namespace IMS.Controllers
                 AccountBLO.Current.Add(account);
                 //send account info to login to the system
                 AccountBLO.Current.SendAccountInfo(account);
-                Success("Add Staff Successfully!");
-                return RedirectToAction("Index");
+                
+                return RedirectToAction("Index", new {Message ="New Staff was added!"});
             }
             return RedirectToAction("Index");
         }
@@ -118,8 +120,8 @@ namespace IMS.Controllers
                 AccountBLO.Current.Add(account);
                 //send account info to login to the system
                 AccountBLO.Current.SendAccountInfo(account);
-                Success("Add Customer Successfully!");
-                return RedirectToAction("Index");
+            
+                return RedirectToAction("Index", new {Message = "New customer was added!"});
             }
             return View(accountCreateViewModel);
         }
@@ -147,8 +149,8 @@ namespace IMS.Controllers
             account.Identification = acvm.Identification;
             account.Phone = acvm.Phone;
             AccountBLO.Current.Update(account);
-            Success("Update Profile Successfully!");
-            return RedirectToAction("ViewProfile", new {username = acvm.Username});
+         
+            return RedirectToAction("ViewProfile", new {username = acvm.Username, Message ="Profile was updated!"});
         }
 
         [Authorize(Roles = "Staff,Shift Head,Manager")]
@@ -191,14 +193,14 @@ namespace IMS.Controllers
             account.Identification = viewmodel.Identification;
             account.Email = viewmodel.Email;
             AccountBLO.Current.Update(account);
-            Success("Update Profile Successfully!");
-            return RedirectToAction("ViewProfile", new { username = viewmodel.Username });
+       
+            return RedirectToAction("ViewProfile", new { username = viewmodel.Username, Message ="Profile was updated!" });
         }
 
 
    
 
-        public ActionResult ViewProfile(string username)
+        public ActionResult ViewProfile(string username, string Message)
         {
             Account account = AccountBLO.Current.GetAccountByCode(username);
             if (account == null)
@@ -208,29 +210,31 @@ namespace IMS.Controllers
             var accountviewmodel = Mapper.Map<Account, AccountCreateViewModel>(account);
             accountviewmodel.UserLogin = GetCurrentUserName();
             accountviewmodel.RoleLogin = GetCurrentUserRole();
+            accountviewmodel.SuccessMessage = Message;
             return View(accountviewmodel);
         }
 
         [HttpPost]
         public ActionResult ViewProfile(AccountCreateViewModel acvm)
         {
+            var mess = "";
             if (acvm.Button == "Deactivate")
             {
             
                 var account = AccountBLO.Current.GetAccountByCode(acvm.Username);
                 account.Status = false;
                 AccountBLO.Current.Update(account);
-                Success("Deactiave Account Successfully!");
+                mess = "Account was deativated!";
             }
             if (acvm.Button == "Activate")
             {
                 var account = AccountBLO.Current.GetAccountByCode(acvm.Username);
                 account.Status = true;
                 AccountBLO.Current.Update(account);
-                Success("Activate Account Successfully!");
+                mess = "Account was activated!";
             }
 
-        return RedirectToAction("ViewProfile", new {username = acvm.Username});
+        return RedirectToAction("ViewProfile", new {username = acvm.Username, Message = mess});
         }
 
         public ActionResult GetForgotPassword()
@@ -248,8 +252,8 @@ namespace IMS.Controllers
                 o.Password = newpw;
                 AccountBLO.Current.AddOrUpdate(o);
                 AccountBLO.Current.SendAccountInfo(o);
-                Success("Reset passwork successfully! Please check your email!");
-                return View("Login");
+         
+                return RedirectToAction("Login", new { Message = "Your password was reseted! Please check email!"});
             }
             else
             {
@@ -278,8 +282,7 @@ namespace IMS.Controllers
                     {
                         o.Password = cpvm.NewPassword;
                         AccountBLO.Current.AddOrUpdate(o);
-                        Success("Change Password Successfully!");
-                        return RedirectToAction("ViewProfile",new {username = obj.Username});
+                        return RedirectToAction("ViewProfile",new {username = obj.Username, Message ="Your password was changed!"});
                     }
                     else
                     {

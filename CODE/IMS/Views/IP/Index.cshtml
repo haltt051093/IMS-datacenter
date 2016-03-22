@@ -11,6 +11,9 @@
 
 <!-- Main content -->
 <section class="main-content">
+    <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS hidden">
+        @Html.HiddenFor(model => model.SuccessMessage)
+    </div>
     <div>
         <a class="btn btn-primary pull-left" data-toggle="modal" data-target="#addip-modal"><i class="fa fa-plus"></i> @Labels.AddIP</a>
     </div>
@@ -20,39 +23,39 @@
         {
             <a id="deactivateip" class="btn btn-danger pull-left"><i class="fa fa-minus"></i> @Labels.DeactivateIP</a>
         }
-       
+
 
     </div>
     <div class="clearfix"></div>
     <div style="height: 10px"></div>
     <div class="row hide">
         <div id="dropdown-template" class="col-xs-3">
-            <label>IP Address: @Html.DropDownListFor(model => model.NetworkIP, Model.NetworkIPs, "All IP Addresses", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
+            <label>IP Address: @Html.DropDownListFor(model => model.NetworkIP, Model.NetworkIPs, "All IP Addresses", new {@class = "form-control input-sm", style = "width: 150px"}) </label>
         </div>
     </div>
     <table id="example1" class="table table-bordered table-hover">
         <thead>
-            <tr style="background-color: #404040">
-                <th><span style="color: ghostwhite">Id</span>
-                <th><span style="color: ghostwhite">NetworkIP</span>
-                <th><span style="color: ghostwhite">IP Address</span>
-                <th><span style="color: ghostwhite">Gateway</span>
-                <th><span style="color: ghostwhite">Subnet mask</span>
-                <th><span style="color: ghostwhite">Status</span>
-                <th></th>
-            </tr>
+        <tr style="background-color: #404040">
+            <th><span style="color: ghostwhite">Id</span>
+            <th><span style="color: ghostwhite">NetworkIP</span>
+            <th><span style="color: ghostwhite">IP Address</span>
+            <th><span style="color: ghostwhite">Gateway</span>
+            <th><span style="color: ghostwhite">Subnet mask</span>
+            <th><span style="color: ghostwhite">Status</span>
+            <th></th>
+        </tr>
         </thead>
         <tfoot>
-            <tr style="background-color: #404040">
-                <th><span style="color: ghostwhite">Id</span>
-                <th><span style="color: ghostwhite">NetworkIP</span>
-                <th><span style="color: ghostwhite">IP Address</span>
-                <th><span style="color: ghostwhite">Gateway</span>
-                <th><span style="color: ghostwhite">Subnet mask</span>
-                <th><span style="color: ghostwhite">Status</span>
-                <th></th>
+        <tr style="background-color: #404040">
+            <th><span style="color: ghostwhite">Id</span>
+            <th><span style="color: ghostwhite">NetworkIP</span>
+            <th><span style="color: ghostwhite">IP Address</span>
+            <th><span style="color: ghostwhite">Gateway</span>
+            <th><span style="color: ghostwhite">Subnet mask</span>
+            <th><span style="color: ghostwhite">Status</span>
+            <th></th>
 
-            </tr>
+        </tr>
         </tfoot>
     </table>
 </section><!-- /.content -->
@@ -244,11 +247,20 @@
         }
     });
 
-    $('#deactivateip').click(function () {
+    $('#deactivateip').click(function() {
         $('#checkbox1').prop('checked', false);
         $('#checkbox1').trigger('change');
         $('#deactivateip-modal').modal('show');
-    })
+    });
+    var message = $('#SuccessMessage').val();
+    if (message) {
+        notif({
+            msg: "<b>Success! </b>" + message,
+            type: "info",
+            position: "center"
+        });
+        $('#SuccessMessage').val("");
+    }
 </script>
 <script>
     $.fn.dataTable.ext.search.push(

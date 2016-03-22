@@ -26,6 +26,7 @@ namespace IMS.Models
         public string Password { get; set; }
         public string Role { get; set; }
         public bool Status { get; set; }
+        public string SuccessMessage { get; set; }
         
         public string Fullname { get; set; }
         

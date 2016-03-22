@@ -12,6 +12,9 @@
 
 <!-- Main content -->
 <section class="main-content">
+    <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS hidden">
+        @Html.HiddenFor(model => model.SuccessMessage)
+    </div>
     <label style="color: #3c8dbc">Amount of Rack Available: @Model.RackAvailableCount</label>
     <div>
         <a class="btn btn-primary pull-left" data-toggle="modal" data-target="#addlocation-modal"><i class="fa fa-plus"></i> Add new rack</a>
@@ -109,6 +112,15 @@
             return false;
         }
     );
+    var message = $('#SuccessMessage').val();
+    if (message) {
+        notif({
+            msg: "<b>Success! </b>" + message,
+            type: "info",
+            position: "center"
+        });
+        $('#SuccessMessage').val("");
+    }
 </script>
 
 <script type="text/javascript">
