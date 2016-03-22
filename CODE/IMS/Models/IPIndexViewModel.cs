@@ -22,7 +22,7 @@ namespace IMS.Models
         public List<SelectListItem> ListNetmask { get; set; } 
         public string NetworkIP { get; set; }
         public string Action { get; set; }
-
+        public string SuccessMessage { get; set; }
         
         [Required(ErrorMessage = "Please input Network Address!")]
         [RegularExpression("^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +

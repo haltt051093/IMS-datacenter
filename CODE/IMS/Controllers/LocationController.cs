@@ -18,9 +18,10 @@ namespace IMS.Controllers
     public class LocationController : CoreController
     {
         [Authorize(Roles = "Staff,Shift Head,Manager")]
-        public ActionResult Index()
+        public ActionResult Index(string Message)
         {
             var data = new LocationIndexViewModel();
+            data.SuccessMessage = Message;
             var locations = LocationBLO.Current.GetAllLocation();
             var list = locations.Where(x => x.RackStatus == Constants.StatusCode.RACK_AVAILABLE);
             var listavailablerack =
@@ -61,9 +62,7 @@ namespace IMS.Controllers
                 rack.RackName = livm.RackName;
                 rack.MaximumPower = livm.MaximumPower;
                 RackBLO.Current.AddRackAndLocation(rack);
-
-                Success("New Rack added successfully!");
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new {Message ="New Rack was added!"});
 
             }
             return RedirectToAction("Index");

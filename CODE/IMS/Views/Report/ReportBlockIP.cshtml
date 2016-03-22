@@ -93,8 +93,7 @@
             switch (aData.blockedtime) {
                 case null:
                     $(nRow).css('background-color', '#ffe6e6');
-                    actionCell.html('<label style="color: red">Now</label>');
-                    
+                    actionCell.html('<label style="color: red">Now</label>');                    
                     actionCell2.html('<label style="color: red">Undefined</label>');
                     break;
                 case 0:
@@ -102,6 +101,7 @@
                     break;
                 case 1:
                     actionCell2.html('1 day');
+                    break;
                 default:
                     actionCell2.html(aData.blockedtime + ' days');
                     break;
