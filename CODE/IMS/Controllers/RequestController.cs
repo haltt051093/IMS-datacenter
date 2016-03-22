@@ -16,9 +16,9 @@ namespace IMS.Controllers
     public class RequestController : CoreController
     {
         [Authorize]
-        public ActionResult Index()
+        public ActionResult Index(RequestIndexViewModel data)
         {
-            var data = new RequestIndexViewModel();
+            //var data = new RequestIndexViewModel();
             var username = GetCurrentUserName();
             data.Requests = LogBLO.Current.GetRequestOfCustomer(username);
             data.FilterByRequestType = RequestTypeBLO.Current
@@ -269,22 +269,20 @@ namespace IMS.Controllers
             var customer = GetCurrentUserName();
             var requestCode = Session[Constants.Session.REQUEST_CODE].ToString();
             //Add request and log
-            RequestBLO.Current.AddRequestAddServer(customer, viewmodel.RequestInfo.Description,
+            var result = RequestBLO.Current.AddRequestAddServer(customer, viewmodel.RequestInfo.Description,
                 viewmodel.RequestInfo.AppointmentTime, requestCode);
             //Xoa session server
             if (Session[Constants.Session.REQUEST_CODE] != null)
             {
                 Session[Constants.Session.REQUEST_CODE] = null;
             }
-            //Notification
-            var notif = Mapper.Map<RequestAddServerViewModel, NotificationExtendedModel>(viewmodel);
-            notif.RequestTypeName = Constants.RequestTypeName.SERVER_ADD;
-            notif.StatusName = Constants.StatusName.REQUEST_PENDING;
-            notif.RequestCode = viewmodel.RequestInfo.RequestCode;
             //dang ky ham cho client
-            NotifRegister(notif);
-            Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
-            return RedirectToAction("Index");
+            Notify(result.NotificationCodes);
+            RequestIndexViewModel redirectValue = new RequestIndexViewModel()
+            {
+                SuccessMessage = "You've sent Request Add Server"
+            };
+            return RedirectToAction("Index", "Request", redirectValue);
         }
 
         [HttpPost]
@@ -292,10 +290,15 @@ namespace IMS.Controllers
         {
             var customer = GetCurrentUserName();
             //update lai trang thai server, trang thai serverIP
-            var requestCode = RequestBLO.Current.AddRequestBringServerAway(customer, viewmodel.RequestInfo.Description,
+            var result = RequestBLO.Current.AddRequestBringServerAway(customer, viewmodel.RequestInfo.Description,
                 viewmodel.ServerOfCustomer, viewmodel.RequestInfo.AppointmentTime);
-            Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
-            return RedirectToAction("Index");
+            //dang ky ham cho client
+            Notify(result.NotificationCodes);
+            RequestIndexViewModel redirectValue = new RequestIndexViewModel()
+            {
+                SuccessMessage = "You've sent Request Bring Server Away"
+            };
+            return RedirectToAction("Index", "Request", redirectValue);
         }
 
         [HttpPost]
@@ -314,15 +317,14 @@ namespace IMS.Controllers
                 viewmodel.RequestInfo.Description = JsonConvert.SerializeObject(requestDetail);
                 //Add request and log
                 var result = RequestBLO.Current.AddRequestAssignIP(customer, viewmodel.RequestInfo.Description, viewmodel.SelectedServer);
-                //Notification
-                var notif = Mapper.Map<RequestAssignIPViewModel, NotificationExtendedModel>(viewmodel);
-                notif.RequestTypeName = Constants.RequestTypeName.IP_ASSIGN;
-                notif.StatusName = Constants.StatusName.REQUEST_PENDING;
-                notif.RequestCode = result;
                 //dang ky ham cho client
-                NotifRegister(notif);
+                Notify(result.NotificationCodes);
             }
-            return RedirectToAction("Index");
+            RequestIndexViewModel redirectValue = new RequestIndexViewModel()
+            {
+                SuccessMessage = "You've sent Request Assign IP"
+            };
+            return RedirectToAction("Index", "Request", redirectValue);
         }
 
         [HttpPost]
@@ -333,14 +335,14 @@ namespace IMS.Controllers
             {
                 //Add request and log
                 var result = RequestBLO.Current.AddRequestChangeIP(customer, viewmodel.RequestInfo.Description, viewmodel.SelectedServer, viewmodel.ReturningIPs);
-                //Notification
-                var notif = Mapper.Map<RequestChangeIPViewModel, NotificationExtendedModel>(viewmodel);
-                notif.RequestTypeName = Constants.RequestTypeName.IP_CHANGE;
-                notif.StatusName = Constants.StatusName.REQUEST_PENDING;
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
             }
-            return RedirectToAction("Index");
+            RequestIndexViewModel redirectValue = new RequestIndexViewModel()
+            {
+                SuccessMessage = "You've sent Request Change IP"
+            };
+            return RedirectToAction("Index", "Request", redirectValue);
         }
 
         [HttpPost]
@@ -350,17 +352,16 @@ namespace IMS.Controllers
             if (viewmodel.ReturningIPs.Count > 0)
             {
                 //Add and log request
-                var result = RequestBLO.Current.AddRequestReturnIP(customer, viewmodel.RequestInfo.Description, viewmodel.SelectedServer, viewmodel.ReturningIPs);
-                //Notification
-                var notif = Mapper.Map<RequestReturnIPViewModel, NotificationExtendedModel>(viewmodel);
-                notif.RequestTypeName = Constants.RequestTypeName.IP_RETURN;
-                notif.StatusName = Constants.StatusName.REQUEST_PENDING;
-                notif.RequestCode = result;
+                var result = RequestBLO.Current.AddRequestReturnIP(customer, viewmodel.RequestInfo.Description,
+                    viewmodel.SelectedServer, viewmodel.ReturningIPs);
                 //dang ky ham cho client
-                NotifRegister(notif);
+                Notify(result.NotificationCodes);
             }
-            Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
-            return RedirectToAction("Index");
+            RequestIndexViewModel redirectValue = new RequestIndexViewModel()
+            {
+                SuccessMessage = "You've sent Request Return IP"
+            };
+            return RedirectToAction("Index", "Request", redirectValue);
         }
 
         [HttpPost]
@@ -377,15 +378,13 @@ namespace IMS.Controllers
             viewmodel.RequestInfo.Description = JsonConvert.SerializeObject(requestDetail);
             //Add and log request
             var result = RequestBLO.Current.AddRequestRentRack(customer, viewmodel.RequestInfo.Description);
-            //Notification
-            var notif = Mapper.Map<RequestRentRackViewModel, NotificationExtendedModel>(viewmodel);
-            notif.RequestTypeName = Constants.RequestTypeName.RACK_RENT;
-            notif.StatusName = Constants.StatusName.REQUEST_PENDING;
-            notif.RequestCode = result;
             //dang ky ham cho client
-            NotifRegister(notif);
-            Toast(Constants.AlertType.SUCCESS, "RequestRentRack", null, true);
-            return RedirectToAction("Index");
+            Notify(result.NotificationCodes);
+            RequestIndexViewModel redirectValue = new RequestIndexViewModel()
+            {
+                SuccessMessage = "You've sent Request Rent Rack"
+            };
+            return RedirectToAction("Index", "Request", redirectValue);
         }
 
         [HttpPost]
@@ -393,16 +392,14 @@ namespace IMS.Controllers
         {
             var customer = GetCurrentUserName();
             //Add and log request
-            var requestCode = RequestBLO.Current.AddRequestReturnRack(customer, viewmodel.RequestInfo.Description, viewmodel.AllRacks);
-            //Notification
-            var notif = Mapper.Map<RequestReturnRackViewModel, NotificationExtendedModel>(viewmodel);
-            notif.RequestTypeName = Constants.RequestTypeName.RACK_RETURN;
-            notif.StatusName = Constants.StatusName.REQUEST_PENDING;
-            notif.RequestCode = requestCode;
+            var result = RequestBLO.Current.AddRequestReturnRack(customer, viewmodel.RequestInfo.Description, viewmodel.AllRacks);
             //dang ky ham cho client
-            NotifRegister(notif);
-            Toast(Constants.AlertType.SUCCESS, "RequestReturnRack", null, true);
-            return RedirectToAction("Index");
+            Notify(result.NotificationCodes);
+            RequestIndexViewModel redirectValue = new RequestIndexViewModel()
+            {
+                SuccessMessage = "You've sent Request Return Rack"
+            };
+            return RedirectToAction("Index", "Request", redirectValue);
         }
         #endregion
 
@@ -439,12 +436,12 @@ namespace IMS.Controllers
         }
         [Roles(Constants.Role.CUSTOMER)]
         [HttpPost]
-        public ActionResult CancelRequestChangeIp(ProcessRequestChangeIPViewModel viewmodel)
+        public ActionResult CancelRequestChangeIp(string requestCode, string taskCode)
         {
             var customer = GetCurrentUserName();
-            RequestBLO.Current.CancelRequestChangeIp(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
+            RequestBLO.Current.CancelRequestChangeIp(requestCode, customer, taskCode);
             return RedirectToAction("Detais",
-               new { rType = Constants.TypeOfLog.LOG_CHANGE_IP, rCode = viewmodel.RequestInfo.RequestCode });
+               new { rType = Constants.TypeOfLog.LOG_CHANGE_IP, rCode = requestCode });
         }
         [Roles(Constants.Role.CUSTOMER)]
         [HttpPost]

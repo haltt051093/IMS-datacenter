@@ -4,7 +4,7 @@ using IMS.Data.ViewModels;
 
 namespace IMS.Models
 {
-    public class RequestIndexViewModel
+    public class RequestIndexViewModel : BaseViewModel
     {
         public RequestIndexViewModel()
         {

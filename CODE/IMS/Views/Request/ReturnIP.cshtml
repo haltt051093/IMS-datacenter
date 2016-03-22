@@ -110,20 +110,11 @@
                 });
                 return false;
             } else {
-
-                notif({
-                    msg: "<b>Oops!</b> A wild error appeared!",
-                    type: "info",
-                    position: "center"
+                var selectedValues = [];
+                $("[id*=MyTable] input:checked").each(function () {
+                    selectedValues.push($(this).val());
                 });
-
-                setTimeout(function () {
-                    var selectedValues = [];
-                    $("[id*=MyTable] input:checked").each(function () {
-                        selectedValues.push($(this).val());
-                    });
-                    $('#ips').val(selectedValues);
-                }, 4000);
+                $('#ips').val(selectedValues);
             }
         });
 

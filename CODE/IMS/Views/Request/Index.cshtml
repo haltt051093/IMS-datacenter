@@ -13,6 +13,7 @@
     <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
         <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
             @Html.LabelFor(model => model.FilterByRequestType)
+            @Html.HiddenFor(model => model.SuccessMessage)
         </div>
         <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
             @Html.DropDownListFor(m => m.FilterByRequestType, Model.FilterByRequestType, "Select All", new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
@@ -190,6 +191,16 @@
             .next('.showhide')
             .toggle('fast');
     });
+
+    var message = $('#SuccessMessage').val();
+    if (message) {
+        notif({
+            msg: "<b>Success! </b>" + message,
+            type: "info",
+            position: "center"
+        });
+        $('#SuccessMessage').val("");
+    }
 
     $("#example1").dataTable({
         "iDisplayLength": -1,

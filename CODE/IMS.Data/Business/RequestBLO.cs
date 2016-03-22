@@ -186,7 +186,7 @@ namespace IMS.Data.Business
         }
 
         #region create request
-        public string AddRequestAddServer(string customer, string description, DateTime? appointmentTime, string uniqueRequestCode)
+        public NotificationResultModel AddRequestAddServer(string customer, string description, DateTime? appointmentTime, string uniqueRequestCode)
         {
             //request
             var requestCode = AddRequestANDLog(Constants.RequestTypeCode.ADD_SERVER,
@@ -200,10 +200,22 @@ namespace IMS.Data.Business
                 server.Customer = customer;
                 ServerBLO.Current.AddServerANDLog(server, requestCode);
             }
-            return requestCode;
+            //luu notification
+            var result = new NotificationResultModel();
+            var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
+            var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
+                .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
+                .ToList();
+            var desc = "Request Add Server from " + customer;
+            foreach (var shiftHead in activeStaff)
+            {
+                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.ADD_SERVER, shiftHead.Username, desc);
+                result.NotificationCodes.Add(notifCode);
+            }
+            return result;
         }
 
-        public string AddRequestBringServerAway(string customer, string description, List<ServerExtendedModel> listServers, DateTime? appointmentTime)
+        public NotificationResultModel AddRequestBringServerAway(string customer, string description, List<ServerExtendedModel> listServers, DateTime? appointmentTime)
         {
             //add request
             var requestCode = AddRequestANDLog(Constants.RequestTypeCode.BRING_SERVER_AWAY,
@@ -228,7 +240,19 @@ namespace IMS.Data.Business
                         customer);
                 }
             }
-            return requestCode;
+            //luu notification
+            var result = new NotificationResultModel();
+            var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
+            var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
+                .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
+                .ToList();
+            var desc = "Request Bring Server Away from " + customer;
+            foreach (var shiftHead in activeStaff)
+            {
+                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.BRING_SERVER_AWAY, shiftHead.Username, desc);
+                result.NotificationCodes.Add(notifCode);
+            }
+            return result;
         }
 
         //luu xong het moi log Location cua server
@@ -250,20 +274,29 @@ namespace IMS.Data.Business
         //    LogBLO.Current.Add(logLocation);
         //}
 
-        public string AddRequestAssignIP(string customer, string description, string serverCode)
+        public NotificationResultModel AddRequestAssignIP(string customer, string description, string serverCode)
         {
             //request
             var requestCode = AddRequestANDLog(Constants.RequestTypeCode.ASSIGN_IP,
                     Constants.StatusCode.REQUEST_PENDING, customer, description,
                     null, serverCode, Constants.TypeOfLog.LOG_ASSIGN_IP, null);
             //luu notification
-            var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.ASSIGN_IP, customer, description);
-            return requestCode;
+            var result = new NotificationResultModel();
+            var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
+            var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
+                .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
+                .ToList();
+            var desc = "Request Assign IP from " + customer;
+            foreach (var shiftHead in activeStaff)
+            {
+                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.ASSIGN_IP, shiftHead.Username, desc);
+                result.NotificationCodes.Add(notifCode);
+            }
+            return result;
         }
 
         public NotificationResultModel AddRequestChangeIP(string customer, string description, string serverCode, List<string> returningIPs)
         {
-            var result = new NotificationResultModel();
             var requestCode = AddRequestANDLog(Constants.RequestTypeCode.CHANGE_IP,
                     Constants.StatusCode.REQUEST_PENDING, customer, description,
                     null, serverCode, Constants.TypeOfLog.LOG_CHANGE_IP, null);
@@ -279,6 +312,7 @@ namespace IMS.Data.Business
                     customer);
             }
             //luu notification
+            var result = new NotificationResultModel();
             var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
             var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
                 .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
@@ -289,11 +323,10 @@ namespace IMS.Data.Business
                 var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.CHANGE_IP, shiftHead.Username, desc);
                 result.NotificationCodes.Add(notifCode);
             }
-            
             return result;
         }
 
-        public string AddRequestReturnIP(string customer, string description, string serverCode, List<string> returningIPs)
+        public NotificationResultModel AddRequestReturnIP(string customer, string description, string serverCode, List<string> returningIPs)
         {
             //add request
             var requestCode = AddRequestANDLog(Constants.RequestTypeCode.RETURN_IP,
@@ -310,22 +343,42 @@ namespace IMS.Data.Business
                     customer);
             }
             //luu notification
-            var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.RETURN_IP, customer, description);
-            return requestCode;
+            var result = new NotificationResultModel();
+            var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
+            var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
+                .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
+                .ToList();
+            var desc = "Request Return IP from " + customer;
+            foreach (var shiftHead in activeStaff)
+            {
+                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.RETURN_IP, shiftHead.Username, desc);
+                result.NotificationCodes.Add(notifCode);
+            }
+            return result;
         }
 
-        public string AddRequestRentRack(string customer, string description)
+        public NotificationResultModel AddRequestRentRack(string customer, string description)
         {
             //add request
             var requestCode = AddRequestANDLog(Constants.RequestTypeCode.RENT_RACK,
                 Constants.StatusCode.REQUEST_PENDING, customer, description,
                 null, null, Constants.TypeOfLog.LOG_RENT_RACK, null);
             //luu notification
-            var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.RENT_RACK, customer, description);
-            return requestCode;
+            var result = new NotificationResultModel();
+            var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
+            var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
+                .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
+                .ToList();
+            var desc = "Request Rent Rack from " + customer;
+            foreach (var shiftHead in activeStaff)
+            {
+                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.RENT_RACK, shiftHead.Username, desc);
+                result.NotificationCodes.Add(notifCode);
+            }
+            return result;
         }
 
-        public string AddRequestReturnRack(string customer, string description, List<RackOfCustomerExtendedModel> listRacks)
+        public NotificationResultModel AddRequestReturnRack(string customer, string description, List<RackOfCustomerExtendedModel> listRacks)
         {
             //Add and log request
             var requestCode = AddRequestANDLog(Constants.RequestTypeCode.RETURN_RACK,
@@ -342,8 +395,18 @@ namespace IMS.Data.Business
                 }
             }
             //luu notification
-            var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.RENT_RACK, customer, description);
-            return requestCode;
+            var result = new NotificationResultModel();
+            var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
+            var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
+                .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
+                .ToList();
+            var desc = "Request Return Rack from " + customer;
+            foreach (var shiftHead in activeStaff)
+            {
+                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.RequestTypeCode.RETURN_RACK, shiftHead.Username, desc);
+                result.NotificationCodes.Add(notifCode);
+            }
+            return result;
         }
         #endregion
 
