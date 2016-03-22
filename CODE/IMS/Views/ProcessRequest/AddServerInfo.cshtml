@@ -62,15 +62,15 @@
                             </div>
                         }
                     }
-                    @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                    @if ((User.IsInRole("Shift Head") || User.IsInRole("Manager")))
                     {
-                        if ((Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING || Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_NOTFINISH) &&
-                            (User.IsInRole("Shift Head") || User.IsInRole("Manager")) ||
-                      (Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING && Model.RequestInfo.IsShifthead))
+                        if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                         {
-                            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                            if ((Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING || Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_NOTFINISH) ||
+                          (Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING && Model.RequestInfo.IsShifthead))
+                            {
                                 <a class="btn btn-primary pull-left" data-toggle="modal" data-target="#Reassigntask"><i class="fa fa-plus"></i>Reassign Task</a>
-                            </div>
+                            }
                         }
                     }
                 </div>

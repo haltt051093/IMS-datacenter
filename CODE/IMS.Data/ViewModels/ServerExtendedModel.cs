@@ -22,17 +22,14 @@ namespace IMS.Data.ViewModels
             }
         }
 
-        [Display(Name = "Customer", ResourceType = typeof(Labels))]
         public string CustomerName { get; set; }
 
         public string RackCode { get; set; }
 
         public string RackName { get; set; }
 
-        [Display(Name = "RackUnit", ResourceType = typeof(Labels))]
         public int? RackUnit { get; set; }
 
-        [Display(Name = "Status", ResourceType = typeof(Labels))]
         public string Status { get; set; }
 
         public string Memory { get; set; }

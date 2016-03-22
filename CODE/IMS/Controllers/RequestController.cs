@@ -15,7 +15,7 @@ namespace IMS.Controllers
 {
     public class RequestController : CoreController
     {
-        [Authorize]
+        [Roles(Constants.Role.CUSTOMER)]
         public ActionResult Index(RequestIndexViewModel data)
         {
             //var data = new RequestIndexViewModel();
@@ -207,7 +207,7 @@ namespace IMS.Controllers
         [HttpGet]
         public ActionResult Detail(string code, string msg)
         {
-            var r = RequestBLO.Current.GetByKeys(new Request {RequestCode = code});
+            var r = RequestBLO.Current.GetByKeys(new Request { RequestCode = code });
             var rType = string.Empty;
             if (r != null)
             {
@@ -218,6 +218,12 @@ namespace IMS.Controllers
                 //Get request
                 var request = RequestBLO.Current.DetailProcessRequestAddServer(code, null, null);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestAddServerViewModel>(request);
+                var list = new List<ServerExtendedModel>();
+                foreach (var item in request.Serverss)
+                {
+                    list.Add(item);
+                }
+                viewmodel.Servers = list;
                 viewmodel.SuccessMessage = msg;
                 return View("AddServerDetail", viewmodel);
             }
@@ -226,6 +232,12 @@ namespace IMS.Controllers
                 //Get request
                 var request = RequestBLO.Current.DetailProcessRequestBringServerAway(code, null, null);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestBringServerAwayViewModel>(request);
+                var list = new List<ServerExtendedModel>();
+                foreach (var item in request.ServerOfCustomers)
+                {
+                    list.Add(item);
+                }
+                viewmodel.ServerOfCustomer = list;
                 viewmodel.SuccessMessage = msg;
                 return View("BringServerAwayDetail", viewmodel);
             }

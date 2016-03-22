@@ -40,8 +40,8 @@
             <tbody>
                 <tr>
                     <td>
-                        @Html.ActionLink(Model.Tasks[i].RequestCode, "Detais", "ProcessRequest",
-                            new { rType = Model.Tasks[i].RequestTypeCode, rCode = Model.Tasks[i].RequestCode }, null)
+                        @Html.ActionLink(Model.Tasks[i].RequestCode, "Detail", "ProcessRequest",
+                            new { code = Model.Tasks[i].RequestCode }, null)
                         @Html.HiddenFor(modelItem => modelItem.Tasks[i].RequestCode)
                     </td>
                     <td>

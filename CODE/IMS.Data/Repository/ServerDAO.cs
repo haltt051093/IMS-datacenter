@@ -234,7 +234,6 @@ namespace IMS.Data.Repository
                             Size = s.Size,
                             Power = s.Power,
                             RegisteredDate = s.RegisteredDate,
-                            Outlet = s.Outlet,
                             Bandwidth = s.Bandwidth,
                             PartNumber = s.PartNumber,
                             SerialNumber = s.SerialNumber
@@ -266,7 +265,6 @@ namespace IMS.Data.Repository
                             Size = s.Size,
                             Power = s.Power,
                             RegisteredDate = s.RegisteredDate,
-                            Outlet = s.Outlet,
                             Bandwidth = s.Bandwidth,
                             PartNumber = s.PartNumber,
                             SerialNumber = s.SerialNumber

@@ -13,7 +13,6 @@ namespace IMS.Controllers
         public ActionResult Index()
         {
             var userName = GetCurrentUserName();
-            var role = GetCurrentUserRole();
             var data = new NotificationViewModel();
             //data.FilterByRequestType = RequestTypeBLO.Current
             //    .GetAll()
@@ -23,7 +22,7 @@ namespace IMS.Controllers
             //    .GetStatusByObject(Constants.Object.OBJECT_REQUEST)
             //    .Select(x => new SelectListItem { Value = x.StatusCode, Text = x.StatusName })
             //    .ToList();
-            data.NotificationList = NotificationBLO.Current.ListNotification(role, userName);
+            data.NotificationList = NotificationBLO.Current.ListNotification(userName);
             return View(data);
         }
 

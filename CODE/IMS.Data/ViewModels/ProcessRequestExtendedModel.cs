@@ -13,12 +13,12 @@ namespace IMS.Data.ViewModels
         public string AssigneeName { get; set; }
 
         //Add server
-        public List<ServerExtendedModel> Servers { get; set; }
+        public List<ServerExtendedModel> Serverss { get; set; }
         //bring server away
         public int ReturnIpNumber { get; set; }
         public int ReturnLocationNumber { get; set; }
         public int SelectedServerNumber { get; set; }
-        public List<ServerExtendedModel> ServerOfCustomer { get; set; }
+        public List<ServerExtendedModel> ServerOfCustomers { get; set; }
         //assign ip
         public int NumberOfIP { get; set; }
         public int NumberOfAvailableIP { get; set; }

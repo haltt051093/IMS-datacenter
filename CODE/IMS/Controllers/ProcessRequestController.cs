@@ -54,6 +54,12 @@ namespace IMS.Controllers
                 //Get request
                 var request = RequestBLO.Current.DetailProcessRequestAddServer(code, group, role);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestAddServerViewModel>(request);
+                var list = new List<ServerExtendedModel>();
+                foreach (var item in request.Serverss)
+                {
+                    list.Add(item);
+                }
+                viewmodel.Servers = list;
                 viewmodel.CurrentUser = GetCurrentUserName();
                 viewmodel.StaffCodeOptions = request.listStaff
                 .Select(x => new SelectListItem
@@ -72,6 +78,12 @@ namespace IMS.Controllers
                 //Get request
                 var request = RequestBLO.Current.DetailProcessRequestBringServerAway(code, group, role);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestBringServerAwayViewModel>(request);
+                var list = new List<ServerExtendedModel>();
+                foreach (var item in request.ServerOfCustomers)
+                {
+                    list.Add(item);
+                }
+                viewmodel.ServerOfCustomer = list;
                 viewmodel.CurrentUser = GetCurrentUserName();
                 viewmodel.StaffCodeOptions = request.listStaff
                 .Select(x => new SelectListItem
@@ -296,11 +308,14 @@ namespace IMS.Controllers
             {
                 var shifthead = GetCurrentUserName();
                 var preTask = RequestBLO.Current.CancelTask(viewmodel.RequestInfo.TaskCode,
-                     viewmodel.RequestInfo.RequestCode, viewmodel.RequestInfo.Assignee);
+                     viewmodel.RequestInfo.RequestCode, viewmodel.RequestInfo.Assignee, shifthead);
                 var newTask = RequestBLO.Current.ReAssignTask(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RequestCode,
                     viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.AssignedStaff, shifthead);
                 //dang ky ham cho client
-                Notify(preTask.NotificationCodes);
+                if (viewmodel.RequestInfo.Assignee != shifthead)
+                {
+                    Notify(preTask.NotificationCodes);
+                }
                 if (viewmodel.RequestInfo.AssignedStaff != shifthead)
                 {
                     Notify(newTask.NotificationCodes);
@@ -359,11 +374,14 @@ namespace IMS.Controllers
             {
                 var shifthead = GetCurrentUserName();
                 var preTask = RequestBLO.Current.CancelTask(viewmodel.RequestInfo.TaskCode,
-                    viewmodel.RequestInfo.RequestCode, viewmodel.RequestInfo.Assignee);
+                     viewmodel.RequestInfo.RequestCode, viewmodel.RequestInfo.Assignee, shifthead);
                 var newTask = RequestBLO.Current.ReAssignTask(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RequestCode,
                     viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.AssignedStaff, shifthead);
                 //dang ky ham cho client
-                Notify(preTask.NotificationCodes);
+                if (viewmodel.RequestInfo.Assignee != shifthead)
+                {
+                    Notify(preTask.NotificationCodes);
+                }
                 if (viewmodel.RequestInfo.AssignedStaff != shifthead)
                 {
                     Notify(newTask.NotificationCodes);
@@ -411,11 +429,14 @@ namespace IMS.Controllers
             {
                 var shifthead = GetCurrentUserName();
                 var preTask = RequestBLO.Current.CancelTask(viewmodel.RequestInfo.TaskCode,
-                    viewmodel.RequestInfo.RequestCode, viewmodel.RequestInfo.Assignee);
+                     viewmodel.RequestInfo.RequestCode, viewmodel.RequestInfo.Assignee, shifthead);
                 var newTask = RequestBLO.Current.ReAssignTask(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RequestCode,
                     viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.AssignedStaff, shifthead);
                 //dang ky ham cho client
-                Notify(preTask.NotificationCodes);
+                if (viewmodel.RequestInfo.Assignee != shifthead)
+                {
+                    Notify(preTask.NotificationCodes);
+                }
                 if (viewmodel.RequestInfo.AssignedStaff != shifthead)
                 {
                     Notify(newTask.NotificationCodes);
@@ -465,11 +486,14 @@ namespace IMS.Controllers
             {
                 var shifthead = GetCurrentUserName();
                 var preTask = RequestBLO.Current.CancelTask(viewmodel.RequestInfo.TaskCode,
-                     viewmodel.RequestInfo.RequestCode, viewmodel.RequestInfo.Assignee);
+                     viewmodel.RequestInfo.RequestCode, viewmodel.RequestInfo.Assignee, shifthead);
                 var newTask = RequestBLO.Current.ReAssignTask(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RequestCode,
                     viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.AssignedStaff, shifthead);
                 //dang ky ham cho client
-                Notify(preTask.NotificationCodes);
+                if (viewmodel.RequestInfo.Assignee != shifthead)
+                {
+                    Notify(preTask.NotificationCodes);
+                }
                 if (viewmodel.RequestInfo.AssignedStaff != shifthead)
                 {
                     Notify(newTask.NotificationCodes);
@@ -518,11 +542,14 @@ namespace IMS.Controllers
             {
                 var shifthead = GetCurrentUserName();
                 var preTask = RequestBLO.Current.CancelTask(viewmodel.RequestInfo.TaskCode,
-                    viewmodel.RequestInfo.RequestCode, viewmodel.RequestInfo.Assignee);
+                     viewmodel.RequestInfo.RequestCode, viewmodel.RequestInfo.Assignee, shifthead);
                 var newTask = RequestBLO.Current.ReAssignTask(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RequestCode,
                     viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.AssignedStaff, shifthead);
                 //dang ky ham cho client
-                Notify(preTask.NotificationCodes);
+                if (viewmodel.RequestInfo.Assignee != shifthead)
+                {
+                    Notify(preTask.NotificationCodes);
+                }
                 if (viewmodel.RequestInfo.AssignedStaff != shifthead)
                 {
                     Notify(newTask.NotificationCodes);
@@ -570,11 +597,14 @@ namespace IMS.Controllers
             {
                 var shifthead = GetCurrentUserName();
                 var preTask = RequestBLO.Current.CancelTask(viewmodel.RequestInfo.TaskCode,
-                    viewmodel.RequestInfo.RequestCode, viewmodel.RequestInfo.Assignee);
+                     viewmodel.RequestInfo.RequestCode, viewmodel.RequestInfo.Assignee, shifthead);
                 var newTask = RequestBLO.Current.ReAssignTask(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RequestCode,
                     viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.AssignedStaff, shifthead);
                 //dang ky ham cho client
-                Notify(preTask.NotificationCodes);
+                if (viewmodel.RequestInfo.Assignee != shifthead)
+                {
+                    Notify(preTask.NotificationCodes);
+                }
                 if (viewmodel.RequestInfo.AssignedStaff != shifthead)
                 {
                     Notify(newTask.NotificationCodes);
@@ -622,16 +652,19 @@ namespace IMS.Controllers
             {
                 var shifthead = GetCurrentUserName();
                 var preTask = RequestBLO.Current.CancelTask(viewmodel.RequestInfo.TaskCode,
-                    viewmodel.RequestInfo.RequestCode, viewmodel.RequestInfo.Assignee);
+                     viewmodel.RequestInfo.RequestCode, viewmodel.RequestInfo.Assignee, shifthead);
                 var newTask = RequestBLO.Current.ReAssignTask(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RequestCode,
                     viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.AssignedStaff, shifthead);
                 //dang ky ham cho client
-                Notify(preTask.NotificationCodes);
+                if (viewmodel.RequestInfo.Assignee != shifthead)
+                {
+                    Notify(preTask.NotificationCodes);
+                }
                 if (viewmodel.RequestInfo.AssignedStaff != shifthead)
                 {
                     Notify(newTask.NotificationCodes);
                 }
-                return RedirectToAction("Detail", "ProcessRequest", new {code = viewmodel.RequestInfo.RequestCode });
+                return RedirectToAction("Detail", "ProcessRequest", new { code = viewmodel.RequestInfo.RequestCode });
             }
             return RedirectToAction("Index");
 

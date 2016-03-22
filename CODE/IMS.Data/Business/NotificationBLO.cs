@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using IMS.Core;
 using IMS.Core.Express;
@@ -55,38 +56,19 @@ namespace IMS.Data.Business
                 RefType = refType,
                 Username = username,
                 Description = description,
-                IsViewed = false
+                IsViewed = false,
+                NotifTime = DateTime.Now
             };
 
             dao.Add(notif);
             return notifCode;
         }
 
-        public List<NotificationExtendedModel> ListServerSideNotification()
+        public List<Notification> ListNotification(string username)
         {
-            return dao.ListServerSideNotification();
-        }
-
-        public List<NotificationExtendedModel> ListClientSideNotification(string customer)
-        {
-            return dao.ListClientSideNotification(customer);
-        }
-
-        public List<NotificationExtendedModel> ListNotification(string role, string customer)
-        {
-            var list = new List<NotificationExtendedModel>();
-            if (role == Constants.Role.CUSTOMER && customer != null)
-            {
-                list = ListClientSideNotification(customer);
-            }
-            else if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.STAFF || role == Constants.Role.MANAGER)
-            {
-                list = ListServerSideNotification();
-            }
+            var list = dao.Query(x => x.Username == username).ToList();
             return list;
         }
-
-
 
         private string GenerateCode()
         {

@@ -21,12 +21,12 @@
             <tbody id="tableBody">
                 @foreach (var item in Model.NotificationList)
                 {
-                    <tr class="btnRequestCode" data-requestCode="@item.RequestCode">
+                    <tr class="btnRequestCode" data-requestCode="@item.RefCode">
                         <td>
                             @Html.DisplayFor(modelItem => item.Description)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.RequestedTime)
+                            @Html.DisplayFor(modelItem => item.NotifTime)
                         </td>
                     </tr>
                 }

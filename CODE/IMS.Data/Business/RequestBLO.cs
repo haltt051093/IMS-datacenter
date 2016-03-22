@@ -475,8 +475,6 @@ namespace IMS.Data.Business
                 Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
-            //update task
-            TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
             //luu notification
             var result = new NotificationResultModel();
             var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
@@ -691,7 +689,7 @@ namespace IMS.Data.Business
                 var server = ServerBLO.Current.GetAllServerInfo(servercode);
                 list.Add(server);
             }
-            request.Servers = list;
+            request.Serverss = list;
             return request;
         }
 
@@ -707,7 +705,7 @@ namespace IMS.Data.Business
             request.ReturnIpNumber = returnValues.ReturnIpNumber;
             request.ReturnLocationNumber = returnValues.ReturnLocationNumber;
             request.SelectedServerNumber = returnValues.ReturnServerNumber;
-            request.ServerOfCustomer = returnValues.Servers;
+            request.ServerOfCustomers = returnValues.Servers;
             return request;
         }
 
@@ -918,17 +916,21 @@ namespace IMS.Data.Business
 
         #region reassign
 
-        public NotificationResultModel CancelTask(string taskCode, string requestCode, string preAssignedStaff)
+        public NotificationResultModel CancelTask(string taskCode, string requestCode, string preAssignedStaff, string shifthead)
         {
             //cancel task của thang truoc do, neu trang thai task la Waiting
             TaskBLO.Current.CancelWaitingTask(taskCode);
-            //luu notification
-            var result = new NotificationResultModel();
-            var desc = "Your task is CANCELLED!";
-            var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_TASK,
-                preAssignedStaff, desc);
-            result.NotificationCodes.Add(notifCode);
-            return result;
+            if (shifthead != preAssignedStaff)
+            {
+                //luu notification
+                var result = new NotificationResultModel();
+                var desc = "Your task is CANCELLED!";
+                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_TASK,
+                    preAssignedStaff, desc);
+                result.NotificationCodes.Add(notifCode);
+                return result;
+            }
+            return null;
         }
 
         public NotificationResultModel ReAssignTask(string taskCode, string requestCode, string preAssignedStaff,
@@ -937,13 +939,17 @@ namespace IMS.Data.Business
             //cancel task của thang truoc do, neu trang thai task la Waiting
             TaskBLO.Current.AssignTask(requestCode, shifthead, newAssignedStaff, preAssignedStaff);
             UpdateRequestAssignee(requestCode, newAssignedStaff);
-            //luu notification
-            var result = new NotificationResultModel();
-            var desc = "You has a new task";
-            var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_TASK,
-                newAssignedStaff, desc);
-            result.NotificationCodes.Add(notifCode);
-            return result;
+            if (shifthead != newAssignedStaff)
+            {
+                //luu notification
+                var result = new NotificationResultModel();
+                var desc = "You has a new task";
+                var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_TASK,
+                    newAssignedStaff, desc);
+                result.NotificationCodes.Add(notifCode);
+                return result;
+            }
+            return null;
         }
         #endregion
 

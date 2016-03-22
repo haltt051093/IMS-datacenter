@@ -42,11 +42,11 @@
                     </div>
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                        @Html.LabelFor(model => model.RequestInfo.Assignee)
-                    </div>
                     @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING && (User.IsInRole("Shift Head") || User.IsInRole("Manager")))
                     {
+                        <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
+                            @Html.LabelFor(model => model.RequestInfo.Assignee)
+                        </div>
                         <div class="@Constants.HtmlFormat.FORM_CONTROL_X2_CLASS">
                             @Html.DropDownListFor(model => model.RequestInfo.Assignee, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                             @Html.ValidationMessageFor(model => model.RequestInfo.Assignee)
@@ -55,6 +55,9 @@
 
                     @if (Model.RequestInfo.AssigneeName != null)
                     {
+                        <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
+                            @Html.LabelFor(model => model.RequestInfo.Assignee)
+                        </div>
                         <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                             @Html.DisplayFor(model => model.RequestInfo.AssigneeName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                             @Html.HiddenFor(model => model.RequestInfo.Assignee)
