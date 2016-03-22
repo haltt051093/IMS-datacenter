@@ -1,0 +1,28 @@
+﻿.custom-combobox {
+    position: relative;
+} 
+.custom-combobox-toggle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
+}
+.custom-combobox-input {
+    margin: 0;
+    padding: 5px 10px;
+}
+
+.ui-background-bordered {
+    border: 1px solid lightgrey;
+    background: white;
+}
+
+.ui-menu .ui-menu-item {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.ui-state-focus {
+    background: #66afe9;
+}

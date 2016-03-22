@@ -1,0 +1,236 @@
+/* ######### Drop Down DIVs CSS ######### */
+
+
+.ddsubmenustyle, .ddsubmenustyle div{ /*topmost and sub DIVs, respectively*/
+font: normal 13px Verdana;
+margin: 0;
+padding: 0;
+position: absolute;
+left: 0;
+top: 0;
+list-style-type: none;
+background: white;
+border: 1px solid black;
+border-bottom-width: 0;
+visibility: hidden;
+z-index: 100;
+}
+
+.ddsubmenustyle ul{
+margin: 0;
+padding: 0;
+position: absolute;
+left: 0;
+top: 0;
+list-style-type: none;
+border: 0px none;
+}
+
+.ddsubmenustyle li a{
+display: block;
+width: 170px; /*width of menu (not including side paddings)*/
+color: black;
+background-color: lightyellow;
+text-decoration: none;
+padding: 4px 5px;
+border-bottom: 1px solid black;
+}
+
+* html .ddsubmenustyle li{ /*IE6 CSS hack*/
+display: inline-block;
+width: 170px; /*width of menu (include side paddings of LI A*/
+}
+
+.ddsubmenustyle li a:hover{
+background-color: black;
+color: white;
+}
+
+/* ######### Neutral CSS  ######### */
+
+.downarrowpointer{ /*CSS for "down" arrow image added to top menu items*/
+padding-left: 4px;
+border: 0;
+}
+
+.rightarrowpointer{ /*CSS for "right" arrow image added to drop down menu items*/
+position: absolute;
+padding-top: 3px;
+right: 3px;
+border: 0;
+}
+
+.backarrowpointer{ /*CSS for "back" arrow image added to breadcrumb of mobile menu sub menus*/
+position: relative;
+border: 0;
+}
+
+.ddiframeshim{
+position: absolute;
+z-index: 500;
+background: transparent;
+border-width: 0;
+width: 0;
+height: 0;
+display: block;
+}
+
+/* ######### Mobile Menu CSS  ######### */
+
+
+nav.mobilelevelsmenu{
+	position: absolute;
+	width: 200px; /* width of menu. Percentage value accepted */
+	height: 230px; /* height of menu */
+	border: 1px solid black;
+}
+
+
+nav.mobilelevelsmenu ul{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	overflow-y: scroll;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	left: 0;
+	top: 0;
+	background: lightyellow;
+	font-weight: bold;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+
+nav.mobilelevelsmenu ul li.breadcrumb{ /* Breadcrumb DIV that gets added to top of each sub level UL menu */
+  position: relative;
+  padding: 10px;
+  border-bottom: 1px solid gray;
+  background: black;
+	color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+nav.mobilelevelsmenu ul span.left{ /* SPAN inside breadcrumb containing "left" arrow markup */
+	margin-right: 5px;
+	font-weight: bold;
+	font-size: 1.5em;
+	color: darkred;
+}
+
+
+nav.mobilelevelsmenu ul li{
+	
+}
+
+nav.mobilelevelsmenu ul li a{
+  text-decoration: none;
+  display: block;
+  padding: 10px;
+  color: black;
+  border-bottom: 1px solid #eee;
+}
+
+nav.mobilelevelsmenu ul li a:hover{
+  background: black;
+	color: white;
+}
+
+nav.mobilelevelsmenu ul li a span.right{ /* SPAN inside LI headers containing "right" arrow markup */
+  position: absolute;
+  right: 8px;
+	font-weight: bold;
+	font-size: 1.1em;
+}
+
+/* ############# Animated Drawer icon (horizontal mobile menu toggler) CSS ############# */
+
+.animateddrawer{
+	font-size: 10px; /* Base font size. Adjust this value to modify size of drawer icon */
+  width: 3em; 
+  height: 2.8em; 
+  outline: none;
+  display: none;
+	position: relative;
+	background: white;
+	z-index: 1000;
+}
+
+.animateddrawer:before, .animateddrawer:after{
+  position: absolute;
+  content: '';
+  display: block;
+  width: 100%;
+  height: 0.6em; /* height of top and bottom drawer line */
+  background: black;
+  border-radius: 2px;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  -webkit-transition: all 0.3s ease-in; /* set transition type and time */
+  transition: all 0.3s ease-in; 
+}
+
+.animateddrawer:after{
+  top: auto;
+  bottom: 0;
+}
+
+.animateddrawer span{
+  width: 100%;
+  height: 0.6em; /* height of middle drawer line */
+  background: black;
+  position: absolute;
+  top: 50%;
+  margin-top: -0.3em; /* set this to - half of middle drawer line height */
+  border-radius: 2px;
+  -ms-transform-origin: 50% 50%;
+  -webkit-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
+  -webkit-transition: all 0.3s ease-in 0.3s; /* set transition type and time */
+  transition: all 0.3s ease-in 0.3s;
+}
+
+.animateddrawer span::after{
+  content: '';
+  display: block;
+  width: 100%;
+  height: 0.6em; /* height of middle drawer line */
+  background: black;
+  border-radius: 2px;
+  position: absolute;
+  -ms-transform-origin: 50% 50%;
+  -webkit-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
+  -webkit-transition: all 0.3s ease-in 0.3s; /* set transition type and time */
+  transition: all 0.3s ease-in 0.3s;
+}
+
+.animateddrawer.open{
+}
+
+.animateddrawer.open:before{ /* style when .open class is added to button */
+  top: 50%;
+  margin-top: -0.3em; /* set this to - half of top drawer line height */
+  opacity: 0;
+}
+
+.animateddrawer.open:after{ /* style when .open class is added to button */
+  bottom: 50%;
+  opacity: 0;
+}
+
+.animateddrawer.open span{ /* style when .open class is added to button */
+  -ms-transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.animateddrawer.open span:after{ /* style when .open class is added to button */
+  -ms-transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+}

@@ -1,0 +1,1 @@
+﻿var ngAppCentral = new angular.module('appCentral', []);

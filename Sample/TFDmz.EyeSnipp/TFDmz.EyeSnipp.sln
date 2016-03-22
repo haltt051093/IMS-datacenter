@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFDmz.EyeSnipp.Web", "TFDmz.EyeSnipp.Web\TFDmz.EyeSnipp.Web.csproj", "{00219CC6-5D40-41C3-BC29-C3D83FC2CEC7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFDmz.EyeSnipp.Core", "TFDmz.EyeSnipp.Core\TFDmz.EyeSnipp.Core.csproj", "{E8979486-73F9-45FD-A9FB-9608A2841B51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFDmz.EyeSnipp.Resources", "TFDmz.EyeSnipp.Resources\TFDmz.EyeSnipp.Resources.csproj", "{ACD11FC9-B23A-484B-81DB-B3CB82FF1534}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{82BD4BBF-5082-4136-86B7-F9A8BDFC17FF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{7E5F8215-C1E9-440C-A4C9-D1B01CC75733}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{00219CC6-5D40-41C3-BC29-C3D83FC2CEC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00219CC6-5D40-41C3-BC29-C3D83FC2CEC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00219CC6-5D40-41C3-BC29-C3D83FC2CEC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00219CC6-5D40-41C3-BC29-C3D83FC2CEC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8979486-73F9-45FD-A9FB-9608A2841B51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8979486-73F9-45FD-A9FB-9608A2841B51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8979486-73F9-45FD-A9FB-9608A2841B51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8979486-73F9-45FD-A9FB-9608A2841B51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACD11FC9-B23A-484B-81DB-B3CB82FF1534}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACD11FC9-B23A-484B-81DB-B3CB82FF1534}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACD11FC9-B23A-484B-81DB-B3CB82FF1534}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACD11FC9-B23A-484B-81DB-B3CB82FF1534}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{00219CC6-5D40-41C3-BC29-C3D83FC2CEC7} = {7E5F8215-C1E9-440C-A4C9-D1B01CC75733}
+		{E8979486-73F9-45FD-A9FB-9608A2841B51} = {82BD4BBF-5082-4136-86B7-F9A8BDFC17FF}
+		{ACD11FC9-B23A-484B-81DB-B3CB82FF1534} = {82BD4BBF-5082-4136-86B7-F9A8BDFC17FF}
+	EndGlobalSection
+EndGlobal
