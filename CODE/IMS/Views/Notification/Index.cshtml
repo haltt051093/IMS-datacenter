@@ -1,163 +1,64 @@
 ﻿@model NotificationViewModel
 @{
-    ViewBag.Title = "ListNotifications";
-    ViewBag.Role = "Shift Head";
-}
-
-<script src="@Url.Content("~/Scripts/jquery.signalR-2.2.0.js")"></script>
-<script src="@Url.Content("~/signalr/hubs")"></script>
-<script>
-    //$(document).ready(function () {
-    //    var table = document.getElementById("myTable");
-    //    var row = table.insertRow(1);
-    //    var cellRequestCode = row.insertCell(0);
-    //    var cellRequestType = row.insertCell(1);
-    //    var cellRequestStatus = row.insertCell(2);
-    //    //var cellCustomer = row.insertCell(2);
-    //    //var cellDescription = row.insertCell(3);
-    //    //var cellAppointmentTime = row.insertCell(4);
-    //    //cell1.innerHTML = "NEW CELL1";
-
-    //    var commandHub = $.connection.remoteControllerHub;
-    //    commandHub.client.executeCommand = function (requestCode, typeOfRequest, customer, description, appointmentTime, requestStatus) {
-    //        //$('#result').append(requestCode + ' | ' + typeOfRequest + ' | ' + customer + ' | ' + description + ' | ' + appointmentTime + ' | ' + requestStatus + '<br/>');
-    //        cellRequestCode.innerHTML = requestCode;
-    //        cellRequestType.innerHTML = typeOfRequest;
-    //        cellRequestStatus.innerHTML = requestStatus;
-    //        //cellCustomer.innerHTML = customer;
-    //        //cellDescription.innerHTML = description;
-    //        //cellAppointmentTime.innerHTML = appointmentTime;
-    //    };
-    //    $.connection.hub.start();
-    //});
-
-</script>
-<section class="content-header">
-    <h1>
-        List of Notification
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="@Url.Action("Index2", "Schedule")"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">List of Notification</li>
-    </ol>
-</section>
-<!-- Main content -->
-<section class="content">
-    <table id="example1" class="table table-bordered table-striped table-responsive">
-        <thead>
-            <tr>
-                <th>RequestCode</th>
-                <th>Customer</th>
-                <th>RequestType</th>
-                <th>RequestedTime</th>
-                <th>Status</th>
-                <th class="hidden"></th>
-            </tr>
-        </thead>
-        <tbody id="tableBody">
-            @foreach (var item in Model.NotificationList)
-            {
-                <tr>
-                    <td>
-                        @Html.ActionLink(item.RequestCode, "Detais", "ProcessRequest", new { rType = item.RequestType, rCode = item.RequestCode }, null)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Customer)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RequestTypeName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RequestedTime)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.StatusName)
-                    </td>
-                    <td class="hidden">
-                        @Html.DisplayFor(modelItem => item.Priority)
-                    </td>
-                </tr>
-            }
-        </tbody>
-        <tfoot>
-            <tr>
-                <th>RequestCode</th>
-                <th>Customer</th>
-                <th>RequestType</th>
-                <th>RequestedTime</th>
-                <th>Status</th>
-                <th class="hidden"></th>
-            </tr>
-        </tfoot>
-    </table>
-    @if (User.IsInRole("Manager"))
+    ViewBag.Title = Pages.Notification;
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
     {
-        <div>
-        </div>
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("Notification", "Index", Pages.Notification)
+    };
+}
+<!-- Main content -->
+<section class="main-content">
+    @using (Html.BeginForm("Detail", "Notification", FormMethod.Post, new { @id = "addserverform" }))
+    {
+        <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS">
+            <thead>
+                <tr style="background-color: #404040">
+                    <th><span style="color: ghostwhite">Notification</span>
+                    <th><span style="color: ghostwhite">Time</span>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                @foreach (var item in Model.NotificationList)
+                {
+                    <tr class="btnRequestCode" data-requestCode="@item.RequestCode">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Customer)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RequestTypeName)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr style="background-color: #404040">
+                    <th><span style="color: ghostwhite">Notification</span></th>
+                    <th><span style="color: ghostwhite">Time</span></th>
+                </tr>
+            </tfoot>
+        </table>
     }
 </section><!-- /.content -->
-<!-- ACCEPT REQUEST MODAL -->
-<div class="modal fade" id="acceptrequest-modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" style="width: 500px">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"><i class="fa fa-check"></i> Accept Request</h4>
-            </div>
-            @using (Html.BeginForm("AcceptRequest", "Notification", FormMethod.Post))
-            {
-                <div class="modal-body">
-                    <div class="form-group">
-                        <div class="form-group">
-                            @*@Html.ActionLink("View Request Details", "Detais", "ProcessRequest", null, new { @class = "viewDetails" })*@
-                            <a href="#" class="viewDetails" action="edit">View details</a>
-                        </div>
-                    </div>
-                    <div class="form-group hidden assignbox">
-                        <label>Assign Name</label>
-                        <select>
-                            <option>You</option>
-                            <option>tienhlh</option>
-                            <option>namch</option>
-                        </select>
-                    </div>
-                </div>
-                <input type="hidden" id="requestCode" name="requestCode" value="" />
-                <input type="hidden" id="requestType" name="requestType" value="" />
-                <div class="modal-footer clearfix">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-                    <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-check"></i> Accept</button>
-                </div>
-            }
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 <script type="text/javascript">
     $(function () {
+        //DOING, aData lay tu dau?
         $("#example1").dataTable({
             "iDisplayLength": -1,
-            "aaSorting": [[5, "asc"], [3, "desc"]] // Sort by first column descending
+            "aaSorting": [[1, "desc"]] // Sort by first column descending
         });
-        //
-        $('#tableBody').on('click', '.btnRequestCode', function () {
+        //row.css('background-color', '#ffe6e6');
+        // row.css('background-color', '#ccd9ff');
+        $('#example1').on('dblclick', '.btnRequestCode', function () {
             var result = $(this).attr('data-requestCode');
-            $('#requestCode').val(result);
-            var requestType = $(this).attr('data-requestType');
-            $('#requestType').val(requestType);
-        });
+            $.ajax({
+                data: { code: result },
+                url: '@Url.Action("Detail","Notification")',
+                type: 'POST',
+                success: function (result) {
 
-        $('.btnRequestCode').click(function () {
-            var requestType = $(this).attr('data-requestType');
-            if (requestType !== "RT003") {
-                $('.assignbox').removeClass('hidden');
-            }
-        });
-
-        $('.viewDetails').click(function () {
-            var requestCode = $('#requestCode').val();
-            var requestType = $('#requestType').val();
-            var url = "@(Url.Action("Detais", "ProcessRequest"))";
-            $.post(url, { rType: requestType, rCode: requestCode });
+                }
+            });
         });
     });
 </script>
