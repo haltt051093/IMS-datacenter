@@ -142,13 +142,13 @@ namespace IMS.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult AssignIP(string rType, string rCode, string OldIP, string ServerCode)
+        public ActionResult AssignIP(string rType, string rCode, string OldIP, string ServerCode,string FailMessage)
         {
             var data = new IPCreateViewModel();
             data.RequestCode = rCode;
-            data.RequestType = rType;
             data.OldIP = OldIP;
             data.ServerCode = ServerCode;
+            data.FailMessage = FailMessage;
             var ips = IPAddressPoolBLO.Current.GetAvailableIPs();
             var listNetworkIP =
                 ips.OrderBy(x => x.NetworkIP).GroupBy(x => x.NetworkIP).Select(x => x.FirstOrDefault());
@@ -165,19 +165,17 @@ namespace IMS.Controllers
         {
             if (icvm.NewIP == null)
             {
-                Alert("Please select IP Address!");
-                return RedirectToAction("AssignIP",new {rType = icvm.RequestType,rCode = icvm.RequestCode, OldIP = icvm.OldIP, ServerCode = icvm.ServerCode});
+                return RedirectToAction("AssignIP",new {rCode = icvm.RequestCode, OldIP = icvm.OldIP, ServerCode = icvm.ServerCode, FailMessage ="Select IP to assign!"});
             }
 
             var x = IPAddressPoolBLO.Current.UpdateIP(icvm.ServerCode, icvm.NewIP, icvm.RequestCode, icvm.OldIP);
             if (x == false)
             {
-                Alert("Assign IP Fail! Try again!");
-                return RedirectToAction("AssignIP", new { rType = icvm.RequestType, rCode = icvm.RequestCode, OldIP = icvm.OldIP, ServerCode = icvm.ServerCode });
+                return RedirectToAction("AssignIP", new {rCode = icvm.RequestCode, OldIP = icvm.OldIP, ServerCode = icvm.ServerCode, FailMessage ="Assign IP Fail! Try Again!" });
             }
             else
             {
-                return RedirectToAction("Detais", "ProcessRequest", new { rType = icvm.RequestType, rCode = icvm.RequestCode });
+                return RedirectToAction("Detail", "ProcessRequest", new { code = icvm.RequestCode });
             }
 
             

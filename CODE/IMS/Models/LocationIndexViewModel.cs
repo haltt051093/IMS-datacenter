@@ -30,6 +30,7 @@ namespace IMS.Models
         public int Size { get; set; }
         public List<SelectLocationViewModel> Selected { get; set; }
         public string SuccessMessage { get; set; }
+        public string FailMessage { get; set; }
 
         [Required(ErrorMessage = "Please input Rack Name!")]
         [RegularExpression("^[A-Z][1-9]?[0-9]+$", ErrorMessage = "Wrong format of Rack Name! Try again!")]
