@@ -117,14 +117,14 @@
                     <div class="pull-left">
                         <h3>Select Network IP to deactivate:</h3>
                     </div>
-                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS" id="tbodyid">
                         @if (Model.NetIPAvai.Count > 0)
                         {
                             for (int i = 0; i < Model.NetIPAvai.Count; i++)
                             {
-                                <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                                <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS" >
                                     @Html.HiddenFor(model => model.NetIPAvai[i].Value)
-                                    @Html.CheckBoxFor(model => model.NetIPAvai[i].Selected)
+                                    @Html.CheckBoxFor(model => model.NetIPAvai[i].Selected,   new { @class = "chknull"})
                                     @Html.DisplayFor(model => model.NetIPAvai[i].Text)
                                 </div>
                             }
@@ -278,6 +278,24 @@
 </script>
 
 <script type="text/javascript">
+    var selectedChkCount = 0;
+    $('#tbodyid').on('click', '.chknull', function () {
+        var selectedChk = $('.chknull:checked');
+        //alert(selectedChk.length);
+        selectedChkCount = selectedChk.length;
+    });
+
+    //Get value of selected items
+    $("#deactive").click(function () {
+        if (selectedChkCount <= 0) {
+            notif({
+                msg: "<b>Oops!</b> Please select IP Address Range!",
+                type: "error",
+                position: "center"
+            });
+            return false;
+        }       
+    });
     var table = $('#example1').DataTable({
         dom: '<lf<t>ip>',
         processing: true,
