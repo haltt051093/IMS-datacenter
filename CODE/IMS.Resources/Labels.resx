@@ -180,6 +180,9 @@
   <data name="DialogReset" xml:space="preserve">
     <value>Reset</value>
   </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Reset password</value>
+  </data>
   <data name="IP" xml:space="preserve">
     <value>IP Address</value>
   </data>
@@ -224,6 +227,9 @@
   </data>
   <data name="RequestType" xml:space="preserve">
     <value>Request Type</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Reset</value>
   </data>
   <data name="SearchBy" xml:space="preserve">
     <value>Search By</value>

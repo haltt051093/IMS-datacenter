@@ -239,7 +239,7 @@ namespace IMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult PostForgotPassword(ForgotPasswordViewModel fpvm)
+        public ActionResult PostForgotPassword(AccountLoginViewModel fpvm)
         {
             Account o = AccountDAO.Current.Query(x => x.Email == fpvm.Email).FirstOrDefault();
             if (o != null)
@@ -253,8 +253,8 @@ namespace IMS.Controllers
             }
             else
             {
-                Alert("Email is not existed!");
-                return View("ForgotPassword");
+                Alert("Email is not existed! Try again!");
+                return View("Login");
             }
 
         }
