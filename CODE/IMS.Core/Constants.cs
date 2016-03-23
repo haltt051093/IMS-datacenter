@@ -294,7 +294,8 @@ namespace IMS.Core
             public const string DANGER_BUTTON_CLASS = "btn btn-danger";
             public const string DANGER_TEXT_CLASS = "text-danger";
 
-            public const string DATATABLE_CLASS = "table table-bordered table-hover clickable";
+            public const string DATATABLE_CLASS_HOVER = "table table-bordered table-hover";
+            public const string DATATABLE_CLASS = "table table-bordered";
             public const string DATATABLE_HEADER_CLASS = "tf-datatable-header";
 
             public const string FORM_ROW_CLASS = "row form-group";
