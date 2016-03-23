@@ -12,7 +12,7 @@
 <section class="main-content">
     @using (Html.BeginForm("Detail", "Notification", FormMethod.Post, new { @id = "addserverform" }))
     {
-        <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS">
+        <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS_HOVER">
             <thead>
                 <tr style="background-color: #404040">
                     <th><span style="color: ghostwhite">Notification</span>
@@ -22,7 +22,7 @@
             <tbody id="tableBody">
                 @foreach (var item in Model.NotificationList)
                 {
-                    <tr class="btnRequestCode clickable" notif-code="@item.NotificationCode">
+                    <tr class="clickable btnRequestCode" notif-code="@item.NotificationCode">
                         <td>
                             @Html.DisplayFor(modelItem => item.Description)
                         </td>
