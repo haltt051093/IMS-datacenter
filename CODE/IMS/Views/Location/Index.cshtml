@@ -136,8 +136,10 @@
         ],
         iDisplayLength: 42,
         aLengthMenu: [[42, 84, 126], [42, 84, 126]],
-        fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-            $(nRow).dblclick(function() {
+        fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            $(nRow).addClass('hightlight');
+            $(nRow).addClass('clickable');
+            $(nRow).click(function() {
                 if (aData.ServerCode != null) {
                     var url = CONSTANT.authority + '@Url.Action("Detail", "Server")' + '/' + aData.ServerCode;
                     window.location.assign(url);
