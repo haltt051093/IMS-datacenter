@@ -332,6 +332,7 @@ namespace IMS.Core
             public const string PROCESS_ACTION = "Process";
             public const string ACCEPT_TASK_ACTION = "AcceptTask";
             public const string NOT_FINISHED_TASK_ACTION = "NotFinished";
+            public const string EXPORT_ACTION = "Export";
         }
 
         public class ServerAttributeCode

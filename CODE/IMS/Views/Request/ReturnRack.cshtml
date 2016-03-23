@@ -33,14 +33,14 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tbodyid">
                         @for (int i = 0; i < Model.AllRacks.Count; i++)
                         {
                             <tr class="check" rack-code="@Model.AllRacks[i].RackCode">
                                 <td>
                                     @if (Model.AllRacks[i].ServerNum != 0)
                                     {
-                                        @Html.CheckBoxFor(modelItem => Model.AllRacks[i].Checked, new { disabled = "disabled" })
+                                        @Html.CheckBoxFor(modelItem => Model.AllRacks[i].Checked, new { disabled = "disabled", @class= "chknull" })
                                     }
                                     else
                                     {
@@ -89,27 +89,45 @@
 </section>
 
 <script>
-    $("#checkAll").change(function () {
-        var state = $('#checkAll').is(':checked');
-        $('tr.check input[type="checkbox"]:not(:disabled)').prop('checked', state);
-    });
+    $(function() {
 
+        $("#checkAll").change(function() {
+            var state = $('#checkAll').is(':checked');
+            $('tr.check input[type="checkbox"]:not(:disabled)').prop('checked', state);
+        });
 
-    $('.returnallservers').on('click', function () {
-        var rackCode = $('.rackCode').val();
+        var selectedChkCount = 0;
+        $('#tbodyid').on('click', '.chknull', function () {
+            var selectedChk = $('.chknull:checked');
+            selectedChkCount = selectedChk.length;
+        });
+        $("#btnAccept").click(function () {
+            if (selectedChkCount <= 0) {
+                notif({
+                    msg: "<b>Error!</b> You should choose at least one rack!",
+                    type: "error",
+                    position: "center"
+                });
+                return false;
+            } 
+        });
 
-        $.ajax({
-            cache: false,
-            url: '@(Url.Action("Create", "Request"))',
-            type: 'post',
-            data: {
-                "Type": "RT007",
-                "RackCode": rackCode
-            },
-            dataType: "json",
-            success: function (result) {
-                alert('Save Successful');
-            }
+        $('.returnallservers').on('click', function() {
+            var rackCode = $('.rackCode').val();
+
+            $.ajax({
+                cache: false,
+                url: '@(Url.Action("Create", "Request"))',
+                type: 'post',
+                data: {
+                    "Type": "RT007",
+                    "RackCode": rackCode
+                },
+                dataType: "json",
+                success: function(result) {
+                    alert('Save Successful');
+                }
+            });
         });
     });
 </script>

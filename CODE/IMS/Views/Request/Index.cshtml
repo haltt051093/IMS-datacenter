@@ -37,43 +37,42 @@
             @Html.ValidationMessageFor(model => model.FilterByPeriodOfTime)
         </div>
     </div>
-    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-        <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS">
-            <thead>
-                <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
-                    <th>
-                        Request Code
-                    </th>
-                    <th>
-                        Request Type
-                    </th>
-                    <th>
-                        Requested Time
-                    </th>
-                    <th>
-                        Status
-                    </th>
-                </tr>
-            </thead>
-            @for (int i = 0; i < Model.Requests.Count; i++)
+    <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS">
+        <thead>
+            <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
+                <th>
+                    Request Code
+                </th>
+                <th>
+                    Request Type
+                </th>
+                <th>
+                    Requested Time
+                </th>
+                <th>
+                    Status
+                </th>
+            </tr>
+        </thead>
+        @for (int i = 0; i < Model.Requests.Count; i++)
             {
-                <tbody class="clickmee check" status-code="@Model.Requests[i].LastestStatusRequest.StatusCode" type-code="@Model.Requests[i].LastestStatusRequest.RequestTypeCode" duration="@Model.Requests[i].LastestStatusRequest.DaysFromNow">
-                    <tr>
-                        <td>
-                            @Html.ActionLink(Model.Requests[i].LastestStatusRequest.RequestCode, "Detail", "Request",
+            <tbody class="clickmee check" status-code="@Model.Requests[i].LastestStatusRequest.StatusCode" type-code="@Model.Requests[i].LastestStatusRequest.RequestTypeCode" duration="@Model.Requests[i].LastestStatusRequest.DaysFromNow">
+                <tr>
+                    <td>
+                        @Html.ActionLink(Model.Requests[i].LastestStatusRequest.RequestCode, "Detail", "Request",
                                 new { code = Model.Requests[i].LastestStatusRequest.RequestCode }, null)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.RequestTypeName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.LogTime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.StatusName)
-                        </td>
-                    </tr>
-                </tbody>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.RequestTypeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.LogTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.StatusName)
+                    </td>
+                </tr>
+            </tbody>
                 <tbody class="showhide" style="display: none; background-color: lightgrey;">
                     @if (Model.Requests[i].OldStatusRequests != null)
                     {
@@ -96,33 +95,32 @@
                         }
                     }
                 </tbody>
-            }
-            <tfoot>
-                <tr style="background-color: #404040">
-                    <th>
-                        <span style="color: ghostwhite">
-                            RequestCode
-                        </span>
-                    </th>
-                    <th>
-                        <span style="color: ghostwhite">
-                            RequestType
-                        </span>
-                    </th>
-                    <th>
-                        <span style="color: ghostwhite">
-                            RequestedTime
-                        </span>
-                    </th>
-                    <th>
-                        <span style="color: ghostwhite">
-                            Status
-                        </span>
-                    </th>
-                </tr>
-            </tfoot>
-        </table>
-    </div>
+        }
+        <tfoot>
+            <tr style="background-color: #404040">
+                <th>
+                    <span style="color: ghostwhite">
+                        RequestCode
+                    </span>
+                </th>
+                <th>
+                    <span style="color: ghostwhite">
+                        RequestType
+                    </span>
+                </th>
+                <th>
+                    <span style="color: ghostwhite">
+                        RequestedTime
+                    </span>
+                </th>
+                <th>
+                    <span style="color: ghostwhite">
+                        Status
+                    </span>
+                </th>
+            </tr>
+        </tfoot>
+    </table>
 </section><!-- /.content -->
 
 <script>

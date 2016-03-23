@@ -282,6 +282,12 @@
                     @Labels.Reject
                 </button>
                 }
+                @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
+                {
+                    <button type="submit" id="btnExport" name="@Constants.FormAction.EXPORT_ACTION" value="@Constants.FormAction.EXPORT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
+                        @Labels.Reject
+                    </button>
+                }
             </div>
         </div>
     }
