@@ -143,21 +143,6 @@ namespace IMS.Data.Business
                     var server = ServerBLO.Current.GetByServerCode(serverCode);
                     server.DefaultIP = newIP;
                     ServerBLO.Current.Update(server);
-                    var si = new ServerIP();
-                    si.CurrentIP = newIP;
-                    si.ServerCode = serverCode;
-                    si.AssignedDate = DateTime.Now;
-                    si.StatusCode = Constants.StatusCode.SERVERIP_CURRENT;
-                    ServerIPBLO.Current.Add(si);
-                    var log = new Log();
-                    log.TypeOfLog = Constants.TypeOfLog.LOG_ASSIGN_DEFAULT_IP;
-                    log.Object = Constants.Object.OBJECT_IP;
-                    log.ChangedValueOfObject = newIP;
-                    log.ObjectStatus = Constants.StatusCode.IP_USED;
-                    log.ServerCode = serverCode;
-                    log.LogTime = DateTime.Now;
-                    log.RequestCode = requestCode;
-                    LogBLO.Current.Add(log);
                     return true;
                 }
                 else
@@ -175,18 +160,10 @@ namespace IMS.Data.Business
                     var server = ServerBLO.Current.GetByKeys(new Server {ServerCode = serverCode});
                     server.DefaultIP = newIP;
                     ServerBLO.Current.Update(server);
-                    var serverip = ServerIPBLO.Current.GetByKeys(new ServerIP { ServerCode = serverCode});
-                    serverip.CurrentIP = newIP;
-                    serverip.AssignedDate = DateTime.Now;
-                    ServerIPBLO.Current.Update(serverip);
                     var ip = dao.GetByKeys(new IPAddressPool {IPAddress = oldIP});
                     ip.StatusCode = Constants.StatusCode.IP_AVAILABLE;
                     ip.IsDefault = false;
                     dao.Update(ip);
-                    var log = LogBLO.Current.GetByServerCode(serverCode);
-                    log.LogTime = DateTime.Now;
-                    log.ChangedValueOfObject = newIP;
-                    LogBLO.Current.Update(log);
                     return true;
                 }
                 else
