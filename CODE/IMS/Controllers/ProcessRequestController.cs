@@ -7,8 +7,6 @@ using IMS.Data.Business;
 using IMS.Data.Models;
 using IMS.Data.ViewModels;
 using IMS.Models;
-using Microsoft.Office.Interop.Word;
-using Newtonsoft.Json;
 
 namespace IMS.Controllers
 {
@@ -352,7 +350,7 @@ namespace IMS.Controllers
                     //dang ky ham cho client
                     Notify(result.NotificationCodes);
                     return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've FINISHED Request Add Server" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.APPROVE_REQUEST_ADD_SERVER });
                 }
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
@@ -362,7 +360,7 @@ namespace IMS.Controllers
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've REJECTED Request Add Server" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.REJECT_REQUEST_ADD_SERVER });
             }
             if (Request.Form[Constants.FormAction.PROCESS_ACTION] != null)
             {
@@ -378,7 +376,7 @@ namespace IMS.Controllers
                     Notify(task.NotificationCodes);
                 }
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "Request Add Server is PROCESSING" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.PROCESSING_REQUEST_ADD_SERVER });
             }
             if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
             {
@@ -396,7 +394,7 @@ namespace IMS.Controllers
                 {
                     Notify(newTask.NotificationCodes);
                 }
-                var message = "You've REASSIGNED a Task to" + viewmodel.RequestInfo.AssignedStaff;
+                var message = Constants.Message.REASSIGN_TASK + viewmodel.RequestInfo.AssignedStaff;
                 return RedirectToAction("Detail", "ProcessRequest",
                     new { code = viewmodel.RequestInfo.RequestCode, msg = message });
             }
@@ -405,14 +403,14 @@ namespace IMS.Controllers
                 //update task
                 TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_DOING);
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You're DOING the task" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.ACCEPT_TASK });
             }
             if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
             {
                 var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RejectReason);
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
-                   new { code = viewmodel.RequestInfo.RequestCode, msg = "You've NOT FINISHED the task." });
+                   new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.NOT_FINISHED_TASK});
             }
             return RedirectToAction("Index");
         }
@@ -430,7 +428,7 @@ namespace IMS.Controllers
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've ACCEPTED Request Bring Server Away" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.ACCEPT_REQUEST_BRING_SERVER_AWAY });
             }
             if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
@@ -439,7 +437,7 @@ namespace IMS.Controllers
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've FINISHED Request Bring Server Away" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.APPROVE_REQUEST_BRING_SERVER_AWAY });
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
@@ -448,7 +446,7 @@ namespace IMS.Controllers
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've REJECTED Request Bring Server Away" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.REJECT_REQUEST_BRING_SERVER_AWAY });
             }
             if (Request.Form[Constants.FormAction.PROCESS_ACTION] != null)
             {
@@ -464,7 +462,7 @@ namespace IMS.Controllers
                     Notify(task.NotificationCodes);
                 }
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "Request Bring Server Away is PROCESSING" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.PROCESSING_REQUEST_BRING_SERVER_AWAY });
             }
             if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
             {
@@ -482,7 +480,7 @@ namespace IMS.Controllers
                 {
                     Notify(newTask.NotificationCodes);
                 }
-                var message = "You've REASSIGNED a Task to" + viewmodel.RequestInfo.AssignedStaff;
+                var message = Constants.Message.REASSIGN_TASK + viewmodel.RequestInfo.AssignedStaff;
                 return RedirectToAction("Detail", "ProcessRequest",
                     new { code = viewmodel.RequestInfo.RequestCode, msg = message });
             }
@@ -491,14 +489,14 @@ namespace IMS.Controllers
                 //update task
                 TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_DOING);
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You're DOING the task" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.ACCEPT_TASK });
             }
             if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
             {
                 var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RejectReason);
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
-                   new { code = viewmodel.RequestInfo.RequestCode, msg = "You've NOT FINISHED the task." });
+                   new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.NOT_FINISHED_TASK });
             }
             return RedirectToAction("Index");
         }
@@ -521,7 +519,7 @@ namespace IMS.Controllers
                     Notify(task.NotificationCodes);
                 }
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've ACCEPTED Request Assign IP Address" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.ACCEPT_REQUEST_ASSIGN_IP });
             }
             if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
@@ -530,7 +528,7 @@ namespace IMS.Controllers
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've FINISHED Request Assign IP Address" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.APPROVE_REQUEST_ASSIGN_IP});
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
@@ -539,7 +537,7 @@ namespace IMS.Controllers
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've REJECTED Request Assign IP Address" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.REJECT_REQUEST_ASSIGN_IP });
             }
             if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
             {
@@ -557,7 +555,7 @@ namespace IMS.Controllers
                 {
                     Notify(newTask.NotificationCodes);
                 }
-                var message = "You've REASSIGNED a Task to" + viewmodel.RequestInfo.AssignedStaff;
+                var message = Constants.Message.REASSIGN_TASK + viewmodel.RequestInfo.AssignedStaff;
                 return RedirectToAction("Detail", "ProcessRequest",
                     new { code = viewmodel.RequestInfo.RequestCode, msg = message });
             }
@@ -566,14 +564,14 @@ namespace IMS.Controllers
                 //update task
                 TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_DOING);
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You're DOING the task" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.ACCEPT_TASK });
             }
             if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
             {
                 var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RejectReason);
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
-                   new { code = viewmodel.RequestInfo.RequestCode, msg = "You've NOT FINISHED the task." });
+                   new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.NOT_FINISHED_TASK });
             }
             return RedirectToAction("Index");
         }
@@ -596,7 +594,7 @@ namespace IMS.Controllers
                     Notify(task.NotificationCodes);
                 }
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've ACCEPTED Request Change IP Address" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.ACCEPT_REQUEST_CHANGE_IP });
             }
             if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
@@ -606,7 +604,7 @@ namespace IMS.Controllers
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've FINISHED Request Change IP Address" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.APPROVE_REQUEST_CHANGE_IP });
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
@@ -616,7 +614,7 @@ namespace IMS.Controllers
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've REJECTED Request Change IP Address" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.REJECT_REQUEST_CHANGE_IP });
             }
             if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
             {
@@ -634,7 +632,7 @@ namespace IMS.Controllers
                 {
                     Notify(newTask.NotificationCodes);
                 }
-                var message = "You've REASSIGNED a Task to" + viewmodel.RequestInfo.AssignedStaff;
+                var message = Constants.Message.REASSIGN_TASK + viewmodel.RequestInfo.AssignedStaff;
                 return RedirectToAction("Detail", "ProcessRequest",
                     new { code = viewmodel.RequestInfo.RequestCode, msg = message });
             }
@@ -643,14 +641,14 @@ namespace IMS.Controllers
                 //update task
                 TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_DOING);
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You're DOING the task" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.ACCEPT_TASK });
             }
             if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
             {
                 var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RejectReason);
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
-                   new { code = viewmodel.RequestInfo.RequestCode, msg = "You've NOT FINISHED the task." });
+                   new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.NOT_FINISHED_TASK });
             }
             return RedirectToAction("Index");
         }
@@ -673,7 +671,7 @@ namespace IMS.Controllers
                     Notify(task.NotificationCodes);
                 }
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've ACCEPTED Request Return IP Address" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.APPROVE_REQUEST_RETURN_IP });
             }
             if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
@@ -682,7 +680,7 @@ namespace IMS.Controllers
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've FINISHED Request Return IP Address" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.APPROVE_REQUEST_RETURN_IP });
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
@@ -692,7 +690,7 @@ namespace IMS.Controllers
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've REJECTED Request Return IP Address" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.REJECT_REQUEST_RETURN_IP });
             }
             if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
             {
@@ -710,7 +708,7 @@ namespace IMS.Controllers
                 {
                     Notify(newTask.NotificationCodes);
                 }
-                var message = "You've REASSIGNED a Task to" + viewmodel.RequestInfo.AssignedStaff;
+                var message = Constants.Message.REASSIGN_TASK + viewmodel.RequestInfo.AssignedStaff;
                 return RedirectToAction("Detail", "ProcessRequest",
                     new { code = viewmodel.RequestInfo.RequestCode, msg = message });
             }
@@ -719,14 +717,14 @@ namespace IMS.Controllers
                 //update task
                 TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_DOING);
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You're DOING the task" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.ACCEPT_TASK });
             }
             if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
             {
                 var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RejectReason);
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
-                   new { code = viewmodel.RequestInfo.RequestCode, msg = "You've NOT FINISHED the task." });
+                   new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.NOT_FINISHED_TASK });
             }
             return RedirectToAction("Index");
         }
@@ -749,7 +747,7 @@ namespace IMS.Controllers
                     Notify(task.NotificationCodes);
                 }
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg =  });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.ACCEPT_REQUEST_RERNT_RACK });
             }
             if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
@@ -758,7 +756,7 @@ namespace IMS.Controllers
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've FINISHED Request Rent Rack" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.APPROVE_REQUEST_RENT_RACK });
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {

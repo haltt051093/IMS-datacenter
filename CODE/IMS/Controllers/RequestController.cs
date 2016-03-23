@@ -304,7 +304,7 @@ namespace IMS.Controllers
             //dang ky ham cho client
             Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
-            { code = requestCode, msg = "You've sent Request Add Server" });
+            { code = requestCode, msg = Constants.Message.CANCEL_REQUEST_ADD_SERVER });
         }
 
         [HttpPost]
@@ -317,7 +317,7 @@ namespace IMS.Controllers
             //dang ky ham cho client
             Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
-            { code = result.RefCode, msg = "You've sent Request Bring Server Away" });
+            { code = result.RefCode, msg = Constants.Message.CANCEL_REQUEST_BRING_SERVER_AWAY });
         }
 
         [HttpPost]
@@ -337,7 +337,7 @@ namespace IMS.Controllers
             //dang ky ham cho client
             Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
-            { code = result.RefCode, msg = "You've sent Request Assign IP" });
+            { code = result.RefCode, msg = Constants.Message.CANCEL_REQUEST_ASSIGN_IP });
         }
 
         [HttpPost]
@@ -349,7 +349,7 @@ namespace IMS.Controllers
             //dang ky ham cho client
             Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
-            { code = result.RefCode, msg = "You've sent Request Change IP" });
+            { code = result.RefCode, msg = Constants.Message.CANCEL_REQUEST_CHANGE_IP });
         }
 
         [HttpPost]
@@ -362,7 +362,7 @@ namespace IMS.Controllers
             //dang ky ham cho client
             Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
-            { code = result.RefCode, msg = "You've sent Request Return IP" });
+            { code = result.RefCode, msg = Constants.Message.CANCEL_REQUEST_RETURN_IP });
         }
 
         [HttpPost]
@@ -382,7 +382,7 @@ namespace IMS.Controllers
             //dang ky ham cho client
             Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
-            { code = result.RefCode, msg = "You've sent Request Rent Rack" });
+            { code = result.RefCode, msg = Constants.Message.SEND_REQUEST_RENT_RACK });
         }
 
         [HttpPost]
@@ -394,7 +394,7 @@ namespace IMS.Controllers
             //dang ky ham cho client
             Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
-            { code = result.RefCode, msg = "You've sent Request Return Rack" });
+            { code = result.RefCode, msg = Constants.Message.SEND_REQUEST_RETURN_RACK });
         }
         #endregion
 
@@ -409,7 +409,7 @@ namespace IMS.Controllers
             //dang ky ham cho client
             Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
-            { code = viewmodel.RequestInfo.RequestCode, msg = "You've cancelled Request Add Server"});
+            { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.CANCEL_REQUEST_ADD_SERVER});
         }
 
         [Roles(Constants.Role.CUSTOMER)]
@@ -423,7 +423,7 @@ namespace IMS.Controllers
             //dang ky ham cho client
             Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
-            { code = viewmodel.RequestInfo.RequestCode, msg = "You've cancelled Request Bring Server Away" });
+            { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.CANCEL_REQUEST_BRING_SERVER_AWAY });
         }
         [Roles(Constants.Role.CUSTOMER)]
         [HttpPost]
@@ -435,7 +435,7 @@ namespace IMS.Controllers
             //dang ky ham cho client
             Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
-            { code = viewmodel.RequestInfo.RequestCode, msg = "You've cancelled Request Assign IP Address" });
+            { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.CANCEL_REQUEST_ASSIGN_IP });
         }
         [Roles(Constants.Role.CUSTOMER)]
         [HttpPost]
@@ -447,7 +447,7 @@ namespace IMS.Controllers
             //dang ky ham cho client
             Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
-            { code = viewmodel.RequestInfo.RequestCode, msg = "You've cancelled Request Change IP Address" });
+            { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.APPROVE_REQUEST_CHANGE_IP });
         }
         [Roles(Constants.Role.CUSTOMER)]
         [HttpPost]
@@ -459,7 +459,7 @@ namespace IMS.Controllers
             //dang ky ham cho client
             Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
-            { code = viewmodel.RequestInfo.RequestCode, msg = "You've cancelled Request Return IP Address" });
+            { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.CANCEL_REQUEST_RETURN_IP });
         }
         [Roles(Constants.Role.CUSTOMER)]
         [HttpPost]
@@ -471,7 +471,7 @@ namespace IMS.Controllers
             //dang ky ham cho client
             Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
-            { code = viewmodel.RequestInfo.RequestCode, msg = "You've cancelled Request Rent Rack" });
+            { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.CANCEL_REQUEST_RENT_RACK });
         }
         [Roles(Constants.Role.CUSTOMER)]
         [HttpPost]
@@ -483,7 +483,7 @@ namespace IMS.Controllers
             //dang ky ham cho client
             Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
-            { code = viewmodel.RequestInfo.RequestCode, msg = "You've cancelled Request Return Rack" });
+            { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.CANCEL_REQUEST_RETURN_RACK });
         }
         #endregion
 

@@ -357,6 +357,23 @@ namespace IMS.Core
 
         public class Message
         {
+            public const string SEND_REQUEST_ADD_SERVER = "You've sent Request Add Server";
+            public const string SEND_REQUEST_BRING_SERVER_AWAY = "You've sent Request Bring Server Away";
+            public const string SEND_REQUEST_ASSIGN_IP = "You've sent Request Assign IP Address";
+            public const string SEND_REQUEST_CHANGE_IP = "You've sent Request Change IP Address";
+            public const string SEND_REQUEST_RETURN_IP = "You've sent Request Return IP Address";
+            public const string SEND_REQUEST_RENT_RACK = "You've sent Request Rent Rack";
+            public const string SEND_REQUEST_RETURN_RACK = "You've sent Request Return Rack";
+
+            public const string CANCEL_REQUEST_ADD_SERVER = "You've cancelled Request Add Server";
+            public const string CANCEL_REQUEST_BRING_SERVER_AWAY = "You've cancelled Reques Bring Server Away";
+            public const string CANCEL_REQUEST_ASSIGN_IP = "You've cancelled Request Assign IP Address";
+            public const string CANCEL_REQUEST_CHANGE_IP = "You've cancelled Request Change IP Address";
+            public const string CANCEL_REQUEST_RETURN_IP = "You've cancelled Request Return IP Address";
+            public const string CANCEL_REQUEST_RENT_RACK = "You've cancelled Request Rent Rack";
+            public const string CANCEL_REQUEST_RETURN_RACK = "You've cancelled Request Return Rack";
+
+
             public const string PRINT_PROCEDURE = "You've PRINTED a procedure";
 
             public const string REASSIGN_TASK = "You've REASSIGNED a Task to";
@@ -371,10 +388,24 @@ namespace IMS.Core
             public const string ACCEPT_REQUEST_RERNT_RACK = "You've ACCEPTED Request Rent Rack";
             public const string ACCEPT_REQUEST_RETURN_RACK = "You've ACCEPTED Request Return Rack";
 
+            public const string APPROVE_REQUEST_ADD_SERVER = "You've FINISHED Request Add Server";
+            public const string APPROVE_REQUEST_BRING_SERVER_AWAY = "You've FINISHED Request Bring Server Away";
+            public const string APPROVE_REQUEST_ASSIGN_IP = "You've FINISHED Request Assign IP Address";
+            public const string APPROVE_REQUEST_CHANGE_IP = "You've FINISHED Request Change IP Address";
+            public const string APPROVE_REQUEST_RETURN_IP = "You've FINISHED Request Return IP Address";
+            public const string APPROVE_REQUEST_RENT_RACK = "You've FINISHED Request Rent Rack";
             public const string APPROVE_REQUEST_RETURN_RACK = "You've FINISHED Request Return Rack";
 
+            public const string REJECT_REQUEST_ADD_SERVER = "You've REJECTED Request Add Server";
+            public const string REJECT_REQUEST_BRING_SERVER_AWAY = "You've REJECTED Request Bring Server Away";
+            public const string REJECT_REQUEST_ASSIGN_IP = "You've REJECTED Request Assign IP Address";
+            public const string REJECT_REQUEST_CHANGE_IP = "You've REJECTED Request Change IP Address";
+            public const string REJECT_REQUEST_RETURN_IP = "You've REJECTED Request Return IP Address";
             public const string REJECT_REQUEST_RENT_RACK = "You've REJECTED Request Rent Rack";
             public const string REJECT_REQUEST_RETURN_RACK = "You've REJECTED Request Return Rack";
+
+            public const string PROCESSING_REQUEST_ADD_SERVER = "Request Add Server is PROCESSING";
+            public const string PROCESSING_REQUEST_BRING_SERVER_AWAY = "Request Bring Server Away is PROCESSING";
         }
     }
 }
