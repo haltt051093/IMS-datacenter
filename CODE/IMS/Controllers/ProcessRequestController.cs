@@ -39,7 +39,7 @@ namespace IMS.Controllers
 
         #region request detail
         [HttpGet]
-        public ActionResult Detail(string code)
+        public ActionResult Detail(string code, string msg)
         {
             var r = RequestBLO.Current.GetByKeys(new Request { RequestCode = code });
             var rType = string.Empty;

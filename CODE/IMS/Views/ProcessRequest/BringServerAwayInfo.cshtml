@@ -1,18 +1,14 @@
 ﻿@model ProcessRequestBringServerAwayViewModel
 @{
-    ViewBag.Title = "RequestBringAwayServerInfo";
+    ViewBag.Title = Pages.ProcessRequestBringServerAway;
+    ViewBag.PageTitle = Pages.ProcessRequestBringServerAway;
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("ProcessRequest", "Index", Pages.ProcessRequest),
+        new BreadcrumbModel("ProcessRequest", "Detail", Pages.ProcessRequestBringServerAway)
+    };
 }
-
-<section class="content-header">
-    <h1>
-        Detail Request Bring Away Server
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="@Url.Action("Index", "Schedule")"><i class="fa fa-dashboard"></i> Home</a></li>
-        Detail Request:
-        <li class="active"> Bring Away Server</li>
-    </ol>
-</section>
 <section class="main-content">
     @using (Html.BeginForm("ProcessRequestBringServerAway", "ProcessRequest", FormMethod.Post))
     {

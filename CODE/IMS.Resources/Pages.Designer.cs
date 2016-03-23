@@ -205,11 +205,65 @@ namespace IMS.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Process Request Add Server.
+        /// </summary>
+        public static string ProcessRequestAddServer {
+            get {
+                return ResourceManager.GetString("ProcessRequestAddServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Process Request Assign IP Address.
+        /// </summary>
+        public static string ProcessRequestAssignIP {
+            get {
+                return ResourceManager.GetString("ProcessRequestAssignIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Process Request Bring Server Away.
+        /// </summary>
+        public static string ProcessRequestBringServerAway {
+            get {
+                return ResourceManager.GetString("ProcessRequestBringServerAway", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Process Request Change IP Address.
         /// </summary>
         public static string ProcessRequestChangeIP {
             get {
                 return ResourceManager.GetString("ProcessRequestChangeIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Process Request Rent Rack.
+        /// </summary>
+        public static string ProcessRequestRentRack {
+            get {
+                return ResourceManager.GetString("ProcessRequestRentRack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Process Request Return IP Address.
+        /// </summary>
+        public static string ProcessRequestReturnIP {
+            get {
+                return ResourceManager.GetString("ProcessRequestReturnIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Process Request Return Rack.
+        /// </summary>
+        public static string ProcessRequestReturnRack {
+            get {
+                return ResourceManager.GetString("ProcessRequestReturnRack", resourceCulture);
             }
         }
         

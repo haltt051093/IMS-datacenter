@@ -225,4 +225,22 @@
   <data name="LocationAvai" xml:space="preserve">
     <value>List of Locations Available</value>
   </data>
+  <data name="ProcessRequestAddServer" xml:space="preserve">
+    <value>Process Request Add Server</value>
+  </data>
+  <data name="ProcessRequestAssignIP" xml:space="preserve">
+    <value>Process Request Assign IP Address</value>
+  </data>
+  <data name="ProcessRequestBringServerAway" xml:space="preserve">
+    <value>Process Request Bring Server Away</value>
+  </data>
+  <data name="ProcessRequestRentRack" xml:space="preserve">
+    <value>Process Request Rent Rack</value>
+  </data>
+  <data name="ProcessRequestReturnIP" xml:space="preserve">
+    <value>Process Request Return IP Address</value>
+  </data>
+  <data name="ProcessRequestReturnRack" xml:space="preserve">
+    <value>Process Request Return Rack</value>
+  </data>
 </root>

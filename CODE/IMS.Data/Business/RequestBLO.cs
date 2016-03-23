@@ -217,7 +217,8 @@ namespace IMS.Data.Business
             return result;
         }
 
-        public NotificationResultModel AddRequestBringServerAway(string customer, string description, List<ServerExtendedModel> listServers, DateTime? appointmentTime)
+        public NotificationResultModel AddRequestBringServerAway(string customer, string description, 
+            List<ServerExtendedModel> listServers, DateTime? appointmentTime)
         {
             //add request
             var requestCode = AddRequestANDLog(Constants.RequestTypeCode.BRING_SERVER_AWAY,
@@ -254,6 +255,7 @@ namespace IMS.Data.Business
                 var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
                 result.NotificationCodes.Add(notifCode);
             }
+            result.RefCode = requestCode;
             return result;
         }
 
@@ -294,6 +296,7 @@ namespace IMS.Data.Business
                 var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
                 result.NotificationCodes.Add(notifCode);
             }
+            result.RefCode = requestCode;
             return result;
         }
 
@@ -325,6 +328,7 @@ namespace IMS.Data.Business
                 var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
                 result.NotificationCodes.Add(notifCode);
             }
+            result.RefCode = requestCode;
             return result;
         }
 
@@ -356,6 +360,7 @@ namespace IMS.Data.Business
                 var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
                 result.NotificationCodes.Add(notifCode);
             }
+            result.RefCode = requestCode;
             return result;
         }
 
@@ -377,6 +382,7 @@ namespace IMS.Data.Business
                 var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
                 result.NotificationCodes.Add(notifCode);
             }
+            result.RefCode = requestCode;
             return result;
         }
 
@@ -408,6 +414,7 @@ namespace IMS.Data.Business
                 var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
                 result.NotificationCodes.Add(notifCode);
             }
+            result.RefCode = requestCode;
             return result;
         }
         #endregion

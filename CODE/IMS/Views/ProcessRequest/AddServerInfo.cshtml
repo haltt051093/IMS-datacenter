@@ -1,17 +1,14 @@
 ﻿@model ProcessRequestAddServerViewModel
 @{
-    ViewBag.Title = "Request Add Server";
+    ViewBag.Title = Pages.ProcessRequestAddServer;
+    ViewBag.PageTitle = Pages.ProcessRequestAddServer;
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+    new BreadcrumbModel("Home", "Index", Pages.Home),
+    new BreadcrumbModel("ProcessRequest", "Index", Pages.ProcessRequest),
+    new BreadcrumbModel("ProcessRequest", "Detail", Pages.ProcessRequestAddServer)
+    };
 }
-
-<section class="content-header">
-    <h1>
-        Detail Request Add New Server
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="@Url.Action("Index", "Schedule" )">><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Detail Request Add New Server</li>
-    </ol>
-</section>
 <section class="main-content">
     @using (Html.BeginForm("ProcessRequestAddServer", "ProcessRequest", FormMethod.Post))
     {

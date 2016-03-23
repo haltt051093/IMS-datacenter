@@ -303,11 +303,8 @@ namespace IMS.Controllers
             }
             //dang ky ham cho client
             Notify(result.NotificationCodes);
-            RequestIndexViewModel redirectValue = new RequestIndexViewModel()
-            {
-                SuccessMessage = "You've sent Request Add Server"
-            };
-            return RedirectToAction("Index", "Request", redirectValue);
+            return RedirectToAction("Detail", "Request", new
+            { code = requestCode, msg = "You've sent Request Add Server" });
         }
 
         [HttpPost]
@@ -319,74 +316,53 @@ namespace IMS.Controllers
                 viewmodel.ServerOfCustomer, viewmodel.RequestInfo.AppointmentTime);
             //dang ky ham cho client
             Notify(result.NotificationCodes);
-            RequestIndexViewModel redirectValue = new RequestIndexViewModel()
-            {
-                SuccessMessage = "You've sent Request Bring Server Away"
-            };
-            return RedirectToAction("Index", "Request", redirectValue);
+            return RedirectToAction("Detail", "Request", new
+            { code = result.RefCode, msg = "You've sent Request Bring Server Away" });
         }
 
         [HttpPost]
         public ActionResult AssignIp(RequestAssignIPViewModel viewmodel)
         {
             var customer = GetCurrentUserName();
-            if (ModelState.IsValid)
+            //Edit description
+            var requestDetail = new RequestDetailViewModel();
+            requestDetail.NumberOfIp = viewmodel.NumberOfIP;
+            if (!string.IsNullOrWhiteSpace(viewmodel.RequestInfo.Description))
             {
-                //Edit description
-                var requestDetail = new RequestDetailViewModel();
-                requestDetail.NumberOfIp = viewmodel.NumberOfIP;
-                if (!string.IsNullOrWhiteSpace(viewmodel.RequestInfo.Description))
-                {
-                    requestDetail.Description = viewmodel.RequestInfo.Description;
-                }
-                viewmodel.RequestInfo.Description = JsonConvert.SerializeObject(requestDetail);
-                //Add request and log
-                var result = RequestBLO.Current.AddRequestAssignIP(customer, viewmodel.RequestInfo.Description, viewmodel.SelectedServer);
-                //dang ky ham cho client
-                Notify(result.NotificationCodes);
+                requestDetail.Description = viewmodel.RequestInfo.Description;
             }
-            RequestIndexViewModel redirectValue = new RequestIndexViewModel()
-            {
-                SuccessMessage = "You've sent Request Assign IP"
-            };
-            return RedirectToAction("Index", "Request", redirectValue);
+            viewmodel.RequestInfo.Description = JsonConvert.SerializeObject(requestDetail);
+            //Add request and log
+            var result = RequestBLO.Current.AddRequestAssignIP(customer, viewmodel.RequestInfo.Description, viewmodel.SelectedServer);
+            //dang ky ham cho client
+            Notify(result.NotificationCodes);
+            return RedirectToAction("Detail", "Request", new
+            { code = result.RefCode, msg = "You've sent Request Assign IP" });
         }
 
         [HttpPost]
         public ActionResult ChangeIp(RequestChangeIPViewModel viewmodel)
         {
             var customer = GetCurrentUserName();
-            if (viewmodel.ReturningIPs.Count > 0)
-            {
-                //Add request and log
-                var result = RequestBLO.Current.AddRequestChangeIP(customer, viewmodel.RequestInfo.Description, viewmodel.SelectedServer, viewmodel.ReturningIPs);
-                //dang ky ham cho client
-                Notify(result.NotificationCodes);
-            }
-            RequestIndexViewModel redirectValue = new RequestIndexViewModel()
-            {
-                SuccessMessage = "You've sent Request Change IP"
-            };
-            return RedirectToAction("Index", "Request", redirectValue);
+            //Add request and log
+            var result = RequestBLO.Current.AddRequestChangeIP(customer, viewmodel.RequestInfo.Description, viewmodel.SelectedServer, viewmodel.ReturningIPs);
+            //dang ky ham cho client
+            Notify(result.NotificationCodes);
+            return RedirectToAction("Detail", "Request", new
+            { code = result.RefCode, msg = "You've sent Request Change IP" });
         }
 
         [HttpPost]
         public ActionResult ReturnIp(RequestReturnIPViewModel viewmodel)
         {
             var customer = GetCurrentUserName();
-            if (viewmodel.ReturningIPs.Count > 0)
-            {
-                //Add and log request
-                var result = RequestBLO.Current.AddRequestReturnIP(customer, viewmodel.RequestInfo.Description,
-                    viewmodel.SelectedServer, viewmodel.ReturningIPs);
-                //dang ky ham cho client
-                Notify(result.NotificationCodes);
-            }
-            RequestIndexViewModel redirectValue = new RequestIndexViewModel()
-            {
-                SuccessMessage = "You've sent Request Return IP"
-            };
-            return RedirectToAction("Index", "Request", redirectValue);
+            //Add and log request
+            var result = RequestBLO.Current.AddRequestReturnIP(customer, viewmodel.RequestInfo.Description,
+                viewmodel.SelectedServer, viewmodel.ReturningIPs);
+            //dang ky ham cho client
+            Notify(result.NotificationCodes);
+            return RedirectToAction("Detail", "Request", new
+            { code = result.RefCode, msg = "You've sent Request Return IP" });
         }
 
         [HttpPost]
@@ -405,11 +381,8 @@ namespace IMS.Controllers
             var result = RequestBLO.Current.AddRequestRentRack(customer, viewmodel.RequestInfo.Description);
             //dang ky ham cho client
             Notify(result.NotificationCodes);
-            RequestIndexViewModel redirectValue = new RequestIndexViewModel()
-            {
-                SuccessMessage = "You've sent Request Rent Rack"
-            };
-            return RedirectToAction("Index", "Request", redirectValue);
+            return RedirectToAction("Detail", "Request", new
+            { code = result.RefCode, msg = "You've sent Request Rent Rack" });
         }
 
         [HttpPost]
@@ -420,11 +393,8 @@ namespace IMS.Controllers
             var result = RequestBLO.Current.AddRequestReturnRack(customer, viewmodel.RequestInfo.Description, viewmodel.AllRacks);
             //dang ky ham cho client
             Notify(result.NotificationCodes);
-            RequestIndexViewModel redirectValue = new RequestIndexViewModel()
-            {
-                SuccessMessage = "You've sent Request Return Rack"
-            };
-            return RedirectToAction("Index", "Request", redirectValue);
+            return RedirectToAction("Detail", "Request", new
+            { code = result.RefCode, msg = "You've sent Request Return Rack" });
         }
         #endregion
 
@@ -438,8 +408,8 @@ namespace IMS.Controllers
                 viewmodel.RequestInfo.TaskCode);
             //dang ky ham cho client
             Notify(result.NotificationCodes);
-            return RedirectToAction("Detail",
-                new { code = viewmodel.RequestInfo.RequestCode, msg = "You've cancelled Request Add Server" });
+            return RedirectToAction("Detail", "Request", new
+            { code = viewmodel.RequestInfo.RequestCode, msg = "You've cancelled Request Add Server"});
         }
 
         [Roles(Constants.Role.CUSTOMER)]
@@ -449,8 +419,8 @@ namespace IMS.Controllers
             var customer = GetCurrentUserName();
             //Update lai serverip, server, request
             RequestBLO.Current.CancelRequestBringServerAway(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
-            return RedirectToAction("Detail",
-               new {code = viewmodel.RequestInfo.RequestCode });
+            return RedirectToAction("Detail", "Request", new
+            { code = viewmodel.RequestInfo.RequestCode, msg = "You've cancelled Request Bring Server Away" });
         }
         [Roles(Constants.Role.CUSTOMER)]
         [HttpPost]
@@ -458,8 +428,8 @@ namespace IMS.Controllers
         {
             var customer = GetCurrentUserName();
             RequestBLO.Current.CancelRequestAssignIP(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
-            return RedirectToAction("Detail",
-                new {code = viewmodel.RequestInfo.RequestCode });
+            return RedirectToAction("Detail", "Request", new
+            { code = viewmodel.RequestInfo.RequestCode, msg = "You've cancelled Request Assign IP Address" });
         }
         [Roles(Constants.Role.CUSTOMER)]
         [HttpPost]
@@ -467,8 +437,8 @@ namespace IMS.Controllers
         {
             var customer = GetCurrentUserName();
             RequestBLO.Current.CancelRequestChangeIp(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
-            return RedirectToAction("Detail",
-               new { code = viewmodel.RequestInfo.RequestCode });
+            return RedirectToAction("Detail", "Request", new
+            { code = viewmodel.RequestInfo.RequestCode, msg = "You've cancelled Request Change IP Address" });
         }
         [Roles(Constants.Role.CUSTOMER)]
         [HttpPost]
@@ -476,8 +446,8 @@ namespace IMS.Controllers
         {
             var customer = GetCurrentUserName();
             RequestBLO.Current.CancelRequestReturnIp(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
-            return RedirectToAction("Detail",
-                new {code = viewmodel.RequestInfo.RequestCode });
+            return RedirectToAction("Detail", "Request", new
+            { code = viewmodel.RequestInfo.RequestCode, msg = "You've cancelled Request Return IP Address" });
         }
         [Roles(Constants.Role.CUSTOMER)]
         [HttpPost]
@@ -485,8 +455,8 @@ namespace IMS.Controllers
         {
             var customer = GetCurrentUserName();
             RequestBLO.Current.CancelRequestRentRack(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
-            return RedirectToAction("Detail",
-                new {code = viewmodel.RequestInfo.RequestCode });
+            return RedirectToAction("Detail", "Request", new
+            { code = viewmodel.RequestInfo.RequestCode, msg = "You've cancelled Request Rent Rack" });
         }
         [Roles(Constants.Role.CUSTOMER)]
         [HttpPost]
@@ -494,8 +464,8 @@ namespace IMS.Controllers
         {
             var customer = GetCurrentUserName();
             RequestBLO.Current.CancelRequestReturnRack(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
-            return RedirectToAction("Detail",
-                new { code = viewmodel.RequestInfo.RequestCode });
+            return RedirectToAction("Detail", "Request", new
+            { code = viewmodel.RequestInfo.RequestCode, msg = "You've cancelled Request Return Rack" });
         }
         #endregion
 

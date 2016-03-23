@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using IMS.Data.Models;
 
 namespace IMS.Data.ViewModels
 {
-    public class NotificationResultModel
+    [NotMapped]
+    public class NotificationResultModel : Notification
     {
         public NotificationResultModel()
         {

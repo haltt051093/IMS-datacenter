@@ -36,8 +36,9 @@ namespace IMS.Data.Business
 
         public List<Notification> GetByUser(string username, int page = 0, int pageSize = 20)
         {
-            var result = dao.Query(x => x.Username == username && x.IsViewed == false, page, pageSize);
-            return result;
+            var result = dao.Query(x => x.Username == username && x.IsViewed == false, page, pageSize).
+                OrderByDescending(x => x.NotifTime);
+            return result.ToList();
         }
 
         public int CountUserUnread(string username)

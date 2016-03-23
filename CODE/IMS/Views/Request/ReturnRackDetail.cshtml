@@ -1,57 +1,56 @@
 ﻿@model ProcessRequestReturnRackViewModel
 @{
-    ViewBag.Title = "RequestReturnRackInfo";
+    ViewBag.Title = Pages.ProcessRequestReturnRack;
+    ViewBag.PageTitle = Pages.ProcessRequestReturnRack;
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("ProcessRequest", "Index", Pages.ProcessRequest),
+        new BreadcrumbModel("ProcessRequest", "Detail", Pages.ProcessRequestReturnRack)
+    };
 }
-
-<section class="content-header">
-    <h1>
-        Detail Request Return Rack
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="@Url.Action("Index", "Schedule")">><i class="fa fa-dashboard"></i> Home</a></li>
-        Detail Request:
-        <li class="active">Return Rack</li>
-    </ol>
-</section>
-<section class="main-contentcontent">
+<section class="main-content">
     @using (Html.BeginForm("CancelRequestReturnRack", "Request", FormMethod.Post))
     {
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                    @Html.LabelFor(model => model.RequestInfo.RequestCode)
-                    @Html.HiddenFor(model => model.SuccessMessage)
+            <div class="col-xs-6">
+                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
+                        @Html.LabelFor(model => model.RequestInfo.RequestCode)
+                        @Html.HiddenFor(model => model.SuccessMessage)
+                    </div>
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                        @Html.DisplayFor(model => model.RequestInfo.RequestCode, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    </div>
                 </div>
-                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                    @Html.DisplayFor(model => model.RequestInfo.RequestCode, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
+                        @Html.LabelFor(model => model.RequestInfo.StatusName)
+                    </div>
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                        @Html.DisplayFor(model => model.RequestInfo.StatusName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    </div>
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
+                        @Html.LabelFor(model => model.RequestInfo.RequestedTime)
+                    </div>
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                        @Html.DisplayFor(model => model.RequestInfo.RequestedTime, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    </div>
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
+                        @Html.LabelFor(model => model.RequestInfo.Description)
+                    </div>
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                        @Html.DisplayFor(model => model.RequestInfo.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    </div>
                 </div>
             </div>
-            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                    @Html.LabelFor(model => model.RequestInfo.StatusName)
-                </div>
-                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                    @Html.DisplayFor(model => model.RequestInfo.StatusName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                </div>
-            </div>
-            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                    @Html.LabelFor(model => model.RequestInfo.RequestedTime)
-                </div>
-                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                    @Html.DisplayFor(model => model.RequestInfo.RequestedTime, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                </div>
-            </div>
-            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                    @Html.LabelFor(model => model.RequestInfo.Description)
-                </div>
-                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                    @Html.DisplayFor(model => model.RequestInfo.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                </div>
+            <div class="col-xs-6">
             </div>
         </div>
-        <hr />
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
                 @Html.LabelFor(model => model.SelectedRacks)

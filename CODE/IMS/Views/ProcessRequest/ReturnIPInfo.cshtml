@@ -1,17 +1,14 @@
 ﻿@model ProcessRequestReturnIPViewModel
 @{
-    ViewBag.Title = "RequestReturnIPInfo";
+    ViewBag.Title = Pages.ProcessRequestReturnIP;
+    ViewBag.PageTitle = Pages.ProcessRequestReturnIP;
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("ProcessRequest", "Index", Pages.ProcessRequest),
+        new BreadcrumbModel("ProcessRequest", "Detail", Pages.ProcessRequestReturnIP)
+    };
 }
-
-<section class="content-header">
-    <h1>
-        Detail Request Return IP Address
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="@Url.Action("Index", "Schedule")"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Detail Request Return IP Address</li>
-    </ol>
-</section>
 <section class="main-content">
     @using (Html.BeginForm("ProcessRequesReturnIp", "ProcessRequest", FormMethod.Post))
     {

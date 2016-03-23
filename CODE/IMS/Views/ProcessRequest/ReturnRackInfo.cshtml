@@ -1,19 +1,15 @@
 ﻿@model ProcessRequestReturnRackViewModel
 @{
-    ViewBag.Title = "RequestReturnRackInfo";
+    ViewBag.Title = Pages.ProcessRequestReturnRack;
+    ViewBag.PageTitle = Pages.ProcessRequestReturnRack;
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("ProcessRequest", "Index", Pages.ProcessRequest),
+        new BreadcrumbModel("ProcessRequest", "Detail", Pages.ProcessRequestReturnRack)
+    };
 }
-
-<section class="content-header">
-    <h1>
-        Detail Request Return Rack
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="@Url.Action("Index", "Schedule")">><i class="fa fa-dashboard"></i> Home</a></li>
-        Detail Request:
-        <li class="active">Return Rack</li>
-    </ol>
-</section>
-<section class="main-contentcontent">
+<section class="main-content">
     @using (Html.BeginForm("ProcessRequestReturnRack", "ProcessRequest", FormMethod.Post))
     {
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
