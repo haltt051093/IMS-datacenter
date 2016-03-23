@@ -118,13 +118,7 @@
 
 <!-- page script -->
 <script type="text/javascript">
-    $(function () {
-        $("#example1").dataTable({
-            //"iDisplayLength": -1,
-            "aaSorting": [[5, "desc"]] // Sort by first column descending
-        });
-    });
-
+    $('#example1').DataTable();
     $("#selectedStatus").change(function () {
         var status = $("#selectedStatus").val();
         if (status == null || status == '') {
