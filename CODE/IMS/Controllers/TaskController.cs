@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
-using IMS.Core;
+﻿using System.Web.Mvc;
 using IMS.Data.Business;
-using IMS.Data.Models;
-using IMS.Data.Repository;
-using IMS.Data.ViewModels;
 using IMS.Models;
 
 namespace IMS.Controllers
@@ -19,25 +12,6 @@ namespace IMS.Controllers
             var data = new TaskIndexViewModel();
             data.Tasks = TaskBLO.Current.ListTaskOfStaff(staff);
             return View(data);
-        }
-
-        [HttpPost]
-        public ActionResult UpdateTaskStatus(TaskIndexViewModel viewmodel)
-        {
-            if (viewmodel.Action == Constants.FormAction.ACCEPT_ACTION)
-            {
-                //update task
-                TaskBLO.Current.UpdateTaskStatus(viewmodel.TaskCode, Constants.StatusCode.TASK_DOING);
-                //khi task la doing thi shifthead
-            }
-            if (viewmodel.Action == Constants.FormAction.CANCEL_ACTION)
-            {
-                //DOING
-                //co note ghi ly do not finished --> note nay gui den shifthead o dau? ntn
-                //update task
-                TaskBLO.Current.UpdateTaskStatus(viewmodel.TaskCode, Constants.StatusCode.TASK_NOTFINISH);
-            }
-            return RedirectToAction("Index");
         }
     }
 }

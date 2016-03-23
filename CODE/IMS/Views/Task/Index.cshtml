@@ -10,13 +10,9 @@
 }
 <!-- Main content -->
 <section class="main-content">
-
     <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS">
         <thead>
             <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
-                <th>
-                    Request Code
-                </th>
                 <th>
                     Request Type
                 </th>
@@ -35,12 +31,7 @@
         @for (int i = 0; i < Model.Tasks.Count; i++)
             {
             <tbody>
-                <tr>
-                    <td>
-                        @Html.ActionLink(Model.Tasks[i].RequestCode, "Detail", "ProcessRequest",
-                            new { code = Model.Tasks[i].RequestCode }, null)
-                        @Html.HiddenFor(modelItem => modelItem.Tasks[i].RequestCode)
-                    </td>
+                <tr class="eachTask" request-code="@Model.Tasks[i].RequestCode">
                     <td>
                         @Html.DisplayFor(modelItem => Model.Tasks[i].RequestTypeName)
                         @Html.HiddenFor(modelItem => modelItem.Tasks[i].RequestTypeName)
@@ -57,34 +48,11 @@
                         @Html.DisplayFor(modelItem => Model.Tasks[i].AssignedTime)
                         @Html.HiddenFor(modelItem => modelItem.Tasks[i].AssignedTime)
                     </td>
-                    @*<td>
-                        @using (Html.BeginForm("UpdateTaskStatus", "Task", FormMethod.Post))
-                        {
-                        <input name="TaskCode" type="hidden" value="@Model.Tasks[i].TaskCode" />
-                            if (Model.Tasks[i].StatusCode == Constants.StatusCode.TASK_WAITING)
-                            {
-                        <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.ACCEPT_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                            @Labels.Accept
-                        </button>
-                            }
-                            if (Model.Tasks[i].StatusCode == Constants.StatusCode.TASK_DOING)
-                            {
-                        <button type="submit" id="btnCancel" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
-                            Not Finished
-                        </button>
-                            }
-                        }
-                    </td>*@
                 </tr>
             </tbody>
         }
         <tfoot>
             <tr style="background-color: #404040">
-                <th>
-                    <span style="color: ghostwhite">
-                        RequestCode
-                    </span>
-                </th>
                 <th>
                     <span style="color: ghostwhite">
                         RequestType
@@ -169,6 +137,22 @@
 </script>
 
 <script type="text/javascript">
+    $('.eachTask').click(function () {
+        var requestCode = $(this).attr("request-code");
+        //DOING
+        //$.post("@(Url.Action("Detail", "ProcessRequest"))", { code: requestCode });
+        @*$.ajax({
+            cache: false,
+            type: "GET",
+            url: "@(Url.Action("Detail", "ProcessRequest"))",
+            data: { 'code': requestCode },
+            dataType: "json"
+            //success: function (data) {
+            //    return false;
+            //}
+        });*@
+    });
+
     $(".clickmee").click(function () {
         $(this).closest('tbody')
             .next('.showhide')
@@ -177,7 +161,7 @@
 
     $("#example1").dataTable({
         "iDisplayLength": -1,
-        "aaSorting": [[2, "desc"]] // Sort by first column descending
+        "aaSorting": [[3, "desc"]] // Sort by first column descending
     });
 
     $("#FilterByRequestType").change(function () {
