@@ -33,7 +33,7 @@
             <label>IP Address: @Html.DropDownListFor(model => model.NetworkIP, Model.NetworkIPs, "All IP Addresses", new {@class = "form-control input-sm", style = "width: 150px"}) </label>
         </div>
     </div>
-    <table id="example1" class="table table-bordered table-hover">
+    <table id="example1" class="table table-bordered">
         <thead>
         <tr style="background-color: #404040">
             <th><span style="color: ghostwhite">Id</span>
@@ -345,11 +345,11 @@
                 });
                 break;
             case '@Constants.StatusCode.IP_RESERVE':
-                row.css('background-color', '#ffe6e6');
+                row.addClass('background-warning');
                 actionCell.html('');
                 break;
             case '@Constants.StatusCode.IP_USED':
-                row.css('background-color', '#ccd9ff');
+                row.addClass('background-danger');
                 actionCell.html('');
                 break;
             case '@Constants.StatusCode.IP_DEACTIVATE':
