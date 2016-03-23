@@ -59,6 +59,16 @@ namespace IMS.Controllers
                     list.Add(item);
                 }
                 viewmodel.Servers = list;
+                //task
+                if (role == Constants.Role.STAFF && (request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING
+                                                     || request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING))
+                {
+                    viewmodel.IsAssignedUser = true;
+                }
+                else
+                {
+                    viewmodel.IsAssignedUser = false;
+                }
                 viewmodel.CurrentUser = GetCurrentUserName();
                 viewmodel.StaffCodeOptions = request.listStaff
                 .Select(x => new SelectListItem
@@ -84,6 +94,16 @@ namespace IMS.Controllers
                     list.Add(item);
                 }
                 viewmodel.ServerOfCustomer = list;
+                //task
+                if (role == Constants.Role.STAFF && (request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING
+                                                     || request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING))
+                {
+                    viewmodel.IsAssignedUser = true;
+                }
+                else
+                {
+                    viewmodel.IsAssignedUser = false;
+                }
                 viewmodel.CurrentUser = GetCurrentUserName();
                 viewmodel.StaffCodeOptions = request.listStaff
                 .Select(x => new SelectListItem
@@ -103,6 +123,16 @@ namespace IMS.Controllers
                 //Get request
                 var request = RequestBLO.Current.DetailProcessRequestAssignIP(code, group, role);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestAssignIPViewModel>(request);
+                //task
+                if (role == Constants.Role.STAFF && (request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING
+                                                     || request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING))
+                {
+                    viewmodel.IsAssignedUser = true;
+                }
+                else
+                {
+                    viewmodel.IsAssignedUser = false;
+                }
                 viewmodel.CurrentUser = GetCurrentUserName();
                 viewmodel.StaffCodeOptions = request.listStaff
                 .Select(x => new SelectListItem
@@ -162,6 +192,16 @@ namespace IMS.Controllers
                 //Get request
                 var request = RequestBLO.Current.DetailProcessRequestChangeIP(code, group, role);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestChangeIPViewModel>(request);
+                //task
+                if (role == Constants.Role.STAFF && (request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING
+                                                     || request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING))
+                {
+                    viewmodel.IsAssignedUser = true;
+                }
+                else
+                {
+                    viewmodel.IsAssignedUser = false;
+                }
                 viewmodel.CurrentUser = GetCurrentUserName();
                 viewmodel.StaffCodeOptions = request.listStaff
                 .Select(x => new SelectListItem
@@ -190,6 +230,16 @@ namespace IMS.Controllers
                 //Get request
                 var request = RequestBLO.Current.DetailProcessRequestReturnIP(code, group, role);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestReturnIPViewModel>(request);
+                //task
+                if (role == Constants.Role.STAFF && (request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING
+                                                     || request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING))
+                {
+                    viewmodel.IsAssignedUser = true;
+                }
+                else
+                {
+                    viewmodel.IsAssignedUser = false;
+                }
                 viewmodel.CurrentUser = GetCurrentUserName();
                 viewmodel.StaffCodeOptions = request.listStaff
                 .Select(x => new SelectListItem
@@ -209,7 +259,7 @@ namespace IMS.Controllers
                 //Get request
                 var request = RequestBLO.Current.DetailProcessRequestRentRack(code, group, role);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestRentRackViewModel>(request);
-                //phai lay duoc task code moi duoc
+                //task
                 if (role == Constants.Role.STAFF && (request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING
                                                      || request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING))
                 {
@@ -244,6 +294,16 @@ namespace IMS.Controllers
                 //Get request
                 var request = RequestBLO.Current.DetailProcessRequestReturnRack(code, group, role);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestReturnRackViewModel>(request);
+                //task
+                if (role == Constants.Role.STAFF && (request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING
+                                                     || request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING))
+                {
+                    viewmodel.IsAssignedUser = true;
+                }
+                else
+                {
+                    viewmodel.IsAssignedUser = false;
+                }
                 viewmodel.CurrentUser = GetCurrentUserName();
                 viewmodel.StaffCodeOptions = request.listStaff
                 .Select(x => new SelectListItem
@@ -340,6 +400,20 @@ namespace IMS.Controllers
                 return RedirectToAction("Detail", "ProcessRequest",
                     new { code = viewmodel.RequestInfo.RequestCode, msg = message });
             }
+            if (Request.Form[Constants.FormAction.ACCEPT_TASK_ACTION] != null)
+            {
+                //update task
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_DOING);
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You're DOING the task" });
+            }
+            if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
+            {
+                //update task
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_NOTFINISH);
+                return RedirectToAction("Detail", "ProcessRequest",
+                   new { code = viewmodel.RequestInfo.RequestCode, msg = "You've NOT FINISHED the task." });
+            }
             return RedirectToAction("Index");
         }
 
@@ -412,6 +486,20 @@ namespace IMS.Controllers
                 return RedirectToAction("Detail", "ProcessRequest",
                     new { code = viewmodel.RequestInfo.RequestCode, msg = message });
             }
+            if (Request.Form[Constants.FormAction.ACCEPT_TASK_ACTION] != null)
+            {
+                //update task
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_DOING);
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You're DOING the task" });
+            }
+            if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
+            {
+                //update task
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_NOTFINISH);
+                return RedirectToAction("Detail", "ProcessRequest",
+                   new { code = viewmodel.RequestInfo.RequestCode, msg = "You've NOT FINISHED the task." });
+            }
             return RedirectToAction("Index");
         }
 
@@ -472,6 +560,20 @@ namespace IMS.Controllers
                 var message = "You've REASSIGNED a Task to" + viewmodel.RequestInfo.AssignedStaff;
                 return RedirectToAction("Detail", "ProcessRequest",
                     new { code = viewmodel.RequestInfo.RequestCode, msg = message });
+            }
+            if (Request.Form[Constants.FormAction.ACCEPT_TASK_ACTION] != null)
+            {
+                //update task
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_DOING);
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You're DOING the task" });
+            }
+            if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
+            {
+                //update task
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_NOTFINISH);
+                return RedirectToAction("Detail", "ProcessRequest",
+                   new { code = viewmodel.RequestInfo.RequestCode, msg = "You've NOT FINISHED the task." });
             }
             return RedirectToAction("Index");
         }
@@ -536,6 +638,20 @@ namespace IMS.Controllers
                 return RedirectToAction("Detail", "ProcessRequest",
                     new { code = viewmodel.RequestInfo.RequestCode, msg = message });
             }
+            if (Request.Form[Constants.FormAction.ACCEPT_TASK_ACTION] != null)
+            {
+                //update task
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_DOING);
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You're DOING the task" });
+            }
+            if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
+            {
+                //update task
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_NOTFINISH);
+                return RedirectToAction("Detail", "ProcessRequest",
+                   new { code = viewmodel.RequestInfo.RequestCode, msg = "You've NOT FINISHED the task." });
+            }
             return RedirectToAction("Index");
         }
 
@@ -597,6 +713,20 @@ namespace IMS.Controllers
                 var message = "You've REASSIGNED a Task to" + viewmodel.RequestInfo.AssignedStaff;
                 return RedirectToAction("Detail", "ProcessRequest",
                     new { code = viewmodel.RequestInfo.RequestCode, msg = message });
+            }
+            if (Request.Form[Constants.FormAction.ACCEPT_TASK_ACTION] != null)
+            {
+                //update task
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_DOING);
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You're DOING the task" });
+            }
+            if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
+            {
+                //update task
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_NOTFINISH);
+                return RedirectToAction("Detail", "ProcessRequest",
+                   new { code = viewmodel.RequestInfo.RequestCode, msg = "You've NOT FINISHED the task." });
             }
             return RedirectToAction("Index");
         }
@@ -664,14 +794,14 @@ namespace IMS.Controllers
                 //update task
                 TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_DOING);
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've doing the task" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You're DOING the task" });
             }
             if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
             {
                 //update task
                 TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_NOTFINISH);
                 return RedirectToAction("Detail", "ProcessRequest",
-                   new { code = viewmodel.RequestInfo.RequestCode, msg = "You've not finished the task." });
+                   new { code = viewmodel.RequestInfo.RequestCode, msg = "You've NOT FINISHED the task." });
             }
             return RedirectToAction("Index");
         }
@@ -733,6 +863,20 @@ namespace IMS.Controllers
                 var message = "You've REASSIGNED a Task to" + viewmodel.RequestInfo.AssignedStaff;
                 return RedirectToAction("Detail", "ProcessRequest",
                     new { code = viewmodel.RequestInfo.RequestCode, msg = message });
+            }
+            if (Request.Form[Constants.FormAction.ACCEPT_TASK_ACTION] != null)
+            {
+                //update task
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_DOING);
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You're DOING the task" });
+            }
+            if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
+            {
+                //update task
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_NOTFINISH);
+                return RedirectToAction("Detail", "ProcessRequest",
+                   new { code = viewmodel.RequestInfo.RequestCode, msg = "You've NOT FINISHED the task." });
             }
             return RedirectToAction("Index");
 
