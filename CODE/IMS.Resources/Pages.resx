@@ -243,4 +243,10 @@
   <data name="ProcessRequestReturnRack" xml:space="preserve">
     <value>Process Request Return Rack</value>
   </data>
+  <data name="Task" xml:space="preserve">
+    <value>Tasks</value>
+  </data>
+  <data name="TaskIndex" xml:space="preserve">
+    <value>Your Task</value>
+  </data>
 </root>

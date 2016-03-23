@@ -16,6 +16,7 @@ namespace IMS.Data.ViewModels
         public string TaskCode { get; set; }
         public bool IsShifthead { get; set; }
         public string ShiftHead { get; set; }
+        public string ShiftHeadName { get; set; }
         public DateTime? AssignedTime { get; set; }
     }
 }

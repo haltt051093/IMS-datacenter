@@ -163,6 +163,7 @@ namespace IMS.Data.Business
                 {
                     request.IsShifthead = true;
                 }
+                request.ShiftHeadName = AccountBLO.Current.GetAccountByCode(request.ShiftHead).Fullname;
             }
             return request;
         }
@@ -1332,7 +1333,25 @@ namespace IMS.Data.Business
         }
         #endregion
 
+        #region Not finish request
 
+        public NotificationResultModel NotFinishRequest(string taskCode, string reason)
+        {
+            //get assignedstaff and shifthead
+            var task = TaskBLO.Current.GetByKeys(new Models.Task() {TaskCode = taskCode});
+            var shifthead = task.ShiftHead;
+            var preAssignedStaff = task.AssignedStaff;
+            //update task
+            TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_NOTFINISH);
+            //luu notification
+            var result = new NotificationResultModel();
+            var desc = preAssignedStaff + "is not finished the Task! Because" + reason;
+            var notifCode = NotificationBLO.Current.AddNotification(task.RequestCode, Constants.Object.OBJECT_REQUEST,
+                shifthead, desc);
+            result.NotificationCodes.Add(notifCode);
+            return result;
+        }
+        #endregion
 
         #region export procedure
 

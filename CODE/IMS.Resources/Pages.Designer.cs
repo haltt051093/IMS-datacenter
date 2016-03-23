@@ -430,6 +430,24 @@ namespace IMS.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tasks.
+        /// </summary>
+        public static string Task {
+            get {
+                return ResourceManager.GetString("Task", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your Task.
+        /// </summary>
+        public static string TaskIndex {
+            get {
+                return ResourceManager.GetString("TaskIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to View Profile.
         /// </summary>
         public static string ViewProfile {

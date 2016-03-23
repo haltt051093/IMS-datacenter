@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using IMS.Core.Express;
 using IMS.Data.Models;
 
@@ -23,6 +24,16 @@ namespace IMS.Data.ViewModels
         public string StatusName { get; set; }
         public string RequestTypeCode { get; set; }
         public string RequestTypeName { get; set; }
-
+        public int DaysFromNow
+        {
+            get
+            {
+                if (AssignedTime == null)
+                {
+                    return 0;
+                }
+                return (int)(DateTime.Now.Date - AssignedTime.Value.Date).TotalDays;
+            }
+        }
     }
 }

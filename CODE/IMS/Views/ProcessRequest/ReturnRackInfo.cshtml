@@ -78,6 +78,14 @@
                 {
                     <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                         <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
+                            @Html.LabelFor(model => model.RequestInfo.ShiftHead, "Assignor")
+                        </div>
+                        <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                            @Html.DisplayFor(model => model.RequestInfo.ShiftHeadName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        </div>
+                    </div>
+                    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
                             @Html.LabelFor(model => model.RequestInfo.TaskStatus, "Task Status")
                         </div>
                         @if (Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING)
@@ -110,14 +118,14 @@
                 </div>
                 @if (Model.CustomerInfo.Company != null)
                 {
-                    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                        <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                            @Html.LabelFor(model => model.CustomerInfo.Company)
-                        </div>
-                        <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
-                            @Html.DisplayFor(model => model.CustomerInfo.Company, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                        </div>
+                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
+                        @Html.LabelFor(model => model.CustomerInfo.Company)
                     </div>
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                        @Html.DisplayFor(model => model.CustomerInfo.Company, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    </div>
+                </div>
                 }
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                     <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
@@ -200,8 +208,9 @@
             @using (Html.BeginForm("ProcessRequestReturnRack", "ProcessRequest", FormMethod.Post))
             {
                 <div class="modal-header">
-                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i>
-                    Reassign Task
+                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS">
+                        <i class="fa fa-plus"></i>
+                        Reassign Task
                     </div>
                 </div>
                 <div class="modal-body">

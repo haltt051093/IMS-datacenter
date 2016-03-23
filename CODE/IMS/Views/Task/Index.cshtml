@@ -1,15 +1,42 @@
 ﻿@model TaskIndexViewModel
 @{
-    ViewBag.Title = Pages.RequestIndex;
-    ViewBag.PageTitle = Pages.RequestIndex;
+    ViewBag.Title = Pages.TaskIndex;
+    ViewBag.PageTitle = Pages.TaskIndex;
     ViewBag.Breadcrumbs = new List<BreadcrumbModel>
     {
         new BreadcrumbModel("Home", "Index", Pages.Home),
-        new BreadcrumbModel("Request", "Index", Pages.Request)
+        new BreadcrumbModel("Request", "Index", Pages.Task)
     };
 }
 <!-- Main content -->
 <section class="main-content">
+    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+        <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+            @Html.LabelFor(model => model.FilterByRequestType, "Request Type")
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+            @Html.DropDownListFor(m => m.FilterByRequestType, Model.FilterByRequestType, "Select All", new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+            @Html.ValidationMessageFor(model => model.FilterByRequestType)
+        </div>
+    </div>
+    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+        <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+            @Html.LabelFor(model => model.FilterByStatus, "Status")
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+            @Html.DropDownListFor(m => m.FilterByStatus, Model.FilterByStatus, "Select All", new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+            @Html.ValidationMessageFor(model => model.FilterByStatus)
+        </div>
+    </div>
+    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+        <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+            @Html.LabelFor(model => model.FilterByPeriodOfTime, "Period of Time")
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+            @Html.DropDownListFor(m => m.FilterByPeriodOfTime, Model.FilterByPeriodOfTime, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+            @Html.ValidationMessageFor(model => model.FilterByPeriodOfTime)
+        </div>
+    </div>
     <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS">
         <thead>
             <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
@@ -20,17 +47,14 @@
                     Status
                 </th>
                 <th>
-                    Assignor
-                </th>
-                <th>
                     Assigned Time
                 </th>
             </tr>
         </thead>
 
         @for (int i = 0; i < Model.Tasks.Count; i++)
-            {
-            <tbody>
+        {
+            <tbody status-code="@Model.Tasks[i].StatusCode" type-code="@Model.Tasks[i].RequestTypeCode" duration="@Model.Tasks[i].DaysFromNow">
                 <tr class="eachTask" request-code="@Model.Tasks[i].RequestCode">
                     <td>
                         @Html.DisplayFor(modelItem => Model.Tasks[i].RequestTypeName)
@@ -39,10 +63,6 @@
                     <td>
                         @Html.DisplayFor(modelItem => Model.Tasks[i].StatusName)
                         @Html.HiddenFor(modelItem => modelItem.Tasks[i].StatusCode)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.Tasks[i].ShiftHeadName)
-                        @Html.HiddenFor(modelItem => modelItem.Tasks[i].ShiftHead)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => Model.Tasks[i].AssignedTime)
@@ -61,11 +81,6 @@
                 <th>
                     <span style="color: ghostwhite">
                         Status
-                    </span>
-                </th>
-                <th>
-                    <span style="color: ghostwhite">
-                        Assignor
                     </span>
                 </th>
                 <th>
@@ -153,15 +168,9 @@
         });*@
     });
 
-    $(".clickmee").click(function () {
-        $(this).closest('tbody')
-            .next('.showhide')
-            .toggle('fast');
-    });
-
     $("#example1").dataTable({
         "iDisplayLength": -1,
-        "aaSorting": [[3, "desc"]] // Sort by first column descending
+        "aaSorting": [[2, "desc"]] // Sort by first column descending
     });
 
     $("#FilterByRequestType").change(function () {

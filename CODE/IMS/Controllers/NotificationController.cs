@@ -28,7 +28,7 @@ namespace IMS.Controllers
 
         public ActionResult Detail(string code)
         {
-            var notif = NotificationBLO.Current.GetByKeys(new Notification {NotificationCode = code});
+            var notif = NotificationBLO.Current.GetByKeys(new Notification { NotificationCode = code });
             if (notif == null)
             {
                 return View();
@@ -36,21 +36,13 @@ namespace IMS.Controllers
 
             notif.IsViewed = true;
             NotificationBLO.Current.Update(notif);
-
-            if (notif.RefType == Constants.Object.OBJECT_REQUEST)
+            if (GetCurrentUserRole() == Constants.Role.CUSTOMER)
             {
-                if (GetCurrentUserRole() == Constants.Role.CUSTOMER)
-                {
-                    return RedirectToAction("Detail", "Request", new { code = notif.RefCode });
-                }
-                else
-                {
-                    return RedirectToAction("Detail", "ProcessRequest", new {code = notif.RefCode});
-                }
+                return RedirectToAction("Detail", "Request", new { code = notif.RefCode });
             }
-            else if (notif.RefType == Constants.Object.OBJECT_TASK)
+            else
             {
-                return RedirectToAction("Index", "Task", new { code = notif.RefCode });
+                return RedirectToAction("Detail", "ProcessRequest", new { code = notif.RefCode });
             }
             return View();
         }
