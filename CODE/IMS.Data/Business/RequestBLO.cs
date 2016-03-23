@@ -163,7 +163,10 @@ namespace IMS.Data.Business
                 {
                     request.IsShifthead = true;
                 }
-                request.ShiftHeadName = AccountBLO.Current.GetAccountByCode(request.ShiftHead).Fullname;
+                if (request.ShiftHead != null)
+                {
+                    request.ShiftHeadName = AccountBLO.Current.GetAccountByCode(request.ShiftHead).Fullname;
+                }
             }
             return request;
         }
@@ -218,7 +221,7 @@ namespace IMS.Data.Business
             return result;
         }
 
-        public NotificationResultModel AddRequestBringServerAway(string customer, string description, 
+        public NotificationResultModel AddRequestBringServerAway(string customer, string description,
             List<ServerExtendedModel> listServers, DateTime? appointmentTime)
         {
             //add request
@@ -619,7 +622,7 @@ namespace IMS.Data.Business
                 for (int i = 0; i < listRacks.Count; i++)
                 {
                     var rack = listRacks[i].ChangedValueOfObject;
-                    var rackCode = RackBLO.Current.GetByName(new Rack() {RackName = rack}).RackCode;
+                    var rackCode = RackBLO.Current.GetByName(new Rack() { RackName = rack }).RackCode;
                     //update and log rackofCustomer
                     RackOfCustomerBLO.Current.UpdateStatusRackOfCustomerANDLog(requestCode, rackCode,
                         Constants.TypeOfLog.LOG_RETURN_RACK, customer, null,
@@ -1338,7 +1341,7 @@ namespace IMS.Data.Business
         public NotificationResultModel NotFinishRequest(string taskCode, string reason)
         {
             //get assignedstaff and shifthead
-            var task = TaskBLO.Current.GetByKeys(new Models.Task() {TaskCode = taskCode});
+            var task = TaskBLO.Current.GetByKeys(new Models.Task() { TaskCode = taskCode });
             var shifthead = task.ShiftHead;
             var preAssignedStaff = task.AssignedStaff;
             //update task

@@ -54,3 +54,19 @@
     }
 </section>
 
+<script>
+    $(function() {
+        $("#btnAccept").click(function () {
+            var severNum = $("#SelectedServer").val();
+            if (severNum.length <= 0) {
+                notif({
+                    msg: "<b>Error!</b> You have to select a server!",
+                    type: "error",
+                    position: "center"
+                });
+                return false;
+            }
+        });
+    });
+</script>
+

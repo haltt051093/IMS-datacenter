@@ -19,7 +19,7 @@
                 @Html.LabelFor(model => model.RackNumbers, "Number of Rack")
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                @Html.DropDownListFor(model => model.RackNumbers, Model.ListRackNumbers, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.DropDownListFor(model => model.RackNumbers, Model.ListRackNumbers, "Select number", new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                 @Html.ValidationMessageFor(model => model.RackNumbers)
             </div>
         </div>
@@ -36,12 +36,34 @@
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                <button type="submit" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
                     Send Request
                 </button>
             </div>
         </div>
     }
 </section>
+
+<script>
+    $(function () {
+
+        $("#checkAll").change(function () {
+            var state = $('#checkAll').is(':checked');
+            $('tr.check input[type="checkbox"]:not(:disabled)').prop('checked', state);
+        });
+
+        //$("#btnAccept").click(function () {
+        //    var num = ("#RackNumbers").val();
+        //    if (num.length <= 0) {
+        //        notif({
+        //            msg: "<b>Error!</b> You have to select number of rack!",
+        //            type: "error",
+        //            position: "center"
+        //        });
+        //        return false;
+        //    }
+        //});
+    });
+</script>
 
 
