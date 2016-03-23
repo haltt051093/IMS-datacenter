@@ -14,10 +14,11 @@
     padding-top: 4px;
 }
 
+.table-hover > tbody > tr:hover {
+    background-color: yellow;
+}
+
 .clickable { cursor:pointer; }
-
-.highlight:hover { background: yellow }
-
 .tf-modal {
     
 }
