@@ -7,5 +7,6 @@
         public string FormController { get; set; }
         public string FormAction { get; set; }
         public string SuccessMessage { get; set; }
+        public bool IsAssignedUser { get; set; }
     }
 }

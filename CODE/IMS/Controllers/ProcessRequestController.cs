@@ -210,6 +210,15 @@ namespace IMS.Controllers
                 var request = RequestBLO.Current.DetailProcessRequestRentRack(code, group, role);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestRentRackViewModel>(request);
                 //phai lay duoc task code moi duoc
+                if (role == Constants.Role.STAFF && (request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING
+                                                     || request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING))
+                {
+                    viewmodel.IsAssignedUser = true;
+                }
+                else
+                {
+                    viewmodel.IsAssignedUser = false;
+                }
                 viewmodel.CurrentUser = GetCurrentUserName();
                 viewmodel.StaffCodeOptions = request.listStaff
                 .Select(x => new SelectListItem
@@ -649,6 +658,20 @@ namespace IMS.Controllers
                 var message = "You've REASSIGNED a Task to" + viewmodel.RequestInfo.AssignedStaff;
                 return RedirectToAction("Detail", "ProcessRequest",
                     new { code = viewmodel.RequestInfo.RequestCode, msg = message });
+            }
+            if (Request.Form[Constants.FormAction.ACCEPT_TASK_ACTION] != null)
+            {
+                //update task
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_DOING);
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've doing the task" });
+            }
+            if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
+            {
+                //update task
+                TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_NOTFINISH);
+                return RedirectToAction("Detail", "ProcessRequest",
+                   new { code = viewmodel.RequestInfo.RequestCode, msg = "You've not finished the task." });
             }
             return RedirectToAction("Index");
         }
