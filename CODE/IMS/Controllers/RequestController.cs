@@ -418,7 +418,10 @@ namespace IMS.Controllers
         {
             var customer = GetCurrentUserName();
             //Update lai serverip, server, request
-            RequestBLO.Current.CancelRequestBringServerAway(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
+            var result = RequestBLO.Current.CancelRequestBringServerAway(viewmodel.RequestInfo.RequestCode, 
+                customer, viewmodel.RequestInfo.TaskCode);
+            //dang ky ham cho client
+            Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
             { code = viewmodel.RequestInfo.RequestCode, msg = "You've cancelled Request Bring Server Away" });
         }
@@ -427,7 +430,10 @@ namespace IMS.Controllers
         public ActionResult CancelRequestAssignIp(ProcessRequestAssignIPViewModel viewmodel)
         {
             var customer = GetCurrentUserName();
-            RequestBLO.Current.CancelRequestAssignIP(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
+            var result = RequestBLO.Current.CancelRequestAssignIP(viewmodel.RequestInfo.RequestCode, 
+                customer, viewmodel.RequestInfo.TaskCode);
+            //dang ky ham cho client
+            Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
             { code = viewmodel.RequestInfo.RequestCode, msg = "You've cancelled Request Assign IP Address" });
         }
@@ -436,7 +442,10 @@ namespace IMS.Controllers
         public ActionResult CancelRequestChangeIp(ProcessRequestChangeIPViewModel viewmodel)
         {
             var customer = GetCurrentUserName();
-            RequestBLO.Current.CancelRequestChangeIp(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
+            var result = RequestBLO.Current.CancelRequestChangeIp(viewmodel.RequestInfo.RequestCode, customer, 
+                viewmodel.RequestInfo.TaskCode);
+            //dang ky ham cho client
+            Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
             { code = viewmodel.RequestInfo.RequestCode, msg = "You've cancelled Request Change IP Address" });
         }
@@ -445,7 +454,10 @@ namespace IMS.Controllers
         public ActionResult CancelRequestReturnIp(ProcessRequestReturnIPViewModel viewmodel)
         {
             var customer = GetCurrentUserName();
-            RequestBLO.Current.CancelRequestReturnIp(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
+            var result = RequestBLO.Current.CancelRequestReturnIp(viewmodel.RequestInfo.RequestCode, customer, 
+                viewmodel.RequestInfo.TaskCode);
+            //dang ky ham cho client
+            Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
             { code = viewmodel.RequestInfo.RequestCode, msg = "You've cancelled Request Return IP Address" });
         }
@@ -454,7 +466,10 @@ namespace IMS.Controllers
         public ActionResult CancelRequestRentRack(ProcessRequestRentRackViewModel viewmodel)
         {
             var customer = GetCurrentUserName();
-            RequestBLO.Current.CancelRequestRentRack(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
+            var result = RequestBLO.Current.CancelRequestRentRack(viewmodel.RequestInfo.RequestCode, customer, 
+                viewmodel.RequestInfo.TaskCode);
+            //dang ky ham cho client
+            Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
             { code = viewmodel.RequestInfo.RequestCode, msg = "You've cancelled Request Rent Rack" });
         }
@@ -463,7 +478,10 @@ namespace IMS.Controllers
         public ActionResult CancelRequestReturnRack(ProcessRequestReturnRackViewModel viewmodel)
         {
             var customer = GetCurrentUserName();
-            RequestBLO.Current.CancelRequestReturnRack(viewmodel.RequestInfo.RequestCode, customer, viewmodel.RequestInfo.TaskCode);
+            var result = RequestBLO.Current.CancelRequestReturnRack(viewmodel.RequestInfo.RequestCode, customer, 
+                viewmodel.RequestInfo.TaskCode);
+            //dang ky ham cho client
+            Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
             { code = viewmodel.RequestInfo.RequestCode, msg = "You've cancelled Request Return Rack" });
         }
