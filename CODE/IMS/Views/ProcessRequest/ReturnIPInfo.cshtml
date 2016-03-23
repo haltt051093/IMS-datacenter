@@ -17,6 +17,7 @@
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                     <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
                         @Html.LabelFor(model => model.RequestInfo.RequestCode)
+                        @Html.HiddenFor(model => model.SuccessMessage)
                     </div>
                     <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                         @Html.DisplayFor(model => model.RequestInfo.RequestCode, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
@@ -225,3 +226,16 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<script type="text/javascript">
+    $(function () {
+        var message = $('#SuccessMessage').val();
+        if (message) {
+            notif({
+                msg: "<b>Success! </b>" + message,
+                type: "info",
+                position: "center"
+            });
+            $('#SuccessMessage').val("");
+        }
+    });
+</script>

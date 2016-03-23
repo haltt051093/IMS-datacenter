@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
@@ -69,6 +68,7 @@ namespace IMS.Controllers
                     Selected = x.Role == Constants.Role.SHIFT_HEAD
                 })
                 .ToList();
+                viewmodel.SuccessMessage = msg;
                 return View("AddServerInfo", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.BRING_SERVER_AWAY))
@@ -93,6 +93,7 @@ namespace IMS.Controllers
                     Selected = x.Role == Constants.Role.SHIFT_HEAD
                 })
                 .ToList();
+                viewmodel.SuccessMessage = msg;
                 return View("BringServerAwayInfo", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.ASSIGN_IP))
@@ -151,6 +152,7 @@ namespace IMS.Controllers
                         //}).ToList();
                     }
                 }
+                viewmodel.SuccessMessage = msg;
                 return View("AssignIPInfo", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.CHANGE_IP))
@@ -178,6 +180,7 @@ namespace IMS.Controllers
                         Text = x.IPAddress
                     }).ToList();
                 }
+                viewmodel.SuccessMessage = msg;
                 return View("ChangeIPInfo", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.RETURN_IP))
@@ -206,6 +209,7 @@ namespace IMS.Controllers
                 //Get request
                 var request = RequestBLO.Current.DetailProcessRequestRentRack(code, group, role);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestRentRackViewModel>(request);
+                //phai lay duoc task code moi duoc
                 viewmodel.CurrentUser = GetCurrentUserName();
                 viewmodel.StaffCodeOptions = request.listStaff
                 .Select(x => new SelectListItem
@@ -221,6 +225,7 @@ namespace IMS.Controllers
                     viewmodel.ListRows = request.rows.Select(x => new SelectListItem { Value = x, Text = x }).ToList();
                 }
                 ViewBag.Message = "Request Deny";
+                viewmodel.SuccessMessage = msg;
                 return View("RentRackInfo", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.RETURN_RACK))
@@ -239,6 +244,7 @@ namespace IMS.Controllers
                     Selected = x.Role == Constants.Role.SHIFT_HEAD
                 })
                 .ToList();
+                viewmodel.SuccessMessage = msg;
                 return View("ReturnRackInfo", viewmodel);
             }
             return RedirectToAction("Index");
@@ -258,7 +264,8 @@ namespace IMS.Controllers
                     Constants.TypeOfLog.LOG_ADD_SERVER, true);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
-                return RedirectToAction("Detail", "ProcessRequest", new { code = viewmodel.RequestInfo.RequestCode });
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've ACCEPTED Request Add Server" });
             }
             if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
@@ -266,7 +273,8 @@ namespace IMS.Controllers
                 {
                     RequestBLO.Current.ExportProcedure(viewmodel.Servers, viewmodel.CustomerInfo.Customer);
                     Success("Export Procedure Successfully!");
-                    return RedirectToAction("Detail", "ProcessRequest", new { code = viewmodel.RequestInfo.RequestCode });
+                    return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've PRINTED a procedure" });
                 }
                 else
                 {
@@ -274,6 +282,8 @@ namespace IMS.Controllers
                         viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode);
                     //dang ky ham cho client
                     Notify(result.NotificationCodes);
+                    return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've FINISHED Request Add Server" });
                 }
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
@@ -282,6 +292,8 @@ namespace IMS.Controllers
                         viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RejectReason);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've REJECTED Request Add Server" });
             }
             if (Request.Form[Constants.FormAction.PROCESS_ACTION] != null)
             {
@@ -296,7 +308,8 @@ namespace IMS.Controllers
                 {
                     Notify(task.NotificationCodes);
                 }
-                return RedirectToAction("Detail", "ProcessRequest", new {code = viewmodel.RequestInfo.RequestCode });
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "Request Add Server is PROCESSING" });
             }
             if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
             {
@@ -314,7 +327,9 @@ namespace IMS.Controllers
                 {
                     Notify(newTask.NotificationCodes);
                 }
-                return RedirectToAction("Detail", "ProcessRequest", new { code = viewmodel.RequestInfo.RequestCode });
+                var message = "You've REASSIGNED a Task to" + viewmodel.RequestInfo.AssignedStaff;
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = message });
             }
             return RedirectToAction("Index");
         }
@@ -331,7 +346,8 @@ namespace IMS.Controllers
                    Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, true);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
-                return RedirectToAction("Detail", "ProcessRequest", new { code = viewmodel.RequestInfo.RequestCode });
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've ACCEPTED Request Bring Server Away" });
             }
             if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
@@ -339,6 +355,8 @@ namespace IMS.Controllers
                     viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've FINISHED Request Bring Server Away" });
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
@@ -346,6 +364,8 @@ namespace IMS.Controllers
                     viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RejectReason);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've REJECTED Request Bring Server Away" });
             }
             if (Request.Form[Constants.FormAction.PROCESS_ACTION] != null)
             {
@@ -360,7 +380,8 @@ namespace IMS.Controllers
                 {
                     Notify(task.NotificationCodes);
                 }
-                return RedirectToAction("Detail", "ProcessRequest", new { code = viewmodel.RequestInfo.RequestCode });
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "Request Bring Server Away is PROCESSING" });
             }
             if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
             {
@@ -378,7 +399,9 @@ namespace IMS.Controllers
                 {
                     Notify(newTask.NotificationCodes);
                 }
-                return RedirectToAction("Detail", "ProcessRequest", new { code = viewmodel.RequestInfo.RequestCode });
+                var message = "You've REASSIGNED a Task to" + viewmodel.RequestInfo.AssignedStaff;
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = message });
             }
             return RedirectToAction("Index");
         }
@@ -400,7 +423,8 @@ namespace IMS.Controllers
                 {
                     Notify(task.NotificationCodes);
                 }
-                return RedirectToAction("Detail", "ProcessRequest", new { code = viewmodel.RequestInfo.RequestCode });
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've ACCEPTED Request Assign IP Address" });
             }
             if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
@@ -408,6 +432,8 @@ namespace IMS.Controllers
                     viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode, viewmodel.SelectedServer);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've FINISHED Request Assign IP Address" });
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
@@ -415,6 +441,8 @@ namespace IMS.Controllers
                     viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.RejectReason);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've REJECTED Request Assign IP Address" });
             }
             if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
             {
@@ -432,7 +460,9 @@ namespace IMS.Controllers
                 {
                     Notify(newTask.NotificationCodes);
                 }
-                return RedirectToAction("Detail", "ProcessRequest", new { code = viewmodel.RequestInfo.RequestCode });
+                var message = "You've REASSIGNED a Task to" + viewmodel.RequestInfo.AssignedStaff;
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = message });
             }
             return RedirectToAction("Index");
         }
@@ -454,7 +484,8 @@ namespace IMS.Controllers
                 {
                     Notify(task.NotificationCodes);
                 }
-                return RedirectToAction("Detail", "ProcessRequest", new { code = viewmodel.RequestInfo.RequestCode });
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've ACCEPTED Request Change IP Address" });
             }
             if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
@@ -463,6 +494,8 @@ namespace IMS.Controllers
                     viewmodel.SelectedServer, viewmodel.RequestInfo.StatusCode);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've FINISHED Request Change IP Address" });
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
@@ -471,6 +504,8 @@ namespace IMS.Controllers
                     viewmodel.SelectedServer, viewmodel.RequestInfo.RejectReason);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've REJECTED Request Change IP Address" });
             }
             if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
             {
@@ -488,7 +523,9 @@ namespace IMS.Controllers
                 {
                     Notify(newTask.NotificationCodes);
                 }
-                return RedirectToAction("Detail", "ProcessRequest", new { code = viewmodel.RequestInfo.RequestCode });
+                var message = "You've REASSIGNED a Task to" + viewmodel.RequestInfo.AssignedStaff;
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = message });
             }
             return RedirectToAction("Index");
         }
@@ -510,7 +547,8 @@ namespace IMS.Controllers
                 {
                     Notify(task.NotificationCodes);
                 }
-                return RedirectToAction("Detail", "ProcessRequest", new { code = viewmodel.RequestInfo.RequestCode });
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've ACCEPTED Request Return IP Address" });
             }
             if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
@@ -518,6 +556,8 @@ namespace IMS.Controllers
                     viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode, viewmodel.SelectedServer);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've FINISHED Request Return IP Address" });
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
@@ -526,6 +566,8 @@ namespace IMS.Controllers
                     viewmodel.RequestInfo.RejectReason);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've REJECTED Request Return IP Address" });
             }
             if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
             {
@@ -543,7 +585,9 @@ namespace IMS.Controllers
                 {
                     Notify(newTask.NotificationCodes);
                 }
-                return RedirectToAction("Detail", "ProcessRequest", new { code = viewmodel.RequestInfo.RequestCode });
+                var message = "You've REASSIGNED a Task to" + viewmodel.RequestInfo.AssignedStaff;
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = message });
             }
             return RedirectToAction("Index");
         }
@@ -565,7 +609,8 @@ namespace IMS.Controllers
                 {
                     Notify(task.NotificationCodes);
                 }
-                return RedirectToAction("Detail", "ProcessRequest", new { code = viewmodel.RequestInfo.RequestCode });
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've ACCEPTED Request Rent Rack" });
             }
             if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
@@ -573,6 +618,8 @@ namespace IMS.Controllers
                     viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode, viewmodel.CustomerInfo.Customer);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've FINISHED Request Rent Rack" });
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
@@ -580,6 +627,8 @@ namespace IMS.Controllers
                     viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RejectReason);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've REJECTED Request Rent Rack" });
             }
             if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
             {
@@ -597,7 +646,9 @@ namespace IMS.Controllers
                 {
                     Notify(newTask.NotificationCodes);
                 }
-                return RedirectToAction("Detail", "ProcessRequest", new { code = viewmodel.RequestInfo.RequestCode });
+                var message = "You've REASSIGNED a Task to" + viewmodel.RequestInfo.AssignedStaff;
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = message });
             }
             return RedirectToAction("Index");
         }
@@ -619,7 +670,8 @@ namespace IMS.Controllers
                 {
                     Notify(task.NotificationCodes);
                 }
-                return RedirectToAction("Detail", "ProcessRequest", new { code = viewmodel.RequestInfo.RequestCode });
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've ACCEPTED Request Return Rack" });
             }
             if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
@@ -627,6 +679,8 @@ namespace IMS.Controllers
                     viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode, viewmodel.CustomerInfo.Customer);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've FINISHED Request Return Rack" });
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
@@ -634,6 +688,8 @@ namespace IMS.Controllers
                     viewmodel.RequestInfo.TaskCode, viewmodel.CustomerInfo.Customer, viewmodel.RequestInfo.RejectReason);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've REJECTED Request Return Rack" });
             }
             if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
             {
@@ -651,7 +707,9 @@ namespace IMS.Controllers
                 {
                     Notify(newTask.NotificationCodes);
                 }
-                return RedirectToAction("Detail", "ProcessRequest", new { code = viewmodel.RequestInfo.RequestCode });
+                var message = "You've REASSIGNED a Task to" + viewmodel.RequestInfo.AssignedStaff;
+                return RedirectToAction("Detail", "ProcessRequest",
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = message });
             }
             return RedirectToAction("Index");
 
