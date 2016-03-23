@@ -46,7 +46,7 @@
                             @Html.LabelFor(model => model.RequestInfo.Assignee)
                         </div>
                         <div class="@Constants.HtmlFormat.FORM_CONTROL_X2_CLASS">
-                            @Html.DropDownListFor(model => model.RequestInfo.Assignee, Model.StaffCodeOptions, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                            @Html.DropDownListFor(model => model.RequestInfo.Assignee, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                             @Html.ValidationMessageFor(model => model.RequestInfo.Assignee)
                         </div>
                     }
@@ -57,7 +57,7 @@
                             @Html.LabelFor(model => model.RequestInfo.Assignee)
                         </div>
                         <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
-                            @Html.DisplayFor(model => model.RequestInfo.AssigneeName, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                            @Html.DisplayFor(model => model.RequestInfo.AssigneeName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                             @Html.HiddenFor(model => model.RequestInfo.Assignee)
                             @if ((User.IsInRole("Shift Head") || User.IsInRole("Manager")))
                             {
@@ -72,6 +72,7 @@
                             }
                         </div>
                     }
+
                 </div>
                 @if (Model.IsAssignedUser)
                 {
@@ -81,19 +82,20 @@
                         </div>
                         @if (Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING)
                         {
-                            <button type="submit" id="btnAcceptTask" name="@Constants.FormAction.ACCEPT_TASK_ACTION" value="@Constants.FormAction.ACCEPT_TASK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                                Accept Task
-                            </button>
+                            <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                                <button type="submit" id="btnAcceptTask" name="@Constants.FormAction.ACCEPT_TASK_ACTION" value="@Constants.FormAction.ACCEPT_TASK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                                    Accept Task
+                                </button>
+                            </div>
                         }
                         @if (Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
                         {
-                            <button type="submit" id="btnNotFinished" name="@Constants.FormAction.NOT_FINISHED_TASK_ACTION" value="@Constants.FormAction.NOT_FINISHED_TASK_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
-                                Not Finish Task
-                            </button>
+                            <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                                <button type="submit" id="btnNotFinished" name="@Constants.FormAction.NOT_FINISHED_TASK_ACTION" value="@Constants.FormAction.NOT_FINISHED_TASK_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
+                                    Not Finish Task
+                                </button>
+                            </div>
                         }
-                        <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
-                            @Html.DisplayFor(model => model.RequestInfo.RequestedTime, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                        </div>
                     </div>
                 }
             </div>

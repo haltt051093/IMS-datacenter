@@ -65,17 +65,40 @@
                                 if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                                 {
                                     if ((Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING || Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_NOTFINISH) ||
-                                  (Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING && Model.RequestInfo.IsShifthead))
+                                        (Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING && Model.RequestInfo.IsShifthead))
                                     {
                                         <a class="btn btn-primary pull-left" data-toggle="modal" data-target="#Reassigntask"><i class="fa fa-plus"></i>Reassign Task</a>
                                     }
                                 }
                             }
-
                         </div>
                     }
 
                 </div>
+                @if (Model.IsAssignedUser)
+                {
+                    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
+                            @Html.LabelFor(model => model.RequestInfo.TaskStatus)
+                        </div>
+                        @if (Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING)
+                        {
+                            <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                                <button type="submit" id="btnAcceptTask" name="@Constants.FormAction.ACCEPT_TASK_ACTION" value="@Constants.FormAction.ACCEPT_TASK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                                    Accept Task
+                                </button>
+                            </div>
+                        }
+                        @if (Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
+                        {
+                            <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                                <button type="submit" id="btnNotFinished" name="@Constants.FormAction.NOT_FINISHED_TASK_ACTION" value="@Constants.FormAction.NOT_FINISHED_TASK_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
+                                    Not Finish Task
+                                </button>
+                            </div>
+                        }
+                    </div>
+                }
             </div>
             <div class="col-xs-6">
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
