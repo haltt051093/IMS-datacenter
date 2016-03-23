@@ -40,11 +40,11 @@
                                 <td>
                                     @if (Model.AllRacks[i].ServerNum != 0)
                                     {
-                                        @Html.CheckBoxFor(modelItem => Model.AllRacks[i].Checked, new { disabled = "disabled", @class= "chknull" })
+                                        @Html.CheckBoxFor(modelItem => Model.AllRacks[i].Checked, new { disabled = "disabled", data_check= "chknull" })
                                     }
                                     else
                                     {
-                                        @Html.CheckBoxFor(modelItem => Model.AllRacks[i].Checked)
+                                        @Html.CheckBoxFor(modelItem => Model.AllRacks[i].Checked, new { data_check = "chknull" })
                                     }
                                 </td>
                                 <td>
@@ -97,20 +97,20 @@
         });
 
         var selectedChkCount = 0;
-        $('#tbodyid').on('click', '.chknull', function () {
-            var selectedChk = $('.chknull:checked');
+        $('#tbodyid').on('click', function () {
+            var selectedChk = $('[data-check="chknull"]:checked');
             selectedChkCount = selectedChk.length;
         });
-        //$("#btnAccept").click(function () {
-        //    if (selectedChkCount <= 0) {
-        //        notif({
-        //            msg: "<b>Error!</b> You should choose at least one rack!",
-        //            type: "error",
-        //            position: "center"
-        //        });
-        //        return false;
-        //    } 
-        //});
+        $("#btnAccept").click(function () {
+            if (selectedChkCount <= 0) {
+                notif({
+                    msg: "<b>Error!</b> You should choose at least one rack!",
+                    type: "error",
+                    position: "center"
+                });
+                return false;
+            } 
+        });
 
         $('.returnallservers').on('click', function() {
             var rackCode = $('.rackCode').val();

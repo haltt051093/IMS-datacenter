@@ -37,7 +37,7 @@
             @Html.ValidationMessageFor(model => model.FilterByPeriodOfTime)
         </div>
     </div>
-    <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS">
+    <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS_HOVER">
         <thead>
             <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
                 <th>
@@ -55,7 +55,7 @@
         @for (int i = 0; i < Model.Tasks.Count; i++)
         {
             <tbody status-code="@Model.Tasks[i].StatusCode" type-code="@Model.Tasks[i].RequestTypeCode" duration="@Model.Tasks[i].DaysFromNow">
-                <tr class="eachTask" request-code="@Model.Tasks[i].RequestCode">
+                <tr class="clickable eachTask" request-code="@Model.Tasks[i].RequestCode">
                     <td>
                         @Html.DisplayFor(modelItem => Model.Tasks[i].RequestTypeName)
                         @Html.HiddenFor(modelItem => modelItem.Tasks[i].RequestTypeName)
@@ -154,18 +154,7 @@
 <script type="text/javascript">
     $('.eachTask').click(function () {
         var requestCode = $(this).attr("request-code");
-        //DOING
-        //$.post("@(Url.Action("Detail", "ProcessRequest"))", { code: requestCode });
-        @*$.ajax({
-            cache: false,
-            type: "GET",
-            url: "@(Url.Action("Detail", "ProcessRequest"))",
-            data: { 'code': requestCode },
-            dataType: "json"
-            //success: function (data) {
-            //    return false;
-            //}
-        });*@
+        window.location.assign('@Url.Action("Detail", "ProcessRequest")' + '/' + requestCode);
     });
 
     $("#example1").dataTable({

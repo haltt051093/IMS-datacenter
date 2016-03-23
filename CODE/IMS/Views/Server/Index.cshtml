@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-        <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS">
+        <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS_HOVER">
             <thead>
                 <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
                     @if (User.IsInRole("Customer"))
@@ -42,12 +42,11 @@
             <tbody>
                 @for (int i = 0; i < Model.Servers.Count; i++)
             {
-                    <tr class="check" status-code="@Model.Servers[i].StatusCode">
+                    <tr class="clickable check" status-code="@Model.Servers[i].StatusCode" server-code="@Model.Servers[i].ServerCode">
                         @if (User.IsInRole("Customer"))
                         {
                             <td>
-                                @Html.ActionLink(Model.Servers[i].ServerCode, "Detail", "Server",
-                            new { code = @Model.Servers[i].ServerCode }, null)
+                                @Html.DisplayFor(modelItem => Model.Servers[i].ServerCode)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => Model.Servers[i].Status)
@@ -59,8 +58,7 @@
                         else
                         {
                             <td>
-                                @Html.ActionLink(Model.Servers[i].ServerCode, "Detail", "Server",
-                            new { code = @Model.Servers[i].ServerCode }, null)
+                                @Html.DisplayFor(modelItem => Model.Servers[i].ServerCode)
                             </td>
                             <td>
                                 @Html.DisplayFor(model => Model.Servers[i].CustomerName)
@@ -82,8 +80,8 @@
                                                 request.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                                             {
                                                 <dt>
-                                                    @Html.ActionLink(@request.RequestTypeName, "Detais", "ProcessRequest",
-                                                new { rType = request.RequestType, rCode = request.RequestCode }, new { @class = "fa fa-angle-double-right" })
+                                                    @Html.ActionLink(@request.RequestTypeName, "Detail", "ProcessRequest",
+                                                new { code = request.RequestCode }, new { @class = "fa fa-angle-double-right" })
                                                 </dt>
                                             }
                                         }
@@ -127,5 +125,9 @@
             $('#example1 tbody tr').hide();
             $('#example1 tbody tr[status-code="' + status + '"]').show();
         }
+    });
+    $('#example1').on('click', '.check', function () {
+        var servercode = $(this).attr('server-code');
+        window.location.assign('@Url.Action("Detail", "Server")' + '/' + servercode);
     });
 </script>

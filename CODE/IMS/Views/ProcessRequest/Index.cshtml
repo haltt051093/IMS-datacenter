@@ -38,12 +38,9 @@
         </div>
     </div>
     <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-        <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS">
+        <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS_HOVER">
             <thead>
                 <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
-                    <th>
-                        Request Code
-                    </th>
                     <th>
                         Customer
                     </th>
@@ -60,12 +57,8 @@
             </thead>
             @for (int i = 0; i < Model.Requests.Count; i++)
             {
-                <tbody class="clickmee check" status-code="@Model.Requests[i].LastestStatusRequest.StatusCode" type-code="@Model.Requests[i].LastestStatusRequest.RequestTypeCode" duration="@Model.Requests[i].LastestStatusRequest.DaysFromNow">
+                <tbody class="clickable clickmee check" request-code="@Model.Requests[i].LastestStatusRequest.RequestCode" status-code="@Model.Requests[i].LastestStatusRequest.StatusCode" type-code="@Model.Requests[i].LastestStatusRequest.RequestTypeCode" duration="@Model.Requests[i].LastestStatusRequest.DaysFromNow">
                     <tr>
-                        <td>
-                            @Html.ActionLink(Model.Requests[i].LastestStatusRequest.RequestCode, "Detail", "ProcessRequest",
-                                new { code = Model.Requests[i].LastestStatusRequest.RequestCode }, null)
-                        </td>
                         <td>
                             @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.Customer)
                         </td>
@@ -87,9 +80,6 @@
                         {
                             <tr style="background-color: lightgrey;">
                                 <td>
-                                    @Html.DisplayFor(modelItem => old.RequestCode)
-                                </td>
-                                <td>
                                     @Html.DisplayFor(modelItem => old.Customer)
                                 </td>
                                 <td>
@@ -108,11 +98,6 @@
             }
             <tfoot>
                 <tr style="background-color: #404040">
-                    <th>
-                        <span style="color: ghostwhite">
-                            RequestCode
-                        </span>
-                    </th>
                     <th>
                         <span style="color: ghostwhite">
                             Customer
@@ -203,6 +188,11 @@
         $(this).closest('tbody')
             .next('.showhide')
             .toggle('fast');
+    });
+
+    $('#example1').on('click', '.clickmee', function () {
+        var requestcode = $(this).attr('request-code');
+        window.location.assign('@Url.Action("Detail", "ProcessRequest")' + '/' + requestcode);
     });
 
     $("#example1").dataTable({

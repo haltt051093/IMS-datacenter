@@ -43,19 +43,13 @@
 </section><!-- /.content -->
 <script type="text/javascript">
     $(function () {
-        //DOING, aData lay tu dau?
         $("#example1").dataTable({
             "iDisplayLength": -1,
             "aaSorting": [[1, "desc"]] // Sort by first column descending
         });
-        //row.css('background-color', '#ffe6e6');
-        // row.css('background-color', '#ccd9ff');
         $('#example1').on('click', '.btnRequestCode', function () {
             var notif = $(this).attr('notif-code');
             window.location.assign('@Url.Action("Detail", "Notification")' + '/' + notif);
         });
-        //$("tr").click(function () {
-        //    $(this).addClass("hover").siblings().removeClass("hover");
-        //});
     });
 </script>

@@ -37,12 +37,9 @@
             @Html.ValidationMessageFor(model => model.FilterByPeriodOfTime)
         </div>
     </div>
-    <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS">
+    <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS_HOVER">
         <thead>
             <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
-                <th>
-                    Request Code
-                </th>
                 <th>
                     Request Type
                 </th>
@@ -56,12 +53,8 @@
         </thead>
         @for (int i = 0; i < Model.Requests.Count; i++)
             {
-            <tbody class="clickmee check" status-code="@Model.Requests[i].LastestStatusRequest.StatusCode" type-code="@Model.Requests[i].LastestStatusRequest.RequestTypeCode" duration="@Model.Requests[i].LastestStatusRequest.DaysFromNow">
+            <tbody class="clickable clickmee check" request-code="@Model.Requests[i].LastestStatusRequest.RequestCode" status-code="@Model.Requests[i].LastestStatusRequest.StatusCode" type-code="@Model.Requests[i].LastestStatusRequest.RequestTypeCode" duration="@Model.Requests[i].LastestStatusRequest.DaysFromNow">
                 <tr>
-                    <td>
-                        @Html.ActionLink(Model.Requests[i].LastestStatusRequest.RequestCode, "Detail", "Request",
-                                new { code = Model.Requests[i].LastestStatusRequest.RequestCode }, null)
-                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.RequestTypeName)
                     </td>
@@ -80,9 +73,6 @@
                         {
                             <tr style="background-color: lightgrey;">
                                 <td>
-                                    @Html.DisplayFor(modelItem => old.RequestCode)
-                                </td>
-                                <td>
                                     @Html.DisplayFor(modelItem => old.RequestTypeName)
                                 </td>
                                 <td>
@@ -98,11 +88,6 @@
         }
         <tfoot>
             <tr style="background-color: #404040">
-                <th>
-                    <span style="color: ghostwhite">
-                        RequestCode
-                    </span>
-                </th>
                 <th>
                     <span style="color: ghostwhite">
                         RequestType
@@ -189,15 +174,10 @@
             .toggle('fast');
     });
 
-    //var message = $('#SuccessMessage').val();
-    //if (message) {
-    //    notif({
-    //        msg: "<b>Success! </b>" + message,
-    //        type: "info",
-    //        position: "center"
-    //    });
-    //    $('#SuccessMessage').val("");
-    //}
+    $('#example1').on('click', '.clickmee', function () {
+        var requestcode = $(this).attr('request-code');
+        window.location.assign('@Url.Action("Detail", "Request")' + '/' + requestcode);
+    });
 
     $("#example1").dataTable({
         "iDisplayLength": -1,
