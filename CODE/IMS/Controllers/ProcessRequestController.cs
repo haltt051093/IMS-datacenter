@@ -334,7 +334,7 @@ namespace IMS.Controllers
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've ACCEPTED Request Add Server" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.ACCEPT_REQUEST_ADD_SERVER });
             }
             if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
@@ -343,7 +343,7 @@ namespace IMS.Controllers
                     RequestBLO.Current.ExportProcedure(viewmodel.Servers, viewmodel.CustomerInfo.Customer);
                     Success("Export Procedure Successfully!");
                     return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've PRINTED a procedure" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.PRINT_PROCEDURE });
                 }
                 else
                 {
@@ -824,7 +824,7 @@ namespace IMS.Controllers
                     Notify(task.NotificationCodes);
                 }
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've ACCEPTED Request Return Rack" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.ACCEPT_REQUEST_RETURN_RACK });
             }
             if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
@@ -833,7 +833,7 @@ namespace IMS.Controllers
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've FINISHED Request Return Rack" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.APPROVE_REQUEST_RETURN_RACK });
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
@@ -842,7 +842,7 @@ namespace IMS.Controllers
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've REJECTED Request Return Rack" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.REJECT_REQUEST_RETURN_RACK });
             }
             if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
             {

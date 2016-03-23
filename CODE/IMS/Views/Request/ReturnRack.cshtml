@@ -101,16 +101,16 @@
             var selectedChk = $('.chknull:checked');
             selectedChkCount = selectedChk.length;
         });
-        $("#btnAccept").click(function () {
-            if (selectedChkCount <= 0) {
-                notif({
-                    msg: "<b>Error!</b> You should choose at least one rack!",
-                    type: "error",
-                    position: "center"
-                });
-                return false;
-            } 
-        });
+        //$("#btnAccept").click(function () {
+        //    if (selectedChkCount <= 0) {
+        //        notif({
+        //            msg: "<b>Error!</b> You should choose at least one rack!",
+        //            type: "error",
+        //            position: "center"
+        //        });
+        //        return false;
+        //    } 
+        //});
 
         $('.returnallservers').on('click', function() {
             var rackCode = $('.rackCode').val();

@@ -354,6 +354,18 @@ namespace IMS.Core
         {
             public const long EPOCH_VS_TICK_OFFSET = 621355968000000000;
         }
+
+        public class Message
+        {
+            public const string PRINT_PROCEDURE = "You've PRINTED a procedure";
+
+            public const string ACCEPT_REQUEST_ADD_SERVER = "You've ACCEPTED Request Add Server";
+            public const string ACCEPT_REQUEST_RETURN_RACK = "You've ACCEPTED Request Return Rack";
+
+            public const string APPROVE_REQUEST_RETURN_RACK = "You've FINISHED Request Return Rack";
+
+            public const string REJECT_REQUEST_RETURN_RACK = "You've REJECTED Request Return Rack";
+        }
     }
 }
 
