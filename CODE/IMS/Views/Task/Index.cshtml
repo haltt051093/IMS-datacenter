@@ -29,9 +29,6 @@
                 <th>
                     Assigned Time
                 </th>
-                <th>
-                    Action
-                </th>
             </tr>
         </thead>
 
@@ -60,27 +57,56 @@
                         @Html.DisplayFor(modelItem => Model.Tasks[i].AssignedTime)
                         @Html.HiddenFor(modelItem => modelItem.Tasks[i].AssignedTime)
                     </td>
-                    <td>
+                    @*<td>
                         @using (Html.BeginForm("UpdateTaskStatus", "Task", FormMethod.Post))
                         {
-                            <input name="TaskCode" type="hidden" value="@Model.Tasks[i].TaskCode" />
+                        <input name="TaskCode" type="hidden" value="@Model.Tasks[i].TaskCode" />
                             if (Model.Tasks[i].StatusCode == Constants.StatusCode.TASK_WAITING)
                             {
-                                <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.ACCEPT_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                                    @Labels.Accept
-                                </button>
+                        <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.ACCEPT_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                            @Labels.Accept
+                        </button>
                             }
                             if (Model.Tasks[i].StatusCode == Constants.StatusCode.TASK_DOING)
                             {
-                                <button type="submit" id="btnCancel" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                                    Not Finished
-                                </button>
+                        <button type="submit" id="btnCancel" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
+                            Not Finished
+                        </button>
                             }
                         }
-                    </td>
+                    </td>*@
                 </tr>
             </tbody>
         }
+        <tfoot>
+            <tr style="background-color: #404040">
+                <th>
+                    <span style="color: ghostwhite">
+                        RequestCode
+                    </span>
+                </th>
+                <th>
+                    <span style="color: ghostwhite">
+                        RequestType
+                    </span>
+                </th>
+                <th>
+                    <span style="color: ghostwhite">
+                        Status
+                    </span>
+                </th>
+                <th>
+                    <span style="color: ghostwhite">
+                        Assignor
+                    </span>
+                </th>
+                <th>
+                    <span style="color: ghostwhite">
+                        Assigned Time
+                    </span>
+                </th>
+            </tr>
+        </tfoot>
     </table>
 </section><!-- /.content -->
 <script>
