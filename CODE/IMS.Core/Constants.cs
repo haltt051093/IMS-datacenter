@@ -350,7 +350,7 @@ namespace IMS.Core
             public const string DANGER = "danger";
         }
 
-        public class TimeConversion 
+        public class TimeConversion
         {
             public const long EPOCH_VS_TICK_OFFSET = 621355968000000000;
         }
@@ -359,11 +359,21 @@ namespace IMS.Core
         {
             public const string PRINT_PROCEDURE = "You've PRINTED a procedure";
 
+            public const string REASSIGN_TASK = "You've REASSIGNED a Task to";
+            public const string ACCEPT_TASK = "You're DOING the task";
+            public const string NOT_FINISHED_TASK = "You've NOT FINISHED the task.";
+
             public const string ACCEPT_REQUEST_ADD_SERVER = "You've ACCEPTED Request Add Server";
+            public const string ACCEPT_REQUEST_BRING_SERVER_AWAY = "You've ACCEPTED Request Bring Server Away";
+            public const string ACCEPT_REQUEST_ASSIGN_IP = "You've ACCEPTED Request Assign IP Address";
+            public const string ACCEPT_REQUEST_CHANGE_IP = "You've ACCEPTED Request Change IP Address";
+            public const string ACCEPT_REQUEST_RETURN_IP = "You've ACCEPTED Request Return IP Address";
+            public const string ACCEPT_REQUEST_RERNT_RACK = "You've ACCEPTED Request Rent Rack";
             public const string ACCEPT_REQUEST_RETURN_RACK = "You've ACCEPTED Request Return Rack";
 
             public const string APPROVE_REQUEST_RETURN_RACK = "You've FINISHED Request Return Rack";
 
+            public const string REJECT_REQUEST_RENT_RACK = "You've REJECTED Request Rent Rack";
             public const string REJECT_REQUEST_RETURN_RACK = "You've REJECTED Request Return Rack";
         }
     }

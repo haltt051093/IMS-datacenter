@@ -749,7 +749,7 @@ namespace IMS.Controllers
                     Notify(task.NotificationCodes);
                 }
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've ACCEPTED Request Rent Rack" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg =  });
             }
             if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
@@ -767,7 +767,7 @@ namespace IMS.Controllers
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You've REJECTED Request Rent Rack" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.REJECT_REQUEST_RENT_RACK });
             }
             if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
             {
@@ -785,7 +785,7 @@ namespace IMS.Controllers
                 {
                     Notify(newTask.NotificationCodes);
                 }
-                var message = "You've REASSIGNED a Task to" + viewmodel.RequestInfo.AssignedStaff;
+                var message = Constants.Message.REASSIGN_TASK + viewmodel.RequestInfo.AssignedStaff;
                 return RedirectToAction("Detail", "ProcessRequest",
                     new { code = viewmodel.RequestInfo.RequestCode, msg = message });
             }
@@ -794,14 +794,14 @@ namespace IMS.Controllers
                 //update task
                 TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_DOING);
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You're DOING the task" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.ACCEPT_TASK });
             }
             if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
             {
                 var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RejectReason);
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
-                   new { code = viewmodel.RequestInfo.RequestCode, msg = "You've NOT FINISHED the task." });
+                   new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.NOT_FINISHED_TASK });
             }
             return RedirectToAction("Index");
         }
@@ -860,7 +860,7 @@ namespace IMS.Controllers
                 {
                     Notify(newTask.NotificationCodes);
                 }
-                var message = "You've REASSIGNED a Task to" + viewmodel.RequestInfo.AssignedStaff;
+                var message = Constants.Message.REASSIGN_TASK + viewmodel.RequestInfo.AssignedStaff;
                 return RedirectToAction("Detail", "ProcessRequest",
                     new { code = viewmodel.RequestInfo.RequestCode, msg = message });
             }
@@ -869,14 +869,14 @@ namespace IMS.Controllers
                 //update task
                 TaskBLO.Current.UpdateTaskStatus(viewmodel.RequestInfo.TaskCode, Constants.StatusCode.TASK_DOING);
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = "You're DOING the task" });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.ACCEPT_TASK });
             }
             if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
             {
                 var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RejectReason);
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
-                   new { code = viewmodel.RequestInfo.RequestCode, msg = "You've NOT FINISHED the task." });
+                   new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.NOT_FINISHED_TASK });
             }
             return RedirectToAction("Index");
 

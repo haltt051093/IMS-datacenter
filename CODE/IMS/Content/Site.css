@@ -16,6 +16,8 @@
 
 .clickable { cursor:pointer; }
 
+.highlight:hover { background: yellow }
+
 .tf-modal {
     
 }
