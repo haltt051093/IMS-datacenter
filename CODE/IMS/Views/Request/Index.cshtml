@@ -12,7 +12,7 @@
 <section class="main-content">
     <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
         <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-            @Html.LabelFor(model => model.FilterByRequestType)
+            @Html.LabelFor(model => model.FilterByRequestType, "Request Type")
             @Html.HiddenFor(model => model.SuccessMessage)
         </div>
         <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
@@ -22,7 +22,7 @@
     </div>
     <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
         <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-            @Html.LabelFor(model => model.FilterByStatus)
+            @Html.LabelFor(model => model.FilterByStatus, "Status")
         </div>
         <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
             @Html.DropDownListFor(m => m.FilterByStatus, Model.FilterByStatus, "Select All", new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
@@ -31,7 +31,7 @@
     </div>
     <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
         <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-            @Html.LabelFor(model => model.FilterByPeriodOfTime)
+            @Html.LabelFor(model => model.FilterByPeriodOfTime, "Period of Time")
         </div>
         <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
             @Html.DropDownListFor(m => m.FilterByPeriodOfTime, Model.FilterByPeriodOfTime, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })

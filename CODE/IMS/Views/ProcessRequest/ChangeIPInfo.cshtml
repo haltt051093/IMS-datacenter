@@ -17,7 +17,7 @@
             <div class="col-xs-6">
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                     <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                        @Html.LabelFor(model => model.RequestInfo.RequestCode)
+                        @Html.LabelFor(model => model.RequestInfo.RequestCode, "Request Code")
                         @Html.HiddenFor(model => model.SuccessMessage)
                     </div>
                     <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
@@ -26,7 +26,7 @@
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                     <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                        @Html.LabelFor(model => model.RequestInfo.StatusName)
+                        @Html.LabelFor(model => model.RequestInfo.StatusName, "Status")
                     </div>
                     <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                         @Html.DisplayFor(model => model.RequestInfo.StatusName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
@@ -34,7 +34,7 @@
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                     <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                        @Html.LabelFor(model => model.RequestInfo.RequestedTime)
+                        @Html.LabelFor(model => model.RequestInfo.RequestedTime, "Requested Time")
                     </div>
                     <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                         @Html.DisplayFor(model => model.RequestInfo.RequestedTime, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
@@ -110,7 +110,7 @@
         <hr />
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                @Html.LabelFor(model => model.SelectedServer)
+                @Html.LabelFor(model => model.SelectedServer, "Server")
             </div>
             <div class="@Constants.HtmlFormat.FORM_DETAIL_CLASS">
                 @Html.ActionLink(Model.SelectedServer, "Detail", "Server", new { code = Model.SelectedServer }, null)
@@ -127,7 +127,7 @@
 
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                @Html.LabelFor(model => model.ReturningIPs)
+                @Html.LabelFor(model => model.ReturningIPs ,"Change IP")
             </div>
             <div class="@Constants.HtmlFormat.FORM_DETAIL_CLASS">
                 @for (int i = 0; i < Model.ReturningIPs.Count; i++)
@@ -201,7 +201,7 @@
                 <div class="modal-body">
                     <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
                         <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                            @Html.LabelFor(model => model.RequestInfo.AssigneeName)
+                            @Html.LabelFor(model => model.RequestInfo.AssigneeName, "Assignee Name")
                         </div>
                         <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
                             @Html.DisplayFor(model => model.RequestInfo.AssigneeName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
@@ -209,7 +209,7 @@
                     </div>
                     <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
                         <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                            @Html.LabelFor(model => model.RequestInfo.TaskStatusName)
+                            @Html.LabelFor(model => model.RequestInfo.TaskStatusName, "Task Status")
                         </div>
                         <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
                             @Html.DisplayFor(model => model.RequestInfo.TaskStatusName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
@@ -217,7 +217,7 @@
                     </div>
                     <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
                         <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                            @Html.LabelFor(model => model.RequestInfo.AssignedStaff)
+                            @Html.LabelFor(model => model.RequestInfo.AssignedStaff, "Assigned Staff")
                         </div>
                         <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                             @Html.DropDownListFor(model => model.RequestInfo.AssignedStaff, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
