@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using IMS.Authentications;
 using IMS.Core;
 using IMS.Data.Business;
 using IMS.Models;
 
 namespace IMS.Controllers
 {
+    [Roles(Constants.Role.STAFF)]
     public class TaskController : CoreController
     {
         public ActionResult Index(string code)

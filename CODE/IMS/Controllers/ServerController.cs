@@ -9,6 +9,7 @@ using IMS.Models;
 
 namespace IMS.Controllers
 {
+    [Authorize]
     public class ServerController : CoreController
     {
         public ActionResult Index()

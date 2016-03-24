@@ -77,7 +77,7 @@
 }
 
 .table-hover > tbody > tr:hover {
-    background-color: yellow;
+    background-color: #adadad;
 }
 
 .clickable {

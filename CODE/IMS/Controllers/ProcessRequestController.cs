@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
+using IMS.Authentications;
 using IMS.Core;
 using IMS.Data.Business;
 using IMS.Data.Models;
@@ -10,6 +11,7 @@ using IMS.Models;
 
 namespace IMS.Controllers
 {
+    [Roles(Constants.Role.MANAGER, Constants.Role.SHIFT_HEAD, Constants.Role.STAFF)]
     public class ProcessRequestController : CoreController
     {
         public ActionResult Index()

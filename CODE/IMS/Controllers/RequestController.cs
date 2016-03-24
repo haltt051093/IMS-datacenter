@@ -13,9 +13,9 @@ using Newtonsoft.Json;
 
 namespace IMS.Controllers
 {
+    [Roles(Constants.Role.CUSTOMER)]
     public class RequestController : CoreController
     {
-        [Roles(Constants.Role.CUSTOMER)]
         public ActionResult Index(RequestIndexViewModel data)
         {
             //var data = new RequestIndexViewModel();
@@ -39,7 +39,6 @@ namespace IMS.Controllers
             return View(data);
         }
 
-        [Roles(Constants.Role.CUSTOMER)]
         #region Create Request
         public ActionResult Create(RequestCreateViewModel q)
         {
@@ -203,7 +202,6 @@ namespace IMS.Controllers
         #endregion
 
         #region request details
-        [Authorize]
         [HttpGet]
         public ActionResult Detail(string code, string msg)
         {

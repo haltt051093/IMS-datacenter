@@ -44,7 +44,7 @@ namespace IMS.Controllers
             {
                 return RedirectToAction("Detail", "ProcessRequest", new { code = notif.RefCode });
             }
-            return View();
+            //return View();
         }
 
 
