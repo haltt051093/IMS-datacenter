@@ -88,6 +88,10 @@
                     $(data.ServerIPs).each(function (index, item) {
                         myTable.append('<tr><td>' + '<input type="checkbox" class="chknull" id="CheckBoxList"'
                             + index + ' name="chk" value="' + item.CurrentIP + '" /></td><td>' + item.CurrentIP + '</td></tr>');
+                        if (item.IsDefault) {
+                            var test = "CheckBoxList" + index;
+                            $("#test").addClass("highlight-warning");
+                        }
                     });
                     selectedChkCount = 0;
                 }

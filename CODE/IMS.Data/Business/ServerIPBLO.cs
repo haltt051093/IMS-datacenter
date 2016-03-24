@@ -3,6 +3,7 @@ using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.Repository;
 using System.Linq;
+using IMS.Data.ViewModels;
 
 namespace IMS.Data.Business
 {
@@ -46,11 +47,20 @@ namespace IMS.Data.Business
             return result;
         }
 
-        public List<ServerIP> GetIPtoFetch(string serverCode, string status)
+        public List<ServerIPExtendedModel> GetIPtoFetch(string serverCode, string status)
         {
             var query = from si in ServerIPDAO.Current.Table
+                        join ip in IPAddressPoolDAO.Current.Table
+                            on si.CurrentIP equals ip.NetworkIP into siip
+                        from subsiip in siip.DefaultIfEmpty()
                         where si.ServerCode == serverCode && si.StatusCode == status
-                        select si;
+                        select new ServerIPExtendedModel()
+                        {
+                            StatusCode = si.StatusCode,
+                            IsDefault = subsiip.IsDefault,
+                            CurrentIP = si.CurrentIP,
+                            ServerCode = si.ServerCode
+                        };
             return query.OrderBy(x => x.CurrentIP).ToList();
         }
 

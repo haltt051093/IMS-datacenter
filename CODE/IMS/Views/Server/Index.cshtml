@@ -19,47 +19,46 @@
             @Html.ValidationMessageFor(model => model.SelectedStatus)
         </div>
     </div>
-    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-        <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS_HOVER">
-            <thead>
-                <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
-                    @if (User.IsInRole("Customer"))
-                    {
-                        <th>@Labels.ServerCode</th>
+    <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS_HOVER">
+        <thead>
+            <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
+                @if (User.IsInRole("Customer"))
+                {
+                    <th>@Labels.ServerCode</th>
                         <th>@Labels.Status</th>
                         <th>@Labels.DefaultIP</th>
-                    }
-                    else
-                    {
-                        <th>@Labels.ServerCode</th>
+                }
+                else
+                {
+                    <th>@Labels.ServerCode</th>
                         <th>@Labels.Customer</th>
                         <th>@Labels.Status</th>
                         <th>@Labels.DefaultIP</th>
                         <th>@Labels.CurrentRequest</th>
-                    }
-                </tr>
-            </thead>
-            <tbody>
-                @for (int i = 0; i < Model.Servers.Count; i++)
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Servers.Count; i++)
             {
-                    <tr class="clickable check" status-code="@Model.Servers[i].StatusCode" server-code="@Model.Servers[i].ServerCode">
-                        @if (User.IsInRole("Customer"))
-                        {
-                            <td>
-                                @Html.DisplayFor(modelItem => Model.Servers[i].ServerCode)
-                            </td>
+                <tr class="clickable check" status-code="@Model.Servers[i].StatusCode" server-code="@Model.Servers[i].ServerCode">
+                    @if (User.IsInRole("Customer"))
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Servers[i].ServerCode)
+                        </td>
                             <td>
                                 @Html.DisplayFor(modelItem => Model.Servers[i].Status)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => Model.Servers[i].DefaultIP)
                             </td>
-                        }
-                        else
-                        {
-                            <td>
-                                @Html.DisplayFor(modelItem => Model.Servers[i].ServerCode)
-                            </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Servers[i].ServerCode)
+                        </td>
                             <td>
                                 @Html.DisplayFor(model => Model.Servers[i].CustomerName)
                             </td>
@@ -88,30 +87,29 @@
                                     </dl>
                                 }
                             </td>
-                        }
-                    </tr>
-                }
-            </tbody>
-            <tfoot>
-                <tr style="background-color: #404040">
-                    @if (User.IsInRole("Customer"))
-                    {
-                        <th><span style="color: ghostwhite">@Labels.ServerCode</span></th>
+                    }
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr style="background-color: #404040">
+                @if (User.IsInRole("Customer"))
+                {
+                    <th><span style="color: ghostwhite">@Labels.ServerCode</span></th>
                         <th><span style="color: ghostwhite">@Labels.Status</span></th>
                         <th><span style="color: ghostwhite">@Labels.DefaultIP</span></th>
-                    }
-                    else
-                    {
-                        <th><span style="color: ghostwhite">@Labels.ServerCode</span></th>
+                }
+                else
+                {
+                    <th><span style="color: ghostwhite">@Labels.ServerCode</span></th>
                         <th><span style="color: ghostwhite">@Labels.Customer</span></th>
                         <th><span style="color: ghostwhite">@Labels.Status</span></th>
                         <th><span style="color: ghostwhite">@Labels.DefaultIP</span></th>
                         <th><span style="color: ghostwhite">@Labels.CurrentRequest</span></th>
-                    }
-                </tr>
-            </tfoot>
-        </table>
-    </div>
+                }
+            </tr>
+        </tfoot>
+    </table>
 </div>
 
 <!-- page script -->

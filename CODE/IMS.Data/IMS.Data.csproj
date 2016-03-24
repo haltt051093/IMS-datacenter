@@ -153,6 +153,7 @@
     <Compile Include="ViewModels\LogUsedIPExtendModel.cs" />
     <Compile Include="ViewModels\NotificationResultModel.cs" />
     <Compile Include="ViewModels\ProcessRequestExtendedModel.cs" />
+    <Compile Include="ViewModels\ServerIPExtendedModel.cs" />
     <Compile Include="ViewModels\TaskExtendedModel.cs" />
     <Compile Include="ViewModels\NotificationExtendedModel.cs" />
     <Compile Include="ViewModels\RackExtendedModel.cs" />
