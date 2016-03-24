@@ -30,41 +30,40 @@
     <div style="height: 10px"></div>
     <div class="row hide">
         <div id="dropdown-template" class="col-xs-3">
-            <label>IP Address: @Html.DropDownListFor(model => model.NetworkIP, Model.NetworkIPs, "All IP Addresses", new {@class = "form-control input-sm", style = "width: 150px"}) </label>
+            <label>IP Address: @Html.DropDownListFor(model => model.NetworkIP, Model.NetworkIPs, "All IP Addresses", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
         </div>
     </div>
     <table id="example1" class="table table-bordered">
         <thead>
-        <tr style="background-color: #404040">
-            <th><span style="color: ghostwhite">Id</span>
-            <th><span style="color: ghostwhite">NetworkIP</span>
-            <th><span style="color: ghostwhite">IP Address</span>
-            <th><span style="color: ghostwhite">Gateway</span>
-            <th><span style="color: ghostwhite">Subnet mask</span>
-            <th><span style="color: ghostwhite">Status</span>
-            <th></th>
-        </tr>
+            <tr style="background-color: #404040">
+                <th><span style="color: ghostwhite">Id</span>
+                <th><span style="color: ghostwhite">NetworkIP</span>
+                <th><span style="color: ghostwhite">IP Address</span>
+                <th><span style="color: ghostwhite">Gateway</span>
+                <th><span style="color: ghostwhite">Subnet mask</span>
+                <th><span style="color: ghostwhite">Status</span>
+                <th></th>
+            </tr>
         </thead>
         <tfoot>
-        <tr style="background-color: #404040">
-            <th><span style="color: ghostwhite">Id</span>
-            <th><span style="color: ghostwhite">NetworkIP</span>
-            <th><span style="color: ghostwhite">IP Address</span>
-            <th><span style="color: ghostwhite">Gateway</span>
-            <th><span style="color: ghostwhite">Subnet mask</span>
-            <th><span style="color: ghostwhite">Status</span>
-            <th></th>
+            <tr style="background-color: #404040">
+                <th><span style="color: ghostwhite">Id</span>
+                <th><span style="color: ghostwhite">NetworkIP</span>
+                <th><span style="color: ghostwhite">IP Address</span>
+                <th><span style="color: ghostwhite">Gateway</span>
+                <th><span style="color: ghostwhite">Subnet mask</span>
+                <th><span style="color: ghostwhite">Status</span>
+                <th></th>
 
-        </tr>
+            </tr>
         </tfoot>
     </table>
 </section><!-- /.content -->
-
 <!-- ADD IP MODAL -->
 <div id="addip-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            @using(Html.BeginForm())
+            @using (Html.BeginForm())
             {
                 <div class="modal-header">
                     <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i> @Labels.AddIP</div>
@@ -116,49 +115,45 @@
 </div><!-- /.modal -->
 <!-- DEACTIVATE IP MODAL -->
 <div id="deactivateip-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" style="width: 300px">
+    <div class="modal-dialog" style="width: 400px">
         <div class="modal-content">
             @using (Html.BeginForm())
             {
                 <div class="modal-header">
-                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-minus"></i> @Labels.DeactivateIP</div>
+                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-minus-circle"></i> @Labels.DeactivateIP</div>
                 </div>
                 <div class="modal-body">
-                    <div class="pull-left">
-                        <h3>Select Network IP to deactivate:</h3>
-                    </div>
+
                     <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS" id="tbodyid">
                         @if (Model.NetIPAvai.Count > 0)
                         {
                             for (int i = 0; i < Model.NetIPAvai.Count; i++)
                             {
-                                <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS" >
+                                <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
                                     @Html.HiddenFor(model => model.NetIPAvai[i].Value)
-                                    @Html.CheckBoxFor(model => model.NetIPAvai[i].Selected,   new { @class = "chknull"})
+                                    @Html.CheckBoxFor(model => model.NetIPAvai[i].Selected, new { @class = "chknull" })
                                     @Html.DisplayFor(model => model.NetIPAvai[i].Text)
                                 </div>
                             }
-                        }                       
+                        }
                     </div>
-
                     <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
                         <div class="col-xs-12 tf-form-control">
 
-                            <input type="checkbox" id="checkbox1"/>
+                            <input type="checkbox" id="checkbox1" />
                             <label style="color: crimson">I agree to deactivate selected IP range</label>
 
                         </div>
-                        </div>
                     </div>
-                <div class="modal-footer">
-                    <button id ="deactive" type="submit" name="@Constants.FormAction.ACTION_NAME" value="Deactive" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                        @Labels.DialogOK
-                    </button>
-                    <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
+                </div>
+                <div class="modal-footer">              
+                    <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS pull-right"
                             data-dismiss="modal">
                         @Labels.DialogCancel
                     </button>
-
+                    <button id="deactive" type="submit" name="@Constants.FormAction.ACTION_NAME" value="Deactive" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS pull-right">
+                        @Labels.DialogOK
+                    </button>
                 </div>
             }
         </div><!-- /.modal-content -->
@@ -170,17 +165,13 @@
 <div id="blockip-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            @using (Html.BeginForm("ChangeIPStatus","IP"))
+            @using (Html.BeginForm("ChangeIPStatus", "IP"))
             {
                 <div class="modal-header">
-                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i> @Labels.BlockIP</div>
+                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-question-circle"></i> @Messages.BlockIPWarning</div>
                 </div>
                 <div class="modal-body">
-                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                        <div class="@Constants.HtmlFormat.MODAL_MESSAGE_CLASS">
-                            @Messages.BlockIPWarning?
-                        </div>
-                    </div>
+
                     <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
                         <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
                             @Html.LabelFor(model => model.Description)
@@ -190,7 +181,7 @@
                             @Html.ValidationMessageFor(model => model.Description)
                         </div>
                     </div>
-                    <input class="hidden" name="Id" id="idblock"/>
+                    <input class="hidden" name="Id" id="idblock" />
                 </div>
                 <div class="modal-footer">
                     <button type="submit" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
@@ -210,17 +201,13 @@
 <div id="unblockip-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            @using (Html.BeginForm("ChangeIPStatus","IP"))
+            @using (Html.BeginForm("ChangeIPStatus", "IP"))
             {
                 <div class="modal-header">
-                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i> @Labels.UnblockIP</div>
+                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-question-circle"></i> @Messages.UnblockIPWarning</div>
                 </div>
                 <div class="modal-body">
-                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                        <div class="@Constants.HtmlFormat.MODAL_MESSAGE_CLASS">
-                            @Messages.UnblockIPWarning?
-                        </div>
-                    </div>
+
                     <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
                         <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
                             @Html.LabelFor(model => model.Description)
@@ -230,7 +217,7 @@
                             @Html.ValidationMessageFor(model => model.Description)
                         </div>
                     </div>
-                    <input name  ="Id" Id="idunblock" class="hidden"/>
+                    <input name="Id" Id="idunblock" class="hidden" />
                 </div>
                 <div class="modal-footer">
                     <button type="submit" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
@@ -246,10 +233,9 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
 <!-- page script -->
 <script>
-    $('#checkbox1').change(function() {
+    $('#checkbox1').change(function () {
         if ($('#checkbox1').prop('checked') == true) {
             $('#deactive').prop('disabled', false);
         } else {
@@ -257,7 +243,7 @@
         }
     });
 
-    $('#deactivateip').click(function() {
+    $('#deactivateip').click(function () {
         $('#checkbox1').prop('checked', false);
         $('#checkbox1').trigger('change');
         $('#deactivateip-modal').modal('show');
@@ -304,7 +290,7 @@
                 position: "center"
             });
             return false;
-        }       
+        }
     });
     var table = $('#example1').DataTable({
         dom: '<lf<t>ip>',
@@ -325,11 +311,11 @@
         bAutoWidth: false,
         fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             if (aData.ServerCode != null) {
-         
+
                 $(nRow).addClass('clickable');
                 $(nRow).addClass('highlight');
             };
-            
+
             $(nRow).click(function () {
                 if (aData.ServerCode != null) {
                     var url = CONSTANT.authority + '@Url.Action("Detail", "Server")' + '/' + aData.ServerCode;
@@ -339,33 +325,33 @@
             var row = $(nRow);
             var actionCell = $(nRow.cells[4]);
             switch (aData.StatusCode) {
-            case '@Constants.StatusCode.IP_AVAILABLE':
-                actionCell.html('<a href="#">Block IP</a>');
-                actionCell.find('a').click(function () {
-                    $('#blockip-modal').modal('show');
-                    $('#idblock').val(aData.Id);
-                    return false;
-                });
-                break;
-            case '@Constants.StatusCode.IP_BLOCKED':
-                actionCell.html('<a href="#">Unblock IP</a>');
-                actionCell.find('a').click(function () {
-                    $('#unblockip-modal').modal('show');
-                    $('#idunblock').val(aData.Id);
-                    return false;
-                });
-                break;
-            case '@Constants.StatusCode.IP_RESERVE':
-                row.addClass('background-danger');
-                actionCell.html('');
-                break;
-            case '@Constants.StatusCode.IP_USED':
-                row.addClass('background-info');
-                actionCell.html('');
-                break;
-            case '@Constants.StatusCode.IP_DEACTIVATE':
-                actionCell.html('');
-                break;
+                case '@Constants.StatusCode.IP_AVAILABLE':
+                    actionCell.html('<a href="#">Block IP</a>');
+                    actionCell.find('a').click(function () {
+                        $('#blockip-modal').modal('show');
+                        $('#idblock').val(aData.Id);
+                        return false;
+                    });
+                    break;
+                case '@Constants.StatusCode.IP_BLOCKED':
+                    actionCell.html('<a href="#">Unblock IP</a>');
+                    actionCell.find('a').click(function () {
+                        $('#unblockip-modal').modal('show');
+                        $('#idunblock').val(aData.Id);
+                        return false;
+                    });
+                    break;
+                case '@Constants.StatusCode.IP_RESERVE':
+                    row.addClass('background-danger');
+                    actionCell.html('');
+                    break;
+                case '@Constants.StatusCode.IP_USED':
+                    row.addClass('background-info');
+                    actionCell.html('');
+                    break;
+                case '@Constants.StatusCode.IP_DEACTIVATE':
+                    actionCell.html('');
+                    break;
             }
         },
         order: [[0, "asc"]],
@@ -382,7 +368,7 @@
             targets: [7],
             visible: false,
             searchable: false
-        },{
+        }, {
             targets: [6],
             orderable: false
         }]
