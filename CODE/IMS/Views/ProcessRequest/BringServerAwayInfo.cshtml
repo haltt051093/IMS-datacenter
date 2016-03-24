@@ -41,13 +41,13 @@
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                     @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING &&
-                         (User.IsInRole("Shift Head") || User.IsInRole("Manager")))
+                     (User.IsInRole("Shift Head") || User.IsInRole("Manager")))
                     {
                         <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
                             @Html.LabelFor(model => model.RequestInfo.Assignee)
                         </div>
                         <div class="@Constants.HtmlFormat.FORM_CONTROL_X2_CLASS">
-                            @Html.DropDownListFor(model => model.RequestInfo.Assignee, Model.StaffCodeOptions, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                            @Html.DropDownListFor(model => model.RequestInfo.Assignee, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                             @Html.ValidationMessageFor(model => model.RequestInfo.Assignee)
                         </div>
                     }
@@ -59,7 +59,7 @@
                                 @Html.LabelFor(model => model.RequestInfo.Assignee)
                             </div>
                             <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
-                                @Html.DisplayFor(model => model.RequestInfo.AssigneeName, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                                @Html.DisplayFor(model => model.RequestInfo.AssigneeName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                                 @Html.HiddenFor(model => model.RequestInfo.Assignee)
                             </div>
                         }
@@ -157,96 +157,101 @@
             </div>
         </div>
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-            <table id="" class="@Constants.HtmlFormat.DATATABLE_CLASS">
-                <thead>
-                    <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
-                        <th>Server</th>
-                        <th>IP Address</th>
-                        <th>Location</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (int i = 0; i < Model.ServerOfCustomer.Count; i++)
-                    {
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.Servers, "Server")
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                <table id="" class="@Constants.HtmlFormat.DATATABLE_CLASS">
+                    <thead>
+                        <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
+                            <th>Server</th>
+                            <th>IP Address</th>
+                            <th>Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.ServerOfCustomer.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(model => Model.ServerOfCustomer[i].ServerCode, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                    @Html.HiddenFor(modelItem => modelItem.ServerOfCustomer[i].ServerCode)
+                                </td>
+                                <td>
+                                    <dl>
+                                        @for (int j = 0; j < Model.ServerOfCustomer[i].ServerIps.Count; j++)
+                                        {
+                                            <dt>
+                                                @Html.DisplayFor(model => Model.ServerOfCustomer[i].ServerIps[j].CurrentIP, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                                @Html.HiddenFor(model => Model.ServerOfCustomer[i].ServerIps[j].CurrentIP, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                            </dt>
+                                        }
+                                    </dl>
+                                </td>
+                                <td>
+                                    <dl>
+                                        @for (int l = 0; l < Model.ServerOfCustomer[i].locations.Count; l++)
+                                        {
+                                            <dt>
+                                                @Html.DisplayFor(model => Model.ServerOfCustomer[i].locations[l], new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                            </dt>
+                                        }
+                                    </dl>
+                                </td>
+                            </tr>
+                        }
                         <tr>
                             <td>
-                                @Html.DisplayFor(model => Model.ServerOfCustomer[i].ServerCode, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                @Html.HiddenFor(modelItem => modelItem.ServerOfCustomer[i].ServerCode)
+                                @Html.DisplayFor(model => model.SelectedServerNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                             </td>
                             <td>
-                                <dl>
-                                    @for (int j = 0; j < Model.ServerOfCustomer[i].ServerIps.Count; j++)
-                                    {
-                                        <dt>
-                                            @Html.DisplayFor(model => Model.ServerOfCustomer[i].ServerIps[j].CurrentIP, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                            @Html.HiddenFor(model => Model.ServerOfCustomer[i].ServerIps[j].CurrentIP, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                        </dt>
-                                    }
-                                </dl>
+                                @Html.DisplayFor(model => model.ReturnIpNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                             </td>
                             <td>
-                                <dl>
-                                    @for (int l = 0; l < Model.ServerOfCustomer[i].locations.Count; l++)
-                                    {
-                                        <dt>
-                                            @Html.DisplayFor(model => Model.ServerOfCustomer[i].locations[l], new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                        </dt>
-                                    }
-                                </dl>
+                                @Html.DisplayFor(model => model.ReturnLocationNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                             </td>
                         </tr>
-                    }
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(model => model.SelectedServerNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => model.ReturnIpNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => model.ReturnLocationNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-            @Html.HiddenFor(model => model.RequestInfo.RequestCode)
-            @Html.HiddenFor(model => model.CustomerInfo.Customer)
-            @Html.HiddenFor(x => x.RequestInfo.RequestType)
-            @Html.HiddenFor(model => model.RequestInfo.Assignee)
-            @Html.HiddenFor(model => model.RequestInfo.TaskCode)
-            @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.HiddenFor(model => model.RequestInfo.RequestCode)
+                @Html.HiddenFor(model => model.CustomerInfo.Customer)
+                @Html.HiddenFor(x => x.RequestInfo.RequestType)
+                @Html.HiddenFor(model => model.RequestInfo.Assignee)
+                @Html.HiddenFor(model => model.RequestInfo.TaskCode)
+                @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                 {
                     if (Model.RequestInfo.Assignee == Model.CurrentUser && Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
                     {
-                    <button type="submit" id="btnApprove" name="@Constants.FormAction.APPROVE_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                        @Labels.Approve
+                        <button type="submit" id="btnApprove" name="@Constants.FormAction.APPROVE_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                            @Labels.Approve
+                        </button>
+                        <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
+                            @Labels.Reject
+                        </button>
+                    }
+                }
+                else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING)
+                {
+                    <button type="submit" id="btnProcess" name="@Constants.FormAction.PROCESS_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        Process
                     </button>
                     <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
                         @Labels.Reject
                     </button>
                 }
-            }
-            else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING)
-            {
-                <button type="submit" id="btnProcess" name="@Constants.FormAction.PROCESS_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                    Process
-                </button>
-                <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
-                    @Labels.Reject
-                </button>
-            }
-            else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING && (User.IsInRole("Shift Head") || User.IsInRole("Manager")))
-            {
-                <button type="submit" id="btnAccept" name="@Constants.FormAction.ACCEPT_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                    @Labels.Accept
-                </button>
-                <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
-                    @Labels.Reject
-                </button>
-            }
-        </div>
+                else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING && (User.IsInRole("Shift Head") || User.IsInRole("Manager")))
+                {
+                    <button type="submit" id="btnAccept" name="@Constants.FormAction.ACCEPT_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        @Labels.Accept
+                    </button>
+                    <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
+                        @Labels.Reject
+                    </button>
+                }
+            </div>
     }
 </section>
 <!-- Reassign IP MODAL -->

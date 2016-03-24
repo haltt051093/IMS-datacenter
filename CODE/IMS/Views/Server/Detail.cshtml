@@ -137,7 +137,7 @@
                                 <br />
                             }
                             <br />
-                            @if (Model.Server.Status == Constants.StatusName.SERVER_RUNNING && Model.UserRole!=Constants.Role.CUSTOMER)
+                            @if (Model.Server.Status == Constants.StatusName.SERVER_RUNNING && !User.IsInRole("Customer"))
                             {
                                 <label>
                                     @*<a data-toggle="modal" class="open-blockIP-modal" href="#changelocation-modal"

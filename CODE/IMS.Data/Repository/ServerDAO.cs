@@ -274,7 +274,7 @@ namespace IMS.Data.Repository
             var serverip = from si in ServerIPDAO.Current.Table
                            where si.ServerCode == serverCode
                            select si;
-            if (serverip != null)
+            if (serverip.Count() != 0)
             {
                 server.ServerIps = serverip.ToList();
             }
