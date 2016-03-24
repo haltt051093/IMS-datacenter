@@ -23,5 +23,6 @@ namespace IMS.Models
         public string RackCode { get; set; }
         public List<SelectLocationViewModel> Selected { get; set; }
         public string SuccessMessage { get; set; }
+        public string UserRole { get; set; }
     }
 }

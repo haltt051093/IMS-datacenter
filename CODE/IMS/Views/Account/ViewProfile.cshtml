@@ -127,32 +127,46 @@
                 @Html.DisplayFor(model => model.Identification, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
             </div>
         </div>
-        @if ((Model.Role == "Customer" && Model.RoleLogin == "Manager") || Model.Username == Model.UserLogin)
-        {
-            <a href="@Url.Action("EditAccount", "Account", new {username = Model.Username})" class="btn btn-primary"><i class="fa fa-edit"></i> Edit Profile</a>
-        }
-        else if ((Model.Role == "Staff" || Model.Role == "Shift Head") && Model.RoleLogin == "Manager")
-        {
-            <a href="@Url.Action("EditStaff", "Account", new {username = Model.Username})" class="btn btn-primary"><i class="fa fa-edit"></i> Edit Profile</a>
-        }
-        @if (Model.Username == Model.UserLogin)
-        {
-            <a href="@Url.Action("GetChangePW", "Account", new {username = Model.Username})" class="btn btn-primary"><i class="fa fa-edit"></i> Change Password</a>
-        }
-        @if (Model.Username != Model.UserLogin && Model.RoleLogin == "Manager")
-        {
-
-            if (Model.Status)
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            @if ((Model.Role == "Customer" && Model.RoleLogin == "Manager") || Model.Username == Model.UserLogin)
             {
-                <a class="btn btn-danger" data-toggle="modal" data-target="#deactivate-modal"><i class="fa fa-pencil"></i> Deactivate Account</a>
-            }
-            else
-            {
-                <a class="btn btn-warning" data-toggle="modal" data-target="#activate-modal"><i class="fa fa-pencil"></i> Activate Account</a>
-            }
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
 
-        }
-    </section>
+                    <a href="@Url.Action("EditAccount", "Account", new {username = Model.Username})" class="btn btn-primary"><i class="fa fa-edit"></i> Edit Profile</a>
+
+                </div>
+            }
+            else if ((Model.Role == "Staff" || Model.Role == "Shift Head") && Model.RoleLogin == "Manager")
+            {
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    <a href="@Url.Action("EditStaff", "Account", new {username = Model.Username})" class="btn btn-primary"><i class="fa fa-edit"></i> Edit Profile</a>
+                </div>
+            }
+            @if (Model.Username == Model.UserLogin)
+            {
+                <div class="@Constants.HtmlFormat.FORM_DETAIL_CLASS">
+                    <a href="@Url.Action("GetChangePW", "Account", new {username = Model.Username})" class="btn btn-primary"><i class="fa fa-edit"></i> Change Password</a>
+                </div>
+            }
+            @if (Model.Username != Model.UserLogin && Model.RoleLogin == "Manager")
+            {
+
+                if (Model.Status)
+                {
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_CLASS">
+                        <a class="btn btn-danger" data-toggle="modal" data-target="#deactivate-modal"><i class="fa fa-pencil"></i> Deactivate Account</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_CLASS">
+                        <a class="btn btn-warning" data-toggle="modal" data-target="#activate-modal"><i class="fa fa-pencil"></i> Activate Account</a>
+                    </div>
+                }
+
+            }
+                    </div>
+</section>
 
     <div id="deactivate-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" style="width: 350px">

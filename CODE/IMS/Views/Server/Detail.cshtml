@@ -17,7 +17,7 @@
         <div class="col-xs-6">
             <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                 <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                    @Html.LabelFor(model => model.Server.ServerCode)
+                    @Html.LabelFor(model => model.Server.ServerCode, "Server Code")
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                     @Html.HiddenFor(model => model.Server.Customer, new { @id = "customer" })
@@ -38,7 +38,7 @@
             {
             <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                 <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                    @Html.LabelFor(model => model.Server.PartNumber)
+                    @Html.LabelFor(model => model.Server.PartNumber, "Part Number")
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                     @Html.DisplayFor(model => model.Server.PartNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
@@ -49,7 +49,7 @@
             {
             <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                 <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                    @Html.LabelFor(model => model.Server.SerialNumber)
+                    @Html.LabelFor(model => model.Server.SerialNumber, "Serial Number")
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                     @Html.DisplayFor(model => model.Server.SerialNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
@@ -82,7 +82,7 @@
             </div>
             <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                 <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                    @Html.LabelFor(model => model.Server.RegisteredDate)
+                    @Html.LabelFor(model => model.Server.RegisteredDate, "Registered Date")
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                     @Html.DisplayFor(model => model.Server.RegisteredDate, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
@@ -124,7 +124,7 @@
             }
             <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                     <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                        @Html.LabelFor(model => model.Server.ServerLocation)
+                        @Html.LabelFor(model => model.Server.ServerLocation, "Location")
                     </div>
                     @if (Model.Server.ServerLocation.Count > 0)
                     {
@@ -137,7 +137,7 @@
                                 <br />
                             }
                             <br />
-                            @if (Model.Server.Status == Constants.StatusName.SERVER_RUNNING)
+                            @if (Model.Server.Status == Constants.StatusName.SERVER_RUNNING && Model.UserRole!=Constants.Role.CUSTOMER)
                             {
                                 <label>
                                     @*<a data-toggle="modal" class="open-blockIP-modal" href="#changelocation-modal"
@@ -151,7 +151,7 @@
             </div>
             <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                 <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                    @Html.LabelFor(model => model.CurrentIPs)
+                    @Html.LabelFor(model => model.CurrentIPs, "Current IP")
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                     @if (Model.CurrentIPs.Count == 0)

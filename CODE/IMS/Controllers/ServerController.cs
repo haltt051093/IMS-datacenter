@@ -47,6 +47,7 @@ namespace IMS.Controllers
         public ActionResult Detail(string code, string Message)
         {
             var data = new ServerDetailsViewModel();
+            data.UserRole = GetCurrentUserRole();   
             data.SuccessMessage = Message;
             data.Server = ServerBLO.Current.GetAllServerInfo(code);
             //var serverattributes = ServerBLO.Current.GetServerAttributes(serverCode);

@@ -23,7 +23,10 @@ namespace IMS.Models
         public string NetworkIP { get; set; }
         public string Action { get; set; }
         public string SuccessMessage { get; set; }
-        
+
+        [Required(ErrorMessage = "Please select type of Gateway!")]
+        public string Option { get; set; }
+
         [Required(ErrorMessage = "Please input Network Address!")]
         [RegularExpression("^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
         "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +

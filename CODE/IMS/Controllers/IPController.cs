@@ -78,9 +78,16 @@ namespace IMS.Controllers
             }
                 else
                 {
-                    var ips = IPAddressPoolBLO.Current.GenerateIP(iivm.Address, iivm.Netmask);
-
-                    var k = ips.Count - 1;
+                var ips = new List<IPAddressPool>();
+                if (iivm.Option == "After")
+                {
+                    ips = IPAddressPoolBLO.Current.GenerateIPAfterFirst(iivm.Address, iivm.Netmask);
+                }
+                if (iivm.Option == "Before")
+                {
+                    ips = IPAddressPoolBLO.Current.GenerateIPBeforeLast(iivm.Address, iivm.Netmask);
+                }
+                var k = ips.Count - 1;
                     ips[k].StatusCode = Constants.StatusCode.IP_RESERVE;
 
                     for (var i = 0; i < ips.Count - 1; i++)
