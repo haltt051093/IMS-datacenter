@@ -37,43 +37,42 @@
             @Html.ValidationMessageFor(model => model.FilterByPeriodOfTime)
         </div>
     </div>
-    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-        <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS_HOVER">
-            <thead>
-                <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
-                    <th>
-                        Customer
-                    </th>
-                    <th>
-                        Request Type
-                    </th>
-                    <th>
-                        Requested Time
-                    </th>
-                    <th>
-                        Status
-                    </th>
-                </tr>
-            </thead>
-            @for (int i = 0; i < Model.Requests.Count; i++)
+    <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS_HOVER">
+        <thead>
+            <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
+                <th>
+                    Customer
+                </th>
+                <th>
+                    Request Type
+                </th>
+                <th>
+                    Requested Time
+                </th>
+                <th>
+                    Status
+                </th>
+            </tr>
+        </thead>
+        @for (int i = 0; i < Model.Requests.Count; i++)
             {
-                <tbody class="clickable clickmee check" request-code="@Model.Requests[i].LastestStatusRequest.RequestCode" status-code="@Model.Requests[i].LastestStatusRequest.StatusCode" type-code="@Model.Requests[i].LastestStatusRequest.RequestTypeCode" duration="@Model.Requests[i].LastestStatusRequest.DaysFromNow">
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.Customer)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.RequestTypeName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.LogTime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.StatusName)
-                        </td>
-                    </tr>
-                </tbody>
-                <tbody class="showhide" style="display: none; background-color: lightgrey;">
+            <tbody class="clickable clickmee check" request-code="@Model.Requests[i].LastestStatusRequest.RequestCode" status-code="@Model.Requests[i].LastestStatusRequest.StatusCode" type-code="@Model.Requests[i].LastestStatusRequest.RequestTypeCode" duration="@Model.Requests[i].LastestStatusRequest.DaysFromNow">
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.Customer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.RequestTypeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.LogTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.StatusName)
+                    </td>
+                </tr>
+            </tbody>
+            @*<tbody class="showhide" style="display: none; background-color: lightgrey;">
                     @if (Model.Requests[i].OldStatusRequests != null)
                     {
                         foreach (var old in Model.Requests[i].OldStatusRequests)
@@ -94,34 +93,33 @@
                             </tr>
                         }
                     }
-                </tbody>
-            }
-            <tfoot>
-                <tr style="background-color: #404040">
-                    <th>
-                        <span style="color: ghostwhite">
-                            Customer
-                        </span>
-                    </th>
-                    <th>
-                        <span style="color: ghostwhite">
-                            RequestType
-                        </span>
-                    </th>
-                    <th>
-                        <span style="color: ghostwhite">
-                            RequestedTime
-                        </span>
-                    </th>
-                    <th>
-                        <span style="color: ghostwhite">
-                            Status
-                        </span>
-                    </th>
-                </tr>
-            </tfoot>
-        </table>
-    </div>
+                </tbody>*@
+        }
+        <tfoot>
+            <tr style="background-color: #404040">
+                <th>
+                    <span style="color: ghostwhite">
+                        Customer
+                    </span>
+                </th>
+                <th>
+                    <span style="color: ghostwhite">
+                        RequestType
+                    </span>
+                </th>
+                <th>
+                    <span style="color: ghostwhite">
+                        RequestedTime
+                    </span>
+                </th>
+                <th>
+                    <span style="color: ghostwhite">
+                        Status
+                    </span>
+                </th>
+            </tr>
+        </tfoot>
+    </table>
 </section><!-- /.content -->
 
 <script>
@@ -184,34 +182,35 @@
 </script>
 
 <script type="text/javascript">
-    $(".clickmee").dblclick(function () {
-        $(this).closest('tbody')
-            .next('.showhide')
-            .toggle('fast');
-    });
+    $(function() {
+        $("#example1").DataTable({
+            //"iDisplayLength": -1,
+            "aaSorting": [[2, "desc"]] // Sort by first column descending
+        });
+        //$(".clickmee").dblclick(function() {
+        //    $(this).closest('tbody')
+        //        .next('.showhide')
+        //        .toggle('fast');
+        //});
 
-    $('#example1').on('click', '.clickmee', function () {
-        var requestcode = $(this).attr('request-code');
-        window.location.assign('@Url.Action("Detail", "ProcessRequest")' + '/' + requestcode);
-    });
+        $('#example1').on('click', '.clickmee', function() {
+            var requestcode = $(this).attr('request-code');
+            window.location.assign('@Url.Action("Detail", "ProcessRequest")' + '/' + requestcode);
+        });
 
-    $("#example1").dataTable({
-        //"iDisplayLength": -1,
-        "aaSorting": [[2, "desc"]] // Sort by first column descending
-    });
 
-    $("#FilterByRequestType").change(function () {
+        $("#FilterByRequestType").change(function() {
+            filterRequest();
+        });
+
+        $("#FilterByStatus").change(function() {
+            filterRequest();
+        });
+
+        $("#FilterByPeriodOfTime").change(function() {
+            filterRequest();
+        });
+
         filterRequest();
-
     });
-
-    $("#FilterByStatus").change(function () {
-        filterRequest();
-    });
-
-    $("#FilterByPeriodOfTime").change(function () {
-        filterRequest();
-    });
-
-    filterRequest();
 </script>

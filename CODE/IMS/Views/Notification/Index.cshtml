@@ -23,7 +23,7 @@
             <tbody id="tableBody">
                 @foreach (var item in Model.NotificationList)
                 {
-                    <tr class="clickable btnRequestCode" notif-code="@item.NotificationCode" 
+                    <tr class="clickable btnRequestCode" notif-code="@item.NotificationCode"
                         view-code="@item.IsViewed">
                         <td>
                             @Html.DisplayFor(modelItem => item.Description)
@@ -49,29 +49,13 @@
 </section><!-- /.content -->
 <script type="text/javascript">
     $(function () {
-        //$("table").each(function () {
-        //    $("tr:gt(4)", this).addClass("hidden");
-        //});
         $("#example1").DataTable({
             //"iDisplayLength": -1,
             "aaSorting": [[1, "desc"]], // Sort by first column descending
             "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                //decorateRow(nRow);
-                //return nRow;
                 if (aData[2] == "False") {
-                    //$('td', nRow).css('background-color', '#fcf8e3');
                     $('td', nRow).addClass('background-warning');
-
                 };
-                //if ( aData[2].val =="False" )
-                //{
-                //    $('td', nRow).css('background-color', 'Red');
-                ////    alert("yeaasd");
-                //}
-                //else if ( aData[2] == "4" )
-                //{
-                //    $('td', nRow).css('background-color', 'Orange');
-                //}
             },
             columnDefs: [{
                 targets: [2],
@@ -89,15 +73,7 @@
                     $(td).css("color", "blue");
                 }
             });
-
         }
-        //$('#example1 > tbody > tr').each(function () {
-        //    var isviewed = $(this).attr("view-code");
-        //    if (isviewed.length > 0) {
-        //        $(this).css('background-color', 'orange');
-        //    }
-        //});
-
         $('#example1').on('click', '.btnRequestCode', function () {
             var notif = $(this).attr('notif-code');
             window.location.assign('@Url.Action("Detail", "Notification")' + '/' + notif);
