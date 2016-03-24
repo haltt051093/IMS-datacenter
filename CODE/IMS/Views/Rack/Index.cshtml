@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <table id="example1" class="table table-bordered table-hover">
+    <table id="example1" class="table table-bordered">
         <thead>
             <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
                 <th>Rack Code</th>
@@ -72,8 +72,11 @@
         iDisplayLength: 42,
         aLengthMenu: [[42, 84, 126], [42, 84, 126]],
         fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-            $(nRow).addClass('highlight');
-            $(nRow).addClass('clickable');
+            if (aData.ServerCode != null) {
+                $(nRow).addClass('clickable');
+                $(nRow).addClass('highlight');
+            }
+            
             $(nRow).click(function() {
                 if (aData.ServerCode != null) {
                     var url = CONSTANT.authority + '@Url.Action("Detail", "Server")' + '/' + aData.ServerCode;
@@ -82,7 +85,7 @@
             });
             switch (aData.StatusName) {
             case 'Used':
-                $(nRow).css('background-color', '#ccd9ff');
+                $(nRow).addClass('background-info');
                 break;
             }
         },

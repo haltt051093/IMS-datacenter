@@ -39,7 +39,7 @@
 
     }
 
-    <table id="example1" class="table table-bordered table-hover">
+    <table id="example1" class="table table-bordered">
 
         <thead>
         <tr style="background-color: #404040">
@@ -119,8 +119,8 @@
         aLengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
 
         fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-            $(nRow).addClass('highlight');
             $(nRow).addClass('clickable');
+            $(nRow).addClass('highlight');
             $(nRow).click(function() {
                 if (aData.Fullname != null) {
                     var url = CONSTANT.authority + '@Url.Action("ViewProfile", "Account")' + '?username=' + aData.Username;
@@ -131,7 +131,7 @@
             //var actionCell = $(nRow.cells[4]);
             switch (aData.Status) {
             case false:
-                row.css('background-color', '#ffe6e6');
+                row.addClass('background-danger');
 
                 break;
 

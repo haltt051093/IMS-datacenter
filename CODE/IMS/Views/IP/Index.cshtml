@@ -317,6 +317,7 @@
             if (aData.ServerCode != null) {
          
                 $(nRow).addClass('clickable');
+                $(nRow).addClass('highlight');
             };
             
             $(nRow).click(function () {
@@ -345,11 +346,11 @@
                 });
                 break;
             case '@Constants.StatusCode.IP_RESERVE':
-                row.addClass('background-warning');
+                row.addClass('background-danger');
                 actionCell.html('');
                 break;
             case '@Constants.StatusCode.IP_USED':
-                row.addClass('background-danger');
+                row.addClass('background-info');
                 actionCell.html('');
                 break;
             case '@Constants.StatusCode.IP_DEACTIVATE':
