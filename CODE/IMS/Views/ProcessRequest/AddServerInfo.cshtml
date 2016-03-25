@@ -41,7 +41,7 @@
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                     @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING &&
-                 (User.IsInRole("Shift Head") || User.IsInRole("Manager")))
+             (User.IsInRole("Shift Head") || User.IsInRole("Manager")))
                     {
                         <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
                             @Html.LabelFor(model => model.RequestInfo.Assignee)
@@ -160,7 +160,8 @@
                             <th>Bandwidth</th>
                             <th>Serial Number</th>
                             <th>Part Number</th>
-                            @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
+                            @if ((Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)&&
+                                (Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING || Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_COMPLETED))
                             {
                                 <th>Default IP</th>
                                 <th>Location</th>
@@ -195,7 +196,8 @@
                                     @Html.DisplayFor(model => Model.Servers[i].PartNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                                     @Html.HiddenFor(modelItem => modelItem.Servers[i].PartNumber)
                                 </td>
-                                @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
+                                @if ((Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE) &&
+                                    (Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING) || Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_COMPLETED)
                                 {
                                     <td>
                                         @if (Model.RequestInfo.StatusCode != Constants.StatusCode.REQUEST_DONE && Model.Servers[i].DefaultIP == null)
@@ -224,8 +226,8 @@
                                             for (int j = 0; j < Model.Servers[i].ServerLocation.Count; j++)
                                             {
                                                 <div>
-                                                    @Html.DisplayFor(model => Model.Servers[i].ServerLocation[j].RackName) 
-                                                    <span>U</span> 
+                                                    @Html.DisplayFor(model => Model.Servers[i].ServerLocation[j].RackName)
+                                                    <span>U</span>
                                                     @Html.DisplayFor(model => Model.Servers[i].ServerLocation[j].RackUnit, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                                                     @Html.HiddenFor(modelItem => Model.Servers[i].ServerLocation[j].RackName)
                                                     @Html.HiddenFor(modelItem => Model.Servers[i].ServerLocation[j].RackUnit)
@@ -352,7 +354,7 @@
                                 @Html.LabelFor(model => model.RequestInfo.NotFinishReason)
                             </div>
                             <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                                @Html.TextBoxFor(model => model.RequestInfo.Reason, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                @Html.TextBoxFor(model => model.RequestInfo.NotFinishReason, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                                 @Html.ValidationMessageFor(model => model.RequestInfo.NotFinishReason)
                             </div>
                         </div>
