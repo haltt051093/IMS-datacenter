@@ -358,7 +358,7 @@ namespace IMS.Controllers
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
                 var result = RequestBLO.Current.RejectRequestAddServer(viewmodel.RequestInfo.RequestCode, viewmodel.Servers,
-                        viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RejectReason);
+                        viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
@@ -409,7 +409,7 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
             {
-                var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RejectReason);
+                var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.NOT_FINISHED_TASK});
@@ -444,7 +444,7 @@ namespace IMS.Controllers
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
                 var result = RequestBLO.Current.RejectRequestBringServerAway(viewmodel.RequestInfo.RequestCode, viewmodel.ServerOfCustomer,
-                    viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RejectReason);
+                    viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
@@ -495,7 +495,7 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
             {
-                var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RejectReason);
+                var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.NOT_FINISHED_TASK });
@@ -535,7 +535,7 @@ namespace IMS.Controllers
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
                 var result = RequestBLO.Current.RejectRequestAssignIP(viewmodel.RequestInfo.RequestCode,
-                    viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.RejectReason);
+                    viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.Reason);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
@@ -570,7 +570,7 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
             {
-                var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RejectReason);
+                var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.NOT_FINISHED_TASK });
@@ -612,7 +612,7 @@ namespace IMS.Controllers
             {
                 var result = RequestBLO.Current.RejectRequestChangeIP(viewmodel.RequestInfo.RequestCode, viewmodel.ReturningIPs,
                     viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode,
-                    viewmodel.SelectedServer, viewmodel.RequestInfo.RejectReason);
+                    viewmodel.SelectedServer, viewmodel.RequestInfo.Reason);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
@@ -647,7 +647,7 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
             {
-                var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RejectReason);
+                var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.NOT_FINISHED_TASK });
@@ -688,7 +688,7 @@ namespace IMS.Controllers
             {
                 var result = RequestBLO.Current.RejectRequestReturnIP(viewmodel.RequestInfo.RequestCode, viewmodel.ReturningIPs,
                     viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode, viewmodel.SelectedServer,
-                    viewmodel.RequestInfo.RejectReason);
+                    viewmodel.RequestInfo.Reason);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
@@ -723,7 +723,7 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
             {
-                var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RejectReason);
+                var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.NOT_FINISHED_TASK });
@@ -763,7 +763,7 @@ namespace IMS.Controllers
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
                 var result = RequestBLO.Current.RejectRequestRentRack(viewmodel.RequestInfo.RequestCode,
-                    viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RejectReason);
+                    viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
@@ -798,7 +798,7 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
             {
-                var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RejectReason);
+                var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.NOT_FINISHED_TASK });
@@ -838,7 +838,7 @@ namespace IMS.Controllers
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
                 var result = RequestBLO.Current.RejectRequestReturnRack(viewmodel.RequestInfo.RequestCode, viewmodel.RequestInfo.Assignee,
-                    viewmodel.RequestInfo.TaskCode, viewmodel.CustomerInfo.Customer, viewmodel.RequestInfo.RejectReason);
+                    viewmodel.RequestInfo.TaskCode, viewmodel.CustomerInfo.Customer, viewmodel.RequestInfo.Reason);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
@@ -873,7 +873,7 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
             {
-                var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.RejectReason);
+                var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.NOT_FINISHED_TASK });
