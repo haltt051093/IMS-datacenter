@@ -26,6 +26,7 @@ namespace IMS.Data.ViewModels
         public string RequestTypeName { get; set; }
         public string RequestTypeCode { get; set; }
         public string Customer { get; set; }
+        public string CustomerName { get; set; }
         public int Priority { get; set; }
 
         public LogExtentedModel LastestStatusRequest { get; set; }

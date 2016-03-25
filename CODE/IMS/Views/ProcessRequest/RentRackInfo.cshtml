@@ -13,16 +13,8 @@
     @using (Html.BeginForm("ProcessRequestRentRack", "ProcessRequest", FormMethod.Post))
     {
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            @Html.HiddenFor(model => model.SuccessMessage)
             <div class="col-xs-6">
-                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                        @Html.LabelFor(model => model.RequestInfo.RequestCode, "Request Code")
-                        @Html.HiddenFor(model => model.SuccessMessage)
-                    </div>
-                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
-                        @Html.DisplayFor(model => model.RequestInfo.RequestCode, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                    </div>
-                </div>
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                     <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
                         @Html.LabelFor(model => model.RequestInfo.StatusName, "Status")
@@ -42,35 +34,35 @@
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                     @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING && (User.IsInRole("Shift Head") || User.IsInRole("Manager")))
                     {
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                        @Html.LabelFor(model => model.RequestInfo.Assignee)
-                    </div>
-                    <div class="@Constants.HtmlFormat.FORM_CONTROL_X2_CLASS">
-                        @Html.DropDownListFor(model => model.RequestInfo.Assignee, Model.StaffCodeOptions, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
-                        @Html.ValidationMessageFor(model => model.RequestInfo.Assignee)
-                    </div>
+                        <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
+                            @Html.LabelFor(model => model.RequestInfo.Assignee)
+                        </div>
+                        <div class="@Constants.HtmlFormat.FORM_CONTROL_X2_CLASS">
+                            @Html.DropDownListFor(model => model.RequestInfo.Assignee, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                            @Html.ValidationMessageFor(model => model.RequestInfo.Assignee)
+                        </div>
                     }
 
                     @if (Model.RequestInfo.AssigneeName != null)
                     {
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                        @Html.LabelFor(model => model.RequestInfo.Assignee)
-                    </div>
-                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
-                        @Html.DisplayFor(model => model.RequestInfo.AssigneeName, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
-                        @Html.HiddenFor(model => model.RequestInfo.Assignee)
-                        @if ((User.IsInRole("Shift Head") || User.IsInRole("Manager")))
+                        <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
+                            @Html.LabelFor(model => model.RequestInfo.Assignee)
+                        </div>
+                        <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                            @Html.DisplayFor(model => model.RequestInfo.AssigneeName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                            @Html.HiddenFor(model => model.RequestInfo.Assignee)
+                            @if ((User.IsInRole("Shift Head") || User.IsInRole("Manager")))
                             {
                                 if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                                 {
                                     if ((Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING || Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_NOTFINISH) ||
                                         (Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING && Model.RequestInfo.IsShifthead))
                                     {
-                            <a class="btn btn-primary pull-left" data-toggle="modal" data-target="#Reassigntask"><i class="fa fa-plus"></i>Reassign Task</a>
+                                        <a class="btn btn-primary pull-left" data-toggle="modal" data-target="#Reassigntask"><i class="fa fa-plus"></i>Reassign Task</a>
                                     }
                                 }
                             }
-                    </div>
+                        </div>
                     }
 
                 </div>
@@ -165,12 +157,11 @@
                     @Html.ValidationMessageFor(model => model.SelectedRow)
                 </div>
             </div>
-            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                <div id="notEnough" class="alert alert-warning alert-dismissable" style="display: none">
-                    <i class="fa fa-warning"></i>
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <b>Alert!</b> Rack is out of stock! Please Add more.
-                </div>
+            <div id="notEnough" class="alert alert-warning alert-dismissable" style="display: none">
+                <i class="fa fa-warning"></i>
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <b>Alert!</b> Rack is out of stock! Please Add more.
+            </div>
                 <table id="masterTable" class="@Constants.HtmlFormat.DATATABLE_CLASS">
                     <thead>
                         <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
@@ -196,8 +187,6 @@
                         }
                     </tbody>
                 </table>
-
-            </div>
         }
         if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
         {
@@ -335,52 +324,52 @@
         <div class="modal-content">
             @using (Html.BeginForm("ProcessRequestRentRack", "ProcessRequest", FormMethod.Post))
             {
-                <div class="modal-header">
-                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS">
-                        <i class="fa fa-plus"></i>
-                        Reassign Task
-                    </div>
+        <div class="modal-header">
+            <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS">
+                <i class="fa fa-plus"></i>
+                Reassign Task
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                    @Html.LabelFor(model => model.RequestInfo.AssigneeName, "Assignee Name")
                 </div>
-                <div class="modal-body">
-                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                            @Html.LabelFor(model => model.RequestInfo.AssigneeName, "Assignee Name")
-                        </div>
-                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                            @Html.DisplayFor(model => model.RequestInfo.AssigneeName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                        </div>
-                    </div>
-                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                            @Html.LabelFor(model => model.RequestInfo.TaskStatusName, "Task Status")
-                        </div>
-                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                            @Html.DisplayFor(model => model.RequestInfo.TaskStatusName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                        </div>
-                    </div>
-                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                            @Html.LabelFor(model => model.RequestInfo.AssignedStaff, "Assigned Staff")
-                        </div>
-                        <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                            @Html.DropDownListFor(model => model.RequestInfo.AssignedStaff, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                            @Html.ValidationMessageFor(model => model.RequestInfo.AssignedStaff)
-                        </div>
-                    </div>
+                <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                    @Html.DisplayFor(model => model.RequestInfo.AssigneeName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                 </div>
-                <div class="modal-footer">
-                    @Html.HiddenFor(model => model.RequestInfo.Assignee)
-                    @Html.HiddenFor(model => model.RequestInfo.RequestCode)
-                    @Html.HiddenFor(model => model.RequestInfo.TaskCode)
-                    <button type="submit" name="@Constants.FormAction.REASSIGN_ACTION" value="@Constants.FormAction.REASSIGN_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                        @Labels.DialogOK
-                    </button>
-                    <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
-                            data-dismiss="modal">
-                        @Labels.DialogCancel
-                    </button>
+            </div>
+            <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                    @Html.LabelFor(model => model.RequestInfo.TaskStatusName, "Task Status")
+                </div>
+                <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                    @Html.DisplayFor(model => model.RequestInfo.TaskStatusName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                </div>
+            </div>
+            <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                    @Html.LabelFor(model => model.RequestInfo.AssignedStaff, "Assigned Staff")
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.DropDownListFor(model => model.RequestInfo.AssignedStaff, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    @Html.ValidationMessageFor(model => model.RequestInfo.AssignedStaff)
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            @Html.HiddenFor(model => model.RequestInfo.Assignee)
+            @Html.HiddenFor(model => model.RequestInfo.RequestCode)
+            @Html.HiddenFor(model => model.RequestInfo.TaskCode)
+            <button type="submit" name="@Constants.FormAction.REASSIGN_ACTION" value="@Constants.FormAction.REASSIGN_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                @Labels.DialogOK
+            </button>
+            <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
+                    data-dismiss="modal">
+                @Labels.DialogCancel
+            </button>
 
-                </div>
+        </div>
             }
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

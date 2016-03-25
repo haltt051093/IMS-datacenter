@@ -7,6 +7,7 @@ using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.Repository;
 using IMS.Data.ViewModels;
+using System.Net.Mail;
 
 namespace IMS.Data.Business
 {
@@ -82,5 +83,156 @@ namespace IMS.Data.Business
             }
             return code;
         }
+
+        #region send mail to customer
+        public void SendMail(string email, string mainContent, string subject)
+        {
+            var smtpUsername = Constants.SendMail.FROM_EMAIL_USERNAME;
+            var smtpPassword = Constants.SendMail.FROM_EMAIL_PASSWORD;
+            var smtpHost = Constants.SendMail.SMTP_HOST;
+            var smtpPort = Constants.SendMail.SMTP_PORT;
+
+            var mail = new MailMessage();
+            var SmtpServer = new SmtpClient(smtpHost);
+
+            mail.From = new MailAddress(smtpUsername);
+            mail.To.Add(email);
+            mail.Subject = subject;
+            mail.IsBodyHtml = true;
+            var mainMessage = mainContent;
+            var htmlBody =
+                string.Format("You've received an email from IMS Datacenter of QTSC<br/> " +
+                              "Your request status is: <br/>{0}",
+                    mainMessage);
+            mail.Body = htmlBody;
+            SmtpServer.Port = smtpPort;
+            SmtpServer.Credentials = new System.Net.NetworkCredential(smtpUsername, smtpPassword);
+            SmtpServer.EnableSsl = true;
+            SmtpServer.Send(mail);
+        }
+
+        public void SendMailAccepRequest(string requestCode)
+        {
+            var request = RequestBLO.Current.GetByKeys(new Request { RequestCode = requestCode });
+            var customer = AccountBLO.Current.GetByKeys(new Account { Username = request.Customer });
+            if (request.RequestType == Constants.RequestTypeCode.ADD_SERVER)
+            {
+                var content = "Your request [Add Server] at " + request.RequestedTime + " is accepted.<br/> We're looking forward to meet you at "+request.AppointmentTime+" <br/> Best Regards";
+                SendMail(customer.Email, content, Constants.SendMail.SUBJECT_REQUEST_ACCEPT);
+            }
+            if (request.RequestType == Constants.RequestTypeCode.BRING_SERVER_AWAY)
+            {
+                var content = "Your request [Bring Server Away] at " + request.RequestedTime + " is accepted.<br/> We're looking forward to meet you at " + request.AppointmentTime + " <br/> Best Regards";
+                SendMail(customer.Email, content, Constants.SendMail.SUBJECT_REQUEST_ACCEPT);
+            }
+            if (request.RequestType == Constants.RequestTypeCode.ASSIGN_IP)
+            {
+                var content = "Your request [Assign IP Address] at " + request.RequestedTime + " is accepted.<br/> We're processing it. Please wait!<br/> Best Regards";
+                SendMail(customer.Email, content, Constants.SendMail.SUBJECT_REQUEST_ACCEPT);
+            }
+            if (request.RequestType == Constants.RequestTypeCode.CHANGE_IP)
+            {
+                var content = "Your request [Change IP Address] at " + request.RequestedTime + " is accepted.<br/> We're processing it. Please wait!<br/> Best Regards";
+                SendMail(customer.Email, content, Constants.SendMail.SUBJECT_REQUEST_ACCEPT);
+            }
+            if (request.RequestType == Constants.RequestTypeCode.RETURN_IP)
+            {
+                var content = "Your request [Return IP Address] at " + request.RequestedTime + " is accepted.<br/> We're processing it. Please wait!<br/> Best Regards";
+                SendMail(customer.Email, content, Constants.SendMail.SUBJECT_REQUEST_ACCEPT);
+            }
+            if (request.RequestType == Constants.RequestTypeCode.RENT_RACK)
+            {
+                var content = "Your request [Rent Rack] at " + request.RequestedTime + " is accepted.<br/> We're processing it. Please wait!<br/> Best Regards";
+                SendMail(customer.Email, content, Constants.SendMail.SUBJECT_REQUEST_ACCEPT);
+            }
+            if (request.RequestType == Constants.RequestTypeCode.RETURN_RACK)
+            {
+                var content = "Your request [Return Rack] at " + request.RequestedTime + " is accepted.<br/> We're processing it. Please wait!<br/> Best Regards";
+                SendMail(customer.Email, content, Constants.SendMail.SUBJECT_REQUEST_ACCEPT);
+            }
+        }
+
+        public void SendMailApproveRequest(string requestCode)
+        {
+            var request = RequestBLO.Current.GetByKeys(new Request { RequestCode = requestCode });
+            var customer = AccountBLO.Current.GetByKeys(new Account { Username = request.Customer });
+            if (request.RequestType == Constants.RequestTypeCode.ADD_SERVER)
+            {
+                var content = "Your request [Add Server] at " + request.RequestedTime + " is done.<br/> Best Regards";
+                SendMail(customer.Email, content, Constants.SendMail.SUBJECT_REQUEST_APPROVE);
+            }
+            if (request.RequestType == Constants.RequestTypeCode.BRING_SERVER_AWAY)
+            {
+                var content = "Your request [Bring Server Away] at " + request.RequestedTime + " is done.<br/> Best Regards";
+                SendMail(customer.Email, content, Constants.SendMail.SUBJECT_REQUEST_APPROVE);
+            }
+            if (request.RequestType == Constants.RequestTypeCode.ASSIGN_IP)
+            {
+                var content = "Your request [Assign IP Address] at " + request.RequestedTime + " is done.<br/> Best Regards";
+                SendMail(customer.Email, content, Constants.SendMail.SUBJECT_REQUEST_APPROVE);
+            }
+            if (request.RequestType == Constants.RequestTypeCode.CHANGE_IP)
+            {
+                var content = "Your request [Change IP Address] at " + request.RequestedTime + " is done.<br/> Best Regards";
+                SendMail(customer.Email, content, Constants.SendMail.SUBJECT_REQUEST_APPROVE);
+            }
+            if (request.RequestType == Constants.RequestTypeCode.RETURN_IP)
+            {
+                var content = "Your request [Return IP Address] at " + request.RequestedTime + " is done.<br/> Best Regards";
+                SendMail(customer.Email, content, Constants.SendMail.SUBJECT_REQUEST_APPROVE);
+            }
+            if (request.RequestType == Constants.RequestTypeCode.RENT_RACK)
+            {
+                var content = "Your request [Rent Rack] at " + request.RequestedTime + " is done.<br/> Best Regards";
+                SendMail(customer.Email, content, Constants.SendMail.SUBJECT_REQUEST_APPROVE);
+            }
+            if (request.RequestType == Constants.RequestTypeCode.RETURN_RACK)
+            {
+                var content = "Your request [Return Rack] at " + request.RequestedTime + " is done.<br/> Best Regards";
+                SendMail(customer.Email, content, Constants.SendMail.SUBJECT_REQUEST_APPROVE);
+            }
+        }
+
+        public void SendMailRejectRequest(string requestCode)
+        {
+            var request = RequestBLO.Current.GetByKeys(new Request { RequestCode = requestCode });
+            var customer = AccountBLO.Current.GetByKeys(new Account { Username = request.Customer });
+            if (request.RequestType == Constants.RequestTypeCode.ADD_SERVER)
+            {
+                var content = "Your request [Add Server] at " + request.RequestedTime + " is rejected.<br/> Best Regards";
+                SendMail(customer.Email, content, Constants.SendMail.SUBJECT_REQUEST_REJECT);
+            }
+            if (request.RequestType == Constants.RequestTypeCode.BRING_SERVER_AWAY)
+            {
+                var content = "Your request [Bring Server Away] at " + request.RequestedTime + " is rejected.<br/> Best Regards";
+                SendMail(customer.Email, content, Constants.SendMail.SUBJECT_REQUEST_REJECT);
+            }
+            if (request.RequestType == Constants.RequestTypeCode.ASSIGN_IP)
+            {
+                var content = "Your request [Assign IP Address] at " + request.RequestedTime + " is rejected.<br/> Best Regards";
+                SendMail(customer.Email, content, Constants.SendMail.SUBJECT_REQUEST_REJECT);
+            }
+            if (request.RequestType == Constants.RequestTypeCode.CHANGE_IP)
+            {
+                var content = "Your request [Change IP Address] at " + request.RequestedTime + " is rejected.<br/> Best Regards";
+                SendMail(customer.Email, content, Constants.SendMail.SUBJECT_REQUEST_REJECT);
+            }
+            if (request.RequestType == Constants.RequestTypeCode.RETURN_IP)
+            {
+                var content = "Your request [Return IP Address] at " + request.RequestedTime + " is rejected.<br/> Best Regards";
+                SendMail(customer.Email, content, Constants.SendMail.SUBJECT_REQUEST_REJECT);
+            }
+            if (request.RequestType == Constants.RequestTypeCode.RENT_RACK)
+            {
+                var content = "Your request [Rent Rack] at " + request.RequestedTime + " is rejected.<br/> Best Regards";
+                SendMail(customer.Email, content, Constants.SendMail.SUBJECT_REQUEST_REJECT);
+            }
+            if (request.RequestType == Constants.RequestTypeCode.RETURN_RACK)
+            {
+                var content = "Your request [Return Rack] at " + request.RequestedTime + " is rejected.<br/> Best Regards";
+                SendMail(customer.Email, content, Constants.SendMail.SUBJECT_REQUEST_REJECT);
+            }
+        }
+        #endregion
     }
 }

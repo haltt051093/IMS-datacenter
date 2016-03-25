@@ -890,6 +890,8 @@ namespace IMS.Data.Business
                 var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
                     customer, desc);
                 result.NotificationCodes.Add(notifCode);
+                //send mail
+                NotificationBLO.Current.SendMailAccepRequest(requestCode);
                 return result;
             }
             return null;
@@ -980,6 +982,8 @@ namespace IMS.Data.Business
             var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
                 customer, desc);
             result.NotificationCodes.Add(notifCode);
+            //send mail
+            NotificationBLO.Current.SendMailApproveRequest(requestCode);
             return result;
         }
 
@@ -1020,6 +1024,8 @@ namespace IMS.Data.Business
             var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
                 customer, desc);
             result.NotificationCodes.Add(notifCode);
+            //send mail
+            NotificationBLO.Current.SendMailApproveRequest(requestCode);
             return result;
         }
 
@@ -1048,6 +1054,8 @@ namespace IMS.Data.Business
             var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
                 customer, desc);
             result.NotificationCodes.Add(notifCode);
+            //send mail
+            NotificationBLO.Current.SendMailApproveRequest(requestCode);
             return result;
         }
 
@@ -1069,6 +1077,8 @@ namespace IMS.Data.Business
             var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
                 customer, desc);
             result.NotificationCodes.Add(notifCode);
+            //send mail
+            NotificationBLO.Current.SendMailApproveRequest(requestCode);
             return result;
         }
 
@@ -1097,6 +1107,8 @@ namespace IMS.Data.Business
             var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
                 customer, desc);
             result.NotificationCodes.Add(notifCode);
+            //send mail
+            NotificationBLO.Current.SendMailApproveRequest(requestCode);
             return result;
         }
 
@@ -1126,6 +1138,8 @@ namespace IMS.Data.Business
             var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
                 customer, desc);
             result.NotificationCodes.Add(notifCode);
+            //send mail
+            NotificationBLO.Current.SendMailApproveRequest(requestCode);
             return result;
         }
 
@@ -1155,6 +1169,8 @@ namespace IMS.Data.Business
             var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
                 customer, desc);
             result.NotificationCodes.Add(notifCode);
+            //send mail
+            NotificationBLO.Current.SendMailApproveRequest(requestCode);
             return result;
         }
         #endregion
@@ -1187,6 +1203,8 @@ namespace IMS.Data.Business
             var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
                 customer, desc);
             result.NotificationCodes.Add(notifCode);
+            //send mail
+            NotificationBLO.Current.SendMailApproveRequest(requestCode);
             return result;
         }
 
@@ -1224,6 +1242,8 @@ namespace IMS.Data.Business
             var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
                 customer, desc);
             result.NotificationCodes.Add(notifCode);
+            //send mail
+            NotificationBLO.Current.SendMailApproveRequest(requestCode);
             return result;
         }
 
@@ -1242,6 +1262,8 @@ namespace IMS.Data.Business
             var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
                 customer, desc);
             result.NotificationCodes.Add(notifCode);
+            //send mail
+            NotificationBLO.Current.SendMailApproveRequest(requestCode);
             return result;
         }
 
@@ -1266,6 +1288,8 @@ namespace IMS.Data.Business
             var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
                 customer, desc);
             result.NotificationCodes.Add(notifCode);
+            //send mail
+            NotificationBLO.Current.SendMailApproveRequest(requestCode);
             return result;
         }
 
@@ -1291,6 +1315,8 @@ namespace IMS.Data.Business
             var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
                 customer, desc);
             result.NotificationCodes.Add(notifCode);
+            //send mail
+            NotificationBLO.Current.SendMailApproveRequest(requestCode);
             return result;
         }
 
@@ -1309,6 +1335,8 @@ namespace IMS.Data.Business
             var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
                 customer, desc);
             result.NotificationCodes.Add(notifCode);
+            //send mail
+            NotificationBLO.Current.SendMailApproveRequest(requestCode);
             return result;
         }
 
@@ -1336,6 +1364,8 @@ namespace IMS.Data.Business
             var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST,
                 customer, desc);
             result.NotificationCodes.Add(notifCode);
+            //send mail
+            NotificationBLO.Current.SendMailApproveRequest(requestCode);
             return result;
         }
         #endregion
@@ -1352,7 +1382,7 @@ namespace IMS.Data.Business
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_NOTFINISH);
             //luu notification
             var result = new NotificationResultModel();
-            var desc = preAssignedStaff + "is not finished the Task! Because" + reason;
+            var desc = preAssignedStaff + " is not finished the Task! Because " + reason;
             var notifCode = NotificationBLO.Current.AddNotification(task.RequestCode, Constants.Object.OBJECT_REQUEST,
                 shifthead, desc);
             result.NotificationCodes.Add(notifCode);

@@ -133,6 +133,9 @@ namespace IMS.Core
             public const string SMTP_HOST = "smtp.gmail.com";
             public const int SMTP_PORT = 25;
             public const string SUBJECT_NEWACCOUNT = "New Account to IMS-datacenter";
+            public const string SUBJECT_REQUEST_ACCEPT = "[IMS-Datacenter]Your request is accepted.";
+            public const string SUBJECT_REQUEST_APPROVE = "[IMS-Datacenter]Your request is done.";
+            public const string SUBJECT_REQUEST_REJECT = "[IMS-Datacenter]Your request is rejected.";
         }
 
         public class Session

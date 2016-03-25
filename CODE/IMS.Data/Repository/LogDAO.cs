@@ -171,7 +171,14 @@ namespace IMS.Data.Repository
                                          };
                 if (allStatusOfRequest.Any())
                 {
-                    var requests = ParseTypeLogToRequestType(allStatusOfRequest.ToList());
+                    var allrequests = new List<LogExtentedModel>();
+                    foreach(var item in allStatusOfRequest)
+                    {
+                        var cus = AccountDAO.Current.GetByKeys(new Account { Username = item.Customer});
+                        item.CustomerName = cus.Fullname;
+                        allrequests.Add(item);
+                    }
+                    var requests = ParseTypeLogToRequestType(allrequests.ToList());
                     var newest = requests.First();
                     var request = new LogExtentedModel();
                     var others = new List<LogExtentedModel>();

@@ -59,7 +59,7 @@
             <tbody class="clickable clickmee check" request-code="@Model.Requests[i].LastestStatusRequest.RequestCode" status-code="@Model.Requests[i].LastestStatusRequest.StatusCode" type-code="@Model.Requests[i].LastestStatusRequest.RequestTypeCode" duration="@Model.Requests[i].LastestStatusRequest.DaysFromNow">
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.Customer)
+                        @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.CustomerName)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.RequestTypeName)
