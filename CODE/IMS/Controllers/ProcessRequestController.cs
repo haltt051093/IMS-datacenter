@@ -283,7 +283,6 @@ namespace IMS.Controllers
                 {
                     viewmodel.ListRows = request.rows.Select(x => new SelectListItem { Value = x, Text = x }).ToList();
                 }
-                ViewBag.Message = "Request Deny";
                 viewmodel.SuccessMessage = msg;
                 return View("RentRackInfo", viewmodel);
             }
@@ -406,7 +405,7 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
             {
-                var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
+                var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.NotFinishReason);
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.NOT_FINISHED_TASK });
@@ -492,7 +491,7 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
             {
-                var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
+                var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.NotFinishReason);
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.NOT_FINISHED_TASK });
@@ -567,7 +566,7 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
             {
-                var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
+                var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.NotFinishReason);
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.NOT_FINISHED_TASK });
@@ -644,7 +643,7 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
             {
-                var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
+                var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.NotFinishReason);
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.NOT_FINISHED_TASK });
@@ -720,7 +719,7 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
             {
-                var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
+                var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.NotFinishReason);
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.NOT_FINISHED_TASK });
@@ -795,7 +794,7 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
             {
-                var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
+                var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.NotFinishReason);
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.NOT_FINISHED_TASK });
@@ -870,7 +869,7 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
             {
-                var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
+                var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.NotFinishReason);
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.NOT_FINISHED_TASK });

@@ -80,6 +80,18 @@
                 }
             </div>
         </div>
+        if (Model.RequestInfo.Reason != null && Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_REJECTED)
+        {
+            <hr />
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    @Html.LabelFor(model => model.RequestInfo.Reason, "Rejeted Reason")
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.DisplayFor(model => model.RequestInfo.Reason, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                </div>
+            </div>
+        }
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
             </div>
