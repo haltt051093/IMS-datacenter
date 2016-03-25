@@ -338,22 +338,19 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
-                if (viewmodel.Button == "Export")
-                {
-                    RequestBLO.Current.ExportProcedure(viewmodel.Servers, viewmodel.CustomerInfo.Customer);
-                    Success("Export Procedure Successfully!");
-                    return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.PRINT_PROCEDURE });
-                }
-                else
-                {
-                    var result = RequestBLO.Current.ApproveRequestAddServer(viewmodel.RequestInfo.RequestCode, viewmodel.Servers,
-                        viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode);
-                    //dang ky ham cho client
-                    Notify(result.NotificationCodes);
-                    return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.APPROVE_REQUEST_ADD_SERVER });
-                }
+                var result = RequestBLO.Current.ApproveRequestAddServer(viewmodel.RequestInfo.RequestCode, viewmodel.Servers,
+                    viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode);
+                //dang ky ham cho client
+                Notify(result.NotificationCodes);
+                return RedirectToAction("Detail", "ProcessRequest",
+                new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.APPROVE_REQUEST_ADD_SERVER });
+            }
+            if (Request.Form[Constants.FormAction.EXPORT_ACTION] != null)
+            {
+                RequestBLO.Current.ExportProcedure(viewmodel.Servers, viewmodel.CustomerInfo.Customer);
+                Success("Export Procedure Successfully!");
+                return RedirectToAction("Detail", "ProcessRequest",
+                new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.PRINT_PROCEDURE });
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
@@ -412,7 +409,7 @@ namespace IMS.Controllers
                 var result = RequestBLO.Current.NotFinishRequest(viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
-                   new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.NOT_FINISHED_TASK});
+                   new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.NOT_FINISHED_TASK });
             }
             return RedirectToAction("Index");
         }
@@ -530,7 +527,7 @@ namespace IMS.Controllers
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.APPROVE_REQUEST_ASSIGN_IP});
+                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.APPROVE_REQUEST_ASSIGN_IP });
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
