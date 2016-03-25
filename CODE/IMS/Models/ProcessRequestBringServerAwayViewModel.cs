@@ -29,6 +29,7 @@ namespace IMS.Models
         public List<string> ServerLocation { get; set; }
         public int SelectedServerNumber { get; set; }
         public List<ServerExtendedModel> ServerOfCustomer { get; set; }
+  
 
         //DropdownList
         public List<SelectListItem> StaffCodeOptions { get; set; }
