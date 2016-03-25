@@ -75,6 +75,7 @@
             if (aData.ServerCode != null) {
                 $(nRow).addClass('clickable');
                 $(nRow).addClass('highlight');
+                $(nRow).addClass('background-info');
             }
             
             $(nRow).click(function() {
@@ -83,11 +84,7 @@
                     window.location.assign(url);
                 }
             });
-            switch (aData.StatusName) {
-            case 'Used':
-                $(nRow).addClass('background-info');
-                break;
-            }
+
         },
         order: [[1, "asc"] ,[ 2, "desc" ]],
         columnDefs: [

@@ -136,24 +136,20 @@
         ],
         iDisplayLength: 42,
         aLengthMenu: [[42, 84, 126], [42, 84, 126]],
-        fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+        fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             if (aData.ServerCode != null) {
                 $(nRow).addClass('clickable');
                 $(nRow).addClass('highlight');
+                $(nRow).addClass('background-info');
             }
-            
+
             $(nRow).click(function() {
                 if (aData.ServerCode != null) {
                     var url = CONSTANT.authority + '@Url.Action("Detail", "Server")' + '/' + aData.ServerCode;
                     window.location.assign(url);
                 }
             });
-            switch (aData.StatusName) {
-            case 'Used':
-                $(nRow).addClass('background-danger');
-                break;
-            }
-        },
+},
         order: [[1, "asc"] ,[ 2, "desc" ]],
         columnDefs: [
             {
