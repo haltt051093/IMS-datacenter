@@ -347,8 +347,10 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.EXPORT_ACTION] != null)
             {
-                RequestBLO.Current.ExportProcedure(viewmodel.Servers, viewmodel.CustomerInfo.Customer);
-                Success("Export Procedure Successfully!");
+                var role = GetCurrentUserRole();
+                var st = GetCurrentUserName();
+                var staff = AccountBLO.Current.GetAccountByCode(st);
+                RequestBLO.Current.ExportProcedure(viewmodel.Servers, viewmodel.CustomerInfo.Customer, staff.Fullname,role);
                 return RedirectToAction("Detail", "ProcessRequest",
                 new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.PRINT_PROCEDURE });
             }

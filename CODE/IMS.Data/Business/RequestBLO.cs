@@ -1358,16 +1358,23 @@ namespace IMS.Data.Business
 
         #region export procedure
 
-        public void ExportProcedure(List<ServerExtendedModel> servers, string customer)
+        public void ExportProcedure(List<ServerExtendedModel> servers, string customer, string staff, string role)
         {
             Account acc = AccountDAO.Current.Query(x => x.Username == customer).FirstOrDefault();
+
             foreach (var item in servers)
             {
+                string location = "";
+                string na = "N/A";
+                for (int i = 0; i < item.ServerLocation.Count; i++)
+                {
+                    location += item.ServerLocation[i].RackName + "U" + item.ServerLocation[i].RackUnit + "--";
+                }
                 IPAddressPool ip =
                     IPAddressPoolDAO.Current.Query(x => x.IPAddress == item.DefaultIP).FirstOrDefault();
                 System.Object oMissing = System.Reflection.Missing.Value;
 
-                System.Object oTemplatePath = "E:/ProcedureOfDatacenter.dotx";
+                System.Object oTemplatePath = "E:/QTSCProcedure.dotx";
 
                 Application wordApp = new Application();
                 Document wordDoc = new Document();
@@ -1388,19 +1395,66 @@ namespace IMS.Data.Business
                         String fieldName = fieldText.Substring(11, endMerge - 11);
 
                         fieldName = fieldName.Trim();
-
-                        if (fieldName == "PartA")
+                        if (acc.Company == null)
                         {
+                            if (fieldName == "PartA")
+                            {
 
-                            myMergeField.Select();
+                                myMergeField.Select();
 
-                            wordApp.Selection.TypeText(acc.Fullname);
+                                wordApp.Selection.TypeText(acc.Fullname);
 
+                            }
+                            if (fieldName == "Representative")
+                            {
+                                myMergeField.Select();
+                                wordApp.Selection.TypeText(na);
+                            }
+                            if (fieldName == "Title")
+                            {
+                                myMergeField.Select();
+                                wordApp.Selection.TypeText(na);
+                            }
                         }
-                        if (fieldName == "Representative")
+                        else
+                        {
+                            if (fieldName == "PartA")
+                            {
+
+                                myMergeField.Select();
+
+                                wordApp.Selection.TypeText(acc.Company);
+
+                            }
+                            if (fieldName == "Representative")
+                            {
+                                myMergeField.Select();
+                                wordApp.Selection.TypeText(acc.Fullname);
+                            }
+                            if (fieldName == "Title")
+                            {
+                                myMergeField.Select();
+                                wordApp.Selection.TypeText("");
+                            }
+                        }
+
+                        if (fieldName == "Location")
+                        {
+                           
+                                myMergeField.Select();
+                                wordApp.Selection.TypeText(location);
+                            
+                            
+                        }
+                        if (fieldName == "RepresentativeB")
                         {
                             myMergeField.Select();
-                            wordApp.Selection.TypeText(acc.Username);
+                            wordApp.Selection.TypeText(staff);
+                        }
+                        if (fieldName == "TitleB")
+                        {
+                            myMergeField.Select();
+                            wordApp.Selection.TypeText(role);
                         }
                         if (fieldName == "Address")
                         {
