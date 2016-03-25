@@ -96,19 +96,40 @@
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                @Html.HiddenFor(model => model.RequestInfo.RequestCode, new { @id = "requestCode" })
+                @Html.HiddenFor(model => model.RequestInfo.RequestCode, new {@id = "requestCode"})
                 @Html.HiddenFor(model => model.CustomerInfo.Customer)
                 @Html.HiddenFor(x => x.RequestInfo.RequestType)
-                @Html.HiddenFor(model => model.RequestInfo.TaskCode, new { @id = "taskCode" })
+                @Html.HiddenFor(model => model.RequestInfo.TaskCode, new {@id = "taskCode"})
                 @if ((Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING ||
                       Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING) && User.IsInRole("Customer"))
                 {
-                    <button type="submit" id="btnCancel" name="@Constants.FormAction.CANCEL_ACTION" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
-                        @Labels.Cancel
-                    </button>
+                    <a class="btn btn-danger" data-toggle="modal" data-target="#Cancelrequest">Cancel</a>
                 }
             </div>
         </div>
+                      <!-- Cancel request modal -->
+        <div id="Cancelrequest" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" style="width: 350px">
+                <div class="modal-content">
+
+
+                    <div class="modal-body">
+                        <h4>Are you sure to cancel this request?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" id="btnCancel" name="@Constants.FormAction.CANCEL_ACTION" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                            @Labels.OK
+                        </button>
+                        <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
+                                data-dismiss="modal">
+                            @Labels.DialogCancel
+                        </button>
+
+                    </div>
+
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
     }
 </section>
 <script type="text/javascript">
