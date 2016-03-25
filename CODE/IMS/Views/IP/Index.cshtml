@@ -314,6 +314,7 @@
 
                 $(nRow).addClass('clickable');
                 $(nRow).addClass('highlight');
+                $(nRow).addClass('background-info');
             };
 
             $(nRow).click(function () {
@@ -346,7 +347,6 @@
                     actionCell.html('');
                     break;
                 case '@Constants.StatusCode.IP_USED':
-                    row.addClass('background-info');
                     actionCell.html('');
                     break;
                 case '@Constants.StatusCode.IP_DEACTIVATE':
