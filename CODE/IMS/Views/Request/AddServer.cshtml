@@ -119,6 +119,8 @@
 <!-- ADD SERVER MODAL -->
 <div id="serverinfo-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
+@using (Html.BeginForm("SaveTempData", "Request", FormMethod.Post))
+{
         <div class="modal-content">
             <div class="modal-header">
                 <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i> @Labels.AddServer</div>
@@ -150,7 +152,6 @@
                         @Html.ValidationMessageFor(model => model.Server.SerialNumber)
                     </div>
                 </div>
-
                 <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
                     <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
                         @Html.LabelFor(model => model.Server.PartNumber)
@@ -170,6 +171,7 @@
                     </div>
                 </div>
                 @Html.HiddenFor(model => model.Server.TempCode)
+                @Html.HiddenFor(model => model.Server.btnAction)
                 <div class="modal-footer">
                     <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION"
                             class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS" data-dismiss="modal">
@@ -182,6 +184,7 @@
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
+}
     </div><!-- /.modal -->
 </div>
 <script type="text/javascript">
@@ -198,6 +201,8 @@
         $('#Server_SerialNumber').val(server.SerialNumber);
         $('#Server_PartNumber').val(server.PartNumber);
         $('#Server_TempCode').val(server.TempCode);
+        $('#Server_btnAction').val("Edit");
+        $('#Server_Bandwidth').val();
     }
 
     function addModal(server) {
@@ -227,7 +232,7 @@
             //return false;
         });
 
-        $('#submitserver').click(function() {
+        @*$('#submitserver').click(function() {
             var server =
             {
                 "Power": $('#Server_Power').val(),
@@ -262,7 +267,7 @@
                     $('#serverinfo-modal').modal('hide');
                 }
             });
-        });
+        });*@
 
         $('a[x-code][action="edit"]').click(function() {
             clearModal();

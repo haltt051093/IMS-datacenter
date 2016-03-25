@@ -407,7 +407,7 @@ namespace IMS.Controllers
             //dang ky ham cho client
             Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
-            { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.CANCEL_REQUEST_ADD_SERVER});
+            { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.CANCEL_REQUEST_ADD_SERVER });
         }
 
         [Roles(Constants.Role.CUSTOMER)]
@@ -416,7 +416,7 @@ namespace IMS.Controllers
         {
             var customer = GetCurrentUserName();
             //Update lai serverip, server, request
-            var result = RequestBLO.Current.CancelRequestBringServerAway(viewmodel.RequestInfo.RequestCode, 
+            var result = RequestBLO.Current.CancelRequestBringServerAway(viewmodel.RequestInfo.RequestCode,
                 customer, viewmodel.RequestInfo.TaskCode);
             //dang ky ham cho client
             Notify(result.NotificationCodes);
@@ -428,7 +428,7 @@ namespace IMS.Controllers
         public ActionResult CancelRequestAssignIp(ProcessRequestAssignIPViewModel viewmodel)
         {
             var customer = GetCurrentUserName();
-            var result = RequestBLO.Current.CancelRequestAssignIP(viewmodel.RequestInfo.RequestCode, 
+            var result = RequestBLO.Current.CancelRequestAssignIP(viewmodel.RequestInfo.RequestCode,
                 customer, viewmodel.RequestInfo.TaskCode);
             //dang ky ham cho client
             Notify(result.NotificationCodes);
@@ -440,7 +440,7 @@ namespace IMS.Controllers
         public ActionResult CancelRequestChangeIp(ProcessRequestChangeIPViewModel viewmodel)
         {
             var customer = GetCurrentUserName();
-            var result = RequestBLO.Current.CancelRequestChangeIp(viewmodel.RequestInfo.RequestCode, customer, 
+            var result = RequestBLO.Current.CancelRequestChangeIp(viewmodel.RequestInfo.RequestCode, customer,
                 viewmodel.RequestInfo.TaskCode);
             //dang ky ham cho client
             Notify(result.NotificationCodes);
@@ -452,7 +452,7 @@ namespace IMS.Controllers
         public ActionResult CancelRequestReturnIp(ProcessRequestReturnIPViewModel viewmodel)
         {
             var customer = GetCurrentUserName();
-            var result = RequestBLO.Current.CancelRequestReturnIp(viewmodel.RequestInfo.RequestCode, customer, 
+            var result = RequestBLO.Current.CancelRequestReturnIp(viewmodel.RequestInfo.RequestCode, customer,
                 viewmodel.RequestInfo.TaskCode);
             //dang ky ham cho client
             Notify(result.NotificationCodes);
@@ -464,7 +464,7 @@ namespace IMS.Controllers
         public ActionResult CancelRequestRentRack(ProcessRequestRentRackViewModel viewmodel)
         {
             var customer = GetCurrentUserName();
-            var result = RequestBLO.Current.CancelRequestRentRack(viewmodel.RequestInfo.RequestCode, customer, 
+            var result = RequestBLO.Current.CancelRequestRentRack(viewmodel.RequestInfo.RequestCode, customer,
                 viewmodel.RequestInfo.TaskCode);
             //dang ky ham cho client
             Notify(result.NotificationCodes);
@@ -476,7 +476,7 @@ namespace IMS.Controllers
         public ActionResult CancelRequestReturnRack(ProcessRequestReturnRackViewModel viewmodel)
         {
             var customer = GetCurrentUserName();
-            var result = RequestBLO.Current.CancelRequestReturnRack(viewmodel.RequestInfo.RequestCode, customer, 
+            var result = RequestBLO.Current.CancelRequestReturnRack(viewmodel.RequestInfo.RequestCode, customer,
                 viewmodel.RequestInfo.TaskCode);
             //dang ky ham cho client
             Notify(result.NotificationCodes);
@@ -504,33 +504,40 @@ namespace IMS.Controllers
             return Json(newmodel, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult SaveTempData(ServerExtendedModel server)
+        public ActionResult SaveTempData(RequestAddServerViewModel data)
         {
-            var pass = new RequestAddServerViewModel()
+            //var pass = new RequestAddServerViewModel()
+            //{
+            //    Server = server
+            //};
+            //if (data.Server.btnAction == Constants.FormAction.OK_ACTION)
+            //{
+           
+            //pass.TempCode = temp.TempCode;
+            if (data.Server.btnAction == Constants.FormAction.EDIT_ACTION)
             {
-                Server = server
-            };
-            if (server.btnAction == Constants.FormAction.OK_ACTION)
+                //var temp = new TempRequest()
+                //{
+                //    TempCode = data.Server.TempCode,
+                //    Data = JsonConvert.SerializeObject(data.Server)
+                //};
+                var temp = TempRequestBLO.Current.GetByKeys(new TempRequest { TempCode = data.Server.TempCode });
+                temp.Data = JsonConvert.SerializeObject(data.Server);
+                TempRequestBLO.Current.Update(temp);
+                //pass.TempCode = temp.TempCode;
+            }
+            else
             {
                 var temp = new TempRequest();
-                server.Customer = GetCurrentUserName();
+                data.Server.Customer = GetCurrentUserName();
                 temp.RequestCode = Session[Constants.Session.REQUEST_CODE].ToString();
-                temp.Data = JsonConvert.SerializeObject(server);
+                temp.Data = JsonConvert.SerializeObject(data.Server);
                 temp.TempCode = TempRequestBLO.Current.GenerateCode();
                 TempRequestBLO.Current.Add(temp);
-                pass.TempCode = temp.TempCode;
             }
-            else if (server.btnAction == Constants.FormAction.EDIT_ACTION)
-            {
-                var temp = new TempRequest()
-                {
-                    TempCode = server.TempCode,
-                    Data = JsonConvert.SerializeObject(server)
-                };
-                TempRequestBLO.Current.Update(temp);
-                pass.TempCode = temp.TempCode;
-            }
-            return Json(pass, JsonRequestBehavior.AllowGet);
+            var request = new RequestCreateViewModel() { Type = Constants.RequestTypeCode.ADD_SERVER };
+            return RedirectToAction("Create", "Request", request);
+            //return Json(pass, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult DeleteTempServer(string code)
