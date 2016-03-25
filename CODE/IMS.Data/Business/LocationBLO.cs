@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using IMS.Core;
 using IMS.Core.Express;
@@ -45,7 +46,7 @@ namespace IMS.Data.Business
             return code;
         }
 
-        public bool UpdateLocation(string ServerCode, List<string> Locations)
+        public bool UpdateLocation(string ServerCode, List<string> Locations, string username, string request)
         {
 
                 var locations = dao.GetAll();
@@ -66,10 +67,24 @@ namespace IMS.Data.Business
                             {
                                 data.StatusCode = Constants.StatusCode.RACK_AVAILABLE;
                                 RackDAO.Current.Update(data);
+                                
+                                
                             }
                             
                         }
+                    if (request == "Change")
+                    {
+                        var log = new Log();
+                        log.TypeOfLog = Constants.TypeOfLog.LOG_CHANGE_LOCATION;
+                        log.Object = Constants.Object.OBJECT_LOCATION;
+                        log.ChangedValueOfObject = locations[i].LocationCode;
+                        log.ObjectStatus = Constants.StatusCode.LOCATION_FREE;
+                        log.ServerCode = ServerCode;
+                        log.Username = username;
+                        log.LogTime = DateTime.Now;
+                        LogBLO.Current.Add(log);
                     }
+                }
                 }
                 
                 for (int i = 0; i < Locations.Count; i++)
@@ -77,8 +92,7 @@ namespace IMS.Data.Business
                     for (int j = 0; j < locations.Count; j++)
                     {
                         if (Locations[i] == locations[j].LocationCode)
-                        {
-                            
+                        {                          
                                 locations[j].StatusCode = Constants.StatusCode.LOCATION_USED;
                                 locations[j].ServerCode = ServerCode;
                                 dao.Update(locations[j]);
@@ -89,9 +103,20 @@ namespace IMS.Data.Business
                                     data.StatusCode = Constants.StatusCode.RACK_USED;
                                     RackDAO.Current.Update(data);
                                 }
-                                
-                            
+
+                        if (request == "Change")
+                        {
+                            var log = new Log();
+                            log.TypeOfLog = Constants.TypeOfLog.LOG_CHANGE_LOCATION;
+                            log.Object = Constants.Object.OBJECT_LOCATION;
+                            log.ChangedValueOfObject = locations[j].LocationCode;
+                            log.ObjectStatus = Constants.StatusCode.LOCATION_USED;
+                            log.ServerCode = ServerCode;
+                            log.Username = username;
+                            log.LogTime = DateTime.Now;
+                            LogBLO.Current.Add(log);
                         }
+                    }
                     }
              
             }

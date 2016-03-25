@@ -61,64 +61,6 @@ namespace IMS.Controllers
             return View(data);
         }
 
-        [HttpPost]
-        public ActionResult Detail(ServerDetailsViewModel sdvm)
-        {
-
-            var selectedLocationCodes = sdvm.Selected
-                .Where(x => x.IsSelected)
-                .Select(x => x.LocationCode)
-                .ToList();
-            if (selectedLocationCodes.Count == 0)
-            {
-                return View(sdvm);
-            }
-            var location = LocationBLO.Current.GetByKeys(new Location { LocationCode = selectedLocationCodes[0] });
-            if (location == null)
-            {
-                return View(sdvm);
-            }
-
-            var locations = LocationBLO.Current.GetAllLocation(new GetLocationQuery { RackCode = location.RackCode });
-            var startIndex = -1;
-            var endIndex = -1;
-            for (var i = 0; i < locations.Count; i++)
-            {
-                var l = locations[i];
-                if (startIndex == -1 && selectedLocationCodes.Contains(l.LocationCode))
-                {
-                    startIndex = i;
-                }
-                if (startIndex != -1 && selectedLocationCodes.Contains(l.LocationCode))
-                {
-                    endIndex = i;
-                }
-                if (startIndex != -1 && !selectedLocationCodes.Contains(l.LocationCode))
-                {
-                    break;
-                }
-            }
-
-            if ((endIndex - startIndex + 1) != sdvm.Size || (locations[startIndex].ServerCode != null) || (locations[endIndex].ServerCode != null))
-            {
-                Alert("Change Location Fail!");
-                return RedirectToAction("Detail", new { code = sdvm.ServerCode });
-            }
-
-
-            bool result = LocationBLO.Current.UpdateLocation(sdvm.ServerCode, selectedLocationCodes);
-            if (result)
-            {
-                Success("Change Location Successfully!");
-                return RedirectToAction("Detail", new { code = sdvm.ServerCode });
-            }
-            else
-            {
-                Alert("Change Location Fail!");
-                return RedirectToAction("Detail", new { code = sdvm.ServerCode });
-            }
-
-        }
 
         [HttpGet]
         public ActionResult GetLocationByRackName(ServerDetailsViewModel model)
