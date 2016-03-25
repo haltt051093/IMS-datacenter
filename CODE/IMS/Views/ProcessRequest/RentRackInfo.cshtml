@@ -237,9 +237,7 @@
                         <button type="submit" id="btnApprove" name="@Constants.FormAction.APPROVE_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
                             @Labels.Approve
                         </button>
-                        <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
-                            @Labels.Reject
-                        </button>
+                        <a class="btn btn-danger" data-toggle="modal" data-target="#Rejectrequest">Reject</a>
                     }
                 }
                 else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING && (User.IsInRole("Shift Head") || User.IsInRole("Manager")))
@@ -247,12 +245,48 @@
                     <button type="submit" id="btnAccept" name="@Constants.FormAction.ACCEPT_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
                         @Labels.Accept
                     </button>
-                    <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
-                        @Labels.Reject
-                    </button>
+                    <a class="btn btn-danger" data-toggle="modal" data-target="#Rejectrequest">Reject</a>
                 }
             </div>
         </div>
+
+                <!-- Reject request MODAL -->
+        <div id="Rejectrequest" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS">
+                            <i class="fa fa-minus-circle"></i>
+                            Reject Request
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                            <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                                @Html.LabelFor(model => model.RequestInfo.Reason)
+                            </div>
+                            <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                                @Html.TextBoxFor(model => model.RequestInfo.Reason, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                @Html.ValidationMessageFor(model => model.RequestInfo.Reason)
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
+                            @Labels.Reject
+                        </button>
+                        <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
+                                data-dismiss="modal">
+                            @Labels.DialogCancel
+                        </button>
+
+                    </div>
+
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
     }
 </section>
 <!-- Reassign IP MODAL -->
