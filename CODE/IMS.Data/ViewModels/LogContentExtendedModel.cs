@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
 using IMS.Core.Express;
 using IMS.Data.Models;
 
@@ -8,7 +9,7 @@ namespace IMS.Data.ViewModels
     [NotMapped]
     public class LogContentExtendedModel: Log
     {
-        public Log _Log
+        public Log _LogChangedContent
         {
             set
             {
