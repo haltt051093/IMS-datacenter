@@ -9,7 +9,7 @@ namespace IMS.Data.ViewModels
     {
         public string AssigneeName { get; set; }
         public string StatusName { get; set; }
-        //public string RejectReason { get; set; }
+        public string NotFinishReason { get; set; }
         public string AssignedStaff { get; set; }
         public string TaskStatus { get; set; }
         public string TaskStatusName { get; set; }

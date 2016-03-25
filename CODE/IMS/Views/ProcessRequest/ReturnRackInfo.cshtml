@@ -99,9 +99,7 @@
                         @if (Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
                         {
                             <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
-                                <button type="submit" id="btnNotFinished" name="@Constants.FormAction.NOT_FINISHED_TASK_ACTION" value="@Constants.FormAction.NOT_FINISHED_TASK_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
-                                    Not Finish Task
-                                </button>
+                                <a class="btn btn-danger" data-toggle="modal" data-target="#notfinishtask">Not Finish Task</a>
                             </div>
                         }
                     </div>
@@ -118,14 +116,14 @@
                 </div>
                 @if (Model.CustomerInfo.Company != null)
                 {
-                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                        @Html.LabelFor(model => model.CustomerInfo.Company)
+                    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
+                            @Html.LabelFor(model => model.CustomerInfo.Company)
+                        </div>
+                        <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                            @Html.DisplayFor(model => model.CustomerInfo.Company, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        </div>
                     </div>
-                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
-                        @Html.DisplayFor(model => model.CustomerInfo.Company, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                    </div>
-                </div>
                 }
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                     <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
@@ -232,6 +230,42 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
+ <!-- Not Finish Task MODAL -->
+        <div id="notfinishtask" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS">
+                            <i class="fa fa-minus-circle"></i>
+                            Not Finish Task
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                            <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                                @Html.LabelFor(model => model.RequestInfo.NotFinishReason)
+                            </div>
+                            <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                                @Html.TextBoxFor(model => model.RequestInfo.Reason, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                @Html.ValidationMessageFor(model => model.RequestInfo.NotFinishReason)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" id="btnReject" name="@Constants.FormAction.NOT_FINISHED_TASK_ACTION" value="@Constants.FormAction.NOT_FINISHED_TASK_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
+                            Not Finish Task
+                        </button>
+                        <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
+                                data-dismiss="modal">
+                            @Labels.DialogCancel
+                        </button>
+
+                    </div>
+
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
     }
 </section>
 <!-- Reassign IP MODAL -->
@@ -240,52 +274,52 @@
         <div class="modal-content">
             @using (Html.BeginForm("ProcessRequestReturnRack", "ProcessRequest", FormMethod.Post))
             {
-                <div class="modal-header">
-                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS">
-                        <i class="fa fa-plus"></i>
-                        Reassign Task
-                    </div>
+        <div class="modal-header">
+            <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS">
+                <i class="fa fa-plus"></i>
+                Reassign Task
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                    @Html.LabelFor(model => model.RequestInfo.AssigneeName, "Assignee Name")
                 </div>
-                <div class="modal-body">
-                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                            @Html.LabelFor(model => model.RequestInfo.AssigneeName, "Assignee Name")
-                        </div>
-                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                            @Html.DisplayFor(model => model.RequestInfo.AssigneeName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                        </div>
-                    </div>
-                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                            @Html.LabelFor(model => model.RequestInfo.TaskStatusName, "Task Status")
-                        </div>
-                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                            @Html.DisplayFor(model => model.RequestInfo.TaskStatusName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                        </div>
-                    </div>
-                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                            @Html.LabelFor(model => model.RequestInfo.AssignedStaff, "Assigned Staff")
-                        </div>
-                        <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                            @Html.DropDownListFor(model => model.RequestInfo.AssignedStaff, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                            @Html.ValidationMessageFor(model => model.RequestInfo.AssignedStaff)
-                        </div>
-                    </div>
+                <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                    @Html.DisplayFor(model => model.RequestInfo.AssigneeName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                 </div>
-                <div class="modal-footer">
-                    @Html.HiddenFor(model => model.RequestInfo.Assignee)
-                    @Html.HiddenFor(model => model.RequestInfo.RequestCode)
-                    @Html.HiddenFor(model => model.RequestInfo.TaskCode)
-                    <button type="submit" name="@Constants.FormAction.REASSIGN_ACTION" value="@Constants.FormAction.REASSIGN_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                        @Labels.DialogOK
-                    </button>
-                    <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
-                            data-dismiss="modal">
-                        @Labels.DialogCancel
-                    </button>
+            </div>
+            <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                    @Html.LabelFor(model => model.RequestInfo.TaskStatusName, "Task Status")
+                </div>
+                <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                    @Html.DisplayFor(model => model.RequestInfo.TaskStatusName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                </div>
+            </div>
+            <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                    @Html.LabelFor(model => model.RequestInfo.AssignedStaff, "Assigned Staff")
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.DropDownListFor(model => model.RequestInfo.AssignedStaff, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    @Html.ValidationMessageFor(model => model.RequestInfo.AssignedStaff)
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            @Html.HiddenFor(model => model.RequestInfo.Assignee)
+            @Html.HiddenFor(model => model.RequestInfo.RequestCode)
+            @Html.HiddenFor(model => model.RequestInfo.TaskCode)
+            <button type="submit" name="@Constants.FormAction.REASSIGN_ACTION" value="@Constants.FormAction.REASSIGN_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                @Labels.DialogOK
+            </button>
+            <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
+                    data-dismiss="modal">
+                @Labels.DialogCancel
+            </button>
 
-                </div>
+        </div>
             }
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
