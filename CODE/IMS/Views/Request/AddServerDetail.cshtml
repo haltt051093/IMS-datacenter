@@ -115,7 +115,15 @@
                                     @Html.HiddenFor(modelItem => modelItem.Servers[i].DefaultIP)
                                 </td>
                                 <td>
-                                    <input type="hidden" value="true" name="location"/>
+                                    @*<input type="hidden" value="true" name="location"/>*@
+                                    @for (int j = 0; j < Model.Servers[i].ServerLocation.Count; j++)
+                                    {
+                                        @Html.DisplayFor(model => Model.Servers[i].ServerLocation[j].RackName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                        <span>U</span>
+                                        @Html.DisplayFor(model => Model.Servers[i].ServerLocation[j].RackUnit, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].RackCode)
+                                    <br />
+                                    }
                                 </td>
                             }
                         </tr>
