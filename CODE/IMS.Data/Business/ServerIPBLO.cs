@@ -91,5 +91,10 @@ namespace IMS.Data.Business
         {
             dao.UpdateServerIpANDLog(requestCode, serverCode, updatedIp, typeOfLog, newStatus, username);
         }
+
+        public void AddDefaultIPANDLog(string serverCode, string requestCode, string username)
+        {
+            dao.AddDefaultIPANDLog(serverCode, requestCode, username);
+        }
     }
 }

@@ -177,12 +177,16 @@ namespace IMS.Data.Business
         }
 
         public void UpdateStatusIpANDLog(string requestCode, string serverCode, string ip, string newStatus,
-            string typeOfLog, string username)
+            string typeOfLog, string username, bool isDefault)
         {
             var existing = dao.GetByKeys(new IPAddressPool { IPAddress = ip });
             if (existing != null)
             {
                 existing.StatusCode = newStatus;
+                if (isDefault == true)
+                {
+                    existing.IsDefault = false;
+                }
                 dao.Update(existing);
             }
             //Add log trang thai IP
@@ -197,6 +201,16 @@ namespace IMS.Data.Business
                 Username = username
             };
             LogBLO.Current.Add(logIp);
+        }
+
+        public void UpdateDefaultIPANDLog(string requestCode, string serverCode, string username)
+        {
+            var defaultIP = ServerBLO.Current.GetByKeys(new Server { ServerCode = serverCode }).DefaultIP;
+            if (defaultIP != null)
+            {
+                UpdateStatusIpANDLog(requestCode, serverCode, defaultIP, 
+                    Constants.StatusCode.IP_AVAILABLE, Constants.TypeOfLog.LOG_ADD_SERVER, username, true);
+            }
         }
 
         public List<IPAddressPoolExtendedModel> GetAvailableIpsSameGateway(string serverCode)

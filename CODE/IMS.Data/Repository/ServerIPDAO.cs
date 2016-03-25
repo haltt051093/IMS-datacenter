@@ -79,6 +79,27 @@ namespace IMS.Data.Repository
             LogBLO.Current.Add(logServerIp);
         }
 
-        //public void UpdateIPStatusOfServer(string serverCode, )
+        public void AddDefaultIPANDLog(string serverCode, string requestCode, string username)
+        {
+            var defaultIP = ServerBLO.Current.GetByKeys(new Server { ServerCode = serverCode }).DefaultIP;
+            if (defaultIP != null)
+            {
+                AddServerIpAndLog(requestCode, serverCode, defaultIP, Constants.TypeOfLog.LOG_ADD_SERVER,
+                    Constants.StatusCode.SERVERIP_CURRENT, username);
+                //log default ip
+                Log logDefaultIP = new Log
+                {
+                    RequestCode = requestCode,
+                    TypeOfLog = Constants.TypeOfLog.LOG_ADD_SERVER,
+                    Object = Constants.Object.OBJECT_IP,
+                    ChangedValueOfObject = defaultIP,
+                    ObjectStatus = Constants.StatusCode.IP_USED,
+                    ServerCode = serverCode,
+                    Username = username
+                };
+                LogBLO.Current.Add(logDefaultIP);
+            }
+
+        }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mime;
 using IMS.Core;
 using IMS.Data.Generic;
 using IMS.Data.Models;
@@ -96,14 +95,14 @@ namespace IMS.Data.Business
                     Constants.TypeOfLog.LOG_CHANGE_IP, Constants.StatusCode.SERVERIP_OLD, staffCode);
                 //update and log status cua up cu o IPAddresspool
                 IPAddressPoolBLO.Current.UpdateStatusIpANDLog(requestCode, selectedServer, item.old, Constants.StatusCode.IP_AVAILABLE,
-                    Constants.TypeOfLog.LOG_CHANGE_IP, staffCode);
+                    Constants.TypeOfLog.LOG_CHANGE_IP, staffCode, false);
 
                 //add and log new serverip
                 ServerIPBLO.Current.AddServerIpAndLog(requestCode, selectedServer, item.changed,
                     Constants.TypeOfLog.LOG_CHANGE_IP, Constants.StatusCode.SERVERIP_CURRENT, staffCode);
                 //Update and log status cua IP moi o IPAddressPool
                 IPAddressPoolBLO.Current.UpdateStatusIpANDLog(requestCode, selectedServer, item.changed, Constants.StatusCode.IP_USED,
-                    Constants.TypeOfLog.LOG_CHANGE_IP, staffCode);
+                    Constants.TypeOfLog.LOG_CHANGE_IP, staffCode, false);
             }
         }
 
@@ -965,6 +964,8 @@ namespace IMS.Data.Business
                 //update and log server
                 ServerBLO.Current.UpdateServerANDLog(requestCode, server.ServerCode,
                     Constants.TypeOfLog.LOG_ADD_SERVER, Constants.StatusCode.SERVER_RUNNING, assignee);
+                //luu default ip vo bang server ip, log lai ipaddresspool, serverip
+                ServerIPBLO.Current.AddDefaultIPANDLog(server.ServerCode, requestCode, assignee);
             }
             //Add and log request
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ADD_SERVER,
@@ -993,7 +994,7 @@ namespace IMS.Data.Business
                 {
                     //update and log status cua IP o IPAddresspool
                     IPAddressPoolBLO.Current.UpdateStatusIpANDLog(requestCode, server.ServerCode, ip,
-                        Constants.StatusCode.IP_AVAILABLE, Constants.TypeOfLog.LOG_RETURN_IP, assignee);
+                        Constants.StatusCode.IP_AVAILABLE, Constants.TypeOfLog.LOG_RETURN_IP, assignee, false);
                     // update and log statuscode cua bang serverIP
                     ServerIPBLO.Current.UpdateServerIpANDLog(requestCode, server.ServerCode, ip,
                         Constants.TypeOfLog.LOG_RETURN_IP, Constants.StatusCode.SERVERIP_OLD, assignee);
@@ -1032,7 +1033,7 @@ namespace IMS.Data.Business
                     Constants.TypeOfLog.LOG_ASSIGN_IP, Constants.StatusCode.SERVERIP_CURRENT, assignee);
                 //update and log ipaddress
                 IPAddressPoolBLO.Current.UpdateStatusIpANDLog(requestCode, selectedServer, item,
-                    Constants.StatusCode.IP_USED, Constants.TypeOfLog.LOG_ASSIGN_IP, assignee);
+                    Constants.StatusCode.IP_USED, Constants.TypeOfLog.LOG_ASSIGN_IP, assignee, false);
             }
             //Add Log and update request status
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ASSIGN_IP,
@@ -1078,7 +1079,7 @@ namespace IMS.Data.Business
             {
                 //update and log status cua IP o IPAddresspool
                 IPAddressPoolBLO.Current.UpdateStatusIpANDLog(requestCode, selectedServer, item,
-                    Constants.StatusCode.IP_AVAILABLE, Constants.TypeOfLog.LOG_RETURN_IP, assignee);
+                    Constants.StatusCode.IP_AVAILABLE, Constants.TypeOfLog.LOG_RETURN_IP, assignee, false);
                 // update and log statuscode cua bang serverIP
                 ServerIPBLO.Current.UpdateServerIpANDLog(requestCode, selectedServer, item.ToString(),
                     Constants.TypeOfLog.LOG_RETURN_IP, Constants.StatusCode.SERVERIP_OLD, assignee);
@@ -1168,7 +1169,10 @@ namespace IMS.Data.Business
                 //update and log server
                 ServerBLO.Current.UpdateServerANDLog(requestCode, server,
                     Constants.TypeOfLog.LOG_ADD_SERVER, Constants.StatusCode.SERVER_DEACTIVATE, assignee);
-                //update lai ip va location neu co
+                //update ip addresspool, chuyen trang thai default ip = false, update status
+                IPAddressPoolBLO.Current.UpdateDefaultIPANDLog(requestCode, server, assignee);
+                //update lai location, status va xoa servercode
+                LocationBLO.Current.SetLocationAvailable(server);
             }
             //Add and log request
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ADD_SERVER,
@@ -1440,11 +1444,11 @@ namespace IMS.Data.Business
 
                         if (fieldName == "Location")
                         {
-                           
-                                myMergeField.Select();
-                                wordApp.Selection.TypeText(location);
-                            
-                            
+
+                            myMergeField.Select();
+                            wordApp.Selection.TypeText(location);
+
+
                         }
                         if (fieldName == "RepresentativeB")
                         {
