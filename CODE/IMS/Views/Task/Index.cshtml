@@ -159,7 +159,12 @@
 
     $("#example1").DataTable({
         //"iDisplayLength": -1,
-        "aaSorting": [[2, "desc"]] // Sort by first column descending
+        "aaSorting": [[2, "desc"]], // Sort by first column descending
+        "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            if (aData[1] == "Completed") {
+                $('td', nRow).addClass('background-warning');
+            };
+        }
     });
 
     $("#FilterByRequestType").change(function () {

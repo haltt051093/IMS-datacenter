@@ -185,7 +185,12 @@
     $(function() {
         $("#example1").DataTable({
             //"iDisplayLength": -1,
-            "aaSorting": [[2, "desc"]] // Sort by first column descending
+            "aaSorting": [[2, "desc"]], // Sort by first column descending
+            "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                if (aData[3] == "Done") {
+                    $('td', nRow).addClass('background-success');
+                };
+            }
         });
         //$(".clickmee").dblclick(function() {
         //    $(this).closest('tbody')

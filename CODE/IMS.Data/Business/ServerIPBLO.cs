@@ -51,7 +51,7 @@ namespace IMS.Data.Business
         {
             var query = from si in ServerIPDAO.Current.Table
                         join ip in IPAddressPoolDAO.Current.Table
-                            on si.CurrentIP equals ip.NetworkIP into siip
+                            on si.CurrentIP equals ip.IPAddress into siip
                         from subsiip in siip.DefaultIfEmpty()
                         where si.ServerCode == serverCode && si.StatusCode == status
                         select new ServerIPExtendedModel()

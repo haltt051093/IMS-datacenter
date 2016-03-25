@@ -89,8 +89,7 @@
                         myTable.append('<tr><td>' + '<input type="checkbox" class="chknull" id="CheckBoxList"'
                             + index + ' name="chk" value="' + item.CurrentIP + '" /></td><td>' + item.CurrentIP + '</td></tr>');
                         if (item.IsDefault) {
-                            var test = "CheckBoxList" + index;
-                            $("#test").addClass("highlight-warning");
+                            $("tr:last").css({ backgroundColor: "yellow", fontWeight: "bolder" }).attr('id','hohoho');
                         }
                     });
                     selectedChkCount = 0;
@@ -100,8 +99,11 @@
 
         $('#tbodyid').on('click', '.chknull', function () {
             var selectedChk = $('.chknull:checked');
-            //alert(selectedChk.length);
             selectedChkCount = selectedChk.length;
+        });
+        $('#tbodyid').on('click', function () {
+                var state = $('#hohoho input[type=checkbox]').is(':checked');
+                $('#MyTable input[type="checkbox"]').prop('checked', state);
         });
 
         //Get value of selected items
