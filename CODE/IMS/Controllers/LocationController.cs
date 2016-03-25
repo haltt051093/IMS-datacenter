@@ -182,8 +182,8 @@ namespace IMS.Controllers
                     return RedirectToAction("AssignLocation", "Location", new {FailMessage = "Assign Location Fail! Try again!", rType = livm.RequestType, rCode = livm.RequestCode, ServerCode = livm.ServerCode, Size = livm.Size });
             }
 
-
-            bool result = LocationBLO.Current.UpdateLocation(livm.ServerCode, selectedLocationCodes);
+            string user = GetCurrentUserName();
+            bool result = LocationBLO.Current.UpdateLocation(livm.ServerCode, selectedLocationCodes, user, livm.RequestType);
             if (result)
             {
                 if (livm.RequestType == "Change")

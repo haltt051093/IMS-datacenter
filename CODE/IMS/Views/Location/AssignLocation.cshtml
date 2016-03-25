@@ -172,10 +172,15 @@
             }
             switch (aData.ServerCode) {
             case '@Model.ServerCode':
-                row.css('background-color', '#ffe6e6');              
+                row.addClass('background-success');              
                 break;
-            
+            case null:
+                    break;
+            default:
+                    row.addClass('background-danger');
+                    break;
             }
+
         },
         order: [[1, "acs"], [2, "desc"]],
         columnDefs: [{

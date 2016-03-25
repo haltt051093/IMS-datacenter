@@ -61,7 +61,7 @@
 </section><!-- /.content -->
 <!-- ADD IP MODAL -->
 <div id="addip-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width: 300px">
         <div class="modal-content">
             @using (Html.BeginForm())
             {
@@ -69,34 +69,52 @@
                     <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i> @Labels.AddIP</div>
                 </div>
                 <div class="modal-body">
-                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                            @Html.LabelFor(model => model.Address)
-                        </div>
-                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                            @Html.TextBoxFor(model => model.Address, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                            @Html.ValidationMessageFor(model => model.Address)
-                        </div>
-                    </div>
-                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                            @Html.LabelFor(model => model.Netmask)
-                        </div>
-                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                            @Html.DropDownListFor(model => model.Netmask, Model.ListNetmask, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                        </div>
-                    </div>
-                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                            @Html.LabelFor(model => model.Option, "Gateway")
-                        </div>
-                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                            @Html.RadioButtonFor(model => model.Option, "After")<label>After first IP</label>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            @Html.RadioButtonFor(model => model.Option, "Before")<label>Before last IP</label>
-                            @Html.ValidationMessageFor(model => model.Option)
-                        </div>
-                    </div>
+                    <table>
+                        <tr>
+                            <th>Address</th>
+                            <th>Netmask</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.TextBoxFor(model => model.Address, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                            </td>
+                            <td>
+                                @Html.DropDownListFor(model => model.Netmask, Model.ListNetmask, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.ValidationMessageFor(model => model.Address)
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                    </table>
+                    <div class="clearfix"></div>
+                    <div style="height: 10px"></div>
+                    <table>
+                        <tr>
+                            <th>Gateway</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.RadioButtonFor(model => model.Option, "After")<label>After first IP Address</label>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.RadioButtonFor(model => model.Option, "Before")<label>Before last IP Address</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.ValidationMessageFor(model => model.Option)
+                            </td>
+                        </tr>
+                    </table>
+
 
                 </div>
                 <div class="modal-footer">

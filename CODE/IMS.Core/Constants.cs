@@ -191,6 +191,8 @@ namespace IMS.Core
             public const string LOG_UNBLOCK_IP = "UNBLOCKIP";
             //bring server away
             public const string LOG_BRING_SERVER_AWAY = "BASERVER";
+            //change location
+            public const string LOG_CHANGE_LOCATION = "CHANGELOCATION";
         }
 
         public class BandWidth
