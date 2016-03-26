@@ -37,83 +37,101 @@
     <section class="content">
         @Html.HiddenFor(model=>model.RequestCode)
         @Html.ActionLink("Cancel", "Detail", "ProcessRequest", new {code = Model.RequestCode}, htmlAttributes: new {@class = "btn btn-default pull-right"})
-        <button type="submit" class="btn btn-primary pull-right">Assign</button>
+        <button type="submit" id="assignbutton" class="btn btn-primary pull-right">Assign</button>
 
     </section>
 </form>
 <script>
-                $.fn.dataTable.ext.search.push(
-                    function (settings, data, dataIndex) {
-                        var networkIP = $('#NetworkIP').val();
-                        if (networkIP == '') {
-                            return true;
-                        }
-                        if (networkIP == data[1]) {
-                            return true;
-                        }
-                        return false;
-                    }
-                );
-                var message = $('#FailMessage').val();
-                if (message) {
-                    notif({
-                        msg: "<b>Fail! </b>" + message,
-                        type: "error",
-                        position: "center"
-                    });
-                    $('#FailMessage').val("");
-                }
+    $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            var networkIP = $('#NetworkIP').val();
+            if (networkIP == '') {
+                return true;
+            }
+            if (networkIP == data[1]) {
+                return true;
+            }
+            return false;
+        }
+    );
+    var message = $('#FailMessage').val();
+    if (message) {
+        notif({
+            msg: "<b>Fail! </b>" + message,
+            type: "error",
+            position: "center"
+        });
+        $('#FailMessage').val("");
+    }
 </script>
 
 <script type="text/javascript">
-                var table = $('#example1').DataTable({
-                    dom: '<lf<t>ip>',
-                    processing: true,
-                    ajax: "@Url.Action("GetAvailableIP", "IP", new {httproute = ""})",
-                    columns: [
-                        { data: "Id" },
-                        { data: "NetworkIP" },
-                        { data: "IPAddress" },
-                        { data: "Gateway" },
-                        { data: "Subnetmask" },
-                        { data: "StatusCode" }
-                    ],
-                    iDisplayLength: 10,
-                    aLengthMenu: [[10, 20, 30], [10, 20, 30]],
-                    fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                        var row = $(nRow);
-                        var actionCell = $(nRow.cells[3]);
+    
+    var table = $('#example1').DataTable({
+        dom: '<lf<t>ip>',
+        processing: true,
+        ajax: "@Url.Action("GetAvailableIP", "IP", new {httproute = ""})",
+        columns: [
+            { data: "Id" },
+            { data: "NetworkIP" },
+            { data: "IPAddress" },
+            { data: "Gateway" },
+            { data: "Subnetmask" },
+            { data: "StatusCode" }
+        ],
+        iDisplayLength: 10,
+        aLengthMenu: [[10, 20, 30], [10, 20, 30]],
+        fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            var row = $(nRow);
+            var actionCell = $(nRow.cells[3]);
 
-                        switch (aData.StatusCode) {
-                            case '@Constants.StatusCode.IP_AVAILABLE':
-                                actionCell.html('<input type="radio" name="NewIP" value="' + aData.IPAddress + '"/>');
+            switch (aData.StatusCode) {
+            case '@Constants.StatusCode.IP_AVAILABLE':
+                actionCell.html('<input type="radio" name="NewIP" class="chknull" value="' + aData.IPAddress + '"/>');
 
-                                break;
+                break;
 
-                        }
+            }
 
-                    },
-                    order: [[0, "asc"]],
-                    columnDefs: [{
-                        targets: [0],
-                        visible: false,
-                        searchable: true
-                    }, {
-                        targets: [1],
-                        visible: false,
-                        searchable: true
+        },
+        order: [[0, "asc"]],
+        columnDefs: [{
+            targets: [0],
+            visible: false,
+            searchable: true
+        }, {
+            targets: [1],
+            visible: false,
+            searchable: true
 
-                    }]
-                });
+        }]
+    });
 
-                $('#example1_filter').append($('#dropdown-template').html());
-                $('#dropdown-template').html('');
+    $('#example1_filter').append($('#dropdown-template').html());
+    $('#dropdown-template').html('');
 
-                $('#NetworkIP').change(function () {
-                    table.draw();
-                });
+    $('#NetworkIP').change(function () {
+        table.draw();
+    });
 
+    var selectedChkCount = 0;
+    $('#example1').on('click', '.chknull', function () {
+        var selectedChk = $('.chknull:checked');
+        //alert(selectedChk.length);
+        selectedChkCount = selectedChk.length;
+    });
 
+    //Get value of selected items
+    $("#assignbutton").click(function () {
+        if (selectedChkCount <= 0) {
+            notif({
+                msg: "Select IP Address to assign!",
+                type: "error",
+                position: "center"
+            });
+            return false;
+        }
+    });
 </script>
 @section Styles {
     <style>
