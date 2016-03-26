@@ -24,17 +24,15 @@
             <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
                 @if (User.IsInRole("Customer"))
                 {
-                    <th>@Labels.ServerCode</th>
-                        <th>@Labels.Status</th>
-                        <th>@Labels.DefaultIP</th>
+                    <th>@Labels.DefaultIP</th>
+                    <th>@Labels.Status</th>
                 }
                 else
                 {
-                    <th>@Labels.ServerCode</th>
-                        <th>@Labels.Customer</th>
-                        <th>@Labels.Status</th>
-                        <th>@Labels.DefaultIP</th>
-                        <th>@Labels.CurrentRequest</th>
+                    <th>@Labels.Customer</th>
+                    <th>@Labels.DefaultIP</th>
+                    <th>@Labels.Status</th>
+                    <th>@Labels.CurrentRequest</th>
                 }
             </tr>
         </thead>
@@ -45,48 +43,42 @@
                     @if (User.IsInRole("Customer"))
                     {
                         <td>
-                            @Html.DisplayFor(modelItem => Model.Servers[i].ServerCode)
+                            @Html.DisplayFor(modelItem => Model.Servers[i].DefaultIP)
                         </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => Model.Servers[i].Status)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => Model.Servers[i].DefaultIP)
-                            </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Servers[i].Status)
+                        </td>
                     }
                     else
                     {
                         <td>
-                            @Html.DisplayFor(modelItem => Model.Servers[i].ServerCode)
+                            @Html.DisplayFor(model => Model.Servers[i].CustomerName)
                         </td>
-                            <td>
-                                @Html.DisplayFor(model => Model.Servers[i].CustomerName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => Model.Servers[i].Status)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => Model.Servers[i].DefaultIP)
-                            </td>
-                            <td class="sidebar-menu">
-                                @if (Model.Servers[i].Requests.Count > 0)
-                                {
-                                    <dl>
-                                        @foreach (var request in Model.Servers[i].Requests)
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Servers[i].DefaultIP)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Servers[i].Status)
+                        </td>
+                        <td class="sidebar-menu">
+                            @if (Model.Servers[i].Requests.Count > 0)
+                            {
+                                <dl>
+                                    @foreach (var request in Model.Servers[i].Requests)
+                                    {
+                                        if (request.StatusCode == Constants.StatusCode.REQUEST_PENDING ||
+                                            request.StatusCode == Constants.StatusCode.REQUEST_WAITING ||
+                                            request.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                                         {
-                                            if (request.StatusCode == Constants.StatusCode.REQUEST_PENDING ||
-                                                request.StatusCode == Constants.StatusCode.REQUEST_WAITING ||
-                                                request.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
-                                            {
-                                                <dt>
-                                                    @Html.ActionLink(@request.RequestTypeName, "Detail", "ProcessRequest",
+                                            <dt>
+                                                @Html.ActionLink(@request.RequestTypeName, "Detail", "ProcessRequest",
                                                 new { code = request.RequestCode }, new { @class = "fa fa-angle-double-right" })
-                                                </dt>
-                                            }
+                                            </dt>
                                         }
-                                    </dl>
-                                }
-                            </td>
+                                    }
+                                </dl>
+                            }
+                        </td>
                     }
                 </tr>
             }
@@ -95,17 +87,15 @@
             <tr style="background-color: #404040">
                 @if (User.IsInRole("Customer"))
                 {
-                    <th><span style="color: ghostwhite">@Labels.ServerCode</span></th>
-                        <th><span style="color: ghostwhite">@Labels.Status</span></th>
-                        <th><span style="color: ghostwhite">@Labels.DefaultIP</span></th>
+                    <th><span style="color: ghostwhite">@Labels.DefaultIP</span></th>
+                    <th><span style="color: ghostwhite">@Labels.Status</span></th>
                 }
                 else
                 {
-                    <th><span style="color: ghostwhite">@Labels.ServerCode</span></th>
-                        <th><span style="color: ghostwhite">@Labels.Customer</span></th>
-                        <th><span style="color: ghostwhite">@Labels.Status</span></th>
-                        <th><span style="color: ghostwhite">@Labels.DefaultIP</span></th>
-                        <th><span style="color: ghostwhite">@Labels.CurrentRequest</span></th>
+                    <th><span style="color: ghostwhite">@Labels.Customer</span></th>
+                    <th><span style="color: ghostwhite">@Labels.DefaultIP</span></th>
+                    <th><span style="color: ghostwhite">@Labels.Status</span></th>
+                    <th><span style="color: ghostwhite">@Labels.CurrentRequest</span></th>
                 }
             </tr>
         </tfoot>
@@ -114,7 +104,10 @@
 
 <!-- page script -->
 <script type="text/javascript">
-    $('#example1').DataTable();
+    $('#example1').DataTable({
+        //"iDisplayLength": -1,
+        "aaSorting": [[1, "desc"]]// Sort by first column descending
+    });
     $("#selectedStatus").change(function () {
         var status = $("#selectedStatus").val();
         if (status == null || status == '') {

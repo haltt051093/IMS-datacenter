@@ -56,8 +56,9 @@
                                     @Html.DisplayFor(model => Model.AllRacks[i].ServerNum)
                                     @if (Model.AllRacks[i].ServerNum != 0)
                                     {
-                                        @Html.ActionLink("Return all servers", "ReturnRackByBringServerAway", "Request",
-                                       new { RackCode = Model.AllRacks[i].RackCode }, new { @class = "returnallservers" })
+                                        @*@Html.ActionLink("Return all servers", "ReturnRackByBringServerAway", "Request",
+                                       new { RackCode = Model.AllRacks[i].RackCode }, new { @class = "returnallservers" })*@
+                                        <a href="#" class="returnall" rack-code="@Model.AllRacks[i].RackCode">Return all servers</a>
                                     }
                                 </td>
                             </tr>
@@ -112,10 +113,11 @@
             } 
         });
 
-        $('.returnallservers').on('click', function() {
-            var rackCode = $('.rackCode').val();
-
-            $.ajax({
+        $('.returnall').on('click', function () {
+            var rackCode = $(this).attr('rack-code');
+            window.location.assign('@Url.Action("ReturnRackByBringServerAway", "Request")' + '/' + rackCode);
+        });
+            @*$.ajax({
                 cache: false,
                 url: '@(Url.Action("Create", "Request"))',
                 type: 'post',
@@ -127,7 +129,7 @@
                 success: function(result) {
                     alert('Save Successful');
                 }
-            });
-        });
+            });*@
+       // });
     });
 </script>

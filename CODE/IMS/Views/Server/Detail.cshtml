@@ -15,17 +15,17 @@
         </div>*@
     <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
         <div class="col-xs-6">
-            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            @Html.HiddenFor(model => model.Server.Customer, new { @id = "customer" })
+            @Html.HiddenFor(model => model.Server.ServerCode, new { @id = "servercode" })
+            @Html.HiddenFor(model => model.Server.Power, new { @id = "power" })
+            @*<div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                 <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
                     @Html.LabelFor(model => model.Server.ServerCode, "Server Code")
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
-                    @Html.HiddenFor(model => model.Server.Customer, new { @id = "customer" })
-                    @Html.HiddenFor(model => model.Server.ServerCode, new { @id = "servercode" })
-                    @Html.HiddenFor(model => model.Server.Power, new { @id = "power" })
                     @Html.DisplayFor(model => model.Server.ServerCode, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                 </div>
-            </div>
+            </div>*@
             <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                 <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
                     @Html.LabelFor(model => model.Server.Status)

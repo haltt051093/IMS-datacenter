@@ -298,7 +298,7 @@
                     @Html.LabelFor(model => model.RequestInfo.AssignedStaff, "Assigned Staff")
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                    @Html.DropDownListFor(model => model.RequestInfo.AssignedStaff, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    @Html.DropDownListFor(model => model.RequestInfo.AssignedStaff, Model.StaffCodeOptions)
                     @Html.ValidationMessageFor(model => model.RequestInfo.AssignedStaff)
                 </div>
             </div>

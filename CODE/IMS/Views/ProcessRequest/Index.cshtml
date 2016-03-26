@@ -47,10 +47,10 @@
                     Request Type
                 </th>
                 <th>
-                    Requested Time
+                    Status
                 </th>
                 <th>
-                    Status
+                    Requested Time
                 </th>
             </tr>
         </thead>
@@ -65,10 +65,10 @@
                         @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.RequestTypeName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.LogTime)
+                        @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.StatusName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.StatusName)
+                        @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.LogTime)
                     </td>
                 </tr>
             </tbody>
@@ -109,12 +109,12 @@
                 </th>
                 <th>
                     <span style="color: ghostwhite">
-                        RequestedTime
+                        Status
                     </span>
                 </th>
                 <th>
                     <span style="color: ghostwhite">
-                        Status
+                        RequestedTime
                     </span>
                 </th>
             </tr>

@@ -173,7 +173,7 @@ namespace IMS.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
-
+        //DOING
         public ActionResult ReturnRackByBringServerAway(string rackCode)
         {
             var customer = GetCurrentUserName();
@@ -186,6 +186,7 @@ namespace IMS.Controllers
             var rackOfCustomer = RackOfCustomerBLO.Current.GetRacksOfCustomer(customer,
                 Constants.StatusCode.RACKOFCUSTOMER_CURRENT);
             //check select all 
+            //Lam sao xo xuong server tương ứng với rack này?
             if (rackOfCustomer.Count > 0)
             {
                 data.RackOfCustomer = rackOfCustomer

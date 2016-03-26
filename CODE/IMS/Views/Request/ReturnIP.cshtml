@@ -89,7 +89,7 @@
                         myTable.append('<tr><td>' + '<input type="checkbox" class="chknull" id="CheckBoxList"'
                             + index + ' name="chk" value="' + item.CurrentIP + '" /></td><td>' + item.CurrentIP + '</td></tr>');
                         if (item.IsDefault) {
-                            $("tr:last").css({ backgroundColor: "yellow", fontWeight: "bolder" }).attr('id','hohoho');
+                            $("tr:last").css({ backgroundColor: "yellow", fontWeight: "bolder" }).attr('id', 'hohoho');
                         }
                     });
                     selectedChkCount = 0;
@@ -97,15 +97,17 @@
             });
         });
 
-        $('#tbodyid').on('click', '.chknull', function () {
+        //$('#tbodyid').on('click', '.chknull', function () {
+        //    var selectedChk = $('.chknull:checked');
+        //    selectedChkCount = selectedChk.length;
+        //});
+        //DOING, ko check dc nhung ip khac
+        $('#tbodyid').on('click', function () {
             var selectedChk = $('.chknull:checked');
             selectedChkCount = selectedChk.length;
+            var state = $('#hohoho input[type=checkbox]').is(':checked');
+            $('#MyTable input[type="checkbox"]').prop('checked', state);
         });
-        //DOING, ko check dc nhung ip khac
-        //$('#tbodyid').on('click', function () {
-        //        var state = $('#hohoho input[type=checkbox]').is(':checked');
-        //        $('#MyTable input[type="checkbox"]').prop('checked', state);
-        //});
 
         //Get value of selected items
         $("#btnAccept").click(function () {

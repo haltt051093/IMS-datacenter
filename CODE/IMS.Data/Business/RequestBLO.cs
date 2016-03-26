@@ -968,6 +968,21 @@ namespace IMS.Data.Business
                     Constants.TypeOfLog.LOG_ADD_SERVER, Constants.StatusCode.SERVER_RUNNING, assignee);
                 //luu default ip vo bang server ip, log lai ipaddresspool, serverip
                 ServerIPBLO.Current.AddDefaultIPANDLog(server.ServerCode, requestCode, assignee);
+                //log lai location
+                foreach (var location in server.ServerLocation)
+                {
+                    //log location
+                    Log logLocation = new Log
+                    {
+                        RequestCode = requestCode,
+                        TypeOfLog = Constants.TypeOfLog.LOG_ADD_SERVER,
+                        Object = Constants.Object.OBJECT_LOCATION,
+                        ChangedValueOfObject = location.LocationCode,
+                        ObjectStatus = Constants.StatusCode.LOCATION_USED,
+                        Username = assignee
+                    };
+                    LogBLO.Current.Add(logLocation);
+                }
             }
             //Add and log request
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ADD_SERVER,
