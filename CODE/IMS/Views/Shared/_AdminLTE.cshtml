@@ -62,7 +62,7 @@
             <section class="content-header">
                 @if (ViewBag.PageTitle != null)
             {
-                    <div class="h1">@ViewBag.PageTitle</div>
+                    <div class="h2">@ViewBag.PageTitle</div>
                 }
                 @{ var breadcrumbItems = ViewBag.Breadcrumbs as List<BreadcrumbModel>; }
                 @if (breadcrumbItems != null && breadcrumbItems.Count > 0)

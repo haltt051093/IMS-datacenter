@@ -159,10 +159,10 @@
     $("#example1").DataTable({
         "aaSorting": [[2, "desc"]], // Sort by first column descending
         "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-            if (aData[2] == "Waiting") {
+            if (aData[1] == "Waiting") {
                 $('td', nRow).addClass('background-danger');
             };
-            if (aData[2] == "Doing") {
+            if (aData[1] == "Doing") {
                 $('td', nRow).addClass('background-info');
             };
         }

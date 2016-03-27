@@ -223,7 +223,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Process Request Bring Server Away.
+        ///   Looks up a localized string similar to Bring Server Away.
         /// </summary>
         public static string ProcessRequestBringServerAway {
             get {

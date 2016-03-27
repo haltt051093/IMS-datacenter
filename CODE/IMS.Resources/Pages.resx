@@ -232,7 +232,7 @@
     <value>Process Request Assign IP Address</value>
   </data>
   <data name="ProcessRequestBringServerAway" xml:space="preserve">
-    <value>Process Request Bring Server Away</value>
+    <value>Bring Server Away</value>
   </data>
   <data name="ProcessRequestRentRack" xml:space="preserve">
     <value>Process Request Rent Rack</value>
