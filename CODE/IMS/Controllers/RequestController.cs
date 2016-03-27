@@ -65,7 +65,16 @@ namespace IMS.Controllers
                         server.TempCode = serverInfo.TempCode;
                         data.Servers.Add(server);
                     }
-                    data.RequestInfo.AppointmentTimeStr = DateTime.Now.Date.AddHours(8).ToString("yyyy-MM-dd HH:mm");
+                    data.RequestInfo = new RequestInfoModel();
+                    var now = DateTime.Now;
+                    if(now.Hour >= 20)
+                    {
+                        data.RequestInfo.AppointmentTimeStr = now.Date.AddHours(32).ToString("dd/MM/yyyy HH:mm");
+                    }
+                    else
+                    {
+                        data.RequestInfo.AppointmentTimeStr = now.Date.AddHours(10).ToString("dd/MM/yyyy HH:mm");
+                    }
                     data.ServerSizes = new int[] { 1, 2, 4 }
                         .Select(x => new SelectListItem { Value = x.ToString(), Text = x.ToString() })
                         .ToList();
