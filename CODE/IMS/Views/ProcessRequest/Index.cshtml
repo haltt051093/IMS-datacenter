@@ -54,10 +54,10 @@
                 </th>
             </tr>
         </thead>
-        @for (int i = 0; i < Model.Requests.Count; i++)
+        <tbody>
+            @for (int i = 0; i < Model.Requests.Count; i++)
             {
-            <tbody class="clickable clickmee check" request-code="@Model.Requests[i].LastestStatusRequest.RequestCode" status-code="@Model.Requests[i].LastestStatusRequest.StatusCode" type-code="@Model.Requests[i].LastestStatusRequest.RequestTypeCode" duration="@Model.Requests[i].LastestStatusRequest.DaysFromNow">
-                <tr>
+                <tr class="clickable clickmee check" request-code="@Model.Requests[i].LastestStatusRequest.RequestCode" status-code="@Model.Requests[i].LastestStatusRequest.StatusCode" type-code="@Model.Requests[i].LastestStatusRequest.RequestTypeCode" duration="@Model.Requests[i].LastestStatusRequest.DaysFromNow">
                     <td>
                         @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.CustomerName)
                     </td>
@@ -71,30 +71,30 @@
                         @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.LogTime)
                     </td>
                 </tr>
-            </tbody>
-            @*<tbody class="showhide" style="display: none; background-color: lightgrey;">
-                    @if (Model.Requests[i].OldStatusRequests != null)
+            }
+        </tbody>
+        @*<tbody class="showhide" style="display: none; background-color: lightgrey;">
+                @if (Model.Requests[i].OldStatusRequests != null)
+                {
+                    foreach (var old in Model.Requests[i].OldStatusRequests)
                     {
-                        foreach (var old in Model.Requests[i].OldStatusRequests)
-                        {
-                            <tr style="background-color: lightgrey;">
-                                <td>
-                                    @Html.DisplayFor(modelItem => old.Customer)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => old.RequestTypeName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => old.LogTime)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => old.StatusName)
-                                </td>
-                            </tr>
-                        }
+                        <tr style="background-color: lightgrey;">
+                            <td>
+                                @Html.DisplayFor(modelItem => old.Customer)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => old.RequestTypeName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => old.LogTime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => old.StatusName)
+                            </td>
+                        </tr>
                     }
-                </tbody>*@
-        }
+                }
+            </tbody>*@
         <tfoot>
             <tr style="background-color: #404040">
                 <th>
@@ -151,7 +151,7 @@
         //    $('#example1 tbody[type-code="' + typeCode + '"][status-code="' + statusCode + '"]').show();
         //}
         //}
-        $('#example1 tbody[type-code][status-code]').each(function (i, e) {
+        $('#example1 tr[type-code][status-code]').each(function (i, e) {
             var row = $(e);
             var rowTypeCode = row.attr('type-code');
             var rowStatusCode = row.attr('status-code');
@@ -182,13 +182,16 @@
 </script>
 
 <script type="text/javascript">
-    $(function() {
+    $(function () {
         $("#example1").DataTable({
             //"iDisplayLength": -1,
-            "aaSorting": [[2, "desc"]], // Sort by first column descending
+            "aaSorting": [[3, "desc"]], // Sort by first column descending
             "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                if (aData[3] == "Done") {
-                    $('td', nRow).addClass('background-success');
+                if (aData[2] == "Pending") {
+                    $('td', nRow).addClass('background-danger');
+                };
+                if (aData[2] == "Processing") {
+                    $('td', nRow).addClass('background-info');
                 };
             }
         });
@@ -198,21 +201,21 @@
         //        .toggle('fast');
         //});
 
-        $('#example1').on('click', '.clickmee', function() {
+        $('#example1').on('click', '.clickmee', function () {
             var requestcode = $(this).attr('request-code');
             window.location.assign('@Url.Action("Detail", "ProcessRequest")' + '/' + requestcode);
         });
 
 
-        $("#FilterByRequestType").change(function() {
+        $("#FilterByRequestType").change(function () {
             filterRequest();
         });
 
-        $("#FilterByStatus").change(function() {
+        $("#FilterByStatus").change(function () {
             filterRequest();
         });
 
-        $("#FilterByPeriodOfTime").change(function() {
+        $("#FilterByPeriodOfTime").change(function () {
             filterRequest();
         });
 
