@@ -190,6 +190,8 @@
         $('#Server_Size').val('1');
         $('#Server_SerialNumber').val('');
         $('#Server_PartNumber').val('');
+        $('#Server_btnAction').val("@Constants.FormAction.OK_ACTION");
+        $('#Server_TempCode').val('');
     }
 
     function setModal(server) {
@@ -301,7 +303,7 @@
 
     $('a[x-code][action="edit"]').click(function () {
         clearModal();
-        $('#submitserver').val('@Constants.FormAction.EDIT_ACTION');
+        //$('#submitserver').val('@Constants.FormAction.EDIT_ACTION');
         $('#serverinfo-modal').modal('show');
         var tempCode = $(this).attr('x-code');
         get('@Url.Action("GetTempServer", "Temp", new {httproute = ""})' + '/' + tempCode, function (data) {

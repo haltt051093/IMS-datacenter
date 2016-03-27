@@ -11,6 +11,7 @@ using IMS.Data.ViewModels;
 using IMS.Models;
 using IMS.Services;
 using Newtonsoft.Json;
+using System;
 
 namespace IMS.Controllers
 {
@@ -64,6 +65,7 @@ namespace IMS.Controllers
                         server.TempCode = serverInfo.TempCode;
                         data.Servers.Add(server);
                     }
+                    data.RequestInfo.AppointmentTimeStr = DateTime.Now.Date.AddHours(8).ToString("yyyy-MM-dd HH:mm");
                     data.ServerSizes = new int[] { 1, 2, 4 }
                         .Select(x => new SelectListItem { Value = x.ToString(), Text = x.ToString() })
                         .ToList();

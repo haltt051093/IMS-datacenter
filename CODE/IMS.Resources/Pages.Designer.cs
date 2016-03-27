@@ -205,7 +205,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Process Request Add Server.
+        ///   Looks up a localized string similar to Add Server.
         /// </summary>
         public static string ProcessRequestAddServer {
             get {
@@ -214,7 +214,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Process Request Assign IP Address.
+        ///   Looks up a localized string similar to Assign IP Address.
         /// </summary>
         public static string ProcessRequestAssignIP {
             get {
@@ -232,7 +232,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Process Request Change IP Address.
+        ///   Looks up a localized string similar to Change IP Address.
         /// </summary>
         public static string ProcessRequestChangeIP {
             get {
@@ -241,7 +241,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Process Request Rent Rack.
+        ///   Looks up a localized string similar to Rent Rack.
         /// </summary>
         public static string ProcessRequestRentRack {
             get {
@@ -250,7 +250,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Process Request Return IP Address.
+        ///   Looks up a localized string similar to Return IP Address.
         /// </summary>
         public static string ProcessRequestReturnIP {
             get {
@@ -259,7 +259,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Process Request Return Rack.
+        ///   Looks up a localized string similar to Return Rack.
         /// </summary>
         public static string ProcessRequestReturnRack {
             get {

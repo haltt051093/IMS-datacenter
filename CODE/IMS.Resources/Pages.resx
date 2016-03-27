@@ -196,7 +196,7 @@
     <value>Process Requests</value>
   </data>
   <data name="ProcessRequestChangeIP" xml:space="preserve">
-    <value>Process Request Change IP Address</value>
+    <value>Change IP Address</value>
   </data>
   <data name="CreateCustomer" xml:space="preserve">
     <value>Add new Customer</value>
@@ -226,22 +226,22 @@
     <value>List of Locations Available</value>
   </data>
   <data name="ProcessRequestAddServer" xml:space="preserve">
-    <value>Process Request Add Server</value>
+    <value>Add Server</value>
   </data>
   <data name="ProcessRequestAssignIP" xml:space="preserve">
-    <value>Process Request Assign IP Address</value>
+    <value>Assign IP Address</value>
   </data>
   <data name="ProcessRequestBringServerAway" xml:space="preserve">
     <value>Bring Server Away</value>
   </data>
   <data name="ProcessRequestRentRack" xml:space="preserve">
-    <value>Process Request Rent Rack</value>
+    <value>Rent Rack</value>
   </data>
   <data name="ProcessRequestReturnIP" xml:space="preserve">
-    <value>Process Request Return IP Address</value>
+    <value>Return IP Address</value>
   </data>
   <data name="ProcessRequestReturnRack" xml:space="preserve">
-    <value>Process Request Return Rack</value>
+    <value>Return Rack</value>
   </data>
   <data name="Task" xml:space="preserve">
     <value>Tasks</value>
