@@ -55,23 +55,18 @@
                             </td>
                             <td>
                                 @Html.DisplayFor(model => Model.Servers[i].Power, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})W
-                                @Html.HiddenFor(modelItem => modelItem.Servers[i].Power)
                             </td>
                             <td>
                                 @Html.DisplayFor(model => Model.Servers[i].Size, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})U
-                                @Html.HiddenFor(modelItem => modelItem.Servers[i].Size)
                             </td>
                             <td>
                                 @Html.DisplayFor(model => Model.Servers[i].Bandwidth, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
-                                @Html.HiddenFor(modelItem => modelItem.Servers[i].Bandwidth)
                             </td>
                             <td>
                                 @Html.DisplayFor(model => Model.Servers[i].SerialNumber, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
-                                @Html.HiddenFor(modelItem => modelItem.Servers[i].SerialNumber)
                             </td>
                             <td>
                                 @Html.DisplayFor(model => Model.Servers[i].PartNumber, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
-                                @Html.HiddenFor(modelItem => modelItem.Servers[i].PartNumber)
                             </td>
                             <td>
                                 <a href="#" x-code="@Model.Servers[i].TempCode" action="edit">Edit</a>
@@ -119,73 +114,73 @@
 <!-- ADD SERVER MODAL -->
 <div id="serverinfo-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
-@using (Html.BeginForm("SaveTempData", "Request", FormMethod.Post))
-{
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i> @Labels.AddServer</div>
+        @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "Post", Url = Url.Action("AddServerTemp", "Request"), OnComplete = "addServerComplete" }))
+        {
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i> @Labels.AddServer</div>
+                </div>
+                <div class="modal-body form-horizontal">
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                            @Html.LabelFor(model => model.Server.Power)
+                        </div>
+                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                            @Html.TextBoxFor(model => model.Server.Power, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                            @Html.ValidationMessageFor(model => model.Server.Power)
+                        </div>
+                    </div>
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                            <label>Size</label>
+                        </div>
+                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                            @Html.DropDownListFor(model => model.Server.Size, Model.ServerSizes, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        </div>
+                    </div>
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                            @Html.LabelFor(model => model.Server.SerialNumber)
+                        </div>
+                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                            @Html.TextBoxFor(model => model.Server.SerialNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                            @Html.ValidationMessageFor(model => model.Server.SerialNumber)
+                        </div>
+                    </div>
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                            @Html.LabelFor(model => model.Server.PartNumber)
+                        </div>
+                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                            @Html.TextBoxFor(model => model.Server.PartNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                            @Html.ValidationMessageFor(model => model.Server.PartNumber)
+                        </div>
+                    </div>
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                            <label>Bandwidth</label>
+                        </div>
+                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                            @Html.RadioButtonFor(model => model.Server.Bandwidth, "100Mbps", new { @checked = "checked" }) 100Mbps
+                            @Html.RadioButtonFor(model => model.Server.Bandwidth, "1Gbps", new { }) 1Gbps
+                        </div>
+                    </div>
+                    @Html.HiddenFor(model => model.Server.TempCode)
+                    @Html.HiddenFor(model => model.Server.btnAction)
+                    <div class="modal-footer">
+                        <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION"
+                                class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS" data-dismiss="modal">
+                            @Labels.DialogCancel
+                        </button>
+                        <button type="submit" id="submitserver" name="@Constants.FormAction.ACTION_NAME"
+                                value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                            @Labels.DialogOK
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body form-horizontal">
-                <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                        @Html.LabelFor(model => model.Server.Power)
-                    </div>
-                    <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                        @Html.TextBoxFor(model => model.Server.Power, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                        @Html.ValidationMessageFor(model => model.Server.Power)
-                    </div>
-                </div>
-                <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                        <label>Size</label>
-                    </div>
-                    <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                        @Html.DropDownListFor(model => model.Server.Size, Model.ServerSizes, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                    </div>
-                </div>
-                <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                        @Html.LabelFor(model => model.Server.SerialNumber)
-                    </div>
-                    <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                        @Html.TextBoxFor(model => model.Server.SerialNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                        @Html.ValidationMessageFor(model => model.Server.SerialNumber)
-                    </div>
-                </div>
-                <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                        @Html.LabelFor(model => model.Server.PartNumber)
-                    </div>
-                    <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                        @Html.TextBoxFor(model => model.Server.PartNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                        @Html.ValidationMessageFor(model => model.Server.PartNumber)
-                    </div>
-                </div>
-                <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                        <label>Bandwidth</label>
-                    </div>
-                    <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                        @Html.RadioButtonFor(model => model.Server.Bandwidth, "100Mbps", new { @checked = "checked" }) 100Mbps
-                        @Html.RadioButtonFor(model => model.Server.Bandwidth, "1Gbps", new { }) 1Gbps
-                    </div>
-                </div>
-                @Html.HiddenFor(model => model.Server.TempCode)
-                @Html.HiddenFor(model => model.Server.btnAction)
-                <div class="modal-footer">
-                    <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION"
-                            class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS" data-dismiss="modal">
-                        @Labels.DialogCancel
-                    </button>
-                    <button type="submit" id="submitserver" name="@Constants.FormAction.ACTION_NAME"
-                            value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                        @Labels.DialogOK
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-}
-    </div><!-- /.modal -->
+        }
+    </div>
 </div>
 <script type="text/javascript">
     function clearModal() {
@@ -196,91 +191,50 @@
     }
 
     function setModal(server) {
-        $('#Server_Power').val(server.Power);
-        $('#Server_Size').val(server.Size);
-        $('#Server_SerialNumber').val(server.SerialNumber);
-        $('#Server_PartNumber').val(server.PartNumber);
-        $('#Server_TempCode').val(server.TempCode);
-        $('#Server_btnAction').val("Edit");
-        $('#Server_Bandwidth').val();
+            $('#Server_Power').val(server.Power);
+            $('#Server_Size').val(server.Size);
+            $('#Server_SerialNumber').val(server.SerialNumber);
+            $('#Server_PartNumber').val(server.PartNumber);
+            $('#Server_TempCode').val(server.TempCode);
+            $('#Server_btnAction').val("Edit");
+            $('#Server_Bandwidth').val();
     }
 
     function addModal(server) {
-        $('#item_Power').val(server.Power);
-        $('#item_Size').val(server.Size);
-        $('#item_Bandwidth').val(server.item_Bandwidth);
-        $('#item_SerialNumber').val(server.SerialNumber);
-        $('#item_PartNumber').val(server.PartNumber);
-        $('#item_TempCode').val(server.TempCode);
+            $('#item_Power').val(server.Power);
+            $('#item_Size').val(server.Size);
+            $('#item_Bandwidth').val(server.item_Bandwidth);
+            $('#item_SerialNumber').val(server.SerialNumber);
+            $('#item_PartNumber').val(server.PartNumber);
+            $('#item_TempCode').val(server.TempCode);
     }
-</script>
 
-<script type="text/javascript">
-    $(function() {
-        //$('#datetimepicker1').datetimepicker({
-        //    "disabledHours": [0, 1, 2, 3, 4, 5, 6, 7, 21, 22, 23, 24],
-        //    "enabledHours": [8, 9, 10, 12, 12, 14, 15, 16, 17, 18, 19, 20],
-        //    "stepping": '30',
-        //    "minDate": 'moment',
-        //    "locale": 'vi'
-        //});
-
-        $('#addserver').click(function() {
-            clearModal();
-            $('#submitserver').val('@Constants.FormAction.OK_ACTION');
-            $('#serverinfo-modal').modal('show');
-            //return false;
-        });
-
-        @*$('#submitserver').click(function() {
-            var server =
-            {
-                "Power": $('#Server_Power').val(),
-                "Size": $('#Server_Size').val(),
-                "SerialNumber": $('#Server_SerialNumber').val(),
-                "PartNumber": $('#Server_PartNumber').val(),
-                "Bandwidth": $('#Server_Bandwidth').val(),
-                "btnAction": "OK"
-            };
-
-            var myTable = $('#MyList > tbody');
-            $.ajax({
-                cache: false,
-                type: "GET",
-                url: "@(Url.Action("SaveTempData", "Request"))",
-                data: server,
-                dataType: "json",
-                success: function(data) {
-                    $(data).each(function(index, item) {
-                        myTable.append('<tr>' +
-                            '<td></td>' +
-                            '<td id=item_Power>' + item.Server.Power + '</td>' +
-                            '<td id=item_Size>' + item.Server.Size + '</td>' +
-                            '<td id=item_Bandwidth>' + item.Server.Bandwidth + '</td>' +
-                            '<td id=item_SerialNumber>' + item.Server.SerialNumber + '</td>' +
-                            '<td id=item_PartNumber>' + item.Server.PartNumber + '</td>' +
-                            '<td><a href="#" x-code=' + item.TempCode + ' btnAction="edit">Edit</a></td>' +
-                            '<td><a href="#" x-code=' + item.TempCode + 'btnAction="delete">Delete</a></td>' +
-                            '</tr>');
-                        //addModal(data.Server);
-                    });
-                    $('#serverinfo-modal').modal('hide');
-                }
-            });
-        });*@
-
-        $('a[x-code][action="edit"]').click(function() {
+    function addServer(server) {
+        var tbody = $('#MyList tbody');
+        var newId = tbody.find('tr').length;
+        var row = $('<tr></tr>').attr('id', server.TempCode);
+        var id = $('<td></td>').html(newId);
+        var power = $('<td></td>').html(server.Power + 'W');
+        var size = $('<td></td>').html(server.Size + 'U');
+        var bandwidth = $('<td></td>').html(server.Bandwidth);
+        var serialNumber = $('<td></td>').html(server.SerialNumber);
+        var partNumber = $('<td></td>').html(server.PartNumber);
+        var edit = $('<td></td>').html($('<a></a>').attr('href', '#').attr('x-code', server.TempCode).attr('action', 'edit').html('Edit'));
+        var remove = $('<td></td>').html($('<a></a>').attr('href', '#').attr('x-code', server.TempCode).attr('action', 'delete').html('Delete'));
+        row.append(id).append(power).append(size).append(bandwidth).append(serialNumber).append(partNumber).append(edit).append(remove);
+        tbody.append(row);
+        var lastRow = tbody.find('tr').last();
+        lastRow.find('a[x-code][action="edit"]').click(function () {
             clearModal();
             $('#submitserver').val('@Constants.FormAction.EDIT_ACTION');
             $('#serverinfo-modal').modal('show');
             var tempCode = $(this).attr('x-code');
-            get('@Url.Action("GetTempServer", "Temp", new {httproute = ""})' + '/' + tempCode, function(data) {
+            get('@Url.Action("GetTempServer", "Temp", new {httproute = ""})' + '/' + tempCode, function (data) {
                 setModal(data.Server);
             });
             return false;
         });
-
-        $('a[x-code][action="delete"]').click(function() {
+        lastRow.find('a[x-code][action="delete"]').click(function () {
             var tempCode = $(this).attr('x-code');
             alertify.confirm('Are you sure to delete this server?', function() {
                 get('@Url.Action("DeleteTempServer", "Temp", new {httproute = ""})' + '/' + tempCode, function(data) {
@@ -291,5 +245,59 @@
             });
             return false;
         });
+
+    }
+
+    function addServerComplete(data) {
+        var response = data.responseJSON;
+        if (response.Success) {
+            $('#serverinfo-modal').modal('hide');
+            for (var i = 0; i < response.Codes.length; i++) {
+                var tempCode = response.Codes[i];
+                get('@Url.Action("GetTempServer", "Temp", new {httproute = ""})' + '/' + tempCode, function (server) {
+                    addServer(server.Server);
+                });
+            }
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    //$('#datetimepicker1').datetimepicker({
+    //    "disabledHours": [0, 1, 2, 3, 4, 5, 6, 7, 21, 22, 23, 24],
+    //    "enabledHours": [8, 9, 10, 12, 12, 14, 15, 16, 17, 18, 19, 20],
+    //    "stepping": '30',
+    //    "minDate": 'moment',
+    //    "locale": 'vi'
+    //});
+
+    $('#addserver').click(function() {
+        clearModal();
+        $('#submitserver').val('@Constants.FormAction.OK_ACTION');
+        $('#serverinfo-modal').modal('show');
+        return false;
+    });
+
+    $('a[x-code][action="edit"]').click(function() {
+        clearModal();
+        $('#submitserver').val('@Constants.FormAction.EDIT_ACTION');
+        $('#serverinfo-modal').modal('show');
+        var tempCode = $(this).attr('x-code');
+        get('@Url.Action("GetTempServer", "Temp", new {httproute = ""})' + '/' + tempCode, function(data) {
+            setModal(data.Server);
+        });
+        return false;
+    });
+
+    $('a[x-code][action="delete"]').click(function() {
+        var tempCode = $(this).attr('x-code');
+        alertify.confirm('Are you sure to delete this server?', function() {
+            get('@Url.Action("DeleteTempServer", "Temp", new {httproute = ""})' + '/' + tempCode, function(data) {
+                $('#' + tempCode).remove();
+            });
+        }, function() {
+
+        });
+        return false;
     });
 </script>

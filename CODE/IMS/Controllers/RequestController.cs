@@ -505,27 +505,15 @@ namespace IMS.Controllers
             return Json(newmodel, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult SaveTempData(RequestAddServerViewModel data)
+        [HttpPost]
+        public JsonResult AddServerTemp(RequestAddServerViewModel data)
         {
-            //var pass = new RequestAddServerViewModel()
-            //{
-            //    Server = server
-            //};
-            //if (data.Server.btnAction == Constants.FormAction.OK_ACTION)
-            //{
-           
-            //pass.TempCode = temp.TempCode;
+            var result = new JsonResultModel();
             if (data.Server.btnAction == Constants.FormAction.EDIT_ACTION)
             {
-                //var temp = new TempRequest()
-                //{
-                //    TempCode = data.Server.TempCode,
-                //    Data = JsonConvert.SerializeObject(data.Server)
-                //};
                 var temp = TempRequestBLO.Current.GetByKeys(new TempRequest { TempCode = data.Server.TempCode });
                 temp.Data = JsonConvert.SerializeObject(data.Server);
                 TempRequestBLO.Current.Update(temp);
-                //pass.TempCode = temp.TempCode;
             }
             else
             {
@@ -535,10 +523,10 @@ namespace IMS.Controllers
                 temp.Data = JsonConvert.SerializeObject(data.Server);
                 temp.TempCode = TempRequestBLO.Current.GenerateCode();
                 TempRequestBLO.Current.Add(temp);
+                result.Success = true;
+                result.Codes.Add(temp.TempCode);
             }
-            var request = new RequestCreateViewModel() { Type = Constants.RequestTypeCode.ADD_SERVER };
-            return RedirectToAction("Create", "Request", request);
-            //return Json(pass, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         public ActionResult DeleteTempServer(string code)
