@@ -509,11 +509,14 @@ namespace IMS.Controllers
         public JsonResult AddServerTemp(RequestAddServerViewModel data)
         {
             var result = new JsonResultModel();
+            result.Action = data.Server.btnAction;
             if (data.Server.btnAction == Constants.FormAction.EDIT_ACTION)
             {
                 var temp = TempRequestBLO.Current.GetByKeys(new TempRequest { TempCode = data.Server.TempCode });
                 temp.Data = JsonConvert.SerializeObject(data.Server);
                 TempRequestBLO.Current.Update(temp);
+                result.Success = true;
+                result.Codes.Add(temp.TempCode);
             }
             else
             {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Antlr.Runtime.Misc;
 
 namespace IMS.Models
 {
@@ -9,6 +10,8 @@ namespace IMS.Models
             Codes = new List<string>();
             Messages = new List<string>();
         }
+
+        public string Action { get; set; }
 
         public bool Success { get; set; }
 
