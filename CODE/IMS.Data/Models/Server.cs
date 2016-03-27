@@ -2,7 +2,6 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using IMS.Data.Generic;
-using IMS.Resources;
 
 namespace IMS.Data.Models
 {

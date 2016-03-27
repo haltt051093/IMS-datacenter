@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using IMS.Data.Models;
 
@@ -18,5 +19,7 @@ namespace IMS.Data.ViewModels
         public string ShiftHead { get; set; }
         public string ShiftHeadName { get; set; }
         public DateTime? AssignedTime { get; set; }
+        [Required]
+        public string AppointmentTimeStr { get; set; }
     }
 }

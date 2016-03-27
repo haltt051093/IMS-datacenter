@@ -58,7 +58,7 @@ namespace IMS.Core.Extensions
         public static DateTime? ToDateTime(this string str, string format)
         {
             var result = DateTime.Now;
-            if (DateTime.TryParseExact(str, new string[] { format }, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out result))
+            if (DateTime.TryParseExact(str, new string[] { format }, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out result) == false)
             {
                 return null;
             }
@@ -68,7 +68,7 @@ namespace IMS.Core.Extensions
         public static DateTime ToDateTime(this string str, string format, DateTime defValue)
         {
             var result = DateTime.Now;
-            if (DateTime.TryParseExact(str, new string[] { format }, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out result))
+            if (DateTime.TryParseExact(str, new string[] { format }, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out result) == false)
             {
                 return defValue;
             }

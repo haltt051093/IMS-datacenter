@@ -43,5 +43,12 @@ namespace IMS.Controllers
             var existing = AccountDAO.Current.Query(x => x.Username == user && x.Password == Password).FirstOrDefault();
             return Json(existing != null);
         }
+
+        [HttpPost]
+        public JsonResult CheckAddServer(string ServerCount)
+        {
+            var count = TempRequestBLO.Current.GetByRequestCode(ServerCount).Count;
+            return Json(count != 0);
+        }
     }
 }

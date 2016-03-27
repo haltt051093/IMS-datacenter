@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using AutoMapper;
 using IMS.Authentications;
 using IMS.Core;
+using IMS.Core.Extensions;
 using IMS.Data.Business;
 using IMS.Data.Models;
 using IMS.Data.ViewModels;
@@ -55,6 +56,7 @@ namespace IMS.Controllers
                         Session[Constants.Session.REQUEST_CODE] = requestCode;
                     }
                     var code = Session[Constants.Session.REQUEST_CODE].ToString();
+                    data.ServerCount = code;
                     var serverInfos = TempRequestBLO.Current.GetByRequestCode(code);
                     foreach (var serverInfo in serverInfos)
                     {
@@ -293,8 +295,9 @@ namespace IMS.Controllers
             var customer = GetCurrentUserName();
             var requestCode = Session[Constants.Session.REQUEST_CODE].ToString();
             //Add request and log
+            var appointmentTime = viewmodel.RequestInfo.AppointmentTimeStr.ToDateTime("dd/MM/yyyy HH:mm");
             var result = RequestBLO.Current.AddRequestAddServer(customer, viewmodel.RequestInfo.Description,
-                viewmodel.RequestInfo.AppointmentTime, requestCode);
+                appointmentTime, requestCode);
             //Xoa session server
             if (Session[Constants.Session.REQUEST_CODE] != null)
             {
