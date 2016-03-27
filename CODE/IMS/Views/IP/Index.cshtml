@@ -71,13 +71,15 @@
                 <div class="modal-body">
                     <table>
                         <tr>
-                            <th>Address</th>
-                            <th>Netmask</th>
+                            <th style="width: 300px; text-align: left">Address</th>
+                            <th class="col-xs-1"></th>
+                            <th style="width: 200px; text-align: left">Netmask</th>
                         </tr>
                         <tr>
                             <td>
                                 @Html.TextBoxFor(model => model.Address, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
                             </td>
+                            <td style="text-align: center"><label>/</label></td>
                             <td>
                                 @Html.DropDownListFor(model => model.Netmask, Model.ListNetmask, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
                             </td>
