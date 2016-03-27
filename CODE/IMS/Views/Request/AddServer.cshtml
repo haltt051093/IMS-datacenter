@@ -209,11 +209,6 @@
         $('#item_TempCode').val(server.TempCode);
     }
 
-    function addServer(server) {
-        var tbody = $('#MyList tbody');
-        var newId = tbody.find('tr').length;
-        var row = $('<tr></tr>').attr('id', server.TempCode);
-        var id = $('<td></td>').html(newId + 1);
         var power = $('<td></td>').html(server.Power + 'W');
         var size = $('<td></td>').html(server.Size + 'U');
         var bandwidth = $('<td></td>').html(server.Bandwidth);
@@ -222,9 +217,7 @@
         var edit = $('<td></td>').html($('<a></a>').attr('href', '#').attr('x-code', server.TempCode).attr('action', 'edit').html('Edit'));
         var remove = $('<td></td>').html($('<a></a>').attr('href', '#').attr('x-code', server.TempCode).attr('action', 'delete').html('Delete'));
         row.append(id).append(power).append(size).append(bandwidth).append(serialNumber).append(partNumber).append(edit).append(remove);
-        tbody.append(row);
-        var lastRow = tbody.find('tr').last();
-        lastRow.find('a[x-code][action="edit"]').click(function () {
+        row.find('a[x-code][action="edit"]').click(function () {
             clearModal();
             $('#submitserver').val('@Constants.FormAction.EDIT_ACTION');
             $('#serverinfo-modal').modal('show');
@@ -234,7 +227,7 @@
             });
             return false;
         });
-        lastRow.find('a[x-code][action="delete"]').click(function () {
+        row.find('a[x-code][action="delete"]').click(function () {
             var tempCode = $(this).attr('x-code');
             alertify.confirm('Are you sure to delete this server?', function () {
                 get('@Url.Action("DeleteTempServer", "Temp", new {httproute = ""})' + '/' + tempCode, function (data) {
@@ -245,7 +238,23 @@
             });
             return false;
         });
+    }
 
+    function addServer(server) {
+        var tbody = $('#MyList tbody');
+        var rowId = tbody.find('tr').length + 1;
+        server.RowId = rowId;
+        var row = $('<tr></tr>').attr('id', server.TempCode);
+        tbody.append(row);
+        var lastRow = tbody.find('tr').last();
+        setRow(lastRow, server);
+    }
+
+    function editServer(server) {
+        var lastRow = $('#' + server.TempCode);
+        var rowId = lastRow.find('td').first().text();
+        server.RowId = rowId;
+        setRow(lastRow, server);
     }
 
     function addServerComplete(data) {
@@ -254,8 +263,12 @@
             $('#serverinfo-modal').modal('hide');
             for (var i = 0; i < response.Codes.length; i++) {
                 var tempCode = response.Codes[i];
-                get('@Url.Action("GetTempServer", "Temp", new {httproute = ""})' + '/' + tempCode, function (server) {
-                    addServer(server.Server);
+                get('@Url.Action("GetTempServer", "Temp", new {httproute = ""})' + '/' + tempCode, function(server) {
+                    if (response.Action == '@Constants.FormAction.EDIT_ACTION') {
+                        editServer(server.Server);
+                    } else {
+                        addServer(server.Server);
+                    }
                 });
             }
         }
