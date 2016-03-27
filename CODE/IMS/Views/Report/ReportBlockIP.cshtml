@@ -86,24 +86,27 @@
         iDisplayLength: 25,
         aLengthMenu: [[25, 50, 100], [25, 50, 100]],
         fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-            var actionCell1 = $(nRow.cells[3]);
-            var actionCell2 = $(nRow.cells[4]);
-            var actionCell = $(nRow.cells[2]);
-      
+            var actionCell4 = $(nRow.cells[4]);
+            var actionCell2 = $(nRow.cells[2]);
+            var actionCell1 = $(nRow.cells[1]);
+            actionCell1.html(new moment(aData.LogTime).format('DD-MM-YYYY HH:mm:ss'));
             switch (aData.blockedtime) {
                 case null:
-                    $(nRow).css('background-color', '#ffe6e6');
-                    actionCell.html('<label style="color: red">Now</label>');                    
-                    actionCell2.html('<label style="color: red">Undefined</label>');
+                    $(nRow).css('background-color', '#f2dede');
+                    actionCell2.html('<label style="color: red">---</label>');                    
+                    actionCell4.html('<label style="color: red">---</label>');
                     break;
                 case 0:
-                    actionCell2.html('<1 day');
+                    actionCell4.html('<1 day');
+                    actionCell2.html(new moment(aData.Unblocktime).format('DD-MM-YYYY HH:mm:ss'));
                     break;
                 case 1:
-                    actionCell2.html('1 day');
+                    actionCell4.html('1 day');
+                    actionCell2.html(new moment(aData.Unblocktime).format('DD-MM-YYYY HH:mm:ss'));
                     break;
                 default:
-                    actionCell2.html(aData.blockedtime + ' days');
+                    actionCell4.html(aData.blockedtime + ' days');
+                    actionCell2.html(new moment(aData.Unblocktime).format('DD-MM-YYYY HH:mm:ss'));
                     break;
 
             }
