@@ -197,7 +197,7 @@
         $('#Server_PartNumber').val(server.PartNumber);
         $('#Server_TempCode').val(server.TempCode);
         $('#Server_btnAction').val("Edit");
-        $('#Server_Bandwidth').val();
+        $('[name="Server.Bandwidth"][value="' + server.Bandwidth + '"]').prop('checked', true);
     }
 
     function addModal(server) {
@@ -209,6 +209,9 @@
         $('#item_TempCode').val(server.TempCode);
     }
 
+    function setRow(row, server) {
+        row.html('');
+        var id = $('<td></td>').html(server.RowId);
         var power = $('<td></td>').html(server.Power + 'W');
         var size = $('<td></td>').html(server.Size + 'U');
         var bandwidth = $('<td></td>').html(server.Bandwidth);

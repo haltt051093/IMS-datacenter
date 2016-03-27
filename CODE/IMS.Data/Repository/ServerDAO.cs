@@ -144,7 +144,17 @@ namespace IMS.Data.Repository
                             Model = s.Model,
                             StatusCode = s.StatusCode
                         };
-            return query.ToList();
+            //if default IP ko có --> ghi chú
+            var list = new List<ServerExtendedModel>();
+            foreach (var item in query.ToList())
+            {
+                if (item.DefaultIP == null && item.StatusCode == Constants.StatusCode.SERVER_WAITING)
+                {
+                    item.DefaultIP = "Server is not ready yet. Default IP is not added yet!";
+                }
+                list.Add(item);
+            }
+            return list;
         }
 
         public List<ServerExtendedModel> GetServersOfCustomerByStatus(string customer, string statusCode)
