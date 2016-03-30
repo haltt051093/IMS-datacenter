@@ -146,17 +146,18 @@ namespace IMS.Core
 
         public class Object
         {
+            public const string OBJECT_ACCOUNT = "Account";
+            public const string OBJECT_ASSIGNMENT = "StaffAssignment";
             public const string OBJECT_IP = "IPAddress";
             public const string OBJECT_LOCATION = "Location";
             public const string OBJECT_REQUEST = "Request";
-            public const string OBJECT_TASK = "Task";
             public const string OBJECT_SERVER = "Server";
-            public const string OBJECT_ACCOUNT = "Account";
             public const string OBJECT_NOTE = "Note";
-            public const string OBJECT_ASSIGNMENT = "StaffAssignment";
             public const string OBJECT_RACK = "Rack";
             public const string OBJECT_RACKOFCUSTOMER = "RackOfCustomer";
             public const string OBJECT_SERVERIP = "ServerIP";
+            public const string OBJECT_TASK = "Task";
+            public const string OBJECT_TASK_LIST = "TaskList";
         }
 
         public class TypeOfLog

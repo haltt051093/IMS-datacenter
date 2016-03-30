@@ -36,15 +36,27 @@ namespace IMS.Controllers
 
             notif.IsViewed = true;
             NotificationBLO.Current.Update(notif);
-            if (GetCurrentUserRole() == Constants.Role.CUSTOMER)
+
+            if (notif.RefType == Constants.Object.OBJECT_REQUEST)
             {
-                return RedirectToAction("Detail", "Request", new { code = notif.RefCode });
+                if (GetCurrentUserRole() == Constants.Role.CUSTOMER)
+                {
+                    return RedirectToAction("Detail", "Request", new { code = notif.RefCode });
+                }
+                else
+                {
+                    return RedirectToAction("Detail", "ProcessRequest", new { code = notif.RefCode });
+                }
             }
-            else
+            else if (notif.RefType == Constants.Object.OBJECT_TASK)
             {
-                return RedirectToAction("Detail", "ProcessRequest", new { code = notif.RefCode });
+                return RedirectToAction("Index", "Task", new { code = notif.RefCode });
             }
-            //return View();
+            else if (notif.RefType == Constants.Object.OBJECT_TASK_LIST)
+            {
+                return RedirectToAction("Index", "Task");
+            }
+            return View();
         }
 
 

@@ -98,5 +98,35 @@ namespace IMS.Data.Business
         {
             dao.CancelWaitingTask(taskCode);
         }
+
+        public NotificationResultModel CheckEndOfShiftTasks()
+        {
+            var result = new NotificationResultModel();
+
+            var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
+            if (string.IsNullOrEmpty(activeGroupCode))
+            {
+                return result;
+            }
+
+            var activeStaffs = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
+                .Where(x => x.Role == Constants.Role.STAFF)
+                .Select(x => x.Username)
+                .ToList();
+
+            var pendingTasks = dao.Query(x => activeStaffs.Contains(x.AssignedStaff)
+                    && (x.StatusCode == Constants.StatusCode.TASK_DOING || x.StatusCode == Constants.StatusCode.TASK_NOTFINISH));
+            var staffPendingTasks = pendingTasks.GroupBy(x => x.AssignedStaff)
+                .ToList();
+
+            foreach (var staffPendingTask in staffPendingTasks)
+            {
+                var message = string.Format("You have {0} taks need to be completed before your shift ends", staffPendingTask.Count());
+                var notifCode = NotificationBLO.Current.AddNotification(string.Empty, Constants.Object.OBJECT_TASK_LIST, staffPendingTask.Key, message);
+                result.NotificationCodes.Add(notifCode);
+            }
+
+            return result;
+        }
     }
 }
