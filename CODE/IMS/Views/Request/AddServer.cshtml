@@ -180,14 +180,15 @@
                     @Html.HiddenFor(model => model.Server.TempCode)
                     @Html.HiddenFor(model => model.Server.btnAction)
                     <div class="modal-footer">
-                        <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION"
-                                class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS" data-dismiss="modal">
-                            @Labels.DialogCancel
-                        </button>
                         <button type="submit" id="submitserver" name="@Constants.FormAction.ACTION_NAME"
                                 value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
                             @Labels.DialogOK
                         </button>
+                        <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION"
+                                class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS" data-dismiss="modal">
+                            @Labels.DialogCancel
+                        </button>
+
                     </div>
                 </div>
             </div>
