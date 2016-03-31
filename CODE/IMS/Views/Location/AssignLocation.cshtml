@@ -109,6 +109,71 @@
     );
 </script>
 
+<script>
+    var size = @Model.Size;
+
+    function mouseenter(e) {
+        var rows = $('#example1 tbody tr');
+        var row = $(this);
+        var isValid = true;
+        var index = rows.index(row);
+        if (index != 0) {
+            index = index - Math.floor((size - 1) / 2);
+        }
+        if (index + size - 1 < rows.length) {
+            for (var i = index; i < index + size; i++) {
+                row = $(rows.get(i));
+                if (row.find('input[type="checkbox"]').length == 0) {
+                    isValid = false;
+                }
+            }
+        } else {
+            isValid = false;
+        }
+        if (isValid) {
+            for (var i = index; i < index + size; i++) {
+                row = $(rows.get(i));
+                row.css('cursor', 'pointer');
+                row.css('background-color', '#0000ff');
+            }
+        } else {
+            row.css('cursor', 'not-allowed');
+        }
+    }
+
+    function mouseleave(e) {
+        $('#example1 tbody tr').css('background-color', '');
+        $('#example1 tbody tr').css('cursor', '');
+    }
+
+    function mouseclick(e) {
+        var rows = $('#example1 tbody tr');
+        var row = $(this);
+        var isValid = true;
+        var index = rows.index(row);
+        if (index != 0) {
+            index = index - Math.floor((size - 1) / 2);
+        }
+        if (index + size - 1 < rows.length) {
+            for (var i = index; i < index + size; i++) {
+                row = $(rows.get(i));
+                if (row.find('input[type="checkbox"]').length == 0) {
+                    isValid = false;
+                }
+            }
+        } else {
+            isValid = false;
+        }
+        if (isValid) {
+            $('#example1 tbody tr input[type="checkbox"]').prop('checked', false);
+            for (var i = index; i < index + size; i++) {
+                row = $(rows.get(i));
+                row.find('input[type="checkbox"]').prop('checked', true);
+            }
+        }
+    }
+</script>
+
 <script type="text/javascript">
     var selectedChkCount = 0;
     $('#example1').on('click', '.chknull', function () {
@@ -157,6 +222,8 @@
       
         fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             var row = $(nRow);
+            row.hover(mouseenter, mouseleave);
+            row.click(mouseclick);
             var actionCell = $(nRow.cells[3]);
             actionCell.html('');
             actionCell.append('<input type="hidden" class="chknull" name="Selected[' + iDisplayIndex + '].LocationCode" value="' + aData.LocationCode + '">');
@@ -175,10 +242,10 @@
                 row.addClass('background-danger');              
                 break;
             case null:
-                    break;
+                break;
             default:
-                    row.addClass('background-info');
-                    break;
+                row.addClass('background-info');
+                break;
             }
 
         },
@@ -211,9 +278,6 @@
 
         $(".modal-footer #servercode").val(code);
         $(".modal-footer #size").val(size);
-
-
-
     });
 </script>
 
