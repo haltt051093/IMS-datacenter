@@ -202,6 +202,7 @@ namespace IMS.Data.Business
             foreach (var temp in temps)
             {
                 var server = JsonConvert.DeserializeObject<Server>(temp.Data);
+                server.StatusCode = Constants.StatusCode.SERVER_WAITING;
                 server.Customer = customer;
                 ServerBLO.Current.AddServerANDLog(server, requestCode);
             }
