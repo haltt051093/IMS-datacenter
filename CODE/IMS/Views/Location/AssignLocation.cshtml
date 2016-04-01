@@ -169,6 +169,7 @@
             for (var i = index; i < index + size; i++) {
                 row = $(rows.get(i));
                 row.find('input[type="checkbox"]').prop('checked', true);
+                selectedChkCount += 1;
             }
         }
     }
@@ -177,12 +178,6 @@
 <script type="text/javascript">
     var serverCode = '@Model.ServerCode';
     var selectedChkCount = 0;
-    $('#example1').on('click', '.chknull', function () {
-        var selectedChk = $('.chknull:checked');
-        //alert(selectedChk.length);
-        selectedChkCount = selectedChk.length;
-    });
-
     //Get value of selected items
     $("#assign").click(function () {
         if (selectedChkCount <= 0) {
@@ -227,11 +222,11 @@
             row.click(mouseclick);
             var actionCell = $(nRow.cells[3]);
             actionCell.html('');
-            actionCell.append('<input type="hidden" class="chknull" name="Selected[' + iDisplayIndex + '].LocationCode" value="' + aData.LocationCode + '">');
+            actionCell.append('<input type="hidden" name="Selected[' + iDisplayIndex + '].LocationCode" value="' + aData.LocationCode + '">');
             if (aData.StatusName == 'Free' || aData.ServerCode == serverCode) {
-                actionCell.append('<input type="checkbox" class="chknull" free name="Selected[' + iDisplayIndex + '].IsSelected" value="true"/>');
+                actionCell.append('<input type="checkbox" free name="Selected[' + iDisplayIndex + '].IsSelected" value="true"/>');
             } else {
-                actionCell.append('<input type="checkbox" class="chknull" name="Selected[' + iDisplayIndex + '].IsSelected" value="true"/>');
+                actionCell.append('<input type="checkbox" name="Selected[' + iDisplayIndex + '].IsSelected" value="true"/>');
             }
             switch (aData.ServerCode) {
             case '@Model.ServerCode':

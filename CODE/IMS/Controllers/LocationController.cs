@@ -177,7 +177,7 @@ namespace IMS.Controllers
                 }
             }
 
-            if ((endIndex - startIndex + 1) != livm.Size || (locations[startIndex].ServerCode != null) || (locations[endIndex].ServerCode != null))
+            if ((endIndex - startIndex + 1) != livm.Size || (locations[startIndex].ServerCode != null && locations[startIndex].ServerCode!=livm.ServerCode) || (locations[endIndex].ServerCode != null && locations[endIndex].ServerCode!=livm.ServerCode))
             { 
                     return RedirectToAction("AssignLocation", "Location", new {FailMessage = "Assign Location Fail! Try again!", rType = livm.RequestType, rCode = livm.RequestCode, ServerCode = livm.ServerCode, Size = livm.Size });
             }
