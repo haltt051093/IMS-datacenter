@@ -34,11 +34,11 @@
         {
             <div class="body bg-gray">
                 <div class="form-group">
-                    @Html.TextBoxFor(model => model.UserName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    @Html.TextBoxFor(model => model.UserName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS, placeholder ="Username"})
                     @Html.ValidationMessageFor(model => model.UserName)
                 </div>
                 <div class="form-group">
-                    @Html.PasswordFor(model => model.Password, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    @Html.PasswordFor(model => model.Password, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS, placeholder = "Password"})
                     @Html.ValidationMessageFor(model => model.Password)
                 </div>
             </div>
