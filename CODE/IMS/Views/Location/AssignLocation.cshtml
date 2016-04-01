@@ -123,7 +123,7 @@
         if (index + size - 1 < rows.length) {
             for (var i = index; i < index + size; i++) {
                 row = $(rows.get(i));
-                if (row.find('input[type="checkbox"]').length == 0) {
+                if (row.find('input[type="checkbox"][free]').length == 0) {
                     isValid = false;
                 }
             }
@@ -157,7 +157,7 @@
         if (index + size - 1 < rows.length) {
             for (var i = index; i < index + size; i++) {
                 row = $(rows.get(i));
-                if (row.find('input[type="checkbox"]').length == 0) {
+                if (row.find('input[type="checkbox"][free]').length == 0) {
                     isValid = false;
                 }
             }
@@ -229,8 +229,7 @@
             actionCell.append('<input type="hidden" class="chknull" name="Selected[' + iDisplayIndex + '].LocationCode" value="' + aData.LocationCode + '">');
             switch (aData.StatusName) {
             case 'Free':
-                actionCell.append('<input type="checkbox" class="chknull" name="Selected[' + iDisplayIndex + '].IsSelected" value="true"/>');
-
+                actionCell.append('<input type="checkbox" class="chknull" free name="Selected[' + iDisplayIndex + '].IsSelected" value="true"/>');
                 break;
             default:
                 actionCell.append('<input type="checkbox" class="chknull" name="Selected[' + iDisplayIndex + '].IsSelected" value="true"/>');
