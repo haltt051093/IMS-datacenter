@@ -175,6 +175,7 @@
 </script>
 
 <script type="text/javascript">
+    var serverCode = '@Model.ServerCode';
     var selectedChkCount = 0;
     $('#example1').on('click', '.chknull', function () {
         var selectedChk = $('.chknull:checked');
@@ -227,14 +228,10 @@
             var actionCell = $(nRow.cells[3]);
             actionCell.html('');
             actionCell.append('<input type="hidden" class="chknull" name="Selected[' + iDisplayIndex + '].LocationCode" value="' + aData.LocationCode + '">');
-            switch (aData.StatusName) {
-            case 'Free':
+            if (aData.StatusName == 'Free' || aData.ServerCode == serverCode) {
                 actionCell.append('<input type="checkbox" class="chknull" free name="Selected[' + iDisplayIndex + '].IsSelected" value="true"/>');
-                break;
-            default:
+            } else {
                 actionCell.append('<input type="checkbox" class="chknull" name="Selected[' + iDisplayIndex + '].IsSelected" value="true"/>');
-                break;
-
             }
             switch (aData.ServerCode) {
             case '@Model.ServerCode':
