@@ -15,13 +15,13 @@ namespace IMS.Data.Models
         public string Maker { get; set; }
 
         public string Model { get; set; }
-
+        [Required]
         public int? Power { get; set; }
 
         public int? Size { get; set; }
 
         public string StatusCode { get; set; }
-
+        [Required]
         public string DefaultIP { get; set; }
 
         public DateTime? RegisteredDate { get; set; }

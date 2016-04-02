@@ -16,11 +16,12 @@ namespace IMS.Data.Models
         [StringLength(50)]
         public string Customer { get; set; }
 
-        //[Required(ErrorMessage = "Please select Appointment Time")]
+        [Display(Name = "Appointment Time")]
         public DateTime? AppointmentTime { get; set; }
 
         public string Description { get; set; }
 
+        [Display(Name = "Requested Time")]
         public DateTime? RequestedTime { get; set; }
 
         [StringLength(50)]
