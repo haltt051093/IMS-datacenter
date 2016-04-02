@@ -15,16 +15,11 @@
         @Html.HiddenFor(model => model.SuccessMessage)
     </div>
     <div>
-        <a class="btn btn-primary pull-left" data-toggle="modal" data-target="#addip-modal"><i class="fa fa-plus"></i> @Labels.AddIP</a>
-    </div>
-
-    <div>
+        <a class="btn btn-primary" data-toggle="modal" data-target="#addip-modal"><i class="fa fa-plus"></i> @Labels.AddIP</a>
         @if (Model.NetIPAvai.Count > 0)
         {
-            <a id="deactivateip" class="btn btn-danger pull-left"><i class="fa fa-minus"></i> @Labels.DeactivateIP</a>
+            <a id="deactivateip" class="btn btn-danger"><i class="fa fa-minus"></i> @Labels.DeactivateIP</a>
         }
-
-
     </div>
     <div class="clearfix"></div>
     <div style="height: 10px"></div>
@@ -121,7 +116,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" name="@Constants.FormAction.ACTION_NAME" value="Add" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                        @Labels.DialogOK
+                        <i class="fa fa-plus"></i> @Labels.Add
                     </button>
                     <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
                             data-dismiss="modal">
@@ -166,14 +161,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">              
-                    <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS pull-right"
+                <div class="modal-footer">
+                    <button id="deactive" type="submit" name="@Constants.FormAction.ACTION_NAME" value="Deactive" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
+                        @Labels.Deactivate
+                    </button>
+                    <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
                             data-dismiss="modal">
                         @Labels.DialogCancel
                     </button>
-                    <button id="deactive" type="submit" name="@Constants.FormAction.ACTION_NAME" value="Deactive" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS pull-right">
-                        @Labels.DialogOK
-                    </button>
+
                 </div>
             }
         </div><!-- /.modal-content -->
@@ -204,8 +200,8 @@
                     <input class="hidden" name="Id" id="idblock" />
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                        @Labels.DialogOK
+                    <button type="submit" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
+                        @Labels.Block
                     </button>
                     <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
                             data-dismiss="modal">
@@ -240,8 +236,8 @@
                     <input name="Id" Id="idunblock" class="hidden" />
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                        @Labels.DialogOK
+                    <button type="submit" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.WARNING_BUTTON_CLASS">
+                        @Labels.Unblock
                     </button>
                     <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
                             data-dismiss="modal">

@@ -34,11 +34,10 @@
         </table>
 
     </section><!-- /.content -->
-    <section class="content">
+    <section class="content pull-right">
         @Html.HiddenFor(model=>model.RequestCode)
-        @Html.ActionLink("Cancel", "Detail", "ProcessRequest", new {code = Model.RequestCode}, htmlAttributes: new {@class = "btn btn-default pull-right"})
-        <button type="submit" id="assignbutton" class="btn btn-primary pull-right">Assign</button>
-
+        <button type="submit" id="assignbutton" class="btn btn-primary">Assign</button>
+        @Html.ActionLink("Cancel", "Detail", "ProcessRequest", new {code = Model.RequestCode}, htmlAttributes: new {@class = "btn btn-default"})
     </section>
 </form>
 <script>

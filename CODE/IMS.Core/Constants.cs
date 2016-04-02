@@ -298,6 +298,7 @@ namespace IMS.Core
             public const string PRIMARY_BUTTON_CLASS = "btn btn-primary";
             public const string SECONDARY_BUTTON_CLASS = "btn btn-info";
             public const string DANGER_BUTTON_CLASS = "btn btn-danger";
+            public const string WARNING_BUTTON_CLASS = "btn btn-warning";
             public const string DANGER_TEXT_CLASS = "text-danger";
 
             public const string DATATABLE_CLASS_HOVER = "table table-bordered table-hover";

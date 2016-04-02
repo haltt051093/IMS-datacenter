@@ -178,8 +178,8 @@
                     @Html.HiddenFor(model => model.Username)
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" name="Button" value="Deactivate" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                        @Labels.DialogOK
+                    <button type="submit" name="Button" value="Deactivate" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
+                        @Labels.Deactivate
                     </button>
                     <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
                             data-dismiss="modal">
@@ -201,8 +201,8 @@
                     @Html.HiddenFor(model => model.Username)
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" name="Button" value="Activate" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                        @Labels.DialogOK
+                    <button type="submit" name="Button" value="Activate" class="@Constants.HtmlFormat.WARNING_BUTTON_CLASS">
+                        @Labels.Activate
                     </button>
                     <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
                             data-dismiss="modal">

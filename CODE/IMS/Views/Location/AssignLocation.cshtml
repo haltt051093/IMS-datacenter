@@ -55,19 +55,21 @@
 
     </section><!-- /.content -->
 
-    <section class="content">
+    <section class="content pull-right">
         @Html.HiddenFor(model=>model.RequestCode)
         @Html.HiddenFor(model=>model.RequestType)
         @Html.HiddenFor(model=>model.Size)
         @if (Model.RequestType == "Change")
         {
-            @Html.ActionLink("Cancel", "Detail", "Server", new { code = Model.ServerCode }, htmlAttributes: new { @class = "btn btn-default pull-right" })
-            <button type="submit" id="change" class="btn btn-primary pull-right">Change</button>
+
+            <button type="submit" id="change" class="btn btn-primary">Change</button>
+            @Html.ActionLink("Cancel", "Detail", "Server", new { code = Model.ServerCode }, htmlAttributes: new { @class = "btn btn-default" })
         }
         else
         {
-            @Html.ActionLink("Cancel", "Detail", "ProcessRequest", new { rType = Model.RequestType, rCode = Model.RequestCode }, htmlAttributes: new { @class = "btn btn-default pull-right" })
-            <button type="submit" id="assign" class="btn btn-primary pull-right">Assign</button>
+
+            <button type="submit" id="assign" class="btn btn-primary">Assign</button>
+            @Html.ActionLink("Cancel", "Detail", "ProcessRequest", new { rType = Model.RequestType, rCode = Model.RequestCode }, htmlAttributes: new { @class = "btn btn-default" })
         }
         
        
