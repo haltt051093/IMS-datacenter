@@ -317,7 +317,7 @@ namespace IMS.Controllers
             //dang ky ham cho client
             Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
-            { code = requestCode, msg = Constants.Message.CANCEL_REQUEST_ADD_SERVER });
+            { code = requestCode, msg = Constants.Message.SEND_REQUEST_ADD_SERVER });
         }
 
         [HttpPost]
@@ -330,7 +330,7 @@ namespace IMS.Controllers
             //dang ky ham cho client
             Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
-            { code = result.RefCode, msg = Constants.Message.CANCEL_REQUEST_BRING_SERVER_AWAY });
+            { code = result.RefCode, msg = Constants.Message.SEND_REQUEST_BRING_SERVER_AWAY });
         }
 
         [HttpPost]
@@ -350,7 +350,7 @@ namespace IMS.Controllers
             //dang ky ham cho client
             Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
-            { code = result.RefCode, msg = Constants.Message.CANCEL_REQUEST_ASSIGN_IP });
+            { code = result.RefCode, msg = Constants.Message.SEND_REQUEST_ASSIGN_IP });
         }
 
         [HttpPost]
@@ -362,7 +362,7 @@ namespace IMS.Controllers
             //dang ky ham cho client
             Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
-            { code = result.RefCode, msg = Constants.Message.CANCEL_REQUEST_CHANGE_IP });
+            { code = result.RefCode, msg = Constants.Message.SEND_REQUEST_CHANGE_IP });
         }
 
         [HttpPost]
@@ -375,7 +375,7 @@ namespace IMS.Controllers
             //dang ky ham cho client
             Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
-            { code = result.RefCode, msg = Constants.Message.CANCEL_REQUEST_RETURN_IP });
+            { code = result.RefCode, msg = Constants.Message.SEND_REQUEST_RETURN_IP });
         }
 
         [HttpPost]

@@ -19,6 +19,7 @@ namespace IMS.Data.Models
 
         public bool? Status { get; set; }
 
+        [Display(Name ="Customer")]
         [StringLength(50)]
         public string Fullname { get; set; }
 

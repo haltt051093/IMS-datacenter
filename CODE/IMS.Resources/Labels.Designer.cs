@@ -124,7 +124,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Approve.
+        ///   Looks up a localized string similar to Complete.
         /// </summary>
         public static string Approve {
             get {

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Web.Mvc;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using IMS.Data.ViewModels;
 using SelectListItem = System.Web.Mvc.SelectListItem;
 
@@ -21,10 +22,14 @@ namespace IMS.Models
         public string CurrentUser { get; set; }
 
         // Specific Info
+        [Display(Name = "Server")]
         public string SelectedServer { get; set; }
+        public string SelectedDefaultIP { get; set; }
+        [Display(Name ="Required number of IPs")]
         public int NumberOfIP { get; set; }
         public int NumberOfAvailableIP { get; set; }
         public int NumberOfSelectedIP { get; set; }
+        [Display(Name = "Assigned IPs")]
         public List<string> IPs { get; set; } 
 
         //DropdownList

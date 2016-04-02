@@ -120,12 +120,15 @@ namespace IMS.Controllers
             {
                 var group = GetCurrentUserGroup();
                 var role = GetCurrentUserRole();
+
                 //Get request
                 var request = RequestBLO.Current.DetailProcessRequestAssignIP(code, group, role);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestAssignIPViewModel>(request);
+                viewmodel.CurrentUser = GetCurrentUserName();
                 //task
                 if (role == Constants.Role.STAFF && (request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING
-                                                     || request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING))
+                                                     || request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
+                                                     && viewmodel.CurrentUser == request.RequestInfo.Assignee)
                 {
                     viewmodel.IsAssignedUser = true;
                 }
@@ -133,7 +136,7 @@ namespace IMS.Controllers
                 {
                     viewmodel.IsAssignedUser = false;
                 }
-                viewmodel.CurrentUser = GetCurrentUserName();
+                
                 viewmodel.StaffCodeOptions = request.listStaff
                 .Select(x => new SelectListItem
                 {

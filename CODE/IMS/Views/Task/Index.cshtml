@@ -160,7 +160,7 @@
         "aaSorting": [[2, "desc"]], // Sort by first column descending
         "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             if (aData[1] == "Waiting") {
-                $('td', nRow).addClass('background-danger');
+                $('td', nRow).addClass('background-warning');
             };
             if (aData[1] == "Doing") {
                 $('td', nRow).addClass('background-info');

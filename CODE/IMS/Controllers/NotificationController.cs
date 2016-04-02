@@ -50,7 +50,7 @@ namespace IMS.Controllers
             }
             else if (notif.RefType == Constants.Object.OBJECT_TASK)
             {
-                return RedirectToAction("Index", "Task", new { code = notif.RefCode });
+                return RedirectToAction("Detail", "ProcessRequest", new { code = notif.RefCode });
             }
             else if (notif.RefType == Constants.Object.OBJECT_TASK_LIST)
             {

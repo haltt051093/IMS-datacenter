@@ -139,7 +139,7 @@
     <value>Add Server Information</value>
   </data>
   <data name="Approve" xml:space="preserve">
-    <value>Approve</value>
+    <value>Complete</value>
   </data>
   <data name="Block" xml:space="preserve">
     <value>Block</value>

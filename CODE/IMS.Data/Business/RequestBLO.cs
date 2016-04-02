@@ -724,6 +724,7 @@ namespace IMS.Data.Business
             request.RequestInfo.Description = reqDetail.Description;
             //lay servercode, roi lay ip cua server do, tim nhung ip cung vung con lai
             request.SelectedServer = LogBLO.Current.GetServerCodeByRequestCode(requestCode).FirstOrDefault();
+            request.SelectedDefaultIP = ServerBLO.Current.GetAllServerInfo(request.SelectedServer).DefaultIP;
             if (request.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
             {
                 //Lay list available ip cung vung

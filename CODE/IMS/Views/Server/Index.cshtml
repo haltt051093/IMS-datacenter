@@ -106,7 +106,12 @@
 <script type="text/javascript">
     $('#example1').DataTable({
         //"iDisplayLength": -1,
-        "aaSorting": [[1, "desc"]]// Sort by first column descending
+        "aaSorting": [[1, "desc"]],// Sort by first column descending
+        "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            if (aData[0] == "Waiting") {
+                $('td', nRow).addClass('background-warning');
+            };
+        }
     });
     $("#selectedStatus").change(function () {
         var status = $("#selectedStatus").val();

@@ -33,5 +33,25 @@ namespace IMS.Controllers
             };
             return View(data);
         }
+        #region accept task
+        public ActionResult AcceptTask(string requestCode, string taskCode)
+        {
+            //update task
+            TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_DOING);
+            return RedirectToAction("Detail", "ProcessRequest",
+                new { code = requestCode, msg = Constants.Message.ACCEPT_TASK });
+        }
+        #endregion
+
+        #region not finish task
+        [HttpPost]
+        public ActionResult NotFinishTask(string reason, string taskcode, string requestcode)
+        {
+            var result = RequestBLO.Current.NotFinishRequest(taskcode, reason);
+            Notify(result.NotificationCodes);
+            return RedirectToAction("Detail", "ProcessRequest",
+               new { code = requestcode, msg = Constants.Message.NOT_FINISHED_TASK });
+        }
+        #endregion
     }
 }

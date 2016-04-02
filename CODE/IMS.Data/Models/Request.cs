@@ -30,7 +30,7 @@ namespace IMS.Data.Models
         public bool IsViewed { get; set; }
 
         public string Assignee { get; set; }
-
+        [Display(Name = "Rejected Reason")]
         public string Reason { get; set; }
     }
 }
