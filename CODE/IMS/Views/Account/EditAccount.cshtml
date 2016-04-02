@@ -102,8 +102,8 @@
         </div>
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="@Constants.HtmlFormat.FORM_TEXTBOX_CLASS col-xs-offset-2">
-                <button type="submit" class="btn btn-primary pull-left">Change</button>
-                @Html.ActionLink("Cancel", "ViewProfile", "Account", new { username = Model.Username }, htmlAttributes: new { @class = "btn btn-default pull-left" })
+                <button type="submit" class="btn btn-primary">@Labels.Update</button>
+                @Html.ActionLink("Cancel", "ViewProfile", "Account", new { username = Model.Username }, htmlAttributes: new { @class = "btn btn-default" })
             </div>
         </div>
     }
