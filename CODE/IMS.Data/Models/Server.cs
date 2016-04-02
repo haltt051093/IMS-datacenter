@@ -21,15 +21,15 @@ namespace IMS.Data.Models
         public int? Size { get; set; }
 
         public string StatusCode { get; set; }
-        [Required]
+        
         public string DefaultIP { get; set; }
 
         public DateTime? RegisteredDate { get; set; }
 
         public string Bandwidth { get; set; }
-
+        [Display(Name ="Part Number")]
         public string PartNumber { get; set; }
-
+        [Display(Name ="Serial Number")]
         public string SerialNumber { get; set; }
     }
 }
