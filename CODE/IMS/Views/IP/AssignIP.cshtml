@@ -42,6 +42,16 @@
     </section>
 </form>
 <script>
+    function mouseclick(e) {
+        var rows = $('#example1 tbody tr');
+        var row = $(this);
+        var index = rows.index(row);
+
+            row = $(rows.get(index));
+            row.find('input[type="radio"]').prop('checked', true);
+            selectedChkCount += 1;
+        
+    }
     $.fn.dataTable.ext.search.push(
         function (settings, data, dataIndex) {
             var networkIP = $('#NetworkIP').val();
@@ -84,10 +94,10 @@
         fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             var row = $(nRow);
             var actionCell = $(nRow.cells[3]);
-
+            row.click(mouseclick);
             switch (aData.StatusCode) {
             case '@Constants.StatusCode.IP_AVAILABLE':
-                actionCell.html('<input type="radio" name="NewIP" class="chknull" value="' + aData.IPAddress + '"/>');
+                actionCell.html('<input type="radio" name="NewIP" value="' + aData.IPAddress + '"/>');
 
                 break;
 
@@ -115,11 +125,6 @@
     });
 
     var selectedChkCount = 0;
-    $('#example1').on('click', '.chknull', function () {
-        var selectedChk = $('.chknull:checked');
-        //alert(selectedChk.length);
-        selectedChkCount = selectedChk.length;
-    });
 
     //Get value of selected items
     $("#assignbutton").click(function () {
