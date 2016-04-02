@@ -19,13 +19,15 @@ namespace IMS.Models
         public bool Status { get; set; }  
         [Required]  
         public string Fullname { get; set; }   
+        [RegularExpression("^[0-9]+$", ErrorMessage = "Phone must be number")]
         [Required]  
         public string Phone { get; set; }
         [Required]
         [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "E-mail is not valid")]
         public string Email { get; set; }   
         [Required]
-        public string Address { get; set; }   
+        public string Address { get; set; }
+        [RegularExpression("^[0-9]+$", ErrorMessage = "Identification must be number")]
         [Required]   
         public string Identification { get; set; }
         [Required]
