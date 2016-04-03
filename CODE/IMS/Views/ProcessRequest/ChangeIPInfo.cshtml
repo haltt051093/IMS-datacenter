@@ -114,7 +114,7 @@
                             }
                         </div>
                     }
-                    else
+                    @if (Model.RequestInfo.AssigneeName == null && Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_CANCELLED)
                     {
                         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                             <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">

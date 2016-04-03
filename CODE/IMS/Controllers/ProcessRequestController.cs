@@ -362,8 +362,13 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
+                var assignee = viewmodel.RequestInfo.Assignee;
+                if (viewmodel.RequestInfo.Assignee == null)
+                {
+                    assignee = GetCurrentUserName();
+                }
                 var result = RequestBLO.Current.RejectRequestAddServer(viewmodel.RequestInfo.RequestCode, viewmodel.Servers,
-                        viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
+                        assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
@@ -452,8 +457,13 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
+                var assignee = viewmodel.RequestInfo.Assignee;
+                if (viewmodel.RequestInfo.Assignee == null)
+                {
+                    assignee = GetCurrentUserName();
+                }
                 var result = RequestBLO.Current.RejectRequestBringServerAway(viewmodel.RequestInfo.RequestCode, viewmodel.ServerOfCustomer,
-                    viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
+                    assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
@@ -547,8 +557,13 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
+                var assignee = viewmodel.RequestInfo.Assignee;
+                if (viewmodel.RequestInfo.Assignee == null)
+                {
+                    assignee = GetCurrentUserName();
+                }
                 var result = RequestBLO.Current.RejectRequestAssignIP(viewmodel.RequestInfo.RequestCode,
-                    viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.Reason);
+                    assignee, viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.Reason);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
@@ -627,8 +642,13 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
+                var assignee = viewmodel.RequestInfo.Assignee;
+                if (viewmodel.RequestInfo.Assignee == null)
+                {
+                    assignee = GetCurrentUserName();
+                }
                 var result = RequestBLO.Current.RejectRequestChangeIP(viewmodel.RequestInfo.RequestCode, viewmodel.ReturningIPs,
-                    viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode,
+                    assignee, viewmodel.RequestInfo.TaskCode,
                     viewmodel.SelectedServer, viewmodel.RequestInfo.Reason);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
@@ -707,8 +727,13 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
+                var assignee = viewmodel.RequestInfo.Assignee;
+                if (viewmodel.RequestInfo.Assignee == null)
+                {
+                    assignee = GetCurrentUserName();
+                }
                 var result = RequestBLO.Current.RejectRequestReturnIP(viewmodel.RequestInfo.RequestCode, viewmodel.ReturningIPs,
-                    viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode, viewmodel.SelectedServer,
+                    assignee, viewmodel.RequestInfo.TaskCode, viewmodel.SelectedServer,
                     viewmodel.RequestInfo.Reason);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
@@ -787,8 +812,13 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
+                var assignee = viewmodel.RequestInfo.Assignee;
+                if (viewmodel.RequestInfo.Assignee == null)
+                {
+                    assignee = GetCurrentUserName();
+                }
                 var result = RequestBLO.Current.RejectRequestRentRack(viewmodel.RequestInfo.RequestCode,
-                    viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
+                    assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
@@ -866,7 +896,12 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
-                var result = RequestBLO.Current.RejectRequestReturnRack(viewmodel.RequestInfo.RequestCode, viewmodel.RequestInfo.Assignee,
+                var assignee = viewmodel.RequestInfo.Assignee;
+                if (viewmodel.RequestInfo.Assignee == null)
+                {
+                    assignee = GetCurrentUserName();
+                }
+                var result = RequestBLO.Current.RejectRequestReturnRack(viewmodel.RequestInfo.RequestCode, assignee,
                     viewmodel.RequestInfo.TaskCode, viewmodel.CustomerInfo.Customer, viewmodel.RequestInfo.Reason);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);

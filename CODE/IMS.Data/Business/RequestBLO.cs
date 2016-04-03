@@ -1256,7 +1256,7 @@ namespace IMS.Data.Business
             }
             //Add and log request
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ADD_SERVER,
-                Constants.StatusCode.REQUEST_REJECTED, null, assignee, reason, reason);
+                Constants.StatusCode.REQUEST_REJECTED, assignee, assignee, reason, reason);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
             //luu notification
@@ -1291,7 +1291,7 @@ namespace IMS.Data.Business
                     assignee);
                 //add and log request
                 UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
-                    Constants.StatusCode.REQUEST_REJECTED, null, assignee, reason, reason);
+                    Constants.StatusCode.REQUEST_REJECTED, assignee, assignee, reason, reason);
 
                 //giai phong location, co can log ko?
                 LocationBLO.Current.SetLocationAvailable(server.ServerCode);
@@ -1315,7 +1315,7 @@ namespace IMS.Data.Business
         {
             //Add Log and update request status
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ASSIGN_IP,
-                Constants.StatusCode.REQUEST_REJECTED, null, assignee, reason, reason);
+                Constants.StatusCode.REQUEST_REJECTED, assignee, assignee, reason, reason);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
             //luu notification
@@ -1341,7 +1341,7 @@ namespace IMS.Data.Business
             }
             //update and log request
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
-                 Constants.StatusCode.REQUEST_REJECTED, null, assignee, reason, reason);
+                 Constants.StatusCode.REQUEST_REJECTED, assignee, assignee, reason, reason);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
             //luu notification
@@ -1368,7 +1368,7 @@ namespace IMS.Data.Business
             }
             //Add Log and update request status, task
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_IP,
-                Constants.StatusCode.REQUEST_REJECTED, null, assignee, reason, reason);
+                Constants.StatusCode.REQUEST_REJECTED, assignee, assignee, reason, reason);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
             //luu notification
@@ -1388,7 +1388,7 @@ namespace IMS.Data.Business
         {
             //Change request status
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RENT_RACK,
-                Constants.StatusCode.REQUEST_REJECTED, null, assignee, reason, reason);
+                Constants.StatusCode.REQUEST_REJECTED, assignee, assignee, reason, reason);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
             //luu notification
@@ -1419,7 +1419,7 @@ namespace IMS.Data.Business
             }
             //add and log request
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
-                Constants.StatusCode.REQUEST_REJECTED, null, assignee, reason, reason);
+                Constants.StatusCode.REQUEST_REJECTED, assignee, assignee, reason, reason);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
             //luu notification

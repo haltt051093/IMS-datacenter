@@ -139,7 +139,6 @@ namespace IMS.Data.Business
                 var activeStaff = AccountBLO.Current.GetAccountsByGroup(activegroup)
                 .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
                 .FirstOrDefault();
-                //var shifthead = AccountBLO.Current.GetAccountByCode(activeStaff);
                 list.Add(activeStaff);
             }
             else
@@ -147,8 +146,10 @@ namespace IMS.Data.Business
                 if(query.ShiftHead == query.AssignedStaff)
                 {
                     var activegroup = AssignedShiftBLO.Current.GetActiveGroup();
-                    var shifthead = AccountBLO.Current.GetAccountByCode(activegroup);
-                    list.Add(shifthead);
+                    var activeStaff = AccountBLO.Current.GetAccountsByGroup(activegroup)
+                    .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
+                    .FirstOrDefault();
+                    list.Add(activeStaff);
                 }
                 else
                 {
