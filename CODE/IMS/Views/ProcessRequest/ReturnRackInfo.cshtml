@@ -25,7 +25,7 @@
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                     <div class="@Constants.HtmlFormat.FORM_LABEL_X3_CLASS">
-                        @Html.LabelFor(model => model.RequestInfo.RequestedTime, "Requested Time")
+                        @Html.LabelFor(model => model.RequestInfo.RequestedTime)
                     </div>
                     <div class="@Constants.HtmlFormat.FORM_DETAIL_X3_CLASS">
                         @Html.DisplayFor(model => model.RequestInfo.RequestedTime, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
@@ -125,16 +125,12 @@
                             <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                                 @Html.ActionLink("[Accept Task]", "AcceptTask", "Task",
                     new { requestCode = Model.RequestInfo.RequestCode, taskCode = Model.RequestInfo.TaskCode }, null)
-                                @*<button type="submit" id="btnAcceptTask" name="@Constants.FormAction.ACCEPT_TASK_ACTION" value="@Constants.FormAction.ACCEPT_TASK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                                        Accept Task
-                                    </button>*@
                             </div>
                         }
                         @if (Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
                         {
                             <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                                 <a href="#" data-target="#notfinishtask" id="notfinish">[Not Finish Task]</a>
-                                @*<a class="btn btn-danger" data-toggle="modal" data-target="#notfinishtask">Not Finish Task</a>*@
                             </div>
                         }
                     </div>
@@ -144,7 +140,7 @@
         <hr />
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                @Html.LabelFor(model => model.SelectedRacks, "Rack")
+                @Html.LabelFor(model => model.SelectedRacks)
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                 @for (int i = 0; i < Model.SelectedRacks.Count; i++)
@@ -160,7 +156,7 @@
             <hr />
             <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                 <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                    @Html.LabelFor(model => model.RequestInfo.Reason, "Rejeted Reason")
+                    @Html.LabelFor(model => model.RequestInfo.Reason)
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                     @Html.DisplayFor(model => model.RequestInfo.Reason, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
@@ -195,11 +191,10 @@
                 }
             </div>
         </div>
- <!-- Reject request MODAL -->
+   <!-- Reject request MODAL -->
         <div id="Rejectrequest" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog" style="width: 400px">
                 <div class="modal-content">
-
                     <div class="modal-header">
                         <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS">
                             <i class="fa fa-minus-circle"></i>
@@ -209,26 +204,23 @@
                     <div class="modal-body">
                         <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
                             <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                                @Html.LabelFor(model => model.RequestInfo.Reason)
+                                @Html.LabelFor(model => model.RequestInfo.Reason, "Reason")
                             </div>
                             <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                                @Html.TextBoxFor(model => model.RequestInfo.Reason, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                @Html.TextAreaFor(model => model.RequestInfo.Reason, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                                 @Html.ValidationMessageFor(model => model.RequestInfo.Reason)
                             </div>
                         </div>
-
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
-                            @Labels.Reject
+                        <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                            @Labels.OK
                         </button>
                         <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
                                 data-dismiss="modal">
                             @Labels.DialogCancel
                         </button>
-
                     </div>
-
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->

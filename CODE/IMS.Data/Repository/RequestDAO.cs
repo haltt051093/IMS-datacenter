@@ -174,7 +174,7 @@ namespace IMS.Data.Repository
             return requestCode;
         }
 
-        public void UpdateRequestStatusANDLog(string requestCode, string typeOfLog, string newStatus, string assignee, string staffCode, string description)
+        public void UpdateRequestStatusANDLog(string requestCode, string typeOfLog, string newStatus, string assignee, string staffCode, string description, string reason)
         {
             var request = (from r in Current.Table
                            where r.RequestCode == requestCode
@@ -183,6 +183,10 @@ namespace IMS.Data.Repository
             if (assignee != null)
             {
                 request.Assignee = assignee;
+            }
+            if (reason != null)
+            {
+                request.Reason = reason;
             }
             Update(request);
             // log request status

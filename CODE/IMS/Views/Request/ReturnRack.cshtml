@@ -34,34 +34,46 @@
                         </tr>
                     </thead>
                     <tbody id="tbodyid">
-                        @for (int i = 0; i < Model.AllRacks.Count; i++)
+                        
+                        @if (Model.AllRacks.Count == 0)
                         {
-                            <tr class="check" rack-code="@Model.AllRacks[i].RackCode">
-                                <td>
-                                    @if (Model.AllRacks[i].ServerNum != 0)
-                                    {
-                                        @Html.CheckBoxFor(modelItem => Model.AllRacks[i].Checked, new { disabled = "disabled", data_check= "chknull" })
-                                    }
-                                    else
-                                    {
-                                        @Html.CheckBoxFor(modelItem => Model.AllRacks[i].Checked, new { data_check = "chknull" })
-                                    }
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(model => Model.AllRacks[i].RackName)
-                                    @Html.HiddenFor(model => Model.AllRacks[i].RackName)
-                                    @Html.HiddenFor(model => Model.AllRacks[i].RackCode, new { @class = "rackCode" })
-                                </td>
-                                <td class="cannotclick">
-                                    @Html.DisplayFor(model => Model.AllRacks[i].ServerNum)
-                                    @if (Model.AllRacks[i].ServerNum != 0)
-                                    {
-                                        @*@Html.ActionLink("Return all servers", "ReturnRackByBringServerAway", "Request",
-                                       new { RackCode = Model.AllRacks[i].RackCode }, new { @class = "returnallservers" })*@
-                                        <a href="#" class="returnall" rack-code="@Model.AllRacks[i].RackCode">Return all servers</a>
-                                    }
+                            <tr>
+                                <td colspan="11">
+                                    @Html.Raw("You have no rack.")
                                 </td>
                             </tr>
+                        }
+                        else
+                        {
+                            for (int i = 0; i < Model.AllRacks.Count; i++)
+                            {
+                                <tr class="check" rack-code="@Model.AllRacks[i].RackCode">
+                                    <td>
+                                        @if (Model.AllRacks[i].ServerNum != 0)
+                                        {
+                                            @Html.CheckBoxFor(modelItem => Model.AllRacks[i].Checked, new { disabled = "disabled", data_check = "chknull" })
+                                        }
+                                        else
+                                        {
+                                            @Html.CheckBoxFor(modelItem => Model.AllRacks[i].Checked, new { data_check = "chknull" })
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => Model.AllRacks[i].RackName)
+                                        @Html.HiddenFor(model => Model.AllRacks[i].RackName)
+                                        @Html.HiddenFor(model => Model.AllRacks[i].RackCode, new { @class = "rackCode" })
+                                    </td>
+                                    <td class="cannotclick">
+                                        @Html.DisplayFor(model => Model.AllRacks[i].ServerNum)
+                                        @if (Model.AllRacks[i].ServerNum != 0)
+                                        {
+                                            @*@Html.ActionLink("Return all servers", "ReturnRackByBringServerAway", "Request",
+                                                new { RackCode = Model.AllRacks[i].RackCode }, new { @class = "returnallservers" })*@
+                                            <a href="#" class="returnall" rack-code="@Model.AllRacks[i].RackCode">Return all servers</a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
                         }
                     </tbody>
                 </table>

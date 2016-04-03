@@ -146,41 +146,44 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-4">
-            @if (Model.CustomerInfo.Company != null)
-            {
-                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                        @Html.LabelFor(model => model.CustomerInfo.Company)
+        @if (!User.IsInRole("Customer"))
+        {
+            <div class="col-xs-4">
+                @if (Model.CustomerInfo.Company != null)
+                {
+                    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
+                            @Html.LabelFor(model => model.CustomerInfo.Company)
+                        </div>
+                        <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                            @Html.DisplayFor(model => model.CustomerInfo.Company, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        </div>
                     </div>
-                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
-                        @Html.DisplayFor(model => model.CustomerInfo.Company, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                    </div>
-                </div>
-                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                        @Html.LabelFor(model => model.CustomerInfo.Fullname)
-                    </div>
-                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
-                        @Html.ActionLink(Model.CustomerInfo.Fullname, "ViewProfile", "Account",
+                    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
+                            @Html.LabelFor(model => model.CustomerInfo.Fullname)
+                        </div>
+                        <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                            @Html.ActionLink(Model.CustomerInfo.Fullname, "ViewProfile", "Account",
                             new { username = Model.CustomerInfo.Username }, null)
+                        </div>
                     </div>
-                </div>
-            }
-            else
-            {
-                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                        @Html.LabelFor(model => model.CustomerInfo.Fullname)
-                    </div>
-                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
-                        @Html.ActionLink(Model.CustomerInfo.Fullname, "ViewProfile", "Account",
+                }
+                else
+                {
+                    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
+                            @Html.LabelFor(model => model.CustomerInfo.Fullname)
+                        </div>
+                        <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                            @Html.ActionLink(Model.CustomerInfo.Fullname, "ViewProfile", "Account",
                             new { username = Model.CustomerInfo.Username }, null)
+                        </div>
                     </div>
-                </div>
-            }
+                }
 
-        </div>
+            </div>
+        }
     </div>
 </section>
 

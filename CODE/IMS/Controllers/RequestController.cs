@@ -344,6 +344,10 @@ namespace IMS.Controllers
             {
                 requestDetail.Description = viewmodel.RequestInfo.Description;
             }
+            else
+            {
+                requestDetail.Description = Constants.Message.CONTENT_NULL;
+            }
             viewmodel.RequestInfo.Description = JsonConvert.SerializeObject(requestDetail);
             //Add request and log
             var result = RequestBLO.Current.AddRequestAssignIP(customer, viewmodel.RequestInfo.Description, viewmodel.SelectedServer);
@@ -388,6 +392,10 @@ namespace IMS.Controllers
             if (!string.IsNullOrWhiteSpace(viewmodel.RequestInfo.Description))
             {
                 requestDetail.Description = viewmodel.RequestInfo.Description;
+            }
+            else
+            {
+                requestDetail.Description = Constants.Message.CONTENT_NULL;
             }
             viewmodel.RequestInfo.Description = JsonConvert.SerializeObject(requestDetail);
             //Add and log request

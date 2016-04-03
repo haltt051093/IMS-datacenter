@@ -417,6 +417,8 @@ namespace IMS.Core
 
             public const string PROCESSING_REQUEST_ADD_SERVER = "Request Add Server is PROCESSING";
             public const string PROCESSING_REQUEST_BRING_SERVER_AWAY = "Request Bring Server Away is PROCESSING";
+
+            public const string CONTENT_NULL = "[None]";
         }
     }
 }

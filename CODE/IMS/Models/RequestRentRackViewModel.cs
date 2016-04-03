@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 using IMS.Data.ViewModels;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IMS.Models
 {
@@ -17,6 +19,7 @@ namespace IMS.Models
 
         //main info
         public List<SelectListItem> ListRackNumbers { get; set; }
+        [Display(Name ="Number of racks")]
         public int RackNumbers { get; set; }
 
 

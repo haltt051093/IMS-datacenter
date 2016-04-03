@@ -69,9 +69,9 @@ namespace IMS.Data.Business
             return RequestDAO.Current.Query(x => x.RequestCode == requestCode).Select(x => x.Customer).FirstOrDefault();
         }
 
-        public void UpdateRequestStatusANDLog(string requestCode, string typeOfLog, string newStatus, string assignee, string staffCode, string description)
+        public void UpdateRequestStatusANDLog(string requestCode, string typeOfLog, string newStatus, string assignee, string staffCode, string description, string reason)
         {
-            dao.UpdateRequestStatusANDLog(requestCode, typeOfLog, newStatus, assignee, staffCode, description);
+            dao.UpdateRequestStatusANDLog(requestCode, typeOfLog, newStatus, assignee, staffCode, description, reason);
         }
 
         public void UpdateRequestAssignee(string requestCode, string assignee)
@@ -153,7 +153,8 @@ namespace IMS.Data.Business
                                TaskCode = subrt.TaskCode,
                                TaskStatusName = subrt.StatusName,
                                ShiftHead = subrt.ShiftHead,
-                               AppointmentTime = r.AppointmentTime
+                               AppointmentTime = r.AppointmentTime,
+                               Reason = r.Reason
                            }).FirstOrDefault();
             if (request != null)
             {
@@ -197,6 +198,10 @@ namespace IMS.Data.Business
         public NotificationResultModel AddRequestAddServer(string customer, string description,
             DateTime? appointmentTime, string uniqueRequestCode)
         {
+            if (description == null)
+            {
+                description = Constants.Message.CONTENT_NULL;
+            }
             //request
             var requestCode = AddRequestANDLog(Constants.RequestTypeCode.ADD_SERVER,
                     Constants.StatusCode.REQUEST_PENDING, customer, description,
@@ -229,6 +234,10 @@ namespace IMS.Data.Business
         public NotificationResultModel AddRequestBringServerAway(string customer, string description,
             List<ServerExtendedModel> listServers, DateTime? appointmentTime)
         {
+            if (description == null)
+            {
+                description = Constants.Message.CONTENT_NULL;
+            }
             //add request
             var requestCode = AddRequestANDLog(Constants.RequestTypeCode.BRING_SERVER_AWAY,
                     Constants.StatusCode.REQUEST_PENDING, customer, description,
@@ -313,6 +322,10 @@ namespace IMS.Data.Business
 
         public NotificationResultModel AddRequestChangeIP(string customer, string description, string serverCode, List<string> returningIPs)
         {
+            if (description == null)
+            {
+                description = Constants.Message.CONTENT_NULL;
+            }
             var requestCode = AddRequestANDLog(Constants.RequestTypeCode.CHANGE_IP,
                     Constants.StatusCode.REQUEST_PENDING, customer, description,
                     null, serverCode, Constants.TypeOfLog.LOG_CHANGE_IP, null);
@@ -346,6 +359,10 @@ namespace IMS.Data.Business
 
         public NotificationResultModel AddRequestReturnIP(string customer, string description, string serverCode, List<string> returningIPs)
         {
+            if (description == null)
+            {
+                description = Constants.Message.CONTENT_NULL;
+            }
             //add request
             var requestCode = AddRequestANDLog(Constants.RequestTypeCode.RETURN_IP,
                     Constants.StatusCode.REQUEST_PENDING, customer, description,
@@ -402,6 +419,10 @@ namespace IMS.Data.Business
 
         public NotificationResultModel AddRequestReturnRack(string customer, string description, List<RackOfCustomerExtendedModel> listRacks)
         {
+            if (description == null)
+            {
+                description = Constants.Message.CONTENT_NULL;
+            }
             //Add and log request
             var requestCode = AddRequestANDLog(Constants.RequestTypeCode.RETURN_RACK,
                 Constants.StatusCode.REQUEST_PENDING, customer, description,
@@ -447,7 +468,7 @@ namespace IMS.Data.Business
             }
             //update request status and log
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ADD_SERVER,
-            Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
+            Constants.StatusCode.REQUEST_CANCELLED, null, customer, null,null);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
             //luu notification
@@ -496,7 +517,7 @@ namespace IMS.Data.Business
             }
             //update request status and log
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
-                Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
+                Constants.StatusCode.REQUEST_CANCELLED, null, customer, null,null);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
             //luu notification
@@ -520,7 +541,7 @@ namespace IMS.Data.Business
         {
             //update request status and log
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ASSIGN_IP,
-            Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
+            Constants.StatusCode.REQUEST_CANCELLED, null, customer, null,null);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
             //luu notification
@@ -555,7 +576,7 @@ namespace IMS.Data.Business
                 }
                 //update request status and log
                 UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
-                     Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
+                     Constants.StatusCode.REQUEST_CANCELLED, null, customer, null,null);
             }
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
@@ -592,7 +613,7 @@ namespace IMS.Data.Business
                 }
                 //update request status and log
                 UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_IP,
-                    Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
+                    Constants.StatusCode.REQUEST_CANCELLED, null, customer, null,null);
             }
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
@@ -616,7 +637,7 @@ namespace IMS.Data.Business
         public NotificationResultModel CancelRequestRentRack(string requestCode, string customer, string taskCode)
         {
             //update request status and log
-            UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RENT_RACK, Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
+            UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RENT_RACK, Constants.StatusCode.REQUEST_CANCELLED, null, customer, null,null);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
             //luu notification
@@ -652,7 +673,7 @@ namespace IMS.Data.Business
                 }
                 //update request status and log
                 UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
-                    Constants.StatusCode.REQUEST_CANCELLED, null, customer, null);
+                    Constants.StatusCode.REQUEST_CANCELLED, null, customer, null,null);
             }
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
@@ -879,7 +900,7 @@ namespace IMS.Data.Business
             string assignee, string status, string typeOfLog, bool isNotifed)
         {
             UpdateRequestStatusANDLog(requestCode,
-                typeOfLog, status, assignee, shifthead, null);
+                typeOfLog, status, assignee, shifthead, null,null);
             if (isNotifed)
             {
                 //luu notification
@@ -1014,7 +1035,7 @@ namespace IMS.Data.Business
             }
             //Add and log request
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ADD_SERVER,
-                 Constants.StatusCode.REQUEST_DONE, null, assignee, null);
+                 Constants.StatusCode.REQUEST_DONE, null, assignee, null, null);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
             //luu notification
@@ -1052,7 +1073,7 @@ namespace IMS.Data.Business
                     assignee);
                 //add and log request
                 UpdateRequestStatusANDLog(requestCode,
-                     Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.REQUEST_DONE, null, assignee, null);
+                     Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.REQUEST_DONE, null, assignee, null,null);
 
                 //giai phong location, co can log ko?
                 LocationBLO.Current.SetLocationAvailable(server.ServerCode);
@@ -1086,7 +1107,7 @@ namespace IMS.Data.Business
             }
             //Add Log and update request status
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ASSIGN_IP,
-                Constants.StatusCode.REQUEST_DONE, null, assignee, null);
+                Constants.StatusCode.REQUEST_DONE, null, assignee, null,null);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
             //luu notification
@@ -1109,7 +1130,7 @@ namespace IMS.Data.Business
             UpdateChangeIP(returningIPs, newIPs, selectedServer, requestCode, statusCode);
             //update and log request
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
-                Constants.StatusCode.REQUEST_DONE, null, assignee, null);
+                Constants.StatusCode.REQUEST_DONE, null, assignee, null,null);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
             //luu notification
@@ -1139,7 +1160,7 @@ namespace IMS.Data.Business
             }
             //Add Log and update request status
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_IP,
-                Constants.StatusCode.REQUEST_DONE, null, assignee, null);
+                Constants.StatusCode.REQUEST_DONE, null, assignee, null,null);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
             //luu notification
@@ -1172,7 +1193,7 @@ namespace IMS.Data.Business
             }
             //Change request status, task
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RENT_RACK,
-                Constants.StatusCode.REQUEST_DONE, null, assignee, null);
+                Constants.StatusCode.REQUEST_DONE, null, assignee, null,null);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
             //luu notification
@@ -1203,7 +1224,7 @@ namespace IMS.Data.Business
             }
             //add and log request
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
-                Constants.StatusCode.REQUEST_DONE, null, assignee, null);
+                Constants.StatusCode.REQUEST_DONE, null, assignee, null,null);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
             //luu notification
@@ -1235,7 +1256,7 @@ namespace IMS.Data.Business
             }
             //Add and log request
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ADD_SERVER,
-                Constants.StatusCode.REQUEST_REJECTED, assignee, null, reason);
+                Constants.StatusCode.REQUEST_REJECTED, null, assignee, reason, reason);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
             //luu notification
@@ -1270,7 +1291,7 @@ namespace IMS.Data.Business
                     assignee);
                 //add and log request
                 UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
-                    Constants.StatusCode.REQUEST_REJECTED, assignee, null, reason);
+                    Constants.StatusCode.REQUEST_REJECTED, null, assignee, reason, reason);
 
                 //giai phong location, co can log ko?
                 LocationBLO.Current.SetLocationAvailable(server.ServerCode);
@@ -1294,7 +1315,7 @@ namespace IMS.Data.Business
         {
             //Add Log and update request status
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ASSIGN_IP,
-                Constants.StatusCode.REQUEST_REJECTED, assignee, null, reason);
+                Constants.StatusCode.REQUEST_REJECTED, null, assignee, reason, reason);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
             //luu notification
@@ -1320,7 +1341,7 @@ namespace IMS.Data.Business
             }
             //update and log request
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_CHANGE_IP,
-                 Constants.StatusCode.REQUEST_REJECTED, assignee, null, reason);
+                 Constants.StatusCode.REQUEST_REJECTED, null, assignee, reason, reason);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
             //luu notification
@@ -1347,7 +1368,7 @@ namespace IMS.Data.Business
             }
             //Add Log and update request status, task
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_IP,
-                Constants.StatusCode.REQUEST_REJECTED, null, assignee, reason);
+                Constants.StatusCode.REQUEST_REJECTED, null, assignee, reason, reason);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
             //luu notification
@@ -1367,7 +1388,7 @@ namespace IMS.Data.Business
         {
             //Change request status
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RENT_RACK,
-                Constants.StatusCode.REQUEST_REJECTED, assignee, null, reason);
+                Constants.StatusCode.REQUEST_REJECTED, null, assignee, reason, reason);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
             //luu notification
@@ -1398,7 +1419,7 @@ namespace IMS.Data.Business
             }
             //add and log request
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_RETURN_RACK,
-                Constants.StatusCode.REQUEST_REJECTED, assignee, null, reason);
+                Constants.StatusCode.REQUEST_REJECTED, null, assignee, reason, reason);
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);
             //luu notification
@@ -1449,7 +1470,7 @@ namespace IMS.Data.Business
             //luu notification
             var result = new NotificationResultModel();
             var staffName = AccountBLO.Current.GetAccountByCode(preAssignedStaff).Fullname;
-            var desc = staffName + " is not finished the task! Because: " + reason;
+            var desc = staffName + " not finished the task! Because: " + reason;
             var notifCode = NotificationBLO.Current.AddNotification(task.RequestCode, Constants.Object.OBJECT_REQUEST,
                 shifthead, desc);
             result.NotificationCodes.Add(notifCode);
