@@ -127,6 +127,17 @@
                             </div>
                         </div>
                     }
+                    else
+                    {
+                        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                            <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
+                                @Html.LabelFor(model => model.RequestInfo.Assignee)
+                            </div>
+                            <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                                @Html.Raw("[Not Assigned]")
+                            </div>
+                        </div>
+                    }
                 }
                 @if (Model.IsAssignedUser)
                 {

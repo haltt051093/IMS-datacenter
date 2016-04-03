@@ -130,10 +130,10 @@
     <value>Locations</value>
   </data>
   <data name="LocationIndex" xml:space="preserve">
-    <value>List of Locations</value>
+    <value>Locations</value>
   </data>
   <data name="RackIndex" xml:space="preserve">
-    <value>List of Racks</value>
+    <value>Racks</value>
   </data>
   <data name="Request" xml:space="preserve">
     <value>Requests</value>
@@ -148,7 +148,7 @@
     <value>Request History</value>
   </data>
   <data name="RequestIndex" xml:space="preserve">
-    <value>List of Requests</value>
+    <value>Requests</value>
   </data>
   <data name="ReportBlockIP" xml:space="preserve">
     <value>Report of Block IP Address</value>
@@ -160,7 +160,7 @@
     <value>Server Detail</value>
   </data>
   <data name="ServerIndex" xml:space="preserve">
-    <value>List of Servers</value>
+    <value>Servers</value>
   </data>
   <data name="RequestRentRack" xml:space="preserve">
     <value>Rent Rack</value>
@@ -187,10 +187,10 @@
     <value>Return Rack</value>
   </data>
   <data name="AccountIndex" xml:space="preserve">
-    <value>List of Accounts</value>
+    <value>Accounts</value>
   </data>
   <data name="Customer" xml:space="preserve">
-    <value>List of Customers</value>
+    <value>Customers</value>
   </data>
   <data name="ProcessRequest" xml:space="preserve">
     <value>Requests</value>
@@ -220,10 +220,10 @@
     <value>Notification</value>
   </data>
   <data name="IPAvai" xml:space="preserve">
-    <value>List of IP Available</value>
+    <value>Available IP Addresses</value>
   </data>
   <data name="LocationAvai" xml:space="preserve">
-    <value>List of Locations Available</value>
+    <value>Available Locations</value>
   </data>
   <data name="ProcessRequestAddServer" xml:space="preserve">
     <value>Add Server</value>

@@ -133,17 +133,30 @@ namespace IMS.Data.Business
         {
             var query = dao.Query(x => x.RequestCode == requestCode).OrderByDescending(x => x.AssignedTime).FirstOrDefault();
             var list = new List<Account>();
-            if (query.ShiftHead == query.AssignedStaff || query == null)
+            if (query == null)
             {
-                var shifthead = AccountBLO.Current.GetAccountByCode(query.ShiftHead);
-                list.Add(shifthead);
+                var activegroup = AssignedShiftBLO.Current.GetActiveGroup();
+                var activeStaff = AccountBLO.Current.GetAccountsByGroup(activegroup)
+                .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
+                .FirstOrDefault();
+                //var shifthead = AccountBLO.Current.GetAccountByCode(activeStaff);
+                list.Add(activeStaff);
             }
             else
             {
-                var staff = AccountBLO.Current.GetAccountByCode(query.AssignedStaff);
-                var shifthead = AccountBLO.Current.GetAccountByCode(query.ShiftHead);
-                list.Add(staff);
-                list.Add(shifthead);
+                if(query.ShiftHead == query.AssignedStaff)
+                {
+                    var activegroup = AssignedShiftBLO.Current.GetActiveGroup();
+                    var shifthead = AccountBLO.Current.GetAccountByCode(activegroup);
+                    list.Add(shifthead);
+                }
+                else
+                {
+                    var staff = AccountBLO.Current.GetAccountByCode(query.AssignedStaff);
+                    var shifthead = AccountBLO.Current.GetAccountByCode(query.ShiftHead);
+                    list.Add(staff);
+                    list.Add(shifthead);
+                }
             }
             return list;
         }

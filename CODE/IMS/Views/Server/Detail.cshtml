@@ -94,6 +94,12 @@
                 <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
                     @Html.LabelFor(model => model.Server.ServerLocation, "Location")
                 </div>
+                @if (Model.Server.ServerLocation.Count == 0)
+                {
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                        @Html.Raw("[Updating]")
+                    </div>
+                }
                 @if (Model.Server.ServerLocation.Count > 0)
                 {
                     <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
@@ -101,29 +107,26 @@
                         {
                             @Html.DisplayFor(model => item.RackName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                             <span>U</span>
-                            @Html.DisplayFor(model => item.RackUnit, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                            <br />
+                                    @Html.DisplayFor(model => item.RackUnit, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                    <br />
                         }
                         @if (Model.Server.Status == Constants.StatusName.SERVER_RUNNING && !User.IsInRole("Customer"))
                         {
                             <label>
-                                @*<a data-toggle="modal" class="open-blockIP-modal" href="#changelocation-modal"
-                                    data-id="@Model.Server.ServerCode" data-id1="@Model.Server.Size">Change Location?</a>*@
                                 @Html.ActionLink("Change Location", "AssignLocation", "Location", new { ServerCode = Model.Server.ServerCode, rType = "Change", rCode = "", Size = Model.Server.Size }, null)
                             </label>
                         }
-
                     </div>
                 }
             </div>
             <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                 <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                    @Html.LabelFor(model => model.CurrentIPs, "Current IP")
+                    @Html.LabelFor(model => model.CurrentIPs)
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                     @if (Model.CurrentIPs.Count == 0)
                     {
-                        @Html.Display("Not Assigned Yet", new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        @Html.Raw("[Updating]")
                     }
                     else
                     {

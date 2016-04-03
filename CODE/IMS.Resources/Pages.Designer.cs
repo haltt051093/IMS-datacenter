@@ -61,7 +61,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to List of Accounts.
+        ///   Looks up a localized string similar to Accounts.
         /// </summary>
         public static string AccountIndex {
             get {
@@ -97,7 +97,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to List of Customers.
+        ///   Looks up a localized string similar to Customers.
         /// </summary>
         public static string Customer {
             get {
@@ -142,7 +142,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to List of IP Available.
+        ///   Looks up a localized string similar to Available IP Addresses.
         /// </summary>
         public static string IPAvai {
             get {
@@ -169,7 +169,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to List of Locations Available.
+        ///   Looks up a localized string similar to Available Locations.
         /// </summary>
         public static string LocationAvai {
             get {
@@ -178,7 +178,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to List of Locations.
+        ///   Looks up a localized string similar to Locations.
         /// </summary>
         public static string LocationIndex {
             get {
@@ -268,7 +268,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to List of Racks.
+        ///   Looks up a localized string similar to Racks.
         /// </summary>
         public static string RackIndex {
             get {
@@ -358,7 +358,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to List of Requests.
+        ///   Looks up a localized string similar to Requests.
         /// </summary>
         public static string RequestIndex {
             get {
@@ -421,7 +421,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to List of Servers.
+        ///   Looks up a localized string similar to Servers.
         /// </summary>
         public static string ServerIndex {
             get {

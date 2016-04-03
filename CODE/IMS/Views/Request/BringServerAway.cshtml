@@ -16,16 +16,26 @@
     {
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                @Html.LabelFor(model => model.RequestInfo.AppointmentTime, "Appointment Time")
+                @Html.LabelFor(model => model.RequestInfo.AppointmentTime)
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                 <div class='input-group date' id='datetimepicker1'>
-                    @Html.TextBoxFor(model => model.RequestInfo.AppointmentTime, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                    @Html.ValidationMessageFor(model => model.RequestInfo.AppointmentTime)
+                    @Html.TextBoxFor(model => model.RequestInfo.AppointmentTimeStr, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
+
+                <script>
+                    $('#datetimepicker1').datetimepicker({
+                        "disabledHours": [0, 1, 2, 3, 4, 5, 6, 7, 21, 22, 23, 24],
+                        "stepping": '30',
+                        "minDate": 'moment',
+                        "format": "DD/MM/YYYY HH:mm",
+                        "sideBySide": true
+                    });
+                </script>
+                @Html.ValidationMessageFor(model => model.RequestInfo.AppointmentTimeStr)
             </div>
         </div>
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
@@ -115,14 +125,6 @@
         ordering: false,
         searching: false
     });
-
-    //$('#datetimepicker1').datetimepicker({
-    //    "disabledHours": [0, 1, 2, 3, 4, 5, 6, 7, 21, 22, 23, 24],
-    //    "enabledHours": [8, 9, 10, 12, 12, 14, 15, 16, 17, 18, 19, 20],
-    //    "stepping": '30',
-    //    "minDate": 'moment',
-    //    "locale": 'vi'
-    //});
 
     function countSelected() {
         var count = 0;

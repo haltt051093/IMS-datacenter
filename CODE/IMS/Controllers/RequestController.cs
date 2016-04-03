@@ -117,6 +117,16 @@ namespace IMS.Controllers
                                 .ToList();
                             }
                         }
+                        data.RequestInfo = new RequestInfoModel();
+                        var now = DateTime.Now;
+                        if (now.Hour >= 20)
+                        {
+                            data.RequestInfo.AppointmentTimeStr = now.Date.AddHours(32).ToString("dd/MM/yyyy HH:mm");
+                        }
+                        else
+                        {
+                            data.RequestInfo.AppointmentTimeStr = now.Date.AddHours(10).ToString("dd/MM/yyyy HH:mm");
+                        }
                     }
                     return View("BringServerAway", data);
                 }
@@ -324,9 +334,10 @@ namespace IMS.Controllers
         public ActionResult BringServerAway(RequestBringServerAwayViewModel viewmodel)
         {
             var customer = GetCurrentUserName();
+            var appointmentTime = viewmodel.RequestInfo.AppointmentTimeStr.ToDateTime("dd/MM/yyyy HH:mm");
             //update lai trang thai server, trang thai serverIP
             var result = RequestBLO.Current.AddRequestBringServerAway(customer, viewmodel.RequestInfo.Description,
-                viewmodel.ServerOfCustomer, viewmodel.RequestInfo.AppointmentTime);
+                viewmodel.ServerOfCustomer, appointmentTime);
             //dang ky ham cho client
             Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
