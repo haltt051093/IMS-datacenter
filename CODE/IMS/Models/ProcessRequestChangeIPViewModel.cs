@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using IMS.Data.ViewModels;
 using SelectListItem = System.Web.Mvc.SelectListItem;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IMS.Models
 {
@@ -21,9 +23,13 @@ namespace IMS.Models
         public string CurrentUser { get; set; }
 
         // Specific Info
+        [Display(Name ="Server")]
         public string SelectedServer { get; set; }
+        [Display(Name = "Changing IPs")]
         public List<string> ReturningIPs { get; set; }
+        [Display(Name = "New IPs")]
         public List<string> NewIPs { get; set; }
+        public string SelectedDefaultIP { get; set; }
 
         //DropdownList
         public List<SelectListItem> StaffCodeOptions { get; set; }

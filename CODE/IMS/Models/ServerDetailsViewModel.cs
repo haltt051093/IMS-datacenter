@@ -2,6 +2,8 @@
 using System.Web.Mvc;
 using IMS.Data.Models;
 using IMS.Data.ViewModels;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IMS.Models
 {
@@ -9,6 +11,7 @@ namespace IMS.Models
     {
         public ServerExtendedModel Server { get; set; }
         public List<AttributeExtendedModel> Attributes { get; set; }
+        [Display(Name = "Current IPs")]
         public List<ServerIP> CurrentIPs { get; set; }
         public List<RackOfCustomerExtendedModel> Locations { get; set; }
         public Account CustomerInfo { get; set; }

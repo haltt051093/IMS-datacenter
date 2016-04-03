@@ -387,7 +387,7 @@ namespace IMS.Core
 
             public const string PRINT_PROCEDURE = "You've PRINTED a procedure";
 
-            public const string REASSIGN_TASK = "You've REASSIGNED a Task to";
+            public const string REASSIGN_TASK = "You've REASSIGNED a task to";
             public const string ACCEPT_TASK = "You're DOING the task";
             public const string NOT_FINISHED_TASK = "You've NOT FINISHED the task.";
 

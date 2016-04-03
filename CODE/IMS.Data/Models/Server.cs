@@ -19,11 +19,11 @@ namespace IMS.Data.Models
         public int? Power { get; set; }
 
         public int? Size { get; set; }
-
+        [Display(Name = "Server Status")]
         public string StatusCode { get; set; }
-        
+        [Display(Name = "Default IP")]
         public string DefaultIP { get; set; }
-
+        [Display(Name = "Started Date")]
         public DateTime? RegisteredDate { get; set; }
 
         public string Bandwidth { get; set; }

@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using IMS.Core.Express;
 using IMS.Data.Models;
-using IMS.Resources;
 
 namespace IMS.Data.ViewModels
 {
@@ -29,7 +28,7 @@ namespace IMS.Data.ViewModels
         public string RackName { get; set; }
 
         public int? RackUnit { get; set; }
-
+        [Display(Name = "Server Status")]
         public string Status { get; set; }
 
         public string Memory { get; set; }

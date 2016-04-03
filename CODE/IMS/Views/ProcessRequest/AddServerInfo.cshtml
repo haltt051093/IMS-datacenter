@@ -426,6 +426,7 @@
                     @Html.HiddenFor(model => model.RequestInfo.Assignee)
                     @Html.HiddenFor(model => model.RequestInfo.RequestCode)
                     @Html.HiddenFor(model => model.RequestInfo.TaskCode)
+                    @Html.HiddenFor(model => model.RequestInfo.TaskStatus)
                     <button type="submit" name="@Constants.FormAction.REASSIGN_ACTION" value="@Constants.FormAction.REASSIGN_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
                         @Labels.DialogOK
                     </button>

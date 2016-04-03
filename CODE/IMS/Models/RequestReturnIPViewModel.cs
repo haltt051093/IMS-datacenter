@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
-using IMS.Data.Models;
 using IMS.Data.ViewModels;
 using SelectListItem = System.Web.Mvc.SelectListItem;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IMS.Models
 {
@@ -16,7 +17,9 @@ namespace IMS.Models
         public RequestInfoModel RequestInfo { get; set; }
 
         // Specific Info
+        [Display(Name ="Server")]
         public string SelectedServer { get; set; }
+        [Display(Name = "Returining IPs")]
         public List<string> ReturningIPs { get; set; }
         public List<ServerIPExtendedModel> ServerIPs { get; set; }
 

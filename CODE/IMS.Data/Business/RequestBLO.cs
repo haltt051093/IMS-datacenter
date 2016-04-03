@@ -166,6 +166,10 @@ namespace IMS.Data.Business
                 {
                     request.ShiftHeadName = AccountBLO.Current.GetAccountByCode(request.ShiftHead).Fullname;
                 }
+                if (request.AssignedStaff != null)
+                {
+                    request.AssignedStaffName = AccountBLO.Current.GetAccountByCode(request.AssignedStaff).Fullname;
+                }
             }
             return request;
         }
@@ -212,7 +216,8 @@ namespace IMS.Data.Business
             var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
                 .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
                 .ToList();
-            var desc = "Request Add Server from " + customer;
+            var cusName = AccountBLO.Current.GeCustomerInfo(customer).CustomerName;
+            var desc = "Request Add Server from " + cusName;
             foreach (var shiftHead in activeStaff)
             {
                 var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
@@ -253,7 +258,8 @@ namespace IMS.Data.Business
             var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
                 .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
                 .ToList();
-            var desc = "Request Bring Server Away from " + customer;
+            var cusName = AccountBLO.Current.GeCustomerInfo(customer).CustomerName;
+            var desc = "Request Bring Server Away from " + cusName;
             foreach (var shiftHead in activeStaff)
             {
                 var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
@@ -294,7 +300,8 @@ namespace IMS.Data.Business
             var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
                 .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
                 .ToList();
-            var desc = "Request Assign IP from " + customer;
+            var cusName = AccountBLO.Current.GeCustomerInfo(customer).CustomerName;
+            var desc = "Request Assign IP from " + cusName;
             foreach (var shiftHead in activeStaff)
             {
                 var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
@@ -326,7 +333,8 @@ namespace IMS.Data.Business
             var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
                 .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
                 .ToList();
-            var desc = "Request Change IP from " + customer;
+            var cusName = AccountBLO.Current.GeCustomerInfo(customer).CustomerName;
+            var desc = "Request Change IP from " + cusName;
             foreach (var shiftHead in activeStaff)
             {
                 var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
@@ -358,7 +366,8 @@ namespace IMS.Data.Business
             var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
                 .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
                 .ToList();
-            var desc = "Request Return IP from " + customer;
+            var cusName = AccountBLO.Current.GeCustomerInfo(customer).CustomerName;
+            var desc = "Request Return IP from " + cusName;
             foreach (var shiftHead in activeStaff)
             {
                 var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
@@ -380,7 +389,8 @@ namespace IMS.Data.Business
             var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
                 .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
                 .ToList();
-            var desc = "Request Rent Rack from " + customer;
+            var cusName = AccountBLO.Current.GeCustomerInfo(customer).CustomerName;
+            var desc = "Request Rent Rack from " + cusName;
             foreach (var shiftHead in activeStaff)
             {
                 var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
@@ -412,7 +422,8 @@ namespace IMS.Data.Business
             var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
                 .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
                 .ToList();
-            var desc = "Request Return Rack from " + customer;
+            var cusName = AccountBLO.Current.GeCustomerInfo(customer).CustomerName;
+            var desc = "Request Return Rack from " + cusName;
             foreach (var shiftHead in activeStaff)
             {
                 var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
@@ -441,11 +452,13 @@ namespace IMS.Data.Business
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
             //luu notification
             var result = new NotificationResultModel();
-            var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
-            var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
-                .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
-                .ToList();
-            var desc = "Customer " + customer + " cancelled Request Add Server";
+            //var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
+            //var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
+            //    .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
+            //    .ToList();
+            var activeStaff = TaskBLO.Current.StaffOfTask(requestCode);
+            var cusName = AccountBLO.Current.GeCustomerInfo(customer).CustomerName;
+            var desc = "Customer " + cusName + " cancelled Request Add Server";
             foreach (var shiftHead in activeStaff)
             {
                 var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
@@ -488,11 +501,13 @@ namespace IMS.Data.Business
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
             //luu notification
             var result = new NotificationResultModel();
-            var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
-            var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
-                .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
-                .ToList();
-            var desc = "Customer " + customer + " cancelled Request Bring Server Away";
+            //var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
+            //var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
+            //    .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
+            //    .ToList();
+            var activeStaff = TaskBLO.Current.StaffOfTask(requestCode);
+            var cusName = AccountBLO.Current.GeCustomerInfo(customer).CustomerName;
+            var desc = "Customer " + cusName + " cancelled Request Bring Server Away";
             foreach (var shiftHead in activeStaff)
             {
                 var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
@@ -514,7 +529,8 @@ namespace IMS.Data.Business
             var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
                 .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
                 .ToList();
-            var desc = "Customer " + customer + " cancelled Request Assign IP";
+            var cusName = AccountBLO.Current.GeCustomerInfo(customer).CustomerName;
+            var desc = "Customer " + cusName + " cancelled Request Assign IP";
             foreach (var shiftHead in activeStaff)
             {
                 var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
@@ -545,11 +561,13 @@ namespace IMS.Data.Business
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
             //luu notification
             var result = new NotificationResultModel();
-            var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
-            var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
-                .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
-                .ToList();
-            var desc = "Customer " + customer + " cancelled Request Change IP";
+            //var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
+            //var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
+            //    .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
+            //    .ToList();
+            var activeStaff = TaskBLO.Current.StaffOfTask(requestCode);
+            var cusName = AccountBLO.Current.GeCustomerInfo(customer).CustomerName;
+            var desc = "Customer " + cusName + " cancelled Request Change IP";
             foreach (var shiftHead in activeStaff)
             {
                 var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
@@ -580,11 +598,13 @@ namespace IMS.Data.Business
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
             //luu notification
             var result = new NotificationResultModel();
-            var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
-            var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
-                .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
-                .ToList();
-            var desc = "Customer " + customer + " cancelled Request Return IP";
+            //var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
+            //var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
+            //    .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
+            //    .ToList();
+            var activeStaff = TaskBLO.Current.StaffOfTask(requestCode);
+            var cusName = AccountBLO.Current.GeCustomerInfo(customer).CustomerName;
+            var desc = "Customer " + cusName + " cancelled Request Return IP";
             foreach (var shiftHead in activeStaff)
             {
                 var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
@@ -601,11 +621,13 @@ namespace IMS.Data.Business
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
             //luu notification
             var result = new NotificationResultModel();
-            var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
-            var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
-                .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
-                .ToList();
-            var desc = "Customer " + customer + " cancelled Request Rent Rack";
+            //var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
+            //var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
+            //    .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
+            //    .ToList();
+            var activeStaff = TaskBLO.Current.StaffOfTask(requestCode);
+            var cusName = AccountBLO.Current.GeCustomerInfo(customer).CustomerName;
+            var desc = "Customer " + cusName + " cancelled Request Rent Rack";
             foreach (var shiftHead in activeStaff)
             {
                 var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
@@ -636,11 +658,13 @@ namespace IMS.Data.Business
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
             //luu notification
             var result = new NotificationResultModel();
-            var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
-            var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
-                .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
-                .ToList();
-            var desc = "Customer " + customer + " cancelled Request Return Rack";
+            //var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
+            //var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
+            //    .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
+            //    .ToList();
+            var activeStaff = TaskBLO.Current.StaffOfTask(requestCode);
+            var cusName = AccountBLO.Current.GeCustomerInfo(customer).CustomerName;
+            var desc = "Customer " + cusName + " cancelled Request Return Rack";
             foreach (var shiftHead in activeStaff)
             {
                 var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
@@ -679,10 +703,10 @@ namespace IMS.Data.Business
         public ProcessRequestExtendedModel DetailProcessRequestAddServer(string requestCode, string group, string role)
         {
             var request = GetCommonProcessRequest(requestCode, group);
-            if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.MANAGER)
-            {
-                request.RequestInfo.IsShifthead = true;
-            }
+            //if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.MANAGER)
+            //{
+            //    request.RequestInfo.IsShifthead = true;
+            //}
             //lay list servers
             var serverCodes = LogBLO.Current.GetAddingServers(requestCode);
             List<ServerExtendedModel> list = new List<ServerExtendedModel>();
@@ -698,10 +722,10 @@ namespace IMS.Data.Business
         public ProcessRequestExtendedModel DetailProcessRequestBringServerAway(string requestCode, string group, string role)
         {
             var request = GetCommonProcessRequest(requestCode, group);
-            if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.MANAGER)
-            {
-                request.RequestInfo.IsShifthead = true;
-            }
+            //if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.MANAGER)
+            //{
+            //    request.RequestInfo.IsShifthead = true;
+            //}
             //main info
             var returnValues = LogBLO.Current.RequestDetailsBringServerAway(requestCode);
             request.ReturnIpNumber = returnValues.ReturnIpNumber;
@@ -714,10 +738,10 @@ namespace IMS.Data.Business
         public ProcessRequestExtendedModel DetailProcessRequestAssignIP(string requestCode, string group, string role)
         {
             var request = GetCommonProcessRequest(requestCode, group);
-            if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.MANAGER)
-            {
-                request.RequestInfo.IsShifthead = true;
-            }
+            //if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.MANAGER)
+            //{
+            //    request.RequestInfo.IsShifthead = true;
+            //}
             //Lay so luong IP muon assign
             var reqDetail = JsonConvert.DeserializeObject<RequestDetailViewModel>(request.RequestInfo.Description);
             request.NumberOfIP = reqDetail.NumberOfIp;
@@ -768,15 +792,16 @@ namespace IMS.Data.Business
         public ProcessRequestExtendedModel DetailProcessRequestChangeIP(string requestCode, string group, string role)
         {
             var request = GetCommonProcessRequest(requestCode, group);
-            if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.MANAGER)
-            {
-                request.RequestInfo.IsShifthead = true;
-            }
+            //if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.MANAGER)
+            //{
+            //    request.RequestInfo.IsShifthead = true;
+            //}
             //lay ip muon change
             request.ReturningIPs = LogBLO.Current.GetChangedValueOfObject(requestCode,
                 Constants.Object.OBJECT_SERVERIP, Constants.StatusCode.SERVERIP_CHANGING);
             //lay servercode, roi lay ip cua server do, tim nhung ip cung vung con lai
             request.SelectedServer = LogBLO.Current.GetServerCodeByRequestCode(requestCode).FirstOrDefault();
+            request.SelectedDefaultIP = ServerBLO.Current.GetAllServerInfo(request.SelectedServer).DefaultIP;
             if (request.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
             {
                 //Lay list available ip cung vung
@@ -795,11 +820,12 @@ namespace IMS.Data.Business
         public ProcessRequestExtendedModel DetailProcessRequestReturnIP(string requestCode, string group, string role)
         {
             var request = GetCommonProcessRequest(requestCode, group);
-            if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.MANAGER)
-            {
-                request.RequestInfo.IsShifthead = true;
-            }
+            //if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.MANAGER)
+            //{
+            //    request.RequestInfo.IsShifthead = true;
+            //}
             request.SelectedServer = LogBLO.Current.GetServerCodeByRequestCode(requestCode).FirstOrDefault();
+            request.SelectedDefaultIP = ServerBLO.Current.GetAllServerInfo(request.SelectedServer).DefaultIP;
             //List returning IPs
             request.ReturningIPs = LogBLO.Current.GetChangedValueOfObject(requestCode, Constants.Object.OBJECT_SERVERIP,
                 Constants.StatusCode.SERVERIP_RETURNING);
@@ -809,10 +835,10 @@ namespace IMS.Data.Business
         public ProcessRequestExtendedModel DetailProcessRequestRentRack(string requestCode, string group, string role)
         {
             var request = GetCommonProcessRequest(requestCode, group);
-            if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.MANAGER)
-            {
-                request.RequestInfo.IsShifthead = true;
-            }
+            //if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.MANAGER)
+            //{
+            //    request.RequestInfo.IsShifthead = true;
+            //}
             var desc = JsonConvert.DeserializeObject<RequestDetailViewModel>(request.RequestInfo.Description);
             request.RackNumbers = desc.NumberOfRack;
             request.RequestInfo.Description = desc.Description;
@@ -836,10 +862,10 @@ namespace IMS.Data.Business
         public ProcessRequestExtendedModel DetailProcessRequestReturnRack(string requestCode, string group, string role)
         {
             var request = GetCommonProcessRequest(requestCode, group);
-            if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.MANAGER)
-            {
-                request.RequestInfo.IsShifthead = true;
-            }
+            //if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.MANAGER)
+            //{
+            //    request.RequestInfo.IsShifthead = true;
+            //}
             //Lay so luong rack muon return
             var listRacks = LogBLO.Current.RequestDetailsReturnRack(requestCode);
             request.SelectedRacks = listRacks.listRacks;
@@ -1387,6 +1413,29 @@ namespace IMS.Data.Business
         }
         #endregion
 
+        #region accept request
+        public NotificationResultModel AcceptTask(string taskCode, string requestCode)
+        {
+            //get assignedstaff and shifthead
+            var task = TaskBLO.Current.GetByKeys(new Models.Task() { TaskCode = taskCode });
+            var shifthead = task.ShiftHead;
+            var assignedStaff = task.AssignedStaff;
+            //update task
+            TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_DOING);
+            //get request type
+            var requestType = GetByKeys(new Request { RequestCode = requestCode }).RequestType;
+            var requestTypeName = RequestTypeBLO.Current.GetByKeys(new RequestType { RequestTypeCode = requestType }).RequestTypeName;
+            //luu notification
+            var result = new NotificationResultModel();
+            var assignedStaffName = AccountBLO.Current.GetAccountByCode(assignedStaff).Fullname;
+            var desc = assignedStaffName + " starts PROCESSING request " + requestTypeName;
+            var notifCode = NotificationBLO.Current.AddNotification(task.RequestCode, Constants.Object.OBJECT_REQUEST,
+                shifthead, desc);
+            result.NotificationCodes.Add(notifCode);
+            return result;
+        }
+        #endregion
+
         #region Not finish request
 
         public NotificationResultModel NotFinishRequest(string taskCode, string reason)
@@ -1399,7 +1448,8 @@ namespace IMS.Data.Business
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_NOTFINISH);
             //luu notification
             var result = new NotificationResultModel();
-            var desc = preAssignedStaff + " is not finished the Task! Because " + reason;
+            var staffName = AccountBLO.Current.GetAccountByCode(preAssignedStaff).Fullname;
+            var desc = staffName + " is not finished the task! Because: " + reason;
             var notifCode = NotificationBLO.Current.AddNotification(task.RequestCode, Constants.Object.OBJECT_REQUEST,
                 shifthead, desc);
             result.NotificationCodes.Add(notifCode);

@@ -128,5 +128,24 @@ namespace IMS.Data.Business
 
             return result;
         }
+
+        public List<Account> StaffOfTask(string requestCode)
+        {
+            var query = dao.Query(x => x.RequestCode == requestCode).OrderByDescending(x => x.AssignedTime).FirstOrDefault();
+            var list = new List<Account>();
+            if (query.ShiftHead == query.AssignedStaff || query == null)
+            {
+                var shifthead = AccountBLO.Current.GetAccountByCode(query.ShiftHead);
+                list.Add(shifthead);
+            }
+            else
+            {
+                var staff = AccountBLO.Current.GetAccountByCode(query.AssignedStaff);
+                var shifthead = AccountBLO.Current.GetAccountByCode(query.ShiftHead);
+                list.Add(staff);
+                list.Add(shifthead);
+            }
+            return list;
+        }
     }
 }

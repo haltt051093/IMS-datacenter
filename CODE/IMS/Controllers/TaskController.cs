@@ -5,6 +5,7 @@ using IMS.Authentications;
 using IMS.Core;
 using IMS.Data.Business;
 using IMS.Models;
+using IMS.Data.ViewModels;
 
 namespace IMS.Controllers
 {
@@ -36,8 +37,8 @@ namespace IMS.Controllers
         #region accept task
         public ActionResult AcceptTask(string requestCode, string taskCode)
         {
-            //update task
-            TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_DOING);
+            var result = RequestBLO.Current.AcceptTask(taskCode, requestCode);
+            Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "ProcessRequest",
                 new { code = requestCode, msg = Constants.Message.ACCEPT_TASK });
         }

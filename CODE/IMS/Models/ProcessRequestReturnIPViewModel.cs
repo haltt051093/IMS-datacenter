@@ -22,6 +22,7 @@ namespace IMS.Models
 
         // Specific Info
         public string SelectedServer { get; set; }
+        public string SelectedDefaultIP { get; set; }
         public List<string> ReturningIPs { get; set; }
 
         //DropdownList

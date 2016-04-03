@@ -15,14 +15,6 @@
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             @Html.HiddenFor(model => model.SuccessMessage)
             <div class="col-xs-6">
-                @*<div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                        @Html.LabelFor(model => model.RequestInfo.RequestCode)
-                    </div>
-                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
-                        @Html.DisplayFor(model => model.RequestInfo.RequestCode, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                    </div>
-                </div>*@
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                     <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
                         @Html.LabelFor(model => model.RequestInfo.StatusName)
@@ -55,8 +47,6 @@
                         @Html.DisplayFor(model => model.RequestInfo.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                     </div>
                 </div>
-            </div>
-            <div class="col-xs-6">
             </div>
         </div>
         <hr />

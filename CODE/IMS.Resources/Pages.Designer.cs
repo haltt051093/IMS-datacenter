@@ -196,7 +196,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Process Requests.
+        ///   Looks up a localized string similar to Requests.
         /// </summary>
         public static string ProcessRequest {
             get {
@@ -304,7 +304,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Request Add Server.
+        ///   Looks up a localized string similar to Add Server.
         /// </summary>
         public static string RequestAddServer {
             get {
@@ -313,7 +313,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Request Assign IP.
+        ///   Looks up a localized string similar to Assign IP.
         /// </summary>
         public static string RequestAssignIP {
             get {
@@ -322,7 +322,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Request Bring Server Away.
+        ///   Looks up a localized string similar to Bring Server Away.
         /// </summary>
         public static string RequestBringServerAway {
             get {
@@ -331,7 +331,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Request Change IP Address.
+        ///   Looks up a localized string similar to Change IP Address.
         /// </summary>
         public static string RequestChangeIP {
             get {
@@ -376,7 +376,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Request Rent Rack.
+        ///   Looks up a localized string similar to Rent Rack.
         /// </summary>
         public static string RequestRentRack {
             get {
@@ -385,7 +385,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Request Return IP Address.
+        ///   Looks up a localized string similar to Return IP Address.
         /// </summary>
         public static string RequestReturnIP {
             get {
@@ -394,7 +394,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Request Return Rack.
+        ///   Looks up a localized string similar to Return Rack.
         /// </summary>
         public static string RequestReturnRack {
             get {

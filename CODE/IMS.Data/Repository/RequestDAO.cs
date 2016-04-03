@@ -66,7 +66,7 @@ namespace IMS.Data.Repository
             return RawQuery<ScheduleExtendedModel>(query,
                 new SqlParameter("start", start),
                 new SqlParameter("end", end),
-                new SqlParameter("waiting", Constants.StatusCode.REQUEST_WAITING),
+                new SqlParameter("waiting", Constants.StatusCode.REQUEST_PENDING),
                 new SqlParameter("processing", Constants.StatusCode.REQUEST_PROCESSING),
                 new SqlParameter("done", Constants.StatusCode.REQUEST_DONE)
             );
@@ -217,7 +217,7 @@ namespace IMS.Data.Repository
             var query = LogDAO.Current.Query(x => x.ServerCode == serverCode
                 && x.Object == Constants.Object.OBJECT_REQUEST
                 && (x.ObjectStatus == Constants.StatusCode.REQUEST_PENDING
-                || x.ObjectStatus == Constants.StatusCode.REQUEST_WAITING
+                || x.ObjectStatus == Constants.StatusCode.REQUEST_PENDING
                 || x.ObjectStatus == Constants.StatusCode.REQUEST_PROCESSING)).Select(x => x.RequestCode);
             return query.Select(item => (from re in RequestDAO.Current.Table
                                          join rt in RequestTypeDAO.Current.Table on re.RequestType equals rt.RequestTypeCode

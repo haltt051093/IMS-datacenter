@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using IMS.Data.ViewModels;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using SelectListItem = System.Web.Mvc.SelectListItem;
 
 namespace IMS.Models
@@ -21,7 +23,9 @@ namespace IMS.Models
         // Specific Info
         public List<RackExtendedModel> listRackByRows { get; set; }
         public string SelectedRow { get; set; }
+        [Display(Name ="Rented Rack(s)")]
         public List<string> RentedRacks { get; set; }
+        [Display(Name ="Required number of rack(s)")]
         public int RackNumbers { get; set; }
 
         //DropdownList

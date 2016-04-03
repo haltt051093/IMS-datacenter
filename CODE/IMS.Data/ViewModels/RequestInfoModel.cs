@@ -16,6 +16,7 @@ namespace IMS.Data.ViewModels
         public string NotFinishReason { get; set; }
         [Display(Name = "Assigned Staff")]
         public string AssignedStaff { get; set; }
+        public string AssignedStaffName { get; set; }
         [Display(Name = "Task Status")]
         public string TaskStatus { get; set; }
         [Display(Name = "Task Status")]

@@ -15,63 +15,55 @@
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="col-xs-6">
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                        @Html.LabelFor(model => model.RequestInfo.RequestCode, "Request Code")
-                        @Html.HiddenFor(model => model.SuccessMessage)
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_X3_CLASS">
+                        @Html.LabelFor(model => model.RequestInfo.StatusName)
                     </div>
-                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
-                        @Html.DisplayFor(model => model.RequestInfo.RequestCode, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                    </div>
-                </div>
-                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                        @Html.LabelFor(model => model.RequestInfo.StatusName, "Status")
-                    </div>
-                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X3_CLASS">
                         @Html.DisplayFor(model => model.RequestInfo.StatusName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                     </div>
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                        @Html.LabelFor(model => model.RequestInfo.RequestedTime, "Requested Time")
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_X3_CLASS">
+                        @Html.LabelFor(model => model.RequestInfo.RequestedTime)
                     </div>
-                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X3_CLASS">
                         @Html.DisplayFor(model => model.RequestInfo.RequestedTime, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                     </div>
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_X3_CLASS">
                         @Html.LabelFor(model => model.RequestInfo.Description)
                     </div>
-                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X3_CLASS">
                         @Html.DisplayFor(model => model.RequestInfo.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                     </div>
                 </div>
-            </div>
-            <div class="col-xs-6">
-            </div>
-        </div>
-        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                @Html.LabelFor(model => model.RackNumbers, "Number of Rack")
-            </div>
-            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                @Html.DisplayFor(model => model.RackNumbers, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_X3_CLASS">
+                        @Html.LabelFor(model => model.RackNumbers)
+                    </div>
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X3_CLASS">
+                        @Html.DisplayFor(model => model.RackNumbers, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    </div>
+                </div>
             </div>
         </div>
+
         if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
         {
             <hr />
             <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                    @Html.LabelFor(model => model.RentedRacks, "Rented Rack")
-                </div>
-                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                    @foreach (var item in Model.RentedRacks)
+                <div class="col-xs-6">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_X3_CLASS">
+                        @Html.LabelFor(model => model.RentedRacks)
+                    </div>
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X3_CLASS">
+                        @foreach (var item in Model.RentedRacks)
                     {
-                        @Html.DisplayFor(model => item, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                        <br />
-                    }
+                            @Html.DisplayFor(model => item, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                            <br />
+                        }
+                    </div>
                 </div>
             </div>
         }
@@ -79,52 +71,54 @@
         {
             <hr />
             <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                    @Html.LabelFor(model => model.RequestInfo.Reason, "Rejeted Reason")
-                </div>
-                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                    @Html.DisplayFor(model => model.RequestInfo.Reason, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                <div class="col-xs-6">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_X3_CLASS">
+                        @Html.LabelFor(model => model.RequestInfo.Reason)
+                    </div>
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X3_CLASS">
+                        @Html.DisplayFor(model => model.RequestInfo.Reason, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    </div>
                 </div>
             </div>
         }
-                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                    </div>
-                    <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                        @Html.HiddenFor(model => model.RequestInfo.RequestCode)
-                        @Html.HiddenFor(model => model.CustomerInfo.Customer)
-                        @Html.HiddenFor(x => x.RequestInfo.RequestType)
-                        @Html.HiddenFor(model => model.RequestInfo.TaskCode)
-                        @if ((Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING ||
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.HiddenFor(model => model.RequestInfo.RequestCode)
+                @Html.HiddenFor(model => model.CustomerInfo.Customer)
+                @Html.HiddenFor(x => x.RequestInfo.RequestType)
+                @Html.HiddenFor(model => model.RequestInfo.TaskCode)
+                @if ((Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING ||
                               Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING) && User.IsInRole("Customer"))
-                        {
-                            <a class="btn btn-danger" data-toggle="modal" data-target="#Cancelrequest">Cancel</a>
-                        }
-                    </div>
-                </div>
+                {
+                    <a class="btn btn-danger" data-toggle="modal" data-target="#Cancelrequest">Cancel</a>
+                }
+            </div>
+        </div>
                               <!-- Cancel request modal -->
-                <div id="Cancelrequest" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog" style="width: 350px">
-                        <div class="modal-content">
+        <div id="Cancelrequest" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" style="width: 350px">
+                <div class="modal-content">
 
 
-                            <div class="modal-body">
-                                <h4>Are you sure to cancel this request?</h4>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" id="btnCancel" name="@Constants.FormAction.CANCEL_ACTION" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                                    @Labels.OK
-                                </button>
-                                <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
-                                        data-dismiss="modal">
-                                    @Labels.DialogCancel
-                                </button>
+                    <div class="modal-body">
+                        <h4>Are you sure to cancel this request?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" id="btnCancel" name="@Constants.FormAction.CANCEL_ACTION" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                            @Labels.OK
+                        </button>
+                        <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
+                                data-dismiss="modal">
+                            @Labels.DialogCancel
+                        </button>
 
-                            </div>
+                    </div>
 
-                        </div><!-- /.modal-content -->
-                    </div><!-- /.modal-dialog -->
-                </div><!-- /.modal -->
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
     }
 </section>
 <script type="text/javascript">

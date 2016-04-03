@@ -139,7 +139,7 @@
     <value>Requests</value>
   </data>
   <data name="RequestAddServer" xml:space="preserve">
-    <value>Request Add Server</value>
+    <value>Add Server</value>
   </data>
   <data name="RequestCreate" xml:space="preserve">
     <value>Create Request</value>
@@ -163,28 +163,28 @@
     <value>List of Servers</value>
   </data>
   <data name="RequestRentRack" xml:space="preserve">
-    <value>Request Rent Rack</value>
+    <value>Rent Rack</value>
   </data>
   <data name="ReportUsingIP" xml:space="preserve">
     <value>Report About Used and Using IP</value>
   </data>
   <data name="RequestAssignIP" xml:space="preserve">
-    <value>Request Assign IP</value>
+    <value>Assign IP</value>
   </data>
   <data name="RequestBringServerAway" xml:space="preserve">
-    <value>Request Bring Server Away</value>
+    <value>Bring Server Away</value>
   </data>
   <data name="RequestChangeIP" xml:space="preserve">
-    <value>Request Change IP Address</value>
+    <value>Change IP Address</value>
   </data>
   <data name="RequestRentIP" xml:space="preserve">
     <value>Request Rent IP Address</value>
   </data>
   <data name="RequestReturnIP" xml:space="preserve">
-    <value>Request Return IP Address</value>
+    <value>Return IP Address</value>
   </data>
   <data name="RequestReturnRack" xml:space="preserve">
-    <value>Request Return Rack</value>
+    <value>Return Rack</value>
   </data>
   <data name="AccountIndex" xml:space="preserve">
     <value>List of Accounts</value>
@@ -193,7 +193,7 @@
     <value>List of Customers</value>
   </data>
   <data name="ProcessRequest" xml:space="preserve">
-    <value>Process Requests</value>
+    <value>Requests</value>
   </data>
   <data name="ProcessRequestChangeIP" xml:space="preserve">
     <value>Change IP Address</value>
