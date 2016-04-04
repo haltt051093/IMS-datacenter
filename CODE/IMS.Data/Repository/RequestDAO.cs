@@ -66,7 +66,7 @@ namespace IMS.Data.Repository
             return RawQuery<ScheduleExtendedModel>(query,
                 new SqlParameter("start", start),
                 new SqlParameter("end", end),
-                new SqlParameter("waiting", Constants.StatusCode.REQUEST_PENDING),
+                new SqlParameter("waiting", Constants.StatusCode.REQUEST_WAITING),
                 new SqlParameter("processing", Constants.StatusCode.REQUEST_PROCESSING),
                 new SqlParameter("done", Constants.StatusCode.REQUEST_DONE)
             );
