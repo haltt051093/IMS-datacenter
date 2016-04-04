@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using IMS.Core;
 using IMS.Data.Generic;
 using IMS.Data.Models;
 using IMS.Data.Repository;
@@ -35,7 +36,7 @@ namespace IMS.Data.Business
         {
             var result =  new List<AssignedShift>();
             var shifts = GetAll();
-            var groups = GroupDAO.Current.Query(x => x.GroupCode != "No Group");
+            var groups = GroupDAO.Current.Query(x => x.GroupCode != "Admin" && x.GroupCode != Constants.Role.CUSTOMER);
             var selectedGroup = groups.FirstOrDefault(x => x.GroupCode == startedGroup);
             var startedGroupId = selectedGroup == null ? 0 : groups.IndexOf(selectedGroup);
             for (var date = startedDate; date <= endedDate;)
