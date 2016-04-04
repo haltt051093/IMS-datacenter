@@ -50,9 +50,11 @@ namespace IMS.Services
             public static void Start()
             {
                 var scheduler = StdSchedulerFactory.GetDefaultScheduler();
+                scheduler.Start();
                 {
                     var job = JobBuilder.Create<TestJob>().Build();
                     var trigger = TriggerBuilder.Create()
+                        .StartNow()
                         .WithDailyTimeIntervalSchedule(s => 
                             s.WithIntervalInHours(24)
                             .OnEveryDay()
@@ -70,7 +72,6 @@ namespace IMS.Services
                         .Build();
                     scheduler.ScheduleJob(job, trigger);
                 }
-                scheduler.Start();
             }
         }
     }

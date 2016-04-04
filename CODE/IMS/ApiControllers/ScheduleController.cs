@@ -14,8 +14,8 @@ namespace IMS.ApiControllers
     {
         public List<FullCalendarReponse> GetSchedule(long start, long end)
         {
-            var startTime = start.AsEpochToDateTime();
-            var endTime = end.AsEpochToDateTime();
+            var startTime = start.AsEpochToDateTime(true);
+            var endTime = end.AsEpochToDateTime(true);
             var schedule = RequestBLO.Current.GetSchedule(startTime, endTime);
             var result = schedule.Select(x =>
                     {
