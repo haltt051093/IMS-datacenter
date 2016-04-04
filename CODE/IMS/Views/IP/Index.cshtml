@@ -179,7 +179,7 @@
 
 
 <div id="blockip-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width: 400px">
         <div class="modal-content">
             @using (Html.BeginForm("ChangeIPStatus", "IP"))
             {
@@ -193,14 +193,14 @@
                             @Html.LabelFor(model => model.Description)
                         </div>
                         <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                            @Html.TextBoxFor(model => model.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                            @Html.TextAreaFor(model => model.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS, @cols = 40, @rows = 2 })
                             @Html.ValidationMessageFor(model => model.Description)
                         </div>
                     </div>
                     <input class="hidden" name="Id" id="idblock" />
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
+                    <button type="submit" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
                         @Labels.Block
                     </button>
                     <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
@@ -215,7 +215,7 @@
 </div><!-- /.modal -->
 
 <div id="unblockip-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width: 400px">
         <div class="modal-content">
             @using (Html.BeginForm("ChangeIPStatus", "IP"))
             {
@@ -229,14 +229,14 @@
                             @Html.LabelFor(model => model.Description)
                         </div>
                         <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                            @Html.TextBoxFor(model => model.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                            @Html.TextAreaFor(model => model.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS, @cols = 40, @rows = 2 })
                             @Html.ValidationMessageFor(model => model.Description)
                         </div>
                     </div>
                     <input name="Id" Id="idunblock" class="hidden" />
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.WARNING_BUTTON_CLASS">
+                    <button type="submit" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
                         @Labels.Unblock
                     </button>
                     <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
