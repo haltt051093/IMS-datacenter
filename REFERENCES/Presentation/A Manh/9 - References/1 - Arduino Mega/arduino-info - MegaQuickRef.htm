@@ -1,0 +1,1221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="search" href="https://arduino-info.wikispaces.com/space/opensearch" type="application/opensearchdescription+xml" title="Wikispaces Search (arduino-info Wiki)">
+<link rel="alternate" type="application/x-wiki" title="Edit This Page" href="https://arduino-info.wikispaces.com/page/edit/MegaQuickRef">
+<link rel="alternate" title="arduino-info - All Changes" href="https://arduino-info.wikispaces.com/wiki/xmla?v=rss_2_0" type="application/rss+xml">
+<link rel="alternate" title="arduino-info : MegaQuickRef - Discussion" href="https://arduino-info.wikispaces.com/message/xml/MegaQuickRef?v=rss_2_0" type="application/rss+xml">
+<link rel="alternate" title="arduino-info : MegaQuickRef - Edits" href="https://arduino-info.wikispaces.com/page/xml/MegaQuickRef?v=rss_2_0" type="application/rss+xml">
+<link rel="microsummary" href="https://arduino-info.wikispaces.com/page/microsummary/MegaQuickRef/edits">
+<link rel="microsummary" href="https://arduino-info.wikispaces.com/page/microsummary/MegaQuickRef/messages">
+<script src="arduino-info%20-%20MegaQuickRef_files/ga.js" async="" type="text/javascript"></script><script type="text/javascript">
+  
+if (typeof ws === 'undefined') ws = {};
+ws.context = {
+  instance: {
+    id: '1',
+    url: 'wikispaces.com',
+    isMain: true,
+    supportsGoogleDocs: false,
+    isTesClassroom: false,
+  },
+  user: {
+    id: '',
+    username: '',
+    status: '',
+    locale: 'en_US',
+    imageUrlPrefix: 'https://ssl.wikicdn.com/i/user_none_',
+    isTeacher: false,
+    canAdministerWiki: false,
+  },
+  wiki: {
+    id: '6378028',
+    name: 'arduino-info',
+    text: 'arduino-info',
+    module: 'B',
+    isClassroom: false,
+    isTesClassroom: false
+    ,defaultSpaceId: 6378028
+    ,isWwwWiki: false
+  },
+  project: {
+    id: '6378028',
+    name: ''
+  },
+  space: {
+    id: '6378028',
+    name: 'arduino-info',
+    isDefaultSpace: true,
+    isDefaultTemplate: false
+  },
+
+  environment_name: 'prod',
+
+  path: {
+    object: 'page',
+    method: 'view',
+    page: 'MegaQuickRef',
+    id: ''
+  },
+
+  settings: {
+    main_domain: 'wikispaces.com',
+    session_url: 'https://session.wikispaces.com/1/',
+    asset_url_prefix: 'https://ssl.wikicdn.com',
+    beta_features: false,
+    isMobileSite: false,
+    isUploadCapable: true,
+    can_discuss: false,
+    has_gdocs: false,
+    isDialog: false,
+    pwin: ''
+  },
+  clockSkewMillis: 1433740306600 - ((window.performance && window.performance.timing.responseStart > 0) ? window.performance.timing.responseStart : (new Date()).getTime())
+}
+
+
+// legacy javascript API variables, use the above instead
+var wikispaces_isUserLoggedIn = !!ws.context.user.id;
+var wikispaces_isMain = ws.context.instance.isMain;
+var wikispaces_username = ws.context.user.username;
+var wikispaces_spaceName = ws.context.space.name;
+var wikispaces_projectName = ws.context.project.name;
+var wikispaces_wikiName = ws.context.wiki.name;
+var wikispaces_wikiText = ws.context.wiki.text;
+var wikispaces_isDefaultSpace = ws.context.space.isDefaultSpace;
+var wikispaces_method = ws.context.path.method;
+var wikispaces_object = ws.context.path.object;
+var wikispaces_page = ws.context.path.page;
+var wikispaces_id = ws.context.path.id;
+var wikispaces_domain = ws.context.instance.url;
+var wikispaces_isUserOrganizer = false;
+var wikispaces_main_domain = ws.context.settings.asset_url_prefix;
+var wikispaces_asset_url_prefix = ws.context.settings.asset_url_prefix;
+var wikispaces_beta_features = ws.context.settings.beta_features;
+var wikispaces_isMobileSite = ws.context.settings.isMobileSite;
+var wikispaces_isUploadCapable = ws.context.settings.isUploadCapable;
+var wikispaces_can_discuss = ws.context.settings.can_discuss;
+var wikispaces_has_gdocs = ws.context.settings.has_gdocs;
+
+</script><title>arduino-info - MegaQuickRef</title>
+<meta charset="utf-8">
+<link rel="apple-touch-icon" sizes="144x144" href="https://ssl.wikicdn.com/_/z6371z4x/i/logo-144.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://ssl.wikicdn.com/_/j5j77xz3/i/logo-114.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://ssl.wikicdn.com/_/vq8j5432/i/logo-72.png">
+<link rel="apple-touch-icon" href="https://ssl.wikicdn.com/_/38515190/i/logo-57.png">
+<link rel="shortcut icon" href="https://ssl.wikicdn.com/_/55v9k02z/i/logo-16.png">
+<style type="text/css">
+/* Standard theme styles */
+*, *:before, *:after {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+body {
+  font-family: arial, helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0;
+}
+.ws-theme-header-inner,
+.ws-theme-body-inner,
+.ws-theme-footer-inner,
+.ws-theme-content-inner,
+.ws-theme-sidebar-inner {
+  position: relative;
+}
+.ws-theme-header-inner:after,
+.ws-theme-body-inner:after,
+.ws-theme-footer-inner:after,
+.ws-theme-content-inner:after,
+.ws-theme-sidebar-inner:after,
+.ws-theme-menu-inner:after {
+  content: " ";
+  visibility: hidden;
+  display: block;
+  height: 0;
+  clear: both;
+}
+.ws-theme-content, .ws-theme-sidebar {
+  overflow-x: auto;
+}
+.ws-theme-footer {
+  text-align: right;
+}
+.ws-theme-footer a, .ws-theme-footer a:hover {
+  text-decoration: none;
+}
+@media (min-width: 768px) {
+  .ws-theme-container {
+    width: 750px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  .ws-theme-content {
+    width: 550px;
+    min-height: 384px;
+    float: right;
+  }
+  .ws-theme-sidebar {
+    width: 200px;
+    float: left;
+  }
+}
+@media (min-width: 992px) {
+  .ws-theme-container {
+    width: 970px;
+  }
+  .ws-theme-content {
+    width: 770px;
+    min-height: 496px;
+  }
+}
+@media (min-width: 1200px) {
+  .ws-theme-container {
+    width: 1170px;
+  }
+  .ws-theme-content {
+    width: 970px;
+    min-height: 600px;
+  }
+}
+/* End standard theme styles */
+</style>
+<style type="text/css">
+/* Theme-specific styles */
+body {
+  background: #DDA;
+}
+
+.ws-theme-container {
+  margin: 0 5px;
+}
+
+.ws-theme-header .WikiSearch .WikiSearchInput,
+.ws-theme-sidebar .WikiSearch .WikiSearchInput,
+.ws-theme-footer .WikiSearch .WikiSearchInput {
+  width: 100%;
+}
+
+.ws-theme-header a,
+.ws-theme-header a:hover,
+.ws-theme-sidebar a,
+.ws-theme-footer a {
+  text-decoration: none;
+}
+.ws-theme-header a,
+.ws-theme-header a:hover,
+.ws-theme-footer a {
+  color: inherit;
+  text-decoration: none;
+}
+.ws-theme-header .ws-theme-menu a:hover,
+.ws-theme-sidebar a:hover,
+.ws-theme-footer a:hover {
+  text-decoration: underline;
+}
+.ws-theme-header img,
+.ws-theme-sidebar img,
+.ws-theme-footer img {
+  border: none;
+}
+
+.ws-theme-header,
+.ws-theme-footer {
+  color: #444444;
+}
+
+.ws-theme-header,
+.ws-theme-sidebar {
+  display: none;
+}
+
+.ws-theme-content,
+.ws-theme-sidebar {
+  overflow-x: visible;
+}
+.ws-theme-content-inner,
+.ws-theme-sidebar-inner {
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.ws-theme-body {
+  padding-top: 15px;
+}
+
+.ws-theme-content-inner {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  background-color: #FFF;
+}
+
+.ws-theme-footer {
+  text-align: center;
+}
+.ws-theme-footer-inner {
+  padding: 15px;
+}
+.ws-theme-footer .WikiLicense img {
+  vertical-align: text-bottom;
+}
+
+@media (min-width: 768px) {
+  body {
+    background: url(https://ssl.wikicdn.com/_/2537888v/i/theme_wood.jpg);
+  }
+
+  .ws-theme-container {
+    width: auto;
+  }
+
+  .ws-theme-header,
+  .ws-theme-sidebar {
+    display: block;
+  }
+
+  .ws-theme-header .ws-theme-menu {
+    background: #80A7D9 url(https://ssl.wikicdn.com/_/4qkjx897/i/theme_header_overlay.png) repeat-x;
+    border-bottom: 1px solid #BBB;
+    margin-bottom: 10px;
+    color: #FFFFFF;
+  }
+  .ws-theme-header .ws-theme-menu-inner {
+    padding: 10px 0;
+  }
+  .ws-theme-header .WikiActions {
+    margin: 0 0 0 12px;
+    padding: 0;
+  }
+  .ws-theme-header .WikiActions li {
+    display: inline-block;
+    list-style-type: none;
+    padding-right: 15px;
+    white-space: nowrap;
+  }
+  .ws-theme-header .WikiActions div {
+    display: inline-block;
+  }
+  .ws-theme-header .WikiActionSupplemental {
+    margin-left: 4px;
+  }
+  .ws-theme-header-inner {
+    font-family: Georgia, 'Times New Roman', Times, serif !important;
+    font-size: 1.5em !important;
+    font-weight: normal !important;
+  }
+  .ws-theme-header-inner a {
+    font-size: inherit !important;
+  }
+
+  .ws-theme-content {
+    width: auto;
+    margin-right: 200px;
+    padding-right: 5px;
+    padding-left: 73px;
+    float: none;
+  }
+  .ws-theme-content-inner {
+    float: left;
+    width: 100%;
+  }
+  .ws-theme-content-inner:before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -73px;
+    width: 73px;
+    background: url(https://ssl.wikicdn.com/_/q85x653j/i/theme_spiral.png) repeat-y 0 -6px;
+  }
+
+  .ws-theme-sidebar {
+    float: right;
+  }
+  .ws-theme-sidebar a {
+    color: #0000FF;
+  }
+  .ws-theme-sidebar-inner {
+    padding: 10px;
+    background-color: #EDEDE6;
+    border: 1px solid #BFBA96;
+  }
+  .ws-theme-sidebar .WikiCustomNav ol {
+    padding-left: 16px;
+  }
+  .ws-theme-sidebar .WikiCustomNav ol.includePageList {
+    padding-left: 0;
+  }
+  .ws-theme-sidebar .WikispacesNavbar {
+    margin: 0 -10px;
+    padding: 0 10px;
+  }
+  .ws-theme-sidebar .ws-theme-nav-edit {
+    color: #666;
+    text-align: center;
+  }
+  .ws-theme-sidebar .ws-theme-nav-edit a {
+    color: inherit;
+  }
+}
+/* End theme-specific styles */
+</style>
+<link rel="stylesheet" href="arduino-info%20-%20MegaQuickRef_files/221909772-217420326D.css" type="text/css">
+<link rel="stylesheet" href="arduino-info%20-%20MegaQuickRef_files/9q897620-internal-bootstrap.css" type="text/css">
+<link rel="stylesheet" href="arduino-info%20-%20MegaQuickRef_files/vz033906-internal.css" type="text/css">
+<script src="arduino-info%20-%20MegaQuickRef_files/j91xzz3x-top.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+
+  var wsGoogleAccount = 'UA-80504-1';
+  _gaq.push(['_setAccount', wsGoogleAccount]);
+  _gaq.push(['_gat._anonymizeIp']);
+  _gaq.push(['_setDomainName', 'wikispaces.com']);
+  _gaq.push(['_setAllowLinker', true]);
+  _gaq.push(['_setCustomVar', 2, 'Authenticated', 'Guest', 2]);
+  _gaq.push(['_trackPageview']);
+</script><style id="js-fixed-header-a-style" type="text/css">.wiki a[name]:before { content: "\00A0"; display: inline-block; visibility: hidden; width: 0; padding-top: 28px; margin-top: -28px; }</style><script src="arduino-info%20-%20MegaQuickRef_files/07z93j80.js" type="text/javascript"></script></head>
+<body><a href="#WikiContent" class="hidden sr-only sr-only-focusable">Skip to main content</a><div id="js-fixed-header-holder" class="fixed"><div class="WikispacesContent WikispacesBs3" role="banner">
+      <div style="display: block;" id="WikispacesBanner">Welcome. <a href="https://www.wikispaces.com/t/y/searchbanner">Learn more about what Wikispaces has to offer</a>.</div>
+    <div class="ws-main-top-nav visible-xs">
+    <div class="navbar navbar-static-top" style="margin-bottom: 0;">
+      <div class="container">
+                <div class="navbar-header">
+          <div class="visible-xs pull-left">
+            <a href="https://arduino-info.wikispaces.com/space/menu" class="WikispacesDialogLink btn navbar-btn">
+              <i class="fa fa-bars"></i>
+            </a>
+          </div>
+          <div class="visible-xs pull-right js-globalnav-popover-container">
+                        <a title="" data-original-title="" href="https://www.wikispaces.com/site/signin?goto=https%3A%2F%2Farduino-info.wikispaces.com%2FMegaQuickRef%3FresponseToken%3D035b56c19a2888bc379f3b900ad71304" class="btn navbar-btn ws-mobile-guest-username js-globalnav-popover-trigger">
+              guest
+            </a>
+                        <div class="hidden js-globalnav-popover-content">
+              <div class="WikispacesContent WikispacesBs3">
+                <div class="WikiInternalHeaderNav noHide">
+  <div class="WikiInternalHeaderNavMenu">
+                          
+                  <span class="WikiInternalHeaderNavMenuArea"><a href="https://www.wikispaces.com/user/join?goto=https%3A%2F%2Farduino-info.wikispaces.com%2Fspace%2Fjoin" rel="nofollow" class="WikispacesXDomainDialogLink">Join</a></span>
+
+          <span class="divider">|</span>
+        
+        <span class="WikiInternalHeaderNavMenuArea"><a class="js-help-trigger" rel="nofollow" href="http://helpcenter.wikispaces.com/">Help</a></span>
+
+        <span class="divider">|</span>
+      
+      <span class="WikiInternalHeaderNavMenuArea"><a href="https://www.wikispaces.com/site/signin?goto=https%3A%2F%2Farduino-info.wikispaces.com%2FMegaQuickRef%3FresponseToken%3D035b56c19a2888bc379f3b900ad71304" rel="nofollow" class="WikispacesXDomainDialogLink">Sign In</a></span>
+      </div>
+<div style="display: none;" class="headerPanel hidden" id="NoticeTool"><div id="NoticeToolList"><ol style="display: block;" class="dropdown-menu dropdown-menu-right"><li class="js-last text-center"><a href="https://www.wikispaces.com/mail/list/?folder=Inbox">View All Messages</a></li></ol></div></div><div style="display: none;" class="headerPanel hidden" id="WikiTool"><div id="WikiToolList"><ol style="display: block;" class="dropdown-menu dropdown-menu-right"></ol></div></div><div style="display: none;" class="headerPanel hidden" id="HelpTool"><div id="HelpToolList"><ol style="display: block;" class="dropdown-menu dropdown-menu-right"><li class="js-last divider hidden"></li><li><a class="js-help-trigger" rel="nofollow" href="http://helpcenter.wikispaces.com/">Help Wiki</a></li></ol></div></div></div>              </div>
+            </div>
+          </div>
+          <div class="ws-navbar-middle-xs">
+            <div class="navbar-brand" role="navigation">
+              <a href="https://www.wikispaces.com/" class="ws-logo"></a>
+              <i class="fa fa-angle-right"></i>
+              <a href="https://arduino-info.wikispaces.com/">arduino-info</a>
+                              <i class="fa fa-angle-right"></i> <a href="https://arduino-info.wikispaces.com/home">Home</a>
+              
+            </div>
+          </div>
+                    <form action="/search/view" method="post" class="navbar-form ws-include-xs pull-left ws-navbar-search hidden-xs" role="search"><input name="wikispacesFormToken" value="a98455ea2504796595985a0136d546297305ae72" type="hidden"><input class="form-control search-query" name="q" placeholder="Search" type="text"> </form>
+                  </div>
+      </div>
+    </div>
+  </div>
+      <div class="hidden-xs"><div style="right: -144px;" class="WikiInternalHeaderNav WikiElement floating">
+  <div class="WikiInternalHeaderNavMenu">
+                                    <span class="WikiInternalHeaderNavMenuArea guestUserName">guest</span><span class="slideMarker divider">|</span>
+        
+                  <span class="WikiInternalHeaderNavMenuArea"><a href="https://www.wikispaces.com/user/join?goto=https%3A%2F%2Farduino-info.wikispaces.com%2Fspace%2Fjoin" rel="nofollow" class="WikispacesXDomainDialogLink">Join</a></span>
+
+          <span class="divider">|</span>
+        
+        <span class="WikiInternalHeaderNavMenuArea"><a class="js-help-trigger" rel="nofollow" href="http://helpcenter.wikispaces.com/">Help</a></span>
+
+        <span class="divider">|</span>
+      
+      <span class="WikiInternalHeaderNavMenuArea"><a href="https://www.wikispaces.com/site/signin?goto=https%3A%2F%2Farduino-info.wikispaces.com%2FMegaQuickRef%3FresponseToken%3D035b56c19a2888bc379f3b900ad71304" rel="nofollow" class="WikispacesXDomainDialogLink">Sign In</a></span>
+      </div>
+<div style="display: none;" class="headerPanel hidden" id="NoticeTool"><div id="NoticeToolList"><ol style="display: block;" class="dropdown-menu dropdown-menu-right"><li class="js-last text-center"><a href="https://www.wikispaces.com/mail/list/?folder=Inbox">View All Messages</a></li></ol></div></div><div style="display: none;" class="headerPanel hidden" id="WikiTool"><div id="WikiToolList"><ol style="display: block;" class="dropdown-menu dropdown-menu-right"></ol></div></div><div style="display: none;" class="headerPanel hidden" id="HelpTool"><div id="HelpToolList"><ol style="display: block;" class="dropdown-menu dropdown-menu-right"><li class="js-last divider hidden"></li><li><a class="js-help-trigger" rel="nofollow" href="http://helpcenter.wikispaces.com/">Help Wiki</a></li></ol></div></div></div></div>
+  </div></div><div style="margin-top: 28px;" id="js-fixed-header-offset">
+<header class="ws-theme-header" role="banner">
+  <nav class="ws-theme-menu" role="navigation">
+    <div class="ws-theme-container">
+      <div class="ws-theme-menu-inner">
+        <ul class="WikiActions WikiElement WikiControls">
+    <li id="WikiActionHome"><div><span class="WikiActionSupplemental" style="float: right;"></span><a href="https://arduino-info.wikispaces.com/"><i class="fa fa-home fa-fw"></i></a><a href="https://arduino-info.wikispaces.com/">Wiki Home</a></div></li>
+    <li id="WikiActionChanges"><div><span class="WikiActionSupplemental" style="float: right;"></span><a href="https://arduino-info.wikispaces.com/wiki/changes"><i class="fa fa-clock-o fa-fw"></i></a><a href="https://arduino-info.wikispaces.com/wiki/changes">Recent Changes</a></div></li>
+    <li id="WikiActionPagesAndFiles"><div><span class="WikiActionSupplemental" style="float: right;"></span><a href="https://arduino-info.wikispaces.com/space/content"><i class="fa fa-file-text-o fa-fw"></i></a><a href="https://arduino-info.wikispaces.com/space/content">Pages and Files</a></div></li>
+    <li id="WikiActionMembers"><div class="js-member-link"><span class="WikiActionSupplemental" style="float: right;"></span><a href="https://arduino-info.wikispaces.com/wiki/members"><i class="fa fa-user fa-fw"></i></a><a href="https://arduino-info.wikispaces.com/wiki/members">Members</a></div></li>
+</ul>
+      </div>
+    </div>
+  </nav>
+  <div class="ws-theme-container">
+    <div class="ws-theme-header-inner">
+      <a href="https://arduino-info.wikispaces.com/" class="WikiLogo WikiElement"><img src="arduino-info%20-%20MegaQuickRef_files/logo.jpg" alt="arduino-info"></a>    </div>
+  </div>
+</header>
+
+<div class="ws-theme-body">
+  <div class="ws-theme-container">
+    <div class="ws-theme-body-inner">
+      <nav class="ws-theme-sidebar" role="navigation">
+        <div class="ws-theme-sidebar-inner">
+          <div class="ws-theme-menu">
+            <div class="ws-theme-menu-inner">
+              <form action="/search/view" method="post" class="WikiSearch WikiElement" role="search"><input class="form-control WikiSearchInput" name="q" placeholder="Search" type="text"> </form>              <div class="WikiCustomNav WikiElement wiki"><h2><a class="wiki_link" href="https://arduino-info.wikispaces.com/HOME">HOME</a></h2>
+ <h2><a class="wiki_link" href="https://arduino-info.wikispaces.com/About-Contact">ABOUT US!</a></h2>
+ <h3><span style="color: #ff0037;"><a class="wiki_link_ext" href="http://yourduino.com/sunshop2/" rel="nofollow">YourDuinoShop</a></span></h3>
+ <h3><span style="color: #ff0000;"><a class="wiki_link" href="https://arduino-info.wikispaces.com/Newsletters">NEWSLETTERS</a></span></h3>
+ <h2><a class="wiki_link_ext" href="http://arduinoinfo.info/blog/" rel="nofollow">BLOG</a></h2>
+ <h2><a class="wiki_link" href="https://arduino-info.wikispaces.com/WikiFolk">THIS WIKI:</a></h2>
+ <hr>
+<hr>
+<span style="font-size: 26px; line-height: 30px;"><strong><a class="wiki_link" href="https://arduino-info.wikispaces.com/Arduino-What-IS-it">WHAT IS Arduino?</a></strong></span><br>
+<hr>
+<span style="font-size: 26px; line-height: 30px;"><strong>LEARNING Arduino:</strong></span><br>
+<ul><li><a class="wiki_link" href="https://arduino-info.wikispaces.com/Arduino-What-IS-it">Arduino: WhatIsIt?</a></li><li><a class="wiki_link" href="https://arduino-info.wikispaces.com/YourDuinoStarter">Hands-On Learning</a></li><li><a class="wiki_link" href="https://arduino-info.wikispaces.com/YourDuinoStarterSoftwareSketches">Example Sketches</a></li><li><a class="wiki_link" href="https://arduino-info.wikispaces.com/Arduino-Libraries">Arduino Libraries</a></li></ul><hr>
+<strong><span style="font-size: 26px;">ARDUINO HOWTO:</span></strong><br>
+<ul><li><a class="wiki_link" href="https://arduino-info.wikispaces.com/Cables">CABLES, WIRES and PINS</a></li><li><a class="wiki_link" href="https://arduino-info.wikispaces.com/SensorShield">SENSOR SHIELD</a></li><li><a class="wiki_link" href="https://arduino-info.wikispaces.com/ArduinoPower">ARDUINO POWER</a></li><li><a class="wiki_link" href="https://arduino-info.wikispaces.com/Servos">SERVO MOTORS</a></li><li><a class="wiki_link" href="https://arduino-info.wikispaces.com/Nrf24L01-2.4GHz-HowTo">WIRELESS nRF24L01</a></li><li><a class="wiki_link" href="https://arduino-info.wikispaces.com/LCD-Blue-I2C">LCD DISPLAYS</a></li><li><a class="wiki_link" href="https://arduino-info.wikispaces.com/SD-Cards">SD CARDS</a></li><li><a class="wiki_link" href="https://arduino-info.wikispaces.com/UltraSonicDistance">Ultrasonic Sensors</a></li><li><a class="wiki_link" href="https://arduino-info.wikispaces.com/Brick-Temperature-DS18B20">TemperatureSensor</a></li><li><a class="wiki_link" href="https://arduino-info.wikispaces.com/IR-RemoteControl">IR Remotes</a></li><li><a class="wiki_link" href="https://arduino-info.wikispaces.com/StepperMotors">Stepper Motors</a></li><li><a class="wiki_link" href="https://arduino-info.wikispaces.com/DS1307_RealTime_Clock_Brick">RealTimeClock</a></li><li><a class="wiki_link" href="https://arduino-info.wikispaces.com/Keyboards-MultipleButtons">Keyboards/Buttons</a></li><li><a class="wiki_link" href="https://arduino-info.wikispaces.com/Arduino-PWM-Frequency">PWM Frequencies</a></li><li><a class="wiki_link" href="https://arduino-info.wikispaces.com/Analog-Output">Analog Output</a></li><li><a class="wiki_link" href="https://arduino-info.wikispaces.com/TUTORIALS">TUTORIALS</a></li></ul><br>
+<a class="wiki_link" href="https://arduino-info.wikispaces.com/Collaborate">BJK</a><br>
+<a class="wiki_link" href="https://arduino-info.wikispaces.com/Listing_File_List">C</a></div>              <div class="ws-theme-nav-edit">
+                              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <main class="ws-theme-content" role="main">
+        <div class="ws-theme-content-inner">
+          <div class="contentBox"><div class="innerContentBox" id="WikiContent">
+
+<script type="text/template" id="comment-footer-template">
+
+<div class="commentFooter modal-footer">
+  <div class="pull-left">
+    <button type="button" class="btn btn-default btn-sm previous"><i class="fa fa-arrow-left"></i></button>
+    <button type="button" class="btn btn-default btn-sm next"><i class="fa fa-arrow-right"></i></button>
+  </div>
+  <% if (ws.context.user.canAdministerWiki && !ws.comments.Manager.readOnly) { %>
+  <div class="pull-right">
+    <button type="button" class="btn btn-default btn-sm remove">Remove</button>
+  </div>
+  <% } %>
+</div>
+
+</script>
+
+<script type="text/template" id="comment-content-template">
+<div class="ws-box commentView">
+  <div class="comment-close">
+    <button type="button" class="closeme close" aria-hidden="true"><i class="fa fa-times"></i></button>
+  </div>
+  <div class="commentHeader">
+    <p class="ws-stream-meta command-context">
+      <a class="userLink userLinkPicture" href="<%= userCreated.url %>"><img class="userPicture" src="<%= userCreated.imageUrl %>" width="16" height="16"></a>
+      <a href="<%= userCreated.url %>"><%= userCreated.username %></a>
+      <% if (smartDate == '__live__') { %>
+      <abbr class="timeago" title="<%= (new Date(parseInt(dateCreated, 10) * 1000)).toISOString() %>">
+        <%= dateCreated %>
+      </abbr>
+      <% } else { %>
+        <%- smartDate %>
+      <% } %>
+      <% if (ws.context.user.canAdministerWiki && ws.comments.Manager.readOnly) { %>
+        <i class="fa fa-trash-o contextual-command delete ws-tip" title="Delete Comment"></i>
+      <% } %>
+    </p>
+  </div>
+
+  <div class="commentBody">
+    <div class="commentContent">
+      <%= description %>
+    </div>
+
+      <% for(i = 0; i < replyPages.length; i++) { %>
+        <% for(var j = 0; j < replyPages[i].digests.length; j++) { %>
+      <div class="commentReply" data-id="<%= replyPages[i].digests[j].id %>">
+        <p class="ws-stream-meta command-context">
+          <a class="userLink userLinkPicture" href="<%= replyPages[i].digests[j].userCreated.url %>"><img class="userPicture" src="<%= replyPages[i].digests[j].userCreated.imageUrl %>" width="16" height="16"></a>
+          <a href="<%= replyPages[i].digests[j].userCreated.url %>"><%= replyPages[i].digests[j].userCreated.username %></a>
+          <% if (smartDate == '__live__') { %>
+          <abbr class="timeago" title="<%= (new Date(parseInt(replyPages[i].digests[j].dateCreated, 10) * 1000)).toISOString() %>">
+            <%= new Date(parseInt(replyPages[i].digests[j].dateCreated, 10) * 1000).toLocaleString() %>
+          </abbr>
+          <% } else { %>
+            <%- smartDate %>
+          <% } %>
+          <% if (ws.context.user.canAdministerWiki) { %>
+          <i class="fa fa-trash-o contextual-command delete-reply ws-tip" title="Delete Reply"></i>
+          <% } %>
+          </p>
+        <div class="commentContent"><%= replyPages[i].digests[j].body %></div>
+      </div>
+        <% } %>
+      <% } %>
+
+      <form class="reply commentReply">
+        <div class="form-group">
+          <textarea name="reply" placeholder="Reply" class="form-control" /></textarea>
+        </div>
+        <div class="btn-toolbar">
+          <button type="submit" class="btn btn-primary btn-sm" name="go" value="1">Post</button>
+
+          <% if (ws.context.user.id) { %>
+            <% if (monitored) { %>
+            <button type="button" class="btn btn-default btn-sm pull-right toggle-monitor ws-tip active" title="You are monitoring replies."><i class="fa fa-eye"></i></button>
+            <% } else { %>
+            <button type="button" class="btn btn-default btn-sm pull-right toggle-monitor ws-tip" title="You are not monitoring replies."><i class="fa fa-eye"></i></button>
+            <% } %>
+          <% } %>
+          <% if (ws.context.user.canAdministerWiki) { %>
+            <% if (locked) { %>
+            <button type="button" class="btn btn-default btn-sm pull-right toggle-lock ws-tip active" title="Replies are not allowed."><i class="fa fa-lock"></i></button>
+            <% } else { %>
+            <button type="button" class="btn btn-default btn-sm pull-right toggle-lock ws-tip" title="Replies are allowed."><i class="fa fa-lock"></i></button>
+            <% } %>
+          <% } %>
+
+          <i class="fa fa-spinner fa-spin spinner pull-right hidden"></i>
+        </div>
+      </form>
+   </div>
+
+   
+<div class="commentFooter modal-footer">
+  <div class="pull-left">
+    <button type="button" class="btn btn-default btn-sm previous"><i class="fa fa-arrow-left"></i></button>
+    <button type="button" class="btn btn-default btn-sm next"><i class="fa fa-arrow-right"></i></button>
+  </div>
+  <% if (ws.context.user.canAdministerWiki && !ws.comments.Manager.readOnly) { %>
+  <div class="pull-right">
+    <button type="button" class="btn btn-default btn-sm remove">Remove</button>
+  </div>
+  <% } %>
+</div>
+
+</div>
+</script>
+
+<script type="text/template" id="comment-composer-template">
+<div class="ws-box commentView">
+  <div class="commentComposer">
+    <div class="comment-close">
+      &nbsp;<button type="button" class="close closeme" aria-hidden="true"><i class="fa fa-times"></i></button>
+    </div>
+    <div class="commentHeader">
+      <p class="ws-stream-meta command-context">
+        <img class="userPicture" src="<%= userCreated.imageUrl %>" width="16" height="16">
+        <a href="#" onclick="return false;"><%= userCreated.username %></a>
+      </p>
+    </div>
+    <div class="commentBody">
+      <textarea name="comment" class="compose form-control" placeholder="Comment"/></textarea><br/>
+      <div class="btn-toolbar">
+        <button type="button" class="btn btn-default btn-sm monitored active pull-right" style="margin-left: 6px" onclick="jQuery(this).toggleClass('active')"><i class="fa fa-eye"></i></button>
+        <button type="button" class="btn btn-default btn-sm locked btn-toggle pull-right" onclick="jQuery(this).toggleClass('active')"><i class="fa fa-lock"></i></button>
+        <button type="button" class="btn btn-primary btn-sm closeme">Save</button>
+      </div>
+    </div>
+  </div>
+
+  
+<div class="commentFooter modal-footer">
+  <div class="pull-left">
+    <button type="button" class="btn btn-default btn-sm previous"><i class="fa fa-arrow-left"></i></button>
+    <button type="button" class="btn btn-default btn-sm next"><i class="fa fa-arrow-right"></i></button>
+  </div>
+  <% if (ws.context.user.canAdministerWiki && !ws.comments.Manager.readOnly) { %>
+  <div class="pull-right">
+    <button type="button" class="btn btn-default btn-sm remove">Remove</button>
+  </div>
+  <% } %>
+</div>
+
+</div>
+</script>
+
+<script type="text/template" id="comment-proxy-template">
+<div class="comment-proxy">
+  <span class="commentUser">
+  <% if (userCreated) { %>
+    <img class="userPicture" src="<%= userCreated.imageUrl %>" width="16" height="16">
+  <% } else { %>
+    <img class="userPicture" src="<%= ws.context.user.imageUrlPrefix %>sm.jpg" width="16" height="16">
+  <% } %>
+  </span>
+  <span class="commentReplies"><%= 1 + _(replyPages).reduce(function(memo, page){ return memo + page.digests.length; }, 0) %></span>
+</div>
+</script>
+
+<div class="ws-menu-bar WikiControls WikispacesContent WikispacesBs3">
+  
+    <h1 class="pageTitle"><a href="https://arduino-info.wikispaces.com/MegaQuickRef">MegaQuickRef</a></h1>
+      <div class="btn-group pull-right">
+          <span data-original-title="you do not have permission to edit this page" class="btn btn-default disabled tipme" title=""><i class="fa fa-pencil fa-fw"></i> Edit</span>          <a data-original-title="no discussion posts" class="btn btn-default tipme" title="" href="https://arduino-info.wikispaces.com/MegaQuickRef#discussion"><i class="fa fa-comments fa-fw"></i> 0</a>          <a data-original-title="view 15 revisions" class="btn btn-default tipme" title="" href="https://arduino-info.wikispaces.com/page/history/MegaQuickRef"><i class="fa fa-clock-o fa-fw"></i> 15</a>          <a data-original-title="more options" class="btn btn-default ws-btn-more dropdown-toggle tipme" title="" href="https://arduino-info.wikispaces.com/page/menu/MegaQuickRef"><i class="icon-height-only fa-fw"></i>…</a>        <ul class="ws-more-menu dropdown-menu dropdown-menu-right">
+              <li class=" dropdown"><a class=" ws-tag-dropdown-toggle" href="https://arduino-info.wikispaces.com/page/tags/MegaQuickRef"><span class="pull-right">0</span> <i class="fa fa-tag fa-fw"></i> Tags</a>
+          <div class="dropdown-menu dropdown-menu-right ws-tag-dropdown-menu">
+          
+
+
+
+<form action="#" name="WikiTagForm" class="WikiTagForm"><input name="wikispacesFormToken" value="46186d5ad797b3dff7d60c1d6decd8977ef5f1b8" type="hidden"><input name="wikispacesFormToken" value="46186d5ad797b3dff7d60c1d6decd8977ef5f1b8" type="hidden">
+  <div class="WikiTagList">
+    <i class="fa fa-tag ws-action"></i>
+        <ul class="list-unstyled">
+          <li>No tags</li>
+        </ul>
+      </div>
+  </form>      </div>
+    </li>
+              <li class="divider"></li>
+            <li class=""><a class=" WikispacesDialogLink" href="https://arduino-info.wikispaces.com/wiki/addmonitor?monitorLink=page%3AMegaQuickRef"><i class="fa fa-eye fa-fw"></i> Notify</a>
+    </li>
+        <li class=""><a class=" WikispacesDialogLink" href="https://arduino-info.wikispaces.com/page/rss/MegaQuickRef"><i class="fa fa-rss fa-fw"></i> RSS</a>
+    </li>
+        <li class=""><a class="" href="https://arduino-info.wikispaces.com/page/links/MegaQuickRef"><i class="fa fa-link fa-fw"></i> Backlinks</a>
+    </li>
+              <li class="divider"></li>
+            <li class=""><a class="" href="https://arduino-info.wikispaces.com/page/code/MegaQuickRef"><i class="fa fa-code fa-fw"></i> Source</a>
+    </li>
+        <li class=""><a class="" href="https://arduino-info.wikispaces.com/MegaQuickRef?f=print"><i class="fa fa-print fa-fw"></i> Print</a>
+    </li>
+        <li class=""><a class="" href="https://arduino-info.wikispaces.com/page/pdf/MegaQuickRef"><i class="fa fa-cloud-download fa-fw"></i> Export (PDF)</a>
+    </li>
+      </ul>  </div>
+  </div>
+
+
+
+
+  <textarea class="form-control" id="autosaveContent" style="display:none;" rows="1" cols="1"></textarea>
+  <div id="autosavePrompt" style="display:none;"></div>
+
+<div class="commentContainer">
+  <div class="commentSubject">
+  <div class="wiki wikiPage" id="content_view">
+  <!-- ws:start:WikiTextHeadingRule:0:&lt;h1&gt; --><h1 id="toc0"><a name="Arduino / YourDuino MEGA 1280 and 2560 Pinouts:"></a><!-- ws:end:WikiTextHeadingRule:0 -->Arduino / YourDuino MEGA 1280 and 2560 Pinouts:</h1>
+ <a href="https://arduino-info.wikispaces.com/file/view/arduino-mega2560-schematic-F.jpg/346627792/arduino-mega2560-schematic-F.jpg" onclick="ws.common.trackFileLink('https://arduino-info.wikispaces.com/file/view/arduino-mega2560-schematic-F.jpg/346627792/arduino-mega2560-schematic-F.jpg');">SCHEMATIC DIAGRAM HERE:</a> (Click to enlarge)<br>
+<!-- ws:start:WikiTextHeadingRule:2:&lt;h2&gt; --><h2 id="toc1"><a name="Arduino / YourDuino MEGA 1280 and 2560 Pinouts:-LAYOUT DIAGRAM BELOW.."></a><!-- ws:end:WikiTextHeadingRule:2 -->LAYOUT DIAGRAM BELOW..</h2>
+ <!-- ws:start:WikiTextHeadingRule:4:&lt;h2&gt; --><h2 id="toc2"><a name="Arduino / YourDuino MEGA 1280 and 2560 Pinouts:-POWER PINS:"></a><!-- ws:end:WikiTextHeadingRule:4 -->POWER PINS:</h2>
+ <a class="wiki_link" href="https://arduino-info.wikispaces.com/QuickRef#pwr">Detailed Power Considerations HERE</a><br>
+VIN. The input voltage to the Arduino board when it's using an external 
+power source (as opposed to 5 volts from the USB connection or other 
+regulated power source). You can supply voltage through this pin, or, if
+ supplying voltage via the power jack, access it through this pin.<br>
+<br>
+5V. This pin outputs a regulated 5V from the regulator on the board. The
+ board can be supplied with power either from the DC power jack (7 - 
+12V), the USB connector (5V), or the VIN pin of the board (7-12V). 
+Supplying voltage via the 5V or 3.3V pins bypasses the regulator, and 
+can damage your board. We don't advise it.<br>
+<br>
+3V3. A 3.3 volt supply generated by the on-board regulator. Maximum current draw is 50 mA.<br>
+<br>
+<!-- ws:start:WikiTextHeadingRule:6:&lt;h2&gt; --><h2 id="toc3"><a name="Arduino / YourDuino MEGA 1280 and 2560 Pinouts:-INPUT AND OUTPUT:"></a><!-- ws:end:WikiTextHeadingRule:6 -->INPUT AND OUTPUT:</h2>
+ <br>
+Each of the 54 digital pins on the Mega can be used as an input or 
+output, using pinMode(), digitalWrite(), and digitalRead() functions. 
+They operate at 5 volts. Each pin can provide or receive an absolute 
+maximum of 40 mA (20mA recommended) and has an internal pull-up resistor
+ (disconnected by default) of 20-50 kOhms.<br>
+See <a class="wiki_link" href="https://arduino-info.wikispaces.com/ArduinoPinCurrent">ARDUINO PIN CURRENT LIMITATIONS</a>: Be nice to your Arduino!<br>
+<br>
+<!-- ws:start:WikiTextHeadingRule:8:&lt;h2&gt; --><h2 id="toc4"><a name="Arduino / YourDuino MEGA 1280 and 2560 Pinouts:-SPECIALIZED FUNCTIONS:"></a><!-- ws:end:WikiTextHeadingRule:8 -->SPECIALIZED FUNCTIONS:</h2>
+ <br>
+<strong>Serial:</strong> 0 (RX) and 1 (TX); Serial 1: 19 (RX) and 18 
+(TX); Serial 2: 17 (RX) and 16 (TX); Serial 3: 15 (RX) and 14 (TX). Used
+ to receive (RX) and transmit (TX) TTL serial data. Pins 0 and 1 are 
+also connected to the corresponding pins of the USB-to-TTL Serial chip.<br>
+<br>
+<strong>External Interrupts:</strong> 2 (interrupt 0), 3 (interrupt 1), 
+18 (interrupt 5), 19 (interrupt 4), 20 (interrupt 3), and 21 (interrupt 
+2). These pins can be configured to trigger an interrupt on a low value,
+ a rising or falling edge, or a change in value. See the 
+attachInterrupt() function for details.<br>
+<br>
+<strong>PWM:</strong> 2 to 13 and 44 to 46. Provide 8-bit PWM output with the analogWrite() function.<br>
+<br>
+<strong>SPI:</strong> 50 (MISO), 51 (MOSI), 52 (SCK), 53 (SS). These 
+pins support SPI communication using the SPI library. The SPI pins are 
+also broken out on the ICSP header, which is physically compatible with 
+the Uno, Duemilanove and Diecimila.<br>
+<br>
+<strong>LED:</strong> 13. There is a built-in LED connected to digital 
+pin 13. When the pin is HIGH value, the LED is on, when the pin is LOW, 
+it's off.<br>
+<br>
+<strong>I2C/TWI :</strong> 20 (SDA) and 21 (SCL). Support I2C aka IIC 
+aka TWI communication using the Wire library. Note that these pins are 
+not in the same location as the TWI/I2C pins on the Duemilanove or 
+Diecimila.<br>
+<br>
+<!-- ws:start:WikiTextHeadingRule:10:&lt;h2&gt; --><h2 id="toc5"><a name="Arduino / YourDuino MEGA 1280 and 2560 Pinouts:-ANALOG INPUTS:"></a><!-- ws:end:WikiTextHeadingRule:10 -->ANALOG INPUTS:</h2>
+ <br>
+The Mega has 16 analog inputs, each of which provide 10 bits of 
+resolution (i.e. 1024 different values). By default they measure from 
+ground to 5 volts, though is it possible to change the upper end of 
+their range using the AREF pin and analogReference() function.<br>
+<br>
+<strong>NOTE:</strong> The Analog input pins can also be used as Digital Input or Output pins.<br>
+<br>
+There are a couple of other pins on the board:<br>
+<br>
+<strong>AREF:</strong> Reference voltage for the analog inputs. Used with analogReference().<br>
+<br>
+<strong>RESET:</strong> Bring this line LOW to reset the 
+microcontroller. Typically used to add a reset button to shields which 
+block the one on the board.<br>
+MEGA PINOUT DIAGRAM: THANKS! to Nantonos<br>
+<!-- ws:start:WikiTextLocalImageRule:14:&lt;img src=&quot;/file/view/Mega2560_R3_Label-small-v2%20%282%29.png/471429496/800x526/Mega2560_R3_Label-small-v2%20%282%29.png&quot; alt=&quot;&quot; title=&quot;&quot; style=&quot;height: 526px; width: 800px;&quot; /&gt; --><img src="arduino-info%20-%20MegaQuickRef_files/Mega2560_R3_Label-small-v2%25202.png" alt="Mega2560_R3_Label-small-v2 (2).png" title="Mega2560_R3_Label-small-v2 (2).png" style="height: 526px; width: 800px;"><!-- ws:end:WikiTextLocalImageRule:14 --><br>
+<br>
+LAYOUT DIAGRAM: THANKS! To Alberto Piganti <a class="wiki_link_ext" href="http://yourduino.com/docs/MegaPinOut.png" rel="nofollow">(Original Drawing HERE)</a><br>
+<hr>
+<!-- ws:start:WikiTextLocalImageRule:15:&lt;img src=&quot;/file/view/Mega2-900.jpg/421499040/Mega2-900.jpg&quot; alt=&quot;&quot; title=&quot;&quot; /&gt; --><img src="arduino-info%20-%20MegaQuickRef_files/Mega2-900.jpg" alt="Mega2-900.jpg" title="Mega2-900.jpg"><!-- ws:end:WikiTextLocalImageRule:15 --><br>
+<br>
+<hr>
+
+  </div>
+
+<div id="pageEditor" class="editorWrapper editorLayer">
+  <iframe id="target_editor" name="target_editor" src="arduino-info%20-%20MegaQuickRef_files/blank.htm" style="width:0px;height:0px;border:0"></iframe>
+    <form action="/page/edit/MegaQuickRef" method="post" class="editorForm" id="editorForm"><input name="wikispacesFormToken" value="1ef06315137cad90aa8983048dde252fc623f6fb" type="hidden"><div class="jovise"><input class="form-control" name="wikispaces_user_id" value="user-1433740306" type="text"></div><div class="mimw"><input class="form-control" name="goto" autocomplete="off" type="text"></div><div class="wsh"><input class="form-control" name="mode" autocomplete="off" type="text"></div><div class="jowic"><input class="form-control" name="version" autocomplete="off" type="text"></div><div class="jovise"><input class="form-control" name="pageComments" autocomplete="off" type="text"></div><div class="movkp"><input class="form-control" name="saveAndContinue" autocomplete="off" type="text"></div><div class="movkp"><input class="form-control" name="comment" autocomplete="off" type="text"></div><div class="mimw"><input class="form-control" name="commentsDisabled" autocomplete="off" type="text"></div><div class="movkp"><input class="form-control" name="contentPresent" autocomplete="off" type="text"></div><div class="mimw"><input class="form-control" name="editorCleanup" autocomplete="off" type="text"></div><div class="mimw"><input class="form-control" name="WikispacesEditorContent" autocomplete="off" type="text"></div><input name="wikispacesASFormToken" value="e91e8dcada10af3373a0e1b096ecba7f1e48255e" type="hidden">
+    <input title="goto" name="8af70908617228d5c3407ff888ede4fa6158542c" value="" type="hidden">
+    <input title="mode" name="c4484be67673e262e893c603b28be3c06223f819" autocomplete="off" value="visual" type="hidden">
+    <input title="version" name="6819b127c299881603aaccbbeec2193798cd7579" autocomplete="off" value="525847522" type="hidden">
+    <input title="pageComments" name="51125b561debd5bd9a43a5b0d87448020a83fb92" autocomplete="off" value="" type="hidden">
+    <input title="saveAndContinue" name="6f218f70d1734cc0c8d0d4854d5bf82ce09c1a81" value="0" type="hidden">
+    <input title="comment" name="6a02a241433a58a72d2ed51aa057c7757fcff437" value="" type="hidden">
+    <input title="commentsDisabled" name="feba4618755d2299a2672e9c5a74bb909c2d60bb" autocomplete="off" value="" type="hidden">
+    <input title="contentPresent" name="204732b8546ad93e0a4c04d1e71701c4d19dc89b" autocomplete="off" value="" type="hidden">
+    <input title="editorCleanup" name="61f15f0c5ed75d1024c8c57c9de7dfdf0022024e" autocomplete="off" value="" type="hidden">
+
+    <textarea id="wsMainEditor" title="content" class="noContentHide" name="877cc8110b662e4d18ab629fc5e01f5f3c9b6e27" style="width: 100%; position: absolute; top: -50000px; left: -50000px;" autocomplete="off"></textarea>
+
+  <noscript>
+    <h2>Javascript Required</h2>
+    <p>You need to enable Javascript in your browser to edit pages.</p>
+  </noscript>
+
+  </form>
+  
+  
+  <div id="plainTextEditor" style="position:relative;display:none" class="editorLayer">
+    <textarea style="height: 446px; overflow: hidden;" id="textEditor" class="autogrow"></textarea>
+    <p style="clear:both;" align="right"><a href="https://help.wikispaces.com/help.wikitext" class="js-help-link" data-help="help.wikitext">help on how to format text</a></p>
+  </div>
+</div>
+
+
+
+
+  </div>
+  <div class="commentColumn WikispacesStream"><div class="WikispacesContent WikispacesBs3"><div class="commentList"></div></div></div>
+</div>
+
+  
+
+
+
+
+<script type="text/template" id="js-event-template">
+  <small>
+    <%- startDateShortFormat %>
+    <a href="<%- ws.common.pathFor('event', 'view', id) %>" class="WikispacesDialogLink">
+      <%- ws.common.truncate(title, 15) %>
+    </a>
+  </small>
+</script>
+
+<script type="text/template" id="js-reply-template">
+  <div class="tc-timeline-comment media">
+
+    <a class="pull-left userLink" href="<%- userCreated.url %>">
+      <img src="<%- userCreated.imageUrl %>" width="30" height="30" class="author-avatar" alt="" />
+    </a>
+    <div class="media-body" data-id="<%= id %>">
+      <% if (ws.context.user.canAdministerWiki) { %>
+        <i class="tc-delete-comment fa fa-trash-o contextual-command destroy-message ws-tip" title="Delete reply"></i>
+      <% } %>
+      <div class="tc-box-name-date">
+        <span class="tc-commenter"><a href="<%- userCreated.url %>"><%- userCreated.username %></a></span>
+        <% if (smartDate == '__live__') { %>
+        <abbr style="border-bottom-style: none;" class="timeago tc-comment-date" title="<%- (new Date(parseInt(dateCreated) * 1000)).toISOString() %>">
+          <%- (new Date(parseInt(dateCreated) * 1000)).toDateString() %>
+        </abbr>
+        <% } else { %>
+          <abbr style="border-bottom-style: none;" class="tc-comment-date"><%- smartDate %></abbr>
+        <% } %>
+      </div>
+      <% if (body) { %>
+      <p>
+        <%= body %>
+      </p>
+      <% } %>
+    </div>
+  </div>
+</script>
+
+<script type="text/template" id="js-share-template">
+  <div class="tc-timeline-block tc-<%= ws.stream.typeToBlockType(sharedType) %>-block" <%= (ws.stream.hideTimeline ? 'style="padding-left: 0px;"' : '') %>>
+
+    <% if (!ws.stream.hideTimeline) { %>
+      <div class="tc-timeline-icon">
+        <i class="fa fa-<%= ws.stream.typeToIcon(sharedType) %>"></i>
+      </div>
+      <div class="tc-timeline-triangle-man"></div>
+    <% } %>
+
+    <div class="tc-timeline-box" data-id="<%= id %>">
+      <div class="media">
+        <a class="pull-left userLink" href="<%- userCreated.url %>">
+          <img src="<%- userCreated.imageUrl %>" width="48" height="48" class="author-avatar media-object" alt="" />
+        </a>
+
+        <div class="media-body">
+
+          <div class="tc-stream-dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-chevron-down"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+              <% if (ws.context.user.id) { %>
+              <li>
+                <a class="js-toggle-monitor" tabindex="-1" href="#">
+                  <i class="fa-fw fa fa-eye"></i>
+                  <span><%= monitored ? 'Start Monitoring' : 'Stop Monitoring' %></span>
+                </a>
+              </li>
+              <% } %>
+
+              <% if (ws.context.user.canAdministerWiki) { %>
+              <li>
+                <a class="js-toggle-lock" tabindex="-1" href="#">
+                  <i class="fa-fw fa fa-lock"></i>
+                  <span><%= locked ? 'Unlock Replies' : 'Lock Replies' %></span>
+                </a>
+              </li>
+              <% if (sharedType == 'discussion' || sharedType == 'comment' || sharedType == 'event') { %>
+              <li>
+                <a class="js-destroy-share" tabindex="-1" href="#">
+                  <i class="fa-fw fa fa-trash-o"></i>
+                  Delete <%= ws.stream.typeToName(sharedType) %>
+                </a>
+              </li>
+              <% } %>
+              <% } %>
+            </ul>
+          </div>
+
+          <div class="tc-timeline-box-header ws-reveal media-heading">
+              <h3 class="tc-box-title">
+              <% if (typeof adminLink !== 'undefined' && adminLink && ws.context.user.canAdministerWiki) { %>
+                <a href="<%- adminLink %>"><%- title %></a>
+              <% } else { %>
+                <%- title %>
+              <% } %>
+              <% if (typeof startDate !== 'undefined' && startDate) { %> - <%= startDateShortFormat %> <%= ws.stream.getYearFromStartDate(startDate) %><% } %>
+              </h3>
+              <div class="tc-box-name-date">
+                <% if (ws.context.instance.isTesClassroom) { %>
+                  <%- userCreated.username %>
+                <% } else { %>
+                  <a class="author-name" href="<%- userCreated.url %>"><%- userCreated.username %></a>
+                <% } %>
+                <% if (typeof recipients !== 'undefined' && recipients) { %>
+                  <i class="fa fa-angle-right"></i>
+                  <% if (typeof recipientsLink !== 'undefined') { %>
+                    <a href="<%- recipientsLink %>"><%- recipients %></a>
+                  <% } else { %>
+                    <span class="recipients"><%- recipients %></span>
+                  <% } %>
+                <% } %>
+                <% if (smartDate == '__live__') { %>
+                  <abbr style="border-bottom-style: none;" class="timeago tc-block-date" title="<%= (new Date(parseInt(dateCreated) * 1000)).toISOString() %>">
+                    <%= (new Date(parseInt(dateCreated) * 1000)).toDateString() %>
+                  </abbr>
+                <% } else { %>
+                  <abbr style="border-bottom-style: none;" class="tc-block-date"><%- smartDate %></abbr>
+                <% } %>
+              </div>
+          </div>
+
+          <div class="<%= sharedType == 'comment' && !orphaned && !ws.stream.noCollapse ? 'hidden ' : '' %>tc-block-content">
+            <div class="clearfix">
+              <% if (typeof rangeActions !== 'undefined') { %>
+                <div class="tc-range-actions">
+                  <% for(var i = 0; i < rangeActions.length; i++) { %>
+                  <%= ws.stream.rangeActionTemplate(rangeActions[i]) %>
+                  <% } %>
+                </div>
+              <% } %>
+              <% if (description) { %>
+                <p><%= description %></p>
+              <% } %>
+            </div>
+          </div>
+
+          <% if (replyPages.length > 0 && !(replyPages.length === 1 && replyPages[0].digests.length === 0)) { %>
+            <div class="tc-timeline-comments">
+            <% for (var i = 0; i < replyPages.length; i++) { %>
+              <% if (i == 0 && replyPages[i].more) { %>
+                <a href="#" class="tc-show-more" onclick="ws.stream.pageReplies(<%= id %>, <%= replyPages[i].page + 1 %>); return false">Show more replies (<%= replyPages[i].more %> hidden) </a>
+              <% } else { %>
+                <div></div>
+              <% } %>
+              <% for (var j = 0; j < replyPages[i].digests.length; j++) { %>
+                <%= ws.stream.replyTemplate(replyPages[i].digests[j]) %>
+              <% } %>
+            <% } %>
+            </div>
+          <% } %>
+
+          <% if ((ws.stream.userCanPostMessage && !locked) || ws.context.user.canAdministerWiki) { %>
+          <div class="tc-add-comment media <%= ws.stream.noCollapse ? 'add-active' : ''%>">
+            <img src="<%- ws.context.user.imageUrlPrefix %>lg.jpg" width="30" height="30" class="pull-left author-avatar" alt="" />
+            <div class="media-body">
+              <textarea name="reply" placeholder="Comment" class="form-control form-control-tc ws-reveal <%= !ws.stream.noCollapse ? 'ws-unrevealed' : ''%> reply" /></textarea>
+              <button type="button" class="btn-tc btn-info-tc btn-sm-tc add-reply">Post</button>
+            </div>
+          </div>
+          <% } %>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</script>
+
+<script type="text/template" id="js-range-action-template">
+  <div>
+    <strong><%- name %></strong>
+    <% if (typeof(diffUrl) !== 'undefined') { %>
+      <a href="<%- diffUrl %>">
+    <% } %>
+    <%= new Date(dateCreated * 1000).toLocaleString() %>
+    <% if (typeof(diffUrl) !== 'undefined') { %>
+      </a>
+    <% } %>
+    <% if (typeof(rangeText) !== 'undefined') { %>
+      <div>
+        <span class="commentExtent">
+        <% if (typeof(diffUrl) !== 'undefined') { %>
+          <a href="<%- diffUrl %>">
+        <% } %>
+        <%= rangeText %>
+        <% if (typeof(diffUrl) !== 'undefined') { %>
+          </a>
+        <% } %>
+        </span>
+      </div>
+    <% } %>
+  </div>
+</script>
+
+<script type="text/template" id="js-stream-end-template">
+  <div class="tc-timeline-block tc-end-block">
+    <div class="tc-timeline-icon" style="margin-top: -10px;" />
+    <div class="tc-timeline-box" style="visibility: hidden;">
+      <p class="tc-box-title"></p>
+    </div>
+  </div>
+</script>
+
+<a name="discussion"></a>
+<div class="timeline WikispacesBs3 tc-timeline-embedded show-border">
+  <div class="timeline-line"></div>
+    <div id="js-share-list">
+    <div class="spinner hidden"><i class="fa fa-spinner fa-spin"></i></div>
+  </div>
+</div></div></div><div id="sentinel" style="clear:both"></div>        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<footer class="ws-theme-footer" role="contentinfo">
+  <div class="ws-theme-container">
+    <div class="ws-theme-footer-inner">
+      <div class="WikiFooterNav WikiElement">
+<a href="http://helpcenter.wikispaces.com/" rel="nofollow" class="js-help-trigger">Help</a> ·
+<a href="https://www.wikispaces.com/about">About</a> ·
+<a href="http://blog.wikispaces.com/" target="_new">Blog</a> ·
+<a href="https://www.wikispaces.com/content/pricing" rel="nofollow">Pricing</a> ·
+<a href="https://www.wikispaces.com/privacy" rel="nofollow">Privacy</a> ·
+<a href="https://www.wikispaces.com/terms" rel="nofollow">Terms</a> ·
+<a href="https://www.wikispaces.com/site/help?url=https%3A%2F%2Farduino-info.wikispaces.com%2FMegaQuickRef%3FresponseToken%3D035b56c19a2888bc379f3b900ad71304" rel="nofollow"><strong>Support</strong></a></div>      <div class="WikiLicense WikiElement">Contributions to https://arduino-info.wikispaces.com/ are licensed under a <a rel="license" href="http://www.creativecommons.org/licenses/by-nc/3.0">Creative Commons Attribution Non-Commercial 3.0 License</a>. <a rel="license" href="http://www.creativecommons.org/licenses/by-nc/3.0"><img src="arduino-info%20-%20MegaQuickRef_files/by-nc_3.png" alt="Creative Commons Attribution Non-Commercial 3.0 License" height="15" width="85"></a><br>Portions not contributed by visitors are Copyright 2015 Tangient LLC</div>    </div>
+  </div>
+</footer>
+
+
+<script type="text/template" id="dialog-template">
+<div class="modal fade" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+        <h4 class="modal-title"><%= header %></h4>
+      </div>
+      <div class="modal-body">
+        <%= body %>
+      </div>
+    </div>
+  </div>
+</div>
+</script>
+
+
+<div id="js-help-template" class="hidden">
+  <div class="ws-help">
+    <div class="js-help-controls WikispacesContent WikispacesBs3">
+      <a href="https://www.wikispaces.com/site/gettingstarted/off" class="btn btn-default hidden js-getting-started-off pull-right">Turn off "Getting Started"</a>
+      <ol class="breadcrumb">
+        <li class="js-special-breadcrumb active">
+          <a href="http://helpcenter.wikispaces.com/" data-breadcrumb="0">Home</a>
+        </li>
+        <li class="js-ellipsis hidden js-special-breadcrumb">
+          ...
+        </li>
+        <li class="js-spinner hidden js-special-breadcrumb"><i class="fa fa-spinner fa-spin"></i></li>
+      </ol>
+    </div>
+    <div class="ws-help-content wiki">Loading...</div>
+  </div>
+</div>
+</div>
+<script src="arduino-info%20-%20MegaQuickRef_files/1j69q370-common.js" type="text/javascript"></script>
+<script src="arduino-info%20-%20MegaQuickRef_files/vkz515xz-editorc.js" type="text/javascript"></script>
+<script src="arduino-info%20-%20MegaQuickRef_files/85k7018k-stream.js" type="text/javascript"></script>
+<script src="arduino-info%20-%20MegaQuickRef_files/91k8z207-contentbar.js" type="text/javascript"></script>
+<script src="arduino-info%20-%20MegaQuickRef_files/395j1vq7-component.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+ws.namespace('ws.attributes');
+ws.namespace('ws.stream');
+ws.attributes.DISCUSSION_COUNT = 0;
+ws.attributes.pageId = 109965438;
+ws.attributes.version = 525847522;
+ws.attributes.showEditor = true;
+ws.attributes.editUrl = "https:\/\/arduino-info.wikispaces.com\/page\/edit\/MegaQuickRef?goto=https%3A%2F%2Farduino-info.wikispaces.com%2FMegaQuickRef";
+ws.attributes.userCanEdit = false;
+ws.stream.userCanPostMessage = false;
+ws.stream.hideTimeline = true;
+ws.stream.shareSource = "https:\/\/arduino-info.wikispaces.com\/page\/shares\/MegaQuickRef";
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+jQuery(document).ready(function() {
+  ws.common.addJsonNotices({"warning":[],"error":[],"info":[],"success":[]});
+});
+
+jQuery(document).ready(function($) {
+  
+  function tipPlacement() {
+    return this.$element.closest('.ws-menu-bar .btn-group').is('.open') ? 'top' : 'bottom';
+  }
+
+  
+
+  $('.ws-menu-bar').each(function() {
+    var $menuBar = $(this);
+    var $tagDropdown = $menuBar.find('.ws-tag-dropdown-menu');
+    $menuBar.find('.tipme').tooltip({placement: tipPlacement, container: '.ws-menu-bar'});
+
+    
+    $menuBar.find('.ws-btn-more').click(ws.common.makeLinkClickFunction(function(e) {
+      if ($(this).closest('.ws-menu-bar .btn-group').is('.open')) {
+        ws.common.hideMorePageBar();
+      } else {
+        ws.common.showMorePageBar();
+      }
+    }));
+
+    $menuBar.on('click', '.ws-tag-dropdown-toggle', ws.common.makeLinkClickFunction(function(e) {
+      if ($(this).closest('.ws-menu-bar .dropdown').is('.open')) {
+        ws.common.hideTagDropdown();
+      } else {
+        ws.common.showTagDropdown();
+      }
+    }));
+
+    $(document.body).click(function(e) {
+      var $target = $(e.target);
+      if (!$target.closest('.ws-more-menu').closest('.ws-menu-bar').is($menuBar)
+          || $target.closest('a').is('.WikispacesDialogLink')) {
+        ws.common.hideMorePageBar();
+      }
+      if ($tagDropdown.length && !$target.closest('.ws-tag-dropdown-menu').is($tagDropdown)) {
+        ws.common.hideTagDropdown();
+      }
+    });
+    
+  });
+});
+
+
+jQuery(document).ready(function($) {
+  $('.ws-more-menu').on('click', 'a', function(e) {
+    if ($(this).is('.disabled')) {
+      e.preventDefault();
+    }
+  });
+});
+
+
+jQuery(document).ready(function() {
+  ws.editor.canEdit = false;
+  var editUrl = 'https://arduino-info.wikispaces.com/page/edit/MegaQuickRef?goto=https%3A%2F%2Farduino-info.wikispaces.com%2FMegaQuickRef';
+
+  jQuery('#js-edit-from-template').change(function() {
+    window.location = ws.common.addUriParams(editUrl, [['template', jQuery(this).val()]]);
+  });
+});
+
+
+jQuery(document).ready(function() {
+  ws.editor.loadEditorLibs('https://www.wikispaces.com/site/editorlibs/en_US/07z93j80.gz.js');
+});
+
+
+ws.editor.startEditor = function (moreCoreOptions, moreMainOptions) {
+  ws.editor.canEdit = true;
+
+  var coreOptions = {
+    'content_css': ['https://arduino-info.wikispaces.com/stylesheet/editor/221909772-217420326D.gz.css']
+  };
+
+  // The stylesheet is passed in as a string, turn it into an array
+  // Add bootstrap styles to the editor, if we are in a theme that has full screen bootstrap
+  if (jQuery('body').is('.WikispacesBs3')) {
+    coreOptions.content_css.push('https://www.wikispaces.com//s/internal-bootstrap-body.css');
+  }
+
+  var mainOptions = {
+    'wssave_cancel_url': '/MegaQuickRef',
+    'wsimage_upload_url': 'https://arduino-info.wikispaces.com/file/multiupload',
+    'wsimage_max_file_size_mb': '50',
+    'wsimage_page_view_group': ''
+  };
+
+  ws.editor.loadEditor(jQuery.extend(coreOptions, moreCoreOptions), jQuery.extend(mainOptions, moreMainOptions));
+};
+
+  var wikispaces_page_version = '525847522';
+
+  jQuery(document).ready(function() {
+    ws.editor.enableButtons();
+  });
+
+
+
+--></script><!-- w16 117 mem:3:28(31) dql:1:3(5) wki:1:2(2) tot:117:117(1) -->
+
+
+<div style="position: absolute; top: -10000px; left: -10000px; font-size: 14px; font-family: arial,helvetica,sans-serif; font-weight: 400; line-height: 20px; resize: none; width: 98px;" class="autogrow-shadow"></div><div class="vdh-mask vdh-2016724366" style="width:292px;height:29px;top:293px;left:93px;display:none"></div><div class="vdh-mask vdh-2016730070" style="width:238px;height:29px;top:3019px;left:565px;display:none"></div></body></html>

@@ -1,0 +1,48 @@
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.Business\bin\Debug\PSSC.Business.dll.config
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.Business\bin\Debug\PSSC.Business.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.Business\bin\Debug\PSSC.Business.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.Business\bin\Debug\EntityFramework.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.Business\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.Business\bin\Debug\PSSC.DataAccess.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.Business\bin\Debug\PSSC.DataModel.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.Business\bin\Debug\PSSC.XCommon.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.Business\bin\Debug\PSSC.DataAccess.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.Business\bin\Debug\PSSC.DataModel.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.Business\bin\Debug\PSSC.XCommon.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.Business\bin\Debug\EntityFramework.xml
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.Business\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.Business\obj\Debug\PSSC.Business.csprojResolveAssemblyReference.cache
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.Business\obj\Debug\PSSC.Business.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.Business\obj\Debug\PSSC.Business.pdb
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.Business\bin\Debug\PSSC.Business.dll.config
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.Business\bin\Debug\PSSC.Business.dll
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.Business\bin\Debug\PSSC.Business.pdb
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.Business\bin\Debug\EntityFramework.dll
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.Business\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.Business\bin\Debug\PSSC.DataAccess.dll
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.Business\bin\Debug\PSSC.DataModel.dll
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.Business\bin\Debug\PSSC.XCommon.dll
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.Business\bin\Debug\PSSC.DataAccess.pdb
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.Business\bin\Debug\PSSC.DataModel.pdb
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.Business\bin\Debug\PSSC.XCommon.pdb
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.Business\bin\Debug\EntityFramework.xml
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.Business\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.Business\obj\Debug\PSSC.Business.csprojResolveAssemblyReference.cache
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.Business\obj\Debug\PSSC.Business.dll
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.Business\obj\Debug\PSSC.Business.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.Business\bin\Debug\PSSC.Business.dll.config
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.Business\bin\Debug\PSSC.Business.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.Business\bin\Debug\PSSC.Business.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.Business\bin\Debug\EntityFramework.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.Business\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.Business\bin\Debug\PSSC.DataAccess.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.Business\bin\Debug\PSSC.DataModel.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.Business\bin\Debug\PSSC.XCommon.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.Business\bin\Debug\PSSC.DataAccess.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.Business\bin\Debug\PSSC.DataModel.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.Business\bin\Debug\PSSC.XCommon.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.Business\bin\Debug\EntityFramework.xml
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.Business\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.Business\obj\Debug\PSSC.Business.csprojResolveAssemblyReference.cache
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.Business\obj\Debug\PSSC.Business.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.Business\obj\Debug\PSSC.Business.pdb

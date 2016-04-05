@@ -1,0 +1,36 @@
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.VirtualMachine\bin\Debug\PSSC.VirtualMachine.exe.config
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.VirtualMachine\bin\Debug\PSSC.VirtualMachine.exe
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.VirtualMachine\bin\Debug\PSSC.VirtualMachine.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.VirtualMachine\bin\Debug\PSSC.XCommon.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.VirtualMachine\bin\Debug\PSSC.XCommon.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.VirtualMachine\obj\Debug\PSSC.VirtualMachine.csprojResolveAssemblyReference.cache
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.VirtualMachine\obj\Debug\PSSC.VirtualMachine.App.PortSettingForm.resources
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.VirtualMachine\obj\Debug\PSSC.VirtualMachine.App.frmVirtualMachine.resources
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.VirtualMachine\obj\Debug\PSSC.VirtualMachine.Properties.Resources.resources
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.VirtualMachine\obj\Debug\PSSC.VirtualMachine.csproj.GenerateResource.Cache
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.VirtualMachine\obj\Debug\PSSC.VirtualMachine.exe
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.VirtualMachine\obj\Debug\PSSC.VirtualMachine.pdb
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.VirtualMachine\bin\Debug\PSSC.VirtualMachine.exe.config
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.VirtualMachine\bin\Debug\PSSC.VirtualMachine.exe
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.VirtualMachine\bin\Debug\PSSC.VirtualMachine.pdb
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.VirtualMachine\bin\Debug\PSSC.XCommon.dll
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.VirtualMachine\bin\Debug\PSSC.XCommon.pdb
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.VirtualMachine\obj\Debug\PSSC.VirtualMachine.csprojResolveAssemblyReference.cache
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.VirtualMachine\obj\Debug\PSSC.VirtualMachine.App.PortSettingForm.resources
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.VirtualMachine\obj\Debug\PSSC.VirtualMachine.App.frmVirtualMachine.resources
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.VirtualMachine\obj\Debug\PSSC.VirtualMachine.Properties.Resources.resources
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.VirtualMachine\obj\Debug\PSSC.VirtualMachine.csproj.GenerateResource.Cache
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.VirtualMachine\obj\Debug\PSSC.VirtualMachine.exe
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.VirtualMachine\obj\Debug\PSSC.VirtualMachine.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.VirtualMachine\obj\Debug\PSSC.VirtualMachine.App.PortSettingForm.resources
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.VirtualMachine\obj\Debug\PSSC.VirtualMachine.App.frmVirtualMachine.resources
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.VirtualMachine\obj\Debug\PSSC.VirtualMachine.Properties.Resources.resources
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.VirtualMachine\obj\Debug\PSSC.VirtualMachine.csproj.GenerateResource.Cache
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.VirtualMachine\bin\Debug\PSSC.VirtualMachine.exe.config
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.VirtualMachine\bin\Debug\PSSC.VirtualMachine.exe
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.VirtualMachine\bin\Debug\PSSC.VirtualMachine.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.VirtualMachine\bin\Debug\PSSC.XCommon.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.VirtualMachine\bin\Debug\PSSC.XCommon.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.VirtualMachine\obj\Debug\PSSC.VirtualMachine.csprojResolveAssemblyReference.cache
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.VirtualMachine\obj\Debug\PSSC.VirtualMachine.exe
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.VirtualMachine\obj\Debug\PSSC.VirtualMachine.pdb

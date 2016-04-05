@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7]><html class="iem7"  lang="vi" dir="ltr"><![endif]-->
+<!--[if lte IE 6]><html class="lt-ie9 lt-ie8 lt-ie7"  lang="vi" dir="ltr"><![endif]-->
+<!--[if (IE 7)&(!IEMobile)]><html class="lt-ie9 lt-ie8"  lang="vi" dir="ltr"><![endif]-->
+<!--[if IE 8]><html class="lt-ie9"  lang="vi" dir="ltr"><![endif]-->
+<!--[if (gte IE 9)|(gt IEMobile 7)]><!-->
+<html class="js" dir="ltr" prefix="fb: http://www.facebook.com/2008/fbml content: http://purl.org/rss/1.0/modules/content/ dc: http://purl.org/dc/terms/ foaf: http://xmlns.com/foaf/0.1/ og: http://ogp.me/ns# rdfs: http://www.w3.org/2000/01/rdf-schema# sioc: http://rdfs.org/sioc/ns# sioct: http://rdfs.org/sioc/types# skos: http://www.w3.org/2004/02/skos/core# xsd: http://www.w3.org/2001/XMLSchema#" lang="vi"><!--<![endif]--><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <!--[if IE]><![endif]-->
+<meta charset="utf-8">
+<link rel="shortcut icon" href="http://cdn.arduino.vn/sites/default/files/favicon.png" type="image/png">
+<link rel="shortlink" href="http://arduino.vn/node/101">
+<link rel="dns-prefetch" href="http://cdn.arduino.vn/">
+<meta name="Generator" content="Drupal 7 (http://drupal.org)">
+<meta http-equiv="x-dns-prefetch-control" content="on">
+<link rel="canonical" href="http://arduino.vn/reference/xung-pwm">
+  <title>Xung PWM | Cộng đồng Arduino Việt Nam</title>
+
+      <meta name="MobileOptimized" content="width">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="cleartype" content="on">
+
+  <link type="text/css" rel="stylesheet" href="Xung%20PWM%20_%20C%E1%BB%99ng%20%C4%91%E1%BB%93ng%20Arduino%20Vi%E1%BB%87t%20Nam_files/css__NZTu0F8e8p9bQXPwdBrbGye5SsDkmshw0obmNZvKTCc__SD3cLspeKq.css" media="all">
+  <script src="Xung%20PWM%20_%20C%E1%BB%99ng%20%C4%91%E1%BB%93ng%20Arduino%20Vi%E1%BB%87t%20Nam_files/js__UiO29A8qiU-liB_96gCC8E9JKDzRn317nHrd6s0stps__AwigsEBkeDuY.js"></script>
+<script src="Xung%20PWM%20_%20C%E1%BB%99ng%20%C4%91%E1%BB%93ng%20Arduino%20Vi%E1%BB%87t%20Nam_files/js__nok8G7hcnetIw76kyOWGSjfV7ZbfyfFwm807kxsEXGI__BaEwjj6wscfX.js" defer="defer"></script>
+<script src="Xung%20PWM%20_%20C%E1%BB%99ng%20%C4%91%E1%BB%93ng%20Arduino%20Vi%E1%BB%87t%20Nam_files/js__5O_upywZo-_QbsYdJwBNVd0EfIStknBljv49O_tHIU4__K2m6elQ9OKir.js"></script>
+<script src="Xung%20PWM%20_%20C%E1%BB%99ng%20%C4%91%E1%BB%93ng%20Arduino%20Vi%E1%BB%87t%20Nam_files/js__bzh0uY3h0wP16p2vug7GVZc8YwQII2MvMdP74GgvZU4__29hprtUJjUrY.js" defer="defer"></script>
+<script src="Xung%20PWM%20_%20C%E1%BB%99ng%20%C4%91%E1%BB%93ng%20Arduino%20Vi%E1%BB%87t%20Nam_files/js__USCTpE8CMA35CebIamCY48pPlFoGinjWOGCEpsDiiF0__PRUk2JXc_yzc.js"></script>
+<script>jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":{"theme":"ktheme","theme_token":"BsSY3LMYZryhMXHNxG7gb7lVQZAnUFYuUXDulUbELCw","css":{"modules\/system\/system.base.css":1,"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"sites\/all\/modules\/ldap\/ldap_user\/ldap_user.css":1,"modules\/field\/theme\/field.css":1,"modules\/node\/node.css":1,"modules\/search\/search.css":1,"modules\/user\/user.css":1,"sites\/all\/modules\/views\/css\/views.css":1,"sites\/all\/modules\/ckeditor\/css\/ckeditor.css":1,"sites\/all\/modules\/ctools\/css\/ctools.css":1,"sites\/all\/modules\/fbconnect\/fbconnect.css":1,"sites\/all\/modules\/ldap\/ldap_servers\/ldap_servers.admin.css":1,"sites\/default\/files\/sl_sprites.css":1,"sites\/all\/modules\/path_breadcrumbs\/css\/path_breadcrumbs.css":1,"sites\/all\/themes\/ktheme\/css\/theme-A.css":1,"sites\/all\/libraries\/superfish\/css\/superfish.css":1,"sites\/all\/libraries\/superfish\/style\/ktheme.css":1,"sites\/all\/themes\/ktheme\/system.menus.css":1,"sites\/all\/themes\/ktheme\/system.messages.css":1,"sites\/all\/themes\/ktheme\/system.theme.css":1,"sites\/all\/themes\/ktheme\/css\/styles.css":1,"sites\/all\/modules\/prettify\/styles\/googlecode.css":1},"js":{"modules\/statistics\/statistics.js":1,"misc\/jquery.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1,"sites\/all\/libraries\/google-code-prettify\/prettify.js":1,"sites\/all\/libraries\/google-code-prettify\/lang-css.js":1,"public:\/\/languages\/vi_r2C-K-xGH02cb7NaR69c-FhwBMfQw5NgDS-Jvq9MyPM.js":1,"sites\/all\/modules\/fbconnect\/fbconnect.js":1,"sites\/all\/modules\/prettify\/prettify.loader.js":1,"sites\/all\/modules\/disqus\/disqus.js":1,"sites\/all\/libraries\/superfish\/jquery.hoverIntent.minified.js":1,"sites\/all\/libraries\/superfish\/sfsmallscreen.js":1,"sites\/all\/libraries\/superfish\/supposition.js":1,"sites\/all\/libraries\/superfish\/superfish.js":1,"sites\/all\/libraries\/superfish\/supersubs.js":1,"sites\/all\/modules\/superfish\/superfish.js":1,"sites\/all\/themes\/ktheme\/js\/jquery.js":1,"sites\/all\/themes\/ktheme\/js\/phpjs.js":1,"sites\/all\/themes\/ktheme\/js\/ktheme.js":1}},"fbconnect":{"user_pictures":"disallow","language_code":"vi_VN","app_id":"1424185567850442","debug":0,"connect_js":"document.location.protocol + \u0027\/\/connect.facebook.net\/vi_VN\/all.js\u0027","loginout_mode":"manual","invite_name":"C\u1ed9ng \u0111\u1ed3ng Arduino Vi\u1ec7t Nam","fast_reg_mode":1,"fast_reg_autoname":1,"fbuid":0,"user":{"uid":0,"fbuid":null}},"prettify":{"linenums":false,"match":".content,#content","nocode":"no-code","custom":[],"markup":{"code":true,"pre":true,"precode":false}},"statistics":{"data":{"nid":"101"},"url":"\/modules\/statistics\/statistics.php"},"disqus":{"domain":"arduinovnn","url":"http:\/\/arduino.vn\/reference\/xung-pwm","title":"Xung PWM","identifier":"node\/101","language":"vi","sso":{"name":"C\u1ed9ng \u0111\u1ed3ng Arduino Vi\u1ec7t Nam","url":"http:\/\/arduino.vn\/user\/login?destination=disqus\/closewindow","logout":"http:\/\/arduino.vn\/user\/logout?destination=node\/101","width":800,"height":600,"button":"\/\/cdn.arduino.vn\/sites\/default\/files\/images\/468_88220-1401037433-0-arduino-logo-pantone1.png","icon":"\/\/cdn.arduino.vn\/sites\/default\/files\/favicon.png"},"api_key":"HYyUbnayRKyvJXL3JDIMXGwU073P5OvZt0TYdVd7urTp4SQGmjwJqKULyc2Oeow3","remote_auth_s3":"W10= de10397967c2329d653d3bfc8c445a8d13698d55 1438367439"},"superfish":{"1":{"id":"1","sf":{"delay":"10","animation":{"opacity":"show","height":"show"},"speed":10,"autoArrows":true,"dropShadows":true,"disableHI":false},"plugins":{"smallscreen":{"mode":"window_width","addSelected":false,"menuClasses":false,"hyperlinkClasses":false,"title":"Main menu"},"supposition":true,"bgiframe":false,"supersubs":{"minWidth":"12","maxWidth":"27","extraWidth":1}}}}});</script>
+      <!--[if lt IE 9]>
+    <script src="/sites/all/themes/zen/js/html5-respond.js"></script>
+    <![endif]-->
+  <style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}.fb_link img{border:none}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_reset .fb_dialog_legacy{overflow:visible}.fb_dialog_advanced{padding:10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}.fb_dialog_content{background:#fff;color:#333}.fb_dialog_close_icon{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;_background-image:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif);cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{top:5px;left:5px;right:auto}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent;_background-image:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif)}.fb_dialog_close_icon:active{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent;_background-image:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif)}.fb_dialog_loader{background-color:#f6f7f8;border:1px solid #606060;font-size:24px;padding:20px}.fb_dialog_top_left,.fb_dialog_top_right,.fb_dialog_bottom_left,.fb_dialog_bottom_right{height:10px;width:10px;overflow:hidden;position:absolute}.fb_dialog_top_left{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 0;left:-10px;top:-10px}.fb_dialog_top_right{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -10px;right:-10px;top:-10px}.fb_dialog_bottom_left{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -20px;bottom:-10px;left:-10px}.fb_dialog_bottom_right{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -30px;right:-10px;bottom:-10px}.fb_dialog_vert_left,.fb_dialog_vert_right,.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{position:absolute;background:#525252;filter:alpha(opacity=70);opacity:.7}.fb_dialog_vert_left,.fb_dialog_vert_right{width:10px;height:100%}.fb_dialog_vert_left{margin-left:-10px}.fb_dialog_vert_right{right:0;margin-right:-10px}.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{width:100%;height:10px}.fb_dialog_horiz_top{margin-top:-10px}.fb_dialog_horiz_bottom{bottom:0;margin-bottom:-10px}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #3a5795;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{-webkit-transform:none;height:100%;margin:0;overflow:visible;position:absolute;top:-10000px;left:0;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{max-height:590px;min-height:590px;max-width:500px;min-width:500px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .45);position:absolute;left:0;top:0;width:100%;min-height:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_content .dialog_header{-webkit-box-shadow:white 0 1px 1px -1px inset;background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#738ABA), to(#2C4987));border-bottom:1px solid;border-color:#1d4088;color:#fff;font:14px Helvetica, sans-serif;font-weight:bold;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{-webkit-font-smoothing:subpixel-antialiased;height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#4966A6), color-stop(.5, #355492), to(#2A4887));border:1px solid #2f477a;-webkit-background-clip:padding-box;-webkit-border-radius:3px;-webkit-box-shadow:rgba(0, 0, 0, .117188) 0 1px 1px inset, rgba(255, 255, 255, .167969) 0 1px 0;display:inline-block;margin-top:3px;max-width:85px;line-height:18px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{border:none;background:none;color:#fff;font:12px Helvetica, sans-serif;font-weight:bold;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #555;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f6f7f8;border:1px solid #555;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_hide_iframes iframe{position:relative;left:-10000px}.fb_iframe_widget_loader{position:relative;display:inline-block}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}.fb_iframe_widget_loader iframe{min-height:32px;z-index:2;zoom:1}.fb_iframe_widget_loader .FB_Loader{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/y9/r/jKEcVPZFk-2.gif) no-repeat;height:32px;width:32px;margin-left:-16px;position:absolute;left:50%;z-index:4}</style><link href="Xung%20PWM%20_%20C%E1%BB%99ng%20%C4%91%E1%BB%93ng%20Arduino%20Vi%E1%BB%87t%20Nam_files/loading.css" rel="stylesheet"></head>
+<body class="html not-front not-logged-in no-sidebars page-node page-node- page-node-101 node-type-reference-page section-reference disqus-processed">
+      <p id="skip-link">
+      <a href="#main-menu" class="element-invisible element-focusable">Jump to navigation</a>
+    </p>
+      
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('.block-nice-menus > div').length > 0 ? '' : $('.block-nice-menus').attr('style','display:none;');
+		
+	});
+	$(window).bind('scroll', function() {
+	     if ($(window).scrollTop() > 150) {
+	         $('div#navigation').addClass('fixed');
+	          $('#menuWings').show();
+	     }
+	     else {
+	         $('div#navigation').removeClass('fixed');
+	         $('#menuWings').hide();
+	     }
+	});
+</script>
+<div style="display: block;" class="fixed" id="menuWings"></div>
+<div id="divHeader">&nbsp;</div>
+<div id="page">
+  
+  <header class="header" id="header" role="banner">
+
+          <a href="http://arduino.vn/" title="Nhà" rel="home" class="header__logo" id="logo" style="background: url('//cdn.arduino.vn/sites/all/themes/ktheme/logo.png') no-repeat scroll 0 0 rgba(0, 0, 0, 0);border: medium none;color: #FFFFFF;display: block;height: 80px;text-indent: -9999em;width: 170px;">Nhà</a>
+    
+          <div class="header__name-and-slogan" id="name-and-slogan">
+                  <h1 class="header__site-name" id="site-name">
+            <a href="http://arduino.vn/" title="Nhà" class="header__site-link" rel="home"><span>Cộng đồng  Việt Nam</span></a>
+          </h1>
+        
+              </div>
+    
+    
+      <div class="header__region region region-header">
+    <div id="block-search-form" class="block block-search first last odd" role="search">
+
+      
+  <form action="/reference/xung-pwm" method="post" id="search-block-form" accept-charset="UTF-8"><div><div class="container-inline">
+      <h2 class="element-invisible">Biểu mẫu tìm kiếm</h2>
+    <div class="form-item form-type-textfield form-item-search-block-form">
+  <label class="element-invisible" for="edit-search-block-form--2">Tìm kiếm </label>
+ <input title="Nhập điều kiện tìm kiếm." id="edit-search-block-form--2" name="search_block_form" size="15" maxlength="128" class="form-text" type="text">
+</div>
+<div class="form-actions form-wrapper" id="edit-actions"><input id="edit-submit" name="op" value="Tìm kiếm" class="form-submit" type="submit"></div><input name="form_build_id" value="form-fF21GuXA1U6zZWCVdwSdBqx4W9LsZcSmt20qWMaV9RI" type="hidden">
+<input name="form_id" value="search_block_form" type="hidden">
+</div>
+</div></form>
+</div>
+  </div>
+
+  </header>
+  
+  <div id="main">
+	    <div id="content" class="column column-not-in-frontpage" role="main">
+            <h2 class="element-invisible">Bạn đang ở đây</h2><div class="breadcrumb"><div class="inline odd first" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://arduino.vn/" itemprop="url"><span itemprop="title">Arduino.vn</span></a></div> <span class="delimiter">»</span> <div class="inline even" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://arduino.vn/reference" itemprop="url"><span itemprop="title">Tài liệu tham khảo</span></a></div> <span class="delimiter">»</span> <div class="inline odd last" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><span itemprop="title">Xung PWM</span></div></div>      <a id="main-content"></a>
+                    <h1 class="page__title title" id="page-title">Xung PWM</h1>
+                                          
+
+
+<article class="node-101 not-in-frontpage node node-reference-page node-promoted view-mode-full clearfix" about="/reference/xung-pwm" typeof="sioc:Item foaf:Document">
+
+      <header>
+                  <span property="dc:title" content="Xung PWM" class="rdf-meta element-hidden"></span>
+              <p class="submitted">
+                    <span property="dc:date dc:created" content="2014-05-28T23:56:37+07:00" datatype="xsd:dateTime" rel="sioc:has_creator"><a href="http://arduino.vn/users/pitagoever" title="Xem hồ sơ người dùng." class="username" xml:lang="" about="/users/pitagoever" typeof="sioc:UserAccount" property="foaf:name" datatype="">pitagoever</a> gửi vào <time pubdate="" datetime="2014-05-28T23:56:37+07:00">Thứ tư, 28 Tháng 5, 2014 - 23:56</time></span>        </p>
+      
+          </header>
+  
+  <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><h2><strong><span style="color:#FF8C00">Kiến thức cơ bản</span></strong></h2>
+<p>Xung là các trạng thái cao / thấp (HIGH/LOW) về mức điện áp được lặp 
+đi lặp lại. Đại lượng đặc trưng cho 1 xung PWM (Pulse Width Modulation) 
+bao gồm <span style="color:#FF0000"><strong>tần số</strong></span> (frequency) và <span style="color:#FF0000"><strong>chu kì xung</strong></span> (duty cycle).</p>
+<p>Tần số là gì?</p>
+<p>Tần số là số lần lặp lại trong 1 đơn vị thời gian. Đơn vị tần số là Hz, tức là số lần lặp lại dao động trong 1 giây.</p>
+<p>Lấy ví dụ, 1Hz = 1 dao động trong 1 giây. 2Hz = 2 dao động trong 1 giây. 16MHz = 16 triệu dao động trong 1 giây.</p>
+<p>Như vậy theo quy tắc tam suất: 16 triệu dao động - 1 giây --&gt; 1 dao động tốn 1/16.000.000 (giây) = 0,0625 (micro giây)</p>
+<p>Cách xác định 1 dao động như thế nào? Đa phần các bạn mới nghiên cứu 
+điện tử thường mắc sai lầm ở việc xác định 1 dao động. Dao động được xác
+ định từ trạng thái bắt đầu và kết thúc ngay trước khi trạng thái bắt 
+đầu được lặp lại.</p>
+<p class="rtecenter"><img alt="" src="Xung%20PWM%20_%20C%E1%BB%99ng%20%C4%91%E1%BB%93ng%20Arduino%20Vi%E1%BB%87t%20Nam_files/594_12333-1402655539-0-screenshot-2014-06-13-17.png" style="height:167px; width:359px"></p>
+<p class="rtecenter"><strong><span style="color:#0000FF">Cách xác định 1 dao động</span></strong></p>
+<p>Như vậy thông thường, 1 dao động sẽ bao gồm 2 trạng thái điện: mức 
+cao (x giây) và mức thấp (y giây). Tỉ lệ phần trăm thời gian giữa 2 
+trạng thái điện này chính là chu kì xung.</p>
+<p>Với x/y = 0% ta có xung chứa toàn bộ điện áp thấp (khái niệm xung nên hiểu mở rộng)</p>
+<p>Với x/y = 50% thì 50% thời gian đầu, xung có điện áp cao, 50% sau xung có điện áp thấp.</p>
+<p>Với x/y=100% ta có xung chứa toàn bộ điện áp cao.</p>
+<p>Tóm lại, với 1 xung ta có:</p>
+<ol><li>Tần số: để tính toán ra được thời gian của 1 xung</li>
+<li>Chu kì xung: bao nhiêu thời gian xung có mức áp cao, bao nhiêu thời gian xung có mức áp thấp.</li>
+</ol><h2><span style="color:#FF8C00"><strong>Liên hệ với Arduino</strong></span></h2>
+<p>Với kiến thức cơ bản về xung, các bạn sẽ hiểu rõ hơn về xung trong thực tế như thế nào.</p>
+<p class="rtecenter"><img alt="" src="Xung%20PWM%20_%20C%E1%BB%99ng%20%C4%91%E1%BB%93ng%20Arduino%20Vi%E1%BB%87t%20Nam_files/540_88233-1402656066-0-pwm.htm" style="height:438px; width:400px"></p>
+<p class="rtecenter"><span style="color:#0000FF"><strong>Xung khi sử dụng với hàm analogWrite trong Arduino</strong></span></p>
+<p>Giữa 2 vạch màu xanh lá cây là 1 xung.</p>
+<table class="rtcenter" style="width:500px" border="1" cellpadding="1" cellspacing="1"><tbody><tr><td class="rtecenter">analogWrite</td>
+<td class="rtecenter">tỉ lệ</td>
+<td class="rtecenter">chu kì xung</td>
+</tr><tr><td class="rtecenter">analogWrite(0)</td>
+<td class="rtecenter">0/255</td>
+<td class="rtecenter">0%</td>
+</tr><tr><td class="rtecenter">analogWrite(64)</td>
+<td class="rtecenter">64/255</td>
+<td class="rtecenter">25%</td>
+</tr><tr><td class="rtecenter">analogWrite(127)</td>
+<td class="rtecenter">127/255</td>
+<td class="rtecenter">50%</td>
+</tr><tr><td class="rtecenter">analogWrite(191)</td>
+<td class="rtecenter">191/255</td>
+<td class="rtecenter">75%</td>
+</tr><tr><td class="rtecenter">analogWrite(255)</td>
+<td class="rtecenter">255/255</td>
+<td class="rtecenter">100%</td>
+</tr></tbody></table><p>Hàm <a href="http://arduino.vn/reference/analogwrite">analogWrite()</a>
+ trong Arduino giúp việc tạo 1 xung dễ dàng hơn. Hàm này truyền vào tham
+ số cho phép thay đổi chu kì xung, bạn có thể tính toán ra được chu kì 
+xung như ở bảng trên. Tần số xung được Arduino thiết lập mặc định.</p>
+<p>Đối với board Arduino Uno, xung trên các chân 3,9,10,11 có tần số là 
+490Hz, xung trên chân 5,6 có tần số 980Hz. Làm thế nào để tạo ra các 
+xung có tần số nhanh hơn? Bạn có thể tham khảo thêm các thư viện riêng 
+hỗ trợ việc này. Trong mã nguồn Arduino gốc không hỗ trợ phần này.</p>
+<p><span style="color:#FF0000"><span style="text-decoration: underline;"><em><strong>Lưu ý:</strong></em></span></span> xung điều khiển servo có tên gọi <a href="http://arduino.vn/reference/xung-ppm">PPM</a> (Pulse Position Modulation) khác với xung PWM.</p>
+</div></div></div><div class="field field-name-field-reference-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Reference Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="http://arduino.vn/reference-tags/analog-io" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Analog I/O</a></div></div></div>
+  <ul class="links inline"><li class="statistics_counter first last"><span>4549 lượt xem</span></li>
+</ul>      
+</article>
+<div id="block-disqus-disqus-comments" class="block block-disqus last even">
+
+      
+  <div id="disqus_thread"><iframe verticalscrolling="no" horizontalscrolling="no" src="Xung%20PWM%20_%20C%E1%BB%99ng%20%C4%91%E1%BB%93ng%20Arduino%20Vi%E1%BB%87t%20Nam_files/a.htm" style="width: 100% ! important; border: medium none ! important; overflow: hidden ! important; height: 1068px ! important;" title="Disqus" tabindex="0" scrolling="no" allowtransparency="true" data-disqus-uid="1" id="dsq-1" frameborder="0" width="100%"></iframe></div>
+</div>
+<style type="text/css">
+#dialog {
+background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 25px 5px #999;
+    color: #111;
+    display: none;
+    min-width: 450px;
+    padding: 25px;
+}
+.button.b-close, .button.bClose {
+    border-radius: 7px;
+    box-shadow: none;
+    padding: 0 6px 2px;
+    position: absolute;
+    right: -7px;
+    top: -7px;
+}
+.button {
+    background-color: #2b91af;
+    border-radius: 10px;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+}
+</style>
+<div id="dialog"><span class="button b-close"><span>X</span></span>
+<div>Dườm như đây là lần đầu tiên bạn truy cập vào <b><a href="http://arduino.vn/">Arduino.VN</a></b>?</div>
+<div><h4>Chúng tôi tin vào những gì bạn định làm sắp tới đây, đó sẽ là một điều tuyệt vời. Với Arduino, mọi thứ đều có thể.</h4></div>
+<div><a href="http://arduino.vn/ve-chung-toi">Tìm hiểu về trang web này </a>ngay!</div>
+</div>
+<script type="text/javascript" src="Xung%20PWM%20_%20C%E1%BB%99ng%20%C4%91%E1%BB%93ng%20Arduino%20Vi%E1%BB%87t%20Nam_files/jquery.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+//setTimeout(function(){$('#dialog').bPopup();},5000);
+});
+</script>          </div>
+
+    <div class="fixed" id="navigation">
+	        
+
+        <div class="region region-navigation">
+    <div id="block-superfish-1" class="block block-superfish first last odd">
+
+      
+  <ul id="superfish-1" class="menu sf-menu sf-main-menu sf-horizontal sf-style-ktheme sf-total-items-6 sf-parent-items-1 sf-single-items-5 superfish-processed sf-js-enabled sf-shadow"><li id="menu-218-1" class="first odd sf-item-1 sf-depth-1 sf-no-children"><a href="http://arduino.vn/" title="" class="sf-depth-1">Trang chủ</a></li><li id="menu-409-1" class="middle even sf-item-2 sf-depth-1 sf-total-children-8 sf-parent-children-1 sf-single-children-7 menuparent"><a href="http://arduino.vn/tham-khao" class="sf-depth-1 menuparent sf-with-ul">Tham khảo<span class="sf-sub-indicator"> »</span></a><ul class="sf-hidden" style="float: none; width: 14.5em; display: block;"><li style="white-space: normal; float: left; width: 100%;" id="menu-557-1" class="first odd sf-item-1 sf-depth-2 sf-no-children"><a style="float: none; width: auto;" href="http://arduino.vn/gioi-thieu-ve-arduino" title="" class="sf-depth-2">Giới thiệu về Arduino</a></li><li style="white-space: normal; float: left; width: 100%;" id="menu-1120-1" class="middle even sf-item-2 sf-depth-2 sf-no-children"><a style="float: none; width: auto;" href="http://arduino.vn/intel-galileo" title="" class="sf-depth-2">Intel Galileo</a></li><li style="white-space: normal; float: left; width: 100%;" id="menu-484-1" class="middle odd sf-item-3 sf-depth-2 sf-no-children"><a style="float: none; width: auto;" href="http://arduino.vn/reference" class="sf-depth-2">Tài liệu tham khảo</a></li><li style="white-space: normal; float: left; width: 100%;" id="menu-411-1" class="middle even sf-item-4 sf-depth-2 sf-total-children-3 sf-parent-children-0 sf-single-children-3 menuparent"><a style="float: none; width: auto;" href="http://arduino.vn/chuong-trinh-mau" class="sf-depth-2 menuparent sf-with-ul">Chương trình mẫu<span class="sf-sub-indicator"> »</span></a><ul class="sf-hidden" style="left: 14.5em; float: none; width: 25.0625em;"><li style="white-space: normal; float: left; width: 100%;" id="menu-558-1" class="first odd sf-item-1 sf-depth-3 sf-no-children"><a style="float: none; width: auto;" href="http://arduino.vn/chuong-trinh-mau/level-beginner-vo-long" title="" class="sf-depth-3">Level: Beginner - Vỡ lòng</a></li><li style="white-space: normal; float: left; width: 100%;" id="menu-771-1" class="middle even sf-item-2 sf-depth-3 sf-no-children"><a style="float: none; width: auto;" href="http://arduino.vn/chuong-trinh-mau/level-intermediate-co-kien-thuc-co-ban" title="" class="sf-depth-3">Level: Intermediate - Có kiến thức cơ bản</a></li><li style="white-space: normal; float: left; width: 100%;" id="menu-1121-1" class="last odd sf-item-3 sf-depth-3 sf-no-children"><a style="float: none; width: auto;" href="http://arduino.vn/chuong-trinh-mau/level-advanced-nang-cao" title="" class="sf-depth-3">Level: Advanced - Nâng cao</a></li></ul></li><li style="white-space: normal; float: left; width: 100%;" id="menu-414-1" class="middle odd sf-item-5 sf-depth-2 sf-no-children"><a style="float: none; width: auto;" href="http://arduino.vn/reference/library" title="" class="sf-depth-2">Thư viện</a></li><li style="white-space: normal; float: left; width: 100%;" id="menu-559-1" class="middle even sf-item-6 sf-depth-2 sf-no-children"><a style="float: none; width: auto;" href="http://arduino.vn/reference/cac-loi-thuong-gap-tren-Arduino-va-cach-khac-phuc" class="sf-depth-2">Lỗi của Arduino ?</a></li><li style="white-space: normal; float: left; width: 100%;" id="menu-701-1" class="middle odd sf-item-7 sf-depth-2 sf-no-children"><a style="float: none; width: auto;" href="http://arduino.vn/dien-tu-co-ban" title="" class="sf-depth-2">Điện tử cơ bản</a></li><li style="white-space: normal; float: left; width: 100%;" id="menu-1547-1" class="last even sf-item-8 sf-depth-2 sf-no-children"><a style="float: none; width: auto;" href="http://arduino.vn/lap-trinh-c" title="" class="sf-depth-2">Lập trình C</a></li></ul></li><li id="menu-560-1" class="middle odd sf-item-3 sf-depth-1 sf-no-children"><a href="http://arduino.vn/nao-cung-lam" title="Nào cùng làm với cộng đồng Arduino" class="sf-depth-1">Nào cùng làm!</a></li><li id="menu-514-1" class="middle even sf-item-4 sf-depth-1 sf-no-children"><a href="http://arduino.vn/reference/cach-dang-bai-len-Arduino-Viet-Nam" class="sf-depth-1">Đăng bài</a></li><li id="menu-1635-1" class="middle odd sf-item-5 sf-depth-1 sf-no-children"><a href="http://arduino.vn/download" class="sf-depth-1">Tải về</a></li><li id="menu-1080-1" class="last even sf-item-6 sf-depth-1 sf-no-children"><a href="http://arduino.vn/ve-chung-toi" class="sf-depth-1">Về chúng tôi</a></li></ul>
+</div>
+  </div>
+
+    </div>
+
+    
+    
+  </div>
+  
+
+</div>
+<div class="footer-wrapper">
+	<div>&nbsp;</div>
+  	<div>
+	  		  <div id="footer-columns" class="clearfix">
+		      <div class="region region-footer-firstcolumn">
+    <div id="block-user-online" class="block block-user first last odd" role="complementary">
+
+        <h2 class="block__title block-title">Thành viên trực tuyến</h2>
+    
+  <p>Hiện đang có 0 người trực tuyến.</p>
+</div>
+  </div>
+		      <div class="region region-footer-secondcolumn">
+    <div id="block-user-new" class="block block-user first last odd" role="complementary">
+
+        <h2 class="block__title block-title">Thành viên mới</h2>
+    
+  <div class="item-list"><ul><li class="first"><a href="http://arduino.vn/users/ala-tham" title="Xem hồ sơ người dùng." class="username" xml:lang="" about="/users/ala-tham" typeof="sioc:UserAccount" property="foaf:name" datatype="">Ala Thám</a></li>
+<li><a href="http://arduino.vn/users/tong-dinh" title="Xem hồ sơ người dùng." class="username" xml:lang="" about="/users/tong-dinh" typeof="sioc:UserAccount" property="foaf:name" datatype="">Tống Thế Định</a></li>
+<li><a href="http://arduino.vn/users/quang-do-ngo" title="Xem hồ sơ người dùng." class="username" xml:lang="" about="/users/quang-do-ngo" typeof="sioc:UserAccount" property="foaf:name" datatype="">Quang Do Ngo</a></li>
+<li><a href="http://arduino.vn/users/haidangbentre" title="Xem hồ sơ người dùng." class="username" xml:lang="" about="/users/haidangbentre" typeof="sioc:UserAccount" property="foaf:name" datatype="">haidangbentre</a></li>
+<li><a href="http://arduino.vn/users/viet-luan-huynh" title="Xem hồ sơ người dùng." class="username" xml:lang="" about="/users/viet-luan-huynh" typeof="sioc:UserAccount" property="foaf:name" datatype="">Viet Luan Huynh</a></li>
+<li><a href="http://arduino.vn/users/nguyen-quoc-nguyen" title="Xem hồ sơ người dùng." class="username" xml:lang="" about="/users/nguyen-quoc-nguyen" typeof="sioc:UserAccount" property="foaf:name" datatype="">Nguyễn Quốc Nguyên</a></li>
+<li><a href="http://arduino.vn/users/luckycometdaft" title="Xem hồ sơ người dùng." class="username" xml:lang="" about="/users/luckycometdaft" typeof="sioc:UserAccount" property="foaf:name" datatype="">luckycometdaft</a></li>
+<li><a href="http://arduino.vn/users/quyettdh5gmailcom" title="Xem hồ sơ người dùng." class="username" xml:lang="" about="/users/quyettdh5gmailcom" typeof="sioc:UserAccount" property="foaf:name" datatype="">quyettdh5@gmail.com</a></li>
+<li><a href="http://arduino.vn/users/danhchoban" title="Xem hồ sơ người dùng." class="username" xml:lang="" about="/users/danhchoban" typeof="sioc:UserAccount" property="foaf:name" datatype="">danhchoban</a></li>
+<li class="last"><a href="http://arduino.vn/users/springmusic38" title="Xem hồ sơ người dùng." class="username" xml:lang="" about="/users/springmusic38" typeof="sioc:UserAccount" property="foaf:name" datatype="">springMusic38</a></li>
+</ul></div>
+</div>
+  </div>
+		      <div class="region region-footer-thirdcolumn">
+    <div id="block-block-1" class="block block-block first last odd">
+
+        <h2 class="block__title block-title">Về chúng tôi</h2>
+    
+  <p class="rtejustify"><a href="http://arduino.vn/">Arduino.vn</a> được xây dựng trên nền tảng Drupal 7, phiên bản hiện tại 1.0 tên mã <a href="http://arduino.vn/changelog">Hoàng Sa</a>.</p>
+<p class="rtejustify">Đây là trang thông tin phi lợi nhuận ra đời và phục vụ vì cộng đồng trẻ, những chủ nhân tương lai của đất nước. <strong><a href="http://arduino.vn/ve-chung-toi">Vì sao?</a></strong></p>
+
+</div>
+  </div>
+		      <div class="region region-footer-fourthcolumn">
+    <div id="block-block-2" class="block block-block first last odd">
+
+        <h2 class="block__title block-title">Liên kết</h2>
+    
+  <p>Một sản phẩm hợp tác với <a href="http://machtudong.vn/">Machtudong.vn</a></p>
+<p class="rtecenter"><img alt="" src="Xung%20PWM%20_%20C%E1%BB%99ng%20%C4%91%E1%BB%93ng%20Arduino%20Vi%E1%BB%87t%20Nam_files/grzxrak875oi.png"></p>
+
+</div>
+  </div>
+		  </div> <!-- /#footer-columns -->
+	  	  	 </div>
+  </div>
+  <div class="region region-bottom">
+    <div id="block-block-3" class="block block-block first last odd">
+
+      
+  <div style="margin: 0; padding-top:15px;"><a class="dmca-badge" href="http://www.dmca.com/Protection/Status.aspx?ID=78aa6fcb-6c63-4023-b42d-872e89882865" style="line-height: 1.6;" title="DMCA.com Protection Program"><img alt="DMCA.com Protection Status" src="Xung%20PWM%20_%20C%E1%BB%99ng%20%C4%91%E1%BB%93ng%20Arduino%20Vi%E1%BB%87t%20Nam_files/dmca_protected_sml_120m.png" style="border-style:solid; border-width:0px"></a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="http://creativecommons.org/licenses/by-sa/4.0/" rel="license" style="line-height: 1.6; font-family: 'courier new', courier, monospace;"><img alt="Creative Commons License" src="Xung%20PWM%20_%20C%E1%BB%99ng%20%C4%91%E1%BB%93ng%20Arduino%20Vi%E1%BB%87t%20Nam_files/88x31.png" style="border-style:solid; border-width:0px"></a><br><span style="font-size:14px"><span style="font-family:verdana,geneva,sans-serif">Nội dung trên trang <a href="http://arduino.vn/" style="font-family: 'courier new', courier, monospace; font-size: 14px; line-height: 1.6;">Arduino.vn</a> được phân phối theo giấy phép <a href="http://creativecommons.org/licenses/by-sa/4.0/" rel="license" style="font-family: 'courier new', courier, monospace; font-size: 14px; line-height: 1.6;">Creative Commons Attribution-ShareAlike 4.0 International License</a>.</span></span><br><span style="font-size:14px"><span style="font-family:verdana,geneva,sans-serif">Vui lòng ghi rõ nguồn và link về bài gốc nếu bạn tham khảo nội dung từ website này.</span></span></div>
+
+</div>
+  </div>
+    <div class="region region-page-bottom">
+    <div class=" fb_reset" id="fb-root"><script async="" src="Xung%20PWM%20_%20C%E1%BB%99ng%20%C4%91%E1%BB%93ng%20Arduino%20Vi%E1%BB%87t%20Nam_files/all.js"></script><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div><iframe src="Xung%20PWM%20_%20C%E1%BB%99ng%20%C4%91%E1%BB%93ng%20Arduino%20Vi%E1%BB%87t%20Nam_files/4B2NplaqNF3.htm" style="border: medium none;" tabindex="-1" title="Facebook Cross Domain Communication Frame" aria-hidden="true" id="fb_xdm_frame_http" scrolling="no" allowfullscreen="true" allowtransparency="true" name="fb_xdm_frame_http" frameborder="0"></iframe><iframe src="Xung%20PWM%20_%20C%E1%BB%99ng%20%C4%91%E1%BB%93ng%20Arduino%20Vi%E1%BB%87t%20Nam_files/4B2NplaqNF3_002.htm" style="border: medium none;" tabindex="-1" title="Facebook Cross Domain Communication Frame" aria-hidden="true" id="fb_xdm_frame_https" scrolling="no" allowfullscreen="true" allowtransparency="true" name="fb_xdm_frame_https" frameborder="0"></iframe></div></div><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div></div></div></div>
+      <script type="text/javascript">
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId : '1424185567850442',
+            cookie : true, // enable cookies to allow the server to access the session
+            xfbml : true,
+            logging: '0',
+            channelURL: 'http://arduino.vn/sites/all/modules/fbconnect/channel.html',
+            oauth  : true
+          });
+          // whenever the user logs in, we tell our login service
+          FB.Event.subscribe('auth.login', function() {
+            window.location.reload();
+          });
+          FB.Event.subscribe('auth.logout', function(response) {
+            window.location.reload();
+          });
+
+          jQuery(document).trigger('fb:init');
+        };
+
+        (function() {
+          var e = document.createElement('script');
+          e.src = document.location.protocol + '//connect.facebook.net/vi_VN/all.js';
+          e.async = true;
+          document.getElementById('fb-root').appendChild(e);
+        }());
+      </script>  </div>
+<script src="Xung%20PWM%20_%20C%E1%BB%99ng%20%C4%91%E1%BB%93ng%20Arduino%20Vi%E1%BB%87t%20Nam_files/js__QERVh_Fzf6p9iHQYCmUr1O2jFHk11e-Q95akflX9HwI__JSeQmfvtfZjP.js"></script>
+
+
+</body></html>

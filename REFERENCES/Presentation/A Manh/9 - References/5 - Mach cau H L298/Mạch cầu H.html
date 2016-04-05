@@ -1,0 +1,444 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0048)http://www.hocavr.com/index.php/hardware/hbridge -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="" lang=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!--<base href="http://www.hocavr.com/index.php/hardware/hbridge">--><base href=".">
+  
+  <meta name="robots" content="index, follow">
+  <meta name="keywords" content="hocavr, hoc avr, cung hoc avr,cùng học avr, avr,hotam, avr1, avr2, avr3, avr4, avr5, avr6, avr7, avr8, avr tieng viet, tai lieu, timer, ngat, spi, i2c, lap trinh avr, thanhtam.h">
+  <meta name="title" content="Mạch cầu H">
+  <meta name="author" content="Hồ Tâm">
+  <meta name="description" content="hocavr - to become the avr master">
+  <meta name="generator" content="Joomla! 1.5 - Open Source Content Management">
+  <title>Mạch cầu H</title>
+  <link href="http://www.hocavr.com/templates/ja_barite/favicon.ico" rel="shortcut icon" type="image/x-icon">
+  <link rel="stylesheet" href="./Mạch cầu H_files/extravote.css" type="text/css">
+  <link rel="stylesheet" href="./Mạch cầu H_files/colorbox.css" type="text/css">
+  <style type="text/css">
+    <!--
+#cboxLoadedContent{background-color:#fff;}
+    -->
+  </style>
+  <script type="text/javascript" src="./Mạch cầu H_files/mootools.js"></script>
+  <script type="text/javascript" src="./Mạch cầu H_files/caption.js"></script>
+  <script type="text/javascript" src="./Mạch cầu H_files/extravote.js"></script>
+  <script type="text/javascript" src="./Mạch cầu H_files/jquery.min.js"></script>
+  <script type="text/javascript" src="./Mạch cầu H_files/jquery.colorbox-min.js"></script>
+  <script type="text/javascript">
+
+			$j(document).ready(function(){
+				$j('a.modalizer_link,a.modal,a.modalizer').colorbox({width:'80%',height:'80%',iframe:true});
+				$j('a.modalizer_link_image').colorbox({});
+				$j('a.modalizer_link_external').colorbox({width:'80%',height:'80%',iframe:true});
+			});
+		
+  </script>
+
+<link rel="stylesheet" href="./Mạch cầu H_files/editor.css" type="text/css">
+<link rel="stylesheet" href="./Mạch cầu H_files/system.css" type="text/css">
+<link rel="stylesheet" href="./Mạch cầu H_files/general.css" type="text/css">
+<link rel="stylesheet" href="./Mạch cầu H_files/template.css" type="text/css">
+<link rel="stylesheet" href="./Mạch cầu H_files/typo.css" type="text/css">
+
+<script language="javascript" type="text/javascript" src="./Mạch cầu H_files/ja.script.js"></script>
+
+<!-- Menu head -->
+			<link href="./Mạch cầu H_files/ja.cssmenu.css" rel="stylesheet" type="text/css">
+			<script src="./Mạch cầu H_files/ja.cssmenu.js" language="javascript" type="text/javascript"></script>
+			
+<link href="./Mạch cầu H_files/blue.css" rel="stylesheet" type="text/css">
+
+<!--[if lte IE 6]>
+<style type="text/css">
+.clearfix {height: 1%;}
+img {
+	border: none;
+}
+</style>
+<![endif]-->
+
+<!--[if gte IE 7.0]>
+<style type="text/css">
+.clearfix {display: inline-block;}
+</style>
+<![endif]-->
+
+<!--[if gt IE 7]>
+<link href="http://www.hocavr.com/templates/ja_barite/css/ie8.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+
+
+<style type="text/css">
+#ja-header,
+#ja-subnav,
+#ja-container,
+#ja-botsl,
+#ja-footer {
+	width: 950px;
+	margin: 0 auto;
+}
+
+</style>
+</head>
+
+<body id="bd" class="950 fs4"><div id="cboxOverlay" style="display: none;"></div><div id="colorbox" class="" style="padding-bottom: 42px; padding-right: 42px; display: none;"><div id="cboxWrapper"><div id="false"><div id="cboxTopLeft" style="float: left;"></div><div id="cboxTopCenter" style="float: left;"></div><div id="cboxTopRight" style="float: left;"></div></div><div id="false" style="clear: left;"><div id="cboxMiddleLeft" style="float: left;"></div><div id="cboxContent" style="float: left;"><div id="cboxLoadedContent" class="" style="width: 0px; height: 0px; overflow: hidden;"></div><div id="cboxLoadingOverlay" class=""></div><div id="cboxLoadingGraphic" class=""></div><div id="cboxTitle" class=""></div><div id="cboxCurrent" class=""></div><div id="cboxNext" class=""></div><div id="cboxPrevious" class=""></div><div id="cboxSlideshow" class=""></div><div id="cboxClose" class=""></div></div><div id="cboxMiddleRight" style="float: left;"></div></div><div id="false" style="clear: left;"><div id="cboxBottomLeft" style="float: left;"></div><div id="cboxBottomCenter" style="float: left;"></div><div id="cboxBottomRight" style="float: left;"></div></div></div><div id="false" style="position: absolute; width: 9999px; visibility: hidden; display: none;"></div></div>
+<a name="Top" id="Top"></a>
+<ul class="accessibility">
+	<li><a href="http://www.hocavr.com/index.php/hardware/hbridge#ja-content" title="Skip to content">Skip to content</a></li>
+	<li><a href="http://www.hocavr.com/index.php/hardware/hbridge#ja-mainnav" title="Skip to main navigation">Skip to main navigation</a></li>
+	<li><a href="http://www.hocavr.com/index.php/hardware/hbridge#ja-col1" title="Skip to 1st column">Skip to 1st column</a></li>
+	<li><a href="http://www.hocavr.com/index.php/hardware/hbridge#ja-col2" title="Skip to 2nd column">Skip to 2nd column</a></li>
+	<li><a href="http://www.hocavr.com/index.php/hardware/hbridge#ja-col3" title="Skip to 3nd column">Skip to 2nd column</a></li>
+</ul>
+
+<div id="ja-wrapper">
+
+<!-- BEGIN: HEADER -->
+<div id="ja-headerwrap">
+	<div id="ja-header" class="clearfix">
+
+	        
+        <table width="800" border="0">
+          <tbody><tr>
+            <td width="300">
+             <!-- <h1 class="logo-text">
+                <a href="/index.php" title="Cùng học AVR (AVR tutorial) - Tài liệu học lập trình AVR bằng tiếng Việt"><span>CÙNG HỌC AVR</span></a>	
+            </h1>
+            <p class="site-slogan">...to become the AVR Master</p>
+            -->
+            
+            <!-- Phan ben duoi moi duoc add vao, hien logo CADKit -->
+            <h1>
+             <a href="http://www.hocavr.com/index.php" title="Cùng học AVR (AVR tutorial) - Tài liệu học lập trình AVR bằng tiếng Việt"><span>CÙNG HỌC AVR</span></a>          
+            </h1>
+            <p>...to become the AVR Master</p>	  
+            </td>
+            <td>
+				<a href="http://www.cadkit.net/" target="_blank"><img src="./Mạch cầu H_files/CADKit.gif" width="216" height="80" border="0" style="border:0px solid black;" alt="Phan mem xem CAD va bien tap Glyph mien phi!"></a> 
+            </td>
+            <!-- Phan ben tren moi duoc add vao, hien logo CADKit -->
+            
+          </tr>
+        </tbody></table>
+
+		
+        <!-- <div> <p><a href="http://www.cadkit.net" target="_blank"><img src="/CADKit.gif" width="324" height="120" border="0" style="border:0px solid black;" alt="www.CADKit.net!" /></a></p>    </div> -->
+		
+		
+			<div id="ja-login">
+	          <!--<a href="http://www.cadkit.net" target="_blank"><img src="/CADKit.gif";" alt="www.CADKit.net!" /></a> -->
+			<form action="http://www.hocavr.com/index.php/hardware/index.php" method="post">
+	<div class="search">
+		<input name="searchword" id="mod_search_searchword" maxlength="20" alt="Search" class="inputbox" type="text" size="20" value="search..." onblur="if(this.value==&#39;&#39;) this.value=&#39;search...&#39;;" onfocus="if(this.value==&#39;search...&#39;) this.value=&#39;&#39;;">	</div>
+	<input type="hidden" name="task" value="search">
+	<input type="hidden" name="option" value="com_search">
+	<input type="hidden" name="Itemid" value="33">
+</form>
+<form action="https://www.paypal.com/en/cgi-bin/webscr" method="post">
+	<input type="hidden" name="cmd" value="_donations">
+	<input type="hidden" name="business" value="thanhtam.h@gmail.com">
+	<input type="hidden" name="return" value="http://">
+	<input type="hidden" name="undefined_quantity" value="0">
+	<input type="hidden" name="item_name" value="Giúp cải thiện tốc độ truy cập HOCAVR.COM">
+	<input type="hidden" name="amount" value="">
+<input type="hidden" name="currency_code" value="USD">
+	<input type="hidden" name="charset" value="utf-8">
+	<input type="hidden" name="no_shipping" value="1">
+	<input type="hidden" name="image_url" value="">
+	<input type="hidden" name="cancel_return" value="http://">
+	<input type="hidden" name="no_note" value="0"><br><br>
+		<div align="center">
+		<input type="image" src="./Mạch cầu H_files/btn_donate_SM.gif" name="submit" alt="PayPal secure payments.">
+	</div>
+	</form>			
+		</div>
+	
+	<!-- BEGIN: MAIN NAVIGATION -->
+	<div id="ja-mainnav" class="clearfix">
+		<ul id="ja-cssmenu" class="clearfix">
+<li><a href="http://www.hocavr.com/" class="first-item" id="menu1" title="Trang chủ"><span>Trang chủ</span></a></li> 
+<li class="havechild"><a href="http://www.hocavr.com/index.php/en/lectures" id="menu6" title="Học AVR"><span>Học AVR</span></a><ul><li><a href="http://www.hocavr.com/index.php/en/lectures/lamquenavr" class="first-item" id="menu4" title="Làm quen AVR"><span>Làm quen AVR</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/lectures/cautrucavr" id="menu5" title="Cấu Trúc AVR"><span>Cấu Trúc AVR</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/lectures/ngatngoai" id="menu7" title="Ngắt ngoài"><span>Ngắt ngoài</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/lectures/timer-counter" id="menu8" title="Timer - Counter"><span>Timer - Counter</span></a></li> 
+<li class="havesubchild"><a href="http://www.hocavr.com/index.php/en/lectures/uart" id="menu9" title="Giao tiếp UART"><span>Giao tiếp UART</span></a><ul><li><a href="http://www.hocavr.com/index.php/en/lectures/uart/uartnormal" class="first-item" id="menu49" title="Giao tiếp UART thông thường"><span>Giao tiếp UART thông thường</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/lectures/uart/uartmulti" class="last-item" id="menu50" title="UART- Chế độ Mutli Processor"><span>UART- Chế độ Mutli Processor</span></a></li> 
+</ul></li> 
+<li><a href="http://www.hocavr.com/index.php/en/lectures/adc" id="menu10" title="Chuyển đổi ADC"><span>Chuyển đổi ADC</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/lectures/spi" id="menu11" title="Giao tiếp SPI"><span>Giao tiếp SPI</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/lectures/i2c" id="menu12" title="Giao tiếp TWI-I2C"><span>Giao tiếp TWI-I2C</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/lectures/bosung" class="last-item" id="menu51" title="Bổ sung [Thảo luận]"><span>Bổ sung [Thảo luận]</span></a></li> 
+</ul></li> 
+<li class="havechild"><a href="http://www.hocavr.com/index.php/en/app" id="menu26" title="Ứng dụng AVR"><span>Ứng dụng AVR</span></a><ul><li><a href="http://www.hocavr.com/index.php/en/app/dotmatrix" class="first-item" id="menu28" title="Ma trận LED"><span>Ma trận LED</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/app/keypad" id="menu30" title="Giao tiếp Keypad"><span>Giao tiếp Keypad</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/app/textlcd" id="menu27" title="Text LCD"><span>Text LCD</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/app/glcd" id="menu29" title="Graphic LCD"><span>Graphic LCD</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/app/dcservo" id="menu32" title="Động cơ DC Servo"><span>Động cơ DC Servo</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/app/ds1307" id="menu44" title="Đồng hồ thời gian thực DS1307"><span>Đồng hồ thời gian thực DS1307</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/app/spiadc" id="menu47" title="Function Generator (SPI DAC)"><span>Function Generator (SPI DAC)</span></a></li> 
+<li class="havesubchild"><a href="http://www.hocavr.com/index.php/en/app/gtmt" id="menu70" title="Giao tiếp AVR - PC"><span>Giao tiếp AVR - PC</span></a><ul><li><a href="http://www.hocavr.com/index.php/en/app/gtmt/gtmt1" class="first-item" id="menu71" title="GTMT - Bài 1"><span>GTMT - Bài 1</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/app/gtmt/gtmt2" class="last-item" id="menu72" title="GTMT - Bài 2"><span>GTMT - Bài 2</span></a></li> 
+</ul></li> 
+<li><a href="http://www.hocavr.com/index.php/en/app/input-capture" id="menu86" title="Đo xung bằng Input Capture"><span>Đo xung bằng Input Capture</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/app/mmc" class="last-item" id="menu88" title="Giao tiếp card MMC/SD"><span>Giao tiếp card MMC/SD</span></a></li> 
+</ul></li> 
+<li class="havechild"><a href="http://www.hocavr.com/index.php/en/software" id="menu13" title="Hỗ trợ phần mềm"><span>Hỗ trợ phần mềm</span></a><ul><li><a href="http://www.hocavr.com/index.php/en/software/avr-studio" class="first-item" id="menu18" title="AVR Studio"><span>AVR Studio</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/software/asm" id="menu34" title="Assembly Instruction"><span>Assembly Instruction</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/software/protues" id="menu21" title="Proteus - Mô phỏng"><span>Proteus - Mô phỏng</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/software/winavr" id="menu19" title="WinAVR"><span>WinAVR</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/software/c-cho-avr" id="menu23" title="C cho AVR"><span>C cho AVR</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/software/fuse-bits" id="menu22" title="Fuse bits"><span>Fuse bits</span></a></li> 
+<li class="havesubchild"><a href="http://www.hocavr.com/index.php/en/software/tienich" class="last-item" id="menu41" title="Phần mềm tiện ích"><span>Phần mềm tiện ích</span></a><ul><li><a href="http://www.hocavr.com/index.php/en/software/tienich/gedit" class="first-item" id="menu42" title="GEdit - Biên tập Graphic LCD"><span>GEdit - Biên tập Graphic LCD</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/software/tienich/gcom" id="menu73" title="gCOM - The graphic Interface for COM Port"><span>gCOM - The graphic Interface for COM Port</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/software/tienich/gamoledfont" class="last-item" id="menu92" title="GamoLedFont - Biên tập Font và hình ảnh"><span>GamoLedFont - Biên tập Font và hình ảnh</span></a></li> 
+</ul></li> 
+</ul></li> 
+<li class="havechild active"><a href="http://www.hocavr.com/index.php/en/hardware" class="active" id="menu14" title="Hỗ trợ phần cứng"><span>Hỗ trợ phần cứng</span></a><ul><li><a href="http://www.hocavr.com/index.php/en/hardware/machnap" class="first-item" id="menu24" title="Mạch nạp AVR"><span>Mạch nạp AVR</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/hardware/avrkit" id="menu25" title="Mạch ứng dụng AVR"><span>Mạch ứng dụng AVR</span></a></li> 
+<li class="active"><a href="http://www.hocavr.com/index.php/en/hardware/hbridge" class="active last-item" id="menu33" title="Mạch cầu H"><span>Mạch cầu H</span></a></li> 
+</ul></li> 
+<li class="havechild"><a href="http://www.hocavr.com/index.php/en/thaoluan" id="menu16" title="Thảo luận"><span>Thảo luận</span></a><ul><li><a href="http://www.hocavr.com/index.php/en/thaoluan/forum" class="first-item" id="menu90" title="Forum"><span>Forum</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/thaoluan/recentpost" id="menu91" title="Thảo luận mới"><span>Thảo luận mới</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/thaoluan/dangky" id="menu36" title="Đăng ký thành viên"><span>Đăng ký thành viên</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/thaoluan/login" id="menu35" title="Đăng nhập / Đăng xuất"><span>Đăng nhập / Đăng xuất</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/thaoluan/forumsearch" class="last-item" id="menu98" title="Tìm kiếm - Forum"><span>Tìm kiếm - Forum</span></a></li> 
+</ul></li> 
+<li class="havechild"><a href="http://www.hocavr.com/index.php/en/info" class="last-item" id="menu17" title="Thông tin"><span>Thông tin</span></a><ul><li><a href="http://www.hocavr.com/index.php/en/info/announcement" class="first-item" id="menu74" title="Thông báo"><span>Thông báo</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/info/aboutme" id="menu38" title="About"><span>About</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/info/agreement" id="menu40" title="Quy định sử dụng"><span>Quy định sử dụng</span></a></li> 
+<li><a href="http://www.facebook.com/pages/Vi-dieu-khien-AVR/107753009255306?v=wall" target="_blank" class="last-item" id="menu57" title="Facebook AVR"><span>Facebook AVR</span></a></li> 
+</ul></li> 
+</ul>	</div>
+	<!-- END: MAIN NAVIGATION -->
+	
+	<!-- BEGIN: USER TOOLS -->
+    <div id="ja-usertoolswrap">
+  <span class="ja-sitetool">&nbsp;</span>
+  <div id="ja-usertools" style="width:130px">
+  				<ul class="ja-usertools-font">
+	      	<li><img style="cursor: pointer;" title="Increase font size" src="./Mạch cầu H_files/user-increase.gif" alt="Increase font size" id="ja-tool-increase" onclick="switchFontSize(&#39;ja_barite_ja_font&#39;,&#39;inc&#39;); return false;"></li>
+		    <li><img style="cursor: pointer;" title="Default font size" src="./Mạch cầu H_files/user-reset.gif" alt="Default font size" id="ja-tool-reset" onclick="switchFontSize(&#39;ja_barite_ja_font&#39;,4); return false;"></li>
+		    <li><img style="cursor: pointer;" title="Decrease font size" src="./Mạch cầu H_files/user-decrease.gif" alt="Decrease font size" id="ja-tool-decrease" onclick="switchFontSize(&#39;ja_barite_ja_font&#39;,&#39;dec&#39;); return false;"></li>
+			</ul>
+			<script type="text/javascript">var CurrentFontSize=parseInt('4');</script>
+						<ul class="ja-usertools-color">
+			
+				<li><img style="cursor: pointer;" src="./Mạch cầu H_files/default.gif" title="default color" alt="default color" id="ja-tool-defaultcolor" onclick="switchTool(&#39;ja_barite_ja_color&#39;,&#39;default&#39;);return false;"></li>
+				
+				<li><img style="cursor: pointer;" src="./Mạch cầu H_files/green.gif" title="green color" alt="green color" id="ja-tool-greencolor" onclick="switchTool(&#39;ja_barite_ja_color&#39;,&#39;green&#39;);return false;"></li>
+				
+				<li><img style="cursor: pointer;" src="./Mạch cầu H_files/blue-hilite.gif" title="blue color" alt="blue color" id="ja-tool-bluecolor" onclick="switchTool(&#39;ja_barite_ja_color&#39;,&#39;blue&#39;);return false;"></li>
+							</ul>
+		  </div></div>
+  	<!-- END: USER TOOLS -->
+
+	</div>
+</div>
+<!-- END: HEADER -->
+
+
+<div id="ja-containerwrap-f">
+	<div id="ja-container" class="clearfix">
+
+		<div id="ja-mainbody">
+		
+		<!-- BEGIN: CONTENT -->
+		<div id="ja-content">
+		<div class="ja-innerpad">
+
+			
+
+			<div id="ja-slider">
+				
+			</div>
+
+			
+			
+<script type="text/javascript" language="javascript">
+<!--
+var sfolder = '';
+var extravote_text=Array('Your browser does not support AJAX!','Loading','Thank you for voting!','You need to login to rate this item.','You have already rated this item.','Votes','Vote');
+-->
+</script>
+<h2 class="contentheading">
+		<a href="http://www.hocavr.com/index.php/en/hardware/hbridge" class="contentpagetitle">
+		Mạch cầu H	</a>
+	</h2>
+
+
+
+<div class="extravote-container" style="margin-top:5px;">
+  <ul class="extravote-stars">
+    <li id="rating_26_x" class="current-rating" style="width:85%;"></li>
+    <li><a href="javascript:void(null)" onclick="javascript:JVXVote(26,1,457,107,&#39;x&#39;,1);" title="Very Poor" class="ev-one-star">1</a></li>
+    <li><a href="javascript:void(null)" onclick="javascript:JVXVote(26,2,457,107,&#39;x&#39;,1);" title="Poor" class="ev-two-stars">2</a></li>
+    <li><a href="javascript:void(null)" onclick="javascript:JVXVote(26,3,457,107,&#39;x&#39;,1);" title="Regular" class="ev-three-stars">3</a></li>
+    <li><a href="javascript:void(null)" onclick="javascript:JVXVote(26,4,457,107,&#39;x&#39;,1);" title="Good" class="ev-four-stars">4</a></li>
+    <li><a href="javascript:void(null)" onclick="javascript:JVXVote(26,5,457,107,&#39;x&#39;,1);" title="Very Good" class="ev-five-stars">5</a></li>
+  </ul>
+</div>
+  <span id="extravote_26_x" class="extravote-count"><small>( 107 Votes )</small></span>
+<div class="article-content">
+<table width="100%" cellspacing="1" cellpadding="1" border="0">
+    <tbody>
+        <tr>
+            <td>
+            <table border="1" style="border-bottom: rgb(0,0,0) 1px solid; border-left: rgb(0,0,0) 1px solid; width: 795px; height: 124px; border-top: rgb(0,0,0) 1px solid; border-right: rgb(0,0,0) 1px solid">
+                <tbody>
+                    <tr>
+                        <td style="font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt"><strong><span style="color: rgb(0,128,0)">Nội dung</span></strong></td>
+                        <td style="font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt"><strong><span style="color: rgb(0,128,0)">Các bài cần tham khảo trước</span></strong></td>
+                    </tr>
+                    <tr>
+                        <td style="font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt">
+                        <ol style="padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px">
+                            <li style="line-height: 34px; margin-left: 35px"><span style="color: rgb(51,102,255)"><span style="font-family: &#39;Times New Roman&#39;,serif; font-size: 14pt"><u><font color="#0000ff">Mạch cầu H (H-Bridge Circuit)</font></u><a href="http://hocavr.com/index.php/hardware/machnap#1-asm"><font color="#0000ff">.</font></a></span></span></li>
+                            <li style="line-height: 34px; margin-left: 35px"><span style="color: rgb(51,102,255)"><span style="color: rgb(51,102,255)"><span style="font-family: &#39;Times New Roman&#39;,serif; font-size: 14pt"><u><font color="#0000ff">Mạch cầu H dùng rờ le&nbsp;</font></u></span></span>.</span></li>
+                            <li style="line-height: 34px; margin-left: 35px"><span style="color: rgb(51,102,255)"><span style="color: rgb(51,102,255)"><span style="font-family: &#39;Times New Roman&#39;,serif; font-size: 14pt"><u><font color="#0000ff">Mạch cầu H dùng BJT công suất</font></u></span></span></span><a href="http://hocavr.com/index.php/hardware/machnap#2-c"><span style="color: rgb(51,102,255)"><span style="font-family: &#39;Times New Roman&#39;,serif; font-size: 14pt">.</span></span></a></li>
+                            <li style="line-height: 34px; margin-left: 35px"><span style="color: rgb(51,102,255)"><span style="color: rgb(51,102,255)"><span style="font-family: &#39;Times New Roman&#39;,serif; font-size: 14pt"><u><font color="#0000ff">Mạch cầu H dùng MOSFET</font></u></span></span></span></li>
+                        </ol>
+                        </td>
+                        <td style="font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt">&nbsp;</td>
+                    </tr>
+                </tbody>
+            </table>
+            </td>
+            <td><br>
+            &nbsp;</td>
+        </tr>
+    </tbody>
+</table>
+<p>&nbsp;<span style="font-family: &#39;Times New Roman&#39;; font-size: 19px"><span style="line-height: 24px; font-family: Tahoma"><span style="color: rgb(255,102,0)"><strong><span style="font-family: &#39;Times New Roman&#39;,serif; font-size: 14pt">I. Mạch cầu H (H-Bridge Circuit).</span></strong></span></span></span></p>
+<p align="justify" style="padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">&nbsp;&nbsp; &nbsp; &nbsp;Giả sử bạn có một động cơ DC có 2 đầu A và B, nối 2 đầu dây này với một nguồn điện DC (ắc qui điện – battery). Ai cũng biết rằng nếu nối A với cực (+), B với cực (-) mà động cơ chạy theo chiều thuận (kim đồng hồ) thì khi đảo cực đấu dây (A với (-),&nbsp;B với (+)) thì động cơ sẽ đảo chiều quay. Tất nhiên khi bạn là một “control guy” thì bạn không hề muốn làm công việc “động tay động chân” này (đảo chiều đấu dây), bạn ắt sẽ nghĩ đến một mạch điện có khả năng tự động thực hiện việc đảo chiều này, mạch cầu H (H-Bridge Circuit) sẽ giúp bạn. Như thế, mạch cầu H chỉ là một mạch điện giúp đảo chiều dòng điện qua một đối tượng. Tuy nhiên, rồi bạn sẽ thấy, mạch cầu H không chỉ có một tác dụng “tầm thường” như thế. Nhưng tại sao lại gọi là mạch cầu H, đơn giản là vì mạch này có hình chữ cái H. Xem minh họa trong hình 1.</p>
+<p style="text-align: center; padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px"><img alt="H Bridge" src="./Mạch cầu H_files/image001.png"></p>
+<p style="text-align: center; padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">Hình 1. Mạch cầu H.</p>
+<p align="justify" style="padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">&nbsp;&nbsp;&nbsp;&nbsp; Trong hình 1, hãy xem 2 đầu V và GND là 2 đầu (+) và (-) của ắc qui, “đối tượng” là động cơ DC mà chúng ta cần điều khiển, “đối tượng” này có 2 đầu A và B, mục đích điều khiển là cho phép dòng điện qua “đối tượng” theo chiều A đến B hoặc B đến A. Thành phần chính tạo nên mạch cầu H của chúng ta chính là 4 “khóa” L1, L2, R1 và R2 (L: Left, R:Right). Ở điều kiện bình thường 4 khóa này “mở”, mạch cầu H không hoạt động. Tiếp theo chúng ta sẽ khảo sát hoạt động của mạch cầu H thông qua các hình minh họa 2a và 2b.&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<p style="text-align: center; padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px"><img alt="H Bridge" src="./Mạch cầu H_files/image003.png"></p>
+<p style="text-align: center; padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">Hình 2. Nguyên lý hoạt động mạch cầu H.</p>
+<p align="justify" style="padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">&nbsp;&nbsp;&nbsp;&nbsp; Giả sử bằng cách nào đó (cái cách nào đó chính là nhiệm vụ của người thiết kế mạch) mà 2 khóa L1 và R2 được “đóng lại” (L2 và R1 vẫn mở), bạn dễ dàng hình dung có một dòng điện chạy từ V qua khóa L1 đến đầu A và xuyên qua đối tượng đến đầu B của nó trước khi qua khóa R2 và về GND (như hình 2a).&nbsp; Như thế, với giả sử này sẽ có dòng điện chạy qua đối tượng theo chiều từ A đến B. Bây giờ hãy giả sử khác đi rằng R1 và L2 đóng trong khi L1 và R2 mở, dòng điện lại xuất hiện và lần này nó sẽ chạy qua đối tượng theo chiều từ B đến A như trong hình 2b (V-&gt;R1-&gt;B-&gt;A-&gt;L2-&gt;GND). Vậy là đã rõ, chúng ta có thể dùng mạch cầu H để đảo chiều dòng điện qua một “đối tượng” (hay cụ thể, đảo chiều quay động cơ) bằng “một cách nào đó”.<br>
+&nbsp;&nbsp;&nbsp;&nbsp; Chuyện gì sẽ xảy ra nếu ai đó đóng đồng thời 2 khóa ở cùng một bên (L1 và L2 hoặc R1 và R2) hoặc thậm chí đóng cả 4 khóa? Rất dễ tìm câu trả lời, đó là hiện tượng “ngắn mạch” (short circuit), V và GND gần như nối trực tiếp với nhau và hiển nhiên ắc qui sẽ bị hỏng hoặc nguy hiểm hơn là cháy nổ mạch xảy ra. Cách đóng các khóa như thế này là điều “đại kị” đối với mạch cầu H. Để tránh việc này xảy ra, người ta thường dùng thêm các mạch logic để kích cầu H, chúng ta sẽ biết rõ hơn về mạch logic này trong các phần sau.<br>
+&nbsp;&nbsp;&nbsp;&nbsp; Giả thuyết cuối cùng là 2 trường hợp các khóa ở phần dưới hoặc phần trên cùng đóng (ví dụ L1 và R1 cùng đóng, L2 và R2 cùng mở). Với trường hợp này, cả 2 đầu A, B của “đối tượng” cùng nối với một mức điện áp và sẽ không có dòng điện nào chạy qua, mạch cầu H không hoạt động. Đây có thể coi là một cách “thắng” động cơ (nhưng không phải lúc nào cũng có tác dụng). Nói chung, chúng ta nên tránh trường hợp này xảy ra, nếu muốn mạch cầu không hoạt động thì nên mở tất cả các khóa thay vì dùng trường hợp này.<br>
+&nbsp;&nbsp;&nbsp;&nbsp; Sau khi đã cơ bản nắm được nguyên lý hoạt động của mạch cầu H, phần tiếp theo chúng ta sẽ khảo sát cách thiết kế mạch này bằng các loại linh kiện cụ thể. Như tôi đã trình bày trong phần trước, thành phần chính của mạch cầu H chính là các “khóa”, việc chọn linh kiện để làm các khóa này phụ thuộc vào mục đích sử dụng mạch cầu, loại đối tượng cần điều khiển, công suất tiêu thụ của đối tượng và cả hiểu biết, điều kiện của người thiết kế. Nhìn chung, các khóa của mạch cầu H thường được chế tạo bằng rờ le (relay), BJT (Bipolar Junction Transistor) hay MOSFET (Metal Oxide Semiconductor Field-Effect Transistor). Phần thiết kế mạch cầu H vì vậy sẽ tập trung vào 3 loại linh kiện này. Trong mỗi cách thiết kế, tôi sẽ giải thích ngắn gọn nguyên lý cấu tạo và hoạt động của từng loại linh kiện để bạn đọc dễ nắm bắt hơn.</p>
+<p align="justify" style="padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">&nbsp;<span style="line-height: 24px; font-family: Tahoma"><span style="color: rgb(255,102,0)"><strong><span style="font-family: &#39;Times New Roman&#39;,serif; font-size: 14pt">II. Mạch cầu H dùng rờ le.</span></strong></span></span></p>
+<p align="justify" style="padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Rờ le là một dạng “công tắc” (switch) cơ điện (electrical mechanical device, không phải cơ điện tử đâu nhé :) ). Gọi là công tắc cơ điện vì chúng gồm các tiếp điểm cơ được điều khiển đóng mở bằng dòng điện. Với khả năng đóng mở các tiếp điểm, rờ le đúng là một lựa chọn tốt để làm khóa cho mạch cầu H. Thêm nữa chúng lại được điều khiển bằng tín hiệu điện, nghĩa là chúng ta có thể dùng AVR (hay bất kỳ chip điều khiển nào) để điều khiển rờ le, qua đó điều khiển mạch cầu H. Hãy quan sát cấu tạo và hình dáng của một loại rờ le thông dụng trong hình 3.</p>
+<p style="text-align: center; padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px"><img alt="Relay" src="./Mạch cầu H_files/image006.jpg"></p>
+<p style="text-align: center; padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">Hình 3. Cấu tạo và hình dáng rờ le.</p>
+<p align="justify" style="padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">&nbsp;&nbsp;&nbsp;&nbsp; Hình 3a (phía trên) mô tả cấu tạo của 1 rờ le 2 tiếp điểm. Có 3 cực trên rờ le này. Cực C gọi là cực chung (Common), cực NC là tiếp điểm thường đóng (Normal Closed) và NO là tiếp điểm thường mở (Normal Open). Trong điều kiện bình thường, khi rờ le không hoạt động, do lực kéo của lò xo bên trái thanh nam châm sẽ tiếp xúc với tiếp điểm NC tạo thành một kết nối giữa C và NC, chính vì thế NC được gọi là&nbsp; tiếp điểm thường đóng (bình thường đã đóng). Khi một điện áp được áp vào 2 đường kích Solenoid (cuộn dây của nam châm điện), nam châm điện tạo ra 1 lực từ kéo thanh nam châm xuống, lúc này thanh nam châm không tiếp xúc với tiếp điểm NC nữa mà chuyển sang tiếp xúc với tiếp điểm NO tạo thành một kết nối giữa C và NO. Hoạt động này tương tự 1 công tắc chuyển được điều khiển bởi điện áp kích Solenoid. Một đặc điểm rất quan trọng trong cách hoạt động “đóng – mở” của rờ le là tính “cách li”. Hai đường kích nam châm điện hoàn toàn cách li với các tiếp điểm của rờ le, và vì thế sẽ rất an toàn. Có 2 thông số quan trọng cho 1 rờ le là điện áp kích Solenoid và dòng lớn nhất mà các điểm điểm chịu được. Điện áp kích solenoid thường là 5V, 12V hoặc 24V, việc kích solenoid chính là công việc của chip điều khiển (ví dụ AVR). Vì tiếp xúc giữa cực C và các tiếp điểm là dạng tiếp xúc tạm thời, không cố định nên rất dễ bị hở mạch. Nếu dòng điện qua tiếp điểm quá lớn, nhiệt có thể sinh ra lớn và làm hở tiếp xúc. Vì thế chúng ta cần tính toán dòng điện tối đa trong ứng dụng của mình để chọn rờ le phù hợp.<br>
+&nbsp;&nbsp;&nbsp;&nbsp; Hình 3a (phía dưới) là ký hiệu của một rờ le mà bạn có thể gặp trong các phần mềm thiết kế mạch điện tử. Trong ký hiệu này, chân 1 là chân C, chân 2 là tiếp điểm NC và chân 3 là tiếp điểm NO, trong khi đó hai chân 4 và 5 là 2 đầu của cuộn solenoid. Chúng ta sẽ&nbsp; dùng ký hiệu này khi vẽ mạch cầu H dùng rờ le. Sơ đồ một mạch cầu H đầu đủ dùng rờ le được minh họa trong hình 4.</p>
+<p style="text-align: center; padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px"><img alt="relay h bridge" src="./Mạch cầu H_files/image008.gif"></p>
+<p style="text-align: center; padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">Hình 4. Mạch cầu H dùng rờ le.</p>
+<p align="justify" style="padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">&nbsp;&nbsp;&nbsp;&nbsp; Trong mạch cầu H dùng rờ le ở hình 4, 4 diode được dùng để chống hiện tượng dòng ngược (nhất là khi điều khiển động cơ). Các đường kích solenoid không được nối trực tiếp với chip điều khiển mà thông qua các transistor, việc kích các transistor lại được thực hiện qua các điện trở. Tạm thời chúng ta gọi tổ hợp điện trở + transistor là “mạch kích”, tôi sẽ giải thích rõ hơn hoạt động của mạch kích trong phần tiếp theo.<br>
+&nbsp;&nbsp;&nbsp;&nbsp; Mạch cầu H dùng rờ le có ưu điểm là dễ chế tạo, chịu dòng cao, đặc biệt nếu thay rờ le bằng các linh kiện tương đương như contactor, dòng điện tải có thể lên đến hàng trăm ampere. Tuy nhiên, do là thiết bị “cơ khí” nên tốc độ đóng/mở của rờ le rất chậm, nếu đóng mở quá nhanh có thể dẫn đến hiện tượng “dính” tiếp điểm và hư hỏng. Vì vậy, mạch cầu H bằng rờ le không được dùng trong phương pháp điều khiển tốc độ động cơ bằng PWM. Trong phần tiếp theo chúng ta sẽ tìm hiểu các linh điện có thể thay thế rờ le trong mạch cầu H, gọi là các “khóa điện tử” với khả năng đóng/mở lên đến hàng nghìn hoặc triệu lần trên mỗi giây.</p>
+<p align="justify" style="padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px"><span style="font-family: &#39;Times New Roman&#39;; font-size: 19px">&nbsp;<span style="line-height: 24px; font-family: Tahoma"><span style="color: rgb(255,102,0)"><strong><span style="font-family: &#39;Times New Roman&#39;,serif; font-size: 14pt">II. Mạch cầu H dùng BJT công suất.</span></strong></span></span></span></p>
+<p align="justify" style="padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BJT là viết tắt của từ Bipolar Junction Transistor là một linh kiện bán dẫn (semiconductor device) có 3 cực tương ứng với 3 lớp bán dẫn trong cấu tạo. Trong tất cả các tài liệu về điện tử cơ bản đều giải thích về bán dẫn và BJT, trong tài liệu này tôi chỉ giới thiệu khái quát cấu tạo của transistor và chủ yếu là các chế độ hoạt động của transistor.<br>
+&nbsp;&nbsp;&nbsp;&nbsp; Bán dẫn là các nguyên tố thuộc nhóm IV trong bảng tuần hoàn hóa học, Silic (Si) là một ví dụ điển hình, các nguyên tố này có 4 electron ở lớp ngoài cùng. Ở trạng thái thường, Si là chất dẫn điện kém (gần như không dẫn điện), khi nhiệt độ tăng, các electron dao động mạnh và dễ dàng bị “bứt” ra khỏi tinh thể và do đó tính dẫn điện của bán dẫn sẽ tăng. Tuy nhiên, bán dẫn được dùng để chế tạo linh kiện điện tử không phải là các tinh thể thuần khiết mà có pha “tạp chất”. Nếu pha nguyên tố nhóm V (như Photpho) vào Si, 4 electron lớp ngoài cùng của P tạo liên kết công hóa trị với Si và có 1 electron của P bị “thừa” (vì P có 5 electron lớp ngoài cùng). Chất bán dẫn có pha Photpho vì thế rất dễ dẫn điện và có tính chất “âm” nên gọi là bán dẫn loại n (Negative), “hạt dẫn” trong bán dẫn loại n là electron (e thừa). Trường hợp nguyên tố nhóm III, như Bo (Boron), được pha vào Si, 3 electron lớp ngoài cùng của Bo kết hợp với 4 electron của Si tuy nhiên vẫn còn 1 “chỗ trống” sẵn sàng nhận electron. “Chỗ&nbsp; trống” này được gọi là “lỗ trống” và có tính chất như 1 loại hạt dẫn dương. Bán dẫn loại này vì thế gọi là bán dẫn loại p (Positive). Mức độ pha tạp chất quyết định độ dẫn của bán dẫn. Tuy nhiên, bán dẫn có pha tạp chất dù đã cải thiện tính dẫn điện vẫn không có nhiều tác dụng, “điều kỳ diệu” chỉ xảy ra khi ghép chúng lại với nhau.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Khi ghép bán dẫn loại p và loại n với nhau tạo thành tiếp xúc p-n (p-n junction), đây chính là các diode. Đặc điểm của tiếp xúc p-n là chỉ có dòng điện chạy qua theo 1 chiều từ p sang n. Khi ghép&nbsp;3 lớp bán dẫn sẽ tạo thành transistor, phụ thuộc vào thứ tự bán dẫn được ghép chúng ta có transistor npn hay pnp. Tôi sẽ chọn transistor npn để giải thích hoạt động của transistor vì loại này được dùng phổ biến trong các ứng dụng điều khiển (và cả trong mạch cầu H). Hình 5 là mô hình và ký kiệu của transistor npn.</p>
+<p style="text-align: center; padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px"><img alt="bjt" src="./Mạch cầu H_files/image009.png"></p>
+<p style="text-align: center; padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">Hình 5. Transistor npn.</p>
+<p align="justify" style="padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ba lớp bán dẫn n, p và n kết hợp tạo thành 3 cực C (cực thu-Collector), cực B (nền – Base) và cực E (phát – Emitter). Tùy theo cách mắc transistor mà người ta có các loại phân cực khác nhau, trong hình 6 tôi trình bày cách phân cực rất cơ bản mà chúng ta sẽ dùng sau này, phân cực E chung (CE- Common Emitter).</p>
+<p style="text-align: center; padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px"><img alt="ce" src="./Mạch cầu H_files/image012.jpg"></p>
+<p style="text-align: center; padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">Hình 6. Phân cực E chung cho npn BJT.</p>
+<p align="justify" style="padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">&nbsp;&nbsp;&nbsp;&nbsp; Tuy là được tạo nên từ các bán dẫn tạp chất nhưng nồng độ tạp chất của các lớp trong npn BJT rất khác nhau. Lớp E rất “giàu” hạt dẫn, kế đến là lớp C và lớp B thì lại rất ít hạt dẫn và rất mỏng. Khi điện áp cực B lớn hơn điện áp cực E, tiếp xúc p-n giữa B và E được phân cực thuận. Dòng electron từ E (vốn có rất nhiều do cách pha tạp chất) ào ạt “chảy” về B, trong khi lớp B (bán dẫn loại p) vốn rất mỏng và nghèo hạt dẫn (lỗ trống), nên phần lớn electron từ E sẽ “tràn” qua cực C và đi về nguồn Vc như mô tả trên hình 6. Chú ý trên hình 6 tôi vẽ chiều di chuyển là chiều của dòng electron, chiều dòng điện sẽ ngược lại (vì theo định nghĩa chiều dòng điện ngược chiều electron). Diễn giải đơn giản, dòng diện từ cực B đã gây ra dòng điện từ cực C về E. Quan hệ của các dòng điện như sau:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I<sub>E</sub>=I<sub>B</sub>+I<sub>C</sub>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp; Một đặc điểm thú vị là dòng electron tràn qua cực C sẽ tỉ lệ với dòng electron đến cực B. mối quan hệ như sau:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I<sub>C</sub>=h<sub>fe</sub>I<sub>B</sub>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (2)<br>
+&nbsp;&nbsp;&nbsp; Thông số&nbsp;h<sub>fe</sub> gọi là hệ số khuyếch đại tĩnh (DC Current Gain) của BJT và là hằng số được ghi bởi các nhà sản xuất, nó chính là đặc tính để phân biệt từng loại BJT, gái trị của thường rất lớn, từ vài chục đến vài trăm. Chính vì đặc điểm này mà transistor được dùng như là một linh kiện “khuyếch đại”.&nbsp; Hãy quan sát phần mạch điện bên phải trong hình 6 (phía Vc), nếu giả sử đoạn CE của BJT là một “điện trở”, xem lại công thức (2), nếu tăng dòng điện&nbsp;I<sub>B</sub>&nbsp;thì dòng I<sub>C </sub>sẽ tăng theo trong khi điện trở R<sub>C </sub>và nguồn V<sub>C </sub>lại không đổi, rõ ràng “điện trở EC” đang giảm. Nói cách khác, dòng&nbsp;I<sub>B</sub> sẽ làm giảm điện trở giữa 2 cực CE của BJT. Tiếp tực tăng I<sub>B </sub>thì điều gì xảy ra, điện trở giữa 2 cực CE sẽ giảm đến giá trị nhỏ nhất có thể của nó (thường gần bằng 0, giá trị này được ghi trong datasheet mỗi loại của BJT). Khi điện trở CE đạt giá trị min, phần mạch điện bên phải gần như cố định (V<sub>C</sub>, R<sub>C</sub>, R<sub>CE</sub>) nên dòng&nbsp;I<sub>C </sub>cũng đạt giá trị max và gần như không thay đổi cho dù có tăng&nbsp;I<sub>B</sub>. Quan hệ giữa&nbsp;I<sub>B </sub>và&nbsp;I<sub>C</sub> không còn đúng như công thức (2). Hiện tượng này gọi là bão hòa, đây là hiện tượng rất quan trọng của transistor, nó là cơ sở cho sự phát triển của các mạch điện tử số (điều này giải thích tại sao người ta hay đề cập đến số lượng transistor trong các chip số, như vi xử lí cho máy tính chẳng hạn). Một cách tổng quát, điều kiện để BJT rơi vào trạng thái bão hòa là I<sub>Cmax </sub>&lt; h<sub>fe</sub>I<sub>B</sub>. Khi BJT bão hòa nó sẽ hoạt động như một “khóa&nbsp; điện tử”, hãy xem hình 7.</p>
+<p style="text-align: center; padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px"><img alt="ce" src="./Mạch cầu H_files/image035.gif"></p>
+<p style="text-align: center; padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">Hình 7. Khóa điện tử BJT.</p>
+<p align="justify" style="padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">&nbsp;&nbsp; Giả sử trong mạch điện ở hình 7 R<sub>B</sub>=330, R<sub>C</sub>=10K&nbsp;, hệ số khuyếch đại tĩnh của transistor là 100. Khi điện áp ở ngõ vào Vi=0V, BJT không hoạt động, dòng điện qua&nbsp;R<sub>C</sub> bằng 0 (hoặc rất nhỏ), điện áp ngõ ra Vo=12V. Khi Vi được kích kích bởi điện áp 5V, dòng&nbsp;I<sub>B</sub>=(5 - 0.7)/330=0.013A trong đó 0.7 là điện áp rơi trên BE. Dòng I<sub>C </sub>đạt giá trị lớn nhất khi V<sub>CE</sub>=0V, khi đó I<sub>Cmax&nbsp;</sub> =12/10K=0.0012A. Rõ ràng&nbsp;I<sub>C </sub>&lt; h<sub>fe</sub>I<sub>B</sub> và BJT sẽ bão hòa. Khi BJT bão hòa,&nbsp;V<sub>CE</sub>=0V&nbsp;và&nbsp;ngõ ra&nbsp;Vo&nbsp;được “nối” với GND nên Vo=0V&nbsp;. Tóm lại, bằng cách thay đổi mức điện áp Vi&nbsp;từ 0V sang 5V, điện áp ngõ ra sẽ được “switch” từ 12V sang 0V. Hoạt động của BJT khi bão hòa đôi khi còn được gọi là khuyếch đại điện áp. Vì chế độ bão hòa, BJT có thể được dùng làm các khóa điện tử trong mạch cầu H. Bạn hãy dùng chế độ bão hòa cùa BJT để tự giải thích hoạt động của 4 BJT 2N3904 dùng trong mạch cầu H ở hình 4.<br>
+&nbsp;&nbsp;&nbsp;&nbsp; Mạch điện trong hình 7 gọi là E chung. Mạch E chung của BJT hoạt động rất tốt trong chế độ khóa điện tử. Nếu chúng&nbsp; thay điện trở&nbsp; bằng động cơ thì mạch này tương đương với phần phía dưới của mạch cầu H (BJT tương đương với khóa L2 hoặc R2 trong hình 1). Câu hỏi đặt ra là có thể dùng thêm 1 BJT npn như trên để làm phần trên của&nbsp; mạch cầu H. Hãy xét mạch điện trong hình 8.</p>
+<p style="text-align: center; padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px"><img alt="cc" src="./Mạch cầu H_files/image065.gif"></p>
+<p style="text-align: center; padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">Hình 8. Mạch C chung.</p>
+<p align="justify" style="padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">&nbsp;&nbsp;&nbsp;&nbsp; Mạch điện trong hình 8 gọi là mạch C chung, điểm khác biệt duy nhất của mạch điện này so với hình 7 là điện trở R<sub>C</sub> được dời xuống phía dưới cực E nên gọi là&nbsp;R<sub>E</sub>. Không cần khảo sát phần cực C hãy khảo sát mạch Vi -&gt; B -&gt;E -&gt;&nbsp;R<sub>E</sub>&nbsp;-&gt; GND. Khi Vi=5V, do điện áp rơi trên BE luôn là 0.7V (đặc điểm của tiếp xúc pn khi dẫn điện) nên điện áp rơi trên điện trở&nbsp;&nbsp;R<sub>E </sub>luôn là 4.3V mặc dù điện áp cực C là 12V, như thế điện áp giữa 2 cực CE là 12 - 4.3 = 7.7V.&nbsp; Điều này được hiểu là giữa CE có một “điện trở” khá lớn, “khóa điện tử” không hoạt động tốt đối với mạch C chung. Nếu&nbsp;&nbsp;R<sub>E</sub>&nbsp;là một motor DC loại 12V thì rõ ràng motor không hoạt động tốt vì điện áp rơi trên nó chỉ có 4.3V. Mặc khác điện áp CE quá lớn có thể gây hỏng BJT. Vì lí do này nếu bạn dùng BJT npn làm phần trên của mạch cầu H, BJT này sẽ rất mau hỏng (rất nóng) và mạch không hoạt động tốt.&nbsp; <strong>Như vậy, một chú ý khi thiết kế khóa điện tử dùng BJT là “tải” phải được đặt phía trên BJT tức là nên dùng mạch E chung như trong hình 7</strong>.<br>
+&nbsp;&nbsp; Quay lại mạch cầu H, giải pháp để vượt qua nhược điểm đề cập ở trên là sử dụng BJT loại pnp cho phần trên của mạch cầu H. Nguyên lý hoạt động của BJT pnp cũng na ná npn nhưng chiều dòng điện thì ngược lại. Với các khóa điện tử dùng BJT loại pnp, để kích khóa thì điện áp cực B được kéo xuống thấp thay vì kéo lên cao như trong hình 7. Chúng ta hãy khảo sát một một ví dụ trong hình 9.</p>
+<p style="text-align: center; padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px"><img alt="cc" src="./Mạch cầu H_files/image074.gif"></p>
+<p style="text-align: center; padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">Hình 9. Mạch E chung dùng BJT pnp.</p>
+<p align="justify" style="padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">&nbsp;&nbsp;&nbsp;&nbsp; Mũi tên trong ký hiệu của BJT pnp hướng từ E vào B, ngược lại với BJT npn. Nếu điện áp Vi=12V=V<sub>E</sub> hoặc ngõ&nbsp;Vi&nbsp; không được kết nối thì BJT không hoạt động, không có dòng điện qua R<sub>C </sub>vì dòng I<sub>B </sub>=0 nên dòng I<sub>C </sub>=0. Khi Vi=0V&nbsp;thì dòng I<sub>B </sub>xuất hiện và xuất hiện dòng&nbsp; I<sub>C&nbsp;</sub>(từ cực E) , nếu dòng I<sub>B</sub> đủ lớn sẽ gây bão hòa BJT và điện áp V<sub>EC</sub> gần bằng 0V hay điện áp rơi trên R<sub>C</sub> gần bằng 12V, khóa hoạt động rất tốt. Do đó, BJT pnp thường được dùng làm phần trên trong các mạch cầu H. Một điều thú vị là mạch điện trong hình 9 cũng là một mạch E chung.<br>
+&nbsp;&nbsp; Có lẽ đã đến lúc chúng ta di thiết kết một mạch cầu H hoàn chỉnh dùng BJT. Trong hình 10 tôi giới thiệu một cách thiết kế, đây không phải là cách duy nhất nhưng tôi sẽ dùng mạch này trong việc giải thích và ví dụ điều khiển (nếu có). Bạn có thể “chế” lại tùy thích miễn sao đảm bảo tất cả các BJT phải rơi vào trạng thái bão hòa khi được kích.</p>
+<p style="text-align: center; padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px"><img alt="h" src="./Mạch cầu H_files/image088.gif"></p>
+<p style="text-align: center; padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">Hình 10. Mạch cầu H dùng BJT.</p>
+<p align="justify" style="padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tôi chọn 2 loại BJT công suất trung bình TIP41C và TIP42C để làm mạch cầu. Điện áp cao nhất mà 2 loai BJT này chịu được là 100V và dòng tối đa là 6A (chỉ là danh nghĩa, thực tế có thể thấp hơn). BJT npn TIP41C có thể kích trực tiếp, riêng BJT pnp TIP42C cần dùng thêm 1 BJT loại npn 2N3904 làm “mạch kích”. Khi điện áp ngõ L1 ở mức thấp, BJT Q0-1 không hoạt động, không tồn tại dòng IC của BJT này, nghĩa là không có dòng&nbsp; IB của BJT Q1, Q1 vì thế không hoạt động và tương đương một khóa Q1 mở. Khi L1 được kéo lên mức cao, 5V, BJT Q0-1 bão hòa (mạch E chung), dòng IC của Q0-1 xuất hiện và cũng là dòng IB của BJT Q1. Q1 vì thế cũng bão hòa và tương đương một khóa đóng. Như vậy, chúng ta có thể dùng các mức điện áp chuẩn 0V và 5V để kích các BJT dùng trong mạch cầu H cho dù điện áp nguồn có thể lên vài chục hay trăm Volt. Các đường L1, L2, R1 và R2 sẽ được vi điều khiển (AVR) điều khiển. Do BJT có thể được kích ở tốc độ rất cao nên ngoài chức năng đảo chiều, mạch cầu H dùng BJT có thể dùng điều khiển tốc độ motor bằng cách áp tín hiệu PWM vào các đường kích (thảo luận sau).<br>
+&nbsp;&nbsp;&nbsp;&nbsp; Nhược điểm lớn nhất của mạch cầu H dùng BJT là công suất của BJT thường nhỏ, vì vậy với motor công suất lớn thì BJT ít được sử dụng. Mạch điện kích cho BJT cần tính toán rất kỹ để đưa BJT vào trạng thái bão hòa, nếu không sẽ hỏng BJT. Mặt khác, điện trở CE của BJT khi bão hòa cũng tương đối lớn, BJT vì vậy có thể bị nóng…Trong phần tiếp theo tôi giới thiệu một loại linh kiện khác thường dùng làm mạch cầu H, MOSFET.</p>
+<p align="justify" style="padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px"><span style="line-height: 24px; font-family: Tahoma"><span style="color: rgb(255,102,0)"><strong><span style="font-family: &#39;Times New Roman&#39;,serif; font-size: 14pt">IV. Mạch cầu H dùng MOSFET.</span></strong></span></span>&nbsp;</p>
+<p align="justify" style="padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">&nbsp;&nbsp;&nbsp;&nbsp; MOSFET là viết tắt của cụm Meta Oxide Semiconductor Field-Effect Transistor tức Transisor hiệu ứng trường có dùng kim loại và oxit bán dẫn. Hình 11 mô tả cấu tạo của MOSFET kênh n và ký hiệu của 2 loại MOSFET kênh n và kênh p.</p>
+<p style="text-align: center; padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px"><img alt="mosfet" src="./Mạch cầu H_files/image089.gif"></p>
+<p style="text-align: center; padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">Hình 11. MOSFET.</p>
+<p align="justify" style="padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">&nbsp; &nbsp;&nbsp; MOSFET có 3 chân gọi là Gate (G), Drain (D) và Source (S) tương ứng với B, E và C của BJT. Bạn có thể nguyên lý hoạt động của MOSFET ở các tài liệu về điện tử, ở đây chỉ mô tả các kích hoạt MOSFET. Cơ bản, đối với MOSFET kênh N, nếu điện áp chân G lớn hơn chân S khoảng từ 3V thì MOSFET bão hòa hay dẫn. Khi đó điện trở giữa 2 chân D và S rất nhỏ (gọi là điện trở dẫn DS), MOSFET tương đương với một khóa đóng. Ngược lại, với MOSFET kênh P, khi điện áp chân G nhỏ hơn điện áp chân S khoảng 3V thì MOSFET dẫn, điện trở dẫn cũng rất nhỏ. Vì tính dẫn của MOSFET phụ thuộc vào điện áp chân G (khác với BJT, tính dẫn phụ thuộc vào dòng IB), MOSFET được gọi là linh kiện điều khiển bằng điện áp, rất lý tưởng cho các mạch số nơi mà điện áp được dùng làm mức logic (ví dụ 0V là mức 0, 5V là mức 1).<br>
+&nbsp;&nbsp;&nbsp;&nbsp; MOSFET thường được dùng thay các BJT trong các mạch cầu H vì dòng mà linh kiện bán dẫn này có thể dẫn rất cao, thích hợp cho các mạch công suất lớn. Do cách thức hoạt động, có thể hình dung MOSFET kênh N tương đương một BJT loại npn và MOSFET kênh P tương đương BJT loại pnp. Thông thường các nhà sản xuất MOSFET thường tạo ra 1 cặp MOSFET gồm 1 linh kiện kênh N và 1 linh kiện kênh P, 2 MOSFET này có thông số tương đồng nhau và thường được dùng cùng nhau. Một ví dụ dùng 2 MOSFET tương đồng là các mạch số CMOS (Complemetary MOS). Cũng giống như BJT, khi dùng MOSFET cho mạch cầu H, mỗi loại MOSFET chỉ thích hợp với 1 vị trí nhất định, MOSFET kênh N được dùng cho các khóa phía dưới và MOSFET kênh P dùng cho các khóa phía trên. Để giải thích, hãy ví dụ một MOSFET kênh N được dùng điều khiển motor DC như trong hình 12.</p>
+<p style="text-align: center; padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px"><img alt="mosfet" src="./Mạch cầu H_files/image092.jpg"></p>
+<p style="text-align: center; padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">Hình 12. Dùng MOSFET kênh N điều khiển motor DC.</p>
+<p align="justify" style="padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">&nbsp;&nbsp;&nbsp;&nbsp; Ban đầu MOSFET ko được kích, ko có dòng điện trong mạch, điện áp chân S bằng 0. Khi MOSFET được kích và dẫn, điện trở dẫn DS rất nhỏ so với trở kháng của motor nên điện áp chân S gần bằng điện áp nguồn là 12V. Do yêu cầu của MOSFET, để kích dẫn MOSFET thì điện áp kích chân G phải lớn hơn chân S ít nhất 3V, nghĩa là ít nhất 15V trong khi chúng ta dùng vi điều khiển để kích MOSFET, rất khó tạo ra điện áp 15V. Như thế MOSFET kênh N không phù hợp để làm các khóa phía trên trong mạch cầu H (ít nhất là theo cách giải thích trên). MOSFET loại P thường được dùng trong trường hợp này. Tuy nhiên, một nhược điểm của MOSFET kênh P là điện trở dẫn DS của nó lớn hơn MOSFET loại N. Vì thế, dù được thiết kế tốt, MOSFET kênh P trong các mạch cầu H dùng 2 loại MOSFET thường bị nóng và dễ hỏng hơn MOSFET loại N, công suất mạch cũng bị giảm phần nào. Hình 13 thể hiện một mạch cầu H dùng 2 loại MOSFET tương đồng.</p>
+<p style="text-align: center; padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px"><img alt="mosfet" src="./Mạch cầu H_files/image094.gif"></p>
+<p style="text-align: center; padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">Hình 13. Mạch cầu H dùng MOSFET.</p>
+<p align="justify" style="padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">&nbsp;&nbsp;&nbsp;&nbsp; Tôi dùng 2 MOSFET kênh N IRF540 và 2 kênh P IRF9540 của hãng International Rectifier làm các khóa cho mạch cầu H. Các MOSFET loại này chịu dòng khá cao (có thể đến 30A, danh nghĩa) và điện áp cao nhưng có nhược điểm là điện trở dẫn tương đối&nbsp;lớn (bạn tìm đọc datasheet của chúng để biết thêm). Phần kích cho các MOSFET kênh N bên dưới thì không quá khó, chỉ cần dùng vi điều khiển kích trực tiếp vào các đường L2 hay R2. Riêng các khóa trên (IRF9540, kênh P) tôi phải dùng thêm BJT 2N3904 để làm mạch kích. Khi chưa kích BJT 2N3904, chân G của MOSFET được nối lên VS bằng điện trở 1K, điện áp chân G vì thế gần bằng VS cũng là điện áp chân S của IRF9540 nên MOSFET này không dẫn. Khi kích các line L1 hoặc R1, các BJT 2N3904 dẫn làm điện áp chân G của IRF9540 sụt xuống gần bằng 0V (vì khóa 2N3904 đóng mạch). Khi đó, điện áp chân G nhỏ hơn nhiều so với điện áp chân S, MOSFET dẫn. Vi điều khiển&nbsp; có thể được dùng để kích các đường L1, L2, R1 và R2.</p>
+<p align="justify" style="padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px">...</p>
+<p align="justify" style="padding-bottom: 0px; margin: 12px 0px; padding-left: 0px; padding-right: 0px; font-family: &#39;Times New Roman&#39;,Times,serif; font-size: 14pt; padding-top: 0px"></p>
+
+<br><div align="right"><a href="javascript:scroll(0,0)">[Top]</a></div></div>
+
+
+<span class="article_separator">&nbsp;</span>
+
+
+			
+		</div>
+		</div>
+		<!-- END: CONTENT -->
+		
+		
+		</div>
+		
+		
+	</div>
+</div>
+
+
+<!-- BEGIN: FOOTER -->
+<div id="ja-footerwrap">
+<div id="ja-footer" class="clearfix">
+
+	<div id="ja-footnav">
+		
+	</div>
+
+	<div class="copyright">
+		
+<font align="center"><small>FOOTER_LINE1 
+<br>AVR is a registered trademark of <a href="http://www.atmel.com/" target="_blank" align="center">Atmel Corporation</a>
+<br>This site is founded by <a href="http://www.hotam.net/" target="_blank" align="center">Thanhtam Ho</a></small></font>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="./Mạch cầu H_files/ga.js" type="text/javascript"></script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-12653702-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+<!--<small>FOOTER_LINE2</small> -->
+
+	</div>
+	
+	<div class="ja-cert">
+		
+		<a href="http://jigsaw.w3.org/css-validator/validator?uri=%2Findex.php%2Fhardware%2Fhbridge" target="_blank" title="CSS Validity" style="text-decoration: none;">
+		<img src="./Mạch cầu H_files/but-css.gif" border="none" alt="CSS Validity">
+		</a>
+		<a href="http://validator.w3.org/check/referer" target="_blank" title="XHTML Validity" style="text-decoration: none;">
+		<img src="./Mạch cầu H_files/but-xhtml10.gif" border="none" alt="XHTML Validity">
+		</a>
+	</div>
+
+</div>
+</div>
+<!-- END: FOOTER -->
+
+</div>
+
+
+
+
+
+
+</body></html>

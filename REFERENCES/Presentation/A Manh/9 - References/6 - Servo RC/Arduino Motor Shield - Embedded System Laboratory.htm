@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#" lang="en-US"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arduino Motor Shield - Embedded System Laboratory</title>
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel="pingback" href="http://fos.cmb.ac.lk/esl/xmlrpc.php">
+<!--[if lt IE 9]>
+<script src="http://fos.cmb.ac.lk/esl/wp-content/themes/expound/js/html5.js" type="text/javascript"></script>
+<![endif]-->
+
+
+<!-- This site is optimized with the Yoast WordPress SEO plugin v1.7.4 - https://yoast.com/wordpress/plugins/seo/ -->
+<meta name="description" content="Arduino Motor Shield http://fos.cmb.ac.lk/esl/arduino-motor-shield/">
+<link rel="canonical" href="http://fos.cmb.ac.lk/esl/arduino-motor-shield/">
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Arduino Motor Shield - Embedded System Laboratory">
+<meta property="og:description" content="Arduino Motor Shield http://fos.cmb.ac.lk/esl/arduino-motor-shield/">
+<meta property="og:url" content="http://fos.cmb.ac.lk/esl/arduino-motor-shield/">
+<meta property="og:site_name" content="Embedded System Laboratory">
+<meta property="article:author" content="https://www.facebook.com/dn.lahiru">
+<meta property="article:tag" content="featured">
+<meta property="article:section" content="Arduino">
+<meta property="article:published_time" content="2013-06-03T09:57:04+00:00">
+<meta property="article:modified_time" content="2014-03-23T18:42:16+00:00">
+<meta property="og:updated_time" content="2014-03-23T18:42:16+00:00">
+<meta property="og:image" content="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/05/DSC_1145.jpg">
+<!-- / Yoast WordPress SEO plugin. -->
+
+<link rel="alternate" type="application/rss+xml" title="Embedded System Laboratory » Feed" href="http://fos.cmb.ac.lk/esl/feed/">
+<link rel="alternate" type="application/rss+xml" title="Embedded System Laboratory » Comments Feed" href="http://fos.cmb.ac.lk/esl/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="Embedded System Laboratory » Arduino Motor Shield Comments Feed" href="http://fos.cmb.ac.lk/esl/arduino-motor-shield/feed/">
+<link rel="stylesheet" id="reFaderStylesheet-css" href="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/RandomExcerptsFader.css" type="text/css" media="all">
+<link rel="stylesheet" id="simplicy_random_post-css" href="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/simplicy_random_post.css" type="text/css" media="all">
+<link rel="stylesheet" id="admin-css" href="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/admin.css" type="text/css" media="all">
+<link rel="stylesheet" id="farbtastic-css" href="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/farbtastic.css" type="text/css" media="all">
+<link rel="stylesheet" id="wordpress-plugin-random-post-slider-css" href="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/wordpress-plugin-random-post-slider.css" type="text/css" media="all">
+<link rel="stylesheet" id="post-tiles-css" href="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/post-tiles.css" type="text/css" media="all">
+<link rel="stylesheet" id="super-rss-reader-css-css" href="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/srr-css.css" type="text/css" media="all">
+<link rel="stylesheet" id="expound-style-css" href="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/style.css" type="text/css" media="all">
+<link rel="stylesheet" id="expound-genericons-css" href="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/genericons.css" type="text/css" media="all">
+<script src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/ga.js" async="" type="text/javascript"></script><script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/jquery_002.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/jquery-migrate.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/RandomExcerptsFader.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/jquery.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/srr-js.js"></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://fos.cmb.ac.lk/esl/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://fos.cmb.ac.lk/esl/wp-includes/wlwmanifest.xml"> 
+<meta name="generator" content="WordPress 4.1.6">
+<link rel="shortlink" href="http://fos.cmb.ac.lk/esl/?p=1149">
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/sp-random-post.js"></script><link rel="stylesheet" id="wop-css" href="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/wop.css" type="text/css" media="all">	<style type="text/css">
+	        .site-title a,
+        .site-title a:hover,
+        .site-description {
+			color: #00439b;
+        }
+	
+		</style>
+	<style type="text/css" id="custom-background-css">
+body.custom-background { background-color: #dd0000; }
+</style>
+<link href="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shCore.css" type="text/css" rel="stylesheet"><link href="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shThemeDefault.css" type="text/css" rel="stylesheet"><style type="text/css" id="syntaxhighlighteranchor"></style>
+<!-- 
+			Plugin: Super Simple Google Analytics 
+	Plugin URL: Super Simple Google Analytics
+
+
+	-->
+
+<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-40697635-1']);
+	  _gaq.push(['_trackPageview']);
+	
+	  (function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	</script></head>
+
+<body class="single single-post postid-1149 single-format-standard custom-background group-blog">
+<div id="page" class="hfeed site">
+		<header id="masthead" class="site-header" role="banner">
+		<div class="site-branding">
+			<div class="site-title-group">
+				<h1 class="site-title"><a href="http://fos.cmb.ac.lk/esl/" title="Embedded System Laboratory" rel="home">Embedded System Laboratory</a></h1>
+				<h2 class="site-description">Design, Develop &amp; Share</h2>
+			</div>
+		</div>
+
+		<nav id="site-navigation" class="navigation-main" role="navigation">
+			<h1 class="menu-toggle">Menu</h1>
+			<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+
+			<div class="menu-main-container"><ul id="menu-main" class="menu nav-menu"><li id="menu-item-71" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-71"><a href="http://fos.cmb.ac.lk/esl/">Home</a></li>
+<li id="menu-item-25" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-25"><a href="http://fos.cmb.ac.lk/esl/information/">Course information</a></li>
+<li id="menu-item-70" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-70"><a href="http://fos.cmb.ac.lk/esl/mini-projects/">Mini-projects</a></li>
+<li id="menu-item-27" class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-27"><a href="http://fos.cmb.ac.lk/esl/blog/">Blog</a></li>
+<li id="menu-item-81" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-81"><a href="http://fos.cmb.ac.lk/esl/personnel/">Personnel</a></li>
+<li id="menu-item-83" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-83"><a href="http://fos.cmb.ac.lk/esl/resources/">Resources</a></li>
+</ul></div>			<div id="expound-social" class="menu-social-container"><ul id="menu-social" class="menu"><li id="menu-item-2016" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2016"><a href="http://facebook.com/fosmedia"><span>F</span></a></li>
+</ul></div>					</nav><!-- #site-navigation -->
+	</header><!-- #masthead -->
+	
+	<div id="main" class="site-main">
+
+	<div id="primary" class="content-area">
+		<div id="content" class="site-content" role="main">
+
+		
+			
+<article id="post-1149" class="post-1149 post type-post status-publish format-standard has-post-thumbnail hentry category-arduino tag-featured">
+	<header class="entry-header">
+		<h1 class="entry-title">Arduino Motor Shield</h1>
+
+		<div class="entry-meta">
+			<a class="author" rel="author" href="http://fos.cmb.ac.lk/esl/author/2009s11757/">D. L. N. M. Hettiarachchi</a> / <a class="entry-date" href="http://fos.cmb.ac.lk/esl/arduino-motor-shield/">June 3, 2013</a>		</div><!-- .entry-meta -->
+	</header><!-- .entry-header -->
+
+	<div class="entry-content">
+		<h2><a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/05/DSC_1145.jpg"><img class="size-medium wp-image-1298 aligncenter" alt="DSC_1145" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/DSC_1145-300x200.jpg" height="371" width="558"></a>Introduction</h2>
+<h3>What is Arduino?</h3>
+<p style="text-align: justify;">Use of microcontrollers has increased 
+largely over the recent past in the field of 
+electronics.&nbsp;Components in the microcontroller family are easy to 
+work with due to their flexibility and simple methodologies. Building 
+these into single circuit boards along with all the controller hardware 
+and all the necessary controls such as inputs and outputs, provided a 
+huge hand towards education, especially due the low development cost, 
+and application developers to familiarize new microcontrollers/ 
+processors. The main advantage to any party is that either can move on 
+testing or understanding it’s attributes without a waste of time and 
+energy on developing supporting hardware. Arduino is one of such 
+single-board microcontrollers with open-source hardware and software 
+support of a standard programming language compiler. Since the 
+initiation, a number of versions were introduced until present. ‘Arduino
+ Uno’ was built as the reference model to move forward with advanced USB
+ capability for Arduino platform.</p>
+<h3>Arduino Uno</h3>
+<p>‘Arduino Uno’ board is based on ATmega328 and has 20 I/O pins( 
+including 6 PWM outputs and 6 analog inputs). The board is clocked by a 
+16 MHz ceramic resonator and has a USB connection for power and 
+communication.</p>
+<h3>What is a shield?</h3>
+<p style="text-align: justify;">This board has the capability to control
+ outputs to compatible objects or environments over inputs. In order to 
+attach these, a separate circuit board, called a ‘shield’, is built with
+ additional supporting hardware. Those are usually stacked on the 
+Arduino board in a tower.</p>
+<h3>Controlling motors</h3>
+<p style="text-align: justify;">There are number of motor types that can
+ be driven by Arduino directly or by other driver ICs. Considering a 
+motor, it shows attributes such as speed, direction of rotation, etc. 
+Software control over these factors is greatly considered in real life 
+applications. Here, control over three types of motors is explained.</p>
+<ol style="text-align: justify;">
+<ol>
+<ol>
+<ol>
+<li>RC servo</li>
+<li>DC motors controlled by a H-bridge</li>
+<li>Stepper motor</li>
+</ol>
+</ol>
+</ol>
+</ol>
+<p style="text-align: justify;">Therefore the basic outline is once a 
+shield with supporting hardware for the motors is connected, a simple 
+program written for Arduino could drive them while communication with a 
+computer could control over their attributes.</p>
+<h2>RC – Servo Motor</h2>
+<p>RC Servo motors very oftenly mentioned when talking about robotics 
+and automated processes, In DC motors, the load directly affects the 
+speed and current draw, but for practical applications the exact shaft 
+positions are much more important and it must be known with higher 
+accuracy level. Unlike other motors (DC or Stepper) RC servo motors will
+ used for obtain accurate positions such as “shaft moving to 90 degrees 
+or 25 degrees and stop” and motor protocol are universal so the 
+interfacing steps are much easier and well described by many users, 
+which also explain why this is so popular among practical electronic 
+field.</p>
+<div id="attachment_1236" style="width: 306px" class="wp-caption aligncenter"><a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/05/servo.jpg"><img class="size-medium wp-image-1236 " title="Servo Motor" alt="servo" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/servo-300x294.jpg" height="294" width="300"></a><p class="wp-caption-text">RC Servo motor</p></div>
+<p>Normal DC motor has two wires for the power input (+voltage and 
+Ground supply) and it will continuously rotate when power applied to it,
+ however it will rotate opposite direction when the polarity of the 
+wires are changed. Basically RC servo motors are the same as DC motors 
+but with more mechanical parts and electronic parts, RC servo motors 
+contain 3 wires (+Voltage, Ground and Control) and most servos will run 
+smoothly when the +Voltage in between 5-6 V and it may draw 100 mA to 1 A
+ current depending on motor size. The control wire receives the control 
+signal(PWM pulse) which at about 50 Hz frequency and this pulse deside 
+the servo position.</p>
+<h3>How servo works</h3>
+<p>The control PWM pulse (20 ms period) charges a capacitor constantly 
+when the pulse is high (1 ms – 2 ms) after pulse goes to low, charges on
+ the capacitor fed to the output via a buffer amplifier. This effect 
+essentially produced voltage related to the applied duty cycle of PWM 
+pulse.</p>
+<p>RC servo motors contain DC motor, gearbox, feedback device (potentiometer), servo control unit and drive circuit.</p>
+<div id="attachment_1244" style="width: 565px" class="wp-caption aligncenter"><a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/05/rc_block_diagram-copy.jpg" target="_blank"><img class=" wp-image-1244    " alt="Block diagram of rc servo motor contents" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/rc_block_diagram-copy-300x161.jpg" height="161" width="559"></a><p class="wp-caption-text">Block diagram of rc servo motor contents</p></div>
+<div id="attachment_1237" style="width: 306px" class="wp-caption aligncenter"><a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/05/servo_parts.jpeg" target="_blank"><img class=" wp-image-1237   " alt="Rc motor contents real parts" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/servo_parts-300x183.jpg" height="183" width="300"></a><p class="wp-caption-text">Rc motor contents real parts</p></div>
+<ul>
+<li>DC motor</li>
+</ul>
+<p>This is a normal dc motor and it gives the rotational power to shaft 
+and there are different kind motors available for this (such as brushed 
+motor with core, brushed coreless motor, brushless motors…etc.) but it 
+depends on the RC servo and application.</p>
+<ul>
+<li>Gear Box</li>
+</ul>
+<p>This drives the shaft but more importantly torque will be high and the rpm&nbsp;significantly&nbsp;reduced.</p>
+<ul>
+<li>FeedBack device(potentiometer)</li>
+</ul>
+<p>This is the servo current posisiton&nbsp;obtaining&nbsp;sensor and 
+the voltage will produce according to the position and after that this 
+value goes to the error amplifier to check wither current position and 
+commanded position are equal.</p>
+<ul>
+<li>Control Unit and Driving circuit</li>
+</ul>
+<p>This is the heart of the RC servo motor and this will take care all 
+the steps starting from reading the input PWM signal to output shaft 
+rotation.&nbsp;For more information of what servo contain and their 
+works click&nbsp;<a title="RC servo details" href="http://www.rcmodelreviews.com/howservoswork.shtml" target="_blank">here</a>&nbsp;and&nbsp;<a title="How RC Servos Works" href="http://pcbheaven.com/wikipages/How_RC_Servos_Works/">here</a>.</p>
+<h3>Give Command to RC servo motor</h3>
+<p>RC servos can command by giving PWM pulses to control wire. This PWM 
+pulse should have repetitive 20 ms period (50 Hz) pulse with duty cycle 
+variation of 1 ms to 2 ms (some requires range of 0.5 ms to 2.5 ms). The
+ minimum pulse (1 ms duty cycle) will give the minimum servo position (0
+ degrees – this can be change to 180 degrees by altering coding) and 
+neutral average pulse (1.5 ms) will give the neutral servo position (90 
+degrees) and finally maximum pulse (2 ms) gives maximum servo position 
+180 degrees).</p>
+<p>So when pulse receives to the control unit it changes the appropriate
+ servo position according to the pulse and servo position will remain 
+same until it receives another command from control unit.</p>
+<div id="attachment_1238" style="width: 306px" class="wp-caption aligncenter"><a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/05/servopos.jpg"><img class="size-medium wp-image-1238" alt="Servo positions for various duty cycles" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/servopos-300x109.jpg" height="109" width="300"></a><p class="wp-caption-text">Servo positions for various duty cycles</p></div>
+<p>This is the&nbsp;<a title="fritzing" href="http://fritzing.org/" target="_blank">fritzing</a> diagram for connecting the RC servo motor to the Arduino uno board. Download the fritzing file (<em><a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/05/rc-motor.fzz_.zip">rc motor.fzz</a>&nbsp;)</em>.</p>
+<div id="attachment_1189" style="width: 306px" class="wp-caption aligncenter"><a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/05/2013-05-30-10.45.35-am.jpg" target="_blank"><img class="size-medium wp-image-1189 " alt="2013-05-30 10.45.35 am" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/2013-05-30-10.jpg" height="192" width="300"></a><p class="wp-caption-text">RC servo motor connection diagram<br>(Click on the image for lager view)</p></div>
+<p>In this experiment serial communication with PC and arduino uno 
+development board was enabled so the RC servo motor positions can 
+control from using terminal (mac), putty (windows) or using serial 
+monitor option in Arduino application.The following code allows the user
+ to input the servo position(0 degree – 180 degree) and 
+full&nbsp;forward&nbsp;and reverse sweep to check whether servo motor 
+working as expect. Download arduino&nbsp;sketch&nbsp;for servo motor 
+form here.(<em><a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/05/Rc-servo-sketch.zip">Rc servo sketch</a></em>)</p>
+<h3></h3>
+<h2>Stepper Motor</h2>
+<div id="attachment_1302" style="width: 306px" class="wp-caption aligncenter"><a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/05/stepper_motor.jpg"><img class="size-medium wp-image-1302 " alt="stepper_motor" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/stepper_motor-300x246.jpg" height="246" width="300"></a><p class="wp-caption-text">6-wire stepper motor</p></div>
+<p style="text-align: justify;">Stepper motor is a brushless motor that 
+rotates stepwise as the stator consist electromagnets that creates 
+magnetic fields that make the rotor turn. Here, a 4-phase, 6-wire 
+stepper motor (can be run with either Unipolar or Bipolar driver 
+electronics) with 200 steps is considered. This motor is basically able 
+to rotate in different speeds and in the two directions in different 
+step sizes (full steps and half steps).</p>
+<p style="text-align: justify;">The motor cannot draw enough current 
+from the Arduino Uno board directly. Therefore, power leads of the motor
+ connect to an external power source while the Arduino Uno board 
+connects to other leads through a ULN2803A which consist 8 Darlington 
+transistors that can sink around 500 mA. In this case, pin 13, pin 12, 
+pin 11 and pin 10 of the Arduino board connects to 4 input pins (pin 1, 
+pin 2, pin 3 and pin 4) of the ULN2803A and 4 outputs (pin 18, pin 17, 
+pin 16 and pin 15) are given to the motor.</p>
+<div id="attachment_1305" style="width: 213px" class="wp-caption aligncenter"><a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/05/uln2803-713680.jpg"><img class="size-medium wp-image-1305 " alt="uln2803-713680" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/uln2803-713680-207x300.jpg" height="300" width="207"></a><p class="wp-caption-text">ULN2803A Darlington array</p></div>
+<p style="text-align: justify;">This is the&nbsp;<a title="fritzing" href="http://fritzing.org/" target="_blank">fritzing</a>&nbsp;diagram for connecting the stepper motor to the Arduino uno board. Download the fritzing file (<em><a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/05/Stepper-motor.fzz_.zip">Stepper motor.fzz</a>).</em></p>
+<div id="attachment_1191" style="width: 306px" class="wp-caption aligncenter"><a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/05/2013-05-30-12.29.14-pm.jpg" target="_blank"><img class=" wp-image-1191  " alt="2013-05-30 12.29.14 pm" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/2013-05-30-12_002.jpg" height="188" width="300"></a><p class="wp-caption-text">Stepper motor connection diagram<br>(Click on the image for lager view)</p></div>
+<p style="text-align: justify;">The provided library originally consist 
+defined functions only for full stepping. Therefore, half step function 
+should be added to the code or the library in order to use 
+it.&nbsp;Basic idea on how the step styles could vary as full steps and 
+half steps is shown below.</p>
+<p>Full step drive – Since only one phase is active at a time, power is least consumed.</p>
+<div id="attachment_1304" style="width: 306px" class="wp-caption aligncenter"><a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/05/Stepper-Motor-wave-drrive_1.gif"><img class="size-medium wp-image-1304 " alt="Stepper-Motor-wave-drrive_1" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/Stepper-Motor-wave-drrive_1-300x54.gif" height="54" width="300"></a><p class="wp-caption-text">Full step drive – only one electromagnet is active at a time<br>(Click on the image for lager view)</p></div>
+<div id="attachment_1344" style="width: 306px" class="wp-caption aligncenter"><a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/06/seq1.jpg"><img class=" wp-image-1344  " alt="seq1" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/seq1.jpg" height="95" width="300"></a><p class="wp-caption-text">Table of sequence the phases are activated for full step</p></div>
+<p>Half step drive – Stepping resolution is doubled. Since there are 
+steps when 2 adjacent phases are activated, the torque is different at 
+each step and a slight imbalance in windings could result a inaccuracy 
+in positioning unlike in full step drive.</p>
+<div id="attachment_1303" style="width: 306px" class="wp-caption aligncenter"><a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/05/Stepper-Motor-half-drive_0.gif"><img class="size-medium wp-image-1303 " alt="Stepper-Motor-half-drive_0" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/Stepper-Motor-half-drive_0-300x109.gif" height="109" width="300"></a><p class="wp-caption-text">Half step drive – Two electromagnets are activated for a step in between a full step<br>(Click on the image for lager view)</p></div>
+<div id="attachment_1345" style="width: 306px" class="wp-caption aligncenter"><a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/06/seq2.jpg"><img class=" wp-image-1345   " alt="seq2" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/seq2.jpg" height="170" width="300"></a><p class="wp-caption-text">Table of sequence the phases are activated for half step</p></div>
+<p>Note the 4 LEDs used in the shield, one LED per electromagnet. The 
+LEDs glow according to the sequence the electromagnets are activated. 
+This could help in observing the sequences given in the above tables and
+ decide whether circuitry and the code are correct.</p>
+<p style="text-align: justify;">With the above knowledge, extending the 
+code or the library files (Stepper.h and Stepper.cpp)&nbsp;for half 
+stepping can be done very easily. The following links provide library 
+files extended for half stepping:</p>
+<ul>
+<li>Stepper.h &lt;=&nbsp;<a href="https://code.google.com/p/arduino/issues/attachmentText?id=139&amp;aid=-3349153961204066151&amp;name=Stepper.h&amp;token=4YO6eBAW7SpyOoIMBp59UmeWRDI%3A1367812223322">https://code.google.com/p/arduino/issues/attachmentText?id=139&amp;aid=-3349153961204066151&amp;name=Stepper.h&amp;token=4YO6eBAW7SpyOoIMBp59UmeWRDI%3A1367812223322</a></li>
+</ul>
+<ul>
+<li>Stepper.cpp &lt;= <a href="https://code.google.com/p/arduino/issues/attachmentText?id=139&amp;aid=-8315088408709808847&amp;name=Stepper.cpp&amp;token=ftHQ8FK8xSXU1LXDppXDIluB3JU%3A1367812223322">https://code.google.com/p/arduino/issues/attachmentText?id=139&amp;aid=-8315088408709808847&amp;name=Stepper.cpp&amp;token=ftHQ8FK8xSXU1LXDppXDIluB3JU%3A1367812223322</a></li>
+</ul>
+<p>Click&nbsp;<a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/05/Stepper_motor.rar">here</a>&nbsp;to
+ download the code that allows the user to choose the step type, 
+direction of rotation, speed and number of steps though the serial 
+monitor.</p>
+<h2>DC Motor</h2>
+<div id="attachment_1272" style="width: 306px" class="wp-caption aligncenter"><a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/05/ID711_MED.jpg"><img class="size-medium wp-image-1272 " alt="DC motor1" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/ID711_MED-300x231.jpg" height="231" width="300"></a><p class="wp-caption-text">3 V DC motor</p></div>
+<p>The shield is capable of controlling two DC motors. One is controlled via <em>PIN 2,PIN 4</em> and<em> PIN9</em>
+ of the Uno and the user can decide the pins to be used for controlling 
+the other motor and make the connections manually. Since the motors 
+consumes current up to 3 A, L298 Full-Bridge driver is used for driving 
+the motors.</p>
+<h3>L298</h3>
+<div id="attachment_1273" style="width: 306px" class="wp-caption aligncenter"><a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/05/l298_pl.jpg"><img class="size-medium wp-image-1273 " alt="L298" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/l298_pl-300x225.jpg" height="225" width="300"></a><p class="wp-caption-text">L298 Dual Full-Bridge Driver</p></div>
+<p>L298 Dual Full Bridge driver is capable of driving four high current 
+outputs according to four signal inputs. It can enable or disable <em>OUTPUT 1</em> and <em>OUTPUT 2</em> and/or <em>OUTPUT 3</em> and <em>OUTPUT 4</em> separately with two enable inputs.</p>
+<h3>L6210</h3>
+<p>L6210 is a&nbsp;&nbsp;Dual Schottky &nbsp;Diode Bridge having two 
+diode bridges which are used to protect the motor driver from the power 
+generated inside the motor.</p>
+<div id="attachment_1359" style="width: 255px" class="wp-caption aligncenter"><a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/06/l6210pic.jpg"><img class="size-full wp-image-1359 " alt="l6210pic" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/l6210pic.jpg" height="163" width="249"></a><p class="wp-caption-text">L6210 DUAL SCHOTTKY DIODE BRIDGE</p></div>
+<p>In this application, L298 &nbsp;is used to drive two motors independently.<em>&nbsp;INPUT 1</em> and <em>INPUT 2</em> are used to set the direction of rotation of the motor. A PWM pulse is applied to <em>ENABLE&nbsp; A</em> to enable the motor as well as to control the speed. In case the user decides to control another motor <em>INPUT 3</em>,<em> INPUT 4</em> and <em>ENABLE B</em> pins are used accordingly.&nbsp; <em>CURRENT SENSING A</em> and <em>CURRENT SENSING B</em> pins which can be used to sense the current flowing to the motors are not used for this application and hence grounded.</p>
+<p style="padding-left: 30px;"><strong>Note&nbsp;</strong>-&nbsp;The 
+speed of a DC motor can be controlled by supplying power to it as a PWM 
+pulse. Since the direction should also be controlled , two PWM pins have
+ to be allocated for each motor.</p>
+<p style="padding-left: 30px;">By driving <em>OUTPUT 1</em> and <em>OUTPUT 2</em>
+ by a PWM pulse and its inverted pulse gives the ability to control the 
+speed and direction of a motor with one PWM pulse. But additional 
+hardware has to be introduced to the circuit to invert the pulse and 
+braking the motor is not possible with this method.</p>
+<p style="padding-left: 30px;">Thus in this application, speed control is achieved by enabling the motor (<em>OUTPUT 1</em> and <em>OUTPUT 2</em>) with a PWM pulse.</p>
+<p>Outputs s of L298 have to be connected to the motor through the following diode configuration.</p>
+<div id="attachment_1354" style="width: 306px" class="wp-caption aligncenter"><a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/06/diodeProtection.jpg"><img class="size-medium wp-image-1354 " alt="diodeProtection" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/diodeProtection-300x256.jpg" height="256" width="300"></a><p class="wp-caption-text">Diode protection configuration</p></div>
+<p>These diodes are used to protect the motor driver from refunded power
+ generated in the motor due to the changing of electric fields. <em>D1</em> and <em>D3</em>
+ turn on when the voltage coming from the motor is higher than the 
+voltage of the power source and protect the motor driver from 
+overvoltage. <em>D2</em> and <em>D4</em> turn on when the voltage of the motor is below the circuit ground and protect the circuit from undervoltage.</p>
+<p>In this project, L6210&nbsp;having two units of the above diode 
+configuration was used to connect the motor driver to the motor(s).</p>
+<div id="attachment_1358" style="width: 231px" class="wp-caption aligncenter"><a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/06/l6210.jpg"><img class="size-full wp-image-1358 " alt="l6210" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/l6210.jpg" height="225" width="225"></a><p class="wp-caption-text">L6210 Schematic</p></div>
+<p>This is the&nbsp;<a title="fritzing" href="http://fritzing.org/" target="_blank">fritzing</a>&nbsp;diagram for connecting the DC motor to the Arduino uno board. Download the fritzing file (<a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/05/DC-motor.fzz_.zip">DC motor.fzz</a><em>).</em></p>
+<div id="attachment_1190" style="width: 306px" class="wp-caption aligncenter"><a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/05/2013-05-30-12.06.27-pm.jpg" target="_blank"><img class=" wp-image-1190  " alt="2013-05-30 12.06.27 pm" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/2013-05-30-12.jpg" height="153" width="300"></a><p class="wp-caption-text">Dc motor connection diagram<br>(Click on the image for lager view)</p></div>
+<h3>Code</h3>
+<p>A simple terminal program can be used to control the direction, speed
+ and the braking of the motor.&nbsp; The possible motor controls with 
+the INPUT pins are as follows.</p>
+<table style="width: 872px; height: 116px;" align="center" border="1" cellpadding="0" cellspacing="0">
+<thead>
+<tr style="height: 10px;" align="center" valign="middle">
+<td valign="top" width="205">INPUT 1</td>
+<td valign="top" width="205">INPUT &nbsp;2</td>
+<td valign="top" width="205">Result</td>
+</tr>
+<tr style="height: 10px;" align="center" valign="middle">
+<td style="width: 100px;" align="center" valign="middle">1</td>
+<td valign="top" width="205">0</td>
+<td valign="top" width="205">Clockwise rotation</td>
+</tr>
+<tr style="height: 10px;" align="center" valign="middle">
+<td valign="top" width="205">0</td>
+<td valign="top" width="205">1</td>
+<td valign="top" width="205">Anti-clockwise rotation</td>
+</tr>
+<tr style="height: 10px;" align="center" valign="middle">
+<td valign="top" width="205">1</td>
+<td valign="top" width="205">1</td>
+<td valign="top" width="205">Brake&nbsp;<sup>1*</sup></td>
+</tr>
+<tr style="height: 10px;" align="center" valign="middle">
+<td valign="top" width="205">0</td>
+<td valign="top" width="205">0</td>
+<td valign="top" width="205">Free run&nbsp;<sup>2*</sup></td>
+</tr>
+</thead>
+</table>
+<p>1* Brake- Motor comes to a sudden stop</p>
+<p>2* Free run- Motor free runs to stop</p>
+<p>As motioned, a PWM pulse can be used to control the speed of the motor and with <em>analogWrite</em>
+ function, user can select the 256 speed levels by inserting a integer 
+value between 0 to 255 (with 0 being a stop state and 255 being the 
+maximum speed) to the terminal program.</p>
+<p>The DC motor control program provided <a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/06/DC_motor_sketch.zip">here</a>&nbsp;is
+ a simple terminal program for communicating with the Arduino board via 
+the serial monitor and is capable of controlling the direction, speed 
+and braking of one DC motor. After uploading the program to the Arduino,
+ open the serial monitor and a menu type application will be available 
+from which the user can control the motor real time.</p>
+<h2>Hardware Construction</h2>
+<p>In this post main objective is to crate arduino motor shield which 
+contain rc servo motor, stepper motor and a dc motor. But first all of 
+the above motor constructions were carried out separately and checked 
+whether those are working as expect.&nbsp;Then the all of the above 
+motor schematic diagrams were combine and redrew using “Cadence Orcad 
+Capture Cis 16.5” software to get the final motor shield schematic.</p>
+<p>Here is the schematic diagram for final arduino motor shield.</p>
+<div id="attachment_1235" style="width: 306px" class="wp-caption aligncenter"><a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/05/schematic.jpg" target="_blank"><img class="size-medium wp-image-1235 " alt="schematic" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/schematic-300x269.jpg" height="269" width="300"></a><p class="wp-caption-text">Schematic diagram for motor shield.<br>(Click on the image for larger view)</p></div>
+<p>Click here to get schematic diagram pdf file (<em><a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/05/motor-shield-schematic.pdf">motor shield schematic</a></em>).</p>
+<p>The schematic diagram was transferred to the “Allegro PCB Editor” to 
+design PCB artwork for motor shield. Following figure used as a 
+reference for shield dimensions to design shield which exactly 
+compatible with arduino uno r3 version.</p>
+<div id="attachment_1241" style="width: 306px" class="wp-caption aligncenter"><a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/05/arduino_unoR3_drawing_1000x703.jpg" target="_blank"><img class="size-medium wp-image-1241  " alt="Arduino uno r3 shield dimension reference" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/arduino_unoR3_drawing_1000x703-300x210.jpg" height="210" width="300"></a><p class="wp-caption-text">Arduino uno r3 shield dimension reference<br>(Click on the image for larger view)</p></div>
+<ul>
+<li>RC servo motor draws current 100 mA – 700 mA from power supply 
+depending on the load, Stepper motor draws 100 mA – 1.7 A depending on 
+the load and Dc motors draws 100 mA – 2 A depending on the load, when 
+all these motors working at the same time cause huge current draw from 
+the supply which cannot handle with arduino uno board, so the separate 
+power supply unit and regulating unit was used to power the shield.</li>
+<li>Also high current traveling PCB track width increased to avoid 
+unnecessary failures. When designing the PCB most of the designing 
+constraints considered except transmission line resistance.</li>
+</ul>
+<p>Following figures shows the final PCB design of the motor shield and its 3D view.</p>
+<div id="attachment_1243" style="width: 306px" class="wp-caption aligncenter"><a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/05/pcb.jpg" target="_blank"><img class="size-medium wp-image-1243 " alt="Final PCB diagram(Click on the image for lager view)" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/pcb-300x196.jpg" height="196" width="300"></a><p class="wp-caption-text">Final PCB diagram<br>(Click on the image for lager view)</p></div>
+<div id="attachment_1240" style="width: 306px" class="wp-caption aligncenter"><a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/05/3d.jpg" target="_blank"><img class="size-medium wp-image-1240  " alt="Motor Shield 3D diagram(Click on the image for lager view)" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/3d-300x187.jpg" height="187" width="300"></a><p class="wp-caption-text">Motor Shield 3D diagram<br>(Click on the image for lager view)</p></div>
+<p>Following figure shows the final constructed motor shield.</p>
+<div style="width: 306px" class="wp-caption aligncenter"><a href="http://fos.cmb.ac.lk/esl/wp-content/uploads/2013/05/DSC_1159.jpg" target="_blank"><img class=" " alt="constructed arduino motor shield(click on image for larger view) " src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/DSC_1159-300x205.jpg" height="205" width="300"></a><p class="wp-caption-text">constructed arduino motor shield<br>(click on image for larger view)</p></div>
+<h2></h2>
+<h2>Bibliography</h2>
+<h3><span style="text-decoration: underline;">RC servo motor</span></h3>
+<ul>
+<li>www.instructables.com <i>www.instructables.com</i>, [Online], Available: <a href="http://www.instructables.com/id/RC-Quadrotor-Helicopter/step13/Arduino-Demo-PWM-Output/">http://www.instructables.com/id/RC-Quadrotor-Helicopter/step13/Arduino-Demo-PWM-Output/</a> [9 May 2013].</li>
+<li>www.sparkfun.com <i>www.sparkfun.com</i>, [Online], Available: <a href="https://www.sparkfun.com/tutorials/283">https://www.sparkfun.com/tutorials/283</a> [10 May 2013].</li>
+<li>www.sparkfun.com <i>www.sparkfun.com</i>, [Online], Available: <a href="https://www.sparkfun.com/tutorials/348">https://www.sparkfun.com/tutorials/348</a>.</li>
+<li>Mellis, D.A. (2008) <i>arduino.cc</i>, 11 October, [Online], Available: <a href="http://arduino.cc/en/Tutorial/Sweep">http://arduino.cc/en/Tutorial/Sweep</a> [10 May 2013].</li>
+<li>pcbheaven.com <i>pcbheaven.com</i>, [Online], Available: <a href="http://pcbheaven.com/wikipages/How_RC_Servos_Works/">http://pcbheaven.com/wikipages/How_RC_Servos_Works/</a> [9 May 2013].</li>
+<li>pcbheaven.com <i>pcbheaven.com</i>, [Online], Available: <a href="http://pcbheaven.com/wikipages/PWM_Modulation/">http://pcbheaven.com/wikipages/PWM_Modulation/</a> [9 May 2013].</li>
+<li>teamprincipia.wordpress.com <i>teamprincipia.wordpress.com</i>, [Online], Available: <a href="http://teamprincipia.wordpress.com/2007/12/09/arduino-serial-servo-control/">http://teamprincipia.wordpress.com/2007/12/09/arduino-serial-servo-control/</a> [8 May 2013].</li>
+<li>teamprincipia.wordpress.com <i>teamprincipia.wordpress.com</i>, [Online], Available: <a href="http://teamprincipia.wordpress.com/2007/12/08/arduino-pulse-width-modulation/">http://teamprincipia.wordpress.com/2007/12/08/arduino-pulse-width-modulation/</a> [10 May 2013].</li>
+</ul>
+<h3><span style="text-decoration: underline;">Stepper motor</span></h3>
+<ul>
+<li>Stepper Motors or Step Motors : Tutorial with Basics, working &amp; 
+types of Stepper Motor – EngineersGarage. 2013.&nbsp;Stepper Motors or 
+Step Motors : Tutorial with Basics, working &amp; types of Stepper Motor
+ – EngineersGarage. [ONLINE] Available at:&nbsp;<span style="text-decoration: underline;"><a href="http://www.engineersgarage.com/articles/stepper-motors?page=6">http://www.engineersgarage.com/articles/stepper-motors?page=6</a></span>. [Accessed May&nbsp;2013].</li>
+<li>STEPPER MOTOR, 6-WIRE | AllElectronics.com. 2013.&nbsp;STEPPER MOTOR, 6-WIRE | AllElectronics.com. [ONLINE] Available at:<span style="text-decoration: underline;"><a href="http://www.allelectronics.com/make-a-store/item/SMT-108/STEPPER-MOTOR-6-WIRE/1.html">http://www.allelectronics.com/make-a-store/item/SMT-108/STEPPER-MOTOR-6-WIRE/1.html</a></span>. [Accessed May 2013].</li>
+<li>Freedatasheets.com blog. Datasheet search blog. Semiconductor news. 
+2013.&nbsp;Freedatasheets.com blog. Datasheet search blog. Semiconductor
+ news. [ONLINE] Available at:&nbsp;<span style="text-decoration: underline;"><a href="http://freedatasheets.com/blog/">http://freedatasheets.com/blog/</a></span>. [Accessed May&nbsp;2013].</li>
+<li>Arduino – HomePage . 2013.&nbsp;Arduino – HomePage<i>&nbsp;</i>. [ONLINE] Available at:<span style="text-decoration: underline;"><a href="http://arduino.cc/en/">http://arduino.cc/en/</a></span>. [Accessed May 2013].</li>
+<li>Arduino – Wikipedia, the free encyclopedia. 2013.&nbsp;Arduino – Wikipedia, the free encyclopedia. [ONLINE] Available at:&nbsp;<span style="text-decoration: underline;"><a href="http://en.wikipedia.org/wiki/Arduino">http://en.wikipedia.org/wiki/Arduino</a></span>. [Accessed May&nbsp;2013].</li>
+<li>Arduino Basics: Simple Arduino Serial Communication. 
+2013.&nbsp;Arduino Basics: Simple Arduino Serial Communication. [ONLINE]
+ Available at:<span style="text-decoration: underline;"><a href="http://arduinobasics.blogspot.com/2012/07/arduino-basics-simple-arduino-serial.html">http://arduinobasics.blogspot.com/2012/07/arduino-basics-simple-arduino-serial.html</a></span>. [Accessed May&nbsp;2013]</li>
+<li>6 Wire Motors. 2013.&nbsp;6 Wire Motors. [ONLINE] Available at:<span style="text-decoration: underline;"><a href="http://pminmo.com/six-wire-motors">http://pminmo.com/six-wire-motors</a></span>. [Accessed May 2013].</li>
+<li>Stepperworld Bipolar Tutorial. 2013.&nbsp;Stepperworld Bipolar Tutorial. [ONLINE] Available at:&nbsp;<span style="text-decoration: underline;"><a href="http://www.stepperworld.com/Tutorials/pgBipolarTutorial.htm">http://www.stepperworld.com/Tutorials/pgBipolarTutorial.htm</a></span>. [Accessed May 2013].</li>
+<li>Stepper.h (2.9 KB) – arduino – Arduino is an open-source electronics
+ prototyping platform based on flexible, easy-to-use hardware and 
+software. – Google Project Hosting . 2013.&nbsp;Stepper.h (2.9 KB) – 
+arduino – Arduino is an open-source electronics prototyping platform 
+based on flexible, easy-to-use hardware and software. – Google Project 
+Hosting<i>&nbsp;</i>. [ONLINE] Available at:<span style="text-decoration: underline;"><a href="https://code.google.com/p/arduino/issues/attachmentText?id=139&amp;aid=-3349153961204066151&amp;name=Stepper.h&amp;token=4YO6eBAW7SpyOoIMBp59UmeWRDI%3A1367812223322">https://code.google.com/p/arduino/issues/attachmentText?id=139&amp;aid=-3349153961204066151&amp;name=Stepper.h&amp;token=4YO6eBAW7SpyOoIMBp59UmeWRDI%3A1367812223322</a></span>. [Accessed May&nbsp;2013]</li>
+<li>Stepper.cpp (9.5 KB) – arduino – Arduino is an open-source 
+electronics prototyping platform based on flexible, easy-to-use hardware
+ and software. – Google Project Hosting . 2013.&nbsp;Stepper.cpp (9.5 
+KB) – arduino – Arduino is an open-source electronics prototyping 
+platform based on flexible, easy-to-use hardware and software. – Google 
+Project Hosting<i>&nbsp;</i>. [ONLINE] Available at:<span style="text-decoration: underline;"><a href="https://code.google.com/p/arduino/issues/attachmentText?id=139&amp;aid=-8315088408709808847&amp;name=Stepper.cpp&amp;token=ftHQ8FK8xSXU1LXDppXDIluB3JU%3A1367812223322">https://code.google.com/p/arduino/issues/attachmentText?id=139&amp;aid=-8315088408709808847&amp;name=Stepper.cpp&amp;token=ftHQ8FK8xSXU1LXDppXDIluB3JU%3A1367812223322</a></span>. [Accessed May 2013].</li>
+</ul>
+<h3><span style="text-decoration: underline;">DC motor</span></h3>
+<ul>
+<li>www.instructables.com. 2012.&nbsp;DIY Arduino Motor Shield. [ONLINE] Available at:<span style="text-decoration: underline;"><a href="http://www.instructables.com/id/DIY-Arduino-Motor-Shield-L298N-Chip-2-4-Amps-/?ALLSTEPS">http://www.instructables.com/id/DIY-Arduino-Motor-Shield-L298N-Chip-2-4-Amps-/?ALLSTEPS</a></span>. [Accessed 27 May 13].</li>
+<li>www.robotroom.com. 2013.&nbsp;DC Motor-Driver H-Bridge Circuit. [ONLINE] Available at:<span style="text-decoration: underline;"><a href="http://www.robotroom.com/HBridge.html">http://www.robotroom.com/HBridge.html</a></span>. [Accessed 28 May 13].</li>
+<li>http://arduino.cc. 2013.&nbsp;Arduino Motor Shield. [ONLINE] Available at:<span style="text-decoration: underline;"><a href="http://arduino.cc/en/Main/ArduinoMotorShieldR3">http://arduino.cc/en/Main/ArduinoMotorShieldR3</a></span>. [Accessed 27 May 13].</li>
+<li>www.sparkfun.com. 2013.&nbsp;Ardumoto Motor Driver Shield. [ONLINE] Available at:<span style="text-decoration: underline;"><a href="https://www.sparkfun.com/tutorials/195">https://www.sparkfun.com/tutorials/195</a></span>. [Accessed 27 May 13].</li>
+</ul>
+			</div><!-- .entry-content -->
+
+	<footer class="entry-meta">
+		<a class="entry-date" href="http://fos.cmb.ac.lk/esl/arduino-motor-shield/">June 3, 2013</a> in <a href="http://fos.cmb.ac.lk/esl/category/misc/arduino/" rel="category tag">Arduino</a>. Tags: <a href="http://fos.cmb.ac.lk/esl/tag/featured/" rel="tag">featured</a>	</footer><!-- .entry-meta -->
+</article><!-- #post-## -->
+			<div class="related-content">
+	<h3 class="related-content-title">Related posts</h3>
+	
+		<article id="post-651" class="post-651 post type-post status-publish format-standard hentry category-arduino">
+
+			
+			<header class="entry-header">
+				<h3 class="entry-title"><a href="http://fos.cmb.ac.lk/esl/general-purpose-input-output-arduino-shield/" title="Permalink to General Purpose Input Output Arduino Shield" rel="bookmark">General Purpose Input Output Arduino Shield</a></h3>
+			</header><!-- .entry-header -->
+
+		</article>
+
+	
+		<article id="post-518" class="post-518 post type-post status-publish format-standard hentry category-arduino">
+
+			
+			<header class="entry-header">
+				<h3 class="entry-title"><a href="http://fos.cmb.ac.lk/esl/temperature-logger-arduino-shield/" title="Permalink to Temperature Logger Arduino Shield" rel="bookmark">Temperature Logger Arduino Shield</a></h3>
+			</header><!-- .entry-header -->
+
+		</article>
+
+	</div>
+
+				<nav role="navigation" id="nav-below" class="navigation-post">
+		<h1 class="screen-reader-text">Post navigation</h1>
+
+	
+		<div class="nav-previous"><a href="http://fos.cmb.ac.lk/esl/temperature-logger-arduino-shield/" rel="prev"><span class="meta-nav">←</span>&nbsp;Temperature Logger Arduino Shield</a></div>		<div class="nav-next"><a href="http://fos.cmb.ac.lk/esl/raspberry-pi-initialising-setup/" rel="next">Raspberry PI – Initialising Steps&nbsp;<span class="meta-nav">→</span></a></div>
+	
+	</nav><!-- #nav-below -->
+	
+			
+	<div id="comments" class="comments-area">
+
+	
+	
+	
+									<div id="respond" class="comment-respond">
+				<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="http://fos.cmb.ac.lk/esl/arduino-motor-shield/#respond" style="display:none;">Cancel reply</a></small></h3>
+									<form action="http://fos.cmb.ac.lk/esl/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+																			<p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span></p>							<p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" size="30" aria-required="true" type="text"></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" size="30" aria-describedby="email-notes" aria-required="true" type="text"></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" size="30" type="text"></p>
+												<p class="comment-form-comment"><label for="comment">Comment</label> <textarea id="comment" name="comment" cols="45" rows="8" aria-describedby="form-allowed-tags" aria-required="true"></textarea></p>						<p class="form-allowed-tags" id="form-allowed-tags">You may use these <abbr title="HyperText Markup Language">HTML</abbr> tags and attributes:  <code>&lt;a
+ href="" title=""&gt; &lt;abbr title=""&gt; &lt;acronym title=""&gt; 
+&lt;b&gt; &lt;blockquote cite=""&gt; &lt;cite&gt; &lt;code&gt; &lt;del 
+datetime=""&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=""&gt; &lt;strike&gt; 
+&lt;strong&gt; </code></p>						<p class="form-submit">
+							<input name="submit" id="submit" class="submit" value="Post Comment" type="submit">
+							<input name="comment_post_ID" value="1149" id="comment_post_ID" type="hidden">
+<input name="comment_parent" id="comment_parent" value="0" type="hidden">
+						</p>
+						<p style="display: none;"><input id="akismet_comment_nonce" name="akismet_comment_nonce" value="5b8e48e463" type="hidden"></p><p style="display: none;"></p>					<input id="ak_js" name="ak_js" value="1438367957822" type="hidden"></form>
+							</div><!-- #respond -->
+			
+</div><!-- #comments -->
+
+		
+		</div><!-- #content -->
+	</div><!-- #primary -->
+
+	<div id="secondary" class="widget-area" role="complementary">
+						<aside id="recent-posts-2" class="widget widget_recent_entries">		<h1 class="widget-title">Recent Posts</h1>		<ul>
+					<li>
+				<a href="http://fos.cmb.ac.lk/esl/setting-code-blocks-avr-ubuntu/">Setting up code blocks for AVR on Ubuntu</a>
+						</li>
+					<li>
+				<a href="http://fos.cmb.ac.lk/esl/programing-avr-ubuntu-14-04-usbasp/">Programing AVR on Ubuntu with USBasp for beginers</a>
+						</li>
+					<li>
+				<a href="http://fos.cmb.ac.lk/esl/turbidity-coloury-meter/">Turbidity/Coloury meter</a>
+						</li>
+					<li>
+				<a href="http://fos.cmb.ac.lk/esl/tic-tac-toe/">TIC TAC TOE</a>
+						</li>
+					<li>
+				<a href="http://fos.cmb.ac.lk/esl/reflectometer/">Reflectometer</a>
+						</li>
+				</ul>
+		</aside><aside id="categories-5" class="widget widget_categories"><h1 class="widget-title">Categories</h1>		<ul>
+	<li class="cat-item cat-item-5"><a href="http://fos.cmb.ac.lk/esl/category/mini-projects/">mini-projects</a> (31)
+<ul class="children">
+	<li class="cat-item cat-item-6"><a href="http://fos.cmb.ac.lk/esl/category/mini-projects/2011/">2011</a> (10)
+</li>
+	<li class="cat-item cat-item-7"><a href="http://fos.cmb.ac.lk/esl/category/mini-projects/2012/">2012</a> (10)
+</li>
+	<li class="cat-item cat-item-8"><a href="http://fos.cmb.ac.lk/esl/category/mini-projects/2013/">2013</a> (11)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-10"><a href="http://fos.cmb.ac.lk/esl/category/misc/">Misc</a> (11)
+<ul class="children">
+	<li class="cat-item cat-item-4"><a href="http://fos.cmb.ac.lk/esl/category/misc/arduino/">Arduino</a> (3)
+</li>
+	<li class="cat-item cat-item-9"><a href="http://fos.cmb.ac.lk/esl/category/misc/raspberry/">Raspberry</a> (4)
+</li>
+	<li class="cat-item cat-item-11"><a href="http://fos.cmb.ac.lk/esl/category/misc/totorials/">tutorials</a> (6)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-1"><a href="http://fos.cmb.ac.lk/esl/category/uncategorized/">Uncategorized</a> (1)
+</li>
+		</ul>
+</aside><aside id="refader_widget-3" class="widget reFader_widget"><h1 class="widget-title">Random Excerpts</h1><div class="RandomExcerpts"><p class="" style="height: 168px; display: none;">IntroductionMotion
+ detecting twilight LED lamp is design to turn ON &amp; OFF the light in
+ a room with the use of motion sensor. When a person go through the door
+ inside to the room he or she may forgot to turn off the light when 
+leaving the room. This happens<span class="testimonial-title">Motion detecting twilight LED lamp</span></p><p class="" style="height: 168px; display: none;">This
+ example shows technique for calibrating sensor input and shows the 
+sensor outputs by controlling LEDs and SSD, also shows how to monitor 
+the state of a switch.
+
+Hardware Required
+
+8 LEDS
+
+2 push button switches
+
+2 sliding switches
+
+4-SSD with MAX7221/7219
+
+LM35
+
+Speaker
+
+Circuit
+
+[caption id="attachment_1467" align="alignnone" width="1002"] GPIO 
+Arduino Shield complete circuit[/caption]
+
+In this circuit according to the<span class="testimonial-title">General Purpose Input Output Arduino Shield</span></p><p class="active" style="height: 168px; display: block; opacity: 0;">INTRODUCTION
+
+LED&nbsp;
+ display&nbsp; notice board&nbsp; is&nbsp; an&nbsp; economical&nbsp; 
+solution&nbsp; for&nbsp; displaying&nbsp; messages&nbsp; with&nbsp; 
+various&nbsp; changing&nbsp; effects.&nbsp; It&nbsp; is&nbsp; 
+applicable&nbsp; in&nbsp; shops,&nbsp; restaurants, 
+&nbsp;pharmacies&nbsp; and&nbsp; etc . These notice boards can be made 
+in large led panels or led dot matrix displays. They are in mono color ,
+ bi color and multi<span class="testimonial-title">LED notice board</span></p><p style="height: 168px;">Introduction
+The
+ line following car is a car that follows a black line on white surface.
+ The idea to make a line following car is inspired when I saw some video
+ clips of line following cars. The basic concept of the line following 
+car is that the line is detected using<span class="testimonial-title">Line Following Car</span></p><p style="height: 168px;">Introduction
+Stroboscope
+ instruments are used for inspection and observation of moving parts by 
+freezing or slowing down the action of an object. If a fast rotating or 
+oscillating object is illuminated with periodic light flashes so they 
+always hit it in the same position, the object will appear stationery in
+ the<span class="testimonial-title">LED stroboscope</span></p><div class="duration" style="display:none;">5000</div></div></aside>			</div><!-- #secondary -->
+	</div><!-- #main -->
+
+	<footer id="colophon" class="site-footer" role="contentinfo">
+		<div class="site-info">
+			<a href="http://wordpress.org/" rel="generator">Proudly powered by WordPress</a><span class="sep"> | </span>Theme: Expound by <a href="http://kovshenin.com/" rel="designer">Konstantin Kovshenin</a>		</div><!-- .site-info -->
+	</footer><!-- #colophon -->
+</div><!-- #page -->
+
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/form.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shCore.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shBrushAS3.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shBrushBash.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shBrushColdFusion.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shBrushClojure.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shBrushCpp.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shBrushCSharp.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shBrushCss.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shBrushDelphi.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shBrushDiff.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shBrushErlang.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shBrushFSharp.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shBrushGroovy.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shBrushJava.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shBrushJavaFX.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shBrushJScript.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shBrushLatex.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shBrushMatlabKey.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shBrushObjC.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shBrushPerl.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shBrushPhp.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shBrushPlain.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shBrushPowerShell.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shBrushPython.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shBrushR.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shBrushRuby.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shBrushScala.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shBrushSql.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shBrushVb.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/shBrushXml.js"></script>
+<script type="text/javascript">
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "http://fos.cmb.ac.lk/esl/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shCore.css?ver=3.0.9b";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, document.getElementById("syntaxhighlighteranchor") );
+		var themecssurl = "http://fos.cmb.ac.lk/esl/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shThemeDefault.css?ver=3.0.9b";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		//document.getElementById("syntaxhighlighteranchor").appendChild(themecss);
+		document.getElementsByTagName("head")[0].insertBefore( themecss, document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.strings.expandSource = '+ expand source';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.defaults['wrap-lines'] = false;
+	SyntaxHighlighter.all();
+</script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/navigation.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/skip-link-focus-fix.js"></script>
+<script type="text/javascript" src="Arduino%20Motor%20Shield%20-%20Embedded%20System%20Laboratory_files/comment-reply.js"></script>
+
+
+<div class="vdh-mask vdh-1410656275" style="width:558px;height:372px;top:423px;left:273px;display:none"></div><div class="vdh-mask vdh-705480852" style="width:312px;height:306px;top:1812px;left:399px;display:none"></div><div class="vdh-mask vdh-705480852" style="width:566px;height:309px;top:2477px;left:269px;display:none"></div><div class="vdh-mask vdh-395069973" style="width:312px;height:195px;top:2838px;left:399px;display:none"></div><div class="vdh-mask vdh-705480852" style="width:312px;height:121px;top:3710px;left:399px;display:none"></div><div class="vdh-mask vdh-705480852" style="width:312px;height:204px;top:3943px;left:399px;display:none"></div><div class="vdh-mask vdh-705480852" style="width:312px;height:258px;top:4386px;left:399px;display:none"></div><div class="vdh-mask vdh-705480852" style="width:219px;height:312px;top:4915px;left:445px;display:none"></div><div class="vdh-mask vdh-705480852" style="width:312px;height:200px;top:5339px;left:399px;display:none"></div><div class="vdh-mask vdh-705477751" style="width:312px;height:66px;top:5730px;left:399px;display:none"></div><div class="vdh-mask vdh-705480852" style="width:312px;height:297px;top:5888px;left:399px;display:none"></div><div class="vdh-mask vdh-705477751" style="width:312px;height:121px;top:6336px;left:399px;display:none"></div><div class="vdh-mask vdh-705480852" style="width:312px;height:522px;top:6549px;left:399px;display:none"></div><div class="vdh-mask vdh-705480852" style="width:312px;height:243px;top:7529px;left:399px;display:none"></div><div class="vdh-mask vdh-705480852" style="width:312px;height:237px;top:7962px;left:399px;display:none"></div><div class="vdh-mask vdh-705480852" style="width:261px;height:175px;top:8418px;left:424px;display:none"></div><div class="vdh-mask vdh-705480852" style="width:312px;height:268px;top:9002px;left:399px;display:none"></div><div class="vdh-mask vdh-705480852" style="width:237px;height:237px;top:9481px;left:436px;display:none"></div><div class="vdh-mask vdh-705480852" style="width:312px;height:165px;top:9830px;left:399px;display:none"></div><div class="vdh-mask vdh-705480852" style="width:312px;height:281px;top:10835px;left:399px;display:none"></div><div class="vdh-mask vdh-705480852" style="width:312px;height:222px;top:11287px;left:399px;display:none"></div><div class="vdh-mask vdh-705480852" style="width:312px;height:208px;top:11760px;left:399px;display:none"></div><div class="vdh-mask vdh-705480852" style="width:312px;height:199px;top:12040px;left:399px;display:none"></div><div class="vdh-mask vdh-705480852" style="width:312px;height:217px;top:12351px;left:399px;display:none"></div></body></html>

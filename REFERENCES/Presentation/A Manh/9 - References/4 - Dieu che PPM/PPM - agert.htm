@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html dir="ltr" class="client-js" lang="sv"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<title>PPM - agert</title>
+<meta name="generator" content="MediaWiki 1.25.0">
+<link rel="shortcut icon" href="http://agert.no-ip.biz/favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="http://agert.no-ip.biz/blog/opensearch_desc.php" title="agert (sv)">
+<link rel="EditURI" type="application/rsd+xml" href="http://agert.eu/blog/api.php?action=rsd">
+<link rel="alternate" hreflang="x-default" href="http://agert.no-ip.biz/blog/index.php/PPM">
+<link rel="alternate" type="application/atom+xml" title="agert Atom-flöde" href="http://agert.no-ip.biz/blog/index.php?title=Special:Senaste_%C3%A4ndringar&amp;feed=atom">
+<link rel="stylesheet" href="PPM%20-%20agert_files/load.css">
+<style>
+.mw-collapsible-toggle{float:right;-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none;user-select:none}  .mw-content-ltr .mw-collapsible-toggle,.mw-content-rtl .mw-content-ltr .mw-collapsible-toggle{float:right} .mw-content-rtl .mw-collapsible-toggle,.mw-content-ltr .mw-content-rtl .mw-collapsible-toggle{float:left}.mw-customtoggle,.mw-collapsible-toggle{cursor:pointer} caption .mw-collapsible-toggle,.mw-content-ltr caption .mw-collapsible-toggle,.mw-content-rtl caption .mw-collapsible-toggle,.mw-content-rtl .mw-content-ltr caption .mw-collapsible-toggle,.mw-content-ltr .mw-content-rtl caption .mw-collapsible-toggle{float:none} li .mw-collapsible-toggle,.mw-content-ltr li .mw-collapsible-toggle,.mw-content-rtl li .mw-collapsible-toggle,.mw-content-rtl .mw-content-ltr li .mw-collapsible-toggle,.mw-content-ltr .mw-content-rtl li .mw-collapsible-toggle{float:none} .mw-collapsible-toggle-li{list-style:none}
+/* cache key: wikidb-mw_:resourceloader:filter:minify-css:7:e1ffd603cbaaa5f1a36e0d13fe843535 */
+.suggestions{overflow:hidden;position:absolute;top:0;left:0;width:0;border:none;z-index:1099;padding:0;margin:-1px 0 0 0}.suggestions-special{position:relative;background-color:white;cursor:pointer;border:solid 1px #aaaaaa;padding:0;margin:0;margin-top:-2px;display:none;padding:0.25em 0.25em;line-height:1.25em}.suggestions-results{background-color:white;cursor:pointer;border:solid 1px #aaaaaa;padding:0;margin:0}.suggestions-result{color:black;margin:0;line-height:1.5em;padding:0.01em 0.25em;text-align:left; overflow:hidden;-o-text-overflow:ellipsis; text-overflow:ellipsis;white-space:nowrap}.suggestions-result-current{background-color:#4C59A6;color:white}.suggestions-special .special-label{color:gray;text-align:left}.suggestions-special .special-query{color:black;font-style:italic;text-align:left}.suggestions-special .special-hover{background-color:silver}.suggestions-result-current .special-label,.suggestions-result-current .special-query{color:white}.highlight{font-weight:bold}
+/* cache key: wikidb-mw_:resourceloader:filter:minify-css:7:f8d0c6895ce3ae14434c16b8fca59432 */
+.postedit-container{margin:0 auto;position:fixed;top:0;height:0;left:50%;z-index:1000;font-size:13px}.postedit-container:hover{cursor:pointer}.postedit{position:relative;top:0.6em;left:-50%;padding:.6em 3.6em .6em 1.1em;line-height:1.5625em;color:#626465;background-color:#f4f4f4;border:1px solid #dcd9d9;text-shadow:0 0.0625em 0 rgba(255,255,255,0.5);border-radius:5px;box-shadow:0 2px 5px 0 #ccc;-webkit-transition:all 0.25s ease-in-out;-moz-transition:all 0.25s ease-in-out;-ms-transition:all 0.25s ease-in-out;-o-transition:all 0.25s ease-in-out;transition:all 0.25s ease-in-out}.skin-monobook .postedit{top:6em !important}.postedit-faded{opacity:0}.postedit-icon{padding-left:41px;  line-height:25px;background-repeat:no-repeat;background-position:8px 50%}.postedit-icon-checkmark{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAABblBMVEUAAAD///////9PfTf///80aRdTgjn///9Feij///////////9Rfzf///////////9PfjZRgDh1o1xOfTb///////+bwYqLtnj///////9PfTa82K////9WhT6YxIL///9QgDdTgzr////////j7uDl7eLq8efi693k7OH///////9UhjuBr2rp9uRUhjr///9YljVKgir///9WiTlYjT3////9/v57vFlbkT5PjC9dlD/5/fhuq09stUTs9uhxuElctCpfnT1huDFloEZloUZmpENmvDZpvDxpvTxqvjxrvT5rvT9rwTxsqktswD5uwkBvuUdxw0NztFBztU9ztVBzwkp0tlJ1xkd2t1R3uVR4w1F4xk54x014yE15uVZ5v1R5xVB6v1R7yFJ8wVh9xVl9yFR9yVd9ylN+xVh+yFd/x1l/yFeAylmEx1+Ny2uY0Hqe04Wj1Ymv3Ze33qLD47TJ5L3O6cPU7Mrq9eb2+/Q4j37OAAAAQHRSTlMAAQIEBAUFBQwPFB4fJCUoKiosQEhJS01RUlZZXmdydXaChYuSlJSWmJmoq6uur8LExcvM19fg5ejt8fX2+Pr7SljgewAAAKpJREFUGBkFwQNCAwAAAMDLtl3LtrG4rWXbtvX77gAgZ6grFwC0bhwNVgKgdPZx8b0dgLi+s7Wn0VoAqpfOI9+BNADZI7fLrz2pSEwGHZuH+78lSK8ZLkLezF3ooyUG3VPXq2USei9WngeyoG195yBYWDF3E/2pAhl1e9Gr8bGT+bfOFCC2fnvh4X7rcqIAQNNu+HT6sxkAjceTL/2ZAIhv+PorBwBJxfkA//dFHSCBy/UTAAAAAElFTkSuQmCC);background-image:url(http://agert.eu/blog/resources/src/mediawiki.action/images/green-checkmark.png?2015-05-25T13:01:40Z)!ie;background-position:left}.postedit-close{position:absolute;padding:0 .8em;right:0;top:0;font-size:1.25em;font-weight:bold;line-height:2.3em;color:black;text-shadow:0 0.0625em 0 white;text-decoration:none;opacity:0.2;filter:alpha(opacity=20)}.postedit-close:hover{color:black;text-decoration:none;opacity:0.4;filter:alpha(opacity=40)}
+/* cache key: wikidb-mw_:resourceloader:filter:minify-css:7:a15db716641d133adf693f06bc5fc91b */</style><style>
+.suggestions a.mw-searchSuggest-link,.suggestions a.mw-searchSuggest-link:hover,.suggestions a.mw-searchSuggest-link:active,.suggestions a.mw-searchSuggest-link:focus{color:black;text-decoration:none}.suggestions-result-current a.mw-searchSuggest-link,.suggestions-result-current a.mw-searchSuggest-link:hover,.suggestions-result-current a.mw-searchSuggest-link:active,.suggestions-result-current a.mw-searchSuggest-link:focus{color:white}.suggestions a.mw-searchSuggest-link .special-query{ overflow:hidden;-o-text-overflow:ellipsis; text-overflow:ellipsis;white-space:nowrap}
+/* cache key: wikidb-mw_:resourceloader:filter:minify-css:7:ae3fa4570b5ac0c6cf7b3776c8ae4d6f */</style><meta name="ResourceLoaderDynamicStyles" content="">
+<style>a:lang(ar),a:lang(kk-arab),a:lang(mzn),a:lang(ps),a:lang(ur){text-decoration:none}
+/* cache key: wikidb-mw_:resourceloader:filter:minify-css:7:57a0084134f88a55d8762780632ee632 */</style>
+<script src="PPM%20-%20agert_files/load.php"></script><script src="PPM%20-%20agert_files/load_003.php"></script>
+<script>if(window.mw){
+mw.config.set({"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"PPM","wgTitle":"PPM","wgCurRevisionId":8162,"wgRevisionId":8162,"wgArticleId":202,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Modellflyg","Radioteknik","Modulation"],"wgBreakFrames":false,"wgPageContentLanguage":"sv","wgPageContentModel":"wikitext","wgSeparatorTransformTable":[",\t."," \t,"],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","januari","februari","mars","april","maj","juni","juli","augusti","september","oktober","november","december"],"wgMonthNamesShort":["","jan","feb","mar","apr","maj","jun","jul","aug","sep","okt","nov","dec"],"wgRelevantPageName":"PPM","wgRelevantArticleId":202,"wgIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]});
+}</script><script>if(window.mw){
+mw.loader.implement("user.options",function($,jQuery){mw.user.options.set({"variant":"sv"});});mw.loader.implement("user.tokens",function($,jQuery){mw.user.tokens.set({"editToken":"+\\","patrolToken":"+\\","watchToken":"+\\"});});
+/* cache key: wikidb-mw_:resourceloader:filter:minify-js:7:b2715830f30dc864809ac4d5737e9c9b */
+}</script>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.page.startup","mediawiki.legacy.wikibits","mediawiki.legacy.ajax","skins.vector.js"]);
+}</script><script src="PPM%20-%20agert_files/load_002.php"></script>
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/blog/skins/Vector/csshover.min.htc")}</style><![endif]-->
+</head>
+<body class="mediawiki ltr sitedir-ltr ns-0 ns-subject page-PPM skin-vector action-view">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+
+						<div class="mw-indicators">
+</div>
+			<h1 id="firstHeading" class="firstHeading" lang="sv">PPM</h1>
+						<div id="bodyContent" class="mw-body-content">
+									<div id="siteSub">Från agert</div>
+								<div id="contentSub"></div>
+												<div id="jump-to-nav" class="mw-jump">
+					Hoppa till:					<a href="#mw-head">navigering</a>, 					<a href="#p-search">sök</a>
+				</div>
+				<div id="mw-content-text" dir="ltr" class="mw-content-ltr" lang="sv"><p>Åter till <a href="http://agert.no-ip.biz/blog/index.php/Allm%C3%A4nt" title="Allmänt">Allmänt</a>, <a href="http://agert.no-ip.biz/blog/index.php/Ordlista" title="Ordlista">Ordlista</a> eller <a href="http://agert.no-ip.biz/blog/index.php/PCM" title="PCM">PCM</a>.
+</p><p><a href="http://agert.no-ip.biz/blog/index.php/Fil:Ppm-pcm-sender.gif" class="image"><img alt="Ppm-pcm-sender.gif" src="PPM%20-%20agert_files/300px-Ppm-pcm-sender.gif" srcset="/blog/images/thumb/5/55/Ppm-pcm-sender.gif/450px-Ppm-pcm-sender.gif 1.5x, /blog/images/5/55/Ppm-pcm-sender.gif 2x" height="188" width="300"></a>
+</p>
+<h1><span class="mw-headline" id="PPM_Pulse_Positon_Modulation">PPM Pulse Positon Modulation</span></h1>
+<p>All information on this page is measured from the existing system and
+ the written text is based on assumptions, there is no confirmation from
+ FUTABA for this information. All corrections and additions are welcome.
+</p><p>All today's normal R/C servos (not high-speed digital servos for 
+helicopter tail etc.) that I am aware of are controlled with a pulse 
+length of 1-2ms sent periodically around every 20ms (this value is not 
+so critical). To get a better overview the next image shows a servo-arm 
+related to it's control pulse:
+</p><p><a href="http://agert.no-ip.biz/blog/index.php/Fil:Ppm.gif" class="image"><img alt="Ppm.gif" src="PPM%20-%20agert_files/Ppm.gif" height="361" width="288"></a>
+</p><p>Not all servos deflect to left (when looked from top) with 
+shorter pulse and to the right with longer pulse. Note also that in 
+FUTABA systems the servo center is defined with 1.52ms pulse.
+</p><p>The voltage levels of the control signal (that is usually generated by the receiver) differ from type to type. FUTABA <strong class="selflink">PPM</strong> (standard <a href="http://agert.no-ip.biz/blog/index.php/FM" title="FM" class="mw-redirect">FM</a>) receivers used to have from 0V (low) to almost input battery voltage (high), some FUTABA <a href="http://agert.no-ip.biz/blog/index.php/PCM" title="PCM">PCM</a> receivers use from 0V (low) to 3.3V (high). This is a common cause of problems when using these types of FUTABA <a href="http://agert.no-ip.biz/blog/index.php/PCM" title="PCM">PCM</a>
+ receivers with some other company servos or speed controllers (I did 
+experience erratic behavior with GRAUPNER/JR servos in conjunction with 
+FUTABA PCM receiver, which made me to look for a reason). All FUTABA own
+ servos or speed controllers seem to work without any problems with the 
+3.3V control signal.
+</p><p>Now that you understand how a single servo is controlled, comes a
+ question how to control many servos over one communication channel 
+(this is what the R/C transmitter and receiver are doing, as they 
+usually all have 2+ channels that they control over a single radio 
+channel). There are two wide known techniques for this: PPM and PCM.
+</p><p>I will explain <strong class="selflink">PPM</strong> first. The name <strong class="selflink">PPM</strong> comes from Pulse-Position-Modulation. <strong class="selflink">PPM</strong>
+ signal coding is quasi digital, meaning there are only two levels for 
+the signal (high and low), but the pulse length is analog - it is not 
+quantized.
+</p><p>Here you can see a <strong class="selflink">PPM</strong> signal 
+measured at 7-channel RC coder chip NE5044 output pin 11 (this chip was 
+very popular in standard non-computer model transmitters in the 90's and
+ is still used in some simpler models today):
+</p><p><a href="http://agert.no-ip.biz/blog/index.php/Fil:Ppm1.gif" class="image"><img alt="Ppm1.gif" src="PPM%20-%20agert_files/Ppm1.gif" height="453" width="650"></a>
+</p><p>Notice the frame length of 18ms (note that this value varies from
+ type to type). With the measured system the signal is repeated every 
+18ms (so approx. 50 times per second). In a frame you can see the 8 high
+ pulses. As NE5044 is a 7-channel encoder, (maximum) 7-channels are sent
+ each surrounded with a constant length high pulse. The long (approx. 
+8ms) low pulse at the end of the frame is the sync pulse, also called as
+ reset while it tells the receiver to reset it's channel counter. Here's
+ a better image of the <strong class="selflink">PPM</strong> frame:
+</p><p><a href="http://agert.no-ip.biz/blog/index.php/Fil:Ppm2.gif" class="image"><img alt="Ppm2.gif" src="PPM%20-%20agert_files/Ppm2.gif" height="101" width="540"></a>
+</p><p>Channel data is sent as negative pulse width, which length 
+varies. All channels are sent in series after which a reset pulse tells 
+to start counting the channels from start again.
+</p><p>As you can see, the <strong class="selflink">PPM</strong> (also called "<a href="http://agert.no-ip.biz/blog/index.php/FM" title="FM" class="mw-redirect">FM</a>")
+ receiver actually does not have much signal processing to do - just to 
+divide the pulses to each of it's servo outputs and watch out for the 
+synchronization pulse to reset the channel counter.
+</p><p>As already mentioned before, the high signals have a constant 
+length (350µs here as can be seen on the next zoom-in picture. The 
+length varies from system to system, but usually is between 200 and 
+400µs and stays constant within one system).
+</p><p><a href="http://agert.no-ip.biz/blog/index.php/Fil:Ppm3.gif" class="image"><img alt="Ppm3.gif" src="PPM%20-%20agert_files/Ppm3.gif" height="449" width="648"></a>
+</p><p>No matter what encoding (<strong class="selflink">PPM</strong> or <a href="http://agert.no-ip.biz/blog/index.php/PCM" title="PCM">PCM</a>) the teachers transmitter is sending out, the signal communication between the transmitters is performed with <strong class="selflink">PPM</strong> coding. Pin2 of the DIN6 FUTABA trainer cable is the <strong class="selflink">PPM</strong> output, pin3 the input (ground is the shield). Notice that FUTABA trainer port is using inverted <strong class="selflink">PPM</strong> coding (the signal in vertically mirrored). Here's the measurement of FUTABA FC-28 trainer port pin2:
+</p><p><a href="http://agert.no-ip.biz/blog/index.php/Fil:Ppm4.gif" class="image"><img alt="Ppm4.gif" src="PPM%20-%20agert_files/Ppm4.gif" height="452" width="651"></a>
+</p><p>In the next picture it will be clearer:
+</p><p><a href="http://agert.no-ip.biz/blog/index.php/Fil:Ppm5.gif" class="image"><img alt="Ppm5.gif" src="PPM%20-%20agert_files/Ppm5.gif" height="215" width="747"></a>
+</p><p>Some FUTABA systems use 0V (low) up to battery voltage (high), 
+some (like FC-28) use 0V (low) 3.3V (high) trainer port signal levels. 
+With FC-28 the separation pulse is 400µs long:
+</p><p><a href="http://agert.no-ip.biz/blog/index.php/Fil:Ppm6.gif" class="image"><img alt="Ppm6.gif" src="PPM%20-%20agert_files/Ppm6.gif" height="449" width="653"></a>
+</p><p>There is one special-case with FUTABA. If using PLL-Synthesizer 
+module, then the signal sent is non-reversed PPM and with split reset 
+pulse as can be seen here:
+</p><p><a href="http://agert.no-ip.biz/blog/index.php/Fil:Ppm7.gif" class="image"><img alt="Ppm7.gif" src="PPM%20-%20agert_files/Ppm7.gif" height="449" width="645"></a>
+</p><p>The reason must be not to generate a single pulse longer as 6ms. 
+Why? Because of system stability? If you have an idea, please post it to
+ me.
+</p><p>Anyway this "special" PLL-module <strong class="selflink">PPM</strong> modulation causes some problems:
+</p>
+<ol><li>. Usually when using FUTABA's PLL-module, you MUST use FUTABA's own receiver</li>
+<li>. When using the system as a student transmitter or with a simulator
+ program you have to remove the PLL-module, as no other transmitter or 
+simulator that I am aware of can understand this special variation of 
+PPM. Even connecting this signal to another FUTABA FC-28 did not work.</li></ol>
+<p>As I mentioned at the beginning of the page, there is another well-known coding technique - <a href="http://agert.no-ip.biz/blog/index.php/PCM" title="PCM">PCM</a>, Pulse-Code-Modulation. <a href="http://agert.no-ip.biz/blog/index.php/PCM" title="PCM">PCM</a> coding is fully digital, it has fixed signal levels and also fixed signal (bit) width.
+</p><p><a rel="nofollow" class="external free" href="http://webpages.charter.net/rcfu/HelpsHints/RadioOps.html">http://webpages.charter.net/rcfu/HelpsHints/RadioOps.html</a>
+</p>
+<h2><span class="mw-headline" id="Future">Future</span></h2>
+<p><a href="http://agert.no-ip.biz/blog/index.php?title=Scan-PLL&amp;action=edit&amp;redlink=1" class="new" title="Scan-PLL (sidan existerar inte)">Scan-PLL</a> by ACT 
+<a href="http://agert.no-ip.biz/blog/index.php/IPD" title="IPD">IPD</a> by Multiplex
+<a href="http://agert.no-ip.biz/blog/index.php?title=Scan2000&amp;action=edit&amp;redlink=1" class="new" title="Scan2000 (sidan existerar inte)">Scan2000</a> by Simprop
+</p>
+<!-- 
+NewPP limit report
+CPU time usage: 0.091 seconds
+Real time usage: 0.095 seconds
+Preprocessor visited node count: 7/1000000
+Preprocessor generated node count: 12/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/40
+Expensive parser function count: 0/100
+-->
+
+<!-- 
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    0.000      1 - -total
+-->
+
+<!-- Saved in parser cache with key wikidb-mw_:pcache:idhash:202-0!*!0!!*!5!* and timestamp 20150810151206 and revision id 8162
+ -->
+</div>									<div class="printfooter">
+						Hämtad från "<a dir="ltr" href="http://agert.eu/blog/index.php?title=PPM&amp;oldid=8162">http://agert.eu/blog/index.php?title=PPM&amp;oldid=8162</a>"					</div>
+													<div id="catlinks" class="catlinks"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="http://agert.no-ip.biz/blog/index.php/Special:Kategorier" title="Special:Kategorier">Kategorier</a>: <ul><li><a href="http://agert.no-ip.biz/blog/index.php/Kategori:Modellflyg" title="Kategori:Modellflyg">Modellflyg</a></li><li><a href="http://agert.no-ip.biz/blog/index.php/Kategori:Radioteknik" title="Kategori:Radioteknik">Radioteknik</a></li><li><a href="http://agert.no-ip.biz/blog/index.php/Kategori:Modulation" title="Kategori:Modulation">Modulation</a></li></ul></div></div>												<div class="visualClear"></div>
+							</div>
+		</div>
+		<div id="mw-navigation">
+			<h2>Navigeringsmeny</h2>
+
+			<div id="mw-head">
+									<div id="p-personal" role="navigation" class="" aria-labelledby="p-personal-label">
+						<h3 id="p-personal-label">Personliga verktyg</h3>
+						<ul>
+							<li id="pt-login"><a href="http://agert.no-ip.biz/blog/index.php?title=Special:Inloggning&amp;returnto=PPM" title="Du uppmuntras att logga in, men det är inte nödvändigt [Alt+Shift+o]" accesskey="o">Logga in</a></li>						</ul>
+					</div>
+									<div id="left-navigation">
+										<div id="p-namespaces" role="navigation" class="vectorTabs" aria-labelledby="p-namespaces-label">
+						<h3 id="p-namespaces-label">Namnrymder</h3>
+						<ul>
+															<li id="ca-nstab-main" class="selected"><span><a href="http://agert.no-ip.biz/blog/index.php/PPM" title="Visa innehållssidan [Alt+Shift+c]" accesskey="c">Sida</a></span></li>
+															<li id="ca-talk" class="new"><span><a href="http://agert.no-ip.biz/blog/index.php?title=Diskussion:PPM&amp;action=edit&amp;redlink=1" title="Diskussion om innehållssidan [Alt+Shift+t]" accesskey="t">Diskussion</a></span></li>
+													</ul>
+					</div>
+										<div id="p-variants" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-variants-label">
+												<h3 tabindex="0" id="p-variants-label"><span>Varianter</span><a tabindex="-1" href="#"></a></h3>
+
+						<div class="menu">
+							<ul>
+															</ul>
+						</div>
+					</div>
+									</div>
+				<div id="right-navigation">
+										<div id="p-views" role="navigation" class="vectorTabs" aria-labelledby="p-views-label">
+						<h3 id="p-views-label">Visningar</h3>
+						<ul>
+															<li id="ca-view" class="selected"><span><a href="http://agert.no-ip.biz/blog/index.php/PPM">Visa</a></span></li>
+															<li id="ca-viewsource"><span><a href="http://agert.no-ip.biz/blog/index.php?title=PPM&amp;action=edit" title="Den här sidan är skrivskyddad. Du kan se källtexten. [Alt+Shift+e]" accesskey="e">Visa wikitext</a></span></li>
+															<li id="ca-history" class="collapsible"><span><a href="http://agert.no-ip.biz/blog/index.php?title=PPM&amp;action=history" title="Tidigare versioner av sidan [Alt+Shift+h]" accesskey="h">Visa historik</a></span></li>
+													</ul>
+					</div>
+										<div style="" id="p-cactions" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-cactions-label">
+						<h3 tabindex="0" id="p-cactions-label"><span>Mer</span><a tabindex="-1" href="#"></a></h3>
+
+						<div class="menu">
+							<ul>
+															</ul>
+						</div>
+					</div>
+										<div id="p-search" role="search">
+						<h3>
+							<label for="searchInput">Sök</label>
+						</h3>
+
+						<form action="/blog/index.php" id="searchform">
+														<div id="simpleSearch">
+															<input autocomplete="off" tabindex="1" name="search" placeholder="Sök" title="Sök på agert [Alt+Shift+f]" accesskey="f" id="searchInput" type="search"><input value="Special:Sök" name="title" type="hidden"><input name="go" value="Gå till" title="Gå till sidan med detta namn om den finns" id="searchButton" class="searchButton" type="submit">								</div>
+						</form>
+					</div>
+									</div>
+			</div>
+			<div id="mw-panel">
+				<div id="p-logo" role="banner"><a class="mw-wiki-logo" href="http://agert.no-ip.biz/blog/index.php/Huvudsida" title="Besök huvudsidan"></a></div>
+						<div class="portal" role="navigation" id="p-navigation" aria-labelledby="p-navigation-label">
+			<h3 id="p-navigation-label">Navigering</h3>
+
+			<div class="body">
+									<ul>
+													<li id="n-mainpage-description"><a href="http://agert.no-ip.biz/blog/index.php/Huvudsida" title="Besök huvudsidan [Alt+Shift+z]" accesskey="z">Huvudsida</a></li>
+													<li id="n-recentchanges"><a href="http://agert.no-ip.biz/blog/index.php/Special:Senaste_%C3%A4ndringar" title="Lista över senaste ändringar i wikin [Alt+Shift+r]" accesskey="r">Senaste ändringarna</a></li>
+													<li id="n-randompage"><a href="http://agert.no-ip.biz/blog/index.php/Special:Slumpsida" title="Gå till en slumpmässigt vald sida [Alt+Shift+x]" accesskey="x">Slumpsida</a></li>
+													<li id="n-help"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="Platsen där du hittar hjälp">Hjälp</a></li>
+											</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id="p-tb" aria-labelledby="p-tb-label">
+			<h3 id="p-tb-label">Verktyg</h3>
+
+			<div class="body">
+									<ul>
+													<li id="t-whatlinkshere"><a href="http://agert.no-ip.biz/blog/index.php/Special:L%C3%A4nkar_hit/PPM" title="Lista över alla wikisidor som länkar hit [Alt+Shift+j]" accesskey="j">Vad som länkar hit</a></li>
+													<li id="t-recentchangeslinked"><a href="http://agert.no-ip.biz/blog/index.php/Special:Senaste_relaterade_%C3%A4ndringar/PPM" title="Visa senaste ändringarna av sidor som den här sidan länkar till [Alt+Shift+k]" accesskey="k">Relaterade ändringar</a></li>
+													<li id="t-specialpages"><a href="http://agert.no-ip.biz/blog/index.php/Special:Specialsidor" title="Lista över alla specialsidor [Alt+Shift+q]" accesskey="q">Specialsidor</a></li>
+													<li id="t-print"><a href="http://agert.no-ip.biz/blog/index.php?title=PPM&amp;printable=yes" rel="alternate" title="Utskriftvänlig version av den här sidan [Alt+Shift+p]" accesskey="p">Utskriftsvänlig version</a></li>
+													<li id="t-permalink"><a href="http://agert.no-ip.biz/blog/index.php?title=PPM&amp;oldid=8162" title="Permanent länk till den här versionen av sidan">Permanent länk</a></li>
+													<li id="t-info"><a href="http://agert.no-ip.biz/blog/index.php?title=PPM&amp;action=info" title="Mer information om denna sida">Sidinformation</a></li>
+						<li><a href="http://agert.no-ip.biz/blog/index.php?title=Special:TemplateEdit&amp;article=PPM">Vorlagen editieren</a></li>					</ul>
+							</div>
+		</div>
+				</div>
+		</div>
+		<div id="footer" role="contentinfo">
+							<ul id="footer-info">
+											<li id="footer-info-lastmod"> Sidan ändrades senast den 10 juli 2008 kl. 13.33.</li>
+									</ul>
+							<ul id="footer-places">
+											<li id="footer-places-privacy"><a href="http://agert.no-ip.biz/blog/index.php/Agert:Integritetspolicy" title="Agert:Integritetspolicy">Integritetspolicy</a></li>
+											<li id="footer-places-about"><a href="http://agert.no-ip.biz/blog/index.php/Agert:Om" title="Agert:Om">Om agert</a></li>
+											<li id="footer-places-disclaimer"><a href="http://agert.no-ip.biz/blog/index.php/Agert:Allm%C3%A4nt_f%C3%B6rbeh%C3%A5ll" title="Agert:Allmänt förbehåll">Förbehåll</a></li>
+									</ul>
+										<ul id="footer-icons" class="noprint">
+											<li id="footer-poweredbyico">
+															<a href="http://www.mediawiki.org/"><img src="PPM%20-%20agert_files/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/blog/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /blog/resources/assets/poweredby_mediawiki_176x62.png 2x" height="31" width="88"></a>
+													</li>
+									</ul>
+						<div style="clear:both"></div>
+		</div>
+		<script>if(window.jQuery)jQuery.ready();</script><script>if(window.mw){
+mw.loader.state({"site":"ready","user":"ready","user.groups":"ready"});
+}</script>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.action.view.postEdit","mediawiki.user","mediawiki.hidpi","mediawiki.page.ready","mediawiki.searchSuggest"],null,true);
+}</script>
+<script>if(window.mw){
+mw.config.set({"wgBackendResponseTime":140});
+}</script>
+	
+
+<div class="suggestions" style="display: none; font-size: 13px;"><div class="suggestions-results"></div><div class="suggestions-special"></div></div><div class="vdh-mask vdh-1324183910" style="width:300px;height:188px;top:184px;left:201px;display:none"></div><div class="vdh-mask vdh-1324183910" style="width:288px;height:361px;top:523px;left:201px;display:none"></div><div class="vdh-mask vdh-1324183910" style="width:650px;height:453px;top:1195px;left:201px;display:none"></div><div class="vdh-mask vdh-1324183910" style="width:540px;height:101px;top:1729px;left:201px;display:none"></div><div class="vdh-mask vdh-1324183910" style="width:648px;height:449px;top:1970px;left:201px;display:none"></div><div class="vdh-mask vdh-1324183910" style="width:651px;height:452px;top:2501px;left:201px;display:none"></div><div class="vdh-mask vdh-1324183910" style="width:747px;height:215px;top:2989px;left:201px;display:none"></div><div class="vdh-mask vdh-1324183910" style="width:653px;height:449px;top:3263px;left:201px;display:none"></div><div class="vdh-mask vdh-1324183910" style="width:645px;height:449px;top:3748px;left:201px;display:none"></div></body></html>

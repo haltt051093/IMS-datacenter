@@ -1,0 +1,6 @@
+.RandomExcerpts p { font-style: italic; z-index:5; display: none; padding: 5px 0 0; height: auto; font-size: 100%; color:#fff;}
+.RandomExcerpts p span.testimonial-title { font-size: 1em; display: block; margin-top: 8px; text-transform:uppercase; }
+.RandomExcerpts p span.testimonial-title a{ color:#fff;text-decoration:underline;}
+.RandomExcerpts p span.testimonial-title a:hover{text-decoration:none;}
+.RandomExcerpts p.active { z-index:10; }
+#front-slide h2.widgettitle{background:#fff; padding:5px 0;}

@@ -1,0 +1,198 @@
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>KNN Classification</title>
+<script src="KNN%20Classification_files/ga.js" async="" type="text/javascript"></script><script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-20171535-2']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+
+<body>
+
+<table border="0" height="112" width="800">
+  <tbody><tr>
+    <td height="21"><font face="Calibri"><a href="http://www.saedsayad.com/data_mining_map.htm">Map</a>
+      &gt; <a href="http://www.saedsayad.com/data_mining.htm">Data
+      Mining</a> &gt; <a href="http://www.saedsayad.com/predicting_the_future.htm"> Predicting the Future</a> &gt;
+      <a href="http://www.saedsayad.com/modeling.htm"> Modeling</a> &gt;
+      <a href="http://www.saedsayad.com/classification.htm">
+      Classification</a> &gt; K Nearest Neighbors</font></td>
+  </tr>
+  <tr>
+    <td height="21">
+    </td>
+  </tr>
+  <tr>
+    <td height="25">
+      <h3 align="center"><font color="#008000" face="Calibri">K Nearest
+      Neighbors - Classification</font></h3>
+    </td>
+  </tr>
+  <tr>
+    <td height="21"><font face="Calibri">K nearest neighbors is a simple algorithm that stores all available cases and classifies new cases based on a similarity
+      measure (e.g., distance functions).
+      KNN has been used in statistical estimation and pattern recognition already in the beginning of 1970’s
+      as a non-parametric technique.&nbsp;</font></td>
+  </tr>
+  <tr>
+    <td height="21">&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="21"><font face="Calibri"><b>Algorithm</b></font></td>
+  </tr>
+  <tr>
+    <td height="21"><font face="Calibri">A case is classified by a majority vote of its neighbors, with the
+      case being assigned to the class most common amongst its
+      K nearest neighbors measured by a distance function. If K = 1, then the
+      case is simply assigned to the class of its nearest neighbor.&nbsp;</font></td>
+  </tr>
+  <tr>
+    <td height="21">
+    </td>
+  </tr>
+  <tr>
+    <td height="21">
+      <p align="center"><img src="KNN%20Classification_files/KNN_similarity.png" border="0" height="305" width="322"></p></td>
+  </tr>
+  <tr>
+    <td height="1"></td>
+  </tr>
+  <tr>
+    <td height="1"><font face="Calibri">It should also be noted that all three distance measures are only valid for continuous variables. In the
+      instance of categorical variables the Hamming distance must be used.&nbsp;It
+      also brings up the issue of standardization of the numerical variables
+      between 0 and 1 when there is a mixture of numerical and categorical
+      variables in the dataset.</font></td>
+  </tr>
+  <tr>
+    <td height="1">
+      <p align="center"><img src="KNN%20Classification_files/KNN_hamming.png" border="0" height="332" width="307"></p></td>
+  </tr>
+  <tr>
+    <td height="1"><font face="Calibri">Choosing the optimal value for K is best done by first inspecting the data.  In general, a large
+      K value is more precise as it reduces the overall noise but there is no
+      guarantee. Cross-validation is another way to retrospectively determine a good
+      K value by using an independent dataset to validate the K value.
+      Historically, the optimal K for most datasets has been between 3-10. That produces much better results than
+      1NN.
+      </font></td>
+  </tr>
+  <tr>
+    <td height="1">&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="1"><i>Example</i>:</td>
+  </tr>
+  <tr>
+    <td height="1"><font face="Calibri">Consider the following data concerning
+      credit default. Age and Loan are two numerical variables (predictors) and
+      Default is the target.</font></td>
+  </tr>
+  <tr>
+    <td height="1">
+      <p align="center"><img src="KNN%20Classification_files/KNN_example_1.png" border="0" height="274" width="497"></p></td>
+  </tr>
+  <tr>
+    <td height="1"><font face="Calibri">We can now use the training set to
+      classify an unknown case (Age=48 and Loan=$142,000) using Euclidean
+      distance. If K=1 then the nearest neighbor is the last case in the training
+      set with Default=Y.</font></td>
+  </tr>
+  <tr>
+    <td height="1">
+      &nbsp;</td>
+  </tr>
+  <tr>
+    <td height="1">
+      <p align="center"><font face="Calibri">D = Sqrt[(48-33)^2 +
+      (142000-150000)^2] = 8000.01&nbsp; &gt;&gt; Default=Y</font></p></td>
+  </tr>
+  <tr>
+    <td height="1">
+      <p align="left">
+      &nbsp;&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td height="1">
+      <p align="center"><img src="KNN%20Classification_files/KNN_example_2.png" border="0" height="302" width="439"></p></td>
+  </tr>
+  <tr>
+    <td height="1"><font face="Calibri">With K=3, there are two Default=Y and
+      one Default=N out of three closest neighbors. The prediction for the unknown
+      case is again Default=Y.</font></td>
+  </tr>
+  <tr>
+    <td height="1">&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="1"><font face="Calibri"><b>Standardized Distance</b></font></td>
+  </tr>
+  <tr>
+    <td height="1"><font face="Calibri">One major drawback in 
+calculating distance measures
+      directly from the training set is in the case where variables have
+ different measurement
+      scales or there is a mixture of numerical and categorical 
+variables. For example, if one variable is based on annual income
+      in dollars, and the other is based on age in years then income 
+will have a much higher influence on the distance calculated.
+      One solution is to standardize the training set
+      as shown below.</font></td>
+  </tr>
+  <tr>
+    <td height="1">
+      &nbsp;</td>
+  </tr>
+  <tr>
+    <td height="1">
+      <p align="center"><img src="KNN%20Classification_files/KNN_example_3.png" border="0" height="302" width="415"></p></td>
+  </tr>
+  <tr>
+    <td height="1"><font face="Calibri">Using the standardized distance on the
+      same training set, the unknown case returned a different neighbor
+      which is not a good sign of robustness.&nbsp;</font></td>
+  </tr>
+  <tr>
+    <td height="1">&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="1"><font face="Calibri"><a href="http://www.saedsayad.com/knn_exercise.htm"><span style="background-color: #CCFFFF">Exercise</span></a></font>
+    </td>
+  </tr>
+  <tr>
+    <td height="1">&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="1"><font face="Calibri"><img src="KNN%20Classification_files/invent.png" border="0" height="24" width="27">
+      Try to invent a new KNN algorithm using <a href="http://www.saedsayad.com/numerical_numerical.htm">Linear
+      Correlation</a>.</font></td>
+  </tr>
+  <tr>
+    <td height="1">&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="1"><img src="KNN%20Classification_files/flash16c.png" border="0" height="16" width="16">
+      <font face="Calibri"><a href="http://www.saedsayad.com/flash/KNN_flash.html" target="_blank">KNN
+      Interactive</a></font></td>
+  </tr>
+  <tr>
+    <td height="1"></td>
+  </tr>
+</tbody></table>
+
+
+
+
+</body></html>

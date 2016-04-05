@@ -1,0 +1,176 @@
+/*------------------------------------------------------------------------
+# JA Barite for Joomla 15 - Version 1.4 - Licence Owner JA130162
+# ------------------------------------------------------------------------
+# Copyright (C) 2004-2008 J.O.O.M Solutions Co., Ltd. All Rights Reserved.
+# @license - Copyrighted Commercial Software
+# Author: J.O.O.M Solutions Co., Ltd
+# Websites:  http://www.joomlart.com -  http://www.joomlancers.com
+# This file may not be redistributed in whole or significant part.
+-------------------------------------------------------------------------*/
+
+
+a {
+	color: #006699;
+}
+
+a:hover, a:active, a:focus {
+	color: #006699;
+}
+
+a.readon:hover, a.readon:active, a.readon:focus {
+	background: #006699;
+}
+
+ul.pagination a:hover, ul.pagination a:active, ul.pagination a:focus {
+	border: 1px solid #006699;
+}
+
+#ja-headerwrap {
+	background: url(../../images/blue/header-bg.gif) repeat-x top #006699;
+}
+
+ul.menu li.active a {
+	color: #006699;
+}
+
+ul.menu li li a:hover,
+ul.menu li li a:active,
+ul.menu li li a:focus {
+	color:#006699 !important;
+}
+
+#ja-masstop div.module h3 {
+	color: #006699;
+}
+
+#ja-col2 div.module h3,
+#ja-col2 div.module_menu h3,
+#ja-col2 div.module_text h3 {
+	color: #006699;
+}
+
+#ja-col3 div.module_text h3 {
+	background: url(../../images/blue/h32-r.gif) no-repeat bottom center #006699;
+}
+
+#ja-botsl div.jamod h3 {
+	color: #006699;
+}
+
+#ja-login form #mod_login_username,
+#ja-login form #mod_login_password {
+	border: 1px solid #006699;
+}
+
+.nftitle {
+	font-size: 150%;
+	font-weight: bold;
+	color: #006699;
+	margin: 5px 0 0;
+}
+
+ul.checklist li {
+	background: url(../../images/blue/icon-checklist.gif) no-repeat 0 4px;
+}
+
+ul.stars li {
+	background: url(../../images/blue/icon-star.gif) no-repeat 0 5px;
+}
+
+ul.arrow li {
+	background: url(../../images/blue/icon-arrow.gif) no-repeat 3px 5px;
+}
+
+.bignumber {
+	background: url(../../images/blue/ol-bg.gif) no-repeat top left;
+}
+
+#ja-masstop div.module {
+	background: url(../../images/blue/spotlight-bg.gif) repeat-x top #EAF4F9;
+}
+
+div.module h3,
+div.module_menu h3,
+div.module_text h3,
+div.module_black h3 {
+	background: url(../../images/blue/h32-r.gif) no-repeat top right #006699;
+}
+
+div.module h3 span,
+div.module_menu h3 span,
+div.module_text h3 span,
+div.module_black h3 span {
+	background: url(../../images/blue/h31-l.gif) no-repeat top left;
+}
+
+div.module_black h3 {
+	background: url(../../images/blue/h32-r.gif) no-repeat top right #006699; 
+}
+
+div.module_black h3 span {
+	background: url(../../images/blue/h32-l.gif) no-repeat top left;
+}
+
+#ja-col3 div.module h3,
+#ja-col3 div.module_menu h3,
+#ja-col3 div.module_text h3 {
+	background: url(../../images/blue/h32-r.gif) no-repeat bottom center #006699;
+}
+
+/*split menu*/
+#ja-splitmenu a,
+#ja-splitmenu a span,
+#ja-splitmenu a:hover,
+#ja-splitmenu a:active,
+#ja-splitmenu a:focus,
+#ja-splitmenu a:hover span,
+#ja-splitmenu a:active span,
+#ja-splitmenu a:focus span {
+	background-image: url(../../images/blue/tab-bg.gif);
+}
+
+#ja-splitmenu li.active a,
+#ja-splitmenu li.active a:hover,
+#ja-splitmenu li.active a:active,
+#ja-splitmenu li.active a:focus,
+#ja-splitmenu li.active a span,
+#ja-splitmenu li.active a:hover span,
+#ja-splitmenu li.active a:active span,
+#ja-splitmenu li.active a:focus span {
+	background-image: url(../../images/blue/tab-active-bg.gif);
+}
+
+#ja-subnav a:hover,
+#ja-subnav a:active,
+#ja-subnav a:focus,
+#ja-subnav li.active a {
+	color: #006699;
+}
+
+/* Script Dropline Menu */
+#jasdl-mainnav a,
+#jasdl-mainnav a span,
+#jasdl-mainnav a:hover,
+#jasdl-mainnav ul li.hover a,
+#jasdl-mainnav a:hover span,
+#jasdl-mainnav ul li.hover a span {
+	background-image: url(../../images/blue/tab-bg.gif);
+}
+
+#jasdl-mainnav li.active a,
+#jasdl-mainnav li.active a:hover,
+#jasdl-mainnav li.active a:active,
+#jasdl-mainnav li.active a:focus,
+#jasdl-mainnav li.active a span,
+#jasdl-mainnav li.active a:hover span,
+#jasdl-mainnav li.active a:active span,
+#jasdl-mainnav li.active a:focus span {
+	background-image: url(../../images/blue/tab-active-bg.gif);
+}
+
+#jasdl-subnav a:hover,
+#jasdl-subnav a:active,
+#jasdl-subnav a:focus,
+#jasdl-subnav ul li.active a {
+	color: #006699;
+}

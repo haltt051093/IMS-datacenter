@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+        <link href="q_data/css.css" rel="stylesheet" type="text/css">
+        <style>
+        .amzn-sprite { background-image: url("http://wms-na.amazon-adsystem.com/panda/20070822/US/img/amzn-ad-sprite.png")}
+        </style>
+                <style>
+            body{margin:0;padding:0;font-family:arial,helvetica,sans-sarif;font-size:12px}*,*:before,*:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}*{outline:0}.amzn-animate{-webkit-transition:all .6s linear;-moz-transition:all .6s linear;transition:all .6s linear}.amzn-ad-wrap{float:left;position:relative;border:1px solid #dcdcdc;border-top:2px solid #faad16;overflow:hidden;background-color:#fff}.amzn-ad-wrap a{color:#0066c0;text-decoration:none}.amzn-ad-wrap a:hover{color:#e47911;text-decoration:underline}.amzn-ad-wrap a img{border:0}.amzn-f-left{float:left}.amzn-f-right{float:right}.amzn-clearfix:before,.amzn-clearfix:after{content:"";display:table}.amzn-clearfix:after{clear:both}.amzn-clearfix{zoom:1}.amzn-ad-title{color:#e47911;font-size:14px;line-height:20px;font-family:'HelveticaNeueLT Std Med Cn',arial,helvetica,sans-sarif}.amzn-bold-cta .amzn-ad-title{font-size:18px;font-weight:bold}.amzn-ad-logo a{display:block;width:63px;height:20px;background-position:0 0;text-indent:-9999px}.amzn-prod-title{font-size:13px;line-height:16px;font-weight:bold}.amzn-prod-title a{display:block}a.amzn-prod-by{display:block;color:#666;padding:2px 0;width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.amzn-prime-icon{display:inline-block;width:42px;height:13px;background-position:-63px 0;text-indent:-9999px;vertical-align:middle}a.amzn-new-price{color:#b12704;padding:0 2px;text-decoration:none}.amzn-old-price{color:#aaa;text-decoration:line-through}.amzn-prod-ratting{display:inline-block;width:55px;height:11px;text-indent:-9999px;position:relative;overflow:hidden;background-position:0 -84px;vertical-align:middle}.amzn-prod-ratting span{display:block;left:0;top:0;position:absolute;height:100%;width:0;background-position:0 -73px}.amzn-prod-navigator a:hover{background:#aaa}.amzn-icon-ad-choice{display:inline-block;width:12px;height:15px;background-position:-55px -91px}.amzn-ad-wrap .amzn-icon-ad-choice{position:absolute;bottom:2px;right:2px;z-index:999}.amzn-160x600{width:160px;height:600px}.amzn-160x600 .amzn-prod-title{font-size:11px;font-weight:bold;line-height:12px;max-height:34px;padding:5px 0}.amzn-160x600:hover{border-color:#aaa}.amzn-160x600 .amzn-ad-main-header{padding:12px 10px 7px 10px;border-bottom:1px solid #e7e7e7;height:90px;overflow:hidden}.amzn-160x600 .amzn-ad-main-header .amzn-ad-title{padding-top:5px;line-height:16px}.amzn-160x600 .amzn-ad-main-section .amzn-prod-group .amzn-prod-box:last-child{border:0}.amzn-160x600 .amzn-ad-main-section .amzn-prod-group .amzn-prod-box{min-height:141.5px;padding:5px;border-bottom:1px solid #f1f1f1}.amzn-160x600-multi .amzn-ad-main-section{height:484px;position:relative}.amzn-160x600-multi.amzn-multi-scroll .amzn-ad-main-section{overflow:auto}.amzn-160x600-multi.amzn-multi-scroll .amzn-ad-main-section::-webkit-scrollbar{width:5px;border-radius:10px}.amzn-160x600-multi.amzn-multi-scroll .amzn-ad-main-section::-webkit-scrollbar-track{border-radius:10px;background:#f9f9f9}.amzn-160x600-multi.amzn-multi-scroll .amzn-ad-main-section::-webkit-scrollbar-thumb{background-color:#ccc}.amzn-160x600-multi .amzn-ad-img-wrap{padding:7px 10px;text-align:center}.amzn-160x600-multi .amzn-ad-img-wrap img{height:60px}.amzn-160x600-multi .amzn-ad-main-section .amzn-prod-group{height:497px;width:100%;position:absolute;left:0;top:0;z-index:1;background:#fff;display:none;padding:0 5px}.amzn-160x600-multi.amzn-multi-scroll .amzn-ad-main-section .amzn-prod-group{position:static;display:block;height:auto}.amzn-160x600-multi .amzn-ad-main-section .amzn-prod-group.amzn-goto-right{left:100% !important;display:block}.amzn-160x600-multi .amzn-ad-main-section .amzn-prod-group.amzn-goto-left{left:-100% !important;display:block}.amzn-160x600-multi .amzn-ad-main-section .amzn-prod-group.amzn-goto-current,.amzn-160x600-multi .amzn-ad-main-section .amzn-prod-group.amzn-current-prod{z-index:2;display:block}.amzn-160x600-multi.amzn-multi-scroll .amzn-ad-main-section .amzn-prod-group .amzn-prod-box{height:auto;padding:10px 5px}.amzn-160x600-multi.amzn-multi-1 .amzn-ad-main-section .amzn-prod-group .amzn-prod-box{height:107px;padding:10px 5px}.amzn-160x600-multi .amzn-prod-navigator{height:25px;text-align:center;padding-top:8px;border-bottom:1px solid #e7e7e7}.amzn-160x600-multi.amzn-multi-scroll .amzn-prod-navigator,.amzn-160x600-multi.amzn-multi-1 .amzn-prod-navigator{display:none}.amzn-160x600-multi .amzn-prod-navigator a{display:inline-block;width:9px;height:9px;border-radius:100%;background:#ccc;text-indent:-9999px;margin:0 2px}.amzn-160x600-multi .amzn-prod-navigator a.active{background-color:#e47911}.amzn-160x600-multi .amzn-prod-by{font-size:11px;padding:4px 0}.amzn-160x600-multi .amzn-prod-review{padding:2px 0;font-size:10px;vertical-align:baseline}.amzn-160x600-multi .amzn-prod-review .amzn-comment-count{padding-left:5px;vertical-align:top}.amzn-160x600-multi .amzn-prod-review .amzn-prod-ratting{vertical-align:baseline}.amzn-160x600-multi .amzn-prod-price{padding:2px 0;font-size:10px}.amzn-160x600-multi .amzn-prod-price .amzn-new-price{font-weight:bold}.amzn-160x600-multi .amzn-prod-nav-arrow{position:absolute;height:0;top:101px;left:-1px;right:-1px;z-index:99}.amzn-160x600-multi.amzn-multi-scroll .amzn-prod-nav-arrow,.amzn-160x600-multi.amzn-multi-1 .amzn-prod-nav-arrow{display:none}.amzn-160x600-multi .amzn-prod-nav-arrow>div{position:absolute;height:26px;width:27px;top:-12px;cursor:pointer;border:1px solid #e7e7e7;background-color:#f3f3f3}.amzn-160x600-multi .amzn-prod-nav-arrow>div.amzn-prod-nav-prev{left:0;background-position:-43px -19px}.amzn-160x600-multi .amzn-prod-nav-arrow>div.amzn-prod-nav-next{right:0;background-position:-69px -19px}.amzn-160x600-multi.amzn-multi-1 .amzn-prod-nav-arrow{display:none}.amzn-160x600-multi.amzn-multi-1 .amzn-ad-main-section{height:507px}.amzn-160x600-multi.amzn-multi-1 .amzn-ad-main-section .amzn-prod-group{height:507px}.amzn-160x600-multi.amzn-multi-1 .amzn-prod-navigator{display:none}.amzn-160x600-multi.amzn-multi-1 .amzn-ad-main-section .amzn-prod-group .amzn-prod-box{min-height:169px;padding:10px 5px}
+        </style>
+        <script type="text/javascript">
+            if(typeof amzn_assoc_utils==="undefined"){amzn_assoc_utils={};}if(typeof amzn_assoc_utils.assocRuntimeMaker==="undefined"){amzn_assoc_utils.assocRuntimeMaker=function(l,g,d){var f={},j={},e=[],b,k=function(m){e.push(m);if(window.addEventListener){window.addEventListener("message",m,false);}else{window.attachEvent("onmessage",m);}},c=false,a=false,h=[];j.listen=function(){k(function(n){var m;if(n.origin.indexOf(l)<0&&n.origin.indexOf(g)<0){return;}if(n.data){m=amzn_assoc_utils.parse(n.data);if(m.slotNum===d){if(typeof m.op!=="undefined"&&m.op==="getRuntimeData"){n.source.postMessage(JSON.stringify({slotNum:d,rt:f}),"*");}}}});};j.init=function(n,m){if(typeof n==="object"){f=n;c=true;if(typeof m==="undefined"||!m){j.listen();}}};j.destroy=function(){var m=0;c=false;h=[];f={};a=false;for(m=0;m<e.length;m++){window.removeEventListener("message",e[m],false);}e=[];clearTimeout(b);};j.reinit=function(p,m){var o=h,n;j.destroy();j.init(p,m);for(n=0;n<o.length;n++){if(typeof o[n]==="function"){o[n](p);}}};j.append=function(m){var n;for(n in m){if(m.hasOwnProperty(n)){f[n]=m[n];}}};j.retrieveRuntime=function(m,o,n){if(!c){h.push(m);if(!a){k(function(r){var p=0;if(!c&&r.data){try{var q=JSON.parse(r.data);if(q.slotNum===d&&typeof q.rt!=="undefined"){f=q.rt;clearTimeout(b);for(p=0;p<h.length;p++){if(typeof h[p]==="function"){h[p](f);}}c=true;}}catch(r){}}});window.parent.postMessage(JSON.stringify({slotNum:d,op:"getRuntimeData"}),"*");if(typeof o==="number"&&typeof n==="object"){b=setTimeout(function(){f=n;for(i=0;i<h.length;i++){if(typeof h[i]==="function"){h[i](f);}}c=true;},o);}a=true;}}else{if(typeof m==="function"){m(f);}}};j.getValue=function(m){if(f.hasOwnProperty(m)){return f[m];}else{return null;}};return j;};}if(typeof amzn_assoc_utils.assocRuntime!=="object"){amzn_assoc_utils.assocRuntime={};}amzn_assoc_utils.assocRuntime["1"]=amzn_assoc_utils.assocRuntimeMaker("http://ws-na.amazon-adsystem.com","//z-na.amazon-adsystem.com","1");
+        
+            		var amazon_assoc_ir_f_call_acap = function(map) {
+			var logTypeStr = "", foresterURL, json;
+			if(typeof JSON !== 'undefined') json = JSON.stringify(map);
+			else if(typeof amzn_assoc_utils !== 'undefined') json = amzn_assoc_utils.stringify(map);
+			else return;
+			if(typeof map.logType !== "undefined") logTypeStr = "&logType=" + map.logType;
+			// forester URLs are of format //<end_point>/<api_version>/<channel_id>/<channel_version>/<OPERATION>/
+			// Depending on operation, we either pass the data in the URI or we pass them as query parameters
+			// if operation is OP, data must be in query parameters while if operation is TOP,
+			// data must be in the URI itself
+			foresterURL = "//fls-na.amazon-adsystem.com/1/acap/1/OE/";
+						    foresterURL = foresterURL + encodeURIComponent(json) + "?cb=" + (new Date()).getTime() + "&logType=" + logTypeStr;
+						(new Image()).src = foresterURL;
+		};
+                		var amazon_assoc_ir_f_call_associates_ads = function(map) {
+			var logTypeStr = "", foresterURL, json;
+			if(typeof JSON !== 'undefined') json = JSON.stringify(map);
+			else if(typeof amzn_assoc_utils !== 'undefined') json = amzn_assoc_utils.stringify(map);
+			else return;
+			if(typeof map.logType !== "undefined") logTypeStr = "&logType=" + map.logType;
+			// forester URLs are of format //<end_point>/<api_version>/<channel_id>/<channel_version>/<OPERATION>/
+			// Depending on operation, we either pass the data in the URI or we pass them as query parameters
+			// if operation is OP, data must be in query parameters while if operation is TOP,
+			// data must be in the URI itself
+			foresterURL = "//fls-na.amazon-adsystem.com/1/associates-ads/1/OP/r/json";
+						    foresterURL = foresterURL + "?cb=" + (new Date()).getTime() + logTypeStr + "&p=" + encodeURIComponent(json);
+						(new Image()).src = foresterURL;
+		};
+    var amazon_assoc_ir_f_call = amazon_assoc_ir_f_call_associates_ads;
+               var amazon_assoc_aax_f_call = function(aax_map, pixelURL) {
+       var json,payload;
+       if(typeof pixelURL === 'undefined') return;
+       if(typeof JSON !== 'undefined') json = JSON.stringify(aax_map);
+       else if(typeof amzn_assoc_utils !== 'undefined') json = amzn_assoc_utils.stringify(aax_map);
+       else return;
+       payload = encodeURIComponent(json);
+       if(typeof pixelURL === "string" && pixelURL != "") (new Image()).src = pixelURL + '?assoc_payload='+ payload;
+   };
+          
+            window.runtimeManager = amzn_assoc_utils.assocRuntime["1"];
+            window.backupRuntime = {"trackingId": "hooonrcair-20",
+                                    "url": ((window.location != window.parent.location)?document.referrer:document.location.href),
+                                    "aaxRequestId": "" , "pixelURL" : "${pixelURL}" , "clickURL" :"${clickURL}"};
+                                    
+            var recordInteraction = function(data) {
+                                    runtimeManager.retrieveRuntime(function(rt) {
+                        data.tag = rt["trackingId"];
+                        data.region = "US";
+                        data.linkCode = "w24";
+                        data.creative = "496521";
+                        data.campaignId = "212361";
+                        data.linkId = rt["linkid"];
+                        data.placement = "RFZRBKKRL5QBP32J";
+                        data.refUrl = rt["url"] ||
+                        ((window.location != window.parent.location) ?
+                            document.referrer : document.location.href);
+                        data.refUrl = data.refUrl.substring(0, 256);
+                        if(typeof data.pixelURL === "undefined") {
+                        	data.pixelURL = rt["pixelURL"];
+                        }
+                        if(typeof data.clickURL === "undefined") {
+                        	data.clickURL = rt["clickURL"];
+                        }
+                
+                        amazon_assoc_ir_f_call(data);
+                        if(typeof rt["pixelURL"] !== "undefined") {
+                       		amazon_assoc_aax_f_call(data,data.pixelURL);
+                       	}
+                    	
+                    }, 1000, window.backupRuntime);
+                            };
+            var recordAcapFeedback = function(data) {
+                runtimeManager.retrieveRuntime(function(rt) {
+                    data.type = "af";
+                    data.url = rt["url"] ||
+                    ((window.location != window.parent.location) ?
+                        document.referrer : document.location.href);
+                    data.url = data.url.substring(0, 256);
+                    if (typeof data.request_id === "undefined") {
+                        data.request_id = rt["aaxRequestId"];
+                    }
+                    if(typeof data.pixelURL === "undefined") {
+                        data.pixelURL = rt["pixelURL"];
+                    }
+                    if(typeof data.clickURL === "undefined") {
+                        data.clickURL = rt["clickURL"];
+                     }
+                    data.mkt = 'ATVPDKIKX0DER';
+                    amazon_assoc_ir_f_call_acap(data);
+                    }, 1000, window.backupRuntime);
+            };
+                // go through all the links on the page and add parameter ref-refURL
+    var addRefUrls = function(allLinks, linkid) {
+        var refRefUrl = new RegExp("^http://.*(amazon|endless|myhabit|amazonwireless|javari|smallparts)\\.(com|ca|co\\.jp|de|fr|co\\.uk|cn|it|es)/.*tag=.*", "i"),
+            pageUrl = (window.location != window.parent.location) ? document.referrer : document.location,
+            href, results, newUrl, i,
+            encodeStr = function(b) {
+                return b && encodeURIComponent(b).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            };
+        for (i = 0; i < allLinks.length; i++) {
+            allLinks[i].rel = "nofollow";
+            href = new String(allLinks[i].href);
+            if (results = href.match(refRefUrl)) {
+                newUrl = href + "&ref-refURL=" + encodeStr(pageUrl);
+                if(typeof linkid === "string" && linkid !== "") newUrl = newUrl + "&linkId=" + linkid;
+                allLinks[i].href = newUrl;
+            }
+        }
+    };
+                // go through all the links on the page and wrap them behind AAX redirect click URL
+    var addClickUrls = function(allLinks, clickPixel) {
+         var newUrl,i,href;
+        if(typeof clickPixel === 'undefined') return;
+        else {      
+        	for (i = 0; i < allLinks.length; i++) {
+            	href = new String(allLinks[i].href);
+                newUrl = clickPixel + href;
+                allLinks[i].href = newUrl;
+                }
+            }
+    };
+                
+        </script>
+    </head>
+<body>
+        
+
+<div class="amzn-ad-wrap amzn-160x600 amzn-160x600-multi js-amzn-slide-ad ">
+    <div class="amzn-prod-nav-arrow">
+        <div class="amzn-prod-nav-prev amzn-sprite"></div>
+        <div class="amzn-prod-nav-next amzn-sprite"></div>
+    </div>
+    <div class="amzn-ad-main-header amzn-clearfix">
+        <div class="amzn-ad-logo"><a rel="nofollow" target="_blank" class="amzn-sprite" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/ref=as_sl_pc_ac_c_l?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">Amazon</a></div>
+        <div class="amzn-ad-title">Shop Now</div>
+    </div>
+    <div class="amzn-prod-navigator">
+      
+    <a class="active" href="#">1</a><a class="" href="#">2</a><a class="" href="#">3</a><a class="" href="#">4</a></div>
+
+    <div class="amzn-ad-main-section">
+    	    		
+
+
+<div style="display:false;" class="amzn-prod-group amzn-current-prod">
+                                                                <div data-asin="B0033032VI" data-rectype="pub" class="amzn-prod-box amzn-clearfix">
+            <div class="amzn-ad-img-wrap ">
+                <a rel="nofollow" data-clicktype="image" title="New RC Tech 6 CH Flight Simulator Remote Control w/ Software for Helicopters/ Airplanes" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/Simulator-Control-Software-Helicopters-Airplanes/dp/B0033032VI/ref=as_sl_pc_ac_c_1_1_i_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                    <img src="q_data_002/41U095C8FSL.jpg">
+                </a>
+            </div>
+            <div class="amzn-prod-det ">
+                <div class="amzn-prod-title">
+                    <a rel="nofollow" data-clicktype="title" title="New RC Tech 6 CH Flight Simulator Remote Control w/ Software for Helicopters/ Airplanes" target="blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/Simulator-Control-Software-Helicopters-Airplanes/dp/B0033032VI/ref=as_sl_pc_ac_c_1_1_t_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">New RC Tech 6 CH Flight Simulator Remote Cont...</a>
+                </div>
+                                <div class="amzn-prod-review">
+                                            <a rel="nofollow" data-clicktype="rating" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/Simulator-Control-Software-Helicopters-Airplanes/dp/B0033032VI/ref=as_sl_pc_ac_c_1_1_ra_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            <span title="3.0" class="amzn-prod-ratting amzn-sprite">
+                                <span class="amzn-sprite" style="width:60%;"></span>
+                            </span>
+                        </a>
+                        <a rel="nofollow" data-clicktype="reviews" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/Simulator-Control-Software-Helicopters-Airplanes/dp/B0033032VI/ref=as_sl_pc_ac_c_1_1_r_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            <span title="122 reviews" class="amzn-comment-count">
+                                                                (122)
+                                                            </span>
+                        </a>
+                                    </div>
+                <div class="amzn-prod-price">
+                                                                    <a rel="nofollow" data-clicktype="price" class="amzn-new-price" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/Simulator-Control-Software-Helicopters-Airplanes/dp/B0033032VI/ref=as_sl_pc_ac_c_1_1_p_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            $25.29
+                        </a>
+                                                                <a rel="nofollow" data-clicktype="prime" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/Simulator-Control-Software-Helicopters-Airplanes/dp/B0033032VI/ref=as_sl_pc_ac_c_1_1_pr_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            <span title="Amazon Prime" class="amzn-prime-icon amzn-sprite"></span>
+                        </a>
+                                    </div>
+            </div>
+        </div>
+                                                                    <div data-asin="B00P309MZ6" data-rectype="pub" class="amzn-prod-box amzn-clearfix">
+            <div class="amzn-ad-img-wrap ">
+                <a rel="nofollow" data-clicktype="image" title="DJI Phantom 2 Vision+ V3.0 Quadcopter with FPV HD Video Camera and 3-Axis Gimbal (White)" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/DJI-Phantom-Vision-V3-0-Quadcopter/dp/B00P309MZ6/ref=as_sl_pc_ac_c_1_2_i_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                    <img src="q_data_002/31sGxODHD9L.jpg">
+                </a>
+            </div>
+            <div class="amzn-prod-det ">
+                <div class="amzn-prod-title">
+                    <a rel="nofollow" data-clicktype="title" title="DJI Phantom 2 Vision+ V3.0 Quadcopter with FPV HD Video Camera and 3-Axis Gimbal (White)" target="blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/DJI-Phantom-Vision-V3-0-Quadcopter/dp/B00P309MZ6/ref=as_sl_pc_ac_c_1_2_t_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">DJI Phantom 2 Vision+ V3.0 Quadcopter with F...</a>
+                </div>
+                                <div class="amzn-prod-review">
+                                            <a rel="nofollow" data-clicktype="rating" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/DJI-Phantom-Vision-V3-0-Quadcopter/dp/B00P309MZ6/ref=as_sl_pc_ac_c_1_2_ra_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            <span title="4.0" class="amzn-prod-ratting amzn-sprite">
+                                <span class="amzn-sprite" style="width:80%;"></span>
+                            </span>
+                        </a>
+                        <a rel="nofollow" data-clicktype="reviews" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/DJI-Phantom-Vision-V3-0-Quadcopter/dp/B00P309MZ6/ref=as_sl_pc_ac_c_1_2_r_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            <span title="97 reviews" class="amzn-comment-count">
+                                                                (97)
+                                                            </span>
+                        </a>
+                                    </div>
+                <div class="amzn-prod-price">
+                                                                        <span class="amzn-old-price"> $1,399.00</span>
+                                                <a rel="nofollow" data-clicktype="price" class="amzn-new-price" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/DJI-Phantom-Vision-V3-0-Quadcopter/dp/B00P309MZ6/ref=as_sl_pc_ac_c_1_2_p_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            $1,048.95
+                        </a>
+                                                        </div>
+            </div>
+        </div>
+                                                                    <div data-asin="B00N8GWZ4M" data-rectype="pub" class="amzn-prod-box amzn-clearfix">
+            <div class="amzn-ad-img-wrap ">
+                <a rel="nofollow" data-clicktype="image" title="PowerUp 3.0 Smartphone Controlled Paper Airplane" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/PowerUp-Smartphone-Controlled-Paper-Airplane/dp/B00N8GWZ4M/ref=as_sl_pc_ac_c_1_3_i_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                    <img src="q_data_002/41Ogrl3fVEL.jpg">
+                </a>
+            </div>
+            <div class="amzn-prod-det ">
+                <div class="amzn-prod-title">
+                    <a rel="nofollow" data-clicktype="title" title="PowerUp 3.0 Smartphone Controlled Paper Airplane" target="blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/PowerUp-Smartphone-Controlled-Paper-Airplane/dp/B00N8GWZ4M/ref=as_sl_pc_ac_c_1_3_t_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">PowerUp 3.0 Smartphone Controlled...</a>
+                </div>
+                                <div class="amzn-prod-review">
+                                            <a rel="nofollow" data-clicktype="rating" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/PowerUp-Smartphone-Controlled-Paper-Airplane/dp/B00N8GWZ4M/ref=as_sl_pc_ac_c_1_3_ra_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            <span title="3.0" class="amzn-prod-ratting amzn-sprite">
+                                <span class="amzn-sprite" style="width:60%;"></span>
+                            </span>
+                        </a>
+                        <a rel="nofollow" data-clicktype="reviews" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/PowerUp-Smartphone-Controlled-Paper-Airplane/dp/B00N8GWZ4M/ref=as_sl_pc_ac_c_1_3_r_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            <span title="58 reviews" class="amzn-comment-count">
+                                                                (58)
+                                                            </span>
+                        </a>
+                                    </div>
+                <div class="amzn-prod-price">
+                                                                    <a rel="nofollow" data-clicktype="price" class="amzn-new-price" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/PowerUp-Smartphone-Controlled-Paper-Airplane/dp/B00N8GWZ4M/ref=as_sl_pc_ac_c_1_3_p_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            $49.99
+                        </a>
+                                                                <a rel="nofollow" data-clicktype="prime" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/PowerUp-Smartphone-Controlled-Paper-Airplane/dp/B00N8GWZ4M/ref=as_sl_pc_ac_c_1_3_pr_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            <span title="Amazon Prime" class="amzn-prime-icon amzn-sprite"></span>
+                        </a>
+                                    </div>
+            </div>
+        </div>
+                </div>
+        <div style="display:false;" class="amzn-prod-group">
+                                                                <div data-asin="B00JA38WJ4" data-rectype="pub" class="amzn-prod-box amzn-clearfix">
+            <div class="amzn-ad-img-wrap ">
+                <a rel="nofollow" data-clicktype="image" title="Great Planes Goldberg Eagle 2 Trainer .29-.49 Kit" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/Great-Planes-Goldberg-Trainer-29-49/dp/B00JA38WJ4/ref=as_sl_pc_ac_c_2_4_i_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                    <img src="q_data_002/41kZbmSJ1KL.jpg">
+                </a>
+            </div>
+            <div class="amzn-prod-det ">
+                <div class="amzn-prod-title">
+                    <a rel="nofollow" data-clicktype="title" title="Great Planes Goldberg Eagle 2 Trainer .29-.49 Kit" target="blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/Great-Planes-Goldberg-Trainer-29-49/dp/B00JA38WJ4/ref=as_sl_pc_ac_c_2_4_t_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">Great Planes Goldberg Eagle 2 Trainer .29-.49 Kit</a>
+                </div>
+                                <div class="amzn-prod-review">
+                                            <a rel="nofollow" data-clicktype="rating" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/Great-Planes-Goldberg-Trainer-29-49/dp/B00JA38WJ4/ref=as_sl_pc_ac_c_2_4_ra_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            <span title="5.0" class="amzn-prod-ratting amzn-sprite">
+                                <span class="amzn-sprite" style="width:100%;"></span>
+                            </span>
+                        </a>
+                        <a rel="nofollow" data-clicktype="reviews" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/Great-Planes-Goldberg-Trainer-29-49/dp/B00JA38WJ4/ref=as_sl_pc_ac_c_2_4_r_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            <span title="3 reviews" class="amzn-comment-count">
+                                                                (3)
+                                                            </span>
+                        </a>
+                                    </div>
+                <div class="amzn-prod-price">
+                                                                        <span class="amzn-old-price"> $139.99</span>
+                                                <a rel="nofollow" data-clicktype="price" class="amzn-new-price" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/Great-Planes-Goldberg-Trainer-29-49/dp/B00JA38WJ4/ref=as_sl_pc_ac_c_2_4_p_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            $100.72
+                        </a>
+                                                                <a rel="nofollow" data-clicktype="prime" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/Great-Planes-Goldberg-Trainer-29-49/dp/B00JA38WJ4/ref=as_sl_pc_ac_c_2_4_pr_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            <span title="Amazon Prime" class="amzn-prime-icon amzn-sprite"></span>
+                        </a>
+                                    </div>
+            </div>
+        </div>
+                                                                    <div data-asin="B00GSNWB5K" data-rectype="pub" class="amzn-prod-box amzn-clearfix">
+            <div class="amzn-ad-img-wrap ">
+                <a rel="nofollow" data-clicktype="image" title="Hubsan X4 Quadcopter with FPV Camera Toy" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/Hubsan-Quadcopter-FPV-Camera-Toy/dp/B00GSNWB5K/ref=as_sl_pc_ac_c_2_5_i_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                    <img src="q_data_002/418eL4vs7cL.jpg">
+                </a>
+            </div>
+            <div class="amzn-prod-det ">
+                <div class="amzn-prod-title">
+                    <a rel="nofollow" data-clicktype="title" title="Hubsan X4 Quadcopter with FPV Camera Toy" target="blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/Hubsan-Quadcopter-FPV-Camera-Toy/dp/B00GSNWB5K/ref=as_sl_pc_ac_c_2_5_t_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">Hubsan X4 Quadcopter with FPV Camera Toy</a>
+                </div>
+                                <div class="amzn-prod-review">
+                                            <a rel="nofollow" data-clicktype="rating" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/Hubsan-Quadcopter-FPV-Camera-Toy/dp/B00GSNWB5K/ref=as_sl_pc_ac_c_2_5_ra_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            <span title="3.5" class="amzn-prod-ratting amzn-sprite">
+                                <span class="amzn-sprite" style="width:70%;"></span>
+                            </span>
+                        </a>
+                        <a rel="nofollow" data-clicktype="reviews" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/Hubsan-Quadcopter-FPV-Camera-Toy/dp/B00GSNWB5K/ref=as_sl_pc_ac_c_2_5_r_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            <span title="528 reviews" class="amzn-comment-count">
+                                                                (528)
+                                                            </span>
+                        </a>
+                                    </div>
+                <div class="amzn-prod-price">
+                                                                        <span class="amzn-old-price"> $249.99</span>
+                                                <a rel="nofollow" data-clicktype="price" class="amzn-new-price" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/Hubsan-Quadcopter-FPV-Camera-Toy/dp/B00GSNWB5K/ref=as_sl_pc_ac_c_2_5_p_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            $146.89
+                        </a>
+                                                        </div>
+            </div>
+        </div>
+                                                                    <div data-asin="B00G3Y3KFO" data-rectype="pub" class="amzn-prod-box amzn-clearfix">
+            <div class="amzn-ad-img-wrap ">
+                <a rel="nofollow" data-clicktype="image" title="Super Cub 2.4Ghz RTF 29&quot; WingSpan RC 3CH EPO Airplane Beginner Glider R/C Piper J-3 Trainer Plane V765-2" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/2-4Ghz-WingSpan-Airplane-Beginner-Trainer/dp/B00G3Y3KFO/ref=as_sl_pc_ac_c_2_6_i_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                    <img src="q_data_002/41hDpnDZpRL.jpg">
+                </a>
+            </div>
+            <div class="amzn-prod-det ">
+                <div class="amzn-prod-title">
+                    <a rel="nofollow" data-clicktype="title" title="Super Cub 2.4Ghz RTF 29&quot; WingSpan RC 3CH EPO Airplane Beginner Glider R/C Piper J-3 Trainer Plane V765-2" target="blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/2-4Ghz-WingSpan-Airplane-Beginner-Trainer/dp/B00G3Y3KFO/ref=as_sl_pc_ac_c_2_6_t_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">Super Cub 2.4Ghz RTF 29" WingSpan RC 3CH E...</a>
+                </div>
+                                <div class="amzn-prod-review">
+                                            <a rel="nofollow" data-clicktype="rating" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/2-4Ghz-WingSpan-Airplane-Beginner-Trainer/dp/B00G3Y3KFO/ref=as_sl_pc_ac_c_2_6_ra_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            <span title="2.5" class="amzn-prod-ratting amzn-sprite">
+                                <span class="amzn-sprite" style="width:50%;"></span>
+                            </span>
+                        </a>
+                        <a rel="nofollow" data-clicktype="reviews" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/2-4Ghz-WingSpan-Airplane-Beginner-Trainer/dp/B00G3Y3KFO/ref=as_sl_pc_ac_c_2_6_r_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            <span title="25 reviews" class="amzn-comment-count">
+                                                                (25)
+                                                            </span>
+                        </a>
+                                    </div>
+                <div class="amzn-prod-price">
+                                                                        <span class="amzn-old-price"> $128.98</span>
+                                                <a rel="nofollow" data-clicktype="price" class="amzn-new-price" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/2-4Ghz-WingSpan-Airplane-Beginner-Trainer/dp/B00G3Y3KFO/ref=as_sl_pc_ac_c_2_6_p_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            $89.99
+                        </a>
+                                                        </div>
+            </div>
+        </div>
+                </div>
+        <div style="display:false;" class="amzn-prod-group">
+                                                                <div data-asin="B00F4ZJ700" data-rectype="pub" class="amzn-prod-box amzn-clearfix">
+            <div class="amzn-ad-img-wrap ">
+                <a rel="nofollow" data-clicktype="image" title="HobbyZone Duet RTF" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/HobbyZone-Duet-RTF/dp/B00F4ZJ700/ref=as_sl_pc_ac_c_3_7_i_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                    <img src="q_data_002/41WVLya45WL.jpg">
+                </a>
+            </div>
+            <div class="amzn-prod-det ">
+                <div class="amzn-prod-title">
+                    <a rel="nofollow" data-clicktype="title" title="HobbyZone Duet RTF" target="blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/HobbyZone-Duet-RTF/dp/B00F4ZJ700/ref=as_sl_pc_ac_c_3_7_t_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">HobbyZone Duet RTF</a>
+                </div>
+                                <div class="amzn-prod-review">
+                                            <a rel="nofollow" data-clicktype="rating" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/HobbyZone-Duet-RTF/dp/B00F4ZJ700/ref=as_sl_pc_ac_c_3_7_ra_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            <span title="3.5" class="amzn-prod-ratting amzn-sprite">
+                                <span class="amzn-sprite" style="width:70%;"></span>
+                            </span>
+                        </a>
+                        <a rel="nofollow" data-clicktype="reviews" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/HobbyZone-Duet-RTF/dp/B00F4ZJ700/ref=as_sl_pc_ac_c_3_7_r_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            <span title="197 reviews" class="amzn-comment-count">
+                                                                (197)
+                                                            </span>
+                        </a>
+                                    </div>
+                <div class="amzn-prod-price">
+                                                                        <span class="amzn-old-price"> $79.99</span>
+                                                <a rel="nofollow" data-clicktype="price" class="amzn-new-price" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/HobbyZone-Duet-RTF/dp/B00F4ZJ700/ref=as_sl_pc_ac_c_3_7_p_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            $59.99
+                        </a>
+                                                        </div>
+            </div>
+        </div>
+                                                                    <div data-asin="B00E5FAKVU" data-rectype="pub" class="amzn-prod-box amzn-clearfix">
+            <div class="amzn-ad-img-wrap ">
+                <a rel="nofollow" data-clicktype="image" title="Delta Ray RTF with SAFE technology" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/Delta-Ray-RTF-SAFE-technology/dp/B00E5FAKVU/ref=as_sl_pc_ac_c_3_8_i_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                    <img src="q_data_002/211fl2QZgL.jpg">
+                </a>
+            </div>
+            <div class="amzn-prod-det ">
+                <div class="amzn-prod-title">
+                    <a rel="nofollow" data-clicktype="title" title="Delta Ray RTF with SAFE technology" target="blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/Delta-Ray-RTF-SAFE-technology/dp/B00E5FAKVU/ref=as_sl_pc_ac_c_3_8_t_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">Delta Ray RTF with SAFE technology</a>
+                </div>
+                                <div class="amzn-prod-review">
+                                            <a rel="nofollow" data-clicktype="rating" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/Delta-Ray-RTF-SAFE-technology/dp/B00E5FAKVU/ref=as_sl_pc_ac_c_3_8_ra_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            <span title="4.0" class="amzn-prod-ratting amzn-sprite">
+                                <span class="amzn-sprite" style="width:80%;"></span>
+                            </span>
+                        </a>
+                        <a rel="nofollow" data-clicktype="reviews" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/Delta-Ray-RTF-SAFE-technology/dp/B00E5FAKVU/ref=as_sl_pc_ac_c_3_8_r_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            <span title="58 reviews" class="amzn-comment-count">
+                                                                (58)
+                                                            </span>
+                        </a>
+                                    </div>
+                <div class="amzn-prod-price">
+                                                                        <span class="amzn-old-price"> $229.99</span>
+                                                <a rel="nofollow" data-clicktype="price" class="amzn-new-price" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/Delta-Ray-RTF-SAFE-technology/dp/B00E5FAKVU/ref=as_sl_pc_ac_c_3_8_p_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            $179.99
+                        </a>
+                                                                <a rel="nofollow" data-clicktype="prime" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/Delta-Ray-RTF-SAFE-technology/dp/B00E5FAKVU/ref=as_sl_pc_ac_c_3_8_pr_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            <span title="Amazon Prime" class="amzn-prime-icon amzn-sprite"></span>
+                        </a>
+                                    </div>
+            </div>
+        </div>
+                                                                    <div data-asin="B00DPK10O2" data-rectype="pub" class="amzn-prod-box amzn-clearfix">
+            <div class="amzn-ad-img-wrap ">
+                <a rel="nofollow" data-clicktype="image" title="Syma S111G 3.5 Channel RC Helicopter with Gyro" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/Syma-S111G-Channel-Helicopter-Gyro/dp/B00DPK10O2/ref=as_sl_pc_ac_c_3_9_i_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                    <img src="q_data_002/31E-N8ClcQL.jpg">
+                </a>
+            </div>
+            <div class="amzn-prod-det ">
+                <div class="amzn-prod-title">
+                    <a rel="nofollow" data-clicktype="title" title="Syma S111G 3.5 Channel RC Helicopter with Gyro" target="blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/Syma-S111G-Channel-Helicopter-Gyro/dp/B00DPK10O2/ref=as_sl_pc_ac_c_3_9_t_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">Syma S111G 3.5 Channel RC Helicopter with Gyro</a>
+                </div>
+                                <div class="amzn-prod-review">
+                                            <a rel="nofollow" data-clicktype="rating" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/Syma-S111G-Channel-Helicopter-Gyro/dp/B00DPK10O2/ref=as_sl_pc_ac_c_3_9_ra_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            <span title="4.5" class="amzn-prod-ratting amzn-sprite">
+                                <span class="amzn-sprite" style="width:90%;"></span>
+                            </span>
+                        </a>
+                        <a rel="nofollow" data-clicktype="reviews" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/Syma-S111G-Channel-Helicopter-Gyro/dp/B00DPK10O2/ref=as_sl_pc_ac_c_3_9_r_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            <span title="1086 reviews" class="amzn-comment-count">
+                                                                (1086)
+                                                            </span>
+                        </a>
+                                    </div>
+                <div class="amzn-prod-price">
+                                                                        <span class="amzn-old-price"> $24.99</span>
+                                                <a rel="nofollow" data-clicktype="price" class="amzn-new-price" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/Syma-S111G-Channel-Helicopter-Gyro/dp/B00DPK10O2/ref=as_sl_pc_ac_c_3_9_p_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            $21.89
+                        </a>
+                                                                <a rel="nofollow" data-clicktype="prime" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/Syma-S111G-Channel-Helicopter-Gyro/dp/B00DPK10O2/ref=as_sl_pc_ac_c_3_9_pr_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            <span title="Amazon Prime" class="amzn-prime-icon amzn-sprite"></span>
+                        </a>
+                                    </div>
+            </div>
+        </div>
+                </div>
+        <div style="display:false;" class="amzn-prod-group">
+                                                                <div data-asin="B00D3IN11Q" data-rectype="pub" class="amzn-prod-box amzn-clearfix">
+            <div class="amzn-ad-img-wrap ">
+                <a rel="nofollow" data-clicktype="image" title="UDI U818A 2.4GHz 4 CH 6 Axis Gyro RC Quadcopter with Camera RTF Mode 2" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/UDI-U818A-2-4GHz-RC-Quadcopter/dp/B00D3IN11Q/ref=as_sl_pc_ac_c_4_10_i_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                    <img src="q_data_002/41iQNRYonsL.jpg">
+                </a>
+            </div>
+            <div class="amzn-prod-det ">
+                <div class="amzn-prod-title">
+                    <a rel="nofollow" data-clicktype="title" title="UDI U818A 2.4GHz 4 CH 6 Axis Gyro RC Quadcopter with Camera RTF Mode 2" target="blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/UDI-U818A-2-4GHz-RC-Quadcopter/dp/B00D3IN11Q/ref=as_sl_pc_ac_c_4_10_t_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">UDI U818A 2.4GHz 4 CH 6 Axis Gyro RC Quadcopt...</a>
+                </div>
+                                <div class="amzn-prod-review">
+                                            <a rel="nofollow" data-clicktype="rating" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/UDI-U818A-2-4GHz-RC-Quadcopter/dp/B00D3IN11Q/ref=as_sl_pc_ac_c_4_10_ra_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            <span title="4.0" class="amzn-prod-ratting amzn-sprite">
+                                <span class="amzn-sprite" style="width:80%;"></span>
+                            </span>
+                        </a>
+                        <a rel="nofollow" data-clicktype="reviews" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/UDI-U818A-2-4GHz-RC-Quadcopter/dp/B00D3IN11Q/ref=as_sl_pc_ac_c_4_10_r_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            <span title="2400 reviews" class="amzn-comment-count">
+                                                                (2400)
+                                                            </span>
+                        </a>
+                                    </div>
+                <div class="amzn-prod-price">
+                                                                        <span class="amzn-old-price"> $99.99</span>
+                                                <a rel="nofollow" data-clicktype="price" class="amzn-new-price" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/UDI-U818A-2-4GHz-RC-Quadcopter/dp/B00D3IN11Q/ref=as_sl_pc_ac_c_4_10_p_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            $57.29
+                        </a>
+                                                                <a rel="nofollow" data-clicktype="prime" target="_blank" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/UDI-U818A-2-4GHz-RC-Quadcopter/dp/B00D3IN11Q/ref=as_sl_pc_ac_c_4_10_pr_pub?tag=hooonrcair-20&amp;linkCode=w24&amp;creative=496521&amp;camp=212361&amp;ref-refURL=http%3A%2F%2Fwww.hooked-on-rc-airplanes.com%2Fservo-tutorial.html">
+                            <span title="Amazon Prime" class="amzn-prime-icon amzn-sprite"></span>
+                        </a>
+                                    </div>
+            </div>
+        </div>
+            </div>
+        	    </div>
+    <a rel="nofollow" href="http://aax-us-east.amazon-adsystem.com/x/c/QQt7CIRP8m_BacNMeuXpCuIAAAFPGPUIhwEAAAAApfjalQ/http://www.amazon.com/gp/dra/info" target="_blank" class="amzn-icon-ad-choice amzn-sprite"></a>
+</div>
+    
+    <script type="text/javascript">
+                (function(){window.AmznJ=function(g,f){var e=new a(g,f);Object.defineProperties(e.ele,{addEvent:{value:function(h,l){var k=this;if(typeof l!="function"){l=function(){};}for(var j=0;j<k.length;j++){if(k[j].addEventListener){k[j].addEventListener(h,l,false);}else{k[j].attachEvent(h,l);}}return this;}},addClass:{value:function(k){var l=this;for(var j=0;j<l.length;j++){var h=(l[j].getAttribute("class")||"")+" "+k;var m=h.split(" ");m=m.filter(function(i,n){return i&&m.indexOf(i)==n;});l[j].setAttribute("class",m.join(" "));}return this;}},removeClass:{value:function(n){var o=this;var p=n.split(" ");for(var m=0;m<o.length;m++){var l=(o[m].getAttribute("class")||"").split(" ");for(var k=0;k<p.length;k++){if(!p[k]){continue;}var h=l.indexOf(p[k]);while(h>-1){l.splice(h,1);h=l.indexOf(p[k]);}}o[m].setAttribute("class",l.join(" "));}return this;}},hasClass:{value:function(l){var m=this;var n=l.split(" ");var h=true;var k=m[0].getAttribute("class");if(!k){return false;}k=k.split(" ");for(var i=0;i<n.length;i++){if(k.indexOf(n[i])===-1){h=false;}}return h;}},toggleClass:{value:function(l){var n=this;var o=l.split(" ");for(var h=0;h<o.length;h++){for(var k=0;k<n.length;k++){if(!o[h]){continue;}var m=AmznJ(n[k]);if(m.hasClass(o[h])){m.addClass(o[h]);}else{m.removeClass(o[h]);}}}return this;}},remove:{value:function(){var l=this;for(var j=0,h=l.length;j<h;j++){var k=l[j].parentElement||l[j].parentNode;if(k){k.removeChild(l[j]);l.splice(j,1);}}return this;}},filter:{value:function(o,m){var n=this;var p=AmznJ.eleToNode(m);var q=[];var h=p.querySelectorAll(o);for(var l=0;l<n.length;l++){for(var k=0;k<h.length;k++){if(h[k]==n[l]){q.push(n[l]);break;}}}return AmznJ(q);}},get:{value:function(h){var i=this;h=parseInt(h);if(!h){h=0;}return AmznJ(i[0]);}},index:{value:function(){var l=this;var k=l[0];if(!k){return false;}var j=AmznJ(k.parentNode.childNodes);for(var h=0;h<j.length;h++){if(j[h]==k){return h;}}return 0;}},findParent:{value:function(h){var j=this;var i=j[0],k;if(!i){return false;}while(i){k=AmznJ(i);if(k.hasClass(h)){return k;}else{i=i.parentNode;}}return false;}},not:{value:function(n,p){var q=this;var o=AmznJ.eleToNode(p);var m=[];var h=o.querySelectorAll(n);for(var l=0;l<q.length;l++){var r=false;for(var k=0;k<h.length;k++){if(h[k]==q[l]){r=true;}}if(!r){m.push(q[l]);}}return AmznJ(m);}},append:{value:function(n,l){var m=this;if(!n){return this;}n=AmznJ(n,l);for(var k=0;k<m.length;k++){for(var h=0;h<n.length;h++){m[k].appendChild(n[h]);}}return this;}},html:{value:function(j){var k=this;if(!j){return k[0].innerHTML;}for(var h=0;h<k.length;h++){k[h].innerHTML=j;}return this;}},text:{value:function(k){var j=this;if(!k){if(j[0].textContent){return j[0].textContent;}return j[0].innerText;}for(var h=0;h<j.length;h++){j[h].textContent=k;j[h].innerText=k;}return this;}},width:{value:function(j){var k=this;if(!j){return k[0].offsetWidth;}for(var h=0;h<k.length;h++){k[h].style.width=j+"px";}return this;}},height:{value:function(h){var k=this;if(!h){return k[0].offsetHeight;}for(var j=0;j<k.length;j++){k[j].style.height=h+"px";}return this;}},focus:{value:function(){var h=this;h[0].focus();}},css:{value:function(m){var p=this;if(!m||!AmznJ.isPlainObject(m)){return AmznJ.styleToObj(p[0].getAttribute("style"));}for(var l=0;l<p.length;l++){var h=AmznJ.styleToObj(p[l].getAttribute("style"));var n=AmznJ.extend({},h,m);for(var k in n){if(m[l]===false){delete n[l];}}var o=AmznJ.objToStyle(n);if(o){p[l].setAttribute("style",o);}}return this;}},attr:{value:function(h,l){var k=this;if(l){for(var j=0;j<k.length;j++){k[j].setAttribute(h,l);}}else{return k[0].getAttribute(h);}return this;}}});var d=["click","mouseover","mouseout","mouseenter","mouseleave","keydown","keyup","change","message"];for(var c=0,b=d.length;c<b;c++){(function(h){Object.defineProperty(e.ele,h,{value:function(i){this.addEvent(h,i);return this;}});}(d[c]));}return e.ele;};Object.defineProperties(AmznJ,{AmznJVer:{value:0.1},hasOwn:{value:({}).hasOwnProperty},extend:{value:function(b,e,d){if(!b){b={};}for(var c in e){b[c]=e[c];}if(d){for(var c in d){b[c]=d[c];}}return b;}},isNodeList:{value:function(b){return(typeof b.length==="number");}},trim:{value:function(b){return b.split(/\s+/).join(" ");}},isPlainObject:{value:function(b){return true;}},eleToNode:{value:function(b){if(!b){return document;}var c;if(b.AmznJVer||b.length){c=b[0];}else{if(b.nodeType){c=b;}else{if(typeof b==="string"){c=document.querySelector(b);}else{c=document;}}}return c;}},styleToObj:{value:function(f){var b={};if(!f){return b;}var e=f.split(";");for(var c=0;c<e.length;c++){var d=e[c].split(":");if(d[0]&&d[1]){b[AmznJ.trim(d[0])]=AmznJ.trim(d[1]);}}return b;}},objToStyle:{value:function(e){if(!AmznJ.isPlainObject(e)&&e){return false;}var b="";var d=Math.random();for(var c in e){b+=c+":"+e[c]+";";}return b;}}});function a(k,h){var g=this;if(!h){h=document;}if(typeof k=="string"){if((/^</).test(k)){var j=document.createElement("div");j.innerHTML=k;k=j.childNodes;if(!k.length){k=[];}else{k=k[0];if(AmznJ.isPlainObject(h)){var b=AmznJ.styleToObj(k.getAttribute("style"));var e=AmznJ.extend({},b,(h.css?h.css:{}));var d=AmznJ.objToStyle(e);if(d){k.setAttribute("style",d);}for(var f in h){switch(f){case"css":break;case"text":if("textContent" in k){k.textContent=h[f];}else{k.innerText=h[f];}break;case"html":k.innerHTML=h[f];break;default:k.setAttribute(f,h[f]);}}}k=[k];}}else{if(AmznJ.isNodeList(h)||h.AmznJVer){if(!h[0]){k=[];}else{k=h[0].querySelectorAll(k);}}else{if(h.nodeName){k=h.querySelectorAll(k);}else{k=[];}}}}else{if(AmznJ.isNodeList(k)||k.AmznJVer){k=k;}else{if(k.nodeName){k=[k];}else{k=[];}}}var c=[];for(var f=0;f<k.length;f++){if(k[f].nodeName&&k[f].nodeName!="#text"){c.push(k[f]);}}this.ele=c;}}());(function(b){var a=function(i){if(!i){return false;}var j=this;j.ele=b(i);var g=b(".amzn-prod-navigator",i);var e=b(".amzn-prod-group",i);var h=b(".amzn-prod-nav-prev",i);var d=b(".amzn-prod-nav-next",i);var f=false;j.jumpToIndex=function(l,p){var m=e.filter(".amzn-current-prod");l=parseInt(l);var q=m.index();if(!m.length||typeof l!=="number"||l<0||l>=e.length||q==l){return false;}m.removeClass("amzn-current-prod").addClass("amzn-goto-current");var n="left";if(p){n=p;}else{if(q<l){n="right";}}var k=(n=="right"?"left":"right");var o=b(e[l]).addClass("amzn-goto-"+n);setTimeout(function(){m.removeClass("amzn-goto-current").addClass("amzn-animate").addClass("amzn-goto-"+k);o.removeClass("amzn-goto-"+n).addClass("amzn-animate").addClass("amzn-goto-current");},20);f.removeClass("active");if(f[l]){b(f[l]).addClass("active");}setTimeout(function(){e.removeClass("amzn-animate amzn-goto-left amzn-goto-right amzn-goto-current amzn-current-prod");m.removeClass("amzn-current-prod");o.addClass("amzn-current-prod");},600);return(j.curIdx=l);};j.checkProdGroupType=function(k,l){return b(".amzn-prod-box",e[k]).reduce(function(m,o,n,p){return m&&o.getAttribute("data-rectype")===l;},true);};j.jumpToNext=function(n){var k=e.filter(".amzn-current-prod").index()+1;if(k>=e.length){k=0;}if(n){var m=k;var l=0;while(l<e.length){if(m>=e.length){m=0;}if(j.checkProdGroupType(m,n)){k=m;break;}l++;m++;}if(l==e.length){return;}}j.jumpToIndex(k,"right");};j.jumpToPrev=function(n){var k=e.filter(".amzn-current-prod").index()-1;if(k<0){k=e.length-1;}if(n){var m=k;var l=0;while(l<e.length){if(m<0){m=e.length-1;}if(j.checkProdGroupType(m,n)){k=m;break;}l++;m--;}if(l==e.length){return;}}j.jumpToIndex(k,"left");};j.curIdx=0;j.init=function(){if(e.length<=1){b(i).removeClass("amzn-multi-scroll").addClass("amzn-multi-1");return false;}var m=getTrackPageData();m.interaction="first_render";m.page=0;m.products=b(".amzn-prod-box",e[0]).map(function(o){return{asin:o.getAttribute("data-asin"),asinRecommendationType:o.getAttribute("data-rectype")};});recordInteraction(m);for(var k=0;k<e.length;k++){g.append("<a></a>",{href:"#",text:k+1,"class":(k==j.curIdx?"active":"")});}f=b(".amzn-prod-navigator a",i).click(function(p){p.preventDefault();var o=getTrackPageData();o.interaction="navigation";o.prevPage=j.curIdx+1;j.jumpToIndex(b(this).index());o.page=j.curIdx+1;o.products=b(".amzn-prod-box",e[j.curIdx]).map(function(q){return{asin:q.getAttribute("data-asin"),asinRecommendationType:q.getAttribute("data-rectype")};});recordInteraction(o);});d.click(function(p){p.preventDefault();var o=getTrackPageData();o.interaction="navigation";o.prevPage=j.curIdx+1;j.jumpToNext();o.page=j.curIdx+1;o.products=b(".amzn-prod-box, table",e[j.curIdx]).map(function(q){return{asin:q.getAttribute("data-asin"),asinRecommendationType:q.getAttribute("data-rectype")};});recordInteraction(o);});h.click(function(p){p.preventDefault();var o=getTrackPageData();o.prevPage=j.curIdx+1;j.jumpToPrev();o.interaction="navigation";o.page=j.curIdx+1;o.products=b(".amzn-prod-box",e[j.curIdx]).map(function(q){return{asin:q.getAttribute("data-asin"),asinRecommendationType:q.getAttribute("data-rectype")};});recordInteraction(o);});e.click(function(o){b(this).attr("data-clicked","true");});if(j.ele.hasClass("amzn-autoscroll")){var n=false;function l(){if(!n){n=setInterval(function(){j.jumpToNext("rec");},5000);}}l();j.ele.mouseenter(function(o){if(n){clearInterval(n);n=false;}}).mouseleave(function(o){l();});}return j;};return this;};var c=function(e){if(!e){return false;}var f=this;var d=b(".amzn-prod-group",e);f.init=function(){for(var m=0;m<d.length;m++){var p=b(d[m]);p.css({display:"block"});var o=b(".amzn-prod-title",p);for(var k=0;k<o.length;k++){var l=b(o[k]).height();var n=b("a",o[k]);if(n.height()>l){n.text(n.text()+"...");}while(n.height()>l){var g=n.text();var h=g.substring(0,g.length-4)+"...";n.text(h);}}p.css({display:false});}return f;};};window.onload=function(){var g=b(".js-amzn-slide-ad"),d;for(var f=0;f<g.length;f++){(new a(g[f])).init();}var e=b(".amzn-ad-wrap");for(var f=0;f<e.length;f++){(new c(e[f])).init();}b(".amzn-prod-box a").click(function(k){var j=getTrackData();var h=b(this).findParent("amzn-prod-box");if(h){var i=b(h[0].parentNode);j.interaction="click";j.clickSource=b(this).attr("data-clicktype");j.boxIndex=h.index();j.page=i.index();j.asin=h.attr("data-asin")||"";j.asinRecommendationType=h.attr("data-rectype")||"";recordInteraction(j);recordAcapFeedback({asin:j.asin,action:"CLICK"});}});b(".amzn-ad-logo a").click(function(i){var h=getTrackData();h.interaction="click";h.clickSource="logo";h.boxIndex=-1;h.page=-1;h.asin="";h.asinRecommendationType="";recordInteraction(h);});b(".amzn-prod-box").mouseenter(function(j){var h=b(this).findParent("amzn-prod-box"),i;if(h){i=b(h[0].parentNode);d=setTimeout(function(){var k=getTrackData();k.interaction="hover";k.boxIndex=h.index();k.page=i.index();k.asin=h.attr("data-asin")||"";k.asinRecommendationType=h.attr("data-rectype")||"";recordInteraction(k);recordAcapFeedback({asin:k.asin,action:"HOVER"});},3000);}}).mouseleave(function(){clearTimeout(d);});};}(AmznJ));function getTrackData(){return{clickSource:false,asin:false,boxIndex:false,page:false,asinRecommendationType:false,logType:"contextual_clicks"};}function getTrackPageData(){return{page:false,prevPage:false,products:false,logType:"contextual_navigation"};}
+      
+        
+
+                                    runtimeManager.retrieveRuntime(function(rt) {
+                (new Image()).src = "//ir-na.amazon-adsystem.com/e/ir?o=1&t=" + rt["trackingId"] +
+                                    "&l=w24&creative=496521&camp=212361";
+                            
+                addRefUrls(document.getElementsByTagName("a"), rt["linkid"]);
+                 if(typeof rt["clickURL"] !== "undefined") {
+                	addClickUrls(document.getElementsByTagName("a"), rt["clickURL"]);
+                  }
+              
+            }, 5000, window.backupRuntime);
+            
+            
+                        
+                
+                
+     
+    </script>
+
+
+
+</body></html>

@@ -1,0 +1,332 @@
+
+
+/*
+ * Standard Style Sheet for digitalnemesis.com
+ *
+ * (C) Copyright 2005 Digital Nemesis Pty Ltd, all rights reserved.
+ */
+body 
+{
+	/* Standard Font Setup */
+	font-family: arial,sans-serif;
+	font-size: small;
+	
+	/* Page Colours */
+	background-color: White;
+	color: Black;
+	
+	/* Page Margins */
+	margin: 0;
+	padding: 0;
+}
+
+table
+{
+	border-collapse: collapse;
+	border-spacing: 0;
+	margin: 0;
+	padding: 0;
+}
+
+form
+{
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+
+/* Page Header Styles */
+#pageheader
+{
+	width: 100%;
+	background-color: White;
+	color: Black;
+	background-image: url(/images/header-background-350-1-white.gif);
+	background-position: left top;
+	background-repeat: repeat-y;
+	border: none;
+	text-align: left;
+	vertical-align: top;
+}
+
+.logo img
+{
+	border: none;
+	padding: 0;
+	margin: 0;
+	text-align: left;
+	vertical-align: top;
+}
+
+.sitenav
+{
+	padding-right: 5px;
+	text-align: right;
+	vertical-align: top;
+	white-space: nowrap;
+}
+
+.sitenav a:link, .sitenav a:visited, .sitenav a:active
+{
+	background-color: Transparent;
+	color: black;
+	text-decoration: none;
+}
+
+.sitenav a:hover
+{
+	background-color: Transparent;
+	color: black;
+	text-decoration: underline;
+}
+
+/* Navigation Styles */
+#pagecontent
+{
+	font-family: arial,sans-serif;
+	font-size: small;
+	
+	width: 100%;
+	
+	margin: 0;
+	padding: 0;
+	border-bottom: none;
+	border-left: none;
+	border-right: none;
+	border-top: solid 1px #8A6553;
+}
+
+#navigation
+{
+	background-color: #D5D580;
+	width: 15em;
+	
+	vertical-align: top;
+	text-align: left;	
+	
+	border-right: solid 1px #8A6553;
+	padding: 2px;
+	
+	font-size: x-small;
+}
+
+#navigation h1
+{
+	margin: 0px 0px 2px 0px;
+	font-size: x-small;
+	font-weight: bold;
+}
+
+#navigation .sep
+{
+	border-top: solid 1px #8A6553;
+	margin-top: 10px;
+	padding-top: 2px;
+}
+
+#navigation .ind
+{
+	text-indent: 5px;
+}
+
+#navigation a:link, #navigation a:visited, #navigation a:active
+{
+	display: block;
+	color: black;
+	border: solid 1px #D5D580;
+	background-color: #D5D580;
+	text-decoration: none;
+	padding: 0px 2px 1px 2px;
+	white-space: nowrap;
+	margin: 0;
+}
+
+#navigation a:hover
+{
+	display: block;
+	color: black;
+	border: solid 1px #8A6553;
+	background-color: #D6D6D6;
+	text-decoration: none;
+	padding: 0px 2px 1px 2px;
+	white-space: nowrap;
+	margin: 0;
+}
+
+
+/* Content Styles */
+#contentcontainer
+{
+	vertical-align: top;
+	padding: 0;
+}
+
+#breadcrumbs
+{
+	font-family: arial,sans-serif;
+	font-size: x-small;
+	border-bottom: solid 1px #8A6553;
+	padding: 2px 4px;
+	background-color: #D6D6D6;
+	color: Black;
+}
+
+#breadcrumbs a:link, #breadcrumbs a:visited
+{
+	color: black;
+	font-weight: bold;
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+#breadcrumbs a:hover, #breadcrumbs a:active
+{
+	color: black;
+	font-weight: bold;
+	text-decoration: underline;
+	white-space: nowrap;
+}
+
+#content
+{
+	padding: 5px;
+	font-size: small;
+}
+
+#content a:link, #content a:visited
+{
+	color: #F28900;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+#content a:hover, #content a:active
+{
+	color: #F28900;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+#content h1
+{
+	font-size: medium;
+	color: #999999;
+}
+
+#content h2
+{
+	font-size: small;
+	color: #999999;
+}
+
+#content h3
+{
+	font-size: small;
+	font-weight: normal;
+	color: #999999;
+}
+
+#content p
+{
+
+}
+
+#content dl
+{
+	margin-left: 10px;
+}
+
+#content table
+{
+	border: solid 1px #8A6553;
+	border-collapse: collapse;
+}
+
+#content td
+{
+	border: solid 1px #8A6553;
+	padding: 2px 5px;
+	vertical-align: top;
+	text-align: left;
+}
+
+#content th
+{
+	border: solid 1px #8A6553;
+	background-color: #8A6553;
+	color: white;
+	padding: 2px 5px;
+	vertical-align: top;
+	text-align: left;
+}
+
+/* inline figure */
+.figure
+{
+	text-align: center;
+	font-weight: bold;
+	font-size: x-small;
+}
+
+.figure img
+{
+	border: solid 1px #8A6553;
+	padding: 5px;
+}
+
+/* Footer Styles */
+#pagefooter
+{
+	font-family: arial,sans-serif;
+	font-size: x-small;
+	text-align: center;
+	
+	background-color: white;
+	color: #666666;
+	width: 100%;
+		
+	margin: 0;
+	padding: 0.2em;
+	border-bottom: none;
+	border-left: none;
+	border-right: none;
+	border-top: solid 1px #8A6553;
+}
+
+#pagefooter a:link, #pagefooter a:visited
+{
+	color: #666666;
+	text-decoration: none;
+}
+
+#pagefooter a:hover, #pagefooter a:active
+{
+	color: #999999;
+	text-decoration: underline;
+}
+
+.lastupdated
+{
+	font-size: xx-small;
+	color: #AAA;
+}
+
+.w3clogo
+{
+	float: left;
+}
+
+.w3clogo img
+{
+	border: none;
+	padding: 0;
+	margin: 0;
+}
+
+.standout
+{
+	color: red;
+	border-top: solid 1px red;
+	border-bottom: solid 1px red;
+	padding: 5px 15px;
+}

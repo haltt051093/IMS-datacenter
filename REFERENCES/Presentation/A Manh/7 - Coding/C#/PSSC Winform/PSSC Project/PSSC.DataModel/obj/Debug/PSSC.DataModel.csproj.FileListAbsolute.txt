@@ -1,0 +1,36 @@
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.DataModel\bin\Debug\PSSC.DataModel.dll.config
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.DataModel\bin\Debug\PSSC.DataModel.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.DataModel\bin\Debug\PSSC.DataModel.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.DataModel\bin\Debug\EntityFramework.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.DataModel\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.DataModel\bin\Debug\PSSC.XCommon.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.DataModel\bin\Debug\PSSC.XCommon.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.DataModel\bin\Debug\EntityFramework.xml
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.DataModel\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.DataModel\obj\Debug\PSSC.DataModel.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.DataModel\obj\Debug\PSSC.DataModel.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.DataModel\obj\Debug\PSSC.DataModel.csprojResolveAssemblyReference.cache
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.DataModel\bin\Debug\PSSC.DataModel.dll.config
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.DataModel\bin\Debug\PSSC.DataModel.dll
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.DataModel\bin\Debug\PSSC.DataModel.pdb
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.DataModel\bin\Debug\EntityFramework.dll
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.DataModel\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.DataModel\bin\Debug\PSSC.XCommon.dll
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.DataModel\bin\Debug\PSSC.XCommon.pdb
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.DataModel\bin\Debug\EntityFramework.xml
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.DataModel\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.DataModel\obj\Debug\PSSC.DataModel.csprojResolveAssemblyReference.cache
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.DataModel\obj\Debug\PSSC.DataModel.dll
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.DataModel\obj\Debug\PSSC.DataModel.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.DataModel\bin\Debug\PSSC.DataModel.dll.config
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.DataModel\bin\Debug\PSSC.DataModel.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.DataModel\bin\Debug\PSSC.DataModel.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.DataModel\bin\Debug\EntityFramework.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.DataModel\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.DataModel\bin\Debug\PSSC.XCommon.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.DataModel\bin\Debug\PSSC.XCommon.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.DataModel\bin\Debug\EntityFramework.xml
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.DataModel\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.DataModel\obj\Debug\PSSC.DataModel.csprojResolveAssemblyReference.cache
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.DataModel\obj\Debug\PSSC.DataModel.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.DataModel\obj\Debug\PSSC.DataModel.pdb

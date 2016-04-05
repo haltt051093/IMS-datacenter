@@ -1,0 +1,12 @@
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.XCommon\bin\Debug\PSSC.XCommon.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.XCommon\bin\Debug\PSSC.XCommon.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.XCommon\obj\Debug\PSSC.XCommon.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.XCommon\obj\Debug\PSSC.XCommon.pdb
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.XCommon\bin\Debug\PSSC.XCommon.dll
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.XCommon\bin\Debug\PSSC.XCommon.pdb
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.XCommon\obj\Debug\PSSC.XCommon.dll
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.XCommon\obj\Debug\PSSC.XCommon.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.XCommon\bin\Debug\PSSC.XCommon.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.XCommon\bin\Debug\PSSC.XCommon.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.XCommon\obj\Debug\PSSC.XCommon.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.XCommon\obj\Debug\PSSC.XCommon.pdb

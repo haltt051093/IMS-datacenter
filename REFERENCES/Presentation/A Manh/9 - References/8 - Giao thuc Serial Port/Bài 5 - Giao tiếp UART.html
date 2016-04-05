@@ -1,0 +1,633 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0045)http://www.hocavr.com/index.php/lectures/uart -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="" lang=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!--<base href="http://www.hocavr.com/index.php/lectures/uart">--><base href=".">
+  
+  <meta name="robots" content="index, follow">
+  <meta name="keywords" content="hocavr, hoc avr, cung hoc avr,cùng học avr, avr,hotam, avr1, avr2, avr3, avr4, avr5, avr6, avr7, avr8, avr tieng viet, tai lieu, timer, ngat, spi, i2c, lap trinh avr, thanhtam.h">
+  <meta name="title" content="Bài 5 - Giao tiếp UART">
+  <meta name="author" content="Hồ Tâm">
+  <meta name="description" content="hocavr - to become the avr master">
+  <meta name="generator" content="Joomla! 1.5 - Open Source Content Management">
+  <title>Bài 5 - Giao tiếp UART</title>
+  <link href="http://www.hocavr.com/templates/ja_barite/favicon.ico" rel="shortcut icon" type="image/x-icon">
+  <link rel="stylesheet" href="./Bài 5 - Giao tiếp UART_files/extravote.css" type="text/css">
+  <link rel="stylesheet" href="./Bài 5 - Giao tiếp UART_files/colorbox.css" type="text/css">
+  <style type="text/css">
+    <!--
+#cboxLoadedContent{background-color:#fff;}
+    -->
+  </style>
+  <script type="text/javascript" src="./Bài 5 - Giao tiếp UART_files/mootools.js"></script>
+  <script type="text/javascript" src="./Bài 5 - Giao tiếp UART_files/caption.js"></script>
+  <script type="text/javascript" src="./Bài 5 - Giao tiếp UART_files/extravote.js"></script>
+  <script type="text/javascript" src="./Bài 5 - Giao tiếp UART_files/jquery.min.js"></script>
+  <script type="text/javascript" src="./Bài 5 - Giao tiếp UART_files/jquery.colorbox-min.js"></script>
+  <script type="text/javascript">
+
+			$j(document).ready(function(){
+				$j('a.modalizer_link,a.modal,a.modalizer').colorbox({width:'80%',height:'80%',iframe:true});
+				$j('a.modalizer_link_image').colorbox({});
+				$j('a.modalizer_link_external').colorbox({width:'80%',height:'80%',iframe:true});
+			});
+		
+  </script>
+
+<link rel="stylesheet" href="./Bài 5 - Giao tiếp UART_files/editor.css" type="text/css">
+<link rel="stylesheet" href="./Bài 5 - Giao tiếp UART_files/system.css" type="text/css">
+<link rel="stylesheet" href="./Bài 5 - Giao tiếp UART_files/general.css" type="text/css">
+<link rel="stylesheet" href="./Bài 5 - Giao tiếp UART_files/template.css" type="text/css">
+<link rel="stylesheet" href="./Bài 5 - Giao tiếp UART_files/typo.css" type="text/css">
+
+<script language="javascript" type="text/javascript" src="./Bài 5 - Giao tiếp UART_files/ja.script.js"></script>
+
+<!-- Menu head -->
+			<link href="./Bài 5 - Giao tiếp UART_files/ja.cssmenu.css" rel="stylesheet" type="text/css">
+			<script src="./Bài 5 - Giao tiếp UART_files/ja.cssmenu.js" language="javascript" type="text/javascript"></script>
+			
+<link href="./Bài 5 - Giao tiếp UART_files/blue.css" rel="stylesheet" type="text/css">
+
+<!--[if lte IE 6]>
+<style type="text/css">
+.clearfix {height: 1%;}
+img {
+	border: none;
+}
+</style>
+<![endif]-->
+
+<!--[if gte IE 7.0]>
+<style type="text/css">
+.clearfix {display: inline-block;}
+</style>
+<![endif]-->
+
+<!--[if gt IE 7]>
+<link href="http://www.hocavr.com/templates/ja_barite/css/ie8.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+
+
+<style type="text/css">
+#ja-header,
+#ja-subnav,
+#ja-container,
+#ja-botsl,
+#ja-footer {
+	width: 950px;
+	margin: 0 auto;
+}
+
+</style>
+</head>
+
+<body id="bd" class="950 fs4"><div id="cboxOverlay" style="display: none;"></div><div id="colorbox" class="" style="padding-bottom: 42px; padding-right: 42px; display: none;"><div id="cboxWrapper"><div id="false"><div id="cboxTopLeft" style="float: left;"></div><div id="cboxTopCenter" style="float: left;"></div><div id="cboxTopRight" style="float: left;"></div></div><div id="false" style="clear: left;"><div id="cboxMiddleLeft" style="float: left;"></div><div id="cboxContent" style="float: left;"><div id="cboxLoadedContent" class="" style="width: 0px; height: 0px; overflow: hidden;"></div><div id="cboxLoadingOverlay" class=""></div><div id="cboxLoadingGraphic" class=""></div><div id="cboxTitle" class=""></div><div id="cboxCurrent" class=""></div><div id="cboxNext" class=""></div><div id="cboxPrevious" class=""></div><div id="cboxSlideshow" class=""></div><div id="cboxClose" class=""></div></div><div id="cboxMiddleRight" style="float: left;"></div></div><div id="false" style="clear: left;"><div id="cboxBottomLeft" style="float: left;"></div><div id="cboxBottomCenter" style="float: left;"></div><div id="cboxBottomRight" style="float: left;"></div></div></div><div id="false" style="position: absolute; width: 9999px; visibility: hidden; display: none;"></div></div>
+<a name="Top" id="Top"></a>
+<ul class="accessibility">
+	<li><a href="http://www.hocavr.com/index.php/lectures/uart#ja-content" title="Skip to content">Skip to content</a></li>
+	<li><a href="http://www.hocavr.com/index.php/lectures/uart#ja-mainnav" title="Skip to main navigation">Skip to main navigation</a></li>
+	<li><a href="http://www.hocavr.com/index.php/lectures/uart#ja-col1" title="Skip to 1st column">Skip to 1st column</a></li>
+	<li><a href="http://www.hocavr.com/index.php/lectures/uart#ja-col2" title="Skip to 2nd column">Skip to 2nd column</a></li>
+	<li><a href="http://www.hocavr.com/index.php/lectures/uart#ja-col3" title="Skip to 3nd column">Skip to 2nd column</a></li>
+</ul>
+
+<div id="ja-wrapper">
+
+<!-- BEGIN: HEADER -->
+<div id="ja-headerwrap">
+	<div id="ja-header" class="clearfix">
+
+	        
+        <table width="800" border="0">
+          <tbody><tr>
+            <td width="300">
+             <!-- <h1 class="logo-text">
+                <a href="/index.php" title="Cùng học AVR (AVR tutorial) - Tài liệu học lập trình AVR bằng tiếng Việt"><span>CÙNG HỌC AVR</span></a>	
+            </h1>
+            <p class="site-slogan">...to become the AVR Master</p>
+            -->
+            
+            <!-- Phan ben duoi moi duoc add vao, hien logo CADKit -->
+            <h1>
+             <a href="http://www.hocavr.com/index.php" title="Cùng học AVR (AVR tutorial) - Tài liệu học lập trình AVR bằng tiếng Việt"><span>CÙNG HỌC AVR</span></a>          
+            </h1>
+            <p>...to become the AVR Master</p>	  
+            </td>
+            <td>
+				<a href="http://www.cadkit.net/" target="_blank"><img src="./Bài 5 - Giao tiếp UART_files/CADKit.gif" width="216" height="80" border="0" style="border:0px solid black;" alt="Phan mem xem CAD va bien tap Glyph mien phi!"></a> 
+            </td>
+            <!-- Phan ben tren moi duoc add vao, hien logo CADKit -->
+            
+          </tr>
+        </tbody></table>
+
+		
+        <!-- <div> <p><a href="http://www.cadkit.net" target="_blank"><img src="/CADKit.gif" width="324" height="120" border="0" style="border:0px solid black;" alt="www.CADKit.net!" /></a></p>    </div> -->
+		
+		
+			<div id="ja-login">
+	          <!--<a href="http://www.cadkit.net" target="_blank"><img src="/CADKit.gif";" alt="www.CADKit.net!" /></a> -->
+			<form action="http://www.hocavr.com/index.php/lectures/index.php" method="post">
+	<div class="search">
+		<input name="searchword" id="mod_search_searchword" maxlength="20" alt="Search" class="inputbox" type="text" size="20" value="search..." onblur="if(this.value==&#39;&#39;) this.value=&#39;search...&#39;;" onfocus="if(this.value==&#39;search...&#39;) this.value=&#39;&#39;;">	</div>
+	<input type="hidden" name="task" value="search">
+	<input type="hidden" name="option" value="com_search">
+	<input type="hidden" name="Itemid" value="9">
+</form>
+<form action="https://www.paypal.com/en/cgi-bin/webscr" method="post">
+	<input type="hidden" name="cmd" value="_donations">
+	<input type="hidden" name="business" value="thanhtam.h@gmail.com">
+	<input type="hidden" name="return" value="http://">
+	<input type="hidden" name="undefined_quantity" value="0">
+	<input type="hidden" name="item_name" value="Giúp cải thiện tốc độ truy cập HOCAVR.COM">
+	<input type="hidden" name="amount" value="">
+<input type="hidden" name="currency_code" value="USD">
+	<input type="hidden" name="charset" value="utf-8">
+	<input type="hidden" name="no_shipping" value="1">
+	<input type="hidden" name="image_url" value="">
+	<input type="hidden" name="cancel_return" value="http://">
+	<input type="hidden" name="no_note" value="0"><br><br>
+		<div align="center">
+		<input type="image" src="./Bài 5 - Giao tiếp UART_files/btn_donate_SM.gif" name="submit" alt="PayPal secure payments.">
+	</div>
+	</form>			
+		</div>
+	
+	<!-- BEGIN: MAIN NAVIGATION -->
+	<div id="ja-mainnav" class="clearfix">
+		<ul id="ja-cssmenu" class="clearfix">
+<li><a href="http://www.hocavr.com/" class="first-item" id="menu1" title="Trang chủ"><span>Trang chủ</span></a></li> 
+<li class="havechild active"><a href="http://www.hocavr.com/index.php/en/lectures" class="active" id="menu6" title="Học AVR"><span>Học AVR</span></a><ul><li><a href="http://www.hocavr.com/index.php/en/lectures/lamquenavr" class="first-item" id="menu4" title="Làm quen AVR"><span>Làm quen AVR</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/lectures/cautrucavr" id="menu5" title="Cấu Trúc AVR"><span>Cấu Trúc AVR</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/lectures/ngatngoai" id="menu7" title="Ngắt ngoài"><span>Ngắt ngoài</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/lectures/timer-counter" id="menu8" title="Timer - Counter"><span>Timer - Counter</span></a></li> 
+<li class="havesubchild active"><a href="http://www.hocavr.com/index.php/en/lectures/uart" class="active" id="menu9" title="Giao tiếp UART"><span>Giao tiếp UART</span></a><ul><li><a href="http://www.hocavr.com/index.php/en/lectures/uart/uartnormal" class="first-item" id="menu49" title="Giao tiếp UART thông thường"><span>Giao tiếp UART thông thường</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/lectures/uart/uartmulti" class="last-item" id="menu50" title="UART- Chế độ Mutli Processor"><span>UART- Chế độ Mutli Processor</span></a></li> 
+</ul></li> 
+<li><a href="http://www.hocavr.com/index.php/en/lectures/adc" id="menu10" title="Chuyển đổi ADC"><span>Chuyển đổi ADC</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/lectures/spi" id="menu11" title="Giao tiếp SPI"><span>Giao tiếp SPI</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/lectures/i2c" id="menu12" title="Giao tiếp TWI-I2C"><span>Giao tiếp TWI-I2C</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/lectures/bosung" class="last-item" id="menu51" title="Bổ sung [Thảo luận]"><span>Bổ sung [Thảo luận]</span></a></li> 
+</ul></li> 
+<li class="havechild"><a href="http://www.hocavr.com/index.php/en/app" id="menu26" title="Ứng dụng AVR"><span>Ứng dụng AVR</span></a><ul><li><a href="http://www.hocavr.com/index.php/en/app/dotmatrix" class="first-item" id="menu28" title="Ma trận LED"><span>Ma trận LED</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/app/keypad" id="menu30" title="Giao tiếp Keypad"><span>Giao tiếp Keypad</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/app/textlcd" id="menu27" title="Text LCD"><span>Text LCD</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/app/glcd" id="menu29" title="Graphic LCD"><span>Graphic LCD</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/app/dcservo" id="menu32" title="Động cơ DC Servo"><span>Động cơ DC Servo</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/app/ds1307" id="menu44" title="Đồng hồ thời gian thực DS1307"><span>Đồng hồ thời gian thực DS1307</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/app/spiadc" id="menu47" title="Function Generator (SPI DAC)"><span>Function Generator (SPI DAC)</span></a></li> 
+<li class="havesubchild"><a href="http://www.hocavr.com/index.php/en/app/gtmt" id="menu70" title="Giao tiếp AVR - PC"><span>Giao tiếp AVR - PC</span></a><ul><li><a href="http://www.hocavr.com/index.php/en/app/gtmt/gtmt1" class="first-item" id="menu71" title="GTMT - Bài 1"><span>GTMT - Bài 1</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/app/gtmt/gtmt2" class="last-item" id="menu72" title="GTMT - Bài 2"><span>GTMT - Bài 2</span></a></li> 
+</ul></li> 
+<li><a href="http://www.hocavr.com/index.php/en/app/input-capture" id="menu86" title="Đo xung bằng Input Capture"><span>Đo xung bằng Input Capture</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/app/mmc" class="last-item" id="menu88" title="Giao tiếp card MMC/SD"><span>Giao tiếp card MMC/SD</span></a></li> 
+</ul></li> 
+<li class="havechild"><a href="http://www.hocavr.com/index.php/en/software" id="menu13" title="Hỗ trợ phần mềm"><span>Hỗ trợ phần mềm</span></a><ul><li><a href="http://www.hocavr.com/index.php/en/software/avr-studio" class="first-item" id="menu18" title="AVR Studio"><span>AVR Studio</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/software/asm" id="menu34" title="Assembly Instruction"><span>Assembly Instruction</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/software/protues" id="menu21" title="Proteus - Mô phỏng"><span>Proteus - Mô phỏng</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/software/winavr" id="menu19" title="WinAVR"><span>WinAVR</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/software/c-cho-avr" id="menu23" title="C cho AVR"><span>C cho AVR</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/software/fuse-bits" id="menu22" title="Fuse bits"><span>Fuse bits</span></a></li> 
+<li class="havesubchild"><a href="http://www.hocavr.com/index.php/en/software/tienich" class="last-item" id="menu41" title="Phần mềm tiện ích"><span>Phần mềm tiện ích</span></a><ul><li><a href="http://www.hocavr.com/index.php/en/software/tienich/gedit" class="first-item" id="menu42" title="GEdit - Biên tập Graphic LCD"><span>GEdit - Biên tập Graphic LCD</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/software/tienich/gcom" id="menu73" title="gCOM - The graphic Interface for COM Port"><span>gCOM - The graphic Interface for COM Port</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/software/tienich/gamoledfont" class="last-item" id="menu92" title="GamoLedFont - Biên tập Font và hình ảnh"><span>GamoLedFont - Biên tập Font và hình ảnh</span></a></li> 
+</ul></li> 
+</ul></li> 
+<li class="havechild"><a href="http://www.hocavr.com/index.php/en/hardware" id="menu14" title="Hỗ trợ phần cứng"><span>Hỗ trợ phần cứng</span></a><ul><li><a href="http://www.hocavr.com/index.php/en/hardware/machnap" class="first-item" id="menu24" title="Mạch nạp AVR"><span>Mạch nạp AVR</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/hardware/avrkit" id="menu25" title="Mạch ứng dụng AVR"><span>Mạch ứng dụng AVR</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/hardware/hbridge" class="last-item" id="menu33" title="Mạch cầu H"><span>Mạch cầu H</span></a></li> 
+</ul></li> 
+<li class="havechild"><a href="http://www.hocavr.com/index.php/en/thaoluan" id="menu16" title="Thảo luận"><span>Thảo luận</span></a><ul><li><a href="http://www.hocavr.com/index.php/en/thaoluan/forum" class="first-item" id="menu90" title="Forum"><span>Forum</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/thaoluan/recentpost" id="menu91" title="Thảo luận mới"><span>Thảo luận mới</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/thaoluan/dangky" id="menu36" title="Đăng ký thành viên"><span>Đăng ký thành viên</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/thaoluan/login" id="menu35" title="Đăng nhập / Đăng xuất"><span>Đăng nhập / Đăng xuất</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/thaoluan/forumsearch" class="last-item" id="menu98" title="Tìm kiếm - Forum"><span>Tìm kiếm - Forum</span></a></li> 
+</ul></li> 
+<li class="havechild"><a href="http://www.hocavr.com/index.php/en/info" class="last-item" id="menu17" title="Thông tin"><span>Thông tin</span></a><ul><li><a href="http://www.hocavr.com/index.php/en/info/announcement" class="first-item" id="menu74" title="Thông báo"><span>Thông báo</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/info/aboutme" id="menu38" title="About"><span>About</span></a></li> 
+<li><a href="http://www.hocavr.com/index.php/en/info/agreement" id="menu40" title="Quy định sử dụng"><span>Quy định sử dụng</span></a></li> 
+<li><a href="http://www.facebook.com/pages/Vi-dieu-khien-AVR/107753009255306?v=wall" target="_blank" class="last-item" id="menu57" title="Facebook AVR"><span>Facebook AVR</span></a></li> 
+</ul></li> 
+</ul>	</div>
+	<!-- END: MAIN NAVIGATION -->
+	
+	<!-- BEGIN: USER TOOLS -->
+    <div id="ja-usertoolswrap">
+  <span class="ja-sitetool">&nbsp;</span>
+  <div id="ja-usertools" style="width:130px">
+  				<ul class="ja-usertools-font">
+	      	<li><img style="cursor: pointer;" title="Increase font size" src="./Bài 5 - Giao tiếp UART_files/user-increase.gif" alt="Increase font size" id="ja-tool-increase" onclick="switchFontSize(&#39;ja_barite_ja_font&#39;,&#39;inc&#39;); return false;"></li>
+		    <li><img style="cursor: pointer;" title="Default font size" src="./Bài 5 - Giao tiếp UART_files/user-reset.gif" alt="Default font size" id="ja-tool-reset" onclick="switchFontSize(&#39;ja_barite_ja_font&#39;,4); return false;"></li>
+		    <li><img style="cursor: pointer;" title="Decrease font size" src="./Bài 5 - Giao tiếp UART_files/user-decrease.gif" alt="Decrease font size" id="ja-tool-decrease" onclick="switchFontSize(&#39;ja_barite_ja_font&#39;,&#39;dec&#39;); return false;"></li>
+			</ul>
+			<script type="text/javascript">var CurrentFontSize=parseInt('4');</script>
+						<ul class="ja-usertools-color">
+			
+				<li><img style="cursor: pointer;" src="./Bài 5 - Giao tiếp UART_files/default.gif" title="default color" alt="default color" id="ja-tool-defaultcolor" onclick="switchTool(&#39;ja_barite_ja_color&#39;,&#39;default&#39;);return false;"></li>
+				
+				<li><img style="cursor: pointer;" src="./Bài 5 - Giao tiếp UART_files/green.gif" title="green color" alt="green color" id="ja-tool-greencolor" onclick="switchTool(&#39;ja_barite_ja_color&#39;,&#39;green&#39;);return false;"></li>
+				
+				<li><img style="cursor: pointer;" src="./Bài 5 - Giao tiếp UART_files/blue-hilite.gif" title="blue color" alt="blue color" id="ja-tool-bluecolor" onclick="switchTool(&#39;ja_barite_ja_color&#39;,&#39;blue&#39;);return false;"></li>
+							</ul>
+		  </div></div>
+  	<!-- END: USER TOOLS -->
+
+	</div>
+</div>
+<!-- END: HEADER -->
+
+
+<div id="ja-containerwrap-f">
+	<div id="ja-container" class="clearfix">
+
+		<div id="ja-mainbody">
+		
+		<!-- BEGIN: CONTENT -->
+		<div id="ja-content">
+		<div class="ja-innerpad">
+
+			
+
+			<div id="ja-slider">
+				
+			</div>
+
+			
+			
+<script type="text/javascript" language="javascript">
+<!--
+var sfolder = '';
+var extravote_text=Array('Your browser does not support AJAX!','Loading','Thank you for voting!','You need to login to rate this item.','You have already rated this item.','Votes','Vote');
+-->
+</script>
+<h2 class="contentheading">
+		<a href="http://www.hocavr.com/index.php/en/lectures/uart" class="contentpagetitle">
+		Bài 5 - Giao tiếp UART	</a>
+	</h2>
+
+
+
+<div class="extravote-container" style="margin-top:5px;">
+  <ul class="extravote-stars">
+    <li id="rating_7_x" class="current-rating" style="width:88%;"></li>
+    <li><a href="javascript:void(null)" onclick="javascript:JVXVote(7,1,553,125,&#39;x&#39;,1);" title="Very Poor" class="ev-one-star">1</a></li>
+    <li><a href="javascript:void(null)" onclick="javascript:JVXVote(7,2,553,125,&#39;x&#39;,1);" title="Poor" class="ev-two-stars">2</a></li>
+    <li><a href="javascript:void(null)" onclick="javascript:JVXVote(7,3,553,125,&#39;x&#39;,1);" title="Regular" class="ev-three-stars">3</a></li>
+    <li><a href="javascript:void(null)" onclick="javascript:JVXVote(7,4,553,125,&#39;x&#39;,1);" title="Good" class="ev-four-stars">4</a></li>
+    <li><a href="javascript:void(null)" onclick="javascript:JVXVote(7,5,553,125,&#39;x&#39;,1);" title="Very Good" class="ev-five-stars">5</a></li>
+  </ul>
+</div>
+  <span id="extravote_7_x" class="extravote-count"><small>( 125 Votes )</small></span>
+<div class="article-content">
+<p>
+<meta http-equiv="imagetoolbar" content="no"><style type="text/css"> *{-moz-user-select:none;-khtml-user-select:none;user-select:none} </style><style media="print" type="text/css"><!-- body{display:none} --></style>
+</p><table width="100%" cellspacing="1" cellpadding="1" border="0">
+    <tbody>
+        <tr>
+            <td>
+            <table width="795" border="1" style="border-bottom: rgb(0,0,0) 1px solid; border-left: rgb(0,0,0) 1px solid; height: 124px; border-top: rgb(0,0,0) 1px solid; border-right: rgb(0,0,0) 1px solid">
+                <tbody>
+                    <tr>
+                        <td style="font-family: Times New Roman,Times,serif; font-size: 14pt"><strong><span style="color: rgb(0,128,0)">Nội dung</span></strong></td>
+                        <td style="font-family: Times New Roman,Times,serif; font-size: 14pt"><strong><span style="color: rgb(0,128,0)">Các bài cần tham khảo trước</span></strong></td>
+                    </tr>
+                    <tr>
+                        <td style="font-family: Times New Roman,Times,serif; font-size: 14pt">
+                        <ol>
+                            <li><span style="color: rgb(51,102,255)"><a href="http://www.hocavr.com/index.php/lectures/uart#1-gioi-thieu"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Giới thiệu.</span></a></span></li>
+                            <li><span style="color: rgb(51,102,255)"><a href="http://www.hocavr.com/index.php/lectures/uart#2-khong-dong-bo"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Truyền thông nối tiếp không đồng bộ.</span></a></span></li>
+                            <li><span style="color: rgb(51,102,255)"><a href="http://www.hocavr.com/index.php/lectures/uart#3-khong-dong-bo-avr"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Truyền thông nối tiếp không đồng bộ với AVR (UART).</span></a></span>
+                            <ol>
+                                <li><a href="http://www.hocavr.com/index.php/lectures/uart#3.1-thanh-ghi"><span style="color: rgb(51,102,255)"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Thanh ghi.</span></span></a></li>
+                                <li><a href="http://www.hocavr.com/index.php/lectures/uart#3.2-su-dung"><span style="color: rgb(51,102,255)"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Sử dụng UART.</span></span></a></li>
+                            </ol>
+                            <a href="http://www.hocavr.com/index.php/forum/5-cac-bai-hc-cung-hc-avr/9-avr5-giao-tip-uart" target="_blank"><span style="line-height: 34px">Download ví dụ</span></a></li>
+                        </ol>
+                        </td>
+                        <td style="font-family: Times New Roman,Times,serif; font-size: 14pt"><span style="line-height: 34px"><span style="line-height: normal">
+                        <ul style="padding-bottom: 0px; list-style-type: none; margin: 12px 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px">
+                            <li style="background-image: url(/templates/ja_barite/images/bullet.gif); line-height: 34px; padding-left: 30px; background-repeat: no-repeat; background-position: 18px 8px"><a href="http://www.hocavr.com/index.php/en/lectures/cautrucavr" target="_blank"><span style="color: rgb(0,128,128)"><span style="text-decoration: underline">Cấu trúc AVR</span></span></a><span style="color: rgb(0,128,128)">.</span></li>
+                            <li style="background-image: url(/templates/ja_barite/images/bullet.gif); line-height: 34px; padding-left: 30px; background-repeat: no-repeat; background-position: 18px 8px"><a href="http://www.hocavr.com/index.php/en/software/winavr" target="_blank"><span style="color: rgb(0,128,128)"><span style="text-decoration: underline">WinAVR</span></span></a><span style="color: rgb(0,128,128)">.</span></li>
+                            <li style="background-image: url(/templates/ja_barite/images/bullet.gif); line-height: 34px; padding-left: 30px; background-repeat: no-repeat; background-position: 18px 8px"><a href="http://www.hocavr.com/index.php/en/software/c-cho-avr" target="_blank"><span style="color: rgb(0,128,128)"><span style="text-decoration: underline">C cho AVR.</span></span></a></li>
+                            <li style="background-image: url(/templates/ja_barite/images/bullet.gif); line-height: 34px; padding-left: 30px; background-repeat: no-repeat; background-position: 18px 8px"><a href="http://www.hocavr.com/index.php/en/software/protues" target="_blank"><span style="color: rgb(0,128,128)"><span style="text-decoration: underline">Mô phỏng với Proteus.</span></span></a></li>
+                        </ul>
+                        </span></span></td>
+                    </tr>
+                </tbody>
+            </table>
+            </td>
+            <td><br>
+            &nbsp;</td>
+        </tr>
+    </tbody>
+</table>
+
+<p></p>
+<p><span style="font-family: &#39;Times New Roman&#39;; color: rgb(255,102,0); font-size: 19px; font-weight: bold">I. Giới thiệu.</span></p>
+<div style="text-align: justify"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bài này giúp các bạn biết cách sử dụng cách truyền thông nối tiếp UART trên AVR. Công cụ chính cũng là 2 bộ phần mềm quen thuộc WinAVR và Proteus nhưng trong bài này (và các bài sau nữa) chúng ta sẽ sử dụng chip Atmega32 làm chip minh họa. Về cơ bản việc thay đổi chip minh họa không ảnh hưởng lớn đến tính mạch lạc của loạt bài vì sự khác biệt của hai chip Atmega8 và Atmega32 là không đáng kể. Tuy nhiên, nếu có sự khác biệt lớn ở phần nào đó tôi sẽ kể ra cho bạn tiện so sánh.</span></div>
+<p align="justify"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Sau bài này, tôi hy vọng bạn có thể hiểu và thực hiện được:</span></p>
+<div>
+<ul>
+    <li><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Nguyên lý truyền thông nối tiếp đồng bộ và không đồng bộ</span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">.</span></li>
+    <li><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Module truyền thông nối tiếp USART trên AVR.</span></li>
+    <li><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Truyền thông đa xử lí bằng UART.</span></li>
+</ul>
+</div>
+<p><span style="color: rgb(255,102,0)"><strong><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">II. Truyền thông nối tiếp không đồng bộ.</span></strong></span><a name="2-khong-dong-bo" title="2-khong-dong-bo"></a></p>
+<div style="text-align: justify"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Thuật ngữ USART trong tiếng anh là viết tắt của cụm từ: Universal Synchronous &amp; Asynchronous serial Reveiver and Transmitter, nghĩa là bộ truyền nhận nối tiếp đồng bộ và không đồng bộ. Cần chú ý rằng khái niệm USART (hay UART nếu chỉ nói đến bộ truyền nhận không đồng bộ) thường để chỉ thiết bị phần cứng (device, hardware), không phải chỉ một chuẩn giao tiếp. USART hay UART cần phải kết hợp với một thiết bị chuyển đổi mức điện áp để tạo ra một chuẩn giao tiếp nào đó. Ví dụ, chuẩn RS232 (hay COM) trên các máy tính cá nhân là sự kết hợp của chip UART và chip chuyển đổi mức điện áp. Tín hiệu từ chip UART thường theo mức TTL: mức logic high là 5, mức low là 0V. Trong khi đó, tín hiệu theo chuẩn RS232 trên máy tính cá nhân thường là -12V cho mức logic high và +12 cho mức low (tham khảo hình 1). Chú ý là các giải thích trong tài liệu này theo mức logic TTL của USART, không theo RS232.</span></div>
+<p align="center"><img border="0" src="./Bài 5 - Giao tiếp UART_files/image002.jpg" alt="UART vs RS232" title="UART vs RS232"></p>
+<p align="center"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Hình 1. Tín hiệu tương đương của UART và RS232.</span></p>
+<p align="justify"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt"><span style="color: rgb(0,0,255)"><strong>Truyền thông nối tiếp:</strong></span> giả sử bạn đang xây dựng một ứng dụng phức tạp cần sử dụng nhiều vi điều khiển (hoặc vi điều khiển và máy tính) kết nối với nhau. Trong quá trình làm việc các vi điều khiển cần trao đổi dữ liệu cho nhau, ví dụ tình huống Master truyền lệnh cho Slaver hoặc Slaver gởi tín hiệu thu thập được về Master xử lí…Giả sử dữ liệu cần trao đổi là các mã có chiều dài 8 bits, bạn có thể sẽ nghĩ đến cách kết nối đơn giản nhất là kết nối 1 PORT (8 bit) của mỗi&nbsp; vi điều khiển với nhau, mỗi line trên PORT sẽ chịu trách nhiệm truyền/nhận 1 bit dữ liệu. Đây gọi là cách giao tiếp song song, cách này là cách đơn giản nhất vì dữ liệu được xuất và nhận trực tiếp không thông qua bất kỳ một giải thuật biến đổi nào và vì thế tốc độ truyền cũng rất nhanh. Tuy nhiên, như bạn thấy, nhược điểm của cách truyền này là số đường truyền quá nhiều, bạn hãy tưởng tượng nếu dữ liệu của bạn có giá trị càng lớn thì số đường truyền cũng sẽ nhiều thêm. Hệ thống truyền thông song song thường rất cồng kềnh và vì thế kém hiệu quả. Truyền thông nối tiếp sẽ giải quyết vần đề này, trong tuyền thông nối tiếp dữ liệu được truyền từng bit trên 1 (hoặc một ít) đường truyền. Vì lý do này, cho dù dữ liệu của bạn có lớn đến đâu bạn cũng chỉ dùng rất ít đường truyền. Hình 2 mô tả sự so sánh giữa 2 cách truyền song song và nối tiếp trong việc truyền con số 187 thập phân (tức 10111011 nhị phân).</span></p>
+<p align="center"><img border="0" src="./Bài 5 - Giao tiếp UART_files/image004.gif" alt="parallel vs serial" title="parallel vs serial"></p>
+<p align="center"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Hình 2. Truyền 8 bit theo phương pháp song song và nối tiếp.</span></p>
+<p align="justify"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Một hạn chế rất dễ nhận thấy khi truyền nối tiếp so với song song là tốc độ truyền và độ chính xác của dữ liệu khi truyền và nhận. Vì dữ liệu cần được “chia nhỏ” thành từng bit khi truyền/nhận, tốc độ truyền sẽ bị giảm. Mặt khác, để đảm bảo tính chính xác của dữ liệu, bộ truyền và bộ nhận cần có những “thỏa hiệp” hay những tiêu chuẩn nhất định. Phần tiếp theo trong chương này giới thiệu các tiêu chuẩn trong truyền thông nối tiếp không đồng bộ.<br>
+</span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Khái niệm “đồng bộ” để chỉ sự “báo trước” trong quá trình truyền. Lấy ví dụ thiết bị 1 (tb1) kết với với thiết bị 2 (tb2) bởi 2 đường, một đường dữ liệu và 1 đường xung nhịp. Cứ mỗi lần tb1 muốn send 1 bit dữ liệu, tb1 điều khiển đường xung nhịp chuyển từ mức thấp lên mức cao báo cho tb2 sẵn sàng nhận một bit. Bằng cách “báo trước” này tất cả các bit dữ liệu có thể truyền/nhận dễ dàng với ít “rủi ro” trong quá trình truyền. Tuy nhiên, cách truyền này đòi hỏi ít nhất 2 đường truyền cho 1 quá trình (send or receive).&nbsp;Giao tiếp giữa máy tính và các bàn phím (trừ bàn phím kết nối theo chuẩn USB) là một ví dụ của cách truyền thông nối tiếp đồng bộ.<br>
+</span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Khác với cách truyền đồng bộ, truyền thông “không đồng bộ” chỉ cần một đường truyền cho một quá trình. “Khung dữ liệu” đã được chuẩn hóa bởi các thiết bị nên không cần đường xung nhịp báo trước dữ liệu đến. Ví dụ 2 thiết bị đang giao tiếp với nhau theo phương pháp này, chúng đã được thỏa thuận với nhau rằng cứ 1ms thì sẽ có 1 bit dữ liệu truyền đến, như thế thiết bị nhận chỉ cần kiểm tra và đọc đường truyền mỗi mili-giây để đọc các bit dữ liệu và sau đó kết hợp chúng lại thành dữ liệu có ý nghĩa. Truyền thông nối tiếp không đồng bộ vì thế hiệu quả hơn truyền thông đồng bộ (không cần nhiều lines truyền). Tuy nhiên, để quá trình truyền thành công thì việc tuân thủ các tiêu chuẩn truyền là hết sức quan trọng. Chúng ta sẽ bắt đầu tìm hiểu các khái niệm quan trọng trong phương pháp truyền thông này.<br>
+</span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt"><span style="color: rgb(0,0,255)"><strong>Baud rate (tốc độ Baud):</strong></span> như trong ví dụ trên về việc truyền 1 bit trong 1ms, bạn thấy rằng để việc truyền và nhận không đồng bộ xảy ra thành công thì các thiết bị tham gia phải “thống nhất” nhau về khoảng thời dành cho 1 bit truyền, hay nói cách khác tốc độ truyền phải được cài đặt như nhau trước, tốc độ này gọi là tốc độ Baud. Theo định nghĩa, tốc độ baud là số bit truyền trong 1 giây. Ví dụ nếu tốc độ baud được đặt là 19200 thì thời gian dành cho 1 bit truyền là 1/19200 ~ 52.083us.&nbsp;&nbsp; <br>
+</span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt"><span style="color: rgb(0,0,255)"><strong>Frame (khung truyền):</strong></span> do truyền thông nối tiếp mà nhất là nối tiếp không đồng bộ rất dễ mất hoặc sai lệch dữ liệu, quá trình truyền thông theo kiểu này phải tuân theo một số quy cách nhất định. Bên cạnh tốc độ baud, khung truyền là một yếu tốc quan trọng tạo nên sự thành công khi truyền và nhận. Khung truyền bao gồm các quy định về số bit trong mỗi lần truyền, các bit “báo” như bit Start và bit Stop, các bit kiểm tra như Parity, ngoài ra số lượng các bit trong một data&nbsp; cũng được quy định bởi khung truyền. Hình 1 là một ví dụ của một khung truyền theo UART, khung truyền này được bắt đầu bằng một start bit,&nbsp; tiếp theo là 8 bit data, sau đó là 1 bit parity dùng kiểm tra dữ liệu và cuối cùng là 2 bits stop. <br>
+</span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt"><strong><span style="color: rgb(0,0,255)">Start bit: </span></strong>start là bit đầu tiên được truyền trong một frame truyền, bit này có chức năng báo cho thiết bị nhận biết rằng có một gói dữ liệu sắp được truyền tới. Ở module USART trong AVR, đường truyền luôn ở trạng thái cao khi nghỉ (Idle), nếu một chip AVR muốn thực hiện việc truyền dữ liệu nó sẽ gởi một bit start bằng cách “kéo” đường truyền xuống mức 0. Như vậy, với AVR bit start là mang giá trị 0 và có giá trị điện áp 0V (với chuẩn RS232 giá trị điện áp của bit start là ngược lại). start là bit bắt buộc phải có trong khung truyền.<br>
+</span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt"><span style="color: rgb(0,0,255)"><strong>Data:</strong></span> data hay dữ liệu cần truyền là thông tin chính mà chúng ta cần gởi và nhận. Data không nhất thiết phải là gói 8 bit, với AVR bạn có thể quy định số lượng bit của data là 5, 6, 7, 8 hoặc 9 (tương tự cho hầu hết các thiết bị hỗ trợ UART khác). Trong truyền thông nối tiếp UART, bit có ảnh hưởng nhỏ nhất (LSB – Least Significant Bit, bit bên phải) của data sẽ được truyền trước và cuối cùng là bit có ảnh hưởng lớn nhất (MSB – Most Significant Bit, bit bên trái). <br>
+</span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt"><strong><span style="color: rgb(0,0,255)">Parity bit: </span></strong>parity là bit dùng kiểm tra dữ liệu truyền đúng không (một cách tương đối). Có 2 loại parity là parity chẵn (even parity) và parity lẻ (odd parity). Parity chẵn&nbsp; nghĩa là số lượng số 1 trong dữ liệu bao gồm bit parity luôn là số chẵn. Ngược lại tổng số lượng các số 1 trong parity lẻ luôn là số lẻ. Ví dụ, nếu dữ liệu của bạn là 10111011 nhị phân, có tất cả 6 số 1 trong dữ liệu này, nếu parity chẵn được dùng, bit parity sẽ mang giá trị 0 để đảm bảo tổng các số 1 là số chẵn (6 số 1). Nếu parity lẻ được yêu cầu thì giá trị của parity bit là 1. Hình 1 mô tả ví dụ này với parity chẵn được sử dụng. Parity bit không phải là bit bắt buộc và vì thế chúng ta có thể loại bit này khỏi khung truyền (các ví dụ trong bài này tôi không dùng bit parity).<br>
+</span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt"><span style="color: rgb(0,0,255)"><strong>Stop bits:</strong></span> stop bits là một hoặc các bit báo cho thiết bị nhận rằng một gói dữ liệu đã được gởi xong. Sau khi nhận được stop bits, thiết bị nhận sẽ tiến hành kiểm tra khung truyền để đảm bảo tính chính xác của dữ liệu. Stop bits là các bits bắt buộc xuất hiện trong khung truyền, trong AVR USART có thể là 1 hoặc 2 bits (Trong các thiết bị khác Stop bits có thể là 2.5 bits).&nbsp; Trong ví dụ ở hình 1, có 2 stop bits được dùng cho khung truyền.Giá trị của stop bit luôn là giá trị nghỉ (Idle) và là ngược với giá trị của start bit, giá trị stop bit trong AVR luôn là mức cao (5V).<br>
+</span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt"><strong>(Chú ý và gợi ý: khung truyền phổ biến nhất là : <span style="color: rgb(0,0,255)">start bit+ 8 bit data+1 stop bit</span>)</strong><br>
+</span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Sau khi nắm bắt các khái niệm về truyền thông nối tiếp, phần tiếp theo chúng ta sẽ khảo sát cách thực hiện phương pháp truyền thông này trên chip AVR (cụ thể là chip Atmega32).</span></p>
+<p align="justify"><span style="color: rgb(255,102,0)"><strong><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">III. Truyền thông nối tiếp không đồng bộ với AVR (UART)</span></strong><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">.</span></span><a name="3-khong-dong-bo-avr" title="3-khong-dong-bo-avr"></a></p>
+<p align="justify"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Vi điều khiển Atmega32 có 1 module truyền thông nối tiếp USART. Có 3 chân chính liên quan đến module này đó là chân xung nhịp - XCK (chân số 1), chân truyền dữ liệu – TxD (Transmitted Data) và chân nhận dữ liệu – RxD (Reveived Data). Trong đó chân XCK chỉ được sử dụng như là chân phát hoặc nhận xung giữ nhịp trong chế độ truyền động bộ. Tuy nhiên bài&nbsp; này chúng ta không khảo sát chế độ truyền thông đồng bộ, vì thế bạn chỉ cần quan tâm đến 2 chân TxD và RxD. Vì các chân truyền/nhận dữ liệu chỉ đảm nhiệm 1 chức năng độc lập (hoặc là truyền, hoặc là nhận), để kết nối các chip AVR với nhau (hoặc kết nối AVR với thiết bị hỗ trợ UART khác) bạn phải đấu “chéo” 2 chân này. TxD của thiết bị thứ nhất kết nối với RxD của thiết bị 2 và ngược lại. Module USART trên chip Atmega32 hoạt động “song công” (Full Duplex Operation), nghĩa là quá trình truyền và nhận dữ liệu có thể xảy ra đồng thời.</span></p>
+<p align="justify"><span style="color: rgb(255,102,0)"><strong><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt"><span style="text-decoration: underline"><span style="color: rgb(0,0,255)">1. Thanh ghi:</span></span></span></strong></span><a name="3.1-thanh-ghi" title="3.1-thanh-ghi"></a></p>
+<p align="justify"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Cũng như các thiết bị khác trên AVR, tất cả hoạt động và tráng thái của module USART được điều khiển và quan sát thông qua các thanh ghi trong vùng nhớ I/O. Có 5 thanh ghi được thiết kế riêng cho hoạt động và điều khiển của USART, đó là:</span></p>
+<div>
+<ul>
+    <li style="text-align: justify"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt"><strong>UDR:</strong> hay thanh ghi dữ liệu, là 1 thanh ghi 8 bit chứa giá trị nhận được và phát đi của USART. Thực chất thanh ghi này có thể coi như 2 thanh ghi TXB (Transmit data Buffer) và RXB (Reveive data Buffer) có chung địa chỉ. Đọc UDR thu được giá trị thanh ghi đệm dữ liệu nhận, viết giá trị vào UDR tương đương đặt giá trị vào thanh ghi đệm phát, chuẩn bị để gởi đi. Chú ý trong các khung truyền sử dụng 5, 6 hoặc 7 bit dữ liệu, các bit cao của thanh ghi UDR sẽ không được sử dụng</span></li>
+</ul>
+</div>
+<p><img border="0" src="./Bài 5 - Giao tiếp UART_files/image005.png" alt="UDR register" title="UDR register"></p>
+<div>
+<ul>
+    <li><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt"><strong>UCSRA</strong> (USART Control and Status Register A): là 1 trong 3 thanh ghi điều khiển hoạt động của module USART.</span></li>
+</ul>
+</div>
+<p><img border="0" src="./Bài 5 - Giao tiếp UART_files/image008.jpg" alt="UCSRA Register" title="UCSRA Register"></p>
+<blockquote>
+<div style="text-align: justify"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Thanh ghi UCSRA chủ yếu chứa các bit trạng thái như bit báo quá trình nhận kết thúc (RXC), truyền kết thúc (TXC), báo thanh ghi dữ liệu trống (UDRE), khung truyền có lỗi (FE), dữ liệu tràn (DOR), kiểm tra parity có lỗi (PE)…Bạn chú ý một số bit quan trọng của thanh ghi này:</span></div>
+<div style="text-align: justify; margin-left: 40px"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">* <span style="color: rgb(0,0,255)">UDRE</span> (USART Data Register Empty) khi bit bày bằng 1 nghĩa là thanh ghi dữ liệu UDR đang trống và sẵn sàng cho một nhiệm vụ truyền hay nhận tiếp theo. Vì thế nếu bạn muốn truyền dữ liệu đầu tiên bạn phải kiểm tra xem bit UDRE có bằng 1 hay không, sau khi chắc chắn rằng UDRE=1 hãy viết dữ liệu vào thanh ghi UDR để truyền đi.</span></div>
+<div style="text-align: justify; margin-left: 40px"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">* <span style="color: rgb(0,0,255)">U2X </span>là bit chỉ định gấp đôi tốc độ truyền, khi bit này được set lên 1, tốc độ truyền so cao gấp 2 lần so với khi bit này mang giá trị 0.</span></div>
+<div style="margin-left: 40px"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">* <span style="color: rgb(0,0,255)">MPCM</span> là bit chọn chế độ hoạt động đa xử lí (multi-processor).</span></div>
+</blockquote>
+<div>
+<ul>
+    <li style="text-align: justify"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt"><strong>UCSRB</strong> (USART Control and Status Register B): đây là thanh ghi quan trọng điều khiển USART. Vì thế chúng ta sẽ khảo sát chi tiết từng bit của thanh ghi này.</span></li>
+</ul>
+</div>
+<blockquote><img border="0" src="./Bài 5 - Giao tiếp UART_files/image010.jpg" alt="UCSRB Register" title="UCSRB Register"></blockquote>
+<div><blockquote style="text-align: justify; margin-left: 40px"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">* <span style="color: rgb(0,0,255)">RXCIE </span>(Receive Complete Interrupt Enable) là bit cho phép ngắt khi quá trình nhận kết thúc. Việc nhận dữ liệu truyền bằng phương pháp nối tiếp không đồng bộ thường được thực hiện thông qua ngắt, vì thế bit này thường được set bằng 1 khi USART được dung nhận dữ liệu.<br>
+* <span style="color: rgb(0,0,255)">TXCIE </span>(Transmit Complete Interrupt Enable) bit cho phép ngắt khi quá trình truyền kết thúc.<br>
+* <span style="color: rgb(0,0,255)">UDRIE</span> (USART Data Register Empty Interrupt Enable) là bit cho phép ngắt khi thanh ghi dữ liệu UDR trống.<br>
+* <span style="color: rgb(0,0,255)">RXEN</span> (Receiver Enable) là một bit quan trọng điều khiển bộ nhận của USART, đề kích hoạt chức năng nhận dữ liệu bạn phải set bit này lên 1.<br>
+* <span style="color: rgb(0,0,255)">TXEN</span> (Transmitter Enable) là bit điều khiển bộ phát. Set bit này lên 1 bạn sẽ khởi động bộ phát của USART.<br>
+* <span style="color: rgb(0,0,255)">UCSZ2</span> (Chracter size) bit này kết hợp với 2 bit khác trong thanh ghi UCSRC quy định độ dài của dữ liệu truyền/nhận. Chúng ta sẽ khảo sát chi tiết khi tìm hiểu thanh ghi UCSRC.<br>
+* <span style="color: rgb(0,0,255)">RXB8</span> (Receive Data Bit 8) gọi là bit dữ liệu 8. Bạn nhớ lại rằng USART trong AVR có hỗ trợ truyền dữ liệu có độ dài tối đa 9 bit, trong khi thanh ghi dữ liệu là thanh ghi 8 bit. Do đó, khi có gói dữ liệu 9 bit được nhận, 8 bit đầu sẽ chứa trong thanh ghi UDR, cần có 1 bit khác đóng vai trò bit thứ chín, RXD8 là bit thứ chín này. Bạn chú ý là các bit được đánh số từ 0, vì thế bit thứ chín sẽ có chỉ số là 8, vì lẽ đó mà bit này có tên là RXD8 (không phải RXD9).<br>
+* <span style="color: rgb(0,0,255)">TXB8</span> (Transmit Data Bit 8), tương tự như bit RXD8, bit TXB8 cũng đóng vai trò bit thứ 9 truyền thông, nhưng bit này được dung trong lúc truyền dữ liệu.&nbsp;&nbsp;&nbsp; <br>
+</span></blockquote>
+<ul>
+    <li style="text-align: justify"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt"><strong>UCSRC</strong> (USART Control and Status Register C): thanh ghi này chủ yếu quy định khung truyền và chế độ truyền. Tuy nhiên, có một rắc rối nho nhỏ là thanh ghi này lại có cùng địa chỉ với thanh ghi UBRRH (thanh ghi chứa byte cao dùng để xác lập tốc độ baud), nói một cách khác 2 thanh ghi này là 1. Vì thế bit 7 trong thanh ghi này, tức bit URSEL là bit chọn thanh ghi. Khi URSEL=1, thanh ghi này được chip AVR hiểu là thanh ghi điều khiển UCSRC, nhưng nếu bit URSEL=0 thì thanh ghi UBRRH sẽ được sử dụng.</span></li>
+</ul>
+</div>
+<blockquote><img border="0" src="./Bài 5 - Giao tiếp UART_files/image012.jpg" alt="UCSRC Register" title="UCSRC Register"></blockquote><blockquote>
+<div><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Các bit còn lại trong thanh ghi UCSRC được mô tả như sau:</span></div>
+<div style="text-align: justify; margin-left: 40px"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">* <span style="color: rgb(0,0,255)">UMSEL</span> (USART Mode Select) là bit lựa chọn giữa 2 chế độ truyền thông đồng bộ và không đồng bộ. Nếu&nbsp; UMSEL=0, chế độ không đồng bộ được chọn, ngược lại nếu UMSEL=1, chế độ đồng bộ được kích hoạt.</span></div>
+<div style="text-align: justify; margin-left: 40px"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">* Hai bit <span style="color: rgb(0,0,255)">UPM1 và UPM0</span>( Parity Mode) được dùng để quy định kiểm tra pariry. Nếu UPM1:0=00, parity không được sử dụng (mode này khá thông dụng), UPM1:0=01 không được sử dụng, UPM1:0=10 thì parity chẵn được dùng, UPM1:0=11 parity lẻ được sử dụng (xem thêm bảng 1).</span></div>
+<div><span style="color: rgb(255,0,255)"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Bảng 1: chọn kiểm tra parity.</span></span></div>
+<div><img border="0" src="./Bài 5 - Giao tiếp UART_files/image014.jpg" alt="Parity modes" title="Parity modes"></div>
+<div style="text-align: justify; margin-left: 40px"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">* <span style="color: rgb(0,0,255)">USBS</span> (Stop bit Select), bit Stop trong khung truyền bằng AVR USART có thể là 1 hoặc 2 bit, nếu USBS=0 thì Stop bit chỉ là 1 bit trong khi USBS=1 sẽ có 2 Stop bit được dùng.</span></div>
+<div style="text-align: justify; margin-left: 40px"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">* Hai bit <span style="color: rgb(0,0,255)">UCSZ1 và UCSZ2</span> (Character Size) kết hợp với bit UCSZ2 trong thanh ghi UCSRB tạo thành 3 bit quy định độ dài dữ liệu truyền. Bảng 2 tóm tắt các giá trị có thể có của tổ hợp 3 bit này và độ dài dữ liệu truyền tương ứng.<br>
+<span style="color: rgb(255,0,255)">Bảng 2: độ dài dữ liệu truyền.</span></span></div>
+<div><img border="0" src="./Bài 5 - Giao tiếp UART_files/image016.jpg" alt="Character size" title="Character size"></div>
+<div style="text-align: justify; margin-left: 40px"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">* <span style="color: rgb(0,0,255)">UCPOL</span> (Clock Pority) là bit chỉ cực của xung kích trong chế độ truyền thông đồng bộ. nếu UCPOL=0, dữ liệu sẽ thay đổi thay đổi ở cạnh lên của xung nhịp, nếu UCPOL=1, dữ liệu thay đổi ở cạnh xuống xung nhịp. Nếu bạn sử dụng chế độ truyền thông không đồng bộ, hãy set bit này bằng 0.</span>.</div>
+</blockquote>
+<div>
+<ul>
+    <li><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">UBRRL và UBRRH (USART Baud Rate Register): 2 thanh ghi thấp và cao quy định tốc độ baud.</span></li>
+</ul>
+</div>
+<blockquote><img border="0" src="./Bài 5 - Giao tiếp UART_files/image018.jpg" alt="Baud Register" title="Baud Register"></blockquote><blockquote>
+<div style="text-align: justify"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Nhắc lại là thanh ghi UBRRH dùng chung địa chỉ thanh ghi UCSRC, bạn phải set bit này bằng 0 nếu muốn sử dụng thanh ghi UBRRH. Như bạn quan sát trong hình trên, chỉ có 4 bit thấp của UBRRH được dùng, 4 bit này kết hợp với 8 bit trong thanh ghi UBRRL tạo thành thanh ghi 12 bit quy định tốc độ baud. Chú ý là nếu bạn viết giá trị vào thanh ghi UBRRL, tốc độ baud sẽ tức thì được cập nhật, vì thế bạn phải viết giá trị vào thanh ghi UBRRH trước khi viết vào thanh ghi UBRRL.</span></div>
+<div style="text-align: justify"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Giá trị gán cho thanh ghi UBRR không phải là tốc độ baud, nó chỉ được USART dùng để tính tốc độ baud. Bảng 3 hướng dẫn cách tính tốc độ baud dựa vào giá trị của thanh ghi UBRR và ngược lại, cách tính giá trị cần thiết gán cho thanh ghi UBRR khi đã biết tốc độ baud.</span></div>
+<div><span style="color: rgb(255,0,255)"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Bảng 3: tính tốc độ baud.</span></span></div>
+<div><img border="0" src="./Bài 5 - Giao tiếp UART_files/image020.jpg" alt="Baud computation" title="Baud computation"></div>
+<div style="text-align: justify"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Trong các công thức trong bảng 3, fOSC là tốc tần số xung nhịp của hệ thống (thạch anh hay nguồn xung nội…). Để tiện cho bạn theo dõi, tôi đính kèm bảng ví dụ cách đặt giá trị cho UBRR theo tốc độ baud mẫu.</span></div>
+<div><span style="color: rgb(255,0,255)"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Bảng 4: một số tốc độ baud mẫu.</span></span></div>
+<div><img border="0" src="./Bài 5 - Giao tiếp UART_files/image022.jpg" alt="Baud Sample1" title="Baud Sample 1"></div>
+<div><img border="0" src="./Bài 5 - Giao tiếp UART_files/image024.jpg" alt="Baud Sample2" title="Baud Sample2"></div>
+<div><img border="0" src="./Bài 5 - Giao tiếp UART_files/image026.jpg" alt="Baud Sample3" title="Baud Sample3"></div>
+<div><img border="0" src="./Bài 5 - Giao tiếp UART_files/image028.jpg" alt="Baud Sample4" title="Baud Sample4"></div>
+</blockquote>
+<p align="justify"><span style="color: rgb(255,102,0)"><strong><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt"><span style="text-decoration: underline"><span style="color: rgb(0,0,255)">2. Sử dụng UART:</span></span></span></strong></span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">.</span><a name="3.2-su-dung" title="3.2-su-dung"></a></p>
+<p style="text-align: justify"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Thông thường, để sử dụng module USART trên AVR bạn phải thực hiện 3 việc quan trọng, đó là: cài đặt tốc độ baud (thanh ghi UBRR), định dạng khung truyền (UCSRB, UCSRC) và cuối cùng kích hoạt bộ truyền, bộ nhận, ngắt…Như đã đề cập, trong tài liệu này tôi chủ yếu đề cập đến phương pháp truyền thông không đồng bộ, việc xác lập các thông số hoạt động chủ yếu dựa trên chế độ này. Trong hầu hết các ứng dụng, tốc độ baud và khung truyền thường không đổi, trong trường hợp này chúng ta có thể khởi tạo trực tiếp USART ở phần đầu trong main và sau đó chỉ cần truyền hoặc nhận dữ liệu mà không cần thay đổi các cài đặt. Tuy nhiên, nếu trường hợp giao tiếp “linh hoạt” ví dụ bạn đang chế tạo một thiết bị có khả năng giao tiếp với một thiết bị đầu cuối khác (như máy tính chẳng hạn), lúc này bạn nên cho phép người dùng thay đổi tốc độ baud hoặc các thông số khác để phù hợp với thiết bị đầu cuối. Đối với những ứng dụng kiểu này bạn nên viết 1 chương trình con để khởi động USART và có thể gọi lại nhiều lần khi cần thay đổi.&nbsp; Phần tiếp theo chúng ta sẽ viết một số chương trình ví dụ minh họa cách sử dụng module truyền thông USART từ đơn giản đến phức tạp. Các ví dụ sẽ được thực hiện cho chip Atmega32 với giả sử nguồn xung nhịp hệ thống là 8MHz.</span></p>
+<p align="justify"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt"><em><strong><span style="color: rgb(0,128,0)">2.1 Truyền dữ liệu</span></strong></em>.</span></p>
+<p style="text-align: justify"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Trước hết chúng ta sẽ thực hiện một ví dụ rất đơn giản để hiểu cách khởi động USART và truyền các gói dữ liệu 8 bit. Mạch điện mô phỏng trong hình 3. Giả sử chúng ta muốn định dạng cho khung truyền gồm 1 bit start, 8 bit dữ liệu, không kiểm tra parity và 1 bit stop. Tốc độ baud&nbsp; 57600 (57.6k). Dữ liệu cần truyền là các giá trị liên tục của bảng mã ASCII. Đoạn code trong list 1 trình bày cách thực hiện ví dụ này.</span></p>
+<p align="justify"><span style="color: rgb(0,0,0)"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt"><span style="background-color: rgb(215,210,101)">List 1. Khởi động và truyền dữ liệu không đồng bộ bằng USART</span></span></span></p>
+<table width="795" border="0" style="height: 623px">
+    <tbody>
+        <tr>
+            <td style="background-color: rgb(199,206,191); width: 20px; font-family: Times New Roman,Times,serif; font-size: 14pt">
+            <p><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">1<br>
+            2<br>
+            3<br>
+            4<br>
+            5<br>
+            6<br>
+            7<br>
+            8<br>
+            9<br>
+            10<br>
+            11<br>
+            12<br>
+            13<br>
+            14<br>
+            15<br>
+            16<br>
+            17<br>
+            18<br>
+            19<br>
+            20<br>
+            21<br>
+            22<br>
+            23<br>
+            24<br>
+            25<br>
+            26</span></p>
+            </td>
+            <td style="background-color: rgb(251,248,174); font-family: Times New Roman,Times,serif; font-size: 14pt"><span style="color: rgb(0,0,255)">#include</span> &lt;avr/io.h&gt;<br>
+            <span style="color: rgb(0,0,255)">#include </span>&lt;avr/delay.h&gt;<br>
+            <br>
+            <span style="color: rgb(51,153,102)">//chuong trinh con phat du lieu</span><br>
+            <span style="color: rgb(0,0,255)">void</span> uart_char_tx(<span style="color: rgb(0,0,255)">unsigned char</span> chr){<br>
+            &nbsp;&nbsp; &nbsp;while (bit_is_clear(UCSRA,UDRE)) {};<span style="color: rgb(51,153,102)"> //cho den khi bit UDRE=1</span>&nbsp;&nbsp; &nbsp;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UDR=chr;<br>
+            }<br>
+            <br>
+            <span style="color: rgb(0,0,255)">int</span> main(<span style="color: rgb(0,0,255)">void</span>){&nbsp;&nbsp; &nbsp;<br>
+            <span style="color: rgb(51,153,102)">//set baud, 57.6k ung voi f=8Mhz, xem bang 70 trang 165, Atmega32 datasheet</span><br>
+            &nbsp;&nbsp; &nbsp;UBRRH=0;&nbsp;&nbsp; &nbsp;<br>
+            &nbsp;&nbsp; &nbsp;UBRRL=8;<br>
+            &nbsp;&nbsp; &nbsp;<br>
+            &nbsp;&nbsp; &nbsp;<span style="color: rgb(51,153,102)">//set khung truyen va kich hoat bo nhan du lieu</span><br>
+            &nbsp;&nbsp; &nbsp;UCSRA=0x00;<br>
+            &nbsp;&nbsp; &nbsp;UCSRC=(1&lt;&lt;URSEL)|(1&lt;&lt;UCSZ1)|(1&lt;&lt;UCSZ0);<br>
+            &nbsp;&nbsp; &nbsp;UCSRB=(1&lt;&lt;TXEN);&nbsp;&nbsp; &nbsp;<br>
+            &nbsp;&nbsp; &nbsp;<br>
+            &nbsp;&nbsp; &nbsp;<span style="color: rgb(0,0,255)">whil</span>e(1){<br>
+            &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;<span style="color: rgb(0,0,255)">for</span> (<span style="color: rgb(0,0,255)">char</span> i=32; i&lt;128; i++){<br>
+            &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;uart_char_tx(i);&nbsp;&nbsp;&nbsp; <span style="color: rgb(51,153,102)">//phat du lieu</span><br>
+            &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;_delay_ms(100);<br>
+            &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;}<br>
+            &nbsp;&nbsp; &nbsp;}&nbsp;&nbsp; &nbsp;<br>
+            }</td>
+        </tr>
+    </tbody>
+</table>
+<p align="justify"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Trước hết tôi sẽ giải thích cách khởi động USART trong các dòng code từ 12 đến 18. Nếu bạn xem lại bảng 3 trong trang 9 của tài liệu này (hoặc bảng 70, trang 165 datasheet của chip atmega32), ứng với tần số xung nhịp 8Hhz, không sử dụng chế độ nhân đôi tốc độ (U2X=0), để đạt được tốc bộ baud 57600 thì giá trị cần gán cho thanh ghi UBRR là 8 (xem cột 2, bảng 3). Hai dòng 12 và 13 trong list 1 thực hiện gán 8 cho thanh ghi UBRR thông qua 2 thanh ghi UBRRH và UBRRL. Trong dòng 16, thanh ghi UCSRA được gán bằng 0. Nếu bạn xem lại phần giải thích bạn sẽ thấy thanh ghi UCSRA chủ yếu chứa các bit trạng thái, riêng 2 bit U2X và MPCM là 2 bit điều khiển, 2 bit này bằng 0 nghĩa là chúng ta không sử dụng chế độ nhân đôi tốc độ và không sử dụng truyền thông đa xử lí. Phần quan trọng nhất chính là đặt giá trị cho 2 thanh ghi USCRB và UCSRC. Với thanh ghi UCSRC (dòng 17) trước hết chúng ta phải set bit URSEL để báo rằng chúng ta không muốn truy cập thanh ghi UBRRH mà là thanh ghi UCSRC (2 thanh ghi này có cùng địa chỉ), tiếp theo chúng ta chỉ set 1 cho 2 bit UCSZ1 và UCSZ0, bạn xem lại bảng 2 để thấy rằng nếu UCSZ1=1, UCSZ0=1 cùng với việc bit UCSZ2=0(nằm trong thanh ghi UCSRB) thì độ dài dữ liệu truyền được chọn là 8 bit. Các bit trong thanh ghi UCSRC không được set sẽ mặc định mang giá trị 0, bao gồm UMSEL = 0 (chế độ truyền thông không đồng bộ), UPM1:0=00 ( không sử dụng kiểm tra parity, xem bảng 1), USBS=0 (1 bit stop) và&nbsp; UCPOL=0 (bit này không sử dụng khi truyền không đồng bộ). Sau cùng, trong dòng 18, chúng ta chỉ set bit TXEN =1 nghĩa là chỉ kích hoạt bộ phát dữ liệu, các thành phần khác như bộ nhận, các ngắt…không được sử dụng trong ví dụ này.</span></p>
+<p align="justify"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Trong các bài trước tôi đã giới thiệu bạn về trình phục vụ ngắt và trong phần này tôi sẽ trình bày cách viết một chương trình con bằng ngôn ngữ C trong WinAVR, đó là đoạn chương trình uart_char_tx ở dòng 5. Chương trình con là 1 đoạn code bao gồm các câu lệnh cùng thực hiện một nhiệm vụ chung cụ thể nào đó. Trong trường hợp này là nhiệm vụ truyền 1 tham số 8 bit ra đường TxD của USART thông qua thanh ghi UDR. Như trình bày trong phần mô tả bit UDRE của thanh ghi UCSRA, quá trình truyền chỉ được bắt đầu khi bit UDRE bằng 1, vì thế dòng code 6 làm nhiệm vụ kiểm tra bit UDRE, câu lệnh <strong><span style="color: rgb(0,0,255)">while</span> (bit_is_clear(UCSRA,UDRE)) {};</strong> được hiểu là quá trình lặp sẽ “lẩn quẩn”&nbsp; nếu bit UDRE bằng 0 (bit_is_clear). Khi bit UDRE bằng 1 thì dòng code 7 sẽ xuất biến chr ra thanh ghi UDR cũng là xuất ra chân TxD của module USART. Trong ngôn ngữ C có 2 cách cơ bản để viết chương trình con. Với cách 1 chương trình con được khai báo và viết trực tiếp phía trước chương trình chính main như cách mà tôi thực hiện trong ví dụ 1 này. Cách viết này đễ hiểu và thích hợp cho các đoạn chương trình con ngắn nhưng chúng có thể làm tổng quan chương trình của bạn trở nên rắc rối khi có quá nhiểu chương trình con viết trước main. Bạn có thể khắc phục nhược điểm này bằng cách đặt các chương trình con phía sau main như cách mà chúng ta đã làm với các trình phục vụ ngắt. Nếu theo đúng&nbsp; quy cách của ngôn ngữ C, khi đặt chương trình con sau main bạn phải khai báo tên chương trình phía trước main, nếu bạn đặt chương trình con uart_char_tx phía sau main thì phần trước main bạn sẽ đặt dòng khai báo trước: <strong><span style="color: rgb(0,0,255)">void</span> uart_char_tx(<span style="color: rgb(0,0,255)">unsigned char</span> chr);</strong>. Tuy WinAVR cho phép bạn bỏ qua khai báo trước này nhưng tôi khuyên bạn nên viết đúng cách để tạo thói quen và cũng như để dễ chuyển chương trình sang các trình biên dịch C khác sau này nếu cần thiết. Phần cuối cùng trong đoạn code là gọi lại chương trình uart_char_tx để truyền các dữ liệu là các số từ 32 đến 127.</span></p>
+<p align="justify"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Để thực hiện mô phỏng bằng proteus bạn hãy vẽ một mạch điện đơn giản như trong hình 3. Chip Atmega32 có thể được tìm với từ khóa mega32. Trong mạch điện mô phỏng có một thiết bị đầu cuối ảo (Virtual Terminal) là một thiết bị kết nối và hiển thị&nbsp; kết quả truyền thông không đồng bộ, chúng ta dùng để kiểm tra dữ liệu được truyền bằng chip AVR. Bạn có thể tìm thiết bị này trong trong danh sách các dụ cụ ảo (virtual instruments), nhấn vào nút công cụ&nbsp;&nbsp; và sau đó chọn terminal trong danh sách để chọn thiết bị đầu cuối ảo. Kết nối thiết bị ảo với chip Atmega32 như trong hình 3, chú ý là phải “đấu chéo” 2 chân TxD và RxD. Bên cạnh việc gán chương trình cho chip AVR, bạn phải set thông số cho thiết bị ảo trước khi thực hiện mô phỏng. Hãy mở hộp thoại “edit component” của thiết bị ảo (bằng cách right click rồi left click trên thiết bị ảo). Theo mặc định thiết bị đầu cuối được định dạng khung truyền là 1 bit start+8 bit dữ liệu+1 bit stop tương tự như cách chúng ta cài đặt cho AVR trong vì dụ 1, vì thế bạn chỉ cần thay đổi tốc độ baud thành 57600 trong hộp thoại “edit component” là hoàn tất (xem hình 4). Khi chạy mô phỏng, thiết bị đầu cuối ảo sẽ hiển thị các ký tự ASCII của các số từ 32 đến 127.</span></p>
+<p align="center"><img border="0" src="./Bài 5 - Giao tiếp UART_files/image032.jpg" alt="Protues sim. ex1" title="Protues sim. ex1"></p>
+<p align="center"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Hình 3. Mô phỏng ví dụ 1.</span></p>
+<p align="center"><img border="0" src="./Bài 5 - Giao tiếp UART_files/image034.jpg" alt="Sim setting1" title="Sim setting1"></p>
+<p align="center"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Hình 4. Cài đặt thông số cho thiết bị ảo.</span></p>
+<p align="justify"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt"><em><strong><span style="color: rgb(0,128,0)">2.2 Nhận dữ liệu</span></strong></em>.</span></p>
+<p align="justify"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Quá trình nhận dữ liệu chỉ xảy ra khi bit RXEN trong thanh ghi UCSRB được set bằng 1 và tất nhiên chân nhận dữ liệu RxD phải được nối với một nguồn phát (chân TxD của một chip UART khác chẳng hạn). Các thông số truyền thông như tốc độ baud và khung truyền trong bộ nhận phải được cài đặt như của bộ phát. Nếu không có lỗi trong quá trình truyền và nhận dữ liệu, sau khi nhận dữ liệu sẽ được chứa trong thanh ghi UDR và bit RXC (Reveice Complete) trong thanh ghi UCSRA sẽ tự động được set lên 1. Sau khi thanh ghi UDR được đọc, bit RXC lại tự động reset về 0 để chuẩn bị cho quá trình nhận dữ liệu kế tiếp. Như thế về cơ bản chúng ta có 2 cách đọc dữ liệu nhận về. Cách thứ nhất là cách&nbsp; hỏi vòng (polling), kiểm tra nếu bit RXC = 1 thì đọc giá trị thanh ghi UDR (và đọc cả bit RXB8 trong thanh ghi UCSRB nếu frame truyền 9 bit được dùng). Cách thứ hai là sử dụng ngắt “nhận hoàn tất” (Receive Complete Interrupt), bằng cách set bit cho pháp ngắt nhận hoàn tất, tức bit RXCIE trong thanh ghi UCSRB, và bit cho phép ngắt toàn cục (bit I, xem lại bài 3) thì một ngắt sẽ xảy ra khi dữ liệu đã được nhận và chứa trong thanh ghi UDR, chúng ta chỉ cần đọc giá trị của thanh ghi UDR trong trình phục vụ ngắt là xong. Theo kinh nghiệm, sử dụng ngắt là phương pháp tốt nhất cho đa số các trường hợp nhận dữ liệu UART, vì chúng ta không cần quan tâm thời điểm mà dữ liệu gởi đến, tránh lãng phí thời gian dành cho việc “hỏi vòng”.&nbsp; Vì thế trong phần tiếp theo tôi sẽ trình bày một ví dụ minh họa quá trình nhận dữ liệu bằng phương pháp ngắt. Để phục vụ cho ví dụ này, chúng ta sẽ khảo sát một mạch mô phỏng gồm 2 chip Atmega32 nối với nhau qua các đường TxD và RxD. Chip thứ là chip phát dữ liệu, nhiệm vụ của chip này là phát chuỗi dữ liệu từ 32 đến 127 như chip Atmega32 trong ví dụ 1. Chân phát TxD của chip 1 sẽ được nối với chân nhận RxD của chip thứ 2 (chip thứ 2 được gọi là chip nhận dữ liệu). Chip thứ 2 sau khi nhận dữ liệu sẽ phát dữ liệu này ra chân TxD của chính nó để có thể hiển thị lên thiết bị đầu cuối ảo cho chúng qua quan sát và so sánh kết quả. Bạn xem mạch điện mô phỏng trong hình 5 để hiểu rõ hơn. Chúng ta sử dụng đoạn code trong ví dụ 1 cho chip thứ nhất vì thế chỉ cần viết đoạn code nhận và phát lại dữ liệu cho chip thứ hai. List 2 trình bày đoạn code cho chip thứ hai..</span></p>
+<p align="justify"><span style="color: rgb(0,0,0)"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt"><span style="background-color: rgb(215,210,101)">List 2. Nhận dữ liệu USART không đồng bộ bằng phương pháp ngắt.</span></span></span></p>
+<table width="798" border="0" style="height: 36px">
+    <tbody>
+        <tr>
+            <td style="background-color: rgb(199,206,191); width: 20px; font-family: Times New Roman,Times,serif; font-size: 14pt"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">1<br>
+            2<br>
+            3<br>
+            4<br>
+            5<br>
+            6<br>
+            7<br>
+            8<br>
+            9<br>
+            10<br>
+            11<br>
+            12<br>
+            13<br>
+            14<br>
+            15<br>
+            16<br>
+            17<br>
+            18<br>
+            19<br>
+            20<br>
+            21<br>
+            22<br>
+            23<br>
+            24<br>
+            25<br>
+            26<br>
+            27<br>
+            28</span></td>
+            <td style="background-color: rgb(251,248,174); font-family: Times New Roman,Times,serif; font-size: 14pt"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt"><span style="color: rgb(0,0,255)">#include</span> &lt;avr/io.h&gt;<br>
+            <span style="color: rgb(0,0,255)">#include</span> &lt;avr/interrupt.h&gt;<br>
+            <span style="color: rgb(0,0,255)">#include</span> &lt;util/delay.h&gt;<br>
+            <span style="color: rgb(0,128,0)">//chuong trinh con phat du lieu</span><br>
+            <span style="color: rgb(0,0,255)">void</span> uart_char_tx(<span style="color: rgb(0,0,255)">unsigned char </span>chr){<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: rgb(0,0,255)">while</span> (bit_is_clear(UCSRA,UDRE)) {}; <span style="color: rgb(0,128,0)">//cho den khi bit UDRE=1</span> <br>
+            </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">UDR=chr;<br>
+            }<br>
+            <span style="color: rgb(0,0,255)">volatile unsigned char</span> u_Data;<br>
+            <br>
+            <span style="color: rgb(0,0,255)">int</span> main(<span style="color: rgb(0,0,255)">void</span>){&nbsp;&nbsp;&nbsp; <br>
+            <span style="color: rgb(0,128,0)">//set baud, 57.6k ung voi f=8Mhz, xem bang 70 trang 165, Atmega32 datasheet</span><br>
+            </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">UBRRH=0;&nbsp;&nbsp;&nbsp; <br>
+            </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">UBRRL=8;<br>
+            <span style="color: rgb(0,128,0)">//set khung truyen va kich hoat bo nhan du lieu</span><br>
+            </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">UCSRA=0x00;<br>
+            </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">UCSRC=(1&lt;&lt;URSEL)|(1&lt;&lt;UCSZ1)|(1&lt;&lt;UCSZ0);<br>
+            </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">UCSRB=<span style="color: rgb(0,128,0)"><span style="color: rgb(0,0,0)">(1&lt;&lt;RXEN)|(1&lt;&lt;TXEN)|(1&lt;&lt;RXCIE);</span>//cho phep ca 2 qua trinh nhan va//truyen, va cho&nbsp; phep ngat sau khi nhan xong </span><br>
+            </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">sei(); <span style="color: rgb(0,128,0)">//cho phep ngat toan cuc</span><br>
+            <br>
+            </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt"><span style="color: rgb(0,0,255)">while</span>(1){<br>
+            </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">}&nbsp;&nbsp;&nbsp; <br>
+            }<br>
+            ISR(SIG_UART_RECV){ <span style="color: rgb(0,128,0)">//trinh phuc vu ngat USART hoan tat nhan </span><br>
+            </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">u_Data=UDR;<br>
+            </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">uart_char_tx(u_Data);<br>
+            }</span></td>
+        </tr>
+    </tbody>
+</table>
+<p align="justify"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;; font-size: x-large"><span style="font-size: 19px">Đ</span><span style="font-size: x-large"><span style="font-size: 19px">oạn code trong ví dụ nhận và phát dữ liệu không khác đoạn code trong ví dụ 1 là mấy. Ở dòng thứ 3 tôi include file header interrupt.h vì chúng ta sẽ sử dụng ngắt để nhận dữ liệu. Chúng ta khai báo một biến u_Data &nbsp;dạng 8 bit không dấu để lưu dữ liệu nhận được, do biến này sẽ được truy cập trong trình phục vụ ngắt nên chúng ta đặt attribute volatile (dòng 9). Điểm quan trọng khi khởi động UART trong ví dụ này là dòng code 18, nếu trong ví dụ 1 chúng ta chỉ khởi động duy nhất bộ phát bằng cách set bit TXEN trong thanh ghi UCSRB (UCSRB=(1&lt;&lt;TXEN);) thì trong ví dụ này chúng ta set thêm 2 bit cho phép nhận RXEN và cho phép ngắt RXCIE trong thanh ghi UCSRB. Bit RXEN khởi động bộ nhận và bit RXCIE khởi động chế độ ngắt khi dữ liệu đã nhận trong UDR, tuy nhiên để có thể sử dụng ngắt, chúng ta cần set them bit I trong thanh ghi trạng thái bằng dòng code 20 (sei();). Phần quan trọng nhất trong đoạn code trên là trình phục ngắt nhận dữ liệu ISR. Khi dữ liệu đã được nhận đầy trong UDR, trình ngắt ISR(SIG_UART_RECV) sẽ được thực hiện, chúng ta sẽ đọc giá trị vừa nhận được vào biến u_Data (dòng 26) và sau đó phát giá trị này ra chân TxD để hiển thị lên thiết bị đầu cuối ảo bằng dòng lệnh 27.</span></span></span></p>
+<p align="justify"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &#39;Times New Roman&#39;; font-size: x-large"><span style="font-size: 19px">Phần mạch điện mô phỏng được trình bày trong hình 5. Chương trình cho chip TRANSMITTER là chương trình trong ví dụ 1 và chương trình cho chip RECEIVER là chương trình trong đoạn code trên. Bạn phải set xung clock cho cả 2 chip là 8MHz và set tốc độ baud cho thiết bị đầu cuối ảo là 56700. Nếu khi chạy mô phỏng, thiết bị đầu cuối hiển thị các ký tự ASCII của các số từ 32 đến 127 như trong hình 5 thì mọi thứ đã được thực hiện chính xác.</span></span></p>
+<p align="center"><img border="0" src="./Bài 5 - Giao tiếp UART_files/image036.jpg" alt="Protues sim. ex2" title="Protues sim. ex2"></p>
+<p align="center"><span style="font-family: &#39;Times New Roman&#39;,&#39;serif&#39;; font-size: 14pt">Hình 5. Truyền và nhận bằng UART.</span></p>
+<p style="text-align: left"></p>
+
+<br><div align="right"><a href="javascript:scroll(0,0)">[Top]</a></div></div>
+
+
+<span class="article_separator">&nbsp;</span>
+
+
+			
+		</div>
+		</div>
+		<!-- END: CONTENT -->
+		
+		
+		</div>
+		
+		
+	</div>
+</div>
+
+
+<!-- BEGIN: FOOTER -->
+<div id="ja-footerwrap">
+<div id="ja-footer" class="clearfix">
+
+	<div id="ja-footnav">
+		
+	</div>
+
+	<div class="copyright">
+		
+<font align="center"><small>FOOTER_LINE1 
+<br>AVR is a registered trademark of <a href="http://www.atmel.com/" target="_blank" align="center">Atmel Corporation</a>
+<br>This site is founded by <a href="http://www.hotam.net/" target="_blank" align="center">Thanhtam Ho</a></small></font>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="./Bài 5 - Giao tiếp UART_files/ga.js" type="text/javascript"></script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-12653702-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+<!--<small>FOOTER_LINE2</small> -->
+
+	</div>
+	
+	<div class="ja-cert">
+		
+		<a href="http://jigsaw.w3.org/css-validator/validator?uri=%2Findex.php%2Flectures%2Fuart" target="_blank" title="CSS Validity" style="text-decoration: none;">
+		<img src="./Bài 5 - Giao tiếp UART_files/but-css.gif" border="none" alt="CSS Validity">
+		</a>
+		<a href="http://validator.w3.org/check/referer" target="_blank" title="XHTML Validity" style="text-decoration: none;">
+		<img src="./Bài 5 - Giao tiếp UART_files/but-xhtml10.gif" border="none" alt="XHTML Validity">
+		</a>
+	</div>
+
+</div>
+</div>
+<!-- END: FOOTER -->
+
+</div>
+
+
+
+
+
+
+</body></html>

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!--Marble Repository-->
+<Marbles>
+  <Marble>
+    <MarbleColor>Red</MarbleColor>
+    <Quantity>0</Quantity>
+  </Marble>
+  <Marble>
+    <MarbleColor>Green</MarbleColor>
+    <Quantity>0</Quantity>
+  </Marble>
+  <Marble>
+    <MarbleColor>Blue</MarbleColor>
+    <Quantity>1</Quantity>
+  </Marble>
+  <Marble>
+    <MarbleColor>Purple</MarbleColor>
+    <Quantity>1</Quantity>
+  </Marble>
+  <Marble>
+    <MarbleColor>Pink</MarbleColor>
+    <Quantity>1</Quantity>
+  </Marble>
+</Marbles>

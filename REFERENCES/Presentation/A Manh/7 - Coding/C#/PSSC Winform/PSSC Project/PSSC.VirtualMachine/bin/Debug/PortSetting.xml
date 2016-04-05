@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!--System Setting-->
+<Settings>
+  <Setting>
+    <Name>InputPort</Name>
+    <Value>COM22</Value>
+  </Setting>
+  <Setting>
+    <Name>OutputPort</Name>
+    <Value>COM20</Value>
+  </Setting>
+</Settings>

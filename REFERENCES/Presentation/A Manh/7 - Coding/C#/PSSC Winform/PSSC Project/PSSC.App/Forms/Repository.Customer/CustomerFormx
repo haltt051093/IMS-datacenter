@@ -1,0 +1,294 @@
+﻿namespace PSSC.App
+{
+    partial class CustomerForm
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.lblFormName = new System.Windows.Forms.Label();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.lblPhone = new PSSC.XCommon.FormHelpers.ControlLibrary.PSSCLabel();
+            this.lblName = new PSSC.XCommon.FormHelpers.ControlLibrary.PSSCLabel();
+            this.lblAddress = new PSSC.XCommon.FormHelpers.ControlLibrary.PSSCLabel();
+            this.lblEmail = new PSSC.XCommon.FormHelpers.ControlLibrary.PSSCLabel();
+            this.btnExit = new PSSC.XCommon.FormHelpers.ControlLibrary.PSSCButton();
+            this.btnSave = new PSSC.XCommon.FormHelpers.ControlLibrary.PSSCButton();
+            this.txtAddress = new PSSC.XCommon.FormHelpers.ControlLibrary.PSSCTextBox();
+            this.txtEmail = new PSSC.XCommon.FormHelpers.ControlLibrary.PSSCTextBox();
+            this.txtName = new PSSC.XCommon.FormHelpers.ControlLibrary.PSSCTextBox();
+            this.txtPhone = new PSSC.XCommon.FormHelpers.ControlLibrary.PSSCTextBox();
+            this.rtbMessage = new PSSC.XCommon.FormHelpers.ControlLibrary.PSSCRichTextBox();
+            this.lblLog = new PSSC.XCommon.FormHelpers.ControlLibrary.PSSCLabel();
+            this.lblGenerateProfile = new System.Windows.Forms.LinkLabel();
+            this.SuspendLayout();
+            // 
+            // lblFormName
+            // 
+            this.lblFormName.AutoSize = true;
+            this.lblFormName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFormName.ForeColor = System.Drawing.Color.White;
+            this.lblFormName.Location = new System.Drawing.Point(10, 10);
+            this.lblFormName.Name = "lblFormName";
+            this.lblFormName.Size = new System.Drawing.Size(166, 16);
+            this.lblFormName.TabIndex = 9;
+            this.lblFormName.Text = "Product Sorted System";
+            // 
+            // btnClose
+            // 
+            this.btnClose.FlatAppearance.BorderSize = 0;
+            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClose.ForeColor = System.Drawing.Color.White;
+            this.btnClose.Location = new System.Drawing.Point(675, 1);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(41, 40);
+            this.btnClose.TabIndex = 10;
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // lblPhone
+            // 
+            this.lblPhone.AutoSize = true;
+            this.lblPhone.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
+            this.lblPhone.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.lblPhone.IsUppercase = false;
+            this.lblPhone.Location = new System.Drawing.Point(16, 177);
+            this.lblPhone.Name = "lblPhone";
+            this.lblPhone.Size = new System.Drawing.Size(52, 16);
+            this.lblPhone.StandardSize = PSSC.XCommon.FormHelpers.ControlLibrary.StandardSize.Small;
+            this.lblPhone.TabIndex = 22;
+            this.lblPhone.Text = "Phone";
+            // 
+            // lblName
+            // 
+            this.lblName.AutoSize = true;
+            this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
+            this.lblName.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.lblName.IsUppercase = false;
+            this.lblName.Location = new System.Drawing.Point(20, 84);
+            this.lblName.Name = "lblName";
+            this.lblName.Size = new System.Drawing.Size(49, 16);
+            this.lblName.StandardSize = PSSC.XCommon.FormHelpers.ControlLibrary.StandardSize.Small;
+            this.lblName.TabIndex = 21;
+            this.lblName.Text = "Name";
+            // 
+            // lblAddress
+            // 
+            this.lblAddress.AutoSize = true;
+            this.lblAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
+            this.lblAddress.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.lblAddress.IsUppercase = false;
+            this.lblAddress.Location = new System.Drawing.Point(6, 223);
+            this.lblAddress.Name = "lblAddress";
+            this.lblAddress.Size = new System.Drawing.Size(66, 16);
+            this.lblAddress.StandardSize = PSSC.XCommon.FormHelpers.ControlLibrary.StandardSize.Small;
+            this.lblAddress.TabIndex = 20;
+            this.lblAddress.Text = "Address";
+            // 
+            // lblEmail
+            // 
+            this.lblEmail.AutoSize = true;
+            this.lblEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
+            this.lblEmail.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.lblEmail.IsUppercase = false;
+            this.lblEmail.Location = new System.Drawing.Point(22, 130);
+            this.lblEmail.Name = "lblEmail";
+            this.lblEmail.Size = new System.Drawing.Size(47, 16);
+            this.lblEmail.StandardSize = PSSC.XCommon.FormHelpers.ControlLibrary.StandardSize.Small;
+            this.lblEmail.TabIndex = 19;
+            this.lblEmail.Text = "Email";
+            // 
+            // btnExit
+            // 
+            this.btnExit.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.btnExit.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke;
+            this.btnExit.FlatAppearance.BorderSize = 0;
+            this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExit.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.btnExit.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.btnExit.Location = new System.Drawing.Point(244, 380);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(117, 40);
+            this.btnExit.TabIndex = 18;
+            this.btnExit.Text = "Exit";
+            this.btnExit.UseVisualStyleBackColor = false;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.btnSave.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke;
+            this.btnSave.FlatAppearance.BorderSize = 0;
+            this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSave.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.btnSave.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.btnSave.Location = new System.Drawing.Point(103, 380);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(117, 40);
+            this.btnSave.TabIndex = 17;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = false;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // txtAddress
+            // 
+            this.txtAddress.BackColor = System.Drawing.Color.Gray;
+            this.txtAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
+            this.txtAddress.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.txtAddress.Location = new System.Drawing.Point(103, 220);
+            this.txtAddress.Multiline = true;
+            this.txtAddress.Name = "txtAddress";
+            this.txtAddress.Size = new System.Drawing.Size(287, 125);
+            this.txtAddress.TabIndex = 14;
+            // 
+            // txtEmail
+            // 
+            this.txtEmail.BackColor = System.Drawing.Color.Gray;
+            this.txtEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
+            this.txtEmail.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.txtEmail.Location = new System.Drawing.Point(103, 128);
+            this.txtEmail.Multiline = true;
+            this.txtEmail.Name = "txtEmail";
+            this.txtEmail.Size = new System.Drawing.Size(245, 29);
+            this.txtEmail.TabIndex = 13;
+            // 
+            // txtName
+            // 
+            this.txtName.BackColor = System.Drawing.Color.Gray;
+            this.txtName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
+            this.txtName.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.txtName.Location = new System.Drawing.Point(103, 82);
+            this.txtName.Multiline = true;
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(245, 29);
+            this.txtName.TabIndex = 12;
+            // 
+            // txtPhone
+            // 
+            this.txtPhone.BackColor = System.Drawing.Color.Gray;
+            this.txtPhone.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtPhone.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
+            this.txtPhone.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.txtPhone.Location = new System.Drawing.Point(103, 174);
+            this.txtPhone.Multiline = true;
+            this.txtPhone.Name = "txtPhone";
+            this.txtPhone.Size = new System.Drawing.Size(134, 29);
+            this.txtPhone.TabIndex = 11;
+            // 
+            // rtbMessage
+            // 
+            this.rtbMessage.BackColor = System.Drawing.Color.Gray;
+            this.rtbMessage.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtbMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbMessage.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.rtbMessage.Location = new System.Drawing.Point(414, 82);
+            this.rtbMessage.Name = "rtbMessage";
+            this.rtbMessage.ReadOnly = true;
+            this.rtbMessage.Size = new System.Drawing.Size(278, 338);
+            this.rtbMessage.TabIndex = 23;
+            this.rtbMessage.Text = "";
+            // 
+            // lblLog
+            // 
+            this.lblLog.AutoSize = true;
+            this.lblLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
+            this.lblLog.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.lblLog.IsUppercase = false;
+            this.lblLog.Location = new System.Drawing.Point(411, 53);
+            this.lblLog.Name = "lblLog";
+            this.lblLog.Size = new System.Drawing.Size(34, 16);
+            this.lblLog.StandardSize = PSSC.XCommon.FormHelpers.ControlLibrary.StandardSize.Small;
+            this.lblLog.TabIndex = 21;
+            this.lblLog.Text = "Log";
+            // 
+            // lblGenerateProfile
+            // 
+            this.lblGenerateProfile.ActiveLinkColor = System.Drawing.Color.White;
+            this.lblGenerateProfile.AutoSize = true;
+            this.lblGenerateProfile.LinkColor = System.Drawing.Color.DeepSkyBlue;
+            this.lblGenerateProfile.Location = new System.Drawing.Point(99, 57);
+            this.lblGenerateProfile.Name = "lblGenerateProfile";
+            this.lblGenerateProfile.Size = new System.Drawing.Size(96, 15);
+            this.lblGenerateProfile.TabIndex = 25;
+            this.lblGenerateProfile.TabStop = true;
+            this.lblGenerateProfile.Text = "Generate Profile";
+            this.lblGenerateProfile.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblGenerateProfile_LinkClicked);
+            // 
+            // CustomerForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ClientSize = new System.Drawing.Size(717, 480);
+            this.Controls.Add(this.lblGenerateProfile);
+            this.Controls.Add(this.rtbMessage);
+            this.Controls.Add(this.lblPhone);
+            this.Controls.Add(this.lblLog);
+            this.Controls.Add(this.lblName);
+            this.Controls.Add(this.lblAddress);
+            this.Controls.Add(this.lblEmail);
+            this.Controls.Add(this.btnExit);
+            this.Controls.Add(this.btnSave);
+            this.Controls.Add(this.txtAddress);
+            this.Controls.Add(this.txtEmail);
+            this.Controls.Add(this.txtName);
+            this.Controls.Add(this.txtPhone);
+            this.Controls.Add(this.btnClose);
+            this.Controls.Add(this.lblFormName);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Name = "CustomerForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "CustomerForm";
+            this.Load += new System.EventHandler(this.CustomerForm_Load);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Label lblFormName;
+        private System.Windows.Forms.Button btnClose;
+        private XCommon.FormHelpers.ControlLibrary.PSSCTextBox txtPhone;
+        private XCommon.FormHelpers.ControlLibrary.PSSCTextBox txtName;
+        private XCommon.FormHelpers.ControlLibrary.PSSCTextBox txtEmail;
+        private XCommon.FormHelpers.ControlLibrary.PSSCTextBox txtAddress;
+        private XCommon.FormHelpers.ControlLibrary.PSSCButton btnExit;
+        private XCommon.FormHelpers.ControlLibrary.PSSCButton btnSave;
+        private XCommon.FormHelpers.ControlLibrary.PSSCLabel lblEmail;
+        private XCommon.FormHelpers.ControlLibrary.PSSCLabel lblAddress;
+        private XCommon.FormHelpers.ControlLibrary.PSSCLabel lblName;
+        private XCommon.FormHelpers.ControlLibrary.PSSCLabel lblPhone;
+        private XCommon.FormHelpers.ControlLibrary.PSSCRichTextBox rtbMessage;
+        private XCommon.FormHelpers.ControlLibrary.PSSCLabel lblLog;
+        private System.Windows.Forms.LinkLabel lblGenerateProfile;
+
+    }
+}

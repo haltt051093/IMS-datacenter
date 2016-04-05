@@ -1,0 +1,88 @@
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.App\bin\Debug\PSSC.App.exe.config
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.App\obj\Debug\PSSC.App.exe
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.App\obj\Debug\PSSC.App.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.App\bin\Debug\PSSC.App.exe
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.App\bin\Debug\PSSC.App.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.App\bin\Debug\EntityFramework.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.App\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.App\bin\Debug\PSSC.Business.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.App\bin\Debug\PSSC.DataAccess.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.App\bin\Debug\PSSC.DataModel.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.App\bin\Debug\PSSC.XCommon.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.App\bin\Debug\PSSC.Business.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.App\bin\Debug\PSSC.DataAccess.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.App\bin\Debug\PSSC.DataModel.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.App\bin\Debug\PSSC.XCommon.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.App\bin\Debug\EntityFramework.xml
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.App\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.App\obj\Debug\PSSC.App.csprojResolveAssemblyReference.cache
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.App\obj\Debug\PSSC.App.CustomerForm.resources
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.App\obj\Debug\PSSC.App.MarblesManagementForm.resources
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.App\obj\Debug\PSSC.App.HistoryForm.resources
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.App\obj\Debug\PSSC.App.PortSettingForm.resources
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.App\obj\Debug\PSSC.App.Properties.Resources.resources
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.App\obj\Debug\PSSC.App.UIMainForm.resources
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.App\obj\Debug\PSSC.App.ReportForm.resources
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform - v16\PSSC Project\PSSC.App\obj\Debug\PSSC.App.csproj.GenerateResource.Cache
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\PSSC.App.exe.config
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\PSSC.App.exe
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\PSSC.App.pdb
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\PSSC.App.exe
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\PSSC.App.pdb
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\EntityFramework.dll
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\PSSC.Business.dll
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\PSSC.DataAccess.dll
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\PSSC.DataModel.dll
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\PSSC.XCommon.dll
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\PSSC.Business.pdb
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\PSSC.DataAccess.pdb
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\PSSC.DataModel.pdb
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\PSSC.XCommon.pdb
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\EntityFramework.xml
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\PSSC.App.csprojResolveAssemblyReference.cache
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\PSSC.App.CustomerForm.resources
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\PSSC.App.MarblesManagementForm.resources
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\PSSC.App.HistoryForm.resources
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\PSSC.App.PortSettingForm.resources
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\PSSC.App.Properties.Resources.resources
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\PSSC.App.UIMainForm.resources
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\PSSC.App.ReportForm.resources
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\PSSC.App.csproj.GenerateResource.Cache
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\PSSC.App.CustomerForm.resources
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\PSSC.App.MarblesManagementForm.resources
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\PSSC.App.HistoryForm.resources
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\PSSC.App.PortSettingForm.resources
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\PSSC.App.Properties.Resources.resources
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\PSSC.App.UIMainForm.resources
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\PSSC.App.ReportForm.resources
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\PSSC.App.csproj.GenerateResource.Cache
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\PSSC.App.exe.config
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\PSSC.App.exe
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\PSSC.App.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\EntityFramework.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\PSSC.Business.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\PSSC.DataAccess.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\PSSC.DataModel.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\PSSC.XCommon.dll
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\PSSC.Business.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\PSSC.DataAccess.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\PSSC.DataModel.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\PSSC.XCommon.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\EntityFramework.xml
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\PSSC.App.csprojResolveAssemblyReference.cache
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\PSSC.App.exe
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\PSSC.App.pdb
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\PSSC.App.ReportDetailsForm.resources
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\RdlCompile.cache
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\RdlCompile.compiled
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\PSSC.App.ReportDetailsForm.resources
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\RdlCompile.cache
+C:\Users\ManhNH3392\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\RdlCompile.compiled
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\PSSC.App.exe.manifest
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\bin\Debug\PSSC.App.application
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\PSSC.App.exe.manifest
+C:\Users\Nguyen Hung Manh\Desktop\PSSC Winform\PSSC Project\PSSC.App\obj\Debug\PSSC.App.application

@@ -1,0 +1,263 @@
+/*------------------------------------------------------------------------
+# JA Barite for Joomla 15 - Version 1.4 - Licence Owner JA130162
+# ------------------------------------------------------------------------
+# Copyright (C) 2004-2008 J.O.O.M Solutions Co., Ltd. All Rights Reserved.
+# @license - Copyrighted Commercial Software
+# Author: J.O.O.M Solutions Co., Ltd
+# Websites:  http://www.joomlart.com -  http://www.joomlancers.com
+# This file may not be redistributed in whole or significant part.
+-------------------------------------------------------------------------*/
+
+
+/* BONUS TYPOGRAPHY STYLES
+--------------------------------------------------------- */
+pre, .code {
+	padding: 10px 15px;
+	margin: 5px 0 15px;
+	border-left: 5px solid #999999;
+	background: #FFFFCC;
+	font: 1em/1.5 "Courier News", monospace;
+}
+
+blockquote {
+	padding: 1em 40px 1em 15px;
+}
+
+blockquote span.open {
+	padding: 0 0 0 20px;
+	background: url(../images/so-q.gif) no-repeat left top;
+}
+
+blockquote span.close {
+	padding: 0 20px 0 0;
+	background: url(../images/sc-q.gif) no-repeat bottom right;
+}
+
+/* Rropcap */
+.dropcap {
+	float: left;
+	padding: 4px 8px 0 0;
+	display: block;
+	color: #999999;
+	font: 50px/40px Georgia, Times, serif;
+}
+
+/* Tips, Error, Message, Hightlight*/
+p.error {
+	padding-left: 25px;
+	color: #BF0000;
+	background: url(../images/icon-error.gif) no-repeat top left;
+}
+
+p.message {
+	padding-left: 25px;
+	color: #006699;
+	background: url(../images/icon-info.gif) no-repeat top left;
+}
+
+p.tips {
+	padding-left: 25px;
+	color: #EE9600;
+	background: url(../images/icon-tips.gif) no-repeat top left;
+}
+
+.highlight {
+	padding: 1px 5px;
+	background: #FFFFCC;
+	font-weight: bold;
+}
+
+/* Note Style */
+p.stickynote {
+	padding: 10px 0px 10px 40px;
+	border: 1px solid #CACACC;
+	background: url(../images/sticky-bg.gif) no-repeat 5px center #FFFFFF;
+}
+
+p.download {
+	padding: 10px 0px 10px 40px;
+	border: 1px solid #CACACC;
+	background: url(../images/download-bg.gif) no-repeat 5px center #FFFFFF;
+}
+
+.blocknumber {
+	clear: both;
+	padding: 5px 15px 10px;
+	position: relative;
+}
+
+/* Check list */
+ul.checklist {
+	list-style: none;
+}
+
+ul.checklist li {
+	margin-left: 15px;
+	padding: 0 0 0 20px;
+	background: url(../images/icon-checklist.gif) no-repeat 0 4px;
+}
+
+/* Check list (star) */
+ul.stars {
+	list-style: none;
+}
+
+ul.stars li {
+	margin-left: 15px;
+	padding: 0 0 0 20px;
+	background: url(../images/icon-star.gif) no-repeat 0 5px;
+}
+
+/* List arrow */
+ul.arrow {
+	list-style: none;
+}
+
+ul.arrow li {
+	margin-left: 15px;
+	padding: 0 0 0 20px;
+	background: url(../images/icon-arrow.gif) no-repeat 3px 5px;
+}
+
+/* Bignumber */
+.bignumber {
+	float: left;
+	margin-right: 8px;
+	padding: 6px 7px;
+	display: block;
+	background: url(../images/ol-bg.gif) no-repeat top left;
+	color: #FFFFFF;
+	font: bold 20px/normal Arial, sans-serif;
+}
+
+/* Talking box. Thinking box. */
+div.bubble1, div.bubble2, div.bubble3, div.bubble4 {
+	margin: 15px 0;
+}
+
+div.bubble1 span.author,
+div.bubble2 span.author,
+div.bubble3 span.author,
+div.bubble4 span.author {
+	padding-left: 20px;
+	margin-left: 15px;
+	background: url(../images/icon-author.gif) no-repeat center left;
+	font-weight: bold;
+}
+
+div.bubble1 div {
+	margin: 0;
+	width: 100%;
+	background: url(../images/bub1-br.gif) no-repeat bottom right;
+}
+
+div.bubble1 div div {
+	background: url(../images/bub1-bl.gif) no-repeat bottom left;
+}
+
+div.bubble1 div div div {
+	background: url(../images/bub1-tr.gif) no-repeat top right;
+}
+
+div.bubble1 div div div div {
+	background: url(../images/bub1-tl.gif) no-repeat top left;
+}
+
+div.bubble1 div div div div div {
+	margin: 0;
+	padding: 10px 15px 20px;
+	width: auto;
+}
+
+div.bubble2 div {
+	margin: 0;
+	width: 100%;
+	background: url(../images/bub2-br.gif) no-repeat bottom right;
+}
+
+div.bubble2 div div {
+	background: url(../images/bub2-bl.gif) no-repeat bottom left;
+}
+
+div.bubble2 div div div {
+	background: url(../images/bub2-tr.gif) no-repeat top right;
+}
+
+div.bubble2 div div div div {
+	background: url(../images/bub2-tl.gif) no-repeat top left;
+}
+
+div.bubble2 div div div div div {
+	margin: 0;
+	padding: 10px 15px 25px;
+	width: auto;
+}
+
+div.bubble3 div {
+	margin: 0;
+	width: 100%;
+	background: url(../images/bub3-br.gif) no-repeat bottom right;
+}
+
+div.bubble3 div div {
+	background: url(../images/bub3-bl.gif) no-repeat bottom left;
+}
+
+div.bubble3 div div div {
+	background: url(../images/bub3-tr.gif) no-repeat top right;
+}
+
+div.bubble3 div div div div {
+	background: url(../images/bub3-tl.gif) no-repeat top left;
+}
+
+div.bubble3 div div div div div {
+	margin: 0;
+	padding: 10px 15px 45px;
+	width: auto;
+}
+
+div.bubble4 div {
+	margin: 0;
+	width: 100%;
+	background: url(../images/bub4-br.gif) no-repeat bottom right;
+}
+
+div.bubble4 div div {
+	background: url(../images/bub4-bl.gif) no-repeat bottom left;
+}
+
+div.bubble4 div div div {
+	background: url(../images/bub4-tr.gif) no-repeat top right;
+}
+
+div.bubble4 div div div div {
+	background: url(../images/bub4-tl.gif) no-repeat top left;
+}
+
+div.bubble4 div div div div div {
+	margin: 0;
+	padding: 10px 15px 45px;
+	width: auto;
+}
+
+/* Legend */
+.legend-title {
+	margin: 0;
+	padding: 0 3px;
+	float: left;
+	display: block;
+	background: #FFFFFF;
+	font-weight: bold;
+	position: absolute;
+	top: -10px;
+	left: 7px;
+}
+
+.legend {
+	margin: 20px 0;
+	padding: 0 10px;
+	border: 1px solid #CACACC;
+	background: #FFFFFF;
+	position: relative;
+}
