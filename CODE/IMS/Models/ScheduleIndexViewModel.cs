@@ -15,5 +15,7 @@ namespace IMS.Models
         public List<ScheduleExtendedModel> Schedules { get; set; }
         public List<string> NewNote { get; set; }
         public string StaffCode { get; set; }
+        public string StaffInShift { get; set; }
+        public string StaffRole { get; set; }
     }
 }

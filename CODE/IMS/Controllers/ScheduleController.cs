@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using IMS.Core;
 using IMS.Data.Business;
 using IMS.Data.Models;
 using IMS.Data.Repository;
@@ -19,9 +20,16 @@ namespace IMS.Controllers
         {
             var note = RequestBLO.Current.GetNoteOfShift();
             var prenote = RequestBLO.Current.GetNoteOfPreviousShift();
+            var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
+            var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
+                .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
+                .ToList().FirstOrDefault();
             var data = new ScheduleIndexViewModel();
             data.Schedules = note;
             data.Schedules1 = prenote;
+            data.StaffCode = GetCurrentUserName();
+            data.StaffInShift = activeStaff.Username;
+            data.StaffRole = GetCurrentUserRole();
             var count = data.Schedules.Count;
             data.NewNote = new string[count].ToList();
             return View(data);
