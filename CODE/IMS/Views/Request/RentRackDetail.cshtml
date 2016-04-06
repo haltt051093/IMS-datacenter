@@ -15,34 +15,34 @@
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="col-xs-6">
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_X3_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
                         @Html.LabelFor(model => model.RequestInfo.StatusName)
                     </div>
-                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X3_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                         @Html.DisplayFor(model => model.RequestInfo.StatusName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                     </div>
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_X3_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
                         @Html.LabelFor(model => model.RequestInfo.RequestedTime)
                     </div>
-                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X3_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                         @Html.DisplayFor(model => model.RequestInfo.RequestedTime, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                     </div>
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_X3_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
                         @Html.LabelFor(model => model.RequestInfo.Description)
                     </div>
-                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X3_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                         @Html.DisplayFor(model => model.RequestInfo.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                     </div>
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_X3_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
                         @Html.LabelFor(model => model.RackNumbers)
                     </div>
-                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X3_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                         @Html.DisplayFor(model => model.RackNumbers, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                     </div>
                 </div>
@@ -54,10 +54,10 @@
             <hr />
             <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                 <div class="col-xs-6">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_X3_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
                         @Html.LabelFor(model => model.RentedRacks)
                     </div>
-                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X3_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                         @foreach (var item in Model.RentedRacks)
                     {
                             @Html.DisplayFor(model => item, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
@@ -72,10 +72,10 @@
             <hr />
             <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                 <div class="col-xs-6">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_X3_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
                         @Html.LabelFor(model => model.RequestInfo.Reason)
                     </div>
-                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X3_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                         @Html.DisplayFor(model => model.RequestInfo.Reason, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                     </div>
                 </div>
