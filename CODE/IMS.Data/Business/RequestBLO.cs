@@ -1096,6 +1096,13 @@ namespace IMS.Data.Business
         public NotificationResultModel ApproveRequestAssignIP(string requestCode, List<string> IPs, string assignee,
             string taskCode, string selectedServer)
         {
+            //neu server chưa có default ip, thì ưu tiên add default ip trước
+            var hasDefaultIP = ServerBLO.Current.HasDefaultIP(selectedServer);
+            if (!hasDefaultIP)
+            {
+                var defaultip = IPs.First();
+                ServerBLO.Current.UpdateDefaultIP(selectedServer, defaultip);
+            }
             foreach (var item in IPs)
             {
                 //add and log serverip

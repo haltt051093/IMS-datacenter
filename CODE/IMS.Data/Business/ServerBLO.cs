@@ -82,5 +82,30 @@ namespace IMS.Data.Business
         {
             dao.UpdateServerANDLog(requestCode, serverCode, typeOfLog, newStatus, username);
         }
+
+        public bool HasDefaultIP(string server)
+        {
+            var query = dao.Query(x => x.ServerCode == server).FirstOrDefault();
+            if (query.DefaultIP == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public void UpdateDefaultIP(string server, string ip)
+        {
+            var check = HasDefaultIP(server);
+            if (!check)
+            {
+                var s = GetByKeys(new Server { ServerCode = server });
+                s.DefaultIP = ip;
+                Update(s);
+            }
+        }
+
     }
 }
