@@ -45,7 +45,7 @@
                                 {
                                     <li>
                                         <a href="@Url.Action("Detail", "Notification", new { code = notification.NotificationCode})">
-                                            <i class="ion ion-ios7-people info"></i> @notification.Description
+                                            <i class="fa fa-bell"></i> @notification.Description
                                         </a>
                                     </li>
                                 }
@@ -111,7 +111,7 @@
                 $('#noty_count2').text(noty_count);
                 $('#noty_count').css('display', '');
 
-                var icon = $('<i></i>').attr('class', 'ion ion-ios7-people info');
+                var icon = $('<i></i>').attr('class', 'fa fa-bell');
                 var description = noty.Description;
                 var link = $('<a></a>').attr('href', '@Url.Action("Detail", "Notification")' + '/' + noty.NotificationCode).prepend(icon);
                 link.prepend(description);
