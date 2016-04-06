@@ -96,7 +96,7 @@ namespace IMS.Data.Repository
             {
                 if (item.DefaultIP == null && item.StatusCode == Constants.StatusCode.SERVER_WAITING)
                 {
-                    item.DefaultIP = "Server is not ready yet. Default IP is not added yet!";
+                    item.DefaultIP = "Server is not ready yet.";
                 }
                 list.Add(item);
             }
@@ -150,7 +150,7 @@ namespace IMS.Data.Repository
             {
                 if (item.DefaultIP == null && item.StatusCode == Constants.StatusCode.SERVER_WAITING)
                 {
-                    item.DefaultIP = "Server is not ready yet. Default IP is not added yet!";
+                    item.DefaultIP = "Server is not ready yet.";
                 }
                 list.Add(item);
             }

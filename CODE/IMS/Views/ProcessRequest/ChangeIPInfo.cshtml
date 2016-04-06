@@ -41,7 +41,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-3">
+            <div class="col-xs-4">
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                     <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
                         @Html.LabelFor(model => model.CustomerInfo.Customer)
@@ -70,7 +70,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-5">
+            <div class="col-xs-4">
                 @if (Model.RequestInfo.ShiftHeadName != null)
                 {
                     <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
@@ -167,7 +167,7 @@
             <div id="changeipzone" class="@Constants.HtmlFormat.FORM_DETAIL_CLASS">
                 @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
                 {
-                    <table style="width:210px" class="@Constants.HtmlFormat.DATATABLE_CLASS">
+                    <table class="@Constants.HtmlFormat.DATATABLE_CLASS">
                         <thead>
                             <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
                                 <th>
@@ -190,7 +190,7 @@
                 }
                 else
                 {
-                    <table id="MyTable" style="width:500px" class="@Constants.HtmlFormat.DATATABLE_CLASS">
+                    <table id="MyTable" class="@Constants.HtmlFormat.DATATABLE_CLASS">
                         <thead>
                             <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
                                 <th>
