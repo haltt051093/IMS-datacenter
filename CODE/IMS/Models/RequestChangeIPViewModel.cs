@@ -3,6 +3,7 @@ using IMS.Data.Models;
 using IMS.Data.ViewModels;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using IMS.Validations;
 using SelectListItem = System.Web.Mvc.SelectListItem;
 
 namespace IMS.Models
@@ -21,6 +22,7 @@ namespace IMS.Models
         [Display(Name = "Server")]
         public string SelectedServer { get; set; }
         [Display(Name = "Changing IPs")]
+        [CustomRequired]
         public List<string> ReturningIPs { get; set; }
         public List<string> SelectedIPs { get; set; } 
         public List<ServerIPExtendedModel> ServerIPs { get; set; } 
