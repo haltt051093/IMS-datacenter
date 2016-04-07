@@ -18,7 +18,7 @@
                 @Html.LabelFor(model => model.SelectedServer)
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                @Html.DropDownListFor(m => m.SelectedServer, Model.ServerOptions, "Select your server", new { @id = "servercode", @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.DropDownListFor(m => m.SelectedServer, Model.ServerOptions, "Select your server", new {@id = "servercode", @class = Constants.HtmlFormat.FORM_INNER_CLASS})
                 @Html.ValidationMessageFor(model => model.SelectedServer)
             </div>
         </div>
@@ -33,7 +33,7 @@
                         <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
                             <th>
                                 <div>
-                                    <input id="checkAll" type="checkbox" />
+                                    <input id="checkAll" type="checkbox"/>
                                 </div>
                             </th>
                             <th>
@@ -43,7 +43,8 @@
                         </thead>
                         <tbody id="tbodyid"></tbody>
                     </table>
-                    @Html.HiddenFor(model => model.ReturningIPs, new {id = "ips"})
+                    @Html.HiddenFor(model => model.ReturningIPs, new { id = "ips" })
+                    @Html.ValidationMessageFor(model => model.ReturningIPs)
                 </div>
             </div>
         </div>
@@ -52,7 +53,7 @@
                 @Html.LabelFor(model => model.RequestInfo.Description)
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                @Html.TextAreaFor(model => model.RequestInfo.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.TextAreaFor(model => model.RequestInfo.Description, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
                 @Html.ValidationMessageFor(model => model.RequestInfo.Description)
             </div>
         </div>
@@ -67,58 +68,72 @@
         </div>
     }
 </section>
+<script>
+    // enable validation for hidden fields
+    $.validator.setDefaults({
+        ignore: []
+    });
+
+    // add jquery validation method
+    $.validator.addMethod('customrequired', function (value, element, params) {
+        var count = $('[id*=MyTable] input[type="checkbox"]:checked').length;
+        if (count == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    });
+
+    // add jquery unobtrusive validation adapter
+    $.validator.unobtrusive.adapters.add('customrequired', [],
+        function (options) {
+            options.rules['customrequired'] = {
+            };
+            options.messages['customrequired'] = options.message;
+        }
+    );
+</script>
+
 <script type="text/javascript">
-    $(function () {
-        $('#servercode').change(function () {
-            var pass = $('#servercode').val();
-            var myTable = $('#MyTable > tbody');
-            $('#tbodyid').empty();
-            $.ajax({
-                cache: false,
-                type: "GET",
-                url: "@(Url.Action("FetchChangedIPs", "Request"))",
-                data: { "SelectedServer": pass },
-                dataType: "json",
-                success: function (data) {
-                    $('#divPartialView').removeClass('hidden');
-                    $(data.ServerIPs).each(function (index, item) {
-                        myTable.append('<tr><td>' + '<input type="checkbox" class="chknull" id="CheckBoxList"' + index + ' name="chk" value="' + item.CurrentIP + '" /></td><td>' + item.CurrentIP + '</td></tr>');
-                        if (item.IsDefault) {
-                            $("tr:last").css({ backgroundColor: "yellow", fontWeight: "bolder" }).attr('id', 'hohoho');
-                        }
-                    });
-                }
-            });
-        });
-        //Get value of selected items
-        $("#btnAccept").click(function () {
-            var selectedValues = [];
-            $("[id*=MyTable] input:checked").each(function () {
-                selectedValues.push($(this).val());
-            });
-            $('#ips').val(selectedValues);
-        });
-
-        $("#checkAll").change(function () {
-            var state = $('#checkAll').is(':checked');
-            $('[id*=MyTable] input[type="checkbox"]').prop('checked', state);
-        });
-
-        var selectedChkCount = 0;
-        $('#tbodyid').on('click', '.chknull', function () {
-            var selectedChk = $('.chknull:checked');
-            selectedChkCount = selectedChk.length;
-        });
-        $("#btnAccept").click(function () {
-            if (selectedChkCount <= 0) {
-                notif({
-                    msg: "<b>Error!</b> You have to select at least one IP Address!",
-                    type: "error",
-                    position: "center"
+    $('#servercode').change(function () {
+        var pass = $('#servercode').val();
+        var myTable = $('#MyTable > tbody');
+        $('#tbodyid').empty();
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "@(Url.Action("FetchChangedIPs", "Request"))",
+            data: { "SelectedServer": pass },
+            dataType: "json",
+            success: function (data) {
+                $('#divPartialView').removeClass('hidden');
+                $(data.ServerIPs).each(function (index, item) {
+                    myTable.append('<tr><td>' + '<input type="checkbox" class="chknull" id="CheckBoxList"' + index + ' name="chk" value="' + item.CurrentIP + '" /></td><td>' + item.CurrentIP + '</td></tr>');
+                    if (item.IsDefault) {
+                        $("tr:last").css({ backgroundColor: "yellow", fontWeight: "bolder" }).attr('id', 'hohoho');
+                    }
                 });
-                return false;
             }
         });
+    });
+    //Get value of selected items
+    $("#btnAccept").click(function () {
+        var selectedValues = [];
+        $("[id*=MyTable] input:checked").each(function () {
+            selectedValues.push($(this).val());
+        });
+        $('#ips').val(selectedValues);
+    });
+
+    $("#checkAll").change(function () {
+        var state = $('#checkAll').is(':checked');
+        $('[id*=MyTable] input[type="checkbox"]').prop('checked', state);
+    });
+
+    var selectedChkCount = 0;
+    $('#tbodyid').on('click', '.chknull', function () {
+        var selectedChk = $('.chknull:checked');
+        selectedChkCount = selectedChk.length;
     });
 </script>
 
