@@ -223,7 +223,7 @@
     <value>Available IP Addresses</value>
   </data>
   <data name="LocationAvai" xml:space="preserve">
-    <value>Available Locations</value>
+    <value>Available Racks</value>
   </data>
   <data name="ProcessRequestAddServer" xml:space="preserve">
     <value>Add Server</value>
