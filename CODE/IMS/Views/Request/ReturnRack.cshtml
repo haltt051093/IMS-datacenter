@@ -69,7 +69,8 @@
                                         {
                                             @*@Html.ActionLink("Return all servers", "ReturnRackByBringServerAway", "Request",
                                                 new { RackCode = Model.AllRacks[i].RackCode }, new { @class = "returnallservers" })*@
-                                            <a href="#" class="returnall" rack-code="@Model.AllRacks[i].RackCode">Return all servers</a>
+                                            @*<a href="@Url.Action("Create", "Request", new { Type = Constants.RequestTypeCode.BRING_SERVER_AWAY})" class="returnall" rack-code="@Model.AllRacks[i].RackCode">Return all servers</a>*@
+                                            <a href="@Url.Action("Create", "Request", new { Type = Constants.RequestTypeCode.BRING_SERVER_AWAY})">Return all servers</a>
                                         }
                                     </td>
                                 </tr>

@@ -410,5 +410,21 @@ namespace IMS.Data.Business
                                  };
             return serverlocation.ToList();
         }
+
+        public int GetNumberOfServerPerRack(string rackCode)
+        {
+            var query = from l in dao.Table
+                        where l.RackCode == rackCode
+                        group l by l.ServerCode into newl
+                        select newl.Key;
+            var list = query.ToList();
+            bool check = list.Any(x => x == null);
+            if (check)
+            {
+                list.RemoveAt(0);
+            }
+            int serverNumber = list.Count;
+            return serverNumber;
+        }
     }
 }

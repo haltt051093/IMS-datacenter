@@ -34,7 +34,7 @@ namespace IMS.Data.Business
         }
 
 
-        public List<Tuple<string, string>>  GetRackOfCustomer(string customer)
+        public List<Tuple<string, string>> GetRackOfCustomer(string customer)
         {
             var racks = dao.GetAllRackOfCustomer(customer);
             var result = racks.Select(x => new Tuple<string, string>(x.RackCode, x.RackName))
@@ -51,9 +51,9 @@ namespace IMS.Data.Business
 
         public List<RackOfCustomerExtendedModel> GetRacksOfCustomer(string customer, string status)
         {
-            return dao.GetRacksOfCustomer(customer,status);
+            return dao.GetRacksOfCustomer(customer, status);
         }
-        
+
         //Tien
         public List<RackOfCustomerExtendedModel> GetAllRackOfCustomer(string customer = null)
         {
@@ -62,10 +62,44 @@ namespace IMS.Data.Business
 
         public List<RackOfCustomerExtendedModel> CountServerPerRack(string customer)
         {
-            return dao.CountServerPerRack(customer);
+            //var query = @"select r.RackCode, ra.RackName, COUNT(rc.ServerCode) as serverNum, r.StatusCode
+            //            from [dbo].[RackOfCustomer] as r
+            //             left join [dbo].[Location] as rc
+            //            on r.RackCode = rc.RackCode
+            //             left join [dbo].[Rack] as ra
+            //            on ra.RackCode = rc.RackCode
+            //            where r.Customer = '" + customer +
+            //            @"' AND r.StatusCode='" + Constants.StatusCode.RACKOFCUSTOMER_CURRENT + @"'
+            //            group by r.RackCode, ra.RackName, r.StatusCode";
+            //return RawQuery<RackOfCustomerExtendedModel>(query, new object[] { });
+            var rackOfCus = from rc in dao.Table
+                            join r in RackDAO.Current.Table
+                                on rc.RackCode equals r.RackCode into rrc
+                            from subrrc in rrc.DefaultIfEmpty()
+                            where rc.Customer == customer && rc.StatusCode == Constants.StatusCode.RACKOFCUSTOMER_CURRENT
+                            select new RackOfCustomerExtendedModel()
+                            {
+                                RackCode = rc.RackCode,
+                                RackName = subrrc.RackName,
+                                StatusCode = subrrc.StatusCode
+                            };
+            var list = rackOfCus.ToList();
+            var data = new List<RackOfCustomerExtendedModel>();
+            if (list.Count > 0)
+            {
+                foreach (var item in list)
+                {
+                    var model = new RackOfCustomerExtendedModel();
+                    model = item;
+                    model.ServerNum = LocationBLO.Current.GetNumberOfServerPerRack(model.RackCode);
+                    data.Add(model);
+                }
+                return data;
+            }
+            return null;
         }
 
-        public void AddRackOfCustomerANDLog(string requestCode, string rackCode, string rackName, string typeOfLog, 
+        public void AddRackOfCustomerANDLog(string requestCode, string rackCode, string rackName, string typeOfLog,
             string customer, string staff)
         {
             var rackOfCustomer = new RackOfCustomer
