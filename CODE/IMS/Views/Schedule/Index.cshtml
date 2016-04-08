@@ -37,136 +37,151 @@
 <!-- Main content -->
 <section class="content">
 
+            <div class="row">
 
-    <div class="row">
-        <div class="col-md-4">
-            @if (Model.StaffCode == Model.StaffInShift || Model.StaffRole == Constants.Role.MANAGER)
-            {
-            <div class="box box-primary">
-                <div class="box-header" id="addnote">
-                    <h3 class="box-title fa fa-plus"> Add note for Next Shift</h3>
-                </div>
-                <form method="POST">
-                    <div class="box-body" id="paneladdnote" style="display: none;">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <input type="hidden" name="StaffCode" value="haltt"/>
+                <div class="col-md-4">
+                    @if (Model.StaffCode == Model.StaffInShift || Model.StaffRole == Constants.Role.MANAGER)
+                {
+                        <div class="box box-primary">
+                            <div class="box-header" id="addnote">
+                                <h3 class="box-title fa fa-plus"> Add note for Next Shift</h3>
+                            </div>
+                            <form method="POST">
+                                <div class="box-body" id="paneladdnote" style="display: none;">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <input type="hidden" name="StaffCode" value="haltt" />
 
-                                @{
-                                    if (Model.Schedules.Count > 0)
-                                    {
-
-
-                                        for (int i = 0; i < Model.Schedules.Count; i++)
-                                        {
-                                            var item = Model.Schedules[i];
-                                            
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading" id="">
-                                                        @Html.ActionLink(item.AppointmentTime.Value.ToShortTimeString() +"--"+item.RequestTypeName + "--" + item.StatusName, "Detail", "ProcessRequest", new { code = item.RequestCode }, null)
+                                            @{
+                                                if (Model.Schedules.Count > 0)
+                                                {
 
 
-                                                    </div>
-                                                    <div class="panel-body" id="">
-                                                        @if (!String.IsNullOrEmpty(item.NoteContent))
-                                                        {
-                                                            <div class="form-inline">
-                                                                <div class="form-group">
-                                                                    <label>PreNote:</label>
+                                                    for (int i = 0; i < Model.Schedules.Count; i++)
+                                                    {
+                                                        var item = Model.Schedules[i];
+
+                                                        <div class="panel panel-default">
+                                                            <div class="panel-heading" id="">
+                                                                @Html.ActionLink(item.AppointmentTime.Value.ToShortTimeString() + "--" + item.RequestTypeName + "--" + item.StatusName, "Detail", "ProcessRequest", new { code = item.RequestCode }, null)
+
+
+                                                            </div>
+                                                            <div class="panel-body" id="">
+                                                                @if (!String.IsNullOrEmpty(item.NoteContent))
+                                                                {
+                                                                    <div class="form-inline">
+                                                                        <div class="form-group">
+                                                                            <label>PreNote:</label>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label>@item.NoteContent</label>
+                                                                        </div>
+                                                                    </div>
+
+                                                                }
+
+                                                                <div class="form-inline">
+                                                                    <div class="form-group">
+                                                                        <label>Note:</label>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        @Html.HiddenFor(model => Model.Schedules[i].RequestCode)
+                                                                        @Html.TextAreaFor(content => Model.NewNote[i], htmlAttributes: new { style = "width: 200px" })
+                                                                        @Html.ValidationMessageFor(model => Model.NewNote[i], "", new { @class = "text-danger" })
+                                                                    </div>
                                                                 </div>
-                                                                <div class="form-group">
-                                                                    <label>@item.NoteContent</label>
-                                                                </div>
                                                             </div>
 
-                                                        }
-
-                                                        <div class="form-inline">
-                                                            <div class="form-group">
-                                                                <label>Note:</label>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                @Html.HiddenFor(model => Model.Schedules[i].RequestCode)
-                                                                @Html.TextAreaFor(content => Model.NewNote[i], htmlAttributes: new { style = "width: 200px" })
-                                                                @Html.ValidationMessageFor(model => Model.NewNote[i], "", new { @class = "text-danger" })
-                                                            </div>
                                                         </div>
+
+
+
+                                                    }
+                                                    <div class="form-group">
+                                                        <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-check"></i> Send</button>
+
                                                     </div>
+                                                }
 
-                                                </div>
-                                            
-
-
-                                        }
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-check"></i> Send</button>
+                                            }
 
                                         </div>
-                                    }
 
-                                }
-                                
-                            </div>
-
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                    </div>
-                </form>
-            </div><!-- /. box -->
-}
-        @if (Model.Schedules1.Count > 0)
-        {
-            <div class="box box-primary">
-                <div class="box-header">
-                    <h4 class="box-title">Note of Previous Shift</h4>
-                </div>
-                <div class="box-body">
-                    @foreach (var item in Model.Schedules1)
-                    {
-                        <div class="panel panel-default">
-                            <div class="panel-heading" id="">
-                                @Html.ActionLink(item.AppointmentTime.Value.ToShortTimeString()+"--"+item.RequestTypeName + "--" + item.StatusName, "Detail", "ProcessRequest", new { code = item.RequestCode }, null)
+                    <!-- /. box -->
+                                                }
+
+                        <div class="box box-primary">
+                            <div class="box-header">
+                                <h4 class="box-title">Note of Previous Shift</h4>
                             </div>
-                            
-                             
-                                    @if (String.IsNullOrEmpty(item.NoteContent))
-                                    {
+                            <div class="box-body">
+                                @if (Model.Schedules1.Count == 0)
+                                {
+                                    <div class="panel panel-default">
                                         <div class="panel-body">
                                             <label> Do not have note from previous shift</label>
                                         </div>
-
-                                    }
-                                    else
+                                    </div>
+                                }
+                                else
+                                {
+                                    foreach (var item in Model.Schedules1)
                                     {
-                                        <div class="panel-body">
-                                            <div class="form-inline">
-                                                <div class="form-group">
-                                                    <label>PreNote:</label>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>@item.NoteContent</label>
-                                                </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" id="">
+                                                @Html.ActionLink(item.AppointmentTime.Value.ToShortTimeString() + "--" + item.RequestTypeName + "--" + item.StatusName, "Detail", "ProcessRequest", new { code = item.RequestCode }, null)
                                             </div>
-                                        </div>
-                                    }
+
+
+                                            @if (String.IsNullOrEmpty(item.NoteContent))
+                                            {
+                                                <div class="panel-body">
+                                                    <label> Do not have note from previous shift</label>
+                                                </div>
+
+                                            }
+                                            else
+                                            {
+                                                <div class="panel-body">
+                                                    <div class="form-inline">
+                                                        <div class="form-group">
+                                                            <label>PreNote:</label>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>@item.NoteContent</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
 
 
                                         </div>
                                     }
+                                }
+
+                            </div>
+                        </div>
+                    
+
                 </div>
-            </div>
-        }
-
-        </div><!-- /.col -->
-        <div class="col-md-8">
-            <div class="box box-primary">
-                <div class="box-body no-padding">
-                    <!-- THE CALENDAR -->
-                    <div id="calendar"></div>
-                </div><!-- /.box-body -->
-            </div><!-- /. box -->
-        </div><!-- /.col -->
-    </div><!-- /.row -->
-
+                <!-- /.col -->
+                <div class="col-md-8">
+                    <div class="box box-primary">
+                        <div class="box-body no-padding">
+                            <!-- THE CALENDAR -->
+                            <div id="calendar"></div>
+                        </div><!-- /.box-body -->
+                    </div><!-- /. box -->
+                </div>
+                <!-- /.col -->
+               
+            </div><!-- /.row -->
+                                                
 
 </section><!-- /.content -->
 
