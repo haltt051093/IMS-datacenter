@@ -196,33 +196,6 @@ namespace IMS.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
-        //DOING
-        public ActionResult ReturnRackByBringServerAway(string rackCode)
-        {
-            var customer = GetCurrentUserName();
-            var data = new RequestBringServerAwayViewModel();
-            //lay server cua customer
-            data.ServerOfCustomer = ServerBLO.Current.GetServerOfCustomer(customer);
-            //Muon hien thi number of server trong rack tuy theo viec lua chon dropdownlist
-            data.ServerNumber = data.ServerOfCustomer.Count();
-            //rack cua server, select all va list cua rack, neu ko co thi ko hien
-            var rackOfCustomer = RackOfCustomerBLO.Current.GetRacksOfCustomer(customer,
-                Constants.StatusCode.RACKOFCUSTOMER_CURRENT);
-            //check select all 
-            //Lam sao xo xuong server tương ứng với rack này?
-            if (rackOfCustomer.Count > 0)
-            {
-                data.RackOfCustomer = rackOfCustomer
-                .Select(x => new SelectListItem
-                {
-                    Value = x.RackCode,
-                    Text = x.RackName,
-                    Selected = x.RackCode == rackCode
-                })
-                .ToList();
-            }
-            return View("BringServerAway", data);
-        }
         #endregion
 
         #region request details

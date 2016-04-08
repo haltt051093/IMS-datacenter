@@ -78,8 +78,10 @@
                                         @Html.CheckBoxFor(modelItem => Model.ServerOfCustomer[i].Checked, new { @class = "chknull" })
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => Model.ServerOfCustomer[i].ServerCode)
+                                        @*@Html.DisplayFor(modelItem => Model.ServerOfCustomer[i].ServerCode)*@
                                         @Html.HiddenFor(modelItem => Model.ServerOfCustomer[i].ServerCode)
+                                        @Html.ActionLink(Model.ServerOfCustomer[i].ServerCode, "Detail", "Server",
+                                                        new { code = Model.ServerOfCustomer[i].ServerCode }, null)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => Model.ServerOfCustomer[i].DefaultIP)
@@ -106,15 +108,15 @@
                 @Html.ValidationMessageFor(model => model.RequestInfo.Description)
             </div>
         </div>
-            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                </div>
-                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                    <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                        Send Request
-                    </button>
-                </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
             </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                    Send Request
+                </button>
+            </div>
+        </div>
     }
 </section>
 
@@ -152,7 +154,7 @@
                 position: "center"
             });
             return false;
-        } 
+        }
     });
     $("#checkAll").change(function () {
         var state = $('#checkAll').is(':checked');
