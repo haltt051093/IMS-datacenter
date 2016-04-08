@@ -169,7 +169,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Available Locations.
+        ///   Looks up a localized string similar to Available Racks.
         /// </summary>
         public static string LocationAvai {
             get {
