@@ -44,20 +44,6 @@ namespace IMS.Data.Repository
             return RawQuery<RackOfCustomerExtendedModel>(query, new object[] { });
         }
 
-        public List<RackOfCustomerExtendedModel> CountServerPerRack(string customer)
-        {
-            var query = @"select r.RackCode, ra.RackName, COUNT(rc.ServerCode) as serverNum, r.StatusCode
-                        from [dbo].[RackOfCustomer] as r
-                         left join [dbo].[Location] as rc
-                        on r.RackCode = rc.RackCode
-                         left join [dbo].[Rack] as ra
-                        on ra.RackCode = rc.RackCode
-                        where r.Customer = '" + customer +
-                        @"' AND r.StatusCode='" + Constants.StatusCode.RACKOFCUSTOMER_CURRENT + @"'
-                        group by r.RackCode, ra.RackName, r.StatusCode";
-            return RawQuery<RackOfCustomerExtendedModel>(query, new object[] { });
-        }
-
         public List<LocationViewModel> GetRackOfCustomer(Server server)
         {
             var query = @"select roc.RackCode from RackOfCustomer roc where roc.Customer = '" + server.Customer + @"'";
