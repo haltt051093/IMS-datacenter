@@ -346,11 +346,11 @@ namespace IMS.Controllers
         {
             var customer = GetCurrentUserName();
             //Add request and log
-            //var result = RequestBLO.Current.AddRequestChangeIP(customer, viewmodel.RequestInfo.Description, viewmodel.SelectedServer, viewmodel.ReturningIPs);
+            var result = RequestBLO.Current.AddRequestChangeIP(customer, viewmodel.RequestInfo.Description, viewmodel.SelectedServer, viewmodel.ReturningIPs);
             ////dang ky ham cho client
-            //Notify(result.NotificationCodes);
+            Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
-            { msg = Constants.Message.SEND_REQUEST_CHANGE_IP });
+            { code = result.RefCode, msg = Constants.Message.SEND_REQUEST_CHANGE_IP });
         }
 
         [HttpPost]
