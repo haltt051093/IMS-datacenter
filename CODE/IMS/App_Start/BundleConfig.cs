@@ -34,7 +34,7 @@ namespace IMS
                 "~/Scripts/jquery.validate.js",
                 "~/Scripts/jquery.unobtrusive-ajax.js",
                 "~/Scripts/jquery.validate.unobtrusive.js",
-                "~/Scripts/jquery.validate.tfpatch.js"
+                "~/Scripts/jquery.validate.custom.js"
             ));
             builder.Add(new ScriptBundle(Constants.ScriptBundle.MOMENT).Include(
                 "~/Scripts/moment.js",

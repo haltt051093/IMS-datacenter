@@ -113,21 +113,8 @@
 
                 var icon = $('<i></i>').attr('class', 'fa fa-bell');
                 var description = noty.Description;
-                var link = $('<a></a>').attr('href', '@Url.Action("Detail", "Notification")' + '/' + noty.NotificationCode).prepend(icon);
-                link.prepend(description);
-                var block = $('<li></li>').html(link);
-                $('#noty_menu').prepend(block);
-            }
-            hub.client.notifyTest = function (noty) {
-                var noty_count = $('#noty_count').text() - -1;
-                $('#noty_count').text(noty_count);
-                $('#noty_count2').text(noty_count);
-                $('#noty_count').css('display', '');
-
-                var icon = $('<i></i>').attr('class', 'ion ion-ios7-people info');
-                var description = noty;
-                var link = $('<a></a>').attr('href', '#').prepend(icon);
-                link.prepend(description);
+                var link = $('<a></a>').attr('href', '@Url.Action("Detail", "Notification")' + '/' + noty.NotificationCode).append(icon);
+                link.append(description);
                 var block = $('<li></li>').html(link);
                 $('#noty_menu').prepend(block);
             }

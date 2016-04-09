@@ -88,7 +88,7 @@ namespace IMS.Data.Business
         public List<string> GetNetworkIPToDeact()
         {
             return dao.GetNetworkIPToDeact();
-        } 
+        }
         public List<IPAddressPoolExtendedModel> GetIPsByGateway(string gateway)
         {
             return dao.GetIPSameGateway(gateway);
@@ -146,7 +146,7 @@ namespace IMS.Data.Business
                     return true;
                 }
                 else
-                { return false;}
+                { return false; }
 
             }
             else
@@ -157,10 +157,10 @@ namespace IMS.Data.Business
                     ip1.StatusCode = Constants.StatusCode.IP_USED;
                     ip1.IsDefault = true;
                     dao.Update(ip1);
-                    var server = ServerBLO.Current.GetByKeys(new Server {ServerCode = serverCode});
+                    var server = ServerBLO.Current.GetByKeys(new Server { ServerCode = serverCode });
                     server.DefaultIP = newIP;
                     ServerBLO.Current.Update(server);
-                    var ip = dao.GetByKeys(new IPAddressPool {IPAddress = oldIP});
+                    var ip = dao.GetByKeys(new IPAddressPool { IPAddress = oldIP });
                     ip.StatusCode = Constants.StatusCode.IP_AVAILABLE;
                     ip.IsDefault = false;
                     dao.Update(ip);
@@ -173,7 +173,7 @@ namespace IMS.Data.Business
 
 
             }
-           
+
         }
 
         public void UpdateStatusIpANDLog(string requestCode, string serverCode, string ip, string newStatus,
@@ -208,7 +208,7 @@ namespace IMS.Data.Business
             var defaultIP = ServerBLO.Current.GetByKeys(new Server { ServerCode = serverCode }).DefaultIP;
             if (defaultIP != null)
             {
-                UpdateStatusIpANDLog(requestCode, serverCode, defaultIP, 
+                UpdateStatusIpANDLog(requestCode, serverCode, defaultIP,
                     Constants.StatusCode.IP_AVAILABLE, Constants.TypeOfLog.LOG_ADD_SERVER, username, true);
             }
         }
@@ -425,6 +425,27 @@ namespace IMS.Data.Business
                 result[i].NetworkIP = result[0].IPAddress;
             }
             return result;
+        }
+
+        public bool CheckExistedIPs(List<string> ips)
+        {
+            int count = 0;
+            foreach (var item in ips)
+            {
+                var ip = GetByKeys(new IPAddressPool { IPAddress = item });
+                if (ip.StatusCode == Constants.StatusCode.IP_USED)
+                {
+                    count++;
+                }
+            }
+            if (count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

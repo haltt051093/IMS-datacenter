@@ -548,12 +548,25 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
-                var result = RequestBLO.Current.ApproveRequestAssignIP(viewmodel.RequestInfo.RequestCode, viewmodel.IPs,
-                    viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode, viewmodel.SelectedServer);
+                //get ip
+                var ips = viewmodel.IPsString;
+                var tokens = ips.Split(';').ToList();
+                var msg = Constants.Message.APPROVE_REQUEST_ASSIGN_IP;
+                //validate realtime
+                var check = IPAddressPoolBLO.Current.CheckExistedIPs(tokens);
+                if (check)
+                {
+                    msg = "You're fooled";
+                }
+                else
+                {
+                    var result = RequestBLO.Current.ApproveRequestAssignIP(viewmodel.RequestInfo.RequestCode, tokens,
+                   viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode, viewmodel.SelectedServer);
+                    Notify(result.NotificationCodes);
+                }
                 //dang ky ham cho client
-                Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.APPROVE_REQUEST_ASSIGN_IP });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg });
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {

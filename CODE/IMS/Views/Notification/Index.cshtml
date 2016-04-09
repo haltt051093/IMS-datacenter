@@ -54,7 +54,7 @@
             "aaSorting": [[1, "desc"]], // Sort by first column descending
             "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                 if (aData[2] == "False") {
-                    $('td', nRow).addClass('background-warning');
+                    $(nRow).addClass('background-warning');
                 };
             },
             columnDefs: [{

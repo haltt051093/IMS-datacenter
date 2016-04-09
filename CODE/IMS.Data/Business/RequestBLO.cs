@@ -811,11 +811,15 @@ namespace IMS.Data.Business
                 }
                 else
                 {
-                    request.randomList = null;
-                    request.listAvailableIps = null;
-                    request.NumberOfAvailableIP = 0;
-                    request.NumberOfSelectedIP = 0;
+
                 }
+                //else
+                //{
+                //    request.randomList = null;
+                //    request.listAvailableIps = null;
+                //    request.NumberOfAvailableIP = 0;
+                //    request.NumberOfSelectedIP = 0;
+                //}
             }
             if (request.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
             {

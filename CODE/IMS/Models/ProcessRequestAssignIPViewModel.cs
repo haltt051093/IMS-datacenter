@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using IMS.Data.ViewModels;
 using SelectListItem = System.Web.Mvc.SelectListItem;
+using IMS.Validations;
 
 namespace IMS.Models
 {
@@ -30,7 +31,9 @@ namespace IMS.Models
         public int NumberOfAvailableIP { get; set; }
         public int NumberOfSelectedIP { get; set; }
         [Display(Name = "Assigned IP(s)")]
-        public List<string> IPs { get; set; } 
+        public List<string> IPs { get; set; }
+        [CustomRequired]
+        public string IPsString { get; set; }
 
         //DropdownList
         public List<SelectListItem> StaffCodeOptions { get; set; }

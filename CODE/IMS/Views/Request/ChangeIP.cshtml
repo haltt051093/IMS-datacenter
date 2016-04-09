@@ -69,11 +69,6 @@
     }
 </section>
 <script>
-    // enable validation for hidden fields
-    $.validator.setDefaults({
-        ignore: []
-    });
-
     // add jquery validation method
     $.validator.addMethod('customrequired', function (value, element, params) {
         var count = $('[id*=MyTable] input[type="checkbox"]:checked').length;
@@ -83,15 +78,6 @@
             return true;
         }
     });
-
-    // add jquery unobtrusive validation adapter
-    $.validator.unobtrusive.adapters.add('customrequired', [],
-        function (options) {
-            options.rules['customrequired'] = {
-            };
-            options.messages['customrequired'] = options.message;
-        }
-    );
 </script>
 
 <script type="text/javascript">

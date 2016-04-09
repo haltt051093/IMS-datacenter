@@ -214,12 +214,12 @@
                                         @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                                         {
                                             @Html.DropDownListFor(model => model.NewIPs[i], Model.NewIPsOptions, "-- Select IP --", new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                            @Html.HiddenFor(model => model.NewIPs[i])
+                                            @*@Html.HiddenFor(model => model.NewIPs[i])*@
                                         }
                                         @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
                                         {
                                             @Html.DisplayFor(model => Model.NewIPs[i], new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })<br />
-                                            @Html.HiddenFor(model => model.NewIPs[i])
+                                            @*@Html.HiddenFor(model => model.NewIPs[i])*@
                                         }
                                         @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_REJECTED || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_CANCELLED)
                                         {
@@ -414,7 +414,12 @@
         });
         $(selectedValues).each(function (i, e) {
             if (e != '') {
-                changeipzone.find('option[value="' + e + '"]').attr('disabled', 'disabled');
+                var options = changeipzone.find('select');
+                $(options).each(function (j, s) {
+                    if ($(s).val() != e) {
+                        $(s).find('option[value="' + e + '"]').attr('disabled', 'disabled');
+                    }
+                });
             }
         });
     });

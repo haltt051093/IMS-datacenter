@@ -22,7 +22,7 @@ namespace IMS.Models
         [Display(Name = "Server")]
         public string SelectedServer { get; set; }
         [Display(Name = "Changing IPs")]
-        [CustomRequired]
+        [CustomRequired(ErrorMessage = "hihi")]
         public List<string> ReturningIPs { get; set; }
         public List<string> SelectedIPs { get; set; } 
         public List<ServerIPExtendedModel> ServerIPs { get; set; } 

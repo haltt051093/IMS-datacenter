@@ -37,7 +37,7 @@
             @Html.ValidationMessageFor(model => model.FilterByPeriodOfTime)
         </div>
     </div>
-    <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS_HOVER">
+    <table id="example1" class="table table-bordered">
         <thead>
             <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
                 <th>
@@ -187,11 +187,13 @@
             //"iDisplayLength": -1,
             "aaSorting": [[3, "desc"]], // Sort by first column descending
             "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                $(nRow).addClass('highlight');
+
                 if (aData[2] == "Pending") {
-                    $('td', nRow).addClass('background-warning');
+                    $(nRow).addClass('background-warning');
                 };
                 if (aData[2] == "Processing") {
-                    $('td', nRow).addClass('background-info');
+                    $(nRow).addClass('background-info');
                 };
             }
         });

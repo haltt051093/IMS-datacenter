@@ -109,7 +109,7 @@
         "aaSorting": [[1, "desc"]],// Sort by first column descending
         "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             if (aData[1] == "Waiting") {
-                $('td', nRow).addClass('background-warning');
+                $(nRow).addClass('background-warning');
             };
         }
     });
