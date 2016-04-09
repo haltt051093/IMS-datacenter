@@ -14,10 +14,12 @@ namespace IMS.Controllers
     public class IPController : CoreController
     {
         [Authorize(Roles = "Staff,Shift Head,Manager")]
-        public ActionResult Index(string Message)
+        public ActionResult Index(string Message, string FailBlock, string FailUnBlock)
         {
             var data = new IPIndexViewModel();
             data.SuccessMessage = Message;
+            data.FailBlock = FailBlock;
+            data.FailUnBlock = FailUnBlock;
             var ips = IPAddressPoolBLO.Current.GetAllIP();
             var ipuse = ips.Select(x => x).Where(x => x.StatusCode != Constants.StatusCode.IP_DEACTIVATE);
             var listnet1 = IPAddressPoolBLO.Current.GetNetworkIPToDeact();
@@ -108,7 +110,7 @@ namespace IMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult ChangeIPStatus(IPIndexViewModel iivm)
+        public ActionResult BlockIP(IPIndexViewModel iivm)
         {
             //int? id = ipid.ToInt();
            
@@ -129,12 +131,23 @@ namespace IMS.Controllers
                 return RedirectToAction("Index",  new { Message = "IP Address was blocked!" });
             }
             else
+            {               
+                return RedirectToAction("Index", new {FailBlock ="IP Address was blocked already!"});
+            }
+            
+        }
+
+        [HttpPost]
+        public ActionResult UnblockIP(IPIndexViewModel iivm)
+        {
+            var ip = new IPAddressPool();
+            ip = IPAddressPoolBLO.Current.GetById(iivm.Id);
             if (ip.StatusCode == Constants.StatusCode.IP_BLOCKED)
             {
                 ip.StatusCode = Constants.StatusCode.IP_AVAILABLE;
                 IPAddressPoolDAO.Current.Update(ip);
                 var blockip = LogBLO.Current.GetBlockedIP(ip.IPAddress).FirstOrDefault();
-                
+
                 var log = new Log();
                 log.TypeOfLog = Constants.TypeOfLog.LOG_UNBLOCK_IP;
                 log.Object = Constants.Object.OBJECT_IP;
@@ -144,9 +157,12 @@ namespace IMS.Controllers
                 log.LogTime = DateTime.Now;
                 log.PreviousId = blockip.Id;
                 LogBLO.Current.Add(log);
-                return RedirectToAction("Index", new { Message = "IP Address was unblocked!" });
+                return RedirectToAction("Index", new {Message = "IP Address was unblocked!"});
             }
-            return RedirectToAction("Index");
+            else
+            {
+                return RedirectToAction("Index", new { FailUnBlock = "IP Address was unblocked already!" });
+            }
         }
 
         public ActionResult AssignIP(string rType, string rCode, string OldIP, string ServerCode,string FailMessage)

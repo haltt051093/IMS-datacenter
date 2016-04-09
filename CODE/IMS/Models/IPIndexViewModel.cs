@@ -23,6 +23,8 @@ namespace IMS.Models
         public string NetworkIP { get; set; }
         public string Action { get; set; }
         public string SuccessMessage { get; set; }
+        public string FailBlock { get; set; }
+        public string FailUnBlock { get; set; }
 
         [Required(ErrorMessage = "Please select type of Gateway!")]
         public string Option { get; set; }

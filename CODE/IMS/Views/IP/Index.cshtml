@@ -13,6 +13,8 @@
 <section class="main-content">
     <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS hidden">
         @Html.HiddenFor(model => model.SuccessMessage)
+        @Html.HiddenFor(model => model.FailBlock)
+        @Html.HiddenFor(model => model.FailUnBlock)
     </div>
     <div>
         <a class="btn btn-primary" data-toggle="modal" data-target="#addip-modal"><i class="fa fa-plus"></i> @Labels.AddIP</a>
@@ -181,7 +183,7 @@
 <div id="blockip-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" style="width: 400px">
         <div class="modal-content">
-            @using (Html.BeginForm("ChangeIPStatus", "IP"))
+            @using (Html.BeginForm("BlockIP", "IP"))
             {
                 <div class="modal-header">
                     <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-question-circle"></i> @Messages.BlockIPWarning</div>
@@ -217,7 +219,7 @@
 <div id="unblockip-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" style="width: 400px">
         <div class="modal-content">
-            @using (Html.BeginForm("ChangeIPStatus", "IP"))
+            @using (Html.BeginForm("UnblockIP", "IP"))
             {
                 <div class="modal-header">
                     <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-question-circle"></i> @Messages.UnblockIPWarning</div>
@@ -272,6 +274,24 @@
             position: "center"
         });
         $('#SuccessMessage').val("");
+    }
+    var message = $('#FailBlock').val();
+    if (message) {
+        notif({
+            msg: "" + message,
+            type: "error",
+            position: "center"
+        });
+        $('#FailBlock').val("");
+    }
+    var message = $('#FailUnBlock').val();
+    if (message) {
+        notif({
+            msg: "" + message,
+            type: "error",
+            position: "center"
+        });
+        $('#FailUnBlock').val("");
     }
 </script>
 <script>
