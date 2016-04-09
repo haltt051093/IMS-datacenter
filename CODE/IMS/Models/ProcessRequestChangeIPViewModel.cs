@@ -30,6 +30,8 @@ namespace IMS.Models
         [Display(Name = "New IPs")]
         public List<string> NewIPs { get; set; }
         public string SelectedDefaultIP { get; set; }
+        public int RequiredNum { get; set; }
+        public int AvailableIPNum { get; set; }
 
         //DropdownList
         public List<SelectListItem> StaffCodeOptions { get; set; }

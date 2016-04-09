@@ -136,7 +136,7 @@ namespace IMS.Controllers
                 {
                     viewmodel.IsAssignedUser = false;
                 }
-                
+
                 viewmodel.StaffCodeOptions = request.listStaff
                 .Select(x => new SelectListItem
                 {
@@ -145,44 +145,38 @@ namespace IMS.Controllers
                     Selected = x.Role == Constants.Role.SHIFT_HEAD
                 })
                 .ToList();
-
-                if (request.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                var listAvailableIps = request.listAvailableIps;
+                var num = viewmodel.NumberOfIP;
+                if (viewmodel.NumberOfAvailableIP >= viewmodel.NumberOfIP)
                 {
-                    var randomList = request.randomList;
-                    var listAvailableIps = request.listAvailableIps;
-                    viewmodel.SelectedIps = randomList.Select(x => new SelectListItem
+                    if (request.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                     {
-                        Value = x,
-                        Text = x
-                    }).ToList();
-                    //cho hien thi multiple list, ko bao gom randomList
-                    if (listAvailableIps != null)
-                    {
-                        for (int i = 0; i < listAvailableIps.Count; i++)
+                        var randomList = request.randomList;
+                        viewmodel.SelectedIps = randomList.Select(x => new SelectListItem
                         {
-                            for (int j = 0; j < randomList.Count; j++)
+                            Value = x,
+                            Text = x
+                        }).ToList();
+                        //cho hien thi multiple list, ko bao gom randomList
+                        if (listAvailableIps != null)
+                        {
+                            for (int i = 0; i < listAvailableIps.Count; i++)
                             {
-                                var item = listAvailableIps[i];
-                                if (item.IPAddress.Equals(randomList[j]))
+                                for (int j = 0; j < randomList.Count; j++)
                                 {
-                                    listAvailableIps.Remove(item);
+                                    var item = listAvailableIps[i];
+                                    if (item.IPAddress.Equals(randomList[j]))
+                                    {
+                                        listAvailableIps.Remove(item);
+                                    }
                                 }
                             }
+                            viewmodel.IpSelectListItems = listAvailableIps.Select(x => new SelectListItem
+                            {
+                                Value = x.IPAddress,
+                                Text = x.IPAddress
+                            }).ToList();
                         }
-                        viewmodel.IpSelectListItems = listAvailableIps.Select(x => new SelectListItem
-                        {
-                            Value = x.IPAddress,
-                            Text = x.IPAddress
-                        }).ToList();
-                    }
-                    else
-                    {
-                        //listAvailableIps = [];
-                        //viewmodel.IpSelectListItems = listAvailableIps.Select(x => new SelectListItem
-                        //{
-                        //    Value = "",
-                        //    Text = ""
-                        //}).ToList();
                     }
                 }
                 viewmodel.SuccessMessage = msg;
@@ -218,11 +212,16 @@ namespace IMS.Controllers
 
                 if (request.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                 {
-                    viewmodel.NewIPsOptions = request.listAvailableIps.Select(x => new SelectListItem
+                    viewmodel.RequiredNum = viewmodel.ReturningIPs.Count;
+                    viewmodel.AvailableIPNum = request.listAvailableIps.Count;
+                    if (viewmodel.AvailableIPNum >= viewmodel.RequiredNum)
                     {
-                        Value = x.IPAddress,
-                        Text = x.IPAddress
-                    }).ToList();
+                        viewmodel.NewIPsOptions = request.listAvailableIps.Select(x => new SelectListItem
+                        {
+                            Value = x.IPAddress,
+                            Text = x.IPAddress
+                        }).ToList();
+                    }
                 }
                 viewmodel.SuccessMessage = msg;
                 return View("ChangeIPInfo", viewmodel);
@@ -356,7 +355,7 @@ namespace IMS.Controllers
                 var role = GetCurrentUserRole();
                 var st = GetCurrentUserName();
                 var staff = AccountBLO.Current.GetAccountByCode(st);
-                RequestBLO.Current.ExportProcedure(viewmodel.Servers, viewmodel.CustomerInfo.Customer, staff.Fullname,role);
+                RequestBLO.Current.ExportProcedure(viewmodel.Servers, viewmodel.CustomerInfo.Customer, staff.Fullname, role);
                 return RedirectToAction("Detail", "ProcessRequest",
                 new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.PRINT_PROCEDURE });
             }
@@ -645,13 +644,23 @@ namespace IMS.Controllers
             }
             if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
             {
-                var result = RequestBLO.Current.ApproveRequestChangeIP(viewmodel.RequestInfo.RequestCode, viewmodel.ReturningIPs,
+                var msg = Constants.Message.APPROVE_REQUEST_CHANGE_IP;
+                //validate realtime
+                var check = IPAddressPoolBLO.Current.CheckExistedIPs(viewmodel.NewIPs);
+                if (check)
+                {
+                    msg = "You're fooled";
+                }
+                else
+                {
+                    var result = RequestBLO.Current.ApproveRequestChangeIP(viewmodel.RequestInfo.RequestCode, viewmodel.ReturningIPs,
                     viewmodel.NewIPs, viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.TaskCode,
                     viewmodel.SelectedServer, viewmodel.RequestInfo.StatusCode);
-                //dang ky ham cho client
-                Notify(result.NotificationCodes);
+                    //dang ky ham cho client
+                    Notify(result.NotificationCodes);
+                }
                 return RedirectToAction("Detail", "ProcessRequest",
-                    new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.APPROVE_REQUEST_CHANGE_IP });
+                    new { code = viewmodel.RequestInfo.RequestCode, msg });
             }
             if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
             {
@@ -671,7 +680,7 @@ namespace IMS.Controllers
             if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
             {
                 var shifthead = GetCurrentUserName();
-                if(viewmodel.RequestInfo.TaskStatus != Constants.StatusCode.TASK_NOTFINISH)
+                if (viewmodel.RequestInfo.TaskStatus != Constants.StatusCode.TASK_NOTFINISH)
                 {
                     var preTask = RequestBLO.Current.CancelTask(viewmodel.RequestInfo.TaskCode,
                     viewmodel.RequestInfo.RequestCode, viewmodel.RequestInfo.Assignee, shifthead);

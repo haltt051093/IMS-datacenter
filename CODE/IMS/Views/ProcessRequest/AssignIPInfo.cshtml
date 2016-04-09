@@ -168,7 +168,7 @@
                 @Html.HiddenFor(model => model.SelectedServer)
             </div>
         </div>
-        if (Model.NumberOfIP > Model.SelectedIps.Count)
+        if (Model.NumberOfIP > Model.NumberOfAvailableIP)
         {
             @Html.Raw("Available IPs in the same range are not enough to assign. Current available IP number is:" + Model.NumberOfAvailableIP)
         }
