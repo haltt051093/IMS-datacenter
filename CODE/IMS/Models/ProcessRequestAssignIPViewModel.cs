@@ -25,7 +25,7 @@ namespace IMS.Models
         [Display(Name = "Server")]
         public string SelectedServer { get; set; }
         public string SelectedDefaultIP { get; set; }
-        [Display(Name ="Required number of IP(s)")]
+        [Display(Name ="Required number of IPs")]
         public int NumberOfIP { get; set; }
         public int NumberOfAvailableIP { get; set; }
         public int NumberOfSelectedIP { get; set; }
