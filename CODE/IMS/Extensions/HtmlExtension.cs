@@ -29,8 +29,6 @@ namespace IMS.Extensions
             }
             var sb = new StringBuilder();
             sb.Append(labelText);
-            if (metadata.IsRequired)
-                sb.Append("*");
 
             var tag = new TagBuilder("label");
             if (!string.IsNullOrWhiteSpace(id))
@@ -40,6 +38,10 @@ namespace IMS.Extensions
             else if (generatedId)
             {
                 tag.Attributes.Add("id", html.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldId(htmlFieldName) + "_Label");
+            }
+            if (metadata.IsRequired)
+            {
+                tag.Attributes.Add("class", "required");
             }
 
             tag.Attributes.Add("for", html.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldId(htmlFieldName));

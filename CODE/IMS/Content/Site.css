@@ -168,3 +168,12 @@ h6 {
 .form-group {
     margin-bottom: 10px;
 }
+
+/* -------------------------------------------------------------------------- */
+
+.required:after 
+{
+    content: "*";
+    font-weight: normal;
+    color: red;
+}
