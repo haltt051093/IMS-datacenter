@@ -26,14 +26,14 @@ namespace IMS.Controllers
             data.NetIPAvai = listnet1.Select(x => new SelectListItem
             {
                 Value = x,
-                Text = "Network " + x
+                Text = x
             }).ToList();
 
             var listNetworkIP = ipuse.OrderBy(x => x.NetworkIP).GroupBy(x => x.NetworkIP).Select(x => x.FirstOrDefault()).Where(x => x.NetworkIP!=null);
             data.NetworkIPs = listNetworkIP.Select(x => new SelectListItem
             {
                 Value = x.NetworkIP,
-                Text = "Network " + x.NetworkIP
+                Text = x.NetworkIP
             }).ToList();
             var listnet = new List<SelectListItem>();
             var list = new int[] { 24, 25, 26, 27, 28 };
@@ -52,7 +52,45 @@ namespace IMS.Controllers
             return View(data);
         }
 
+        [HttpPost]
+        public JsonResult AddIPRange(IPIndexViewModel iivm)
+        {
+            var ips = new List<IPAddressPool>();
+            var result = new JsonResultModel();
+            var existing = IPAddressPoolBLO.Current.GetByKeys(new IPAddressPool { IPAddress = iivm.Address });
+            if (existing == null)
+            {
+                if (iivm.Option == "After")
+                {
+                    ips = IPAddressPoolBLO.Current.GenerateIPAfterFirst(iivm.Address, iivm.Netmask);
+                }
+                if (iivm.Option == "Before")
+                {
+                    ips = IPAddressPoolBLO.Current.GenerateIPBeforeLast(iivm.Address, iivm.Netmask);
+                }
+                var k = ips.Count - 1;
+                ips[k].StatusCode = Constants.StatusCode.IP_RESERVE;
 
+                for (var i = 0; i < ips.Count - 1; i++)
+                {
+                    if (ips[i].IPAddress == ips[i].NetworkIP || ips[i].IPAddress == ips[i].Gateway)
+                    {
+                        ips[i].StatusCode = Constants.StatusCode.IP_RESERVE;
+                    }
+                    else
+                    {
+                        ips[i].StatusCode = Constants.StatusCode.IP_AVAILABLE;
+                    }
+                }
+                IPAddressPoolBLO.Current.AddIP(ips);
+                result.Success = true;
+            }
+            else
+            {
+                result.Success = false;
+            }
+            return Json(result);
+        }
         [HttpPost]
         public ActionResult Index(IPIndexViewModel iivm)
         {

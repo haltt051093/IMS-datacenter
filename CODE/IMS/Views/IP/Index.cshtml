@@ -27,7 +27,7 @@
     <div style="height: 10px"></div>
     <div class="row hide">
         <div id="dropdown-template" class="col-xs-3">
-            <label>IP Address: @Html.DropDownListFor(model => model.NetworkIP, Model.NetworkIPs, "All IP Addresses", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
+            <label>Network IP: @Html.DropDownListFor(model => model.NetworkIP, Model.NetworkIPs, "All IP Addresses", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
         </div>
     </div>
     <table id="example1" class="table table-bordered">
@@ -60,7 +60,7 @@
 <div id="addip-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" style="width: 300px">
         <div class="modal-content">
-            @using (Html.BeginForm())
+            @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "Post", Url = Url.Action("AddIPRange", "IP"), OnComplete = "addIPComplete" }))
             {
                 <div class="modal-header">
                     <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i> @Labels.AddIP</div>
@@ -98,7 +98,7 @@
                         </tr>
                         <tr>
                             <td>
-                                @Html.RadioButtonFor(model => model.Option, "After")<label>After first IP Address</label>
+                                @Html.RadioButtonFor(model => model.Option, "After", new {@checked ="checked"})<label>After first IP Address</label>
                             </td>
 
                         </tr>
@@ -143,17 +143,19 @@
 
                     <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS" id="tbodyid">
                         @if (Model.NetIPAvai.Count > 0)
-                        {
-                            for (int i = 0; i < Model.NetIPAvai.Count; i++)
-                            {
-                                <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                                    @Html.HiddenFor(model => model.NetIPAvai[i].Value)
-                                    @Html.CheckBoxFor(model => model.NetIPAvai[i].Selected, new { @class = "chknull" })
-                                    @Html.DisplayFor(model => model.NetIPAvai[i].Text)
-                                </div>
-                            }
-                        }
-                    </div>
+                        {<div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                             <label>List of Network IP</label>
+                         </div>
+                             for (int i = 0; i < Model.NetIPAvai.Count; i++)
+                             {
+                             <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                                 @Html.HiddenFor(model => model.NetIPAvai[i].Value)
+                                 @Html.CheckBoxFor(model => model.NetIPAvai[i].Selected, new {@class = "chknull"})
+                                 @Html.DisplayFor(model => model.NetIPAvai[i].Text)
+                             </div>
+                             }
+                             }
+                         </div>
                     <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
                         <div class="col-xs-12 tf-form-control">
 
@@ -292,6 +294,40 @@
             position: "center"
         });
         $('#FailUnBlock').val("");
+    }
+    function addIPComplete(data) {
+        var response = data.responseJSON;
+        if (response.Success) {
+            $('#addip-modal').modal('hide');
+            var datatable = $('#example1').dataTable().api();
+
+            $.get('@Url.Action("GetAll", "IP", new { httproute = "" })', function (newDataArray) {
+                datatable.clear();
+                datatable.rows.add(newDataArray.data);
+                datatable.draw();
+            });
+            $.get('@Url.Action("GetListNetworkIP", "IP", new { httproute = "" })', function (newDataArray) {
+                $('#NetworkIP').html('<option value="">All IP Addresses</option>');
+                $(newDataArray).each(function (i, e) {
+                    var option = $('<option></option>').html(e).val(e);
+                    $('#NetworkIP').append(option);
+                });
+            });
+            $.get('@Url.Action("GetListAvaiIP", "IP", new { httproute = "" })', function (newDataArray) {
+                $('#tbodyid').html('<div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS"><label>List of Network IP</label></div>');
+                $(newDataArray).each(function (i, e) {
+                    $('#tbodyid').append('<div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS"><input name="NetIPAvai[' + i + '].Value" type="hidden" value="' + e + '"><input class="chknull" id="NetIPAvai_' + i + '__Selected" name="NetIPAvai[' + i + '].Selected" type="checkbox" value="true"><input name="NetIPAvai[' + i + '].Selected" type="hidden" value="false"> ' + e+'</div>');
+                });
+            });
+            notif({
+                msg: "Success! Add new IP Addresses successfully!",
+                type: "info",
+                position: "center"
+            });
+            $('#Address').val('');
+        } else if (!response.Success) {
+            $('span[data-valmsg-for="Address"]').addClass("field-validation-error").html("IP Address is existed!");
+        }
     }
 </script>
 <script>

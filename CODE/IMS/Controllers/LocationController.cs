@@ -31,7 +31,7 @@ namespace IMS.Controllers
             data.Racks = listrack.Select(x => new SelectListItem
             {
                 Value = x.RackName,
-                Text = "Rack " + x.RackName
+                Text = x.RackName
             }).ToList();
 
             var listpow = new List<SelectListItem>();
