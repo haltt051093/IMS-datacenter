@@ -1,11 +1,11 @@
 ﻿@model IMS.Models.IPIndexViewModel
 @{
-    ViewBag.Title = Pages.IPIndex;
+    ViewBag.Title = Pages.IP;
     ViewBag.PageTitle = Pages.IPIndex;
     ViewBag.Breadcrumbs = new List<BreadcrumbModel>
     {
         new BreadcrumbModel("Home", "Index", Pages.Home),
-        new BreadcrumbModel("IP", "Index", Pages.IPIndex)
+        new BreadcrumbModel("IP", "Index", Pages.IP)
     };
 }
 
@@ -134,7 +134,7 @@
 <div id="deactivateip-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" style="width: 400px">
         <div class="modal-content">
-            @using (Html.BeginForm())
+            @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "Post", Url = Url.Action("DeactivateIP", "IP"), OnComplete = "deactivateIPComplete" }))
             {
                 <div class="modal-header">
                     <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-minus-circle"></i> @Labels.DeactivateIP</div>
@@ -188,13 +188,13 @@
             @using (Html.BeginForm("BlockIP", "IP"))
             {
                 <div class="modal-header">
-                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-question-circle"></i> @Messages.BlockIPWarning</div>
+                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-question-circle"></i> @Messages.BlockIPWarning <label id="ipblock" style="color: red"></label></div>
                 </div>
                 <div class="modal-body">
 
                     <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
                         <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                            @Html.LabelFor(model => model.Description)
+                            @Html.LabelFor(model => model.Description, new { @class = "required" })
                         </div>
                         <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
                             @Html.TextAreaFor(model => model.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS, @cols = 40, @rows = 2 })
@@ -224,13 +224,13 @@
             @using (Html.BeginForm("UnblockIP", "IP"))
             {
                 <div class="modal-header">
-                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-question-circle"></i> @Messages.UnblockIPWarning</div>
+                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-question-circle"></i> @Messages.UnblockIPWarning <label id="ipunblock" style="color: red"></label></div>
                 </div>
                 <div class="modal-body">
 
                     <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
                         <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                            @Html.LabelFor(model => model.Description)
+                            @Html.LabelFor(model => model.Description, new { @class = "required" })
                         </div>
                         <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
                             @Html.TextAreaFor(model => model.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS, @cols = 40, @rows = 2 })
@@ -329,6 +329,37 @@
             $('span[data-valmsg-for="Address"]').addClass("field-validation-error").html("IP Address is existed!");
         }
     }
+    function deactivateIPComplete(data) {
+        var response = data.responseJSON;
+        if (response.Success) {
+            $('#deactivateip-modal').modal('hide');
+            var datatable = $('#example1').dataTable().api();
+
+            $.get('@Url.Action("GetAll", "IP", new { httproute = "" })', function (newDataArray) {
+                datatable.clear();
+                datatable.rows.add(newDataArray.data);
+                datatable.draw();
+            });
+            $.get('@Url.Action("GetListNetworkIP", "IP", new { httproute = "" })', function (newDataArray) {
+                $('#NetworkIP').html('<option value="">All IP Addresses</option>');
+                $(newDataArray).each(function (i, e) {
+                    var option = $('<option></option>').html(e).val(e);
+                    $('#NetworkIP').append(option);
+                });
+            });
+            $.get('@Url.Action("GetListAvaiIP", "IP", new { httproute = "" })', function (newDataArray) {
+                $('#tbodyid').html('<div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS"><label>List of Network IP</label></div>');
+                $(newDataArray).each(function (i, e) {
+                    $('#tbodyid').append('<div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS"><input name="NetIPAvai[' + i + '].Value" type="hidden" value="' + e + '"><input class="chknull" id="NetIPAvai_' + i + '__Selected" name="NetIPAvai[' + i + '].Selected" type="checkbox" value="true"><input name="NetIPAvai[' + i + '].Selected" type="hidden" value="false"> ' + e + '</div>');
+                });
+            });
+            notif({
+                msg: "Success! Deactivate IP Range successfully!",
+                type: "info",
+                position: "center"
+            });
+        }
+    }
 </script>
 <script>
     $.fn.dataTable.ext.search.push(
@@ -403,6 +434,7 @@
                     actionCell.find('a').click(function () {
                         $('#blockip-modal').modal('show');
                         $('#idblock').val(aData.Id);
+                        $('#ipblock').html(aData.IPAddress);
                         return false;
                     });
                     break;
@@ -411,6 +443,7 @@
                     actionCell.find('a').click(function () {
                         $('#unblockip-modal').modal('show');
                         $('#idunblock').val(aData.Id);
+                        $('#ipunblock').html(aData.IPAddress);
                         return false;
                     });
                     break;

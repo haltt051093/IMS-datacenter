@@ -142,6 +142,15 @@ namespace IMS.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to IP Address.
+        /// </summary>
+        public static string IP {
+            get {
+                return ResourceManager.GetString("IP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Available IP Addresses.
         /// </summary>
         public static string IPAvai {
@@ -178,7 +187,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Locations.
+        ///   Looks up a localized string similar to Location.
         /// </summary>
         public static string LocationIndex {
             get {
@@ -399,6 +408,15 @@ namespace IMS.Resources {
         public static string RequestReturnRack {
             get {
                 return ResourceManager.GetString("RequestReturnRack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Schedule.
+        /// </summary>
+        public static string Schedule {
+            get {
+                return ResourceManager.GetString("Schedule", resourceCulture);
             }
         }
         

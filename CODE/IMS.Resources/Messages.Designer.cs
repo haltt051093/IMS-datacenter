@@ -61,7 +61,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure to block this IP.
+        ///   Looks up a localized string similar to Are you sure to block IP.
         /// </summary>
         public static string BlockIPWarning {
             get {
@@ -79,7 +79,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure to unblock this IP.
+        ///   Looks up a localized string similar to Are you sure to unblock IP.
         /// </summary>
         public static string UnblockIPWarning {
             get {

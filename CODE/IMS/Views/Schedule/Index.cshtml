@@ -1,8 +1,13 @@
 ﻿@using IMS.Data.Models
 @model IMS.Models.ScheduleIndexViewModel
 @{
-    ViewBag.Title = "SchedulePage";
-    ViewBag.Role = "Shift Head";
+    ViewBag.Title = Pages.Schedule;
+    ViewBag.PageTitle = Pages.Schedule;
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("Schedule", "Index", Pages.Schedule)
+    };
 }
 <!-- fullCalendar -->
 <link href="@Url.Content("~/Content/fullcalendar/fullcalendar.css")" rel="stylesheet" type="text/css" />
@@ -25,14 +30,6 @@
             });
         });
 </script>
-<section class="content-header">
-    <h1>
-        Schedule
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="@Url.Action("Index", "Schedule")"><i class="fa fa-dashboard"></i> Home</a></li>
-    </ol>
-</section>
 
 <!-- Main content -->
 <section class="content">

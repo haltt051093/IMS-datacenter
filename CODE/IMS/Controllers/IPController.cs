@@ -91,6 +91,31 @@ namespace IMS.Controllers
             }
             return Json(result);
         }
+
+        [HttpPost]
+        public JsonResult DeactivateIP(IPIndexViewModel iivm)
+        {
+            var result = new JsonResultModel();
+            for (var i = 0; i < iivm.NetIPAvai.Count; i++)
+            {
+                var item = iivm.NetIPAvai[i];
+                if (item.Selected == true)
+                {
+                    var listip = IPAddressPoolBLO.Current.GetAllIP();
+                    for (var j = 0; j < listip.Count; j++)
+                    {
+                        if (listip[j].NetworkIP == item.Value)
+                        {
+                            listip[j].StatusCode = Constants.StatusCode.IP_DEACTIVATE;
+                            IPAddressPoolDAO.Current.Update(listip[j]);
+                        }
+                    }
+
+                }
+            }
+            result.Success = true;
+            return Json(result);
+        }
         [HttpPost]
         public ActionResult Index(IPIndexViewModel iivm)
         {
@@ -117,33 +142,8 @@ namespace IMS.Controllers
                 return RedirectToAction("Index", new { Message = "IP Addresses were deativated!" });
             }
                 else
-                {
-                var ips = new List<IPAddressPool>();
-                if (iivm.Option == "After")
-                {
-                    ips = IPAddressPoolBLO.Current.GenerateIPAfterFirst(iivm.Address, iivm.Netmask);
-                }
-                if (iivm.Option == "Before")
-                {
-                    ips = IPAddressPoolBLO.Current.GenerateIPBeforeLast(iivm.Address, iivm.Netmask);
-                }
-                var k = ips.Count - 1;
-                    ips[k].StatusCode = Constants.StatusCode.IP_RESERVE;
-
-                    for (var i = 0; i < ips.Count - 1; i++)
-                    {
-                        if (ips[i].IPAddress == ips[i].NetworkIP || ips[i].IPAddress == ips[i].Gateway)
-                        {
-                            ips[i].StatusCode = Constants.StatusCode.IP_RESERVE;
-                        }
-                        else
-                        {
-                            ips[i].StatusCode = Constants.StatusCode.IP_AVAILABLE;
-                        }
-                    }
-                        IPAddressPoolBLO.Current.AddIP(ips);
-               
-                        return RedirectToAction("Index",new {Message = "New IP Addresses were added!" });    
+                {             
+                        return RedirectToAction("Index");    
                 }
         }
 

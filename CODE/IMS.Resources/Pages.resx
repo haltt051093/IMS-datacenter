@@ -130,7 +130,7 @@
     <value>List of Locations</value>
   </data>
   <data name="LocationIndex" xml:space="preserve">
-    <value>Locations</value>
+    <value>Location</value>
   </data>
   <data name="RackIndex" xml:space="preserve">
     <value>List of Racks</value>
@@ -248,5 +248,11 @@
   </data>
   <data name="TaskIndex" xml:space="preserve">
     <value>Your Task</value>
+  </data>
+  <data name="IP" xml:space="preserve">
+    <value>IP Address</value>
+  </data>
+  <data name="Schedule" xml:space="preserve">
+    <value>Schedule</value>
   </data>
 </root>
