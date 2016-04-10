@@ -127,13 +127,13 @@
     <value>List of IP Addresses</value>
   </data>
   <data name="Location" xml:space="preserve">
-    <value>Locations</value>
+    <value>List of Locations</value>
   </data>
   <data name="LocationIndex" xml:space="preserve">
     <value>Locations</value>
   </data>
   <data name="RackIndex" xml:space="preserve">
-    <value>Racks</value>
+    <value>List of Racks</value>
   </data>
   <data name="Request" xml:space="preserve">
     <value>Requests</value>
