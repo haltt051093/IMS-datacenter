@@ -16,7 +16,7 @@
     {
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                @Html.LabelFor(model => model.SelectedServer, "Server")
+                @Html.LabelFor(model => model.SelectedServer)
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                 @Html.DropDownListFor(m => m.SelectedServer, Model.ServerOptions, "Select your server", new { @id = "servercode", @class = Constants.HtmlFormat.FORM_INNER_CLASS })
@@ -26,7 +26,7 @@
         <div id="divPartialView" class="hidden">
             <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                 <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                    @Html.LabelFor(model => model.ReturningIPs, "Return IP")
+                    @Html.LabelFor(model => model.ReturningIPs)
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                     <table id="MyTable" class="@Constants.HtmlFormat.DATATABLE_CLASS">
@@ -123,7 +123,7 @@
         //Get value of selected items
         $("#btnAccept").click(function () {
             var selectedValues = [];
-            $("[id*=MyTable] input:checked").each(function () {
+            $("[id*=MyTable] input[name='chk']:checked").each(function () {
                 selectedValues.push($(this).val());
             });
             $('#ips').val(selectedValues);

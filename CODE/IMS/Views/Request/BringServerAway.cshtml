@@ -16,7 +16,7 @@
     {
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                @Html.LabelFor(model => model.RequestInfo.AppointmentTime)
+                @Html.LabelFor(model => model.RequestInfo.AppointmentTime, new { @class = "required" })
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                 <div class='input-group date' id='datetimepicker1'>

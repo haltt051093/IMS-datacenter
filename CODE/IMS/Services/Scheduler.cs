@@ -16,14 +16,33 @@ namespace IMS.Services
             public void Execute(IJobExecutionContext context)
             {
                 //lay ngay cuoi trong assigndate tru cho ngay hien tai. neu con 3 ngay thi genarate tiep thang sau, cong 1, cong 30 de ra end date
-                DateTime today = DateTime.Now;
+                DateTime today = DateTime.Now.Date;
                 var lastAssign = AssignedShiftDAO.Current.Table.OrderByDescending(x => x.StartedTime).FirstOrDefault();
-                var lastDate = ((lastAssign == null || !lastAssign.StartedTime.HasValue) ? DateTime.Now.Date.AddDays(-1) : lastAssign.StartedTime.Value);
-                //var lastGroup = AssignedShiftDAO.Current.Table().OrderByDescending(x => x.Date).Select(x => x.GroupCode).FirstOrDefault();
+                var lastDate = DateTime.Now.Date.AddDays(-1);
+                if(lastAssign != null && lastAssign.StartedTime.HasValue)
+                {
+                    lastDate = lastAssign.StartedTime.Value.Date;
+                }
+                else if(!string.IsNullOrEmpty(CsConfiguration.GetConfiguration("lastDate")))
+                {
+                    lastDate = CsConfiguration.GetDateTime("lastDate", today);
+                }
+
+                var lastGroup = Constants.GroupName.GROUP_1;
+                if (lastAssign != null && lastAssign.GroupCode != null)
+                {
+                    lastGroup = lastAssign.GroupCode;
+                }
+                else if (!string.IsNullOrEmpty(CsConfiguration.GetConfiguration("lastGroup")))
+                {
+                    lastGroup = CsConfiguration.GetConfiguration("lastGroup");
+                }
+
+                //var  = AssignedShiftDAO.Current.Table().OrderByDescending(x => x.Date).Select(x => x.GroupCode).FirstOrDefault();
                 if ((lastDate - today).Days < 3)
                 {
                     //them 28 ngay, start group luon la group 1
-                    ShiftBLO.Current.GenerateShift(lastDate.AddDays(1), lastDate.AddDays(28), Constants.GroupName.GROUP_1);
+                    ShiftBLO.Current.GenerateShift(lastDate.AddDays(1), lastDate.AddDays(28), lastGroup);
                 }
             }
         }
@@ -72,6 +91,9 @@ namespace IMS.Services
                         .Build();
                     scheduler.ScheduleJob(job, trigger);
                 }
+
+                var testJob = new TestJob();
+                testJob.Execute(null);
             }
         }
     }

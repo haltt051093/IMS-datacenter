@@ -32,13 +32,18 @@ namespace IMS.Data.Business
             dao = ShiftDAO.Current;
         }
 
-        public List<AssignedShift> GenerateShift(DateTime startedDate, DateTime endedDate, string startedGroup)
+        public List<AssignedShift> GenerateShift(DateTime startedDate, DateTime endedDate, string lastGroup)
         {
             var result =  new List<AssignedShift>();
             var shifts = GetAll();
             var groups = GroupDAO.Current.Query(x => x.GroupCode != "Admin" && x.GroupCode != Constants.Role.CUSTOMER);
-            var selectedGroup = groups.FirstOrDefault(x => x.GroupCode == startedGroup);
-            var startedGroupId = selectedGroup == null ? 0 : groups.IndexOf(selectedGroup);
+            var selectedGroup = groups.FirstOrDefault(x => x.GroupCode == lastGroup);
+            var startedGroupIndex = selectedGroup == null ? 0 : groups.IndexOf(selectedGroup);
+            startedGroupIndex++;
+            if (startedGroupIndex >= groups.Count)
+            {
+                startedGroupIndex = 0;
+            }
             for (var date = startedDate; date <= endedDate;)
             {
                 for (var i = 0; i < shifts.Count; i++)
@@ -46,15 +51,15 @@ namespace IMS.Data.Business
                     var assign = new AssignedShift
                     {
                         ShiftCode = shifts[i].ShiftCode,
-                        GroupCode = groups[startedGroupId].GroupCode,
+                        GroupCode = groups[startedGroupIndex].GroupCode,
                         StartedTime = date.AddHours(shifts[i].StartedTime),
                         EndedTime = date.AddHours(shifts[i].EndedTime)
                     };
                     result.Add(assign);
-                    startedGroupId++;
-                    if (startedGroupId >= groups.Count)
+                    startedGroupIndex++;
+                    if (startedGroupIndex >= groups.Count)
                     {
-                        startedGroupId = 0;
+                        startedGroupIndex = 0;
                     }
                     AssignedShiftBLO.Current.Add(assign);
                 }
