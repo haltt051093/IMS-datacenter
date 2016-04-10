@@ -144,20 +144,20 @@ namespace IMS.Controllers
         public ActionResult AssignLocation(LocationIndexViewModel livm)
         {
             var selectedLocationCodes = livm.Selected
-     .Where(x => x.IsSelected)
-     .Select(x => x.LocationCode)
-     .ToList();
+                .Where(x => x.IsSelected)
+                .Select(x => x.LocationCode)
+                .ToList();
             if (selectedLocationCodes.Count == 0)
             {
                 return View(livm);
             }
-            var location = LocationBLO.Current.GetByKeys(new Location { LocationCode = selectedLocationCodes[0] });
+            var location = LocationBLO.Current.GetByKeys(new Location {LocationCode = selectedLocationCodes[0]});
             if (location == null)
             {
                 return View(livm);
             }
 
-            var locations = LocationBLO.Current.GetAllLocation(new GetLocationQuery { RackCode = location.RackCode });
+            var locations = LocationBLO.Current.GetAllLocation(new GetLocationQuery {RackCode = location.RackCode});
             var startIndex = -1;
             var endIndex = -1;
             for (var i = 0; i < locations.Count; i++)
@@ -177,12 +177,22 @@ namespace IMS.Controllers
                 }
             }
 
-            if ((endIndex - startIndex + 1) != livm.Size || (locations[startIndex].ServerCode != null && locations[startIndex].ServerCode!=livm.ServerCode) || (locations[endIndex].ServerCode != null && locations[endIndex].ServerCode!=livm.ServerCode))
-            { 
-                    return RedirectToAction("AssignLocation", "Location", new {FailMessage = "Assign Location Fail! Try again!", rType = livm.RequestType, rCode = livm.RequestCode, ServerCode = livm.ServerCode, Size = livm.Size });
+            if ((endIndex - startIndex + 1) != livm.Size ||
+                (locations[startIndex].ServerCode != null && locations[startIndex].ServerCode != livm.ServerCode) ||
+                (locations[endIndex].ServerCode != null && locations[endIndex].ServerCode != livm.ServerCode))
+            {
+                return RedirectToAction("AssignLocation", "Location",
+                    new
+                    {
+                        FailMessage = "Assign Location Fail! Try Again!",
+                        rType = livm.RequestType,
+                        rCode = livm.RequestCode,
+                        ServerCode = livm.ServerCode,
+                        Size = livm.Size
+                    });
             }
 
-            string user = GetCurrentUserName();
+        string user = GetCurrentUserName();
             bool result = LocationBLO.Current.UpdateLocation(livm.ServerCode, selectedLocationCodes, user, livm.RequestType);
             if (result)
             {

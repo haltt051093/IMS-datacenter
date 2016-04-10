@@ -190,6 +190,11 @@ namespace IMS.Controllers
             {
                 return RedirectToAction("AssignIP",new {rCode = icvm.RequestCode, OldIP = icvm.OldIP, ServerCode = icvm.ServerCode, FailMessage ="Select IP to assign!"});
             }
+            var ip = IPAddressPoolBLO.Current.GetByKeys(new IPAddressPool { IPAddress = icvm.NewIP });
+            if (ip.StatusCode == Constants.StatusCode.IP_USED)
+            {
+                return RedirectToAction("AssignIP",new {rCode = icvm.RequestCode, OldIP = icvm.OldIP, ServerCode = icvm.ServerCode, FailMessage ="Assign IP Fail! Try Again!"});
+            }
 
             var x = IPAddressPoolBLO.Current.UpdateIP(icvm.ServerCode, icvm.NewIP, icvm.RequestCode, icvm.OldIP);
             if (x == false)
