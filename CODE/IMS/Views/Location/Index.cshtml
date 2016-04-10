@@ -23,7 +23,7 @@
     <div style="height: 10px"></div>
     <div class="row hide">
         <div id="dropdown-template" class="col-xs-3">
-            <label>Location: @Html.DropDownListFor(model => model.RackCode, Model.Racks, "All Locations", new {@class = "form-control input-sm", style = "width: 150px"}) </label>
+            <label>Rack: @Html.DropDownListFor(model => model.RackCode, Model.Racks, "All Locations", new {@class = "form-control input-sm", style = "width: 150px"}) </label>
         </div>
     </div>
 
@@ -62,10 +62,10 @@
                 </div>
                 <div class="modal-body">
                     <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                            @Html.LabelFor(model => model.RackName)
+                        <div class="col-xs-4 tf-form-label">
+                            @Html.LabelFor(model => model.RackName, new { @class = "required" })
                         </div>
-                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                        <div class="col-xs-8 tf-form-control">
                             @Html.TextBoxFor(model => model.RackName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS, placeholder="Ex: A1, B1,..." })
                             @Html.ValidationMessageFor(model => model.RackName)
                         </div>
@@ -73,10 +73,10 @@
                     </div>
 
                     <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                        <div class="col-xs-4 tf-form-label">
                             @Html.LabelFor(model => model.Power)
                         </div>
-                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                        <div class="col-xs-8 tf-form-control">
                             @Html.DropDownListFor(model => model.MaximumPower, Model.ListPower, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                         </div>
                     </div>
