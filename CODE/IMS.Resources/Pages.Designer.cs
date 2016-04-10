@@ -160,7 +160,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Locations.
+        ///   Looks up a localized string similar to List of Locations.
         /// </summary>
         public static string Location {
             get {
@@ -268,7 +268,7 @@ namespace IMS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Racks.
+        ///   Looks up a localized string similar to List of Racks.
         /// </summary>
         public static string RackIndex {
             get {
