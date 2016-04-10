@@ -2,6 +2,7 @@
 using IMS.Data.Models;
 using IMS.Data.ViewModels;
 using SelectListItem = System.Web.Mvc.SelectListItem;
+using IMS.Validations;
 
 namespace IMS.Models
 {
@@ -31,6 +32,8 @@ namespace IMS.Models
         public string RequestCode { get; set; }
         public string OldIP { get; set; }
         public string Button { get; set; }
+        [CustomRequired(ErrorMessage ="Please select Default IP and Location!")]
+        public string RequiredValidation { get; set; }
 
         //DropdownList
         public List<SelectListItem> StaffCodeOptions { get; set; }

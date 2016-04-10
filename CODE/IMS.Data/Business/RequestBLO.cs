@@ -792,22 +792,10 @@ namespace IMS.Data.Business
                 if (listAvailableIps != null)
                 {
                     request.NumberOfAvailableIP = listAvailableIps.Count;
-                    //if (listAvailableIps.Count > request.NumberOfIP)
-                    //{
                     //selected values
                     request.randomList = IPAddressPoolBLO.Current.GetRandomIPs(listAvailableIps, request.NumberOfIP);
                     request.listAvailableIps = listAvailableIps;
                     request.NumberOfSelectedIP = request.randomList.Count;
-                    //}
-                    //else
-                    //{
-                    //    if (listAvailableIps.Count != 0)
-                    //    {
-                    //        request.randomList = listAvailableIps.Select(x => x.IPAddress).ToList();
-                    //        request.listAvailableIps = null;
-                    //        request.NumberOfSelectedIP = request.randomList.Count;
-                    //    }
-                    //}
                 }
             }
             if (request.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
