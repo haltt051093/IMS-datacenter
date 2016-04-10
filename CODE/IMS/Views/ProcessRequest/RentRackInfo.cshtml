@@ -161,7 +161,7 @@
         {
             <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                 <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                    @Html.LabelFor(model => model.SelectedRow, "Select Rack")
+                    @Html.LabelFor(model => model.SelectedRow, "Select racks")
                 </div>
                 <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                     @Html.DropDownListFor(m => m.SelectedRow, Model.ListRows, "Select All", new { @id = "selectedRow", @class = Constants.HtmlFormat.FORM_INNER_CLASS })
@@ -191,11 +191,11 @@
                             }
                         </tbody>
                     </table>
-                    <div id="notEnough" class="alert alert-warning alert-dismissable" style="display: none">
+                    @*<div id="notEnough" class="alert alert-warning alert-dismissable" style="display: none">
                         <i class="fa fa-warning"></i>
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                         <b>Alert!</b> Rack is out of stock! Please Add more.
-                    </div>
+                    </div>*@
                 </div>
             </div>
            

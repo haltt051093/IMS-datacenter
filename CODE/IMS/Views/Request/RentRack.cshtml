@@ -16,11 +16,18 @@
     {
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                @Html.LabelFor(model => model.RackNumbers)
+                @Html.LabelFor(model => model.RackNumbers, new { @class = "required" })
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                 @Html.DropDownListFor(model => model.RackNumbers, Model.ListRackNumbers, "-- Select --", new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                @Html.ValidationMessageFor(model => model.RackNumbers)
+            </div>
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.HiddenFor(model => model.RackNumValidation)
+                @Html.ValidationMessageFor(model => model.RackNumValidation)
             </div>
         </div>
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
@@ -43,26 +50,23 @@
         </div>
     }
 </section>
-
+<script>
+    // add jquery validation method
+    $.validator.addMethod('customrequired', function (value, element, params) {
+        var count = $('#RackNumbers').val();
+        if (count == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    });
+</script>
 <script>
     $(function () {
-
         $("#checkAll").change(function () {
             var state = $('#checkAll').is(':checked');
             $('tr.check input[type="checkbox"]:not(:disabled)').prop('checked', state);
         });
-
-        //$("#btnAccept").click(function () {
-        //    var num = ("#RackNumbers").val();
-        //    if (num.length <= 0) {
-        //        notif({
-        //            msg: "<b>Error!</b> You have to select number of rack!",
-        //            type: "error",
-        //            position: "center"
-        //        });
-        //        return false;
-        //    }
-        //});
     });
 </script>
 

@@ -37,12 +37,12 @@ namespace IMS.Data.Repository
         {
             var result = Query(x => x.RackName.StartsWith(rowName) && x.StatusCode == Constants.StatusCode.RACK_AVAILABLE)
                     .Select(x => new RackExtendedModel()
-                        {
-                            StatusCode = x.StatusCode,
-                            RackCode = x.RackCode,
-                            RackName = x.RackName,
-                            RowName = rowName
-                        })
+                    {
+                        StatusCode = x.StatusCode,
+                        RackCode = x.RackCode,
+                        RackName = x.RackName,
+                        RowName = rowName
+                    })
                     .ToList();
             return result;
         }
@@ -50,7 +50,8 @@ namespace IMS.Data.Repository
         public List<string> GetAllRowsOfRack()
         {
             var allRacks = from r in Table
-                select r.RackName;
+                           where r.StatusCode == Constants.StatusCode.RACK_AVAILABLE
+                           select r.RackName;
             var listRows = new List<string>();
             foreach (var item in allRacks)
             {

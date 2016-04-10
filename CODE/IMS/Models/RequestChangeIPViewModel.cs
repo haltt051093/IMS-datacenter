@@ -21,11 +21,13 @@ namespace IMS.Models
         // Specific Info
         [Display(Name = "Server")]
         public string SelectedServer { get; set; }
-        [Display(Name = "Changing IPs")]
-        [CustomRequired(ErrorMessage = "hihi")]
+        [Display(Name = "IPs of Server")]
+        [CustomRequired(ErrorMessage = "Please select IP Address.")]
         public List<string> ReturningIPs { get; set; }
         public List<string> SelectedIPs { get; set; } 
-        public List<ServerIPExtendedModel> ServerIPs { get; set; } 
+        public List<ServerIPExtendedModel> ServerIPs { get; set; }
+        [CustomRequired(ErrorMessage = "Please select server.")]
+        public string ServerValidation { get; set; }
 
         //DropdownList
         public List<SelectListItem> ServerOptions { get; set; }

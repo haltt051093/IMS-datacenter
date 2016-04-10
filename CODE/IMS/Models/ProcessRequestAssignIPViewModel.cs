@@ -26,11 +26,11 @@ namespace IMS.Models
         [Display(Name = "Server")]
         public string SelectedServer { get; set; }
         public string SelectedDefaultIP { get; set; }
-        [Display(Name ="Required number of IPs")]
+        [Display(Name ="Number of IPs")]
         public int NumberOfIP { get; set; }
         public int NumberOfAvailableIP { get; set; }
         public int NumberOfSelectedIP { get; set; }
-        [Display(Name = "Assigned IP(s)")]
+        [Display(Name = "Assigned IPs")]
         public List<string> IPs { get; set; }
         [CustomRequired]
         public string IPsString { get; set; }

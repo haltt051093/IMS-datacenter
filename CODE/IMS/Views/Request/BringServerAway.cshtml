@@ -40,7 +40,7 @@
         </div>
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                @Html.Label("Server")
+                @Html.Label("Servers",new { @class = "required" })
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                 @if (Model.RackOfCustomer != null)
@@ -78,7 +78,6 @@
                                         @Html.CheckBoxFor(modelItem => Model.ServerOfCustomer[i].Checked, new { @class = "chknull" })
                                     </td>
                                     <td>
-                                        @*@Html.DisplayFor(modelItem => Model.ServerOfCustomer[i].ServerCode)*@
                                         @Html.HiddenFor(modelItem => Model.ServerOfCustomer[i].ServerCode)
                                         @Html.ActionLink(Model.ServerOfCustomer[i].ServerCode, "Detail", "Server",
                                                         new { code = Model.ServerOfCustomer[i].ServerCode }, null)
@@ -95,6 +94,12 @@
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                     <div class="@Constants.HtmlFormat.FORM_MESSAGE_CLASS">
                         <span id="selectedNumber">@Model.SelectedServerNumber</span> of <span>@Model.ServerNumber</span> servers selected
+                    </div>
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_MESSAGE_CLASS">
+                        @Html.HiddenFor(model => model.ServerValidation)
+                        @Html.ValidationMessageFor(model => model.ServerValidation)
                     </div>
                 </div>
             </div>
@@ -119,15 +124,15 @@
         </div>
     }
 </section>
-
-<script type="text/javascript">
-
-    $('#masterTable').dataTable({
-        dom: 't',
-        ordering: false,
-        searching: false
+<script>
+    $.validator.addMethod('customrequired', function (value, element, params) {
+        var count = $('[id*=masterTable] input[type="checkbox"]:checked').length;
+        if (count == 0) {
+            return false;
+        } else {
+            return true;
+        }
     });
-
     function countSelected() {
         var count = 0;
         $('tr.check input[type="checkbox"]').each(function (i, e) {
@@ -138,24 +143,15 @@
         });
         $("#selectedNumber").text(count);
     }
-    var selectedChkCount = 0;
-    $('#tbodyid').on('click', '.chknull', function () {
-        var selectedChk = $('.chknull:checked');
-        //alert(selectedChk.length);
-        selectedChkCount = selectedChk.length;
-    });
+</script>
+<script type="text/javascript">
 
-    //Get value of selected items
-    $("#btnAccept").click(function () {
-        if (selectedChkCount <= 0) {
-            notif({
-                msg: "<b>Error!</b> Please select at least one server!",
-                type: "error",
-                position: "center"
-            });
-            return false;
-        }
+    $('#masterTable').dataTable({
+        dom: 't',
+        ordering: false,
+        searching: false
     });
+    
     $("#checkAll").change(function () {
         var state = $('#checkAll').is(':checked');
         $('tr.check input[type="checkbox"]').prop('checked', state);

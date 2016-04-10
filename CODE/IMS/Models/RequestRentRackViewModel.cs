@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using IMS.Data.ViewModels;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using IMS.Validations;
 
 namespace IMS.Models
 {
@@ -21,8 +22,8 @@ namespace IMS.Models
         public List<SelectListItem> ListRackNumbers { get; set; }
         [Display(Name ="Number of racks")]
         public int RackNumbers { get; set; }
-
-
+        [CustomRequired(ErrorMessage = "Please select number of racks")]
+        public string RackNumValidation { get; set; }
     }
 
 }

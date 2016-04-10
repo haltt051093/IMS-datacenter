@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using IMS.Data.ViewModels;
+using IMS.Validations;
 
 namespace IMS.Models
 {
@@ -21,6 +22,10 @@ namespace IMS.Models
         //dropdownlist
         public List<ServerExtendedModel> ServerOfCustomer { get; set; }
         public List<SelectListItem> RackOfCustomer { get; set; }
+        [CustomRequired(ErrorMessage = "Appointment Time is required.")]
+        public string AppointmentValidation { get; set; }
+        [CustomRequired(ErrorMessage = "Please select server.")]
+        public string ServerValidation { get; set; }
 
     }
 }

@@ -4,6 +4,7 @@ using IMS.Data.Models;
 using IMS.Data.Repository;
 using System.Linq;
 using IMS.Data.ViewModels;
+using IMS.Core;
 
 namespace IMS.Data.Business
 {
@@ -69,7 +70,7 @@ namespace IMS.Data.Business
             var query = from s in ServerDAO.Current.Table
                         join si in ServerIPDAO.Current.Table
                             on s.ServerCode equals si.ServerCode
-                        where s.ServerCode == serverCode
+                        where s.ServerCode == serverCode &&  si.StatusCode == Constants.StatusCode.SERVERIP_CURRENT
                         select si;
             return query.ToList();
         }

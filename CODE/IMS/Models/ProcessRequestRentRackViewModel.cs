@@ -23,9 +23,9 @@ namespace IMS.Models
         // Specific Info
         public List<RackExtendedModel> listRackByRows { get; set; }
         public string SelectedRow { get; set; }
-        [Display(Name ="Rented Rack(s)")]
+        [Display(Name ="Rented Racks")]
         public List<string> RentedRacks { get; set; }
-        [Display(Name ="Required number of rack(s)")]
+        [Display(Name ="Number of racks")]
         public int RackNumbers { get; set; }
 
         //DropdownList

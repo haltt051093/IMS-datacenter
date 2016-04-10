@@ -292,7 +292,7 @@ namespace IMS.Data.Repository
             var server = query.FirstOrDefault();
 
             var serverip = from si in ServerIPDAO.Current.Table
-                           where si.ServerCode == serverCode
+                           where si.ServerCode == serverCode && si.StatusCode == Constants.StatusCode.SERVERIP_CURRENT
                            select si;
             if (serverip.Count() != 0)
             {

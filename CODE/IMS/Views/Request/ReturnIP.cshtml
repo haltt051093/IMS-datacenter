@@ -16,11 +16,10 @@
     {
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                @Html.LabelFor(model => model.SelectedServer)
+                @Html.LabelFor(model => model.SelectedServer, new { @class = "required" })
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                 @Html.DropDownListFor(m => m.SelectedServer, Model.ServerOptions, "Select your server", new { @id = "servercode", @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                @Html.ValidationMessageFor(model => model.SelectedServer)
             </div>
         </div>
         <div id="divPartialView" class="hidden">
@@ -102,20 +101,23 @@
                 dataType: "json",
                 success: function (data) {
                     $('#divPartialView').removeClass('hidden');
-                    $(data.ServerIPs).each(function (index, item) {
-                        myTable.append('<tr><td>' + '<input type="checkbox" class="chknull" id="CheckBoxList"'
-                            + index + ' name="chk" value="' + item.CurrentIP + '" /></td><td>' + item.CurrentIP + '</td></tr>');
-                        if (item.IsDefault) {
-                            $("tr:last").css({ backgroundColor: "yellow", fontWeight: "bolder" }).attr('id', 'hohoho');
-                        }
-                    });
+                    if (data.ServerIPs.length == 0) {
+                        myTable.append('<tr><td colspan="2" style="text-align:center">No data available in table</td></tr>');
+                    } else {
+                        $(data.ServerIPs).each(function (index, item) {
+                            myTable.append('<tr><td>' + '<input type="checkbox" class="chknull" id="CheckBoxList"'
+                                + index + ' name="chk" value="' + item.CurrentIP + '" /></td><td>' + item.CurrentIP + '</td></tr>');
+                            if (item.IsDefault) {
+                                $("tr:last").css({ backgroundColor: "yellow", fontWeight: "bolder" }).attr('id', 'hohoho');
+                            }
+                        });
+                    }
                     $('#hohoho input[type=checkbox]').on('change', function () {
                         var selectedChk = $('.chknull:checked');
                         selectedChkCount = selectedChk.length;
                         var state = $('#hohoho input[type=checkbox]').is(':checked');
                         $('#MyTable input[type="checkbox"]').prop('checked', state);
                     });
-                    selectedChkCount = 0;
                 }
             });
         });

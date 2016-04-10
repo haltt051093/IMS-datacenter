@@ -17,7 +17,7 @@
     {
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                @Html.LabelFor(model => model.SelectedServer,"Server")
+                @Html.LabelFor(model => model.SelectedServer, new { @class = "required" })
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                 @Html.DropDownListFor(m => m.SelectedServer, Model.ServerOptions, "Select your server", new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
@@ -26,47 +26,67 @@
         </div>
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                @Html.LabelFor(model => model.NumberOfIP,"Number of IPs")
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                @Html.DropDownListFor(model => model.NumberOfIP, Model.NumberOfIPOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                @Html.ValidationMessageFor(model => model.NumberOfIP)
+                @Html.HiddenFor(model => model.ServerValidation)
+                @Html.ValidationMessageFor(model => model.ServerValidation)
             </div>
         </div>
-        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                @Html.LabelFor(model => model.RequestInfo.Description)
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    @Html.LabelFor(model => model.NumberOfIP, new { @class = "required" })
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.DropDownListFor(model => model.NumberOfIP, Model.NumberOfIPOptions, "Select number of IPs", new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                </div>
             </div>
-            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                @Html.TextAreaFor(model => model.RequestInfo.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                @Html.ValidationMessageFor(model => model.RequestInfo.Description)
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.HiddenFor(model => model.IPNumValidation)
+                    @Html.ValidationMessageFor(model => model.IPNumValidation)
+                </div>
             </div>
-        </div>
-        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                    @Html.LabelFor(model => model.RequestInfo.Description)
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.TextAreaFor(model => model.RequestInfo.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    @Html.ValidationMessageFor(model => model.RequestInfo.Description)
+                </div>
             </div>
-            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                    Send Request
-                </button>
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        Send Request
+                    </button>
+                </div>
             </div>
-        </div>
     }
 </section>
-
 <script>
-    $(function() {
-        $("#btnAccept").click(function () {
-            var severNum = $("#SelectedServer").val();
-            if (severNum.length <= 0) {
-                notif({
-                    msg: "<b>Error!</b> You have to select a server!",
-                    type: "error",
-                    position: "center"
-                });
-                return false;
-            }
-        });
+
+    // add jquery validation method
+    $.validator.addMethod('customrequired', function (value, element, params) {
+        var count = $('#SelectedServer').val();
+        if (count == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    });
+    // add jquery validation method
+    $.validator.addMethod('customrequired1', function (value, element, params) {
+        var count = $('#NumberOfIP').val();
+        if (count == 0) {
+            return false;
+        } else {
+            return true;
+        }
     });
 </script>
 
