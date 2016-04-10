@@ -13,7 +13,7 @@ namespace IMS.Validations
 
             var clientValidationRule = new ModelClientValidationRule()
             {
-                ErrorMessage = metadata.GetDisplayName() + "is not selected",
+                ErrorMessage = ErrorMessage?? metadata.GetDisplayName() + "is not selected",
                 ValidationType = "customrequired"
             };
 
