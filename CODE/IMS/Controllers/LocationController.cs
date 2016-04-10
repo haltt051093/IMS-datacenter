@@ -30,7 +30,7 @@ namespace IMS.Controllers
             var listrack = locations.OrderBy(x => x.RackName).GroupBy(x => x.RackName).Select(x => x.FirstOrDefault());
             data.Racks = listrack.Select(x => new SelectListItem
             {
-                Value = x.RackCode,
+                Value = x.RackName,
                 Text = "Rack " + x.RackName
             }).ToList();
 
@@ -51,6 +51,26 @@ namespace IMS.Controllers
             return View(data);
         }
 
+        [HttpPost]
+        public JsonResult AddLocation(LocationIndexViewModel data)
+        {
+            var result = new JsonResultModel();
+            var rack = new Rack();
+            var existing = RackBLO.Current.GetByName(new Rack { RackName = data.RackName });
+            if (existing == null)
+            {
+                rack.RackName = data.RackName;
+                rack.MaximumPower = data.MaximumPower;
+                RackBLO.Current.AddRackAndLocation(rack);
+                result.Success = true;
+            }
+            else
+            {
+                result.Success = false;
+            }
+            
+            return Json(result);
+        }
         [HttpPost]
         public ActionResult Index(LocationIndexViewModel livm)
         {

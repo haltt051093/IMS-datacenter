@@ -146,7 +146,6 @@ namespace IMS.Controllers
                 })
                 .ToList();
                 var listAvailableIps = request.listAvailableIps;
-                var num = viewmodel.NumberOfIP;
                 if (viewmodel.NumberOfAvailableIP >= viewmodel.NumberOfIP)
                 {
                     if (request.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)

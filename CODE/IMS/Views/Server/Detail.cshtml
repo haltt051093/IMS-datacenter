@@ -108,9 +108,8 @@
                         <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                             @foreach (var item in Model.Server.ServerLocation)
                             {
-                                @Html.DisplayFor(model => item.RackName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                <span>U</span>
-                                @Html.DisplayFor(model => item.RackUnit, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                @Html.DisplayFor(model => item.RackName)
+                                <text>U</text>@Html.DisplayFor(model => item.RackUnit, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                                 <br />
                             }
                             @if (Model.Server.Status == Constants.StatusName.SERVER_RUNNING && !User.IsInRole("Customer"))
@@ -142,28 +141,31 @@
                 }
                 else
                 {
-                    if (Model.CurrentIPs.Count == 0)
-                    {
-                        @Html.Raw("[Updating]")
-                    }
-                    else
-                    {
-                        foreach (var item in Model.CurrentIPs)
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                        @if (Model.CurrentIPs.Count == 0)
                         {
-                            if (item.CurrentIP == Model.Server.DefaultIP)
+                            @Html.Raw("[Updating]")
+                        }
+                        else
+                        {
+                            foreach (var item in Model.CurrentIPs)
                             {
-                                <b style="color: blue;">
-                                    @Html.DisplayFor(model => item.CurrentIP, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                </b>
+                                if (item.CurrentIP == Model.Server.DefaultIP)
+                                {
+                                    <b style="color: blue;">
+                                        @Html.DisplayFor(model => item.CurrentIP, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                    </b>
                                     <br />
-                            }
-                            else
-                            {
-                                @Html.DisplayFor(model => item.CurrentIP, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                <br />
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(model => item.CurrentIP, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                    <br />
+                                }
                             }
                         }
-                    }
+                    </div>
+
                 }
             </div>
         </div>
@@ -255,119 +257,48 @@
 
                 </div>
             </form>
-            @*<script>*@
-            @*$.fn.dataTable.ext.search.push(
-                        function (settings, data, dataIndex) {
-                            var rackCode = $('#RackCode').val();
-                            if (rackCode == '') {
-                                return true;
-                            }
-                            if (rackCode == data[0]) {
-                                return true;
-                            }
-                            return false;
-                        }
-                    );
-                </script>
-
-                <script type="text/javascript">
-                    var table = $('#example1').DataTable({
-                        dom: '<lf<t>ip>',
-                        processing: true,
-                        ajax: "@Url.Action("GetLocationForChange", "Location", new {httproute = "", code = Model.ServerCode})",
-                        columns: [
-                            { data: "RackCode" },
-                            { data: "RackName" },
-                            { data: "RackUnit" },
-                            { data: "ServerCode" },
-                            { data: "LocationCode" }
-                        ],
-                        iDisplayLength: 42,
-
-                        fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                            var row = $(nRow);
-                            var actionCell = $(nRow.cells[4]);
-                            actionCell.html('');
-                            actionCell.append('<input type="hidden" name="Selected['  + iDisplayIndex + '].LocationCode" value="'+aData.LocationCode+'">');
-                            switch (aData.StatusName) {
-                                case 'Free':
-                                    actionCell.append('<input type="checkbox" name="Selected['  + iDisplayIndex + '].IsSelected" value="true"/>');
-
-                                    break;
-                                default:
-                                    actionCell.append('<input type="checkbox" name="Selected['  + iDisplayIndex + '].IsSelected" value="true"/>');
-                                    break;
-
-                            }
-
-                        },
-                        order: [[1, "acs"], [2, "desc"]]
-
-                    });
-
-                    $('#example1_filter').append($('#dropdown-template').html());
-                    $('#dropdown-template').html('');
-
-                    $('#RackCode').change(function() {
-                        table.draw();
-                    });
-
-
-                </script>
-
-                <script>
-                    $(document).on("click", ".open-blockIP-modal", function () {
-                        var code  = $(this).data('id');
-                        var size = $(this).data('id1');
-
-                        $(".modal-footer #servercode").val(code);
-                        $(".modal-footer #size").val(size);
-
-
-
-                    });
-                </script>*@
-            <script>
-                var message = $('#SuccessMessage').val();
-                if (message) {
-                    notif({
-                        msg: "<b>Success! </b>" + message,
-                        type: "info",
-                        position: "center"
-                    });
-                    $('#SuccessMessage').val("");
-                }
-            </script>
-            <script type="text/javascript">
-
-                $(function() {
-
-                    //DOING
-                    var defaultIp = @Model.Server.DefaultIP;
-                    $('#currentIps li').each(function() {
-                        if (this.value == defaultIp) {
-                            $(this).css("background-color:blue;");
-                        }
-                    });
-                    $("#SearchRack").on("click", function() {
-                        $.ajax(
-                        {
-                            type: "GET",
-                            page: 1,
-                            rp: 6,
-                            url: '@Url.Action("Detail", "Server")',
-                            dataType: "json",
-                            success: function(result) {
-
-                            },
-                            error: function(x, e) {
-
-                            }
-                        });
-                    });
-                });
-            </script>
-
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<script>
+    var message = $('#SuccessMessage').val();
+    if (message) {
+        notif({
+            msg: "<b>Success! </b>" + message,
+            type: "info",
+            position: "center"
+        });
+        $('#SuccessMessage').val("");
+    }
+</script>
+<script type="text/javascript">
+
+    $(function() {
+
+        //DOING
+        var defaultIp = @Model.Server.DefaultIP;
+        $('#currentIps li').each(function() {
+            if (this.value == defaultIp) {
+                $(this).css("background-color:blue;");
+            }
+        });
+        $("#SearchRack").on("click", function() {
+            $.ajax(
+            {
+                type: "GET",
+                page: 1,
+                rp: 6,
+                url: '@Url.Action("Detail", "Server")',
+                dataType: "json",
+                success: function(result) {
+
+                },
+                error: function(x, e) {
+
+                }
+            });
+        });
+    });
+</script>
+
+

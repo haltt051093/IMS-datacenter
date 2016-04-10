@@ -117,6 +117,10 @@ namespace IMS.Controllers
                                 .ToList();
                             }
                         }
+                        else
+                        {
+                            data.ServerOfCustomer = serverOfCustomer;
+                        }
                         data.RequestInfo = new RequestInfoModel();
                         var now = DateTime.Now;
                         if (now.Hour >= 20)

@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 using IMS.ApiModels;
 using IMS.Core;
 using IMS.Data.Business;
 using IMS.Data.Repository;
 using IMS.Data.ViewModels;
+using IMS.Models;
 
 namespace IMS.ApiControllers
 {
@@ -17,6 +20,24 @@ namespace IMS.ApiControllers
             return result;
         }
 
+        public List<string> GetListRack()
+        {
+            var locations = LocationBLO.Current.GetAllLocation();
+            var result = new List<string>();
+            var listrack = locations.OrderBy(x => x.RackName).GroupBy(x => x.RackName).Select(x => x.FirstOrDefault());
+            result = listrack.Select(x=>x.RackName).ToList();
+            return result;
+        }
+
+        public int GetEmptyRackCount()
+        {
+            var locations = LocationBLO.Current.GetAllLocation();
+            var list = locations.Where(x => x.RackStatus == Constants.StatusCode.RACK_AVAILABLE);
+            var listavailablerack =
+                list.OrderBy(x => x.RackName).GroupBy(x => x.RackName).Select(x => x.FirstOrDefault());
+            int count = listavailablerack.Count();
+            return count;
+        }
         public DataTableModel<LocationViewModel> GetLocationForChange(string code)
         {
             var server = ServerBLO.Current.GetServerByCode(code, Constants.StatusCode.SERVER_RUNNING);

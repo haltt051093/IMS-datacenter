@@ -10,7 +10,6 @@ namespace IMS.Validations
         public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
         {
 
-
             var clientValidationRule = new ModelClientValidationRule()
             {
                 ErrorMessage = ErrorMessage?? metadata.GetDisplayName() + "is not selected",

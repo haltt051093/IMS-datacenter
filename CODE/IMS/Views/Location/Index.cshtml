@@ -1,12 +1,12 @@
 ﻿@model IMS.Models.LocationIndexViewModel
 @{
-    ViewBag.Title = Pages.RackIndex;
-    ViewBag.PageTitle = Pages.RackIndex;
+    ViewBag.Title = Pages.LocationIndex;
+    ViewBag.PageTitle = Pages.LocationIndex;
     ViewBag.Role = "Shift Head";
     ViewBag.Breadcrumbs = new List<BreadcrumbModel>
     {
         new BreadcrumbModel("Home", "Index", Pages.Home),
-        new BreadcrumbModel("Location", "Index", Pages.RackIndex)
+        new BreadcrumbModel("Location", "Index", Pages.LocationIndex)
     };
 }
 
@@ -15,7 +15,7 @@
     <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS hidden">
         @Html.HiddenFor(model => model.SuccessMessage)
     </div>
-    <label style="color: #3c8dbc">Amount of Rack Available: @Model.RackAvailableCount</label>
+    <label id="countrack" style="color: #3c8dbc">Amount of Rack Empty: @Model.RackAvailableCount</label>
     <div>
         <a class="btn btn-primary pull-left" data-toggle="modal" data-target="#addlocation-modal"><i class="fa fa-plus"></i> Add new rack</a>
     </div>
@@ -55,7 +55,7 @@
     <div class="modal-dialog" style="width: 400px">
         <div class="modal-content">
 
-            @using (Html.BeginForm())
+            @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "Post", Url = Url.Action("AddLocation", "Location"), OnComplete = "addLocationComplete" }))
             {
                 <div class="modal-header">
                     <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i> @Labels.AddRack</div>
@@ -66,7 +66,7 @@
                             @Html.LabelFor(model => model.RackName)
                         </div>
                         <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                            @Html.TextBoxFor(model => model.RackName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                            @Html.TextBoxFor(model => model.RackName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS, placeholder="Ex: A1, B1,..." })
                             @Html.ValidationMessageFor(model => model.RackName)
                         </div>
 
@@ -78,7 +78,6 @@
                         </div>
                         <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
                             @Html.DropDownListFor(model => model.MaximumPower, Model.ListPower, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                            @Html.ValidationMessageFor(model => model.MaximumPower)
                         </div>
                     </div>
                 </div>
@@ -106,7 +105,7 @@
             if (rackCode == '') {
                 return true;
             }
-            if (rackCode == data[0]) {
+            if (rackCode == data[1]) {
                 return true;
             }
             return false;
@@ -120,6 +119,37 @@
             position: "center"
         });
         $('#SuccessMessage').val("");
+    }
+    function addLocationComplete(data) {
+        var response = data.responseJSON;
+        if (response.Success) {
+            $('#addlocation-modal').modal('hide');
+            var datatable = $('#example1').dataTable().api();
+
+            $.get('@Url.Action("GetAll", "Location", new { httproute = "" })', function (newDataArray) {
+                datatable.clear();
+                datatable.rows.add(newDataArray.data);
+                datatable.draw();
+            });
+            $.get('@Url.Action("GetListRack", "Location", new { httproute = "" })', function (newDataArray) {
+                $('#RackCode').html('<option value="">All Locations</option>');
+                $(newDataArray).each(function (i, e) {
+                    var option = $('<option></option>').html(e).val(e);
+                    $('#RackCode').append(option);
+                });
+            });
+            $.get('@Url.Action("GetEmptyRackCount", "Location", new { httproute = "" })', function (countRackEmpty) {
+                $('#countrack').html('Amount of Rack Empty: '+ countRackEmpty);
+            });
+            notif({
+                msg: "Success! Add new rack successfully!",
+                type: "info",
+                position: "center"
+            });
+            $('#RackName').val('');
+        } else if(!response.Success) {
+            $('span[data-valmsg-for="RackName"]').addClass("field-validation-error").html("Rack Name is existed!");
+        }
     }
 </script>
 

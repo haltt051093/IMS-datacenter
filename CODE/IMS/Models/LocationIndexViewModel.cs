@@ -35,7 +35,7 @@ namespace IMS.Models
         [Required(ErrorMessage = "Please input Rack Name!")]
         [RegularExpression("^[A-Z][1-9]?[0-9]+$", ErrorMessage = "Wrong format of Rack Name! Try again!")]
 
-        [Remote("CheckRackName", "Validate", ErrorMessage = "RackName is existed", HttpMethod = "POST")]
+        [Remote("CheckRackName", "Validate", ErrorMessage = "Rack Name is existed", HttpMethod = "POST")]
         [Display(Name ="Rack Name")]
         public string RackName { get; set; }
         public int? MaximumPower { get; set; }
