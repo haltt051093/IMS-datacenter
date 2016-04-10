@@ -47,6 +47,13 @@
                     @Html.HiddenFor(model => model.ReturningIPs, new { id = "ips" })
                     @Html.HiddenFor(model => model.SelectedServer)
                 </div>
+                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS"></div>
+                    <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                        @Html.HiddenFor(model => model.RequiredValidation)
+                        @Html.ValidationMessageFor(model => model.RequiredValidation)
+                    </div>
+                </div>
             </div>
         </div>
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
@@ -69,7 +76,17 @@
         </div>
     }
 </section>
-
+<script>
+    // add jquery validation method
+    $.validator.addMethod('customrequired', function (value, element, params) {
+        var count = $('[id*=MyTable] input[type="checkbox"]:checked').length;
+        if (count == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    });
+</script>
 <script type="text/javascript">
     $(function () {
         var selectedChkCount = 0;
@@ -103,29 +120,13 @@
             });
         });
 
-        //$('#tbodyid').on('click', '.chknull', function () {
-        //    var selectedChk = $('.chknull:checked');
-        //    selectedChkCount = selectedChk.length;
-        //});
-        //DOING, ko check dc nhung ip khac
-        
-
         //Get value of selected items
         $("#btnAccept").click(function () {
-            if (selectedChkCount <= 0) {
-                notif({
-                    msg: "<b>Error!</b> You have to select at least one IP Address!",
-                    type: "error",
-                    position: "center"
-                });
-                return false;
-            } else {
-                var selectedValues = [];
-                $("[id*=MyTable] input:checked").each(function () {
-                    selectedValues.push($(this).val());
-                });
-                $('#ips').val(selectedValues);
-            }
+            var selectedValues = [];
+            $("[id*=MyTable] input:checked").each(function () {
+                selectedValues.push($(this).val());
+            });
+            $('#ips').val(selectedValues);
         });
 
         $("#checkAll").change(function () {
