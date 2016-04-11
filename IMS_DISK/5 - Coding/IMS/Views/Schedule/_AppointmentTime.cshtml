@@ -1,0 +1,23 @@
+﻿<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/scripts/jquery-ui-1.11.4.js"></script>
+<script src="~/scripts/jquery.timepicker.min.js"></script>
+<link href="~/Content/jquery.timepicker.css" rel="stylesheet" />
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('input[type=datetime]').datepicker({
+            dateFormat: "dd/M/yy",
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-60:+0",
+            gotoCurrent: true
+        });
+        $('#apTime').timepicker({
+            'showDuration': true,
+            'timeFormat': 'h:i A',
+            'minTime': '8:00am',
+            'maxTime': '8:30pm'
+        });
+    });
+</script>

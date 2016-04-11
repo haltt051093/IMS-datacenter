@@ -1,0 +1,92 @@
+﻿@using System.Web.UI.WebControls
+@using IMS.Data.Business
+@using IMS.Data.Models
+@model IMS.Models.CreateCustomerViewModel
+@{
+    ViewBag.Title = Pages.CreateCustomer;
+    ViewBag.PageTitle = Pages.CreateCustomer;
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("Account", "CreateCustomer", Pages.CreateCustomer)
+    };
+}
+
+<section class="main-content">
+  
+    @using (Html.BeginForm("CreateCustomer", "Account", FormMethod.Post))
+    {
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.Username, new {@class="required"})
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_TEXTBOX_CLASS">
+                @Html.TextBoxFor(model => model.Username, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                @Html.ValidationMessageFor(model => model.Username)
+            </div>
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.Fullname, new { @class = "required" })
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_TEXTBOX_CLASS">
+                @Html.TextBoxFor(model => model.Fullname, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                @Html.ValidationMessageFor(model => model.Fullname)
+            </div>
+
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.Company)
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_TEXTBOX_CLASS">
+                @Html.TextBoxFor(model => model.Company, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.ValidationMessageFor(model => model.Company)
+            </div>
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.Phone, new { @class = "required" })
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_TEXTBOX_CLASS">
+                @Html.TextBoxFor(model => model.Phone, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                @Html.ValidationMessageFor(model => model.Phone)
+            </div>
+
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.Email, new { @class = "required" })
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_TEXTBOX_CLASS">
+                @Html.TextBoxFor(model => model.Email, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.Address, new { @class = "required" })
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_TEXTBOX_CLASS">
+                @Html.TextBoxFor(model => model.Address, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                @Html.ValidationMessageFor(model => model.Address)
+            </div>
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.Identification, new { @class = "required" })
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_TEXTBOX_CLASS">
+                @Html.TextBoxFor(model => model.Identification, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.ValidationMessageFor(model => model.Identification)
+            </div>
+        </div>
+       
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_TEXTBOX_CLASS col-xs-offset-2">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Add</button>
+                @Html.ActionLink("Cancel", "Index", "Account", htmlAttributes: new { @class = "btn btn-default" })
+            </div>
+            </div>
+    }
+</section>

@@ -1,0 +1,179 @@
+﻿.main-content {
+    padding: 15px 20px;
+}
+
+.tf-form-label {
+    padding-top: 0px;
+    text-align: right;
+}
+
+.tf-form-input {
+}
+
+.tf-form-info {
+    padding-top: 0px;
+}
+
+/* -- HIGHLIGHT-------------------------------------------------------------- */
+
+.background {
+    background-color: #f5f5f5;
+}
+
+.highlight {
+    background-color: #f5f5f5;
+}
+
+.highlight:hover {
+    background-color: #adadad;
+}
+
+.background-success {
+    background: #dff0d8;
+}
+
+.highlight-success {
+    background: #dff0d8;
+}
+
+.highlight-success:hover {
+    background: #d0e9c6;
+}
+
+.background-info {
+    background: #d9edf7;
+}
+
+.highlight-info {
+    background: #d9edf7;
+}
+
+.highlight-info:hover {
+    background: #c4e3f3;
+}
+
+.background-warning {
+    background: #fcf8e3;
+}
+
+.highlight-warning {
+    background: #fcf8e3;
+}
+
+.highlight-warning:hover {
+    background: #faf2cc;
+}
+
+.background-danger {
+    background: #f2dede;
+}
+
+.highlight-danger {
+    background: #f2dede;
+}
+
+.highlight-danger:hover {
+    background: #ebcccc;
+}
+
+.table-hover > tbody > tr:hover {
+    background-color: #adadad;
+}
+
+.clickable {
+     cursor:pointer;
+}
+
+/* -------------------------------------------------------------------------- */
+.tf-modal {
+    
+}
+
+.tf-modal .modal-dialog {
+}
+
+tr.tf-datatable-header {
+    background-color: #404040;
+}
+
+tr.tf-datatable-header th {
+    margin-top: 1.33em;
+    margin-bottom: 1.33em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+    color: ghostwhite;
+}
+
+/* http://www.w3schools.com/tags/tag_hn.asp */
+h1 {
+    display: block;
+    font-size: 2em;
+    margin-top: 0.67em;
+    margin-bottom: 0.67em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
+h2 {
+    display: block;
+    font-size: 1.5em;
+    margin-top: 0.83em;
+    margin-bottom: 0.83em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
+h3 {
+    display: block;
+    font-size: 1.17em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
+h4 {
+    display: block;
+    margin-top: 1.33em;
+    margin-bottom: 1.33em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
+h5 {
+    display: block;
+    font-size: .83em;
+    margin-top: 1.67em;
+    margin-bottom: 1.67em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
+h6 {
+    display: block;
+    font-size: .67em;
+    margin-top: 2.33em;
+    margin-bottom: 2.33em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+/* -------------------------------------------------------------------------- */
+
+.required:after 
+{
+    content: "*";
+    font-weight: normal;
+    color: red;
+}
