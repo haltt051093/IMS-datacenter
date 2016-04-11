@@ -1,0 +1,174 @@
+﻿@model RequestBringServerAwayViewModel
+@{
+    ViewBag.Title = Pages.RequestBringServerAway;
+    ViewBag.PageTitle = Pages.RequestBringServerAway;
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("Request", "Index", Pages.Request),
+        new BreadcrumbModel("Request", "Create", Pages.RequestCreate),
+        new BreadcrumbModel("Request", "Create", Pages.RequestBringServerAway, new { Type = Constants.RequestTypeCode.BRING_SERVER_AWAY })
+    };
+}
+
+<section class="main-content">
+    @using (Html.BeginForm("BringServerAway", "Request", FormMethod.Post))
+    {
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.RequestInfo.AppointmentTime, new { @class = "required" })
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                <div class='input-group date' id='datetimepicker1'>
+                    @Html.TextBoxFor(model => model.RequestInfo.AppointmentTimeStr, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+
+                <script>
+                    $('#datetimepicker1').datetimepicker({
+                        "disabledHours": [0, 1, 2, 3, 4, 5, 6, 7, 21, 22, 23, 24],
+                        "stepping": '30',
+                        "minDate": 'moment',
+                        "format": "DD/MM/YYYY HH:mm",
+                        "sideBySide": true
+                    });
+                </script>
+                @Html.ValidationMessageFor(model => model.RequestInfo.AppointmentTimeStr)
+            </div>
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.Label("Servers",new { @class = "required" })
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @if (Model.RackOfCustomer != null)
+                {
+                    if (Model.RackOfCustomer.Count > 0)
+                    {
+                        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                            <div class="@Constants.HtmlFormat.FORM_MESSAGE_CLASS">
+                                @Html.DropDownListFor(m => m.SelectedRack, Model.RackOfCustomer, "Show all", new { @id = "selectedRack", @class = @Constants.HtmlFormat.FORM_INNER_CLASS })
+                            </div>
+                        </div>
+                    }
+                }
+                <table id="masterTable" class="@Constants.HtmlFormat.DATATABLE_CLASS">
+                    <thead>
+                        <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
+                            <th>
+                                <input id="checkAll" type="checkbox" />
+                            </th>
+                            <th>
+                                @Labels.ServerCode
+                            </th>
+                            <th>
+                                @Labels.DefaultIP
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyid">
+                        @if (Model.ServerOfCustomer != null)
+                        {
+                            for (var i = 0; i < Model.ServerOfCustomer.Count; i++)
+                            {
+                                <tr class="check" rack-code="@Model.ServerOfCustomer[i].RackCode">
+                                    <td>
+                                        @Html.CheckBoxFor(modelItem => Model.ServerOfCustomer[i].Checked, new { @class = "chknull" })
+                                    </td>
+                                    <td>
+                                        @Html.HiddenFor(modelItem => Model.ServerOfCustomer[i].ServerCode)
+                                        @Html.ActionLink(Model.ServerOfCustomer[i].ServerCode, "Detail", "Server",
+                                                        new { code = Model.ServerOfCustomer[i].ServerCode }, null)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => Model.ServerOfCustomer[i].DefaultIP)
+                                        @Html.HiddenFor(modelItem => Model.ServerOfCustomer[i].DefaultIP)
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_MESSAGE_CLASS">
+                        <span id="selectedNumber">@Model.SelectedServerNumber</span> of <span>@Model.ServerNumber</span> servers selected
+                    </div>
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_MESSAGE_CLASS">
+                        @Html.HiddenFor(model => model.ServerValidation)
+                        @Html.ValidationMessageFor(model => model.ServerValidation)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                @Html.LabelFor(model => model.RequestInfo.Description)
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.TextAreaFor(model => model.RequestInfo.Description, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                @Html.ValidationMessageFor(model => model.RequestInfo.Description)
+            </div>
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                    Send Request
+                </button>
+            </div>
+        </div>
+    }
+</section>
+<script>
+    $.validator.addMethod('customrequired', function (value, element, params) {
+        var count = $('[id*=masterTable] input[type="checkbox"]:checked').length;
+        if (count == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    });
+    function countSelected() {
+        var count = 0;
+        $('tr.check input[type="checkbox"]').each(function (i, e) {
+            var state = $(e).is(':checked');
+            if (state) {
+                count++;
+            }
+        });
+        $("#selectedNumber").text(count);
+    }
+</script>
+<script type="text/javascript">
+
+    $('#masterTable').dataTable({
+        dom: 't',
+        ordering: false,
+        searching: false
+    });
+    
+    $("#checkAll").change(function () {
+        var state = $('#checkAll').is(':checked');
+        $('tr.check input[type="checkbox"]').prop('checked', state);
+        countSelected();
+    });
+
+    $('tr.check input[type="checkbox"]').change(function () {
+        countSelected();
+    });
+
+    $("#selectedRack").change(function () {
+        var rackCode = $("#selectedRack").val();
+        if (rackCode == null || rackCode == '') {
+            $('#masterTable tbody tr').show();
+        } else {
+            $('#masterTable tbody tr').hide();
+            $('#masterTable tbody tr[rack-code="' + rackCode + '"]').show();
+        }
+    });
+</script>

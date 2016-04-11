@@ -1,0 +1,34 @@
+﻿@model HomeIndexViewModel
+@{
+    ViewBag.Title = Pages.HomeIndex;
+    ViewBag.PageTitle = Pages.HomeIndex;
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home)
+    };
+}
+
+<div class="main-content">
+    <h2>@Messages.Welcome</h2>
+
+
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="row">
+                <div class="col-xs-4"></div>
+                <div class="col-xs-8"></div>
+            </div>
+        </div>
+        <div class="col-xs-6"></div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+                
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- page script -->
