@@ -25,7 +25,8 @@ namespace IMS.ApiControllers
                             Title = string.Format("[{0}] {1}--{2}", x.RequestTypeName, x.Fullname, x.StatusName),
                             Start = appointmentTime.ToString("yyyy-MM-dd HH:mm:ss"),
                             AllDay = false,
-                            Status = x.StatusCode
+                            Status = x.StatusCode,
+                            RequestCode = x.RequestCode
                         };
                     })
                 .ToList();

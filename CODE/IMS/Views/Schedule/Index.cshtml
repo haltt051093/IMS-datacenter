@@ -235,13 +235,9 @@
                         day: 'day'
                     },
                     eventClick: function(calEvent, jsEvent, view) {
-                        if (calEvent.Status != '@Constants.StatusCode.REQUEST_DONE') {
-                            alert('Event: ' + calEvent.title);
-                            alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-                            alert('View: ' + view.name);
-
-                            // change the border color just for fun
-                            $(this).css('border-color', 'red');
+                        if (calEvent.Status != '') {
+                            var url = CONSTANT.authority + '@Url.Action("Detail", "ProcessRequest")' + '/' + calEvent.RequestCode;
+                            window.location.assign(url);
                         }
                         
 
