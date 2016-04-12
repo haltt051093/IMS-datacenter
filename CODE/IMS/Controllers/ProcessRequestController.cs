@@ -188,21 +188,24 @@ namespace IMS.Controllers
                     })
                     .ToList();
                     var listAvailableIps = request.listAvailableIps;
-                    if (listAvailableIps.Count >= viewmodel.NumberOfIP)
+                    if (listAvailableIps != null)
                     {
-                        if (request.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                        if (listAvailableIps.Count >= viewmodel.NumberOfIP)
                         {
-                            var randomList = request.randomList;
-                            viewmodel.SelectedIps = randomList.Select(x => new SelectListItem
+                            if (request.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                             {
-                                Value = x,
-                                Text = x
-                            }).ToList();
-                            viewmodel.IpSelectListItems = request.listAvailableIpsOption.Select(x => new SelectListItem
-                            {
-                                Value = x.IPAddress,
-                                Text = x.IPAddress
-                            }).ToList();
+                                var randomList = request.randomList;
+                                viewmodel.SelectedIps = randomList.Select(x => new SelectListItem
+                                {
+                                    Value = x,
+                                    Text = x
+                                }).ToList();
+                                viewmodel.IpSelectListItems = request.listAvailableIpsOption.Select(x => new SelectListItem
+                                {
+                                    Value = x.IPAddress,
+                                    Text = x.IPAddress
+                                }).ToList();
+                            }
                         }
                     }
                     if (msg != null)
