@@ -1,0 +1,211 @@
+﻿@model IMS.Models.LocationIndexViewModel
+@{
+    ViewBag.Title = Pages.LocationIndex;
+    ViewBag.PageTitle = Pages.Location;
+    ViewBag.Role = "Shift Head";
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("Location", "Index", Pages.LocationIndex)
+    };
+}
+
+<!-- Main content -->
+<section class="main-content">
+    <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS hidden">
+        @Html.HiddenFor(model => model.SuccessMessage)
+    </div>
+    <label id="countrack" style="color: #3c8dbc">Amount of Rack Empty: @Model.RackAvailableCount</label>
+    <div>
+        <a class="btn btn-primary pull-left" data-toggle="modal" data-target="#addlocation-modal"><i class="fa fa-plus"></i> Add new rack</a>
+    </div>
+    <div class="clearfix"></div>
+    <div style="height: 10px"></div>
+    <div class="row hide">
+        <div id="dropdown-template" class="col-xs-3">
+            <label>Rack: @Html.DropDownListFor(model => model.RackCode, Model.Racks, "All Locations", new {@class = "form-control input-sm", style = "width: 150px"}) </label>
+        </div>
+    </div>
+
+    <table id="example1" class="table table-bordered">
+
+        <thead>
+        <tr style="background-color: #404040">
+            <th><span style="color: ghostwhite">Rack Code</span>
+            <th><span style="color: ghostwhite">Rack Name</span>
+            <th><span style="color: ghostwhite">Rack Unit</span></th>
+            <th><span style="color: ghostwhite">IP Address</span></th>
+        </tr>
+        </thead>
+        <tfoot>
+
+        <tr style="background-color: #404040">
+            <th><span style="color: ghostwhite">Rack Code</span></th>
+            <th><span style="color: ghostwhite">Rack Name</span></th>
+            <th><span style="color: ghostwhite">Rack Unit</span></th>
+            <th><span style="color: ghostwhite">IP Address</span></th>
+        </tr>
+
+        </tfoot>
+    </table>
+</section><!-- /.content -->
+
+<!-- ADD LOCATION MODAL -->
+<div id="addlocation-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width: 400px">
+        <div class="modal-content">
+
+            @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "Post", Url = Url.Action("AddLocation", "Location"), OnComplete = "addLocationComplete" }))
+            {
+                <div class="modal-header">
+                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i> @Labels.AddRack</div>
+                </div>
+                <div class="modal-body">
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="col-xs-4 tf-form-label">
+                            @Html.LabelFor(model => model.RackName, new { @class = "required" })
+                        </div>
+                        <div class="col-xs-8 tf-form-control">
+                            @Html.TextBoxFor(model => model.RackName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS, placeholder="Ex: A1, B1,..." })
+                            @Html.ValidationMessageFor(model => model.RackName)
+                        </div>
+
+                    </div>
+
+                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                        <div class="col-xs-4 tf-form-label">
+                            @Html.LabelFor(model => model.Power)
+                        </div>
+                        <div class="col-xs-8 tf-form-control">
+                            @Html.DropDownListFor(model => model.MaximumPower, Model.ListPower, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        <i class="fa fa-plus"></i> @Labels.Add
+                    </button>
+                    <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
+                            data-dismiss="modal">
+                        @Labels.DialogCancel
+                    </button>
+
+                </div>
+            }
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- page script -->
+
+<script>
+    $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            var rackCode = $('#RackCode').val();
+            if (rackCode == '') {
+                return true;
+            }
+            if (rackCode == data[1]) {
+                return true;
+            }
+            return false;
+        }
+    );
+    var message = $('#SuccessMessage').val();
+    if (message) {
+        notif({
+            msg: "<b>Success! </b>" + message,
+            type: "info",
+            position: "center"
+        });
+        $('#SuccessMessage').val("");
+    }
+    function addLocationComplete(data) {
+        var response = data.responseJSON;
+        if (response.Success) {
+            $('#addlocation-modal').modal('hide');
+            var datatable = $('#example1').dataTable().api();
+
+            $.get('@Url.Action("GetAll", "Location", new { httproute = "" })', function (newDataArray) {
+                datatable.clear();
+                datatable.rows.add(newDataArray.data);
+                datatable.draw();
+            });
+            $.get('@Url.Action("GetListRack", "Location", new { httproute = "" })', function (newDataArray) {
+                $('#RackCode').html('<option value="">All Locations</option>');
+                $(newDataArray).each(function (i, e) {
+                    var option = $('<option></option>').html(e).val(e);
+                    $('#RackCode').append(option);
+                });
+            });
+            $.get('@Url.Action("GetEmptyRackCount", "Location", new { httproute = "" })', function (countRackEmpty) {
+                $('#countrack').html('Amount of Rack Empty: '+ countRackEmpty);
+            });
+            notif({
+                msg: "Success! Add new rack successfully!",
+                type: "info",
+                position: "center"
+            });
+            $('#RackName').val('');
+        } else if(!response.Success) {
+            $('span[data-valmsg-for="RackName"]').addClass("field-validation-error").html("Rack Name is existed!");
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    var table = $('#example1').DataTable({
+        dom: '<lf<t>ip>',
+        processing: true,
+        ajax: "@Url.Action("GetAll", "Location", new {httproute = ""})",
+        columns: [
+            { data: "RackCode" },
+            { data: "RackName" },
+            { data: "RackUnit" },
+            { data: "DefaultIP" }
+        ],
+        iDisplayLength: 42,
+        aLengthMenu: [[42, 84, 126], [42, 84, 126]],
+        fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            if (aData.ServerCode != null) {
+                $(nRow).addClass('clickable');
+                $(nRow).addClass('highlight');
+                $(nRow).addClass('background-info');
+            }
+
+            $(nRow).click(function() {
+                if (aData.ServerCode != null) {
+                    var url = CONSTANT.authority + '@Url.Action("Detail", "Server")' + '/' + aData.ServerCode;
+                    window.location.assign(url);
+                }
+            });
+},
+        order: [[1, "asc"] ,[ 2, "desc" ]],
+        columnDefs: [
+            {
+                targets: [0],
+                visible: false,
+                searchable: true
+            }
+        ]
+    });
+
+    $("#example1_filter").append($('#dropdown-template').html());
+    $('#dropdown-template').html('');
+
+    $('#RackCode').change(function() {
+        table.draw();
+    });
+
+    $('#RackName').autocomplete({
+        source: '@Url.Action("GetAvailableName", "Rack", new { httproute = "" })'
+    });
+
+</script>
+
+@section Styles {
+    <style>
+    </style>
+}
+
+

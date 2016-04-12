@@ -1,0 +1,117 @@
+﻿@model IMS.Models.ReportUsedIPViewModel
+@{
+    ViewBag.Title = Pages.ReportUsingIP;
+    ViewBag.PageTitle = Pages.ReportUsingIP;
+    ViewBag.Role = "Shift Head";
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("Report", "ReportUsedIP", Pages.ReportUsingIP)
+    };
+}
+<section class="main-content">
+
+    <div class="row hide">
+        <div id="dropdown-template" class="col-xs-3">
+            <label>Filter: @Html.DropDownListFor(model => model.Condition, Model.ListConditions, "All IP Address", new { @class = "form-control input-sm", style = "width: 150px" }) </label>
+        </div>
+    </div>
+
+    <table id="example1" class="table table-bordered table-hover">
+        <thead>
+            <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
+                <th>IP Address</th>
+                <th>Network IP</th>
+                <th>Log Time</th>
+                <th>Server</th>
+                <th>Log Name</th>
+                <th>Status</th>
+
+            </tr>
+        </thead>
+        <tfoot>
+            <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
+                <th>IP Address</th>
+                <th>Network IP</th>
+                <th>Log Time</th>
+                <th>Server</th>
+                <th>Log Name</th>
+                <th>Status</th>
+            </tr>
+        </tfoot>
+    </table>
+</section><!-- /.content -->
+
+<script>
+    $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            var timerange = $('#Condition').val();
+            if (timerange == '') {
+                return true;
+            }
+
+            if (timerange == 'used') {
+                if (data[2] == null || data[2] == '') {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+            if (timerange == data[1]) {
+
+                return true;
+            }
+            
+            return false;
+        }
+
+    );
+</script>
+
+<script type="text/javascript">
+    var table = $('#example1').DataTable({
+        dom: '<lf<t>ip>',
+        processing: true,
+        ajax: "@Url.Action("GetUsedIP", "Report", new {httproute = ""})",
+        columns: [
+            { data: "IPAddress" },
+            { data: "NetworkIP" },
+            { data: "LogTime" },
+            { data: "ServerCode" },
+            { data: "TypeName" },
+            { data: "StatusName" }
+
+        ],
+        iDisplayLength: 50,
+        aLengthMenu: [[25, 50, 100], [25, 50, 100]],
+        fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            var actionCell1 = $(nRow.cells[3]);
+            var actionCell2 = $(nRow.cells[5]);
+            var actionCell = $(nRow.cells[4]);
+            switch (aData.StatusName) {
+                case null:
+                    $(nRow).css('background-color','#f0f5f5');
+                    break;
+                default :
+                    $(nRow).css('background-color', '#ffe6e6');
+                    break;
+            }
+            $(nRow.cells[0]).html('<label>' + aData.IPAddress + '</label>');
+        },
+        order: [[1, "asc"]]
+
+    });
+
+    $("#example1_filter").append($('#dropdown-template').html());
+    $('#dropdown-template').html('');
+
+    $('#Condition').change(function () {
+        table.draw();
+    });
+
+</script>
+
+@section Styles {
+    <style>
+    </style>
+}

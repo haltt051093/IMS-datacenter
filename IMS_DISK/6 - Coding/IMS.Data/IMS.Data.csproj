@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E9439358-EA28-4874-8B27-72987A3B1761}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>IMS.Data</RootNamespace>
+    <AssemblyName>IMS.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Business\AccountBLO.cs" />
+    <Compile Include="Business\AssignedShiftBLO.cs" />
+    <Compile Include="Business\AttributeBLO.cs" />
+    <Compile Include="Business\IPAddressPoolBLO.cs" />
+    <Compile Include="Business\LocationBLO.cs" />
+    <Compile Include="Business\LogBLO.cs" />
+    <Compile Include="Business\ObjectBLO.cs" />
+    <Compile Include="Business\RackBLO.cs" />
+    <Compile Include="Business\RackOfCustomerBLO.cs" />
+    <Compile Include="Business\RequestBLO.cs" />
+    <Compile Include="Business\RequestTypeBLO.cs" />
+    <Compile Include="Business\RoleBLO.cs" />
+    <Compile Include="Business\ServerAttributeBLO.cs" />
+    <Compile Include="Business\ServerBLO.cs" />
+    <Compile Include="Business\ServerIPBLO.cs" />
+    <Compile Include="Business\ShiftBLO.cs" />
+    <Compile Include="Business\GroupBLO.cs" />
+    <Compile Include="Business\TaskBLO.cs" />
+    <Compile Include="Business\StatusBLO.cs" />
+    <Compile Include="Business\NotificationBLO.cs" />
+    <Compile Include="Business\TempRequestBLO.cs" />
+    <Compile Include="Business\NoteBLO.cs" />
+    <Compile Include="Business\TypeOfLogBLO.cs" />
+    <Compile Include="Generic\BaseBLO.cs" />
+    <Compile Include="Generic\BaseDAO.cs" />
+    <Compile Include="Generic\BaseModel.cs" />
+    <Compile Include="Generic\DataEnum.cs" />
+    <Compile Include="IMSContext.cs" />
+    <Compile Include="MailService.cs" />
+    <Compile Include="Models\Note.cs" />
+    <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\TempRequest.cs" />
+    <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\AssignedShift.cs" />
+    <Compile Include="Models\Attribute.cs" />
+    <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\IPAddressPool.cs" />
+    <Compile Include="Models\Location.cs" />
+    <Compile Include="Models\Log.cs" />
+    <Compile Include="Models\Object.cs" />
+    <Compile Include="Models\Rack.cs" />
+    <Compile Include="Models\RackOfCustomer.cs" />
+    <Compile Include="Models\Request.cs" />
+    <Compile Include="Models\RequestType.cs" />
+    <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\Server.cs" />
+    <Compile Include="Models\ServerAttribute.cs" />
+    <Compile Include="Models\ServerIP.cs" />
+    <Compile Include="Models\Shift.cs" />
+    <Compile Include="Models\Task.cs" />
+    <Compile Include="Models\Status.cs" />
+    <Compile Include="Models\sysdiagrams.cs" />
+    <Compile Include="Models\TypeOfLog.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Queries\BaseLogQuery.cs" />
+    <Compile Include="Queries\GetLocationQuery.cs" />
+    <Compile Include="Queries\LogReturnRackQuery.cs" />
+    <Compile Include="Queries\LogReturnIPsQuery.cs" />
+    <Compile Include="Queries\LogRentRackQuery.cs" />
+    <Compile Include="Queries\LogChangeIPsQuery.cs" />
+    <Compile Include="Queries\LogBringServersAwayQuery.cs" />
+    <Compile Include="Queries\LogAssignIPsQuery.cs" />
+    <Compile Include="Queries\LogAddServersQuery.cs" />
+    <Compile Include="Repository\AccountDAO.cs" />
+    <Compile Include="Repository\AssignedShiftDAO.cs" />
+    <Compile Include="Repository\AttributeDAO.cs" />
+    <Compile Include="Repository\IPAddressPoolDAO.cs" />
+    <Compile Include="Repository\LocationDAO.cs" />
+    <Compile Include="Repository\LogDAO.cs" />
+    <Compile Include="Repository\ObjectDAO.cs" />
+    <Compile Include="Repository\RackDAO.cs" />
+    <Compile Include="Repository\RackOfCustomerDAO.cs" />
+    <Compile Include="Repository\RequestDAO.cs" />
+    <Compile Include="Repository\RequestTypeDAO.cs" />
+    <Compile Include="Repository\RoleDAO.cs" />
+    <Compile Include="Repository\ServerAttributeDAO.cs" />
+    <Compile Include="Repository\ServerDAO.cs" />
+    <Compile Include="Repository\ServerIPDAO.cs" />
+    <Compile Include="Repository\ShiftDAO.cs" />
+    <Compile Include="Repository\GroupDAO.cs" />
+    <Compile Include="Repository\TaskDAO.cs" />
+    <Compile Include="Repository\StatusDAO.cs" />
+    <Compile Include="Repository\NotificationDAO.cs" />
+    <Compile Include="Repository\TempRequestDAO.cs" />
+    <Compile Include="Repository\NoteDAO.cs" />
+    <Compile Include="Repository\TypeOfLogDAO.cs" />
+    <Compile Include="ViewModels\AccountExtendedModel.cs" />
+    <Compile Include="ViewModels\AttributeExtendedModel.cs" />
+    <Compile Include="Generic\BaseResultModel.cs" />
+    <Compile Include="ViewModels\CustomerInfoModel.cs" />
+    <Compile Include="ViewModels\IPAddressViewModel.cs" />
+    <Compile Include="ViewModels\IPAddressPoolExtendedModel.cs" />
+    <Compile Include="ViewModels\LocationViewModel.cs" />
+    <Compile Include="ViewModels\LogContentExtendedModel.cs" />
+    <Compile Include="ViewModels\LogExtentedModel.cs" />
+    <Compile Include="ViewModels\LogUsedIPExtendModel.cs" />
+    <Compile Include="ViewModels\NotificationResultModel.cs" />
+    <Compile Include="ViewModels\ProcessRequestExtendedModel.cs" />
+    <Compile Include="ViewModels\ServerIPExtendedModel.cs" />
+    <Compile Include="ViewModels\TaskExtendedModel.cs" />
+    <Compile Include="ViewModels\NotificationExtendedModel.cs" />
+    <Compile Include="ViewModels\RackExtendedModel.cs" />
+    <Compile Include="ViewModels\RackOfCustomerExtendedModel.cs" />
+    <Compile Include="ViewModels\RequestDetailViewModel.cs" />
+    <Compile Include="ViewModels\RequestExtendedModel.cs" />
+    <Compile Include="ViewModels\RequestInfoModel.cs" />
+    <Compile Include="ViewModels\ScheduleExtendedModel.cs" />
+    <Compile Include="ViewModels\ServerExtendedModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IMS.Core\IMS.Core.csproj">
+      <Project>{0128e2b7-087b-43bb-a2cc-82457b18cdfd}</Project>
+      <Name>IMS.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IMS.Resources\IMS.Resources.csproj">
+      <Project>{0f9de93b-a0f7-49a0-8162-1a8bb2776fca}</Project>
+      <Name>IMS.Resources</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Word">
+      <Guid>{00020905-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>8</VersionMajor>
+      <VersionMinor>6</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
