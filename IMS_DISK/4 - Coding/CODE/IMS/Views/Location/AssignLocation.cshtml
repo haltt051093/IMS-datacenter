@@ -176,7 +176,6 @@
         }
     }
 </script>
-
 <script type="text/javascript">
     var serverCode = '@Model.ServerCode';
     var selectedChkCount = 0;
@@ -228,7 +227,7 @@
             if (aData.StatusName == 'Free' || aData.ServerCode == serverCode) {
                 actionCell.append('<input type="checkbox" free name="Selected[' + iDisplayIndex + '].IsSelected" value="true"/>');
             } else {
-                actionCell.append('<input type="checkbox" name="Selected[' + iDisplayIndex + '].IsSelected" value="true"/>');
+                actionCell.append('<input type="checkbox" disabled="disabled" name="Selected[' + iDisplayIndex + '].IsSelected" value="true"/>');
             }
             switch (aData.ServerCode) {
             case '@Model.ServerCode':

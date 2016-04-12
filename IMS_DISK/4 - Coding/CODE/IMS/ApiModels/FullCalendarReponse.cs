@@ -21,5 +21,7 @@ namespace IMS.ApiModels
         public bool AllDay { get; set; }
 
         public string Status { get; set; }
+
+        public string RequestCode { get; set; }
     }
 }

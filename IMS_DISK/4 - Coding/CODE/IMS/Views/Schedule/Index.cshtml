@@ -194,7 +194,8 @@
                         // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
                         // it doesn't need to have a start or end
                         var eventObject = {
-                            title: $.trim($(this).text()) // use the element's text as the event title
+                            title: $.trim($(this).text())
+                           // use the element's text as the event title
                         };
 
                         // store the Event Object in the DOM element so we can get to it later
@@ -235,28 +236,27 @@
                         day: 'day'
                     },
                     eventClick: function(calEvent, jsEvent, view) {
-                        if (calEvent.Status != '@Constants.StatusCode.REQUEST_DONE') {
-                            alert('Event: ' + calEvent.title);
-                            alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-                            alert('View: ' + view.name);
-
-                            // change the border color just for fun
-                            $(this).css('border-color', 'red');
+                        if (calEvent.Status != '') {
+                            var url = CONSTANT.authority + '@Url.Action("Detail", "ProcessRequest")' + '/' + calEvent.RequestCode;
+                            window.location.assign(url);
                         }
-                        
-
+                       
                     },
                     eventAfterRender: function (event, element, view) {
-                        
+                        $('.fc-event-inner').addClass('clickable');
                         if (event.Status == '@Constants.StatusCode.REQUEST_DONE') {
                             //event.color = "#FFB347"; //Em andamento
                             element.css('background-color', '#009900');
+                            element.css('font-size', 'small');
+                          
                         }
                         if (event.Status != '@Constants.StatusCode.REQUEST_DONE') {
                             //event.color = "#FFB347"; //Em andamento
+                            element.css('font-size', 'small');
                             element.css('background-color', '#cc0000');
                         }
                     },
+
                     allDaySlot: false,
                     defaultView: 'agendaDay',
                     minTime: '08:00:00',
@@ -278,7 +278,6 @@
                         copiedEventObject.allDay = allDay;
                         copiedEventObject.backgroundColor = $(this).css("background-color");
                         copiedEventObject.borderColor = $(this).css("border-color");
-
                         // render the event on the calendar
                         // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
                         $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
