@@ -1,0 +1,143 @@
+﻿@model IPCreateViewModel
+
+@{
+    ViewBag.Title = Pages.IPAvai;
+    ViewBag.PageTitle = Pages.IPAvai;
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("IP", "AssignIP", Pages.IPAvai)
+    };
+}
+<form action="#" method="POST">
+    <section class="content">
+        <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS hidden">
+            @Html.HiddenFor(model => model.FailMessage)
+        </div>
+        <div class="row hide">
+            <div id="dropdown-template">
+                <label>@Html.DropDownListFor(model => model.NetworkIP, Model.NetworkIPs, "All IP Addresses", new {@class = "form-control input-sm", style = "width: 150px"}) </label>
+            </div>
+        </div>
+
+        <table id="example1" class="table table-bordered table-hover">
+            <thead>
+            <tr style="background-color: #404040">
+                <th><span style="color: ghostwhite">Id</span>
+                <th><span style="color: ghostwhite">NetworkIP</span>
+                <th><span style="color: ghostwhite">IP Address</span>
+                <th><span style="color: ghostwhite">Gateway</span>
+                <th><span style="color: ghostwhite">Subnet mask</span>
+                <th></th>
+            </tr>
+            </thead>
+        </table>
+
+    </section><!-- /.content -->
+    <section class="content pull-right">
+        @Html.HiddenFor(model=>model.RequestCode)
+        <button type="submit" id="assignbutton" class="btn btn-primary">Assign</button>
+        @Html.ActionLink("Cancel", "Detail", "ProcessRequest", new {code = Model.RequestCode}, htmlAttributes: new {@class = "btn btn-default"})
+    </section>
+</form>
+<script>
+    function mouseclick(e) {
+        var rows = $('#example1 tbody tr');
+        var row = $(this);
+        var index = rows.index(row);
+
+            row = $(rows.get(index));
+            row.find('input[type="radio"]').prop('checked', true);
+            selectedChkCount += 1;
+        
+    }
+    $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            var networkIP = $('#NetworkIP').val();
+            if (networkIP == '') {
+                return true;
+            }
+            if (networkIP == data[1]) {
+                return true;
+            }
+            return false;
+        }
+    );
+    var message = $('#FailMessage').val();
+    if (message) {
+        notif({
+            msg: "<b>Fail! </b>" + message,
+            type: "error",
+            position: "center"
+        });
+        $('#FailMessage').val("");
+    }
+</script>
+
+<script type="text/javascript">
+    
+    var table = $('#example1').DataTable({
+        dom: '<lf<t>ip>',
+        processing: true,
+        ajax: "@Url.Action("GetAvailableIP", "IP", new {httproute = ""})",
+        columns: [
+            { data: "Id" },
+            { data: "NetworkIP" },
+            { data: "IPAddress" },
+            { data: "Gateway" },
+            { data: "Subnetmask" },
+            { data: "StatusCode" }
+        ],
+        iDisplayLength: 10,
+        aLengthMenu: [[10, 20, 30], [10, 20, 30]],
+        fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            var row = $(nRow);
+            var actionCell = $(nRow.cells[3]);
+            row.click(mouseclick);
+            switch (aData.StatusCode) {
+            case '@Constants.StatusCode.IP_AVAILABLE':
+                actionCell.html('<input type="radio" name="NewIP" value="' + aData.IPAddress + '"/>');
+
+                break;
+
+            }
+
+        },
+        order: [[0, "asc"]],
+        columnDefs: [{
+            targets: [0],
+            visible: false,
+            searchable: true
+        }, {
+            targets: [1],
+            visible: false,
+            searchable: true
+
+        }]
+    });
+
+    $('#example1_filter').append($('#dropdown-template').html());
+    $('#dropdown-template').html('');
+
+    $('#NetworkIP').change(function () {
+        table.draw();
+    });
+
+    var selectedChkCount = 0;
+
+    //Get value of selected items
+    $("#assignbutton").click(function () {
+        if (selectedChkCount <= 0) {
+            notif({
+                msg: "Select IP Address to assign!",
+                type: "error",
+                position: "center"
+            });
+            return false;
+        }
+    });
+</script>
+@section Styles {
+    <style>
+    </style>
+}

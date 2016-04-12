@@ -1,0 +1,304 @@
+﻿@model ServerDetailsViewModel
+@{
+    ViewBag.Title = Pages.ServerDetail;
+    ViewBag.PageTitle = Pages.ServerDetail;
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("Server", "Index", Pages.Server),
+        new BreadcrumbModel("Server", "ServerDetails", Pages.ServerDetail)
+    };
+}
+<section class="main-content">
+    @*<div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS hidden">
+            @Html.HiddenFor(model => model.SuccessMessage)
+        </div>*@
+    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+        <div class="col-xs-4">
+            @Html.HiddenFor(model => model.Server.Customer, new { @id = "customer" })
+            @Html.HiddenFor(model => model.Server.ServerCode, new { @id = "servercode" })
+            @Html.HiddenFor(model => model.Server.Power, new { @id = "power" })
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_X3_CLASS">
+                    @Html.LabelFor(model => model.Server.ServerCode, "Server Code")
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_DETAIL_X3_CLASS">
+                    @Html.DisplayFor(model => model.Server.ServerCode, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                </div>
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_X3_CLASS">
+                    @Html.LabelFor(model => model.Server.Status)
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_DETAIL_X3_CLASS">
+                    @Html.DisplayFor(model => model.Server.Status, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                </div>
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_X3_CLASS">
+                    @Html.LabelFor(model => model.Server.Power)
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_DETAIL_X3_CLASS">
+                    @Html.DisplayFor(model => model.Server.Power, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })W
+                </div>
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_X3_CLASS">
+                    @Html.LabelFor(model => model.Server.Size)
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_DETAIL_X3_CLASS">
+                    @Html.DisplayFor(model => model.Server.Size, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })U
+                </div>
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_X3_CLASS">
+                    @Html.LabelFor(model => model.Server.Bandwidth)
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_DETAIL_X3_CLASS">
+                    @Html.DisplayFor(model => model.Server.Bandwidth, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                </div>
+            </div>
+            @if (Model.Server.PartNumber != null)
+            {
+                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_X3_CLASS">
+                        @Html.LabelFor(model => model.Server.PartNumber)
+                    </div>
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X3_CLASS">
+                        @Html.DisplayFor(model => model.Server.PartNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    </div>
+                </div>
+            }
+            @if (Model.Server.SerialNumber != null)
+            {
+                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_X3_CLASS">
+                        @Html.LabelFor(model => model.Server.SerialNumber)
+                    </div>
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X3_CLASS">
+                        @Html.DisplayFor(model => model.Server.SerialNumber, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    </div>
+                </div>
+            }
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_X3_CLASS">
+                    @Html.LabelFor(model => model.Server.RegisteredDate)
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_DETAIL_X3_CLASS">
+                    @Html.DisplayFor(model => model.Server.RegisteredDate, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                </div>
+            </div>
+
+        </div>
+        <div class="col-xs-4">
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
+                    @Html.LabelFor(model => model.Server.ServerLocation, "Location")
+                </div>
+                @if (Model.Server.Status == Constants.StatusName.SERVER_DEACTIVATE)
+                {
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                        @Html.Raw("[None]")
+                    </div>
+                }
+                else
+                {
+                    if (Model.Server.ServerLocation.Count > 0)
+                    {
+                        <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                            @foreach (var item in Model.Server.ServerLocation)
+                            {
+                                @Html.DisplayFor(model => item.RackName)
+                                <text>U</text>@Html.DisplayFor(model => item.RackUnit, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                <br />
+                            }
+                            @if (Model.Server.Status == Constants.StatusName.SERVER_RUNNING && !User.IsInRole("Customer"))
+                            {
+                                <label>
+                                    @Html.ActionLink("Change Location", "AssignLocation", "Location", new { ServerCode = Model.Server.ServerCode, rType = "Change", rCode = "", Size = Model.Server.Size }, null)
+                                </label>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                            @Html.Raw("[Updating]")
+                        </div>
+                    }
+
+                }
+            </div>
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
+                    @Html.LabelFor(model => model.CurrentIPs)
+                </div>
+                @if (Model.Server.Status == Constants.StatusName.SERVER_DEACTIVATE)
+                {
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                        @Html.Raw("[None]")
+                    </div>
+                }
+                else
+                {
+                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                        @if (Model.CurrentIPs.Count == 0)
+                        {
+                            @Html.Raw("[Updating]")
+                        }
+                        else
+                        {
+                            foreach (var item in Model.CurrentIPs)
+                            {
+                                if (item.CurrentIP == Model.Server.DefaultIP)
+                                {
+                                    <b style="color: blue;">
+                                        @Html.DisplayFor(model => item.CurrentIP, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                    </b>
+                                    <br />
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(model => item.CurrentIP, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                    <br />
+                                }
+                            }
+                        }
+                    </div>
+
+                }
+            </div>
+        </div>
+        @if (!User.IsInRole("Customer"))
+        {
+            <div class="col-xs-4">
+                @if (Model.CustomerInfo.Company != null)
+                {
+                    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
+                            @Html.LabelFor(model => model.CustomerInfo.Company)
+                        </div>
+                        <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                            @Html.DisplayFor(model => model.CustomerInfo.Company, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        </div>
+                    </div>
+                    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
+                            @Html.LabelFor(model => model.CustomerInfo.Fullname)
+                        </div>
+                        <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                            @Html.ActionLink(Model.CustomerInfo.Fullname, "ViewProfile", "Account",
+                            new { username = Model.CustomerInfo.Username }, null)
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
+                            @Html.LabelFor(model => model.CustomerInfo.Fullname)
+                        </div>
+                        <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                            @Html.ActionLink(Model.CustomerInfo.Fullname, "ViewProfile", "Account",
+                            new { username = Model.CustomerInfo.Username }, null)
+                        </div>
+                    </div>
+                }
+
+            </div>
+        }
+    </div>
+</section>
+
+<!-- CHANGE LOCATION MODAL -->
+<div class="modal fade" id="changelocation-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 1000px">
+        <div class="modal-content">
+            <form action="ServerDetails" method="POST">
+                <div class="modal-body">
+
+                    <section class="content-header">
+                        <h1>
+                            List of Location Available
+                        </h1>
+                    </section>
+
+                    <div class="form-group">
+                        <div id="dropdown-template" class="col-xs-3">
+                            @*<label>Location: @Html.DropDownListFor(model => model.RackCode, Model.Racks, new { @class = "form-control input-sm", style = "width: 150px" }) </label>*@
+                        </div>
+                    </div>
+
+                    <section class="content">
+
+
+                        <table id="example1" class="table table-bordered table-hover">
+                            <thead>
+                                <tr style="background-color: #404040">
+                                    <th><h4 style="color: ghostwhite">Rack Code</h4>
+                                    <th><h4 style="color: ghostwhite">Rack Name</h4>
+                                    <th><h4 style="color: ghostwhite">Rack Unit</h4></th>
+                                    <th><h4 style="color: ghostwhite">Server Code</h4></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+
+                    </section>
+
+                </div>
+                <div class="modal-footer">
+                    <input class="hidden" name="ServerCode" id="servercode" value="" />
+                    <input class="hidden" name="Size" id="size" value="" />
+
+                    <button type="submit" class="btn btn-primary">Save Change</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+
+
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script>
+    var message = $('#SuccessMessage').val();
+    if (message) {
+        notif({
+            msg: "<b>Success! </b>" + message,
+            type: "info",
+            position: "center"
+        });
+        $('#SuccessMessage').val("");
+    }
+</script>
+<script type="text/javascript">
+
+    $(function() {
+
+        //DOING
+        var defaultIp = @Model.Server.DefaultIP;
+        $('#currentIps li').each(function() {
+            if (this.value == defaultIp) {
+                $(this).css("background-color:blue;");
+            }
+        });
+        $("#SearchRack").on("click", function() {
+            $.ajax(
+            {
+                type: "GET",
+                page: 1,
+                rp: 6,
+                url: '@Url.Action("Detail", "Server")',
+                dataType: "json",
+                success: function(result) {
+
+                },
+                error: function(x, e) {
+
+                }
+            });
+        });
+    });
+</script>
+
+

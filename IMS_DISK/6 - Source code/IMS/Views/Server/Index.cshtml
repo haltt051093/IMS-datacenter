@@ -1,0 +1,129 @@
+﻿@model ServerIndexViewModel
+
+@{
+    ViewBag.Title = Pages.ServerIndex;
+    ViewBag.PageTitle = Pages.ServerIndex;
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>
+    {
+        new BreadcrumbModel("Home", "Index", Pages.Home),
+        new BreadcrumbModel("Server", "Index", Pages.ServerIndex)
+    };
+}
+<div class="main-content">
+    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+        <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+            @Html.LabelFor(model => model.SelectedStatus, "Status")
+        </div>
+        <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+            @Html.DropDownListFor(m => m.SelectedStatus, Model.ServerStatus, "Show all", new { @id = "selectedStatus", @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+            @Html.ValidationMessageFor(model => model.SelectedStatus)
+        </div>
+    </div>
+    <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS_HOVER">
+        <thead>
+            <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
+                @if (User.IsInRole("Customer"))
+                {
+                    <th>@Labels.DefaultIP</th>
+                    <th>@Labels.Status</th>
+                }
+                else
+                {
+                    <th>@Labels.DefaultIP</th>
+                    <th>@Labels.Status</th>
+                    <th>@Labels.Customer</th>
+                    <th>@Labels.CurrentRequest</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Servers.Count; i++)
+            {
+                <tr class="clickable check" status-code="@Model.Servers[i].StatusCode" server-code="@Model.Servers[i].ServerCode">
+                    @if (User.IsInRole("Customer"))
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Servers[i].DefaultIP)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Servers[i].Status)
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Servers[i].DefaultIP)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Servers[i].Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => Model.Servers[i].CustomerName)
+                        </td>
+                        <td class="sidebar-menu">
+                            @if (Model.Servers[i].Requests.Count > 0)
+                            {
+                                <dl>
+                                    @foreach (var request in Model.Servers[i].Requests)
+                                    {
+                                        if (request.StatusCode == Constants.StatusCode.REQUEST_PENDING ||
+                                            request.StatusCode == Constants.StatusCode.REQUEST_WAITING ||
+                                            request.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                                        {
+                                            <dt>
+                                                @Html.ActionLink(@request.RequestTypeName, "Detail", "ProcessRequest",
+                                                new { code = request.RequestCode }, new { @class = "fa fa-angle-double-right" })
+                                            </dt>
+                                        }
+                                    }
+                                </dl>
+                            }
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr style="background-color: #404040">
+                @if (User.IsInRole("Customer"))
+                {
+                    <th><span style="color: ghostwhite">@Labels.DefaultIP</span></th>
+                    <th><span style="color: ghostwhite">@Labels.Status</span></th>
+                }
+                else
+                {
+                    <th><span style="color: ghostwhite">@Labels.DefaultIP</span></th>
+                    <th><span style="color: ghostwhite">@Labels.Status</span></th>
+                    <th><span style="color: ghostwhite">@Labels.Customer</span></th>
+                    <th><span style="color: ghostwhite">@Labels.CurrentRequest</span></th>
+                }
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<!-- page script -->
+<script type="text/javascript">
+    $('#example1').DataTable({
+        //"iDisplayLength": -1,
+        "aaSorting": [[1, "desc"]],// Sort by first column descending
+        "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            if (aData[1] == "Waiting") {
+                $(nRow).addClass('background-warning');
+            };
+        }
+    });
+    $("#selectedStatus").change(function () {
+        var status = $("#selectedStatus").val();
+        if (status == null || status == '') {
+            $('#example1 tbody tr').show();
+        } else {
+            $('#example1 tbody tr').hide();
+            $('#example1 tbody tr[status-code="' + status + '"]').show();
+        }
+    });
+    $('#example1').on('click', '.check', function () {
+        var servercode = $(this).attr('server-code');
+        window.location.assign('@Url.Action("Detail", "Server")' + '/' + servercode);
+    });
+</script>
