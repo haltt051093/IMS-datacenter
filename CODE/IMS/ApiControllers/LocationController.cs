@@ -20,12 +20,15 @@ namespace IMS.ApiControllers
             return result;
         }
 
-        public List<string> GetListRack()
+        public List<LocationIndexViewModel> GetListRack()
         {
             var locations = LocationBLO.Current.GetAllLocation();
-            var result = new List<string>();
             var listrack = locations.OrderBy(x => x.RackName).GroupBy(x => x.RackName).Select(x => x.FirstOrDefault());
-            result = listrack.Select(x=>x.RackName).ToList();
+            var result = listrack.Select(x => new LocationIndexViewModel
+            {
+                RackName = x.RackName,
+                Customer = x.Fullname
+            }).ToList();
             return result;
         }
 

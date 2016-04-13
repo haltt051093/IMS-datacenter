@@ -12,6 +12,7 @@ using IMS.Data.Models;
 using IMS.Data.Queries;
 using IMS.Data.Repository;
 using IMS.Models;
+using Microsoft.Office.Interop.Word;
 
 namespace IMS.Controllers
 {
@@ -23,6 +24,13 @@ namespace IMS.Controllers
             var data = new LocationIndexViewModel();
             data.SuccessMessage = Message;
             var locations = LocationBLO.Current.GetAllLocation();
+            for (int i = 0; i < locations.Count; i++)
+            {
+                if (locations[i].Fullname != null)
+                {
+                    locations[i].Fullname = "(" + locations[i].Fullname + ")";
+                }
+            }
             var list = locations.Where(x => x.RackStatus == Constants.StatusCode.RACK_AVAILABLE);
             var listavailablerack =
                 list.OrderBy(x => x.RackName).GroupBy(x => x.RackName).Select(x => x.FirstOrDefault());
@@ -31,7 +39,7 @@ namespace IMS.Controllers
             data.Racks = listrack.Select(x => new SelectListItem
             {
                 Value = x.RackName,
-                Text = x.RackName +"  "+ x.Fullname
+                Text = x.RackName + " " +x.Fullname
             }).ToList();
 
             var listpow = new List<SelectListItem>();
