@@ -63,24 +63,22 @@ namespace IMS.ApiControllers
             if (locationserver.Count == 0)
             {
                 locations = LocationBLO.Current.GetNewLocation(server);
-                if (locations.Count == 0)
-                {
+                
                     if (RackOfCustomerDAO.Current.GetRackOfCustomer(server).Count > 0)
                     {
                         locations1 = LocationBLO.Current.GetNewLocation1(server);
                     }
-                }
+                
             }
             else
             {
                 locations = LocationBLO.Current.GetChangeLocation(server);
-                if (locations.Count == 0)
-                {
+                
                     if (RackOfCustomerDAO.Current.GetRackOfCustomer(server).Count > 0)
                     {
                         locations1 = LocationBLO.Current.GetChangeLocation1(server);
                     }
-                }
+                
             }
            
             var result = new DataTableModel<LocationViewModel>();

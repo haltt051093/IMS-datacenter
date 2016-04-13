@@ -103,8 +103,7 @@ namespace IMS.Controllers
                     Value = x.RackCode,
                     Text = x.RackName
                 }).ToList();
-                if (locations.Count == 0)
-                { 
+              
                     if (RackOfCustomerDAO.Current.GetRackOfCustomer(server).Count > 0)
                     {
                         var locations1 = LocationBLO.Current.GetNewLocation1(server);
@@ -117,7 +116,7 @@ namespace IMS.Controllers
                         }).ToList();
                         data.Notice = "HaveRack";
                     }
-                }
+                
                 
             }
             else
@@ -130,8 +129,7 @@ namespace IMS.Controllers
                     Value = x.RackCode,
                     Text = x.RackName
                 }).ToList();
-                if (locations.Count == 0)
-                {
+                
                     if (RackOfCustomerDAO.Current.GetRackOfCustomer(server).Count > 0)
                     {
                         var locations1 = LocationBLO.Current.GetChangeLocation1(server);
@@ -144,7 +142,7 @@ namespace IMS.Controllers
                         }).ToList();
                         data.Notice = "HaveRack";
                     }
-                }
+                
             }
             data.RequestCode = rCode;
             data.RequestType = rType;
