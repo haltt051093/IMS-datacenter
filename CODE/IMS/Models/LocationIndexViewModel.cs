@@ -42,5 +42,6 @@ namespace IMS.Models
         public int RackAvailableCount { get; set; }
         public List<SelectListItem> ListPower { get; set; } 
         public string Power { get; set; }
+        public string Customer { get; set; }
     }
 }

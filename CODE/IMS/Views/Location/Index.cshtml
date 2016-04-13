@@ -133,8 +133,14 @@
             });
             $.get('@Url.Action("GetListRack", "Location", new { httproute = "" })', function (newDataArray) {
                 $('#RackCode').html('<option value="">All Locations</option>');
+                var option = '';
                 $(newDataArray).each(function (i, e) {
-                    var option = $('<option></option>').html(e).val(e);
+                    if (e.Customer != null) {
+                        option = $('<option></option>').html(e.RackName + " " + "("+e.Customer+")").val(e.RackName);
+                    } else {
+                        option = $('<option></option>').html(e.RackName).val(e.RackName);
+                    }
+                    
                     $('#RackCode').append(option);
                 });
             });
