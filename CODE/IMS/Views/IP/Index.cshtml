@@ -20,7 +20,7 @@
         <a class="btn btn-primary" data-toggle="modal" data-target="#addip-modal"><i class="fa fa-plus"></i> @Labels.AddIP</a>
         @if (Model.NetIPAvai.Count > 0)
         {
-            <a id="deactivateip" class="btn btn-danger"><i class="fa fa-minus"></i> @Labels.DeactivateIP</a>
+            <a id="deactivateip" hidden class="btn btn-danger"><i class="fa fa-minus"></i> @Labels.DeactivateIP</a>
         }
     </div>
     <div class="clearfix"></div>
