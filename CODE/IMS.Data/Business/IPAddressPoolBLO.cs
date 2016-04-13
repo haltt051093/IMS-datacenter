@@ -135,6 +135,11 @@ namespace IMS.Data.Business
             if (oldIP == null)
             {
                 var ip = dao.GetByKeys(new IPAddressPool { IPAddress = newIP });
+                var existing = ServerDAO.Current.Query(x => x.ServerCode == serverCode).FirstOrDefault();
+                if (existing.StatusCode != Constants.StatusCode.SERVER_WAITING)
+                {
+                    return true;
+                }
                 if (ip.StatusCode == Constants.StatusCode.IP_AVAILABLE)
                 {
                     ip.IsDefault = true;
@@ -152,6 +157,11 @@ namespace IMS.Data.Business
             else
             {
                 var ip1 = dao.GetByKeys(new IPAddressPool { IPAddress = newIP });
+                var existing = ServerDAO.Current.Query(x => x.ServerCode == serverCode).FirstOrDefault();
+                if (existing.StatusCode != Constants.StatusCode.SERVER_WAITING)
+                {
+                    return true;
+                }
                 if (ip1.StatusCode == Constants.StatusCode.IP_AVAILABLE)
                 {
                     ip1.StatusCode = Constants.StatusCode.IP_USED;

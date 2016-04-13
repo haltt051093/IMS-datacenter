@@ -48,7 +48,9 @@ namespace IMS.Data.Business
 
         public bool UpdateLocation(string ServerCode, List<string> Locations, string username, string request)
         {
-
+            var existing = ServerDAO.Current.Query(x => x.ServerCode == ServerCode).FirstOrDefault();
+            if (existing.StatusCode == Constants.StatusCode.SERVER_WAITING)
+            {
                 var locations = dao.GetAll();
                 string rack1 = "";
                 for (int i = 0; i < locations.Count; i++)
@@ -62,65 +64,67 @@ namespace IMS.Data.Business
                         var has = loca.Select(x => x).Where(x => x.ServerCode == ServerCode).Distinct();
                         if (has.Count() < 1)
                         {
-                            var data = RackDAO.Current.GetByKeys(new Rack { RackCode = rack1 });
+                            var data = RackDAO.Current.GetByKeys(new Rack {RackCode = rack1});
                             if (data.StatusCode == Constants.StatusCode.RACK_USED)
                             {
                                 data.StatusCode = Constants.StatusCode.RACK_AVAILABLE;
                                 RackDAO.Current.Update(data);
-                                
-                                
-                            }
-                            
-                        }
-                    if (request == "Change")
-                    {
-                        var log = new Log();
-                        log.TypeOfLog = Constants.TypeOfLog.LOG_CHANGE_LOCATION;
-                        log.Object = Constants.Object.OBJECT_LOCATION;
-                        log.ChangedValueOfObject = locations[i].LocationCode;
-                        log.ObjectStatus = Constants.StatusCode.LOCATION_FREE;
-                        log.ServerCode = ServerCode;
-                        log.Username = username;
-                        log.LogTime = DateTime.Now;
-                        LogBLO.Current.Add(log);
-                    }
-                }
-                }
-                
-                for (int i = 0; i < Locations.Count; i++)
-                {
-                    for (int j = 0; j < locations.Count; j++)
-                    {
-                        if (Locations[i] == locations[j].LocationCode)
-                        {                          
-                                locations[j].StatusCode = Constants.StatusCode.LOCATION_USED;
-                                locations[j].ServerCode = ServerCode;
-                                dao.Update(locations[j]);
-                                var rack = locations[j].RackCode;
-                                var data = RackDAO.Current.GetByKeys(new Rack {RackCode = rack});
-                                if (data.StatusCode == Constants.StatusCode.RACK_AVAILABLE)
-                                {
-                                    data.StatusCode = Constants.StatusCode.RACK_USED;
-                                    RackDAO.Current.Update(data);
-                                }
 
+
+                            }
+
+                        }
                         if (request == "Change")
                         {
                             var log = new Log();
                             log.TypeOfLog = Constants.TypeOfLog.LOG_CHANGE_LOCATION;
                             log.Object = Constants.Object.OBJECT_LOCATION;
-                            log.ChangedValueOfObject = locations[j].LocationCode;
-                            log.ObjectStatus = Constants.StatusCode.LOCATION_USED;
+                            log.ChangedValueOfObject = locations[i].LocationCode;
+                            log.ObjectStatus = Constants.StatusCode.LOCATION_FREE;
                             log.ServerCode = ServerCode;
                             log.Username = username;
                             log.LogTime = DateTime.Now;
                             LogBLO.Current.Add(log);
                         }
                     }
+                }
+
+                for (int i = 0; i < Locations.Count; i++)
+                {
+                    for (int j = 0; j < locations.Count; j++)
+                    {
+                        if (Locations[i] == locations[j].LocationCode)
+                        {
+                            locations[j].StatusCode = Constants.StatusCode.LOCATION_USED;
+                            locations[j].ServerCode = ServerCode;
+                            dao.Update(locations[j]);
+                            var rack = locations[j].RackCode;
+                            var data = RackDAO.Current.GetByKeys(new Rack {RackCode = rack});
+                            if (data.StatusCode == Constants.StatusCode.RACK_AVAILABLE)
+                            {
+                                data.StatusCode = Constants.StatusCode.RACK_USED;
+                                RackDAO.Current.Update(data);
+                            }
+
+                            if (request == "Change")
+                            {
+                                var log = new Log();
+                                log.TypeOfLog = Constants.TypeOfLog.LOG_CHANGE_LOCATION;
+                                log.Object = Constants.Object.OBJECT_LOCATION;
+                                log.ChangedValueOfObject = locations[j].LocationCode;
+                                log.ObjectStatus = Constants.StatusCode.LOCATION_USED;
+                                log.ServerCode = ServerCode;
+                                log.Username = username;
+                                log.LogTime = DateTime.Now;
+                                LogBLO.Current.Add(log);
+                            }
+                        }
                     }
-             
+
+                }
+                return true;
             }
-            return true;
+            else return false;
         }
 
         public List<LocationViewModel> GetAllLocation(GetLocationQuery q = null)
