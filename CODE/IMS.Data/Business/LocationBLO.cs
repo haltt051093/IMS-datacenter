@@ -48,32 +48,31 @@ namespace IMS.Data.Business
 
         public bool UpdateLocation(string ServerCode, List<string> Locations, string username, string request)
         {
-            var existing = ServerDAO.Current.Query(x => x.ServerCode == ServerCode).FirstOrDefault();
-            if (existing.StatusCode == Constants.StatusCode.SERVER_WAITING)
-            {
+   
                 var locations = dao.GetAll();
                 string rack1 = "";
                 for (int i = 0; i < locations.Count; i++)
                 {
                     if (locations[i].ServerCode == ServerCode)
                     {
-                        locations[i].ServerCode = null;
-                        locations[i].StatusCode = Constants.StatusCode.LOCATION_FREE;
-                        rack1 = locations[i].RackCode;
-                        var loca = locations.Select(x => x).Where(x => x.RackCode == rack1);
-                        var has = loca.Select(x => x).Where(x => x.ServerCode == ServerCode).Distinct();
-                        if (has.Count() < 1)
-                        {
-                            var data = RackDAO.Current.GetByKeys(new Rack {RackCode = rack1});
-                            if (data.StatusCode == Constants.StatusCode.RACK_USED)
+                            locations[i].ServerCode = null;
+                            locations[i].StatusCode = Constants.StatusCode.LOCATION_FREE;
+                            rack1 = locations[i].RackCode;
+                            var loca = locations.Select(x => x).Where(x => x.RackCode == rack1);
+                            var has = loca.Select(x => x).Where(x => x.ServerCode == ServerCode).Distinct();
+                            if (has.Count() < 1)
                             {
-                                data.StatusCode = Constants.StatusCode.RACK_AVAILABLE;
-                                RackDAO.Current.Update(data);
+                                var data = RackDAO.Current.GetByKeys(new Rack {RackCode = rack1});
+                                if (data.StatusCode == Constants.StatusCode.RACK_USED)
+                                {
+                                    data.StatusCode = Constants.StatusCode.RACK_AVAILABLE;
+                                    RackDAO.Current.Update(data);
 
+
+                                }
 
                             }
-
-                        }
+                        
                         if (request == "Change")
                         {
                             var log = new Log();
@@ -123,8 +122,7 @@ namespace IMS.Data.Business
 
                 }
                 return true;
-            }
-            else return false;
+
         }
 
         public List<LocationViewModel> GetAllLocation(GetLocationQuery q = null)
@@ -181,23 +179,7 @@ namespace IMS.Data.Business
                     result.AddRange(allLocation.Where(x => x.RackCode == rackCode));
                 }
             }
-            var r = 0;
-            for (var i = 0; i < result.Count; i++)
-            {
-                if (result[i].RackCode.Equals(dao.GetRackOfServer(server).RackCode))
-                {
-                    r++;
-                }
-            }
-            if (r > 0)
-            {
-                return result;
-            }
-            else
-            {
-                result.Add(dao.GetRackOfServer(server));
-                return result;
-            }
+            return result;
         } 
         public List<LocationViewModel> GetChangeLocation(Server server)
         {
