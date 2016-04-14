@@ -154,6 +154,11 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult AssignLocation(LocationIndexViewModel livm)
         {
+            var existing = RequestDAO.Current.Query(x => x.RequestCode == livm.RequestCode).FirstOrDefault();
+            if (livm.RequestType != "Change" && existing.StatusCode != Constants.StatusCode.REQUEST_PROCESSING)
+            {
+                return RedirectToAction("Detail", "ProcessRequest", new { code = livm.RequestCode });
+            }
             var selectedLocationCodes = livm.Selected
                 .Where(x => x.IsSelected)
                 .Select(x => x.LocationCode)
@@ -203,7 +208,7 @@ namespace IMS.Controllers
                     });
             }
 
-        string user = GetCurrentUserName();
+            string user = GetCurrentUserName();
             bool result = LocationBLO.Current.UpdateLocation(livm.ServerCode, selectedLocationCodes, user, livm.RequestType);
             if (result)
             {
@@ -219,7 +224,15 @@ namespace IMS.Controllers
             }
             else
             {
-                return RedirectToAction("Detail", "ProcessRequest", new { code = livm.RequestCode });
+                if (livm.RequestType == "Change")
+                {
+                    return RedirectToAction("Detail", "Server", new { code = livm.ServerCode});
+                }
+                else
+                {
+                    return RedirectToAction("Detail", "ProcessRequest",
+                        new { code = livm.RequestCode });
+                }
             }
         }
     }
