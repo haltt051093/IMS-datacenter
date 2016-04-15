@@ -67,5 +67,12 @@ namespace IMS.Data.Repository
                             and i.Gateway='" + gateway + @"'and i.StatusCode='STATUS10'";
             return RawQuery<IPAddressPoolExtendedModel>(query, new object[] { });
         }
+
+        public List<string> GetCurrentIPOfCustomer(string customer)
+        {
+            var query = @"select si.CurrentIP from ServerIP as si, Server as ser
+                          where si.ServerCode = ser.ServerCode and ser.Customer='"+customer+@"' and si.StatusCode!='STATUS31'";
+            return RawQuery<string>(query, new object[] { });
+        } 
     }
 }

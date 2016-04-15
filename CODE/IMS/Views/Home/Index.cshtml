@@ -1,7 +1,7 @@
 ﻿@model HomeIndexViewModel
 @{
     ViewBag.Title = Pages.HomeIndex;
-    ViewBag.PageTitle = Pages.HomeIndex;
+    ViewBag.PageTitle = Messages.Welcome;
     ViewBag.Breadcrumbs = new List<BreadcrumbModel>
     {
         new BreadcrumbModel("Home", "Index", Pages.Home)
@@ -9,141 +9,214 @@
 }
 
 <div class="main-content">
-    <h2>@Messages.Welcome</h2>
-
-    <div class="row">
-        <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-aqua">
-                <div class="inner">
-                    <h3>
-                        150
-                    </h3>
-                    <p>
-                        Pending Requests
-                    </p>
-                </div>
-                <div class="icon">
-                    <i class="fa fa-pause-circle-o"></i>
-                </div>
-                <a href="@Url.Action("Index","ProcessRequest")" class="small-box-footer">
-                    More info <i class="fa fa-arrow-circle-right"></i>
-                </a>
-            </div>
-        </div><!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-green">
-                <div class="inner">
-                    <h3>
-                        53
-                    </h3>
-                    <p>
-                        Processing Requests
-                    </p>
-                </div>
-                <div class="icon">
-                    <i class="fa fa-play-circle-o"></i>
-                </div>
-                <a href="@Url.Action("Index","ProcessRequest")" class="small-box-footer">
-                    More info <i class="fa fa-arrow-circle-right"></i>
-                </a>
-            </div>
-        </div><!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-yellow">
-                <div class="inner">
-                    <h3>
-                        44
-                    </h3>
-                    <p>
-                        Requests this week
-                    </p>
-                </div>
-                <div class="icon">
-                    <i class="fa fa-reply-all"></i>
-                </div>
-                <a href="@Url.Action("Index","ProcessRequest")" class="small-box-footer">
-                    More info <i class="fa fa-arrow-circle-right"></i>
-                </a>
-            </div>
-        </div><!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-red">
-                <div class="inner">
-                    <h3>
-                        65
-                    </h3>
-                    <p>
-                        Running Servers
-                    </p>
-                </div>
-                <div class="icon">
-                    <i class="fa fa-hdd-o"></i>
-                </div>
-                <a href="@Url.Action("Index","Server")" class="small-box-footer">
-                    More info <i class="fa fa-arrow-circle-right"></i>
-                </a>
-            </div>
-        </div><!-- ./col -->
-</div><!-- /.row -->
-<div class="row">
-    <div class="col-lg-6 col-xs-12">
-        <div class="box box-primary">
-            <div class="box-header">
-                <i class="fa fa-table"></i>
-                <h3 class="box-title">List New Requests</h3>
-            </div>
-            <div class="box-body">
-                <table></table>
-                
-                
-            </div><!-- /.box-body-->
-            <a href="@Url.Action("Index","ProcessRequest")" class="box-footer">
-                More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-        </div>
-
-        </div>
-    <div class="col-lg-6 col-xs-12">
-        <div class="box box-primary">
-            <div class="box-header">
-                <i class="fa fa-bar-chart-o"></i>
-                <h3 class="box-title">IP Address Bar Chart</h3>
-            </div>
-            <div class="box-body">
-                <div id="bar-chart" style="height: 300px;"></div>
-               
-               
-            </div><!-- /.box-body-->
-            <a href="@Url.Action("Index","IP")" class="box-footer">
-                More info <i class="fa fa-arrow-circle-right"></i>
-            </a> 
-        </div>
-    </div>
-</div>
-    <!-- Main row -->
-    <div class="row">
+    @if (Model.RoleLogin != Constants.Role.CUSTOMER)
+    {
         <div class="row">
-            <div class="col-xs-6">
-                <div class="row">
-                    <div class="col-xs-4"></div>
-                    <div class="col-xs-8"></div>
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <h3>
+                            150
+                        </h3>
+                        <p>
+                            Pending Requests
+                        </p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-pause-circle-o"></i>
+                    </div>
+                    <a href="@Url.Action("Index", "ProcessRequest")" class="small-box-footer">
+                        More info <i class="fa fa-arrow-circle-right"></i>
+                    </a>
                 </div>
-            </div>
-            <div class="col-xs-6"></div>
+            </div><!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3>
+                            53
+                        </h3>
+                        <p>
+                            Processing Requests
+                        </p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-play-circle-o"></i>
+                    </div>
+                    <a href="@Url.Action("Index", "ProcessRequest")" class="small-box-footer">
+                        More info <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div><!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-yellow">
+                    <div class="inner">
+                        <h3>
+                            44
+                        </h3>
+                        <p>
+                            Requests this week
+                        </p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-reply-all"></i>
+                    </div>
+                    <a href="@Url.Action("Index", "ProcessRequest")" class="small-box-footer">
+                        More info <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div><!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-red">
+                    <div class="inner">
+                        <h3>
+                            65
+                        </h3>
+                        <p>
+                            Running Servers
+                        </p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-hdd-o"></i>
+                    </div>
+                    <a href="@Url.Action("Index", "Server")" class="small-box-footer">
+                        More info <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div><!-- ./col -->
         </div>
+        <!-- /.row -->
         <div class="row">
-            <div class="col-xs-12">
-                <div class="row">
-
+            <div class="col-lg-6 col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="fa fa-table"></i>
+                        <h3 class="box-title">List New Requests</h3>
+                    </div>
+                    <div class="box-body">
+                        <table></table>
+                    </div><!-- /.box-body-->
+                    <div class="box-footer">
+                        <a href="@Url.Action("Index", "ProcessRequest")">
+                            More info <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="fa fa-bar-chart-o"></i>
+                        <h3 class="box-title">IP Address Bar Chart</h3>
+                    </div>
+                    <div class="box-body">
+                        <div id="bar-chart" style="height: 300px;"></div>
+                    </div><!-- /.box-body-->
+                    <div class="box-footer">
+                        <a href="@Url.Action("Index", "IP")">
+                            More info <i class="fa fa-arrow-circle-right"></i>
+                        </a>  
+                    </div>
                 </div>
             </div>
         </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-lg-4 col-xs-5">
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <h3>
+                            150
+                        </h3>
+                        <p>
+                            Pending Requests
+                        </p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-pause-circle-o"></i>
+                    </div>
+                    <a href="@Url.Action("Index", "Request")" class="small-box-footer">
+                        More info <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3>
+                            53
+                        </h3>
+                        <p>
+                            Processing Requests
+                        </p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-play-circle-o"></i>
+                    </div>
+                    <a href="@Url.Action("Index", "Request")" class="small-box-footer">
+                        More info <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+                <div class="small-box bg-yellow">
+                    <div class="inner">
+                        <h3>
+                            @Model.Currentip
+                        </h3>
+                        <p>
+                            Using IP Addresses
+                        </p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-info-circle"></i>
+                    </div>
+                    <a href="@Url.Action("Index", "Server")" class="small-box-footer">
+                        More info <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+                <div class="small-box bg-red">
+                    <div class="inner">
+                        <h3>
+                            65
+                        </h3>
+                        <p>
+                            Running Servers
+                        </p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-hdd-o"></i>
+                    </div>
+                    <a href="@Url.Action("Index", "Server")" class="small-box-footer">
+                        More info <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-8 col-xs-7">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="fa fa-table"></i>
+                        <h3 class="box-title">List My Requests</h3>
+                    </div>
+                    <div class="box-body">
+                        <table></table>
 
-    </div>
+
+                    </div><!-- /.box-body-->
+                    <div class="box-footer">
+                        <a href="@Url.Action("Index", "Request")">
+                            More info <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    }
+
+
 
 <!-- page script -->
 <script>
@@ -171,11 +244,13 @@
         },
         xaxis: {
             mode: "categories",
-            tickLength: 0
-        },
-        legend: {
-            show: true
+            tickLength: 0,
+            font:{
+                size:15
+            },
+            color: "black"
         }
+      
     });
 </script>
     

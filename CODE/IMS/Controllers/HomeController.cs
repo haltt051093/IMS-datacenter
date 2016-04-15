@@ -13,6 +13,13 @@ namespace IMS.Controllers
         public ActionResult Index(HomeIndexViewModel q)
         {
             var data = new HomeIndexViewModel();
+            data.RoleLogin = GetCurrentUserRole();
+            var user = GetCurrentUserName();
+            if (data.RoleLogin == Constants.Role.CUSTOMER)
+            {
+                var currentips = IPAddressPoolBLO.Current.GetCurrentIPOfCustomer(user);
+                data.Currentip = currentips.Count;
+            }
             var blocked = 0;
             var available = 0;
             var used = 0;

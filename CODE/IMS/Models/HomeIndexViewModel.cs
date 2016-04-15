@@ -10,5 +10,8 @@ namespace IMS.Models
         public int countblockedip { get; set; }   
         public int countusedip { get; set; }
         public int countavailableip { get; set; }
+        public string RoleLogin { get; set; }
+        public int Currentip { get; set; }
     }
+    
 }

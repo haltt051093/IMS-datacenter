@@ -85,6 +85,10 @@ namespace IMS.Data.Business
             return dao.GetAllIP();
         }
 
+        public List<string> GetCurrentIPOfCustomer(string customer)
+        {
+            return dao.GetCurrentIPOfCustomer(customer);
+        } 
         public List<string> GetNetworkIPToDeact()
         {
             return dao.GetNetworkIPToDeact();
