@@ -272,6 +272,7 @@ namespace IMS.Core
             public const string DATATABLE_EDITOR = "~/styles/datatable-editor";
             public const string DDLEVELSMENU = "~/styles/ddlevelsmenu";
             public const string JQUERY_FILER = "~/styles/jquery.filer";
+            public const string JQUERY = "~/styles/jquery";
             public const string JQUERY_UI = "~/styles/jquery-ui";
             public const string JQUERY_VALIDATE = "~/styles/jquery.validate";
             public const string MORRISJS = "~/styles/morrisjs";

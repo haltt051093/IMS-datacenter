@@ -24,6 +24,7 @@ namespace IMS
             ));
             builder.Add(new ScriptBundle(Constants.ScriptBundle.JQUERY).Include(
                 "~/Scripts/jquery-2.2.0.js",
+                "~/Scripts/jquery.tooltipster.js",
                 "~/Scripts/jquery.tfpatch.js"
             ));
             builder.Add(new ScriptBundle(Constants.ScriptBundle.JQUERY_UI).Include(
@@ -71,6 +72,13 @@ namespace IMS
             ));
             builder.Add(new StyleBundle(Constants.StyleBundle.DATATABLE).Include(
                 "~/Content/datatables/dataTables.bootstrap.css"
+            ));
+            builder.Add(new StyleBundle(Constants.StyleBundle.JQUERY).Include(
+                "~/Content/tooltipster.css",
+                "~/Content/themes/tooltipster-light.css",
+                "~/Content/themes/tooltipster-noir.css",
+                "~/Content/themes/tooltipster-punk.css",
+                "~/Content/themes/tooltipster-shadow.css"
             ));
             builder.Add(new StyleBundle(Constants.StyleBundle.JQUERY_UI).Include(
                 "~/Content/jquery-ui.css",

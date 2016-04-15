@@ -41,14 +41,17 @@ namespace IMS.Data.Repository
             {
                 q = new GetLocationQuery();
             }
-            var query = @"select l.LocationCode,ser.ServerCode,ser.DefaultIP, l.RackUnit, s.StatusName,r.RackName,r.RackCode, ser.Id,r.StatusCode as RackStatus, acc.Fullname from Location as l
+            var query = @"select l.LocationCode,ser.ServerCode,ser.DefaultIP, l.RackUnit, s.StatusName,r.RackName,r.RackCode, ser.Id,r.StatusCode as RackStatus, acc.Fullname, acc1.Fullname as ServerOwner, ser.Power, s1.StatusName as ServerStatus, ser.Bandwidth, ser.Size from Location as l
                             left join Status as s
                             on s.StatusCode = l.StatusCode
                             join Rack as r
                             on r.RackCode = l.RackCode
                             left join Server as ser on ser.ServerCode = l.ServerCode
                             left join RackOfCustomer as rack on rack.RackCode = r.RackCode and (rack.StatusCode='STATUS26' OR rack.StatusCode='STATUS27')
-                            left join Account as acc on acc.Username = rack.Customer
+                            left join Account as acc on acc.Username = rack.Customer                            
+							left join Account as acc1 on acc1.Username = ser.Customer
+							left join Status as s1
+							on s1.StatusCode = ser.StatusCode
                             where (isnull(@rackcode, '') = '' or l.RackCode = @rackcode)";
 
             return RawQuery<LocationViewModel>(query,
