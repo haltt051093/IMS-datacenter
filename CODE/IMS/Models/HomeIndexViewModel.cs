@@ -7,6 +7,8 @@ namespace IMS.Models
 {
     public class HomeIndexViewModel
     {
-        
+        public int countblockedip { get; set; }   
+        public int countusedip { get; set; }
+        public int countavailableip { get; set; }
     }
 }

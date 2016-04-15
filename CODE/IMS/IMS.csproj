@@ -772,6 +772,7 @@
     <Content Include="Scripts\plugins\flot\excanvas.min.js" />
     <Content Include="Scripts\plugins\flot\jquery.colorhelpers.js" />
     <Content Include="Scripts\plugins\flot\jquery.colorhelpers.min.js" />
+    <Content Include="Scripts\plugins\flot\jquery.flot.barnumbers.js" />
     <Content Include="Scripts\plugins\flot\jquery.flot.canvas.js" />
     <Content Include="Scripts\plugins\flot\jquery.flot.canvas.min.js" />
     <Content Include="Scripts\plugins\flot\jquery.flot.categories.js" />

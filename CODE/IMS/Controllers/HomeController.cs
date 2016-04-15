@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using IMS.Authentications;
+using IMS.Core;
 using IMS.Data.Business;
 using IMS.Models;
 
@@ -11,7 +12,31 @@ namespace IMS.Controllers
         [Roles]
         public ActionResult Index(HomeIndexViewModel q)
         {
-            return View();
+            var data = new HomeIndexViewModel();
+            var blocked = 0;
+            var available = 0;
+            var used = 0;
+            var ips = IPAddressPoolBLO.Current.GetAllIP();
+            for (int i = 0; i < ips.Count; i++)
+            {
+                if (ips[i].StatusCode == Constants.StatusCode.IP_AVAILABLE)
+                {
+                    available++;
+                }
+                if (ips[i].StatusCode == Constants.StatusCode.IP_BLOCKED)
+                {
+                    blocked++;
+                }
+                if (ips[i].StatusCode == Constants.StatusCode.IP_USED)
+                {
+                    used++;
+                }
+                
+            }
+            data.countavailableip = available;
+            data.countblockedip = blocked;
+            data.countusedip = used;
+            return View(data);
         }
 
         [ChildActionOnly]

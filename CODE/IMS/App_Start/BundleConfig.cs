@@ -25,6 +25,26 @@ namespace IMS
                 "~/Scripts/plugins/datatables/jquery.dataTables.js",
                 "~/Scripts/plugins/datatables/dataTables.bootstrap.js"
             ));
+            builder.Add(new ScriptBundle(Constants.ScriptBundle.FLOTCHART).Include(
+                "~/Scripts/plugins/flot/excanvas.js",
+                "~/Scripts/plugins/flot/jquery.flot.js",
+                "~/Scripts/plugins/flot/jquery.flot.canvas.js",
+                "~/Scripts/plugins/flot/jquery.flot.categories.js",
+                "~/Scripts/plugins/flot/jquery.flot.crosshair.js",
+                "~/Scripts/plugins/flot/jquery.flot.errorbars.js",
+                "~/Scripts/plugins/flot/jquery.flot.fillbetween.js",
+                "~/Scripts/plugins/flot/jquery.flot.image.js",
+                "~/Scripts/plugins/flot/jquery.flot.navigate.js",
+                "~/Scripts/plugins/flot/jquery.flot.pie.js",
+                "~/Scripts/plugins/flot/jquery.flot.resize.js",
+                "~/Scripts/plugins/flot/jquery.flot.selection.js",
+                "~/Scripts/plugins/flot/jquery.flot.stack.js",
+                "~/Scripts/plugins/flot/jquery.flot.symbol.js",
+                "~/Scripts/plugins/flot/jquery.flot.threshold.js",
+                "~/Scripts/plugins/flot/jquery.flot.time.js",
+                "~/Scripts/plugins/flot/jquery.flot.barnumbers.js"
+
+            ));
             builder.Add(new ScriptBundle(Constants.ScriptBundle.JQUERY).Include(
                 "~/Scripts/jquery-2.2.0.js",
                 "~/Scripts/jquery.tooltipster.js",
