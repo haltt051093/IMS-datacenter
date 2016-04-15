@@ -30,6 +30,7 @@ namespace IMS.Data.Models
         [Display(Name ="Part Number")]
         public string PartNumber { get; set; }
         [Display(Name ="Serial Number")]
+        [RegularExpression("^[a-zA-Z0-9]+([\\-][a-zA-Z0-9]+)*$",ErrorMessage ="Wrong format.")]
         public string SerialNumber { get; set; }
     }
 }
