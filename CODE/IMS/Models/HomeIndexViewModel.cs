@@ -12,6 +12,7 @@ namespace IMS.Models
         public int countavailableip { get; set; }
         public string RoleLogin { get; set; }
         public int Currentip { get; set; }
+        public int RunningServer { get; set; }
     }
     
 }

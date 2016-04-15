@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 using IMS.Authentications;
 using IMS.Core;
 using IMS.Data.Business;
@@ -19,6 +20,22 @@ namespace IMS.Controllers
             {
                 var currentips = IPAddressPoolBLO.Current.GetCurrentIPOfCustomer(user);
                 data.Currentip = currentips.Count;
+                var servers =
+                    ServerBLO.Current.GetAll()
+                        .Where(
+                            x =>
+                                x.Customer == user && x.StatusCode != Constants.StatusCode.SERVER_WAITING &&
+                                x.StatusCode != Constants.StatusCode.SERVER_DEACTIVATE).ToList();
+                data.RunningServer = servers.Count;
+            }
+            if (data.RoleLogin != Constants.Role.CUSTOMER)
+            {
+                var servers =
+                    ServerBLO.Current.GetAll()
+                        .Where(
+                            x =>x.StatusCode != Constants.StatusCode.SERVER_WAITING &&
+                                x.StatusCode != Constants.StatusCode.SERVER_DEACTIVATE).ToList();
+                data.RunningServer = servers.Count;
             }
             var blocked = 0;
             var available = 0;
