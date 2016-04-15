@@ -52,9 +52,10 @@ namespace IMS.Data.Repository
 
         public List<RackOfCustomerExtendedModel> GetAllRackOfCustomer(string customer)
         {
-            var query = @"select roc.*,l.RackUnit,l.ServerCode,s.StatusName,r.RackName,k.StatusName as RackStatus, ser.DefaultIP,ser.Power,r.MaximumPower
+            var query = @"select roc.*,l.RackUnit,l.ServerCode,s.StatusName,r.RackName,k.StatusName as RackStatus, ser.DefaultIP,ser.Power,r.MaximumPower, ser.Bandwidth, ser.Size, st.StatusName as ServerStatus
                             from  RackOfCustomer as roc, Status as s, Status as k, Rack as r,Location as l
 							left join Server as ser on ser.ServerCode = l.ServerCode
+                            left join Status as st on st.StatusCode = ser.StatusCode
                             where l.RackCode = roc.RackCode and l.StatusCode = s.StatusCode and r.RackCode=l.RackCode and k.StatusCode = roc.StatusCode
                             and ((isnull(@customer, '') = '' or roc.Customer = @customer)) and (roc.StatusCode='STATUS26' or roc.StatusCode='STATUS27')";
             return RawQuery<RackOfCustomerExtendedModel>(query, 

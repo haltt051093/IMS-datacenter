@@ -30,5 +30,8 @@ namespace IMS.Data.ViewModels
         public bool Checked { get; set; }
         public int? Power { get; set; }
         public int MaximumPower { get; set; }
+        public string Bandwidth { get; set; }
+        public int? Size { get; set; }
+        public string ServerStatus { get; set; }
     }
 }

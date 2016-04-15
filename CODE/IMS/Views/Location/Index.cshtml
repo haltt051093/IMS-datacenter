@@ -201,9 +201,12 @@
                 $(nRow).addClass('highlight');
                 $(nRow).addClass('background-info');
                 $(nRow).attr("title", "Customer: " + aData.ServerOwner + "; Server Status: " + aData.ServerStatus + "; Power: " + aData.Power + "; Bandwidth: " + aData.Bandwidth);
-                $(nRow).tooltip(
-                    "Customer: " + aData.ServerOwner + "; Server Status: " + aData.ServerStatus + "; Power: " + aData.Power + "; Bandwidth: " + aData.Bandwidth
-                );
+                $(nRow).tooltipster({
+                    content: "Server Status: " + aData.ServerStatus + "<br /> Customer: " + aData.ServerOwner + "<br /> Power: " + aData.Power + "<br /> Bandwidth: " + aData.Bandwidth + "<br /> Size: " + aData.Size + "U",
+                    contentAsHTML: true,
+                    theme: 'tooltipster-light',
+                    positionTracker: true
+                });
             }
             $(nRow).attr("ip", aData.DefaultIP);
 
