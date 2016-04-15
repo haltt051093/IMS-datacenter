@@ -52,3 +52,26 @@ $.fn.tooltip = function (tooltip_text) {
     });
 
 }
+
+
+function confirm(message, success) {
+    bootbox.dialog({
+        title: "Confirm",
+        size: 'small',
+        message: message,
+
+        buttons: {
+            confirm: {
+                label: 'OK',
+                className: 'btn-primary',
+                callback: success
+            },
+            cancel: {
+                label: 'Cancel',
+                className: 'btn-default',
+                callback: function (result) {
+                }
+            }
+        }
+    });
+}

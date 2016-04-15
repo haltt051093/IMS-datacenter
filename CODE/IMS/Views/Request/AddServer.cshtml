@@ -247,12 +247,10 @@
         });
         row.find('a[x-code][action="delete"]').click(function () {
             var tempCode = $(this).attr('x-code');
-            alertify.confirm('Are you sure to delete this server?', function () {
+            confirm('Are you sure to delete this server?', function (result) {
                 get('@Url.Action("DeleteTempServer", "Temp", new {httproute = ""})' + '/' + tempCode, function (data) {
                     $('#' + tempCode).remove();
                 });
-            }, function () {
-
             });
             return false;
         });
@@ -319,12 +317,10 @@
 
     $('a[x-code][action="delete"]').click(function () {
         var tempCode = $(this).attr('x-code');
-        alertify.confirm('Are you sure to delete this server?', function () {
+        confirm('Are you sure to delete this server?', function (result) {
             get('@Url.Action("DeleteTempServer", "Temp", new {httproute = ""})' + '/' + tempCode, function (data) {
                 $('#' + tempCode).remove();
             });
-        }, function () {
-
         });
         return false;
     });

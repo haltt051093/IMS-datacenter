@@ -228,6 +228,7 @@ namespace IMS.Core
             public const string ANGULARJS = "~/scripts/agularjs";
             public const string APPLICATION = "~/scripts/application";
             public const string BOOTSNIPP = "~/scripts/bootsnipp";
+            public const string BOOTBOX = "~/scripts/bootbox";
             public const string BOOTSTRAP = "~/scripts/bootstrap";
             public const string BOOTSTRAP_COLORPICKER = "~/scripts/bootstrap-colorpicker";
             public const string BOOTSTRAP_DATETIMEPICKER = "~/scripts/bootstrap-datetimepicker";

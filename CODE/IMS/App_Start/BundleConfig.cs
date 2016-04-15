@@ -12,6 +12,9 @@ namespace IMS
             builder.Add(new ScriptBundle(Constants.ScriptBundle.ALERTIFY).Include(
                 "~/Scripts/alertify.js"
             ));
+            builder.Add(new ScriptBundle(Constants.ScriptBundle.BOOTBOX).Include(
+                "~/Scripts/bootbox.min.js"
+            ));
             builder.Add(new ScriptBundle(Constants.ScriptBundle.BOOTSTRAP).Include(
                 "~/Scripts/bootstrap.js"
             ));
