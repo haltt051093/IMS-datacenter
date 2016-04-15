@@ -295,6 +295,14 @@ namespace IMS.Controllers
             var requestCode = Session[Constants.Session.REQUEST_CODE].ToString();
             //Add request and log
             var appointmentTime = viewmodel.RequestInfo.AppointmentTimeStr.ToDateTime("dd/MM/yyyy HH:mm");
+            if (!string.IsNullOrWhiteSpace(viewmodel.RequestInfo.Description))
+            {
+                viewmodel.RequestInfo.Description = viewmodel.RequestInfo.Description.Replace("\r\n", "<br/>");
+            }
+            else
+            {
+                viewmodel.RequestInfo.Description = Constants.Message.CONTENT_NULL;
+            }
             var result = RequestBLO.Current.AddRequestAddServer(customer, viewmodel.RequestInfo.Description,
                 appointmentTime, requestCode);
             //Xoa session server
@@ -314,6 +322,14 @@ namespace IMS.Controllers
             var customer = GetCurrentUserName();
             var appointmentTime = viewmodel.RequestInfo.AppointmentTimeStr.ToDateTime("dd/MM/yyyy HH:mm");
             //update lai trang thai server, trang thai serverIP
+            if (!string.IsNullOrWhiteSpace(viewmodel.RequestInfo.Description))
+            {
+                viewmodel.RequestInfo.Description = viewmodel.RequestInfo.Description.Replace("\r\n", "<br/>");
+            }
+            else
+            {
+                viewmodel.RequestInfo.Description = Constants.Message.CONTENT_NULL;
+            }
             var result = RequestBLO.Current.AddRequestBringServerAway(customer, viewmodel.RequestInfo.Description,
                 viewmodel.ServerOfCustomer, appointmentTime);
             //dang ky ham cho client
@@ -331,7 +347,7 @@ namespace IMS.Controllers
             requestDetail.NumberOfIp = viewmodel.NumberOfIP;
             if (!string.IsNullOrWhiteSpace(viewmodel.RequestInfo.Description))
             {
-                requestDetail.Description = viewmodel.RequestInfo.Description;
+                requestDetail.Description = viewmodel.RequestInfo.Description.Replace("\r\n", "<br/>");
             }
             else
             {
@@ -350,6 +366,14 @@ namespace IMS.Controllers
         public ActionResult ChangeIp(RequestChangeIPViewModel viewmodel)
         {
             var customer = GetCurrentUserName();
+            if (!string.IsNullOrWhiteSpace(viewmodel.RequestInfo.Description))
+            {
+                viewmodel.RequestInfo.Description = viewmodel.RequestInfo.Description.Replace("\r\n", "<br/>");
+            }
+            else
+            {
+                viewmodel.RequestInfo.Description = Constants.Message.CONTENT_NULL;
+            }
             //Add request and log
             var result = RequestBLO.Current.AddRequestChangeIP(customer, viewmodel.RequestInfo.Description, viewmodel.SelectedServer, viewmodel.ReturningIPs);
             ////dang ky ham cho client
@@ -363,6 +387,14 @@ namespace IMS.Controllers
         {
             var customer = GetCurrentUserName();
             //Add and log request
+            if (!string.IsNullOrWhiteSpace(viewmodel.RequestInfo.Description))
+            {
+                viewmodel.RequestInfo.Description = viewmodel.RequestInfo.Description.Replace("\r\n", "<br/>");
+            }
+            else
+            {
+                viewmodel.RequestInfo.Description = Constants.Message.CONTENT_NULL;
+            }
             var result = RequestBLO.Current.AddRequestReturnIP(customer, viewmodel.RequestInfo.Description,
                 viewmodel.SelectedServer, viewmodel.ReturningIPs);
             //dang ky ham cho client
@@ -380,7 +412,7 @@ namespace IMS.Controllers
             requestDetail.NumberOfRack = viewmodel.RackNumbers;
             if (!string.IsNullOrWhiteSpace(viewmodel.RequestInfo.Description))
             {
-                requestDetail.Description = viewmodel.RequestInfo.Description;
+                requestDetail.Description = viewmodel.RequestInfo.Description.Replace("\r\n", "<br/>");
             }
             else
             {
@@ -400,6 +432,14 @@ namespace IMS.Controllers
         {
             var customer = GetCurrentUserName();
             //Add and log request
+            if (!string.IsNullOrWhiteSpace(viewmodel.RequestInfo.Description))
+            {
+                viewmodel.RequestInfo.Description = viewmodel.RequestInfo.Description.Replace("\r\n", "<br/>");
+            }
+            else
+            {
+                viewmodel.RequestInfo.Description = Constants.Message.CONTENT_NULL;
+            }
             var result = RequestBLO.Current.AddRequestReturnRack(customer, viewmodel.RequestInfo.Description, viewmodel.AllRacks);
             //dang ky ham cho client
             Notify(result.NotificationCodes);

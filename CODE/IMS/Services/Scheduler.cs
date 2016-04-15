@@ -11,19 +11,69 @@ namespace IMS.Services
 {
     public class Scheduler
     {
-        public class TestJob : IJob
+        public class MasterJob : IJob
         {
             public void Execute(IJobExecutionContext context)
             {
+                //var list = RequestBLO.Current.GetTodayOfflineRequest();
+                //if (list != null)
+                //{
+                //    foreach (var item in list)
+                //    {
+                //        IJobDetail job = JobBuilder.Create<OfflineRequestJob>()
+                //            .UsingJobData("requestcode", item.RequestCode)
+                //            .UsingJobData("myFloatValue", 3.141f)
+                //            .Build();
+                //    }
+                //}
+
+                var scheduler = StdSchedulerFactory.GetDefaultScheduler();
+                {
+                    var job = JobBuilder.Create<AssignShiftJob>().Build();
+                    var trigger = TriggerBuilder.Create()
+                        .StartNow()
+                        .StartAt(new DateTimeOffset(DateTime.Now.AddMinutes(15)))
+                        .Build();
+                    scheduler.ScheduleJob(job, trigger);
+                }
+            }
+        }
+
+        public class OfflineRequestJob : IJob
+        {
+            public void Execute(IJobExecutionContext context)
+            {
+                //Add log
+                Log logSchedule = new Log
+                {
+                    Object = Constants.Object.OBJECT_SCHEDULE,
+                    ChangedValueOfObject = "Check offline request.",
+                    LogTime = DateTime.Now
+                };
+            }
+        }
+
+        public class AssignShiftJob : IJob
+        {
+            public void Execute(IJobExecutionContext context)
+            {
+                //Add log
+                Log logSchedule = new Log
+                {
+                    Object = Constants.Object.OBJECT_SCHEDULE,
+                    ChangedValueOfObject = "Generate assigned shift",
+                    LogTime = DateTime.Now
+                };
+                LogBLO.Current.Add(logSchedule);
                 //lay ngay cuoi trong assigndate tru cho ngay hien tai. neu con 3 ngay thi genarate tiep thang sau, cong 1, cong 30 de ra end date
                 DateTime today = DateTime.Now.Date;
                 var lastAssign = AssignedShiftDAO.Current.Table.OrderByDescending(x => x.StartedTime).FirstOrDefault();
                 var lastDate = DateTime.Now.Date.AddDays(-1);
-                if(lastAssign != null && lastAssign.StartedTime.HasValue)
+                if (lastAssign != null && lastAssign.StartedTime.HasValue)
                 {
                     lastDate = lastAssign.StartedTime.Value.Date;
                 }
-                else if(!string.IsNullOrEmpty(CsConfiguration.GetConfiguration("lastDate")))
+                else if (!string.IsNullOrEmpty(CsConfiguration.GetConfiguration("lastDate")))
                 {
                     lastDate = CsConfiguration.GetDateTime("lastDate", today);
                 }
@@ -51,6 +101,14 @@ namespace IMS.Services
         {
             public void Execute(IJobExecutionContext context)
             {
+                //Add log
+                Log logSchedule = new Log
+                {
+                    Object = Constants.Object.OBJECT_SCHEDULE,
+                    ChangedValueOfObject = "Notify unfinished task.",
+                    LogTime = DateTime.Now
+                };
+                LogBLO.Current.Add(logSchedule);
                 var result = TaskBLO.Current.CheckEndOfShiftTasks();
                 foreach (var notiCode in result.NotificationCodes)
                 {
@@ -71,10 +129,10 @@ namespace IMS.Services
                 var scheduler = StdSchedulerFactory.GetDefaultScheduler();
                 scheduler.Start();
                 {
-                    var job = JobBuilder.Create<TestJob>().Build();
+                    var job = JobBuilder.Create<MasterJob>().Build();
                     var trigger = TriggerBuilder.Create()
                         .StartNow()
-                        .WithDailyTimeIntervalSchedule(s => 
+                        .WithDailyTimeIntervalSchedule(s =>
                             s.WithIntervalInHours(24)
                             .OnEveryDay()
                             .StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(0, 0)))
@@ -92,7 +150,7 @@ namespace IMS.Services
                     scheduler.ScheduleJob(job, trigger);
                 }
 
-                var testJob = new TestJob();
+                var testJob = new MasterJob();
                 testJob.Execute(null);
             }
         }

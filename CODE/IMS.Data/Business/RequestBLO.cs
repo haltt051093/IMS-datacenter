@@ -1640,5 +1640,15 @@ namespace IMS.Data.Business
             }
         }
         #endregion
+
+
+        public List<Request> GetTodayOfflineRequest()
+        {
+            var query = from r in dao.Table
+                        where (r.RequestType == Constants.RequestTypeCode.BRING_SERVER_AWAY || r.RequestType == Constants.RequestTypeCode.ADD_SERVER)
+                        && r.AppointmentTime >= DateTime.Now.Date && r.AppointmentTime < DateTime.Now.Date.AddDays(1) && (r.StatusCode == Constants.StatusCode.REQUEST_WAITING || r.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                        select r;
+            return query.ToList();
+        }
     }
 }

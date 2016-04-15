@@ -22,6 +22,7 @@ namespace IMS.Core
             public const string REQUEST_DONE = "STATUS07";
             public const string REQUEST_CANCELLED = "STATUS08";
             public const string REQUEST_REJECTED = "STATUS09";
+            public const string REQUEST_PENDINGPROCESSING = "STATUS38";
 
             public const string SERVER_WAITING = "STATUS01";
             public const string SERVER_RUNNING = "STATUS02";
@@ -158,6 +159,8 @@ namespace IMS.Core
             public const string OBJECT_SERVERIP = "ServerIP";
             public const string OBJECT_TASK = "Task";
             public const string OBJECT_TASK_LIST = "TaskList";
+            public const string OBJECT_SCHEDULE = "TaskList";
+
         }
 
         public class TypeOfLog

@@ -43,7 +43,7 @@
                         @Html.LabelFor(model => model.RequestInfo.Description)
                     </div>
                     <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
-                        @Html.DisplayFor(model => model.RequestInfo.Description, new {@class = Constants.HtmlFormat.FORM_INNER_CLASS})
+                        @Html.Raw(Model.RequestInfo.Description)
                     </div>
                 </div>
             </div>
