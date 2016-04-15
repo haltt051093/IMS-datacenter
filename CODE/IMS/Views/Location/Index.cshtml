@@ -99,6 +99,27 @@
 <!-- page script -->
 
 <script>
+    function mouseenter(e) {
+        var rows = $('#example1 tbody tr');
+        var row = $(this);
+        var isValid = true;
+        var index = rows.index(row);
+        var ip = row.attr("ip");
+        if (typeof ip != 'undefined' && ip != '') {
+            rows.each(function(i, e) {
+                var rowIp = $(e).attr("ip");
+                if (typeof rowIp != 'undefined') {
+                    if (rowIp == ip) {
+                        $(e).css('background-color', '#adadad');
+                    }
+                }
+            });
+        }
+    }
+
+    function mouseleave(e) {
+        $('#example1 tbody tr').css('background-color', '');
+    }
     $.fn.dataTable.ext.search.push(
         function (settings, data, dataIndex) {
             var rackCode = $('#RackCode').val();
@@ -172,12 +193,19 @@
         ],
         iDisplayLength: 42,
         aLengthMenu: [[42, 84, 126], [42, 84, 126]],
-        fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+        fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            var row = $(nRow);
+            row.hover(mouseenter, mouseleave);
             if (aData.ServerCode != null) {
                 $(nRow).addClass('clickable');
                 $(nRow).addClass('highlight');
                 $(nRow).addClass('background-info');
+                $(nRow).attr("title", "Customer: " + aData.ServerOwner + "; Server Status: " + aData.ServerStatus + "; Power: " + aData.Power + "; Bandwidth: " + aData.Bandwidth);
+                $(nRow).tooltip(
+                    "Customer: " + aData.ServerOwner + "; Server Status: " + aData.ServerStatus + "; Power: " + aData.Power + "; Bandwidth: " + aData.Bandwidth
+                );
             }
+            $(nRow).attr("ip", aData.DefaultIP);
 
             $(nRow).click(function() {
                 if (aData.ServerCode != null) {
@@ -185,7 +213,7 @@
                     window.location.assign(url);
                 }
             });
-},
+        },
         order: [[1, "asc"] ,[ 2, "desc" ]],
         columnDefs: [
             {

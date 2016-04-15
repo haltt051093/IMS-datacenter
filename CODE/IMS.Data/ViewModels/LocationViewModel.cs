@@ -18,5 +18,9 @@ namespace IMS.Data.ViewModels
         public string DefaultIP { get; set; }
         public string RackStatus { get; set; }
         public string Fullname { get; set; }
+        public string ServerOwner { get; set; }
+        public int? Power { get; set; }
+        public string ServerStatus { get; set; }
+        public string Bandwidth { get; set; }
     }
 }

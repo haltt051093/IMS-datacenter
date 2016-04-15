@@ -177,3 +177,20 @@ h6 {
     font-weight: normal;
     color: red;
 }
+
+#tooltip {
+    position: absolute;
+    width: auto;
+	display: inline;
+	padding: 8px;
+    font-family: Arial;
+    font-size: 14px;
+    color: #777777;
+	font-weight: bold;
+	border: 1px solid silver;
+    background: #FFFFEE;        /* Slightly yellow background */
+    border-radius: 5px;               /* Rounded corners */
+    box-shadow: 5px 5px 10px #DDD;  /* Tooltip shadow */
+	z-index: 30000;         /* A very large z-index ensures
+	                                   it's "always on top" */
+}
