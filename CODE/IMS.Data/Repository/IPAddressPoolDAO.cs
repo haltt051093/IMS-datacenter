@@ -35,11 +35,17 @@ namespace IMS.Data.Repository
         }
         public List<IPAddressPoolExtendedModel> GetAllIP()
         {
-            var query = @"select i.*,s.StatusName,ser.ServerCode from IPAddressPool as i
+            var query = @"select i.*,s.StatusName,ser.ServerCode, ser1.Power, ser1.Size,s1.StatusName as ServerStatus, ser1.Bandwidth, acc.Fullname as ServerOwner from IPAddressPool as i
                             left join Status as s
                             on s.StatusCode = i.StatusCode
 							left join ServerIP as ser 
-							on ser.CurrentIP = i.IPAddress and (ser.StatusCode='STATUS29' or ser.StatusCode='STATUS30')";
+							on ser.CurrentIP = i.IPAddress and (ser.StatusCode='STATUS29' or ser.StatusCode='STATUS30')
+                            left join Server as ser1
+							on ser.ServerCode = ser1.ServerCode
+							left join Status as s1
+                            on s1.StatusCode = ser1.StatusCode
+                            left join Account as acc
+							on acc.Username = ser1.Customer";
             return RawQuery<IPAddressPoolExtendedModel>(query, new object[] { });
         }
 

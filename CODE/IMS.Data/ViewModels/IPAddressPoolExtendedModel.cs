@@ -20,6 +20,11 @@ namespace IMS.Data.ViewModels
         }
 
         public string StatusName { get; set; }
-       public string ServerCode { get; set; }
+        public string ServerCode { get; set; }
+        public int? Size { get; set; }
+        public int? Power { get; set; }
+        public string Bandwidth { get; set; }
+        public string ServerStatus { get; set; }
+        public string ServerOwner { get; set; }
     }
 }
