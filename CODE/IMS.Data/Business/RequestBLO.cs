@@ -1650,5 +1650,108 @@ namespace IMS.Data.Business
                         select r;
             return query.ToList();
         }
+
+        public int CountAllPendingRequest()
+        {
+            var query = from r in dao.Table
+                        where r.StatusCode == Constants.StatusCode.REQUEST_PENDING
+                        select r;
+            return query.ToList().Count;
+        }
+
+        public int CountCustomerPendingRequest(string customer)
+        {
+            var query = from r in dao.Table
+                        where r.StatusCode == Constants.StatusCode.REQUEST_PENDING && r.Customer == customer
+                        select r;
+            return query.ToList().Count;
+        }
+
+        public int CountAllProcessingRequest()
+        {
+            var query = from r in dao.Table
+                        where r.StatusCode == Constants.StatusCode.REQUEST_PROCESSING
+                        select r;
+            return query.ToList().Count;
+        }
+
+        public int CountCustomerProcessingRequest(string customer)
+        {
+            var query = from r in dao.Table
+                        where r.StatusCode == Constants.StatusCode.REQUEST_PENDING && r.Customer == customer
+                        select r;
+            return query.ToList().Count;
+        }
+
+        public int CountAllWeeklyRequest()
+        {
+            //return (int) (DateTime.Now.Date - LogTime.Value.Date).TotalDays;
+            var listrequest = GetAll();
+            List<Request> weeklyrequests = new List<Request>();
+            foreach (var item in listrequest)
+            {
+                var count = (DateTime.Now.Date - item.RequestedTime.Value.Date).TotalDays;
+                if (count <= 7)
+                {
+                    weeklyrequests.Add(item);
+                }
+            }
+            return weeklyrequests.Count;
+        }
+
+        public int CountCustomerWeeklyRequest(string customer)
+        {
+            var listrequest = GetAll().Where(x => x.Customer == customer).ToList();
+            List<Request> weeklyrequests = new List<Request>();
+            foreach (var item in listrequest)
+            {
+                var count = (DateTime.Now.Date - item.RequestedTime.Value.Date).TotalDays;
+                if (count <= 7)
+                {
+                    weeklyrequests.Add(item);
+                }
+            }
+            return weeklyrequests.Count;
+        }
+
+        public List<RequestExtendedModel> ListRequestAtHome()
+        {
+            var list = from r in dao.Table
+                       join rt in RequestTypeDAO.Current.Table
+                            on r.RequestType equals rt.RequestTypeCode into rrt
+                       from subrrt in rrt.DefaultIfEmpty()
+                       join s in StatusDAO.Current.Table
+                            on r.StatusCode equals s.StatusCode into sr
+                       from subsr in sr.DefaultIfEmpty()
+                       //where r.StatusCode == Constants.StatusCode.REQUEST_PENDING ||
+                       //        r.StatusCode == Constants.StatusCode.REQUEST_PROCESSING ||
+                       //        r.StatusCode == Constants.StatusCode.REQUEST_WAITING
+                       select new RequestExtendedModel()
+                       {
+                           RequestedTime = r.RequestedTime,
+                           RequestTypeName = subrrt.RequestTypeName,
+                           StatusName = subsr.StatusName
+                       };
+            return list.Take(10).ToList();
+        }
+
+        public List<RequestExtendedModel> ListCustomerRequestAtHome(string customer)
+        {
+            var list = from r in dao.Table
+                       join rt in RequestTypeDAO.Current.Table
+                            on r.RequestType equals rt.RequestTypeCode into rrt
+                       from subrrt in rrt.DefaultIfEmpty()
+                       join s in StatusDAO.Current.Table
+                            on r.StatusCode equals s.StatusCode into sr
+                       from subsr in sr.DefaultIfEmpty()
+                       where r.Customer == customer
+                       select new RequestExtendedModel()
+                       {
+                           RequestedTime = r.RequestedTime,
+                           RequestTypeName = subrrt.RequestTypeName,
+                           StatusName = subsr.StatusName
+                       };
+            return list.Take(10).ToList();
+        }
     }
 }

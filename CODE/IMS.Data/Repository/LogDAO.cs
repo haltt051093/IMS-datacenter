@@ -167,7 +167,8 @@ namespace IMS.Data.Repository
                                              TypeOfLog = subsrt.TypeCode,
                                              RequestCode = sr.RequestCode,
                                              Customer = subssr.Customer,
-                                             StatusCode = subsstr.StatusCode
+                                             StatusCode = subsstr.StatusCode,
+                                             RequestedTime =  subssr.RequestedTime
                                          };
                 if (allStatusOfRequest.Any())
                 {
@@ -197,7 +198,6 @@ namespace IMS.Data.Repository
                 }
             }
             return list;
-            //return RawQuery<RequestExtendedModel>(query, new object[] { });
         }
 
         public List<Log> GetBlockedIP(string IP)

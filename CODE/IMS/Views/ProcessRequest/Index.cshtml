@@ -24,7 +24,7 @@
             @Html.LabelFor(model => model.FilterByStatus, "Status")
         </div>
         <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-            @Html.DropDownListFor(m => m.FilterByStatus, Model.FilterByStatus, "Select All", new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+            @Html.DropDownListFor(m => m.FilterByStatus, Model.FilterByStatus, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
             @Html.ValidationMessageFor(model => model.FilterByStatus)
         </div>
     </div>
@@ -123,6 +123,18 @@
 </section><!-- /.content -->
 
 <script>
+    function checkStatus(rowStatusCode, statusCode) {
+        if (statusCode == '@Constants.StatusCode.REQUEST_PENDINGPROCESSING') {
+            if (rowStatusCode == '@Constants.StatusCode.REQUEST_PENDING' || rowStatusCode == '@Constants.StatusCode.REQUEST_PROCESSING') {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return rowStatusCode == statusCode;
+        }
+    }
+
     function filterRequest() {
         var typeCode = $("#FilterByRequestType").val();
         var statusCode = $("#FilterByStatus").val();
@@ -138,19 +150,6 @@
         }
         duration = duration - 0;
 
-        //if (typeCode == '' && statusCode == '') {
-        //    $('#example1 tbody[type-code][status-code]').show();
-        //}
-        //else {
-        //$('#example1 tbody').hide();
-        //if (typeCode != '' && statusCode == '') {
-        //    $('#example1 tbody[type-code="' + typeCode + '"]').show();
-        //} else if (statusCode != '' && typeCode == '') {
-        //    $('#example1 tbody[status-code="' + statusCode + '"]').show();
-        //} else {
-        //    $('#example1 tbody[type-code="' + typeCode + '"][status-code="' + statusCode + '"]').show();
-        //}
-        //}
         $('#example1 tr[type-code][status-code]').each(function (i, e) {
             var row = $(e);
             var rowTypeCode = row.attr('type-code');
@@ -164,11 +163,11 @@
                     isShow = true;
                 }
             } else if (typeCode == '' && statusCode != '') {
-                if (rowStatusCode == statusCode && duration >= rowDuration) {
+                if (checkStatus(rowStatusCode, statusCode) && duration >= rowDuration) {
                     isShow = true;
                 }
             } else {
-                if (rowTypeCode == typeCode && rowStatusCode == statusCode && duration >= rowDuration) {
+                if (rowTypeCode == typeCode && checkStatus(rowStatusCode, statusCode) && duration >= rowDuration) {
                     isShow = true;
                 }
             }

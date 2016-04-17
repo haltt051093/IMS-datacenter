@@ -14,63 +14,6 @@
         <div class="row">
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
-                <div class="small-box bg-aqua">
-                    <div class="inner">
-                        <h3>
-                            150
-                        </h3>
-                        <p>
-                            Pending Requests
-                        </p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-pause-circle-o"></i>
-                    </div>
-                    <a href="@Url.Action("Index", "ProcessRequest")" class="small-box-footer">
-                        More info <i class="fa fa-arrow-circle-right"></i>
-                    </a>
-                </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-green">
-                    <div class="inner">
-                        <h3>
-                            53
-                        </h3>
-                        <p>
-                            Processing Requests
-                        </p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-play-circle-o"></i>
-                    </div>
-                    <a href="@Url.Action("Index", "ProcessRequest")" class="small-box-footer">
-                        More info <i class="fa fa-arrow-circle-right"></i>
-                    </a>
-                </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-yellow">
-                    <div class="inner">
-                        <h3>
-                            44
-                        </h3>
-                        <p>
-                            Requests this week
-                        </p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-reply-all"></i>
-                    </div>
-                    <a href="@Url.Action("Index", "ProcessRequest")" class="small-box-footer">
-                        More info <i class="fa fa-arrow-circle-right"></i>
-                    </a>
-                </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
                 <div class="small-box bg-red">
                     <div class="inner">
                         <h3>
@@ -88,6 +31,63 @@
                     </a>
                 </div>
             </div><!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-yellow">
+                    <div class="inner">
+                        <h3>
+                            @Model.countWeeklyRequest
+                        </h3>
+                        <p>
+                            Requests this week
+                        </p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-reply-all"></i>
+                    </div>
+                    <a href="@Url.Action("Index", "ProcessRequest")" class="small-box-footer">
+                        More info <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div><!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <h3>
+                            @Model.countPendingRequest
+                        </h3>
+                        <p>
+                            Pending Requests
+                        </p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-pause-circle-o"></i>
+                    </div>
+                    <a href="@Url.Action("Index", "ProcessRequest")" class="small-box-footer">
+                        More info <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div><!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3>
+                            @Model.countProcessingRequest
+                        </h3>
+                        <p>
+                            Processing Requests
+                        </p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-play-circle-o"></i>
+                    </div>
+                    <a href="@Url.Action("Index", "ProcessRequest")" class="small-box-footer">
+                        More info <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div><!-- ./col -->
         </div>
         <!-- /.row -->
         <div class="row">
@@ -98,7 +98,37 @@
                         <h3 class="box-title">List New Requests</h3>
                     </div>
                     <div class="box-body">
-                        <table></table>
+                        <table class="@Constants.HtmlFormat.DATATABLE_CLASS">
+                            <thead>
+                                <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
+                                    <th>
+                                        Request Type
+                                    </th>
+                                    <th>
+                                        Status
+                                    </th>
+                                    <th>
+                                        Requested Time
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyid">
+                                @foreach (var item in Model.firstTenRequests)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.RequestTypeName
+                                        </td>
+                                        <td>
+                                            @item.StatusName
+                                        </td>
+                                        <td>
+                                            @item.RequestedTime
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div><!-- /.box-body-->
                     <div class="box-footer">
                         <a href="@Url.Action("Index", "ProcessRequest")">
@@ -114,7 +144,11 @@
                         <h3 class="box-title">IP Address Bar Chart</h3>
                     </div>
                     <div class="box-body">
-                        <div id="bar-chart" style="height: 300px;"></div>
+                        <div id="bar-chart" style="height: 300px;">
+                            @*<table id="MyTable" class="@Constants.HtmlFormat.DATATABLE_CLASS">
+                                
+                            </table>*@
+                        </div>
                     </div><!-- /.box-body-->
                     <div class="box-footer">
                         <a href="@Url.Action("Index", "IP")">
@@ -129,35 +163,19 @@
     {
         <div class="row">
             <div class="col-lg-4 col-xs-5">
-                <div class="small-box bg-aqua">
+                <div class="small-box bg-red">
                     <div class="inner">
                         <h3>
-                            150
+                            @Model.RunningServer
                         </h3>
                         <p>
-                            Pending Requests
+                            Running Servers
                         </p>
                     </div>
                     <div class="icon">
-                        <i class="fa fa-pause-circle-o"></i>
+                        <i class="fa fa-hdd-o"></i>
                     </div>
-                    <a href="@Url.Action("Index", "Request")" class="small-box-footer">
-                        More info <i class="fa fa-arrow-circle-right"></i>
-                    </a>
-                </div>
-                <div class="small-box bg-green">
-                    <div class="inner">
-                        <h3>
-                            53
-                        </h3>
-                        <p>
-                            Processing Requests
-                        </p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-play-circle-o"></i>
-                    </div>
-                    <a href="@Url.Action("Index", "Request")" class="small-box-footer">
+                    <a href="@Url.Action("Index", "Server")" class="small-box-footer">
                         More info <i class="fa fa-arrow-circle-right"></i>
                     </a>
                 </div>
@@ -177,19 +195,35 @@
                         More info <i class="fa fa-arrow-circle-right"></i>
                     </a>
                 </div>
-                <div class="small-box bg-red">
+                <div class="small-box bg-aqua">
                     <div class="inner">
                         <h3>
-                            @Model.RunningServer
+                            @Model.countPendingRequest
                         </h3>
                         <p>
-                            Running Servers
+                            Pending Requests
                         </p>
                     </div>
                     <div class="icon">
-                        <i class="fa fa-hdd-o"></i>
+                        <i class="fa fa-pause-circle-o"></i>
                     </div>
-                    <a href="@Url.Action("Index", "Server")" class="small-box-footer">
+                    <a href="@Url.Action("Index", "Request")" class="small-box-footer">
+                        More info <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3>
+                            @Model.countProcessingRequest
+                        </h3>
+                        <p>
+                            Processing Requests
+                        </p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-play-circle-o"></i>
+                    </div>
+                    <a href="@Url.Action("Index", "Request")" class="small-box-footer">
                         More info <i class="fa fa-arrow-circle-right"></i>
                     </a>
                 </div>
@@ -201,9 +235,37 @@
                         <h3 class="box-title">List My Requests</h3>
                     </div>
                     <div class="box-body">
-                        <table></table>
-
-
+                        <table class="@Constants.HtmlFormat.DATATABLE_CLASS">
+                            <thead>
+                                <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
+                                    <th>
+                                        Request Type
+                                    </th>
+                                    <th>
+                                        Status
+                                    </th>
+                                    <th>
+                                        Requested Time
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyid">
+                                @foreach (var item in Model.firstTenRequests)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.RequestTypeName
+                                        </td>
+                                        <td>
+                                            @item.StatusName
+                                        </td>
+                                        <td>
+                                            @item.RequestedTime
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div><!-- /.box-body-->
                     <div class="box-footer">
                         <a href="@Url.Action("Index", "Request")">

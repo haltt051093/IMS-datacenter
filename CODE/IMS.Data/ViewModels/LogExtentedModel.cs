@@ -28,6 +28,7 @@ namespace IMS.Data.ViewModels
         public string Customer { get; set; }
         public string CustomerName { get; set; }
         public int Priority { get; set; }
+        public DateTime? RequestedTime { get; set; }
 
         public LogExtentedModel LastestStatusRequest { get; set; }
         public List<LogExtentedModel> OldStatusRequests { get; set; }
@@ -47,7 +48,7 @@ namespace IMS.Data.ViewModels
                 {
                     return 0;
                 }
-                return (int) (DateTime.Now.Date - LogTime.Value.Date).TotalDays;
+                return (int)(DateTime.Now.Date - LogTime.Value.Date).TotalDays;
             }
         }
     }

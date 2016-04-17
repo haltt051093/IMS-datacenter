@@ -29,7 +29,7 @@ namespace IMS.Controllers
                 .ToList();
             data.FilterByStatus = StatusBLO.Current
                 .GetStatusByObject(Constants.Object.OBJECT_REQUEST)
-                .Select(x => new SelectListItem { Value = x.StatusCode, Text = x.StatusName })
+                .Select(x => new SelectListItem { Value = x.StatusCode, Text = x.StatusName, Selected = (x.StatusCode == Constants.StatusCode.REQUEST_PENDINGPROCESSING) })
                 .ToList();
             data.FilterByPeriodOfTime = new List<SelectListItem>
             {

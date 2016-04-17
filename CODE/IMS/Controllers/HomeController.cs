@@ -27,39 +27,46 @@ namespace IMS.Controllers
                                 x.Customer == user && x.StatusCode != Constants.StatusCode.SERVER_WAITING &&
                                 x.StatusCode != Constants.StatusCode.SERVER_DEACTIVATE).ToList();
                 data.RunningServer = servers.Count;
+                data.countPendingRequest = RequestBLO.Current.CountCustomerPendingRequest(user);
+                data.countProcessingRequest = RequestBLO.Current.CountCustomerProcessingRequest(user);
+                data.countWeeklyRequest = RequestBLO.Current.CountCustomerWeeklyRequest(user);
+                data.firstTenRequests = RequestBLO.Current.ListCustomerRequestAtHome(user);
             }
             if (data.RoleLogin != Constants.Role.CUSTOMER)
             {
                 var servers =
                     ServerBLO.Current.GetAll()
                         .Where(
-                            x =>x.StatusCode != Constants.StatusCode.SERVER_WAITING &&
+                            x => x.StatusCode != Constants.StatusCode.SERVER_WAITING &&
                                 x.StatusCode != Constants.StatusCode.SERVER_DEACTIVATE).ToList();
                 data.RunningServer = servers.Count;
+                var blocked = 0;
+                var available = 0;
+                var used = 0;
+                var ips = IPAddressPoolBLO.Current.GetAllIP();
+                for (int i = 0; i < ips.Count; i++)
+                {
+                    if (ips[i].StatusCode == Constants.StatusCode.IP_AVAILABLE)
+                    {
+                        available++;
+                    }
+                    if (ips[i].StatusCode == Constants.StatusCode.IP_BLOCKED)
+                    {
+                        blocked++;
+                    }
+                    if (ips[i].StatusCode == Constants.StatusCode.IP_USED)
+                    {
+                        used++;
+                    }
+                }
+                data.countavailableip = available;
+                data.countblockedip = blocked;
+                data.countusedip = used;
+                data.countPendingRequest = RequestBLO.Current.CountAllPendingRequest();
+                data.countProcessingRequest = RequestBLO.Current.CountAllProcessingRequest();
+                data.countWeeklyRequest = RequestBLO.Current.CountAllWeeklyRequest();
+                data.firstTenRequests = RequestBLO.Current.ListRequestAtHome();
             }
-            var blocked = 0;
-            var available = 0;
-            var used = 0;
-            var ips = IPAddressPoolBLO.Current.GetAllIP();
-            for (int i = 0; i < ips.Count; i++)
-            {
-                if (ips[i].StatusCode == Constants.StatusCode.IP_AVAILABLE)
-                {
-                    available++;
-                }
-                if (ips[i].StatusCode == Constants.StatusCode.IP_BLOCKED)
-                {
-                    blocked++;
-                }
-                if (ips[i].StatusCode == Constants.StatusCode.IP_USED)
-                {
-                    used++;
-                }
-                
-            }
-            data.countavailableip = available;
-            data.countblockedip = blocked;
-            data.countusedip = used;
             return View(data);
         }
 
