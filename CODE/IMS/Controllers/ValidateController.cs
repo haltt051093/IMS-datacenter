@@ -47,7 +47,9 @@ namespace IMS.Controllers
         [HttpPost]
         public JsonResult CheckAddServer(string ServerCount)
         {
-            var count = TempRequestBLO.Current.GetByRequestCode(ServerCount).Count;
+            var requestCodePart = ServerCount.Split(new char[] { '-' });
+            var requestCode = requestCodePart[0];
+            var count = TempRequestBLO.Current.GetByRequestCode(requestCode).Count;
             return Json(count != 0);
         }
     }

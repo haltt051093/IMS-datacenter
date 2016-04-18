@@ -1060,7 +1060,7 @@ namespace IMS.Data.Business
                 {
                     //update and log status cua IP o IPAddresspool
                     IPAddressPoolBLO.Current.UpdateStatusIpANDLog(requestCode, server.ServerCode, ip,
-                        Constants.StatusCode.IP_AVAILABLE, Constants.TypeOfLog.LOG_RETURN_IP, assignee, false);
+                        Constants.StatusCode.IP_AVAILABLE, Constants.TypeOfLog.LOG_RETURN_IP, assignee, true);
                     // update and log statuscode cua bang serverIP
                     ServerIPBLO.Current.UpdateServerIpANDLog(requestCode, server.ServerCode, ip,
                         Constants.TypeOfLog.LOG_RETURN_IP, Constants.StatusCode.SERVERIP_OLD, assignee);
@@ -1646,9 +1646,10 @@ namespace IMS.Data.Business
 
         public List<Request> GetTodayOfflineRequest()
         {
+            DateTime test = DateTime.Today.AddDays(1);
             var query = from r in dao.Table
                         where (r.RequestType == Constants.RequestTypeCode.BRING_SERVER_AWAY || r.RequestType == Constants.RequestTypeCode.ADD_SERVER)
-                        && r.AppointmentTime >= DateTime.Now.Date && r.AppointmentTime < DateTime.Now.Date.AddDays(1) && (r.StatusCode == Constants.StatusCode.REQUEST_WAITING || r.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                        && r.AppointmentTime >= DateTime.Today && r.AppointmentTime < test && (r.StatusCode == Constants.StatusCode.REQUEST_WAITING || r.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                         select r;
             return query.ToList();
         }

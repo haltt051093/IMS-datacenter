@@ -3,6 +3,7 @@ using IMS.Data.ViewModels;
 using SelectListItem = System.Web.Mvc.SelectListItem;
 using System.ComponentModel.DataAnnotations;
 using IMS.Validations;
+using IMS.Core;
 
 namespace IMS.Models
 {
@@ -23,7 +24,7 @@ namespace IMS.Models
         public int NumberOfIP { get; set; }
         [CustomRequired(ErrorMessage = "Please select server.")]
         public string ServerValidation { get; set; }
-        [CustomRequired(ErrorMessage = "Please select number of IP Address")]
+        [CustomRequired(Constants.Validation.REQUIRED_A, ErrorMessage = "Please select IP address")]
         public string IPNumValidation { get; set; }
 
         //DropdownList

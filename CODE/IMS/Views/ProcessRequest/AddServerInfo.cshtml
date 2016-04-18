@@ -307,7 +307,7 @@
                         <button type="submit" id="btnApprove" name="@Constants.FormAction.APPROVE_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
                             @Labels.Approve
                         </button>
-                        <a class="btn btn-danger" data-toggle="modal" data-target="#Rejectrequest">Reject</a>
+                        <a class="btn btn-danger" formnovalidate data-toggle="modal" data-target="#Rejectrequest">Reject</a>
                     }
                 }
                 else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING && (User.IsInRole("Shift Head") || User.IsInRole("Manager")))
@@ -315,14 +315,14 @@
                     <button type="submit" id="btnProcess" name="@Constants.FormAction.PROCESS_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
                         Process
                     </button>
-                    <a class="btn btn-danger" data-toggle="modal" data-target="#Rejectrequest">Reject</a>
+                    <a class="btn btn-danger" formnovalidate data-toggle="modal" data-target="#Rejectrequest">Reject</a>
                 }
                 else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING && (User.IsInRole("Shift Head") || User.IsInRole("Manager")))
                 {
                     <button type="submit" id="btnAccept" name="@Constants.FormAction.ACCEPT_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
                         @Labels.Accept
                     </button>
-                    <a class="btn btn-danger" data-toggle="modal" data-target="#Rejectrequest">Reject</a>
+                    <a class="btn btn-danger" formnovalidate data-toggle="modal" data-target="#Rejectrequest">Reject</a>
                 }
                 @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
                 {
@@ -354,7 +354,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        <button type="submit" formnovalidate id="btnReject" name="@Constants.FormAction.REJECT_ACTION" value="@Constants.FormAction.REJECT_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
                             @Labels.OK
                         </button>
                         <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"

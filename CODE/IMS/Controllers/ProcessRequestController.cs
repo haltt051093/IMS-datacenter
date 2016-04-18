@@ -38,6 +38,7 @@ namespace IMS.Controllers
                 new SelectListItem() {Value = "30", Text = "One Month"},
                 new SelectListItem() {Value = "99999", Text = "All"}
             };
+            data.SelectedStatus = Constants.StatusCode.REQUEST_PENDINGPROCESSING;
             return View(data);
         }
 

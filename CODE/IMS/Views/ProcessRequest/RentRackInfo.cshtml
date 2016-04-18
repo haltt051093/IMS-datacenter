@@ -160,46 +160,48 @@
         </div>
         if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
         {
-            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-                    @Html.LabelFor(model => model.SelectedRow, "Select racks")
-                </div>
-                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                    @Html.DropDownListFor(m => m.SelectedRow, Model.ListRows, "Select All", new { @id = "selectedRow", @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                    @Html.ValidationMessageFor(model => model.SelectedRow)
-                    <table id="masterTable" class="@Constants.HtmlFormat.DATATABLE_CLASS">
-                        <thead>
-                            <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
-                                <th>
-                                    <input id="checkAll" type="checkbox" />
-                                </th>
-                                <th>@Labels.Rack</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @for (int i = 0; i < Model.listRackByRows.Count; i++)
-                    {
-                                <tr class="check currentRacks" row-code="@Model.listRackByRows[i].RowName">
-                                    <td>
-                                        @Html.CheckBoxFor(modelItem => modelItem.listRackByRows[i].Checked)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => Model.listRackByRows[i].RackName, new { @class = "form-control" })
-                                        @Html.HiddenFor(model => Model.listRackByRows[i].RackName, new { @class = "form-control" })
-                                        @Html.HiddenFor(model => Model.listRackByRows[i].RackCode, new { @class = "form-control" })
-                                    </td>
+            if (Model.RequestInfo.Assignee == Model.CurrentUser && Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
+            {
+                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                        @Html.LabelFor(model => model.SelectedRow, "Select racks")
+                    </div>
+                    <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                        @Html.DropDownListFor(m => m.SelectedRow, Model.ListRows, "Select All", new { @id = "selectedRow", @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        @Html.ValidationMessageFor(model => model.SelectedRow)
+                        <table id="masterTable" class="@Constants.HtmlFormat.DATATABLE_CLASS">
+                            <thead>
+                                <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
+                                    <th>
+                                        <input id="checkAll" type="checkbox" />
+                                    </th>
+                                    <th>@Labels.Rack</th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
-                    @*<div id="notEnough" class="alert alert-warning alert-dismissable" style="display: none">
-                        <i class="fa fa-warning"></i>
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                        <b>Alert!</b> Rack is out of stock! Please Add more.
-                    </div>*@
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.listRackByRows.Count; i++)
+                                {
+                                    <tr class="check currentRacks" row-code="@Model.listRackByRows[i].RowName">
+                                        <td>
+                                            @Html.CheckBoxFor(modelItem => modelItem.listRackByRows[i].Checked)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => Model.listRackByRows[i].RackName, new { @class = "form-control" })
+                                            @Html.HiddenFor(model => Model.listRackByRows[i].RackName, new { @class = "form-control" })
+                                            @Html.HiddenFor(model => Model.listRackByRows[i].RackCode, new { @class = "form-control" })
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        @*<div id="notEnough" class="alert alert-warning alert-dismissable" style="display: none">
+                                <i class="fa fa-warning"></i>
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                <b>Alert!</b> Rack is out of stock! Please Add more.
+                            </div>*@
+                    </div>
                 </div>
-            </div>
-           
+            }
         }
         if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
         {
@@ -210,8 +212,8 @@
                 <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                     @foreach (var item in Model.RentedRacks)
                     {
-                        @Html.DisplayFor(model => item, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                        <br />
+                    @Html.DisplayFor(model => item, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    <br />
                     }
                 </div>
             </div>
@@ -297,53 +299,53 @@
         <div class="modal-content">
             @using (Html.BeginForm("ProcessRequestRentRack", "ProcessRequest", FormMethod.Post))
             {
-                <div class="modal-header">
-                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS">
-                        <i class="fa fa-plus"></i>
-                        Reassign Task
-                    </div>
+        <div class="modal-header">
+            <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS">
+                <i class="fa fa-plus"></i>
+                Reassign Task
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                <div class="col-xs-4 tf-form-label">
+                    @Html.LabelFor(model => model.RequestInfo.AssigneeName, "Assigned Staff")
                 </div>
-                <div class="modal-body">
-                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                        <div class="col-xs-4 tf-form-label">
-                            @Html.LabelFor(model => model.RequestInfo.AssigneeName, "Assigned Staff")
-                        </div>
-                        <div class="col-xs-8 tf-form-control">
-                            @Html.DisplayFor(model => model.RequestInfo.AssigneeName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                        </div>
-                    </div>
-                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                        <div class="col-xs-4 tf-form-label">
-                            @Html.LabelFor(model => model.RequestInfo.TaskStatusName)
-                        </div>
-                        <div class="col-xs-8 tf-form-control">
-                            @Html.DisplayFor(model => model.RequestInfo.TaskStatusName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                        </div>
-                    </div>
-                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                        <div class="col-xs-4 tf-form-label">
-                            @Html.LabelFor(model => model.RequestInfo.AssignedStaff, "Assignee")
-                        </div>
-                        <div class="col-xs-8 tf-form-control">
-                            @Html.DropDownListFor(model => model.RequestInfo.AssignedStaff, Model.StaffCodeOptions, new { @style = "width: 200px;", @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                            @*@Html.ValidationMessageFor(model => model.RequestInfo.AssignedStaff)*@
-                        </div>
-                    </div>
+                <div class="col-xs-8 tf-form-control">
+                    @Html.DisplayFor(model => model.RequestInfo.AssigneeName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                 </div>
-                <div class="modal-footer">
-                    @Html.HiddenFor(model => model.RequestInfo.Assignee)
-                    @Html.HiddenFor(model => model.RequestInfo.RequestCode)
-                    @Html.HiddenFor(model => model.RequestInfo.TaskCode)
-                    @Html.HiddenFor(model => model.RequestInfo.TaskStatus)
-                    <button type="submit" name="@Constants.FormAction.REASSIGN_ACTION" value="@Constants.FormAction.REASSIGN_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                        @Labels.OK
-                    </button>
-                    <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
-                            data-dismiss="modal">
-                        @Labels.DialogCancel
-                    </button>
+            </div>
+            <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                <div class="col-xs-4 tf-form-label">
+                    @Html.LabelFor(model => model.RequestInfo.TaskStatusName)
+                </div>
+                <div class="col-xs-8 tf-form-control">
+                    @Html.DisplayFor(model => model.RequestInfo.TaskStatusName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                </div>
+            </div>
+            <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                <div class="col-xs-4 tf-form-label">
+                    @Html.LabelFor(model => model.RequestInfo.AssignedStaff, "Assignee")
+                </div>
+                <div class="col-xs-8 tf-form-control">
+                    @Html.DropDownListFor(model => model.RequestInfo.AssignedStaff, Model.StaffCodeOptions, new { @style = "width: 200px;", @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                    @*@Html.ValidationMessageFor(model => model.RequestInfo.AssignedStaff)*@
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            @Html.HiddenFor(model => model.RequestInfo.Assignee)
+            @Html.HiddenFor(model => model.RequestInfo.RequestCode)
+            @Html.HiddenFor(model => model.RequestInfo.TaskCode)
+            @Html.HiddenFor(model => model.RequestInfo.TaskStatus)
+            <button type="submit" name="@Constants.FormAction.REASSIGN_ACTION" value="@Constants.FormAction.REASSIGN_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                @Labels.OK
+            </button>
+            <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
+                    data-dismiss="modal">
+                @Labels.DialogCancel
+            </button>
 
-                </div>
+        </div>
             }
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -354,34 +356,34 @@
         <div class="modal-content">
             @using (Html.BeginForm("NotFinishTask", "Task", FormMethod.Post))
             {
-                <div class="modal-header">
-                    <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS">
-                        <i class="fa fa-minus-circle"></i>
-                        Not Finish Task
-                    </div>
+        <div class="modal-header">
+            <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS">
+                <i class="fa fa-minus-circle"></i>
+                Not Finish Task
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
+                    @Html.LabelFor(model => model.RequestInfo.NotFinishReason)
                 </div>
-                <div class="modal-body">
-                    <div class="@Constants.HtmlFormat.MODAL_ROW_CLASS">
-                        <div class="@Constants.HtmlFormat.MODAL_LABEL_CLASS">
-                            @Html.LabelFor(model => model.RequestInfo.NotFinishReason)
-                        </div>
-                        <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                            @*<textarea rows="2" name="reason" />*@
-                            <TEXTAREA NAME="reason" COLS=40 ROWS=2></TEXTAREA>
-                            <input type="hidden" name="taskcode" value="@Model.RequestInfo.TaskCode" />
-                            <input type="hidden" name="requestcode" value="@Model.RequestInfo.RequestCode" />
-                        </div>
-                    </div>
+                <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
+                    @*<textarea rows="2" name="reason" />*@
+                    <TEXTAREA NAME="reason" COLS=40 ROWS=2></TEXTAREA>
+                    <input type="hidden" name="taskcode" value="@Model.RequestInfo.TaskCode" />
+                    <input type="hidden" name="requestcode" value="@Model.RequestInfo.RequestCode" />
                 </div>
-                <div class="modal-footer">
-                    <button type="submit" id="btnReject" name="@Constants.FormAction.NOT_FINISHED_TASK_ACTION" value="@Constants.FormAction.NOT_FINISHED_TASK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                        @Labels.OK
-                    </button>
-                    <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
-                            data-dismiss="modal">
-                        @Labels.DialogCancel
-                    </button>
-                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" id="btnReject" name="@Constants.FormAction.NOT_FINISHED_TASK_ACTION" value="@Constants.FormAction.NOT_FINISHED_TASK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                @Labels.OK
+            </button>
+            <button type="button" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.CANCEL_ACTION" class="@Constants.HtmlFormat.DEFAULT_BUTTON_CLASS"
+                    data-dismiss="modal">
+                @Labels.DialogCancel
+            </button>
+        </div>
             }
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

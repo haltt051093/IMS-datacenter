@@ -21,11 +21,11 @@
     </div>
     <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
         <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-            @Html.LabelFor(model => model.FilterByStatus, "Status")
+            @Html.LabelFor(model => model.SelectedStatus, "Status")
         </div>
         <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-            @Html.DropDownListFor(m => m.FilterByStatus, Model.FilterByStatus, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-            @Html.ValidationMessageFor(model => model.FilterByStatus)
+            @Html.DropDownListFor(m => m.SelectedStatus, Model.FilterByStatus, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+            @Html.ValidationMessageFor(model => model.SelectedStatus)
         </div>
     </div>
     <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">

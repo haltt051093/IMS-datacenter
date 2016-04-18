@@ -6,6 +6,9 @@ using IMS.Data.Repository;
 using Quartz;
 using Quartz.Impl;
 using IMS.Data.Models;
+using IMS.Data.ViewModels;
+using System.Collections.Generic;
+using IMS.Controllers;
 
 namespace IMS.Services
 {
@@ -15,19 +18,26 @@ namespace IMS.Services
         {
             public void Execute(IJobExecutionContext context)
             {
-                //var list = RequestBLO.Current.GetTodayOfflineRequest();
-                //if (list != null)
-                //{
-                //    foreach (var item in list)
-                //    {
-                //        IJobDetail job = JobBuilder.Create<OfflineRequestJob>()
-                //            .UsingJobData("requestcode", item.RequestCode)
-                //            .UsingJobData("myFloatValue", 3.141f)
-                //            .Build();
-                //    }
-                //}
-
                 var scheduler = StdSchedulerFactory.GetDefaultScheduler();
+                var list = RequestBLO.Current.GetTodayOfflineRequest();
+                if (list != null)
+                {
+                    foreach (var item in list)
+                    {
+                        if (!item.AppointmentTime.HasValue)
+                        {
+                            continue;
+                        }
+                        var job = JobBuilder.Create<OfflineRequestJob>()
+                            .UsingJobData("requestcode", item.RequestCode)
+                            .Build();
+                        var trigger = TriggerBuilder.Create()
+                            .StartNow()
+                            .StartAt(new DateTimeOffset(item.AppointmentTime.Value.AddMinutes(-15)))
+                            .Build();
+                        scheduler.ScheduleJob(job, trigger);
+                    }
+                }
                 {
                     var job = JobBuilder.Create<AssignShiftJob>().Build();
                     var trigger = TriggerBuilder.Create()
@@ -50,6 +60,37 @@ namespace IMS.Services
                     ChangedValueOfObject = "Check offline request.",
                     LogTime = DateTime.Now
                 };
+
+                var dataMap = context.JobDetail.JobDataMap;
+                var requestCode = dataMap.GetString("requestcode");
+                var request = RequestBLO.Current.GetByKeys(new Request { RequestCode = requestCode });
+                //notification
+                var result = new NotificationResultModel();
+                var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
+                var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
+                    .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
+                    .ToList();
+                var desc = "Customer will come at " + request.AppointmentTime;
+                foreach (var shiftHead in activeStaff)
+                {
+                    var notifCode = NotificationBLO.Current.AddNotification(requestCode, Constants.Object.OBJECT_REQUEST, shiftHead.Username, desc);
+                    result.NotificationCodes.Add(notifCode);
+                }
+                //DOING
+                Notify(result.NotificationCodes);
+            }
+        }
+
+        public static void Notify(IEnumerable<string> notificationCodes)
+        {
+            foreach (var notiCode in notificationCodes)
+            {
+                var noti = NotificationBLO.Current.GetByKeys(new Notification { NotificationCode = notiCode });
+                if (noti == null)
+                {
+                    continue;
+                }
+                RemoteControllerHub.Current.Clients.User(noti.Username).Notify(noti);
             }
         }
 
@@ -154,5 +195,18 @@ namespace IMS.Services
                 testJob.Execute(null);
             }
         }
+
+        //public void Notify(IEnumerable<string> notificationCodes)
+        //{
+        //    foreach (var notiCode in notificationCodes)
+        //    {
+        //        var noti = NotificationBLO.Current.GetByKeys(new Notification { NotificationCode = notiCode });
+        //        if (noti == null)
+        //        {
+        //            continue;
+        //        }
+        //        RemoteControllerHub.Current.Clients.User(noti.Username).Notify(noti);
+        //    }
+        //}
     }
 }

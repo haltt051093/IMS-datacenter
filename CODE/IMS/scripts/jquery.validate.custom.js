@@ -13,47 +13,47 @@ $.validator.unobtrusive.adapters.add('customrequired', [],
 );
 
 // add jquery unobtrusive validation adapter
-$.validator.unobtrusive.adapters.add('customrequired1', [],
+$.validator.unobtrusive.adapters.add('customrequireda', [],
     function (options) {
-        options.rules['customrequired1'] = {
+        options.rules['customrequireda'] = {
         };
-        options.messages['customrequired1'] = options.message;
+        options.messages['customrequireda'] = options.message;
     }
 );
 
 // add jquery unobtrusive validation adapter
-$.validator.unobtrusive.adapters.add('customrequired2', [],
+$.validator.unobtrusive.adapters.add('customrequiredb', [],
     function (options) {
-        options.rules['customrequired2'] = {
+        options.rules['customrequiredb'] = {
         };
-        options.messages['customrequired2'] = options.message;
+        options.messages['customrequiredb'] = options.message;
     }
 );
 
 // add jquery unobtrusive validation adapter
-$.validator.unobtrusive.adapters.add('customrequired3', [],
+$.validator.unobtrusive.adapters.add('customrequiredc', [],
     function (options) {
-        options.rules['customrequired3'] = {
+        options.rules['customrequiredc'] = {
         };
-        options.messages['customrequired3'] = options.message;
+        options.messages['customrequiredc'] = options.message;
     }
 );
 
 // add jquery unobtrusive validation adapter
-$.validator.unobtrusive.adapters.add('customrequired4', [],
+$.validator.unobtrusive.adapters.add('customrequiredd', [],
     function (options) {
-        options.rules['customrequired4'] = {
+        options.rules['customrequiredd'] = {
         };
-        options.messages['customrequired4'] = options.message;
+        options.messages['customrequiredd'] = options.message;
     }
 );
 
 // add jquery unobtrusive validation adapter
-$.validator.unobtrusive.adapters.add('customrequired5', [],
+$.validator.unobtrusive.adapters.add('customrequirede', [],
     function (options) {
-        options.rules['customrequired5'] = {
+        options.rules['customrequirede'] = {
         };
-        options.messages['customrequired5'] = options.message;
+        options.messages['customrequirede'] = options.message;
     }
 );
 

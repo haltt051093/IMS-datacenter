@@ -3,6 +3,16 @@ namespace IMS.Core
 {
     public static class Constants
     {
+        public class Validation
+        {
+            public const string REQUIRED = "customrequired";
+            public const string REQUIRED_A = "customrequireda";
+            public const string REQUIRED_B = "customrequiredb";
+            public const string REQUIRED_C = "customrequiredc";
+            public const string REQUIRED_D = "customrequiredd";
+            public const string REQUIRED_E = "customrequirede";
+        }
+
         public class RequestTypeCode
         {
             public const string ADD_SERVER = "RT003";

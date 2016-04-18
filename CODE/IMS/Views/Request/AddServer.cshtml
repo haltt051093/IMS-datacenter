@@ -196,6 +196,14 @@
 </div>
 
 <script type="text/javascript">
+    var requestCode = '@Model.ServerCount';
+    var requestCount = 0;
+
+    function refreshServerCount() {
+        requestCount++;
+        $('#ServerCount').val(requestCode + '-' + requestCount);
+    }
+
     function clearModal() {
         $('#Server_Power').val('');
         $('#Server_Size').val('1');
@@ -250,6 +258,7 @@
             confirm('Are you sure to delete this server?', function (result) {
                 get('@Url.Action("DeleteTempServer", "Temp", new {httproute = ""})' + '/' + tempCode, function (data) {
                     $('#' + tempCode).remove();
+                    refreshServerCount();
                 });
             });
             return false;
@@ -264,6 +273,7 @@
         tbody.append(row);
         var lastRow = tbody.find('tr').last();
         setRow(lastRow, server);
+        refreshServerCount();
     }
 
     function editServer(server) {
@@ -271,6 +281,7 @@
         var rowId = lastRow.find('td').first().text();
         server.RowId = rowId;
         setRow(lastRow, server);
+        refreshServerCount();
     }
 
     function addServerComplete(data) {
