@@ -32,7 +32,7 @@ namespace IMS.Models
         public int NumberOfSelectedIP { get; set; }
         [Display(Name = "Assigned IPs")]
         public List<string> IPs { get; set; }
-        [CustomRequired]
+        [CustomRequired(ErrorMessage = "Please select appropriate number")]
         public string IPsString { get; set; }
 
         //DropdownList

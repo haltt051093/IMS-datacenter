@@ -1438,7 +1438,7 @@ namespace IMS.Data.Business
         }
         #endregion
 
-        #region accept request
+        #region accept task
         public NotificationResultModel AcceptTask(string taskCode, string requestCode)
         {
             //get assignedstaff and shifthead
@@ -1454,7 +1454,7 @@ namespace IMS.Data.Business
             var result = new NotificationResultModel();
             var assignedStaffName = AccountBLO.Current.GetAccountByCode(assignedStaff).Fullname;
             var desc = assignedStaffName + " starts PROCESSING request " + requestTypeName;
-            var notifCode = NotificationBLO.Current.AddNotification(task.RequestCode, Constants.Object.OBJECT_REQUEST,
+            var notifCode = NotificationBLO.Current.AddNotification(task.RequestCode, Constants.Object.OBJECT_TASK,
                 shifthead, desc);
             result.NotificationCodes.Add(notifCode);
             return result;
