@@ -170,12 +170,14 @@
         </div>
         if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
         {
-            if (Model.NumberOfIP > Model.NumberOfAvailableIP)
+            if (Model.RequestInfo.Assignee == Model.CurrentUser && Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
             {
+                if (Model.NumberOfIP > Model.NumberOfAvailableIP)
+                {
                 @Html.Raw("Available IPs in the same range are not enough to assign. Current available IP number is:" + Model.NumberOfAvailableIP)
-            }
-            else
-            {
+                }
+                else
+                {
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                     <div class="col-xs-6">
                         <div class="row">
@@ -188,7 +190,7 @@
                         <div class="row">
                             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                                 @Html.ListBoxFor(model => model.SelectedIps, new MultiSelectList(Model.IpSelectListItems, "Value", "Text"),
-                                new { SelectionMode = "multiple", @id = "availableIps", rows = 30, @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                             new { SelectionMode = "multiple", @id = "availableIps", rows = 30, @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                                 @Html.ValidationMessageFor(model => model.SelectedIps)
                             </div>
                         </div>
@@ -198,7 +200,7 @@
                         <div class="row">
                             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                                 @Html.ListBoxFor(model => model.SelectedIps, new MultiSelectList(Model.IpSelectListItems, "Value", "Text"),
-                                new { SelectionMode = "multiple", @id = "availableIps", rows = 30, @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                             new { SelectionMode = "multiple", @id = "availableIps", rows = 30, @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                                 @Html.ValidationMessageFor(model => model.SelectedIps)
                             </div>
                         </div>
@@ -231,6 +233,7 @@
                         </div>
                     </div>
                 </div>
+                }
             }
         }
         if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
