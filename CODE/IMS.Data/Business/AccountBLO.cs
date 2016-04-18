@@ -89,6 +89,49 @@ namespace IMS.Data.Business
             return result;
         }
 
+        public List<AccountExtendedModel> GetAllStaff(string group)
+        {
+            var shifthead = dao.Query(x => x.GroupCode == group && x.Role == Constants.Role.SHIFT_HEAD).FirstOrDefault();
+            var result = dao.Query(x => x.Role == Constants.Role.STAFF).OrderBy(x => x.GroupCode);
+
+            var list = new List<AccountExtendedModel>();
+            foreach (var item in result)
+            {
+                var account = new AccountExtendedModel();
+                if (item.GroupCode == group)
+                {
+
+                }
+                account.Username = item.Username;
+                account.NameAndGroup = item.Fullname + " - " + item.GroupCode;
+                account.Role = item.Role;
+                account.GroupCode = item.GroupCode;
+                list.Add(account);
+            }
+            if (shifthead != null)
+            {
+                var account = new AccountExtendedModel();
+                account.Username = shifthead.Username;
+                account.NameAndGroup = shifthead.Fullname + " - " + group;
+                account.Role = shifthead.Role;
+                account.GroupCode = group;
+                list.Add(account);
+            }
+            int count = 0;
+            var list1 = new List<AccountExtendedModel>();
+            for (int i = 0; i < list.Count(); i++)
+            {
+                if (list[i].GroupCode == group)
+                {
+                    var temp = list[i];
+                    list.Remove(list[i]);
+                    list.Insert(count, temp);
+                    count = count + 1;
+                }
+            }
+            return list;
+        }
+
         public CustomerInfoModel GeCustomerInfo(string username)
         {
             var account = from a in AccountDAO.Current.Table
@@ -101,6 +144,15 @@ namespace IMS.Data.Business
                               Phone = a.Phone
                           };
             return account.FirstOrDefault();
+        }
+
+        public Account GetActiveShiftHead()
+        {
+            var activeGroup = AssignedShiftBLO.Current.GetActiveGroup();
+            var shifthead = from a in dao.Table
+                            where a.GroupCode == activeGroup && a.Role == Constants.Role.SHIFT_HEAD
+                            select a;
+            return shifthead.FirstOrDefault();
         }
     }
 }

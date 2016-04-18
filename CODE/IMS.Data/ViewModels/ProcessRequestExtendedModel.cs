@@ -9,7 +9,7 @@ namespace IMS.Data.ViewModels
     {
         public RequestInfoModel RequestInfo { get; set; }
         public CustomerInfoModel CustomerInfo { get; set; }
-        public List<Account> listStaff { get; set; }
+        public List<AccountExtendedModel> listStaff { get; set; }
         public string AssigneeName { get; set; }
 
         //Add server

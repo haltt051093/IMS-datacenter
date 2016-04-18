@@ -8,7 +8,7 @@ namespace IMS.Data.ViewModels
     [NotMapped]
     public class RequestInfoModel : Request
     {
-        [Display(Name ="Assignee")]
+        [Display(Name = "Assignee")]
         public string AssigneeName { get; set; }
         [Display(Name = "Request Status")]
         public string StatusName { get; set; }
@@ -26,7 +26,7 @@ namespace IMS.Data.ViewModels
         public string ShiftHead { get; set; }
         public string ShiftHeadName { get; set; }
         public DateTime? AssignedTime { get; set; }
-        [Required(ErrorMessage ="Appointment Time is required.")]
+        [Required(ErrorMessage = "Appointment Time is required.")]
         public string AppointmentTimeStr { get; set; }
     }
 }

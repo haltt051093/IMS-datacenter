@@ -59,14 +59,14 @@
                 </div>
                 @if (Model.CustomerInfo.Company != null)
                 {
-                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                        @Html.LabelFor(model => model.CustomerInfo.Company)
+                    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
+                            @Html.LabelFor(model => model.CustomerInfo.Company)
+                        </div>
+                        <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                            @Html.DisplayFor(model => model.CustomerInfo.Company, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        </div>
                     </div>
-                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
-                        @Html.DisplayFor(model => model.CustomerInfo.Company, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                    </div>
-                </div>
                 }
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                     <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
@@ -80,101 +80,75 @@
             <div class="col-xs-4">
                 @if (Model.RequestInfo.ShiftHeadName != null)
                 {
-                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                        @Html.LabelFor(model => model.RequestInfo.ShiftHead, "Assignor")
-                    </div>
-                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
-                        @Html.DisplayFor(model => model.RequestInfo.ShiftHeadName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                    </div>
-                </div>
-                }
-                @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING &&
-             (User.IsInRole("Shift Head") || User.IsInRole("Manager")))
-                {
-                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                        @Html.LabelFor(model => model.RequestInfo.Assignee)
-                    </div>
-                    <div class="@Constants.HtmlFormat.FORM_CONTROL_X2_CLASS">
-                        @Html.DropDownListFor(model => model.RequestInfo.Assignee, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                        @Html.ValidationMessageFor(model => model.RequestInfo.Assignee)
-                    </div>
-                </div>
-                }
-                else
-                {
-                    if (Model.RequestInfo.AssigneeName != null)
-                    {
-                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                        @Html.LabelFor(model => model.RequestInfo.Assignee)
-                    </div>
-                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
-                        @Html.DisplayFor(model => model.RequestInfo.AssigneeName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                        @Html.HiddenFor(model => model.RequestInfo.Assignee)
-                        @if ((User.IsInRole("Shift Head") || User.IsInRole("Manager")))
-                                {
-                                    if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
-                                    {
-                                        if ((Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING || Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_NOTFINISH) ||
-                                            (Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING && Model.RequestInfo.IsShifthead))
-                                        {
-                        <a href="#" data-target="#Reassigntask" id="reassign">[Reassign Task]</a>
-                                        }
-                                    }
-                                }
-                    </div>
-                </div>
-                    }
-                    else
-                    {
-                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                        @Html.LabelFor(model => model.RequestInfo.Assignee)
-                    </div>
-                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
-                        @Html.Raw("[Not Assigned]")
-                    </div>
-                </div>
-                    }
-                }
-                @if (Model.IsAssignedUser)
-                {
-                @*<div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                         <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
                             @Html.LabelFor(model => model.RequestInfo.ShiftHead, "Assignor")
                         </div>
                         <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                             @Html.DisplayFor(model => model.RequestInfo.ShiftHeadName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                         </div>
-                    </div>*@
-                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                        @Html.LabelFor(model => model.RequestInfo.TaskStatus)
                     </div>
-                    @if (Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING)
+                }
+                @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING &&
+             (User.IsInRole("Shift Head") || User.IsInRole("Manager")))
+                {
+                    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
+                            @Html.LabelFor(model => model.RequestInfo.Assignee)
+                        </div>
+                        <div class="@Constants.HtmlFormat.FORM_CONTROL_X2_CLASS">
+                            @Html.DropDownListFor(model => model.RequestInfo.Assignee, Model.StaffCodeOptions, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                            @Html.ValidationMessageFor(model => model.RequestInfo.Assignee)
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    if (Model.RequestInfo.AssigneeName != null)
+                    {
+                        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                            <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
+                                @Html.LabelFor(model => model.RequestInfo.Assignee)
+                            </div>
+                            <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                                @Html.DisplayFor(model => model.RequestInfo.AssigneeName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                <br />
+                                @Html.HiddenFor(model => model.RequestInfo.Assignee)
+                                @if ((User.IsInRole("Shift Head") || User.IsInRole("Manager")))
+                                {
+                                    if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                                    {
+                                        if ((Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING || Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_NOTFINISH) ||
+                                            (Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING && Model.RequestInfo.IsShifthead))
+                                        {
+                                            <a href="#" data-target="#Reassigntask" id="reassign">[Reassign Task]</a>
+                                        }
+                                    }
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+                @if (Model.IsAssignedUser)
+                {
+                    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                        <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
+                            @Html.LabelFor(model => model.RequestInfo.TaskStatus)
+                        </div>
+                        @if (Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING)
                         {
-                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
-                        @Html.ActionLink("[Accept Task]", "AcceptTask", "Task",
+                            <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                                @Html.ActionLink("[Accept Task]", "AcceptTask", "Task",
                     new { requestCode = Model.RequestInfo.RequestCode, taskCode = Model.RequestInfo.TaskCode }, null)
-                    </div>
-                    @*<div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
-                            <button type="submit" id="btnAcceptTask" name="@Constants.FormAction.ACCEPT_TASK_ACTION" value="@Constants.FormAction.ACCEPT_TASK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                                Accept Task
-                            </button>
-                        </div>*@
+                            </div>
                         }
-                    @if (Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
+                        @if (Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
                         {
-                    <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
-                        <a href="#" data-target="#notfinishtask" id="notfinish">[Not Finish Task]</a>
-                    </div>
-                    @*<div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
-                            <a class="btn btn-danger" data-toggle="modal" data-target="#notfinishtask">Not Finish Task</a>
-                        </div>*@
+                            <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
+                                <a href="#" data-target="#notfinishtask" id="notfinish">[Not Finish Task]</a>
+                            </div>
                         }
-                </div>
+                    </div>
                 }
             </div>
         </div>
@@ -196,8 +170,11 @@
                             @if ((Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE) &&
 (Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING || Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_COMPLETED))
                             {
-                                <th>Default IP</th>
-                                <th>Location</th>
+                                if (Model.RequestInfo.Assignee == Model.CurrentUser && Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
+                                {
+                                    <th>Default IP</th>
+                                    <th>Location</th>
+                                }
                             }
                         </tr>
                     </thead>
@@ -232,52 +209,55 @@
                                 @if ((Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE) &&
 (Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING || Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_COMPLETED))
                                 {
-                                    <td>
-                                        @if (Model.RequestInfo.StatusCode != Constants.StatusCode.REQUEST_DONE && Model.Servers[i].DefaultIP == null)
-                                        {
-                                            @Html.ActionLink("Assign Default IP", "AssignIP", "IP", new { rType = Model.RequestInfo.RequestType, rCode = Model.RequestInfo.RequestCode, OldIP = Model.Servers[i].DefaultIP, ServerCode = Model.Servers[i].ServerCode }, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                            @Html.ValidationMessageFor(modelItem => modelItem.Servers[i].DefaultIP)
-                                        }
-                                        else
-                                        {
-                                            <span selected>
-                                                @Html.DisplayFor(model => Model.Servers[i].DefaultIP, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                            </span>
-                                            if (Model.RequestInfo.StatusCode != Constants.StatusCode.REQUEST_DONE)
+                                    if (Model.RequestInfo.Assignee == Model.CurrentUser && Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
+                                    {
+                                        <td>
+                                            @if (Model.RequestInfo.StatusCode != Constants.StatusCode.REQUEST_DONE && Model.Servers[i].DefaultIP == null)
                                             {
-                                                @Html.ActionLink(" Change Default IP", "AssignIP", "IP", new { rType = Model.RequestInfo.RequestType, rCode = Model.RequestInfo.RequestCode, OldIP = Model.Servers[i].DefaultIP, ServerCode = Model.Servers[i].ServerCode }, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                                @Html.ActionLink("Assign Default IP", "AssignIP", "IP", new { rType = Model.RequestInfo.RequestType, rCode = Model.RequestInfo.RequestCode, OldIP = Model.Servers[i].DefaultIP, ServerCode = Model.Servers[i].ServerCode }, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                                @Html.ValidationMessageFor(modelItem => modelItem.Servers[i].DefaultIP)
                                             }
-                                        }
-                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].DefaultIP)
-                                    </td>
-                                    <td>
-                                        <input type="hidden" value="true" name="location" />
-                                        @if (Model.RequestInfo.StatusCode != Constants.StatusCode.REQUEST_DONE && Model.Servers[i].ServerLocation.Count == 0)
-                                        {
-
-                                            @Html.ActionLink("Assign Location", "AssignLocation", "Location", new { rType = Model.RequestInfo.RequestType, rCode = Model.RequestInfo.RequestCode, ServerCode = Model.Servers[i].ServerCode, Size = Model.Servers[i].Size }, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                        }
-                                        else
-                                        {
-                                            <span selected>
-                                                @for (int j = 0; j < Model.Servers[i].ServerLocation.Count; j++)
+                                            else
+                                            {
+                                                <span selected>
+                                                    @Html.DisplayFor(model => Model.Servers[i].DefaultIP, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                                </span>
+                                                if (Model.RequestInfo.StatusCode != Constants.StatusCode.REQUEST_DONE)
                                                 {
-                                                <div>
-                                                    @Html.DisplayFor(model => Model.Servers[i].ServerLocation[j].RackName)
-                                                    @Html.ValidationMessageFor(modelItem => modelItem.Servers[i].ServerLocation[j].RackName)
-                                                    <text>U</text>@Html.DisplayFor(model => Model.Servers[i].ServerLocation[j].RackUnit, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                                    @Html.HiddenFor(modelItem => Model.Servers[i].ServerLocation[j].RackName)
-                                                    @Html.HiddenFor(modelItem => Model.Servers[i].ServerLocation[j].RackUnit)
-                                                </div>
+                                                    @Html.ActionLink(" Change Default IP", "AssignIP", "IP", new { rType = Model.RequestInfo.RequestType, rCode = Model.RequestInfo.RequestCode, OldIP = Model.Servers[i].DefaultIP, ServerCode = Model.Servers[i].ServerCode }, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                                                 }
-                                            </span>
-
-                                            if (Model.RequestInfo.StatusCode != Constants.StatusCode.REQUEST_DONE)
-                                            {
-                                                @Html.ActionLink("Change Location", "AssignLocation", "Location", new { rType = Model.RequestInfo.RequestType, rCode = Model.RequestInfo.RequestCode, ServerCode = Model.Servers[i].ServerCode, Size = Model.Servers[i].Size }, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                                             }
-                                        }
-                                    </td>
+                                            @Html.HiddenFor(modelItem => modelItem.Servers[i].DefaultIP)
+                                        </td>
+                                        <td>
+                                            <input type="hidden" value="true" name="location" />
+                                            @if (Model.RequestInfo.StatusCode != Constants.StatusCode.REQUEST_DONE && Model.Servers[i].ServerLocation.Count == 0)
+                                            {
+
+                                                @Html.ActionLink("Assign Location", "AssignLocation", "Location", new { rType = Model.RequestInfo.RequestType, rCode = Model.RequestInfo.RequestCode, ServerCode = Model.Servers[i].ServerCode, Size = Model.Servers[i].Size }, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                            }
+                                            else
+                                            {
+                                                <span selected>
+                                                    @for (int j = 0; j < Model.Servers[i].ServerLocation.Count; j++)
+                                                    {
+                                                        <div>
+                                                            @Html.DisplayFor(model => Model.Servers[i].ServerLocation[j].RackName)
+                                                            @Html.ValidationMessageFor(modelItem => modelItem.Servers[i].ServerLocation[j].RackName)
+                                                            <text>U</text>@Html.DisplayFor(model => Model.Servers[i].ServerLocation[j].RackUnit, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                                            @Html.HiddenFor(modelItem => Model.Servers[i].ServerLocation[j].RackName)
+                                                            @Html.HiddenFor(modelItem => Model.Servers[i].ServerLocation[j].RackUnit)
+                                                        </div>
+                                                    }
+                                                </span>
+
+                                                if (Model.RequestInfo.StatusCode != Constants.StatusCode.REQUEST_DONE)
+                                                {
+                                                    @Html.ActionLink("Change Location", "AssignLocation", "Location", new { rType = Model.RequestInfo.RequestType, rCode = Model.RequestInfo.RequestCode, ServerCode = Model.Servers[i].ServerCode, Size = Model.Servers[i].Size }, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                                }
+                                            }
+                                        </td>
+                                    }
                                 }
                             </tr>
                         }
@@ -324,31 +304,31 @@
                 {
                     if (Model.RequestInfo.Assignee == Model.CurrentUser && Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
                     {
-                <button type="submit" id="btnApprove" name="@Constants.FormAction.APPROVE_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                    @Labels.Approve
-                </button>
-                <a class="btn btn-danger" data-toggle="modal" data-target="#Rejectrequest">Reject</a>
+                        <button type="submit" id="btnApprove" name="@Constants.FormAction.APPROVE_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                            @Labels.Approve
+                        </button>
+                        <a class="btn btn-danger" data-toggle="modal" data-target="#Rejectrequest">Reject</a>
                     }
                 }
                 else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_WAITING && (User.IsInRole("Shift Head") || User.IsInRole("Manager")))
                 {
-                <button type="submit" id="btnProcess" name="@Constants.FormAction.PROCESS_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                    Process
-                </button>
-                <a class="btn btn-danger" data-toggle="modal" data-target="#Rejectrequest">Reject</a>
+                    <button type="submit" id="btnProcess" name="@Constants.FormAction.PROCESS_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        Process
+                    </button>
+                    <a class="btn btn-danger" data-toggle="modal" data-target="#Rejectrequest">Reject</a>
                 }
                 else if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING && (User.IsInRole("Shift Head") || User.IsInRole("Manager")))
                 {
-                <button type="submit" id="btnAccept" name="@Constants.FormAction.ACCEPT_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                    @Labels.Accept
-                </button>
-                <a class="btn btn-danger" data-toggle="modal" data-target="#Rejectrequest">Reject</a>
+                    <button type="submit" id="btnAccept" name="@Constants.FormAction.ACCEPT_ACTION" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        @Labels.Accept
+                    </button>
+                    <a class="btn btn-danger" data-toggle="modal" data-target="#Rejectrequest">Reject</a>
                 }
                 @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
                 {
-                <button type="submit" id="btnExport" name="@Constants.FormAction.EXPORT_ACTION" value="@Constants.FormAction.EXPORT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
-                    Export Procedure
-                </button>
+                    <button type="submit" id="btnExport" name="@Constants.FormAction.EXPORT_ACTION" value="@Constants.FormAction.EXPORT_ACTION" class="@Constants.HtmlFormat.DANGER_BUTTON_CLASS">
+                        Export Procedure
+                    </button>
                 }
             </div>
         </div>

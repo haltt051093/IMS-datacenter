@@ -21,7 +21,6 @@ namespace IMS.Data.Business
             }
         }
 
-
         private GroupBLO()
         {
             baseDao = GroupDAO.Current;

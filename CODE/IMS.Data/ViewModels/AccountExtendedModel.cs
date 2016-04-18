@@ -8,5 +8,6 @@ namespace IMS.Data.ViewModels
     public class AccountExtendedModel : Account
     {
         public int CountMember { get; set; }
+        public string NameAndGroup { get; set; }
     }
 }

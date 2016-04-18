@@ -112,6 +112,7 @@
                             </div>
                             <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                                 @Html.DisplayFor(model => model.RequestInfo.AssigneeName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                <br />
                                 @Html.HiddenFor(model => model.RequestInfo.Assignee)
                                 @if ((User.IsInRole("Shift Head") || User.IsInRole("Manager")))
                                 {
@@ -124,17 +125,6 @@
                                         }
                                     }
                                 }
-                            </div>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                            <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
-                                @Html.LabelFor(model => model.RequestInfo.Assignee)
-                            </div>
-                            <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
-                                @Html.Raw("[Not Assigned]")
                             </div>
                         </div>
                     }

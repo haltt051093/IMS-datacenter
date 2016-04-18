@@ -164,11 +164,13 @@ namespace IMS.Data.Business
                 }
                 if (request.ShiftHead != null)
                 {
-                    request.ShiftHeadName = AccountBLO.Current.GetAccountByCode(request.ShiftHead).Fullname;
+                    var shifthead = AccountBLO.Current.GetAccountByCode(request.ShiftHead);
+                    request.ShiftHeadName = shifthead.Fullname + " - " + shifthead.GroupCode;
                 }
                 if (request.AssignedStaff != null)
                 {
-                    request.AssignedStaffName = AccountBLO.Current.GetAccountByCode(request.AssignedStaff).Fullname;
+                    var assignstaff = AccountBLO.Current.GetAccountByCode(request.AssignedStaff);
+                    request.AssignedStaffName = assignstaff.Fullname + " - " + assignstaff.GroupCode;
                 }
                 var log = LogBLO.Current.GetLogInfoByRequestCode(request.RequestCode, Constants.Object.OBJECT_REQUEST).OrderBy(x => x.LogTime).FirstOrDefault();
                 request.RequestedTime = log.LogTime;
@@ -722,8 +724,7 @@ namespace IMS.Data.Business
             request.CustomerInfo = AccountBLO.Current.GeCustomerInfo(request.RequestInfo.Customer);
             if (group != null)
             {
-                //assign task
-                request.listStaff = AccountBLO.Current.GetAccountsByGroup(group);
+                request.listStaff = AccountBLO.Current.GetAllStaff(group);
                 //ng dang lam request
                 //assignee la staff luu trong request, AssigneeName di chung voi assignee
                 //assignedStaff la staff dang lam task do, luu trong bang task
@@ -731,7 +732,7 @@ namespace IMS.Data.Business
                 if (staff != null)
                 {
                     request.RequestInfo.Assignee = staff.Username;
-                    request.RequestInfo.AssigneeName = staff.Fullname;
+                    request.RequestInfo.AssigneeName = staff.Fullname + " - " + staff.GroupCode;
                 }
             }
             return request;

@@ -100,6 +100,7 @@
                         </div>
                         <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                             @Html.DisplayFor(model => model.RequestInfo.AssigneeName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                            <br />
                             @Html.HiddenFor(model => model.RequestInfo.Assignee)
                             @if ((User.IsInRole("Shift Head") || User.IsInRole("Manager")))
                             {
@@ -170,69 +171,71 @@
                 <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
                 </div>
                 <div id="changeipzone" class="@Constants.HtmlFormat.FORM_DETAIL_CLASS">
-                    @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
+                    @*@if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PENDING)
+                        {*@
+                    @if (Model.RequestInfo.Assignee == Model.CurrentUser && Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
                     {
-                        <table class="@Constants.HtmlFormat.DATATABLE_CLASS">
-                            <thead>
-                                <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
-                                    <th>
-                                        Current IPs
-                                    </th>
+                    <table id="MyTable" class="@Constants.HtmlFormat.DATATABLE_CLASS">
+                        <thead>
+                            <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
+                                <th>
+                                    Old IPs
+                                </th>
+                                <th>
+                                    New IPs
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyid">
+                            @for (int i = 0; i < Model.ReturningIPs.Count; i++)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(model => Model.ReturningIPs[i], new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })<br />
+                                        @Html.HiddenFor(model => model.ReturningIPs[i])
+                                    </td>
+
+                                    <td>
+                                        @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                                        {
+                                            @Html.DropDownListFor(model => model.NewIPs[i], Model.NewIPsOptions, "-- Select IP --", new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                        }
+                                        @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
+                                        {
+                                            @Html.DisplayFor(model => Model.NewIPs[i], new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })<br />
+                                        }
+                                        @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_REJECTED || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_CANCELLED)
+                                        {
+                                            @Html.Raw("Nothing changed");
+                                        }
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @for (int i = 0; i < Model.ReturningIPs.Count; i++)
-                                {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(model => Model.ReturningIPs[i], new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })<br />
-                                            @Html.HiddenFor(model => model.ReturningIPs[i])
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
+                            }
+                        </tbody>
+                    </table>
                     }
                     else
                     {
-                        <table id="MyTable" class="@Constants.HtmlFormat.DATATABLE_CLASS">
-                            <thead>
-                                <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
-                                    <th>
-                                        Old IPs
-                                    </th>
-                                    <th>
-                                        New IPs
-                                    </th>
+                    <table class="@Constants.HtmlFormat.DATATABLE_CLASS">
+                        <thead>
+                            <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
+                                <th>
+                                    Current IPs
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.ReturningIPs.Count; i++)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(model => Model.ReturningIPs[i], new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })<br />
+                                        @Html.HiddenFor(model => model.ReturningIPs[i])
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody id="tbodyid">
-                                @for (int i = 0; i < Model.ReturningIPs.Count; i++)
-                                {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(model => Model.ReturningIPs[i], new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })<br />
-                                            @Html.HiddenFor(model => model.ReturningIPs[i])
-                                        </td>
-
-                                        <td>
-                                            @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
-                                            {
-                                                @Html.DropDownListFor(model => model.NewIPs[i], Model.NewIPsOptions, "-- Select IP --", new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                            }
-                                            @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
-                                            {
-                                                @Html.DisplayFor(model => Model.NewIPs[i], new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })<br />
-                                            }
-                                            @if (Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_REJECTED || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_CANCELLED)
-                                            {
-                                                @Html.Raw("Nothing changed");
-                                            }
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
+                            }
+                        </tbody>
+                    </table>
                     }
                 </div>
             </div>

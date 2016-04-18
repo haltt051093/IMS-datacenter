@@ -74,18 +74,17 @@ namespace IMS.Controllers
                 {
                     viewmodel.IsAssignedUser = false;
                 }
-                if(viewmodel.RequestInfo.AssigneeName == null)
+                if (viewmodel.RequestInfo.AssigneeName == null)
                 {
-                    //DOING, chinh sua trong AccountBLO
-                    //sua lai phai getactivategroup -> lay shifthead cua group do
-                    viewmodel.RequestInfo.AssigneeName = GetCurrentAccount().Fullname;
+                    var activeShifthead = AccountBLO.Current.GetActiveShiftHead();
+                    viewmodel.RequestInfo.AssigneeName = activeShifthead.Fullname + " - " + activeShifthead.GroupCode;
                 }
                 viewmodel.CurrentUser = GetCurrentUserName();
                 viewmodel.StaffCodeOptions = request.listStaff
                 .Select(x => new SelectListItem
                 {
                     Value = x.Username,
-                    Text = x.Fullname,
+                    Text = x.NameAndGroup,
                     Selected = x.Role == Constants.Role.SHIFT_HEAD
                 })
                 .ToList();
@@ -117,13 +116,18 @@ namespace IMS.Controllers
                 }
                 viewmodel.CurrentUser = GetCurrentUserName();
                 viewmodel.StaffCodeOptions = request.listStaff
-                .Select(x => new SelectListItem
+                 .Select(x => new SelectListItem
+                 {
+                     Value = x.Username,
+                     Text = x.NameAndGroup,
+                     Selected = x.Role == Constants.Role.SHIFT_HEAD
+                 })
+                 .ToList();
+                if (viewmodel.RequestInfo.AssigneeName == null)
                 {
-                    Value = x.Username,
-                    Text = x.Fullname,
-                    Selected = x.Role == Constants.Role.SHIFT_HEAD
-                })
-                .ToList();
+                    var activeShifthead = AccountBLO.Current.GetActiveShiftHead();
+                    viewmodel.RequestInfo.AssigneeName = activeShifthead.Fullname + " - " + activeShifthead.GroupCode;
+                }
                 viewmodel.SuccessMessage = msg;
                 return View("BringServerAwayInfo", viewmodel);
             }
@@ -152,7 +156,7 @@ namespace IMS.Controllers
                 .Select(x => new SelectListItem
                 {
                     Value = x.Username,
-                    Text = x.Fullname,
+                    Text = x.NameAndGroup,
                     Selected = x.Role == Constants.Role.SHIFT_HEAD
                 })
                 .ToList();
@@ -212,13 +216,13 @@ namespace IMS.Controllers
                     viewmodel.IsAssignedUser = false;
                 }
                 viewmodel.StaffCodeOptions = request.listStaff
-                .Select(x => new SelectListItem
-                {
-                    Value = x.Username,
-                    Text = x.Fullname,
-                    Selected = x.Role == Constants.Role.SHIFT_HEAD
-                })
-                .ToList();
+                 .Select(x => new SelectListItem
+                 {
+                     Value = x.Username,
+                     Text = x.NameAndGroup,
+                     Selected = x.Role == Constants.Role.SHIFT_HEAD
+                 })
+                 .ToList();
 
                 if (request.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                 {
@@ -259,7 +263,7 @@ namespace IMS.Controllers
                 .Select(x => new SelectListItem
                 {
                     Value = x.Username,
-                    Text = x.Fullname,
+                    Text = x.NameAndGroup,
                     Selected = x.Role == Constants.Role.SHIFT_HEAD
                 })
                 .ToList();
@@ -289,7 +293,7 @@ namespace IMS.Controllers
                 .Select(x => new SelectListItem
                 {
                     Value = x.Username,
-                    Text = x.Fullname,
+                    Text = x.NameAndGroup,
                     Selected = x.Role == Constants.Role.SHIFT_HEAD
                 })
                 .ToList();
@@ -324,7 +328,7 @@ namespace IMS.Controllers
                 .Select(x => new SelectListItem
                 {
                     Value = x.Username,
-                    Text = x.Fullname,
+                    Text = x.NameAndGroup,
                     Selected = x.Role == Constants.Role.SHIFT_HEAD
                 })
                 .ToList();
