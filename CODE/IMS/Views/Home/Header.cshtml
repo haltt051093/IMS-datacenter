@@ -43,11 +43,23 @@
                             <ul id="noty_menu" class="menu">
                                 @foreach (var notification in Model.Notifications)
                                 {
-                                    <li>
-                                        <a href="@Url.Action("Detail", "Notification", new { code = notification.NotificationCode})">
-                                            <i class="fa fa-bell"></i> @notification.Description
-                                        </a>
-                                    </li>
+                                    if (notification.RefType == "Request")
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("Detail", "Notification", new { code = notification.NotificationCode})">
+                                                <i class="fa fa-share"></i> @notification.Description
+                                            </a>
+                                        </li>
+                                    }
+                                    if (notification.RefType == "Task")
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("Detail", "Notification", new { code = notification.NotificationCode})">
+                                                <i class="fa fa-tasks warning"></i> @notification.Description
+                                            </a>
+                                        </li>
+                                    }
+
                                 }
                             </ul>
                         </li>
@@ -110,8 +122,14 @@
                 $('#noty_count').text(noty_count);
                 $('#noty_count2').text(noty_count);
                 $('#noty_count').css('display', '');
-
-                var icon = $('<i></i>').attr('class', 'fa fa-bell');
+                var icon = '';
+        if (noty.RefType == "Request") {
+            icon = $('<i></i>').attr('class', 'fa fa-share');
+        }
+                if (noty.RefType == "Task") {
+                    icon = $('<i></i>').attr('class', 'fa fa-tasks warning');
+                }
+                
                 var description = noty.Description;
                 var link = $('<a></a>').attr('href', '@Url.Action("Detail", "Notification")' + '/' + noty.NotificationCode).append(icon);
                 link.append(description);
