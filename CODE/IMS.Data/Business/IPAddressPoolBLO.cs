@@ -184,10 +184,7 @@ namespace IMS.Data.Business
                 {
                     return false;
                 }
-
-
             }
-
         }
 
         public void UpdateStatusIpANDLog(string requestCode, string serverCode, string ip, string newStatus,

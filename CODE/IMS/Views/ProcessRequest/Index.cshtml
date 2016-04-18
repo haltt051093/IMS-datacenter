@@ -196,17 +196,11 @@
                 };
             }
         });
-        //$(".clickmee").dblclick(function() {
-        //    $(this).closest('tbody')
-        //        .next('.showhide')
-        //        .toggle('fast');
-        //});
 
         $('#example1').on('click', '.clickmee', function () {
             var requestcode = $(this).attr('request-code');
             window.location.assign('@Url.Action("Detail", "ProcessRequest")' + '/' + requestcode);
         });
-
 
         $("#FilterByRequestType").change(function () {
             filterRequest();

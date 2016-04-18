@@ -74,6 +74,12 @@ namespace IMS.Controllers
                 {
                     viewmodel.IsAssignedUser = false;
                 }
+                if(viewmodel.RequestInfo.AssigneeName == null)
+                {
+                    //DOING, chinh sua trong AccountBLO
+                    //sua lai phai getactivategroup -> lay shifthead cua group do
+                    viewmodel.RequestInfo.AssigneeName = GetCurrentAccount().Fullname;
+                }
                 viewmodel.CurrentUser = GetCurrentUserName();
                 viewmodel.StaffCodeOptions = request.listStaff
                 .Select(x => new SelectListItem
@@ -579,7 +585,7 @@ namespace IMS.Controllers
                     assignee = GetCurrentUserName();
                 }
                 var result = RequestBLO.Current.RejectRequestAssignIP(viewmodel.RequestInfo.RequestCode,
-                    assignee, viewmodel.RequestInfo.Assignee, viewmodel.RequestInfo.Reason);
+                    assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
                 //dang ky ham cho client
                 Notify(result.NotificationCodes);
                 return RedirectToAction("Detail", "ProcessRequest",

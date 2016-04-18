@@ -28,6 +28,7 @@ namespace IMS.Data.Models
 
         public string Bandwidth { get; set; }
         [Display(Name ="Part Number")]
+        [RegularExpression("^[a-zA-Z0-9]+([\\-][a-zA-Z0-9]+)*$", ErrorMessage = "Wrong format.")]
         public string PartNumber { get; set; }
         [Display(Name ="Serial Number")]
         [RegularExpression("^[a-zA-Z0-9]+([\\-][a-zA-Z0-9]+)*$",ErrorMessage ="Wrong format.")]

@@ -168,7 +168,8 @@ namespace IMS.Data.Repository
                 ChangedValueOfObject = requestCode,
                 ServerCode = serverCode,
                 Description = description,
-                Username = customer
+                Username = customer,
+                LogTime = DateTime.Now
             };
             LogBLO.Current.Add(logRequest);
             return requestCode;
@@ -180,6 +181,7 @@ namespace IMS.Data.Repository
                            where r.RequestCode == requestCode
                            select r).FirstOrDefault();
             request.StatusCode = newStatus;
+            request.RequestedTime = DateTime.Now;
             if (assignee != null)
             {
                 request.Assignee = assignee;
@@ -198,7 +200,8 @@ namespace IMS.Data.Repository
                 ObjectStatus = newStatus,
                 ChangedValueOfObject = requestCode,
                 Username = staffCode,
-                Description = description
+                Description = description,
+                LogTime = DateTime.Now
             };
             LogBLO.Current.Add(logRequest);
         }

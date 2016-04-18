@@ -98,7 +98,7 @@
                         <h3 class="box-title">List New Requests</h3>
                     </div>
                     <div class="box-body">
-                        <table class="@Constants.HtmlFormat.DATATABLE_CLASS">
+                        <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS">
                             <thead>
                                 <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
                                     <th>
@@ -108,14 +108,14 @@
                                         Status
                                     </th>
                                     <th>
-                                        Requested Time
+                                        Updated Time
                                     </th>
                                 </tr>
                             </thead>
                             <tbody id="tbodyid">
                                 @foreach (var item in Model.firstTenRequests)
                                 {
-                                    <tr>
+                                    <tr class="clickable clickmee check" request-code="@item.RequestCode">
                                         <td>
                                             @item.RequestTypeName
                                         </td>
@@ -146,14 +146,14 @@
                     <div class="box-body">
                         <div id="bar-chart" style="height: 410px;">
                             @*<table id="MyTable" class="@Constants.HtmlFormat.DATATABLE_CLASS">
-                                
-                            </table>*@
+
+                                </table>*@
                         </div>
                     </div><!-- /.box-body-->
                     <div class="box-footer">
                         <a href="@Url.Action("Index", "IP")">
                             More info <i class="fa fa-arrow-circle-right"></i>
-                        </a>  
+                        </a>
                     </div>
                 </div>
             </div>
@@ -235,7 +235,7 @@
                         <h3 class="box-title">List My Requests</h3>
                     </div>
                     <div class="box-body">
-                        <table class="@Constants.HtmlFormat.DATATABLE_CLASS" style="height: 450px">
+                        <table id="example2" class="@Constants.HtmlFormat.DATATABLE_CLASS" style="height: 450px">
                             <thead>
                                 <tr class="@Constants.HtmlFormat.DATATABLE_HEADER_CLASS">
                                     <th>
@@ -245,14 +245,14 @@
                                         Status
                                     </th>
                                     <th>
-                                        Requested Time
+                                        Updated Time
                                     </th>
                                 </tr>
                             </thead>
                             <tbody id="tbodyid">
                                 @foreach (var item in Model.firstTenRequests)
                                 {
-                                    <tr>
+                                    <tr class="clickable clickmee check" request-code="@item.RequestCode">
                                         <td>
                                             @item.RequestTypeName
                                         </td>
@@ -272,7 +272,7 @@
                             More info <i class="fa fa-arrow-circle-right"></i>
                         </a>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -280,42 +280,50 @@
 
 
 
-<!-- page script -->
-<script>
-    var bar_data = {
-        data: [["Blocked IP", @Model.countblockedip], ["Used IP", @Model.countusedip], ["Available IP", @Model.countavailableip]],
-        color: "#3c8dbc"
-    };
-    $.plot("#bar-chart", [bar_data], {
-        grid: {
-            borderWidth: 1,
-            borderColor: "#f3f3f3",
-            tickColor: "#f3f3f3"
-        },
-        bars: {
-            numbers: {
-                show: true
-            }
-        },
-        series: {
-            bars: {
-                show: true,
-                barWidth: 0.4,
-                align: "center"
-            }
-        },
-        xaxis: {
-            mode: "categories",
-            tickLength: 0,
-            font:{
-                size:15
+    <!-- page script -->
+    <script>
+        var bar_data = {
+            data: [["Blocked IP", @Model.countblockedip], ["Used IP", @Model.countusedip], ["Available IP", @Model.countavailableip]],
+            color: "#3c8dbc"
+        };
+        $.plot("#bar-chart", [bar_data], {
+            grid: {
+                borderWidth: 1,
+                borderColor: "#f3f3f3",
+                tickColor: "#f3f3f3"
             },
-            color: "black"
-        }
-      
-    });
-</script>
-    
-@section Scripts {
-    @Scripts.Render(Constants.ScriptBundle.FLOTCHART)
-}
+            bars: {
+                numbers: {
+                    show: true
+                }
+            },
+            series: {
+                bars: {
+                    show: true,
+                    barWidth: 0.4,
+                    align: "center"
+                }
+            },
+            xaxis: {
+                mode: "categories",
+                tickLength: 0,
+                font: {
+                    size: 15
+                },
+                color: "black"
+            }
+
+        });
+        $('#example1').on('click', '.clickmee', function () {
+            var requestcode = $(this).attr('request-code');
+            window.location.assign('@Url.Action("Detail", "ProcessRequest")' + '/' + requestcode);
+        });
+        $('#example2').on('click', '.clickmee', function () {
+            var requestcode = $(this).attr('request-code');
+            window.location.assign('@Url.Action("Detail", "Request")' + '/' + requestcode);
+        });
+    </script>
+
+    @section Scripts {
+        @Scripts.Render(Constants.ScriptBundle.FLOTCHART)
+    }

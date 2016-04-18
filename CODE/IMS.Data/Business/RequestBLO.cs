@@ -131,7 +131,6 @@ namespace IMS.Data.Business
                            ShiftHead = t.ShiftHead,
                            AssignedTime = t.AssignedTime
                        };
-
             var request = (from r in RequestDAO.Current.Table
                            join t in task
                                 on r.RequestCode equals t.RequestCode into rt
@@ -171,6 +170,8 @@ namespace IMS.Data.Business
                 {
                     request.AssignedStaffName = AccountBLO.Current.GetAccountByCode(request.AssignedStaff).Fullname;
                 }
+                var log = LogBLO.Current.GetLogInfoByRequestCode(request.RequestCode, Constants.Object.OBJECT_REQUEST).OrderBy(x => x.LogTime).FirstOrDefault();
+                request.RequestedTime = log.LogTime;
             }
             return request;
         }
@@ -1474,7 +1475,7 @@ namespace IMS.Data.Business
             var result = new NotificationResultModel();
             var staffName = AccountBLO.Current.GetAccountByCode(preAssignedStaff).Fullname;
             var desc = staffName + " not finished the task! Because: " + reason;
-            var notifCode = NotificationBLO.Current.AddNotification(task.RequestCode, Constants.Object.OBJECT_REQUEST,
+            var notifCode = NotificationBLO.Current.AddNotification(task.RequestCode, Constants.Object.OBJECT_TASK,
                 shifthead, desc);
             result.NotificationCodes.Add(notifCode);
             return result;
@@ -1723,16 +1724,17 @@ namespace IMS.Data.Business
                        join s in StatusDAO.Current.Table
                             on r.StatusCode equals s.StatusCode into sr
                        from subsr in sr.DefaultIfEmpty()
-                       //where r.StatusCode == Constants.StatusCode.REQUEST_PENDING ||
-                       //        r.StatusCode == Constants.StatusCode.REQUEST_PROCESSING ||
-                       //        r.StatusCode == Constants.StatusCode.REQUEST_WAITING
+                           //where r.StatusCode == Constants.StatusCode.REQUEST_PENDING ||
+                           //        r.StatusCode == Constants.StatusCode.REQUEST_PROCESSING ||
+                           //        r.StatusCode == Constants.StatusCode.REQUEST_WAITING
                        select new RequestExtendedModel()
                        {
                            RequestedTime = r.RequestedTime,
                            RequestTypeName = subrrt.RequestTypeName,
-                           StatusName = subsr.StatusName
+                           StatusName = subsr.StatusName,
+                           RequestCode = r.RequestCode
                        };
-            return list.Take(10).ToList();
+            return list.OrderByDescending(x => x.RequestedTime).Take(10).ToList();
         }
 
         public List<RequestExtendedModel> ListCustomerRequestAtHome(string customer)
@@ -1749,9 +1751,10 @@ namespace IMS.Data.Business
                        {
                            RequestedTime = r.RequestedTime,
                            RequestTypeName = subrrt.RequestTypeName,
-                           StatusName = subsr.StatusName
+                           StatusName = subsr.StatusName,
+                           RequestCode = r.RequestCode
                        };
-            return list.Take(10).ToList();
+            return list.OrderByDescending(x => x.RequestedTime).Take(10).ToList();
         }
     }
 }
