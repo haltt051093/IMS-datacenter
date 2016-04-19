@@ -1681,7 +1681,7 @@ namespace IMS.Data.Business
         public int CountCustomerProcessingRequest(string customer)
         {
             var query = from r in dao.Table
-                        where r.StatusCode == Constants.StatusCode.REQUEST_PENDING && r.Customer == customer
+                        where r.StatusCode == Constants.StatusCode.REQUEST_PROCESSING && r.Customer == customer
                         select r;
             return query.ToList().Count;
         }

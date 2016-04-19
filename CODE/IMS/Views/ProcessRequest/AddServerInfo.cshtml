@@ -170,11 +170,11 @@
                             @if ((Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE) &&
 (Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING || Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_COMPLETED))
                             {
-                                if (Model.RequestInfo.Assignee == Model.CurrentUser && Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
-                                {
-                                    <th>Default IP</th>
+                                //if (Model.RequestInfo.Assignee == Model.CurrentUser && Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
+                                //{
+                                <th>Default IP</th>
                                     <th>Location</th>
-                                }
+                                //}
                             }
                         </tr>
                     </thead>
@@ -209,55 +209,57 @@
                                 @if ((Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING || Model.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE) &&
 (Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING || Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_COMPLETED))
                                 {
-                                    if (Model.RequestInfo.Assignee == Model.CurrentUser && Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
-                                    {
-                                        <td>
-                                            @if (Model.RequestInfo.StatusCode != Constants.StatusCode.REQUEST_DONE && Model.Servers[i].DefaultIP == null)
+                                    <td>
+                                        @if (Model.RequestInfo.StatusCode != Constants.StatusCode.REQUEST_DONE && Model.Servers[i].DefaultIP == null)
+                                        {
+                                            if (Model.RequestInfo.Assignee == Model.CurrentUser && Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
                                             {
-                                                @Html.ActionLink("Assign Default IP", "AssignIP", "IP", new { rType = Model.RequestInfo.RequestType, rCode = Model.RequestInfo.RequestCode, OldIP = Model.Servers[i].DefaultIP, ServerCode = Model.Servers[i].ServerCode }, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                                @Html.ValidationMessageFor(modelItem => modelItem.Servers[i].DefaultIP)
+                                        @Html.ActionLink("Assign Default IP", "AssignIP", "IP", new { rType = Model.RequestInfo.RequestType, rCode = Model.RequestInfo.RequestCode, OldIP = Model.Servers[i].DefaultIP, ServerCode = Model.Servers[i].ServerCode }, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                        @Html.ValidationMessageFor(modelItem => modelItem.Servers[i].DefaultIP)
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                        <span selected>
+                                            @Html.DisplayFor(model => Model.Servers[i].DefaultIP, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                        </span>
+                                            if (Model.RequestInfo.StatusCode != Constants.StatusCode.REQUEST_DONE)
                                             {
-                                                <span selected>
-                                                    @Html.DisplayFor(model => Model.Servers[i].DefaultIP, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                                </span>
-                                                if (Model.RequestInfo.StatusCode != Constants.StatusCode.REQUEST_DONE)
+                                        @Html.ActionLink(" Change Default IP", "AssignIP", "IP", new { rType = Model.RequestInfo.RequestType, rCode = Model.RequestInfo.RequestCode, OldIP = Model.Servers[i].DefaultIP, ServerCode = Model.Servers[i].ServerCode }, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                            }
+                                        }
+                                        @Html.HiddenFor(modelItem => modelItem.Servers[i].DefaultIP)
+                                    </td>
+                                    <td>
+                                        <input type="hidden" value="true" name="location" />
+                                        @if (Model.RequestInfo.StatusCode != Constants.StatusCode.REQUEST_DONE && Model.Servers[i].ServerLocation.Count == 0)
+                                            {
+                                                if (Model.RequestInfo.Assignee == Model.CurrentUser && Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
                                                 {
-                                                    @Html.ActionLink(" Change Default IP", "AssignIP", "IP", new { rType = Model.RequestInfo.RequestType, rCode = Model.RequestInfo.RequestCode, OldIP = Model.Servers[i].DefaultIP, ServerCode = Model.Servers[i].ServerCode }, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                        @Html.ActionLink("Assign Location", "AssignLocation", "Location", new { rType = Model.RequestInfo.RequestType, rCode = Model.RequestInfo.RequestCode, ServerCode = Model.Servers[i].ServerCode, Size = Model.Servers[i].Size }, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                                                 }
                                             }
-                                            @Html.HiddenFor(modelItem => modelItem.Servers[i].DefaultIP)
-                                        </td>
-                                        <td>
-                                            <input type="hidden" value="true" name="location" />
-                                            @if (Model.RequestInfo.StatusCode != Constants.StatusCode.REQUEST_DONE && Model.Servers[i].ServerLocation.Count == 0)
-                                            {
-
-                                                @Html.ActionLink("Assign Location", "AssignLocation", "Location", new { rType = Model.RequestInfo.RequestType, rCode = Model.RequestInfo.RequestCode, ServerCode = Model.Servers[i].ServerCode, Size = Model.Servers[i].Size }, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                            }
                                             else
                                             {
-                                                <span selected>
-                                                    @for (int j = 0; j < Model.Servers[i].ServerLocation.Count; j++)
+                                        <span selected>
+                                            @for (int j = 0; j < Model.Servers[i].ServerLocation.Count; j++)
                                                     {
-                                                        <div>
-                                                            @Html.DisplayFor(model => Model.Servers[i].ServerLocation[j].RackName)
-                                                            @Html.ValidationMessageFor(modelItem => modelItem.Servers[i].ServerLocation[j].RackName)
-                                                            <text>U</text>@Html.DisplayFor(model => Model.Servers[i].ServerLocation[j].RackUnit, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                                            @Html.HiddenFor(modelItem => Model.Servers[i].ServerLocation[j].RackName)
-                                                            @Html.HiddenFor(modelItem => Model.Servers[i].ServerLocation[j].RackUnit)
-                                                        </div>
+                                                    <div>
+                                                        @Html.DisplayFor(model => Model.Servers[i].ServerLocation[j].RackName)
+                                                        @Html.ValidationMessageFor(modelItem => modelItem.Servers[i].ServerLocation[j].RackName)
+                                                        <text>U</text>@Html.DisplayFor(model => Model.Servers[i].ServerLocation[j].RackUnit, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                                        @Html.HiddenFor(modelItem => Model.Servers[i].ServerLocation[j].RackName)
+                                                        @Html.HiddenFor(modelItem => Model.Servers[i].ServerLocation[j].RackUnit)
+                                                    </div>
                                                     }
-                                                </span>
+                                        </span>
 
                                                 if (Model.RequestInfo.StatusCode != Constants.StatusCode.REQUEST_DONE)
                                                 {
-                                                    @Html.ActionLink("Change Location", "AssignLocation", "Location", new { rType = Model.RequestInfo.RequestType, rCode = Model.RequestInfo.RequestCode, ServerCode = Model.Servers[i].ServerCode, Size = Model.Servers[i].Size }, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                        @Html.ActionLink("Change Location", "AssignLocation", "Location", new { rType = Model.RequestInfo.RequestType, rCode = Model.RequestInfo.RequestCode, ServerCode = Model.Servers[i].ServerCode, Size = Model.Servers[i].Size }, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
                                                 }
                                             }
-                                        </td>
-                                    }
+                                    </td>
                                 }
                             </tr>
                         }
