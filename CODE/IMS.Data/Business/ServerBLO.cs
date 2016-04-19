@@ -83,6 +83,13 @@ namespace IMS.Data.Business
             dao.UpdateServerANDLog(requestCode, serverCode, typeOfLog, newStatus, username);
         }
 
+        public void RemoveServerANDLog(string requestCode, string serverCode,
+             string typeOfLog, string username)
+        {
+            dao.RemoveServerANDLog(requestCode, serverCode, typeOfLog, username);
+
+        }
+
         public bool HasDefaultIP(string server)
         {
             var query = dao.Query(x => x.ServerCode == server).FirstOrDefault();

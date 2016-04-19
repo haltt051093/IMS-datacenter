@@ -481,8 +481,8 @@ namespace IMS.Data.Business
             foreach (var server in serverCodes)
             {
                 //update and log server
-                ServerBLO.Current.UpdateServerANDLog(requestCode, server,
-                    Constants.TypeOfLog.LOG_ADD_SERVER, Constants.StatusCode.SERVER_DEACTIVATE, customer);
+                ServerBLO.Current.RemoveServerANDLog(requestCode, server,
+                    Constants.TypeOfLog.LOG_ADD_SERVER, customer);
             }
             //update request status and log
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ADD_SERVER,
@@ -491,10 +491,6 @@ namespace IMS.Data.Business
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_CANCEL);
             //luu notification
             var result = new NotificationResultModel();
-            //var activeGroupCode = AssignedShiftBLO.Current.GetActiveGroup();
-            //var activeStaff = AccountBLO.Current.GetAccountsByGroup(activeGroupCode)
-            //    .Where(x => x.Role == Constants.Role.SHIFT_HEAD)
-            //    .ToList();
             var activeStaff = TaskBLO.Current.StaffOfTask(requestCode);
             var cusName = AccountBLO.Current.GeCustomerInfo(customer).CustomerName;
             var desc = "Customer " + cusName + " cancelled Request Add Server";
@@ -1251,13 +1247,13 @@ namespace IMS.Data.Business
             var serverCodes = LogBLO.Current.GetServerCodeByRequestCode(requestCode);
             foreach (var server in serverCodes)
             {
-                //update and log server
-                ServerBLO.Current.UpdateServerANDLog(requestCode, server,
-                    Constants.TypeOfLog.LOG_ADD_SERVER, Constants.StatusCode.SERVER_DEACTIVATE, assignee);
                 //update ip addresspool, chuyen trang thai default ip = false, update status
                 IPAddressPoolBLO.Current.UpdateDefaultIPANDLog(requestCode, server, assignee);
                 //update lai location, status va xoa servercode
                 LocationBLO.Current.SetLocationAvailable(server);
+                //update and log server
+                ServerBLO.Current.RemoveServerANDLog(requestCode, server,
+                    Constants.TypeOfLog.LOG_ADD_SERVER, assignee);
             }
             //Add and log request
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ADD_SERVER,

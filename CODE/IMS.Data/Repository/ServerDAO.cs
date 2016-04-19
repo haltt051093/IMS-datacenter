@@ -368,5 +368,25 @@ namespace IMS.Data.Repository
             };
             LogBLO.Current.Add(logServer);
         }
+
+        public void RemoveServerANDLog(string requestCode, string serverCode,
+             string typeOfLog, string username)
+        {
+            var server = Query(x => x.ServerCode == serverCode).FirstOrDefault();
+            if (server != null)
+            {
+                Remove(server);
+            }
+            //log server
+            Log logServer = new Log
+            {
+                RequestCode = requestCode,
+                TypeOfLog = typeOfLog,
+                Object = Constants.Object.OBJECT_SERVER,
+                ChangedValueOfObject = serverCode,
+                Username = username
+            };
+            LogBLO.Current.Add(logServer);
+        }
     }
 }
