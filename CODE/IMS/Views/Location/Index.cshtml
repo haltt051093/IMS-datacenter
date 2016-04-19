@@ -147,24 +147,25 @@
             $('#addlocation-modal').modal('hide');
             var datatable = $('#example1').dataTable().api();
 
-            $.get('@Url.Action("GetAll", "Location", new { httproute = "" })', function (newDataArray) {
-                datatable.clear();
-                datatable.rows.add(newDataArray.data);
-                datatable.draw();
-            });
             $.get('@Url.Action("GetListRack", "Location", new { httproute = "" })', function (newDataArray) {
                 $('#RackCode').html('<option value="">All Locations</option>');
                 var option = '';
                 $(newDataArray).each(function (i, e) {
                     if (e.Customer != null) {
-                        option = $('<option></option>').html(e.RackName + " " + "("+e.Customer+")").val(e.RackName);
+                        option = $('<option></option>').html(e.RackName + " " + "(" + e.Customer + ")").val(e.RackName);
                     } else {
                         option = $('<option></option>').html(e.RackName).val(e.RackName);
                     }
-                    
+
                     $('#RackCode').append(option);
                 });
             });
+            $.get('@Url.Action("GetAll", "Location", new { httproute = "" })', function (newDataArray) {
+                datatable.clear();
+                datatable.rows.add(newDataArray.data);
+                datatable.draw();
+            });
+           
             $.get('@Url.Action("GetEmptyRackCount", "Location", new { httproute = "" })', function (countRackEmpty) {
                 $('#countrack').html('Amount of Rack Empty: '+ countRackEmpty);
             });
