@@ -115,7 +115,7 @@
 
     function filterRequest() {
         var typeCode = $("#FilterByRequestType").val();
-        var statusCode = $("#FilterByStatus").val();
+        var statusCode = $("#SelectedStatus").val();
         var duration = $('#FilterByPeriodOfTime').val();
         if (typeCode == null) {
             typeCode = '';
@@ -184,7 +184,7 @@
             filterRequest();
         });
 
-        $("#FilterByStatus").change(function () {
+        $("#SelectedStatus").change(function () {
             filterRequest();
         });
 
