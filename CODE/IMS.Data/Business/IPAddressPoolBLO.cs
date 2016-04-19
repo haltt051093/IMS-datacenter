@@ -46,6 +46,7 @@ namespace IMS.Data.Business
                 item.StatusCode = entry[i].StatusCode;
                 item.Subnetmask = entry[i].Subnetmask;
                 item.NetworkIP = entry[i].NetworkIP;
+                item.Staff = entry[i].Staff;
                 ip.Add(item);
             }
             IPAddressPoolDAO.Current.AddMany(ip);

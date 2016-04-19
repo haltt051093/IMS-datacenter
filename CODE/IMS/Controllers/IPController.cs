@@ -70,7 +70,10 @@ namespace IMS.Controllers
                 }
                 var k = ips.Count - 1;
                 ips[k].StatusCode = Constants.StatusCode.IP_RESERVE;
-
+                for (int i = 0; i < ips.Count; i++)
+                {
+                    ips[i].Staff = GetCurrentUserName();
+                }
                 for (var i = 0; i < ips.Count - 1; i++)
                 {
                     if (ips[i].IPAddress == ips[i].NetworkIP || ips[i].IPAddress == ips[i].Gateway)

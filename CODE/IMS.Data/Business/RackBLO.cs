@@ -39,7 +39,7 @@ namespace IMS.Data.Business
             entry.RackCode = rackCode;
             entry.AddedDate = DateTime.Now;
             entry.StatusCode = Constants.StatusCode.RACK_AVAILABLE;
-
+            entry.MaximumOutlet = 0;
                 dao.Add(entry);
                 var locations = new List<Location>();
                 for (var i = 1; i < 43; i++)
