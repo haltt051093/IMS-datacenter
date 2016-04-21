@@ -1631,7 +1631,7 @@ namespace IMS.Data.Business
                         }
                     }
                 }
-                var name = item.ServerCode + ".doc";
+                var name = item.ServerCode +"_"+item.DefaultIP+ ".doc";
                 wordDoc.SaveAs(name);
                 wordApp.Documents.Open(name);
                 wordApp.Application.Quit();
