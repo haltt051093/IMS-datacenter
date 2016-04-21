@@ -193,6 +193,8 @@ namespace IMS.Services
 
                 var testJob = new MasterJob();
                 testJob.Execute(null);
+                var assignJob = new AssignShiftJob();
+                assignJob.Execute(null);
             }
         }
 
