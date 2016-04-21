@@ -400,7 +400,7 @@ namespace IMS.Core
             public const string CANCEL_REQUEST_RETURN_RACK = "You've cancelled Request Return Rack";
 
 
-            public const string PRINT_PROCEDURE = "You've PRINTED a procedure";
+            public const string PRINT_PROCEDURE = "You've EXPORTED a procedure";
 
             public const string REASSIGN_TASK = "You've REASSIGNED a task to";
             public const string ACCEPT_TASK = "You're DOING the task";
