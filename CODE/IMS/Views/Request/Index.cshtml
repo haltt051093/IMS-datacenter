@@ -21,11 +21,11 @@
     </div>
     <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
         <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-            @Html.LabelFor(model => model.SelectedStatus, "Status")
+            @Html.LabelFor(model => model.FilterByStatus, "Status")
         </div>
         <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-            @Html.DropDownListFor(m => m.SelectedStatus, Model.FilterByStatus, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-            @Html.ValidationMessageFor(model => model.SelectedStatus)
+            @Html.DropDownListFor(m => m.FilterByStatus, Model.FilterByStatus, "Select All", new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+            @Html.ValidationMessageFor(model => model.FilterByStatus)
         </div>
     </div>
     <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
@@ -67,25 +67,6 @@
                 </tr>
             }
         </tbody>
-        @*<tbody class="showhide" style="display: none; background-color: lightgrey;">
-                @if (Model.Requests[i].OldStatusRequests != null)
-                {
-                    foreach (var old in Model.Requests[i].OldStatusRequests)
-                    {
-                        <tr style="background-color: lightgrey;">
-                            <td>
-                                @Html.DisplayFor(modelItem => old.RequestTypeName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => old.StatusName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => old.LogTime)
-                            </td>
-                        </tr>
-                    }
-                }
-            </tbody>*@
         <tfoot>
             <tr style="background-color: #404040">
                 <th>
@@ -123,7 +104,7 @@
 
     function filterRequest() {
         var typeCode = $("#FilterByRequestType").val();
-        var statusCode = $("#SelectedStatus").val();
+        var statusCode = $("#FilterByStatus").val();
         var duration = $('#FilterByPeriodOfTime').val();
         if (typeCode == null) {
             typeCode = '';
@@ -195,7 +176,7 @@
 
     });
 
-    $("#SelectedStatus").change(function () {
+    $("#FilterByStatus").change(function () {
         filterRequest();
     });
 

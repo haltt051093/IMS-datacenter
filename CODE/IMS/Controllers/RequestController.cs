@@ -33,12 +33,12 @@ namespace IMS.Controllers
                 .ToList();
             data.FilterByPeriodOfTime = new List<SelectListItem>
             {
-                new SelectListItem() {Value = "0", Text = "Today", Selected = true },
+                new SelectListItem() {Value = "0", Text = "Today"},
                 new SelectListItem() {Value = "7", Text = "One Week"},
                 new SelectListItem() {Value = "30", Text = "One Month"},
-                new SelectListItem() {Value = "99999", Text = "All"}
+                new SelectListItem() {Value = "99999", Text = "All", Selected = true }
             };
-            data.SelectedStatus = Constants.StatusCode.REQUEST_PENDINGPROCESSING;
+            //data.SelectedStatus = Constants.StatusCode.REQUEST_PENDINGPROCESSING;
             return View(data);
         }
 
