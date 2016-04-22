@@ -103,7 +103,7 @@
                 }
                 else
                 {
-                    if (Model.Server.ServerLocation.Count > 0)
+                    if (Model.Server.ServerLocation != null)
                     {
                         <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                             @foreach (var item in Model.Server.ServerLocation)

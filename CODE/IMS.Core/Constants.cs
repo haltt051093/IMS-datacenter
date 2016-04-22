@@ -38,6 +38,7 @@ namespace IMS.Core
             public const string SERVER_RUNNING = "STATUS02";
             public const string SERVER_DEACTIVATE = "STATUS03";
             public const string SERVER_BRINGING_AWAY = "STATUS34";
+            public const string SERVER_REMOVED = "STATUS39";
 
             public const string IP_AVAILABLE = "STATUS10";
             public const string IP_USED = "STATUS11";
@@ -399,6 +400,7 @@ namespace IMS.Core
             public const string CANCEL_REQUEST_RENT_RACK = "You've cancelled Request Rent Rack";
             public const string CANCEL_REQUEST_RETURN_RACK = "You've cancelled Request Return Rack";
 
+            public const string ERROR_CANCEL_REQUEST = "Error! Request status was changed.";
 
             public const string PRINT_PROCEDURE = "You've EXPORTED a procedure";
 

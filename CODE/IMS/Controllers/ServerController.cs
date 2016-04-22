@@ -17,17 +17,14 @@ namespace IMS.Controllers
             var role = GetCurrentUserRole();
             var data = new ServerIndexViewModel();
             var customer = GetCurrentUserName();
-            var listStatus = StatusBLO.Current.GetStatusByObject(Constants.Object.OBJECT_SERVER);
+            var listStatus = StatusBLO.Current.GetStatusByObject(Constants.Object.OBJECT_SERVER).OrderBy(x => x.Priority).ToList();
+            listStatus.RemoveAt(0);
             data.ServerStatus = listStatus
                         .Select(x => new SelectListItem { Value = x.StatusCode, Text = x.StatusName })
                         .ToList();
             if (role == Constants.Role.CUSTOMER)
             {
                 var servers = ServerBLO.Current.GetServerOfCustomer(customer);
-                foreach (var item in servers)
-                {
-                    item.Requests = RequestBLO.Current.GetWaitingRequestOfServer(item.ServerCode);
-                }
                 data.Servers = servers;
             }
             else
@@ -47,7 +44,7 @@ namespace IMS.Controllers
         public ActionResult Detail(string code, string Message)
         {
             var data = new ServerDetailsViewModel();
-            data.UserRole = GetCurrentUserRole();   
+            data.UserRole = GetCurrentUserRole();
             data.SuccessMessage = Message;
             data.Server = ServerBLO.Current.GetAllServerInfo(code);
             //var serverattributes = ServerBLO.Current.GetServerAttributes(serverCode);

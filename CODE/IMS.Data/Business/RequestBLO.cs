@@ -481,9 +481,13 @@ namespace IMS.Data.Business
             var serverCodes = LogBLO.Current.GetAddingServers(requestCode);
             foreach (var server in serverCodes)
             {
+                //update ip addresspool, chuyen trang thai default ip = false, update status
+                IPAddressPoolBLO.Current.UpdateDefaultIPANDLog(requestCode, server, customer);
+                //update lai location, status va xoa servercode
+                LocationBLO.Current.SetLocationAvailable(server);
                 //update and log server
-                ServerBLO.Current.RemoveServerANDLog(requestCode, server,
-                    Constants.TypeOfLog.LOG_ADD_SERVER, customer);
+                ServerBLO.Current.UpdateServerANDLog(requestCode, server,
+                    Constants.TypeOfLog.LOG_ADD_SERVER, Constants.StatusCode.SERVER_REMOVED, customer);
             }
             //update request status and log
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ADD_SERVER,
@@ -738,10 +742,6 @@ namespace IMS.Data.Business
         public ProcessRequestExtendedModel DetailProcessRequestAddServer(string requestCode, string group, string role)
         {
             var request = GetCommonProcessRequest(requestCode, group);
-            //if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.MANAGER)
-            //{
-            //    request.RequestInfo.IsShifthead = true;
-            //}
             //lay list servers
             var serverCodes = LogBLO.Current.GetAddingServers(requestCode);
             List<ServerExtendedModel> list = new List<ServerExtendedModel>();
@@ -757,10 +757,6 @@ namespace IMS.Data.Business
         public ProcessRequestExtendedModel DetailProcessRequestBringServerAway(string requestCode, string group, string role)
         {
             var request = GetCommonProcessRequest(requestCode, group);
-            //if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.MANAGER)
-            //{
-            //    request.RequestInfo.IsShifthead = true;
-            //}
             //main info
             var returnValues = LogBLO.Current.RequestDetailsBringServerAway(requestCode);
             request.ReturnIpNumber = returnValues.ReturnIpNumber;
@@ -773,10 +769,6 @@ namespace IMS.Data.Business
         public ProcessRequestExtendedModel DetailProcessRequestAssignIP(string requestCode, string group, string role)
         {
             var request = GetCommonProcessRequest(requestCode, group);
-            //if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.MANAGER)
-            //{
-            //    request.RequestInfo.IsShifthead = true;
-            //}
             //Lay so luong IP muon assign
             var reqDetail = JsonConvert.DeserializeObject<RequestDetailViewModel>(request.RequestInfo.Description);
             request.NumberOfIP = reqDetail.NumberOfIp;
@@ -808,10 +800,6 @@ namespace IMS.Data.Business
         public ProcessRequestExtendedModel DetailProcessRequestChangeIP(string requestCode, string group, string role)
         {
             var request = GetCommonProcessRequest(requestCode, group);
-            //if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.MANAGER)
-            //{
-            //    request.RequestInfo.IsShifthead = true;
-            //}
             //lay ip muon change
             request.ReturningIPs = LogBLO.Current.GetChangedValueOfObject(requestCode,
                 Constants.Object.OBJECT_SERVERIP, Constants.StatusCode.SERVERIP_CHANGING);
@@ -836,10 +824,6 @@ namespace IMS.Data.Business
         public ProcessRequestExtendedModel DetailProcessRequestReturnIP(string requestCode, string group, string role)
         {
             var request = GetCommonProcessRequest(requestCode, group);
-            //if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.MANAGER)
-            //{
-            //    request.RequestInfo.IsShifthead = true;
-            //}
             request.SelectedServer = LogBLO.Current.GetServerCodeByRequestCode(requestCode).FirstOrDefault();
             request.SelectedDefaultIP = ServerBLO.Current.GetAllServerInfo(request.SelectedServer).DefaultIP;
             //List returning IPs
@@ -851,10 +835,6 @@ namespace IMS.Data.Business
         public ProcessRequestExtendedModel DetailProcessRequestRentRack(string requestCode, string group, string role)
         {
             var request = GetCommonProcessRequest(requestCode, group);
-            //if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.MANAGER)
-            //{
-            //    request.RequestInfo.IsShifthead = true;
-            //}
             var desc = JsonConvert.DeserializeObject<RequestDetailViewModel>(request.RequestInfo.Description);
             request.RackNumbers = desc.NumberOfRack;
             request.RequestInfo.Description = desc.Description;
@@ -878,10 +858,6 @@ namespace IMS.Data.Business
         public ProcessRequestExtendedModel DetailProcessRequestReturnRack(string requestCode, string group, string role)
         {
             var request = GetCommonProcessRequest(requestCode, group);
-            //if (role == Constants.Role.SHIFT_HEAD || role == Constants.Role.MANAGER)
-            //{
-            //    request.RequestInfo.IsShifthead = true;
-            //}
             //Lay so luong rack muon return
             var listRacks = LogBLO.Current.RequestDetailsReturnRack(requestCode);
             request.SelectedRacks = listRacks.listRacks;
@@ -1253,8 +1229,8 @@ namespace IMS.Data.Business
                 //update lai location, status va xoa servercode
                 LocationBLO.Current.SetLocationAvailable(server);
                 //update and log server
-                ServerBLO.Current.RemoveServerANDLog(requestCode, server,
-                    Constants.TypeOfLog.LOG_ADD_SERVER, assignee);
+                ServerBLO.Current.UpdateServerANDLog(requestCode, server,
+                    Constants.TypeOfLog.LOG_ADD_SERVER, Constants.StatusCode.SERVER_REMOVED, assignee);
             }
             //Add and log request
             UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ADD_SERVER,

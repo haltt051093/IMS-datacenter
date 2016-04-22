@@ -13,6 +13,8 @@
     @using (Html.BeginForm("CancelRequestRentRack", "Request", FormMethod.Post))
             {
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+            @Html.HiddenFor(model => model.SuccessMessage)
+            @Html.HiddenFor(model => model.ErrorMessage)
             <div class="col-xs-6">
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
                     <div class="@Constants.HtmlFormat.FORM_LABEL_X2_CLASS">
@@ -133,6 +135,7 @@
         $('tr.check input[type="checkbox"]').prop('checked', state);
     });
     var message = $('#SuccessMessage').val();
+    var err = $('#ErrorMessage').val();
     if (message) {
         notif({
             msg: "<b>Success! </b>" + message,
@@ -140,6 +143,14 @@
             position: "center"
         });
         $('#SuccessMessage').val("");
+    }
+    if (err) {
+        notif({
+            msg: err,
+            type: "error",
+            position: "center"
+        });
+        $('#ErrorMessage').val("");
     }
     $("#selectedRow").change(function () {
         var rowCode = $("#selectedRow").val();

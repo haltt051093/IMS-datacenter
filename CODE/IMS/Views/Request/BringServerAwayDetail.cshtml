@@ -12,6 +12,8 @@
 <section class="main-content">
     @using (Html.BeginForm("CancelRequestBringServerAway", "Request", FormMethod.Post))
     {
+        @Html.HiddenFor(model => model.SuccessMessage)
+        @Html.HiddenFor(model => model.ErrorMessage)
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             <div class="col-xs-6">
                 <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
@@ -167,6 +169,7 @@
 <script type="text/javascript">
     $(function () {
         var message = $('#SuccessMessage').val();
+        var err = $('#ErrorMessage').val();
         if (message) {
             notif({
                 msg: "<b>Success! </b>" + message,
@@ -174,6 +177,14 @@
                 position: "center"
             });
             $('#SuccessMessage').val("");
+        }
+        if (err) {
+            notif({
+                msg: err,
+                type: "error",
+                position: "center"
+            });
+            $('#ErrorMessage').val("");
         }
     });
 </script>

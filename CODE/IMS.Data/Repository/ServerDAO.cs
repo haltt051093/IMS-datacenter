@@ -74,6 +74,7 @@ namespace IMS.Data.Repository
                         join a in AccountDAO.Current.Table
                             on s.Customer equals a.Username into astsl
                         from suba in astsl.DefaultIfEmpty()
+                        where s.StatusCode != Constants.StatusCode.SERVER_REMOVED
                         select new ServerExtendedModel
                         {
                             RackCode = subl.RackCode,
@@ -92,7 +93,7 @@ namespace IMS.Data.Repository
                         };
             //if default IP ko có --> ghi chú
             var list = new List<ServerExtendedModel>();
-            foreach(var item in query.ToList())
+            foreach (var item in query.ToList())
             {
                 if (item.DefaultIP == null && item.StatusCode == Constants.StatusCode.SERVER_WAITING)
                 {
@@ -128,7 +129,7 @@ namespace IMS.Data.Repository
                         join a in AccountDAO.Current.Table
                             on s.Customer equals a.Username into astsl
                         from suba in astsl.DefaultIfEmpty()
-                        where s.Customer == customer
+                        where s.Customer == customer && s.StatusCode != Constants.StatusCode.SERVER_REMOVED
                         select new ServerExtendedModel
                         {
                             RackCode = subl.RackCode,
@@ -308,7 +309,7 @@ namespace IMS.Data.Repository
                                      RackName = sublr.RackName,
                                      RackUnit = l.RackUnit
                                  };
-            if (serverlocation != null)
+            if (serverlocation.Count() != 0)
             {
                 server.ServerLocation = serverlocation.ToList();
             }

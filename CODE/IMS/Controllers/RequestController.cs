@@ -38,7 +38,6 @@ namespace IMS.Controllers
                 new SelectListItem() {Value = "30", Text = "One Month"},
                 new SelectListItem() {Value = "99999", Text = "All", Selected = true }
             };
-            //data.SelectedStatus = Constants.StatusCode.REQUEST_PENDINGPROCESSING;
             return View(data);
         }
 
@@ -68,7 +67,7 @@ namespace IMS.Controllers
                     }
                     data.RequestInfo = new RequestInfoModel();
                     var now = DateTime.Now;
-                    if(now.Hour >= 16)
+                    if (now.Hour >= 16)
                     {
                         data.RequestInfo.AppointmentTimeStr = now.Date.AddHours(32).ToString("dd/MM/yyyy HH:mm");
                     }
@@ -225,7 +224,18 @@ namespace IMS.Controllers
                     list.Add(item);
                 }
                 viewmodel.Servers = list;
-                viewmodel.SuccessMessage = msg;
+                if (msg != null)
+                {
+                    string check = msg.Substring(0, 5);
+                    if (check == "Error")
+                    {
+                        viewmodel.ErrorMessage = msg;
+                    }
+                    else
+                    {
+                        viewmodel.SuccessMessage = msg;
+                    }
+                }
                 return View("AddServerDetail", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.BRING_SERVER_AWAY))
@@ -239,7 +249,18 @@ namespace IMS.Controllers
                     list.Add(item);
                 }
                 viewmodel.ServerOfCustomer = list;
-                viewmodel.SuccessMessage = msg;
+                if (msg != null)
+                {
+                    string check = msg.Substring(0, 5);
+                    if (check == "Error")
+                    {
+                        viewmodel.ErrorMessage = msg;
+                    }
+                    else
+                    {
+                        viewmodel.SuccessMessage = msg;
+                    }
+                }
                 return View("BringServerAwayDetail", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.ASSIGN_IP))
@@ -247,7 +268,18 @@ namespace IMS.Controllers
                 //Get request
                 var request = RequestBLO.Current.DetailProcessRequestAssignIP(code, null, null);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestAssignIPViewModel>(request);
-                viewmodel.SuccessMessage = msg;
+                if (msg != null)
+                {
+                    string check = msg.Substring(0, 5);
+                    if (check == "Error")
+                    {
+                        viewmodel.ErrorMessage = msg;
+                    }
+                    else
+                    {
+                        viewmodel.SuccessMessage = msg;
+                    }
+                }
                 return View("AssignIPDetail", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.CHANGE_IP))
@@ -255,7 +287,18 @@ namespace IMS.Controllers
                 //Get request
                 var request = RequestBLO.Current.DetailProcessRequestChangeIP(code, null, null);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestChangeIPViewModel>(request);
-                viewmodel.SuccessMessage = msg;
+                if (msg != null)
+                {
+                    string check = msg.Substring(0, 5);
+                    if (check == "Error")
+                    {
+                        viewmodel.ErrorMessage = msg;
+                    }
+                    else
+                    {
+                        viewmodel.SuccessMessage = msg;
+                    }
+                }
                 return View("ChangeIPDetail", viewmodel);
             }
 
@@ -264,7 +307,18 @@ namespace IMS.Controllers
                 //Get request
                 var request = RequestBLO.Current.DetailProcessRequestReturnIP(code, null, null);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestReturnIPViewModel>(request);
-                viewmodel.SuccessMessage = msg;
+                if (msg != null)
+                {
+                    string check = msg.Substring(0, 5);
+                    if (check == "Error")
+                    {
+                        viewmodel.ErrorMessage = msg;
+                    }
+                    else
+                    {
+                        viewmodel.SuccessMessage = msg;
+                    }
+                }
                 return View("ReturnIPDetail", viewmodel);
             }
 
@@ -273,7 +327,18 @@ namespace IMS.Controllers
                 //Get request
                 var request = RequestBLO.Current.DetailProcessRequestRentRack(code, null, null);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestRentRackViewModel>(request);
-                viewmodel.SuccessMessage = msg;
+                if (msg != null)
+                {
+                    string check = msg.Substring(0, 5);
+                    if (check == "Error")
+                    {
+                        viewmodel.ErrorMessage = msg;
+                    }
+                    else
+                    {
+                        viewmodel.SuccessMessage = msg;
+                    }
+                }
                 return View("RentRackDetail", viewmodel);
             }
             if (rType.Equals(Constants.RequestTypeCode.RETURN_RACK))
@@ -281,7 +346,18 @@ namespace IMS.Controllers
                 //Get request
                 var request = RequestBLO.Current.DetailProcessRequestReturnRack(code, null, null);
                 var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestReturnRackViewModel>(request);
-                viewmodel.SuccessMessage = msg;
+                if (msg != null)
+                {
+                    string check = msg.Substring(0, 5);
+                    if (check == "Error")
+                    {
+                        viewmodel.ErrorMessage = msg;
+                    }
+                    else
+                    {
+                        viewmodel.SuccessMessage = msg;
+                    }
+                }
                 return View("ReturnRackDetail", viewmodel);
             }
             return RedirectToAction("Index");
@@ -454,87 +530,168 @@ namespace IMS.Controllers
         [HttpPost]
         public ActionResult CancelRequestAddServer(ProcessRequestAddServerViewModel viewmodel)
         {
-            var customer = GetCurrentUserName();
-            var result = RequestBLO.Current.CancelRequestAddServer(viewmodel.RequestInfo.RequestCode, customer,
-                viewmodel.RequestInfo.TaskCode);
-            //dang ky ham cho client
-            Notify(result.NotificationCodes);
-            return RedirectToAction("Detail", "Request", new
-            { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.CANCEL_REQUEST_ADD_SERVER });
+            var status = RequestBLO.Current.GetByKeys(new Request { RequestCode = viewmodel.RequestInfo.RequestCode }).StatusCode;
+            if (status == Constants.StatusCode.REQUEST_REJECTED || status == Constants.StatusCode.REQUEST_DONE || status == Constants.StatusCode.REQUEST_CANCELLED)
+            {
+                return RedirectToAction("Detail", "Request", new
+                { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.ERROR_CANCEL_REQUEST });
+            }
+            else
+            {
+                var customer = GetCurrentUserName();
+                var result = RequestBLO.Current.CancelRequestAddServer(viewmodel.RequestInfo.RequestCode, customer,
+                    viewmodel.RequestInfo.TaskCode);
+                //dang ky ham cho client
+                Notify(result.NotificationCodes);
+                return RedirectToAction("Detail", "Request", new
+                { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.CANCEL_REQUEST_ADD_SERVER });
+            }
         }
 
         [Roles(Constants.Role.CUSTOMER)]
         [HttpPost]
         public ActionResult CancelRequestBringServerAway(ProcessRequestBringServerAwayViewModel viewmodel)
         {
-            var customer = GetCurrentUserName();
-            //Update lai serverip, server, request
-            var result = RequestBLO.Current.CancelRequestBringServerAway(viewmodel.RequestInfo.RequestCode,
-                customer, viewmodel.RequestInfo.TaskCode);
-            //dang ky ham cho client
-            Notify(result.NotificationCodes);
-            return RedirectToAction("Detail", "Request", new
-            { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.CANCEL_REQUEST_BRING_SERVER_AWAY });
+            var status = RequestBLO.Current.GetByKeys(new Request { RequestCode = viewmodel.RequestInfo.RequestCode }).StatusCode;
+            if (status == Constants.StatusCode.REQUEST_REJECTED || status == Constants.StatusCode.REQUEST_DONE || status == Constants.StatusCode.REQUEST_CANCELLED)
+            {
+                return RedirectToAction("Detail", "Request", new
+                {
+                    code = viewmodel.RequestInfo.RequestCode,
+                    msg = Constants.Message.ERROR_CANCEL_REQUEST
+                });
+            }
+            else
+            {
+                var customer = GetCurrentUserName();
+                //Update lai serverip, server, request
+                var result = RequestBLO.Current.CancelRequestBringServerAway(viewmodel.RequestInfo.RequestCode,
+                    customer, viewmodel.RequestInfo.TaskCode);
+                //dang ky ham cho client
+                Notify(result.NotificationCodes);
+                return RedirectToAction("Detail", "Request", new
+                { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.CANCEL_REQUEST_BRING_SERVER_AWAY });
+            }
         }
         [Roles(Constants.Role.CUSTOMER)]
         [HttpPost]
         public ActionResult CancelRequestAssignIp(ProcessRequestAssignIPViewModel viewmodel)
         {
-            var customer = GetCurrentUserName();
-            var result = RequestBLO.Current.CancelRequestAssignIP(viewmodel.RequestInfo.RequestCode,
-                customer, viewmodel.RequestInfo.TaskCode);
-            //dang ky ham cho client
-            Notify(result.NotificationCodes);
-            return RedirectToAction("Detail", "Request", new
-            { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.CANCEL_REQUEST_ASSIGN_IP });
+            var status = RequestBLO.Current.GetByKeys(new Request { RequestCode = viewmodel.RequestInfo.RequestCode }).StatusCode;
+            if (status == Constants.StatusCode.REQUEST_REJECTED || status == Constants.StatusCode.REQUEST_DONE || status == Constants.StatusCode.REQUEST_CANCELLED)
+            {
+                return RedirectToAction("Detail", "Request", new
+                {
+                    code = viewmodel.RequestInfo.RequestCode,
+                    msg = Constants.Message.ERROR_CANCEL_REQUEST
+                });
+            }
+            else
+            {
+                var customer = GetCurrentUserName();
+                var result = RequestBLO.Current.CancelRequestAssignIP(viewmodel.RequestInfo.RequestCode,
+                    customer, viewmodel.RequestInfo.TaskCode);
+                //dang ky ham cho client
+                Notify(result.NotificationCodes);
+                return RedirectToAction("Detail", "Request", new
+                { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.CANCEL_REQUEST_ASSIGN_IP });
+            }
         }
         [Roles(Constants.Role.CUSTOMER)]
         [HttpPost]
         public ActionResult CancelRequestChangeIp(ProcessRequestChangeIPViewModel viewmodel)
         {
-            var customer = GetCurrentUserName();
-            var result = RequestBLO.Current.CancelRequestChangeIp(viewmodel.RequestInfo.RequestCode, customer,
-                viewmodel.RequestInfo.TaskCode);
-            //dang ky ham cho client
-            Notify(result.NotificationCodes);
-            return RedirectToAction("Detail", "Request", new
-            { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.APPROVE_REQUEST_CHANGE_IP });
+            var status = RequestBLO.Current.GetByKeys(new Request { RequestCode = viewmodel.RequestInfo.RequestCode }).StatusCode;
+            if (status == Constants.StatusCode.REQUEST_REJECTED || status == Constants.StatusCode.REQUEST_DONE || status == Constants.StatusCode.REQUEST_CANCELLED)
+            {
+                return RedirectToAction("Detail", "Request", new
+                {
+                    code = viewmodel.RequestInfo.RequestCode,
+                    msg = Constants.Message.ERROR_CANCEL_REQUEST
+                });
+            }
+            else
+            {
+                var customer = GetCurrentUserName();
+                var result = RequestBLO.Current.CancelRequestChangeIp(viewmodel.RequestInfo.RequestCode, customer,
+                    viewmodel.RequestInfo.TaskCode);
+                //dang ky ham cho client
+                Notify(result.NotificationCodes);
+                return RedirectToAction("Detail", "Request", new
+                { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.APPROVE_REQUEST_CHANGE_IP });
+            }
         }
         [Roles(Constants.Role.CUSTOMER)]
         [HttpPost]
         public ActionResult CancelRequestReturnIp(ProcessRequestReturnIPViewModel viewmodel)
         {
-            var customer = GetCurrentUserName();
-            var result = RequestBLO.Current.CancelRequestReturnIp(viewmodel.RequestInfo.RequestCode, customer,
-                viewmodel.RequestInfo.TaskCode);
-            //dang ky ham cho client
-            Notify(result.NotificationCodes);
-            return RedirectToAction("Detail", "Request", new
-            { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.CANCEL_REQUEST_RETURN_IP });
+            var status = RequestBLO.Current.GetByKeys(new Request { RequestCode = viewmodel.RequestInfo.RequestCode }).StatusCode;
+            if (status == Constants.StatusCode.REQUEST_REJECTED || status == Constants.StatusCode.REQUEST_DONE || status == Constants.StatusCode.REQUEST_CANCELLED)
+            {
+                return RedirectToAction("Detail", "Request", new
+                {
+                    code = viewmodel.RequestInfo.RequestCode,
+                    msg = Constants.Message.ERROR_CANCEL_REQUEST
+                });
+            }
+            else
+            {
+                var customer = GetCurrentUserName();
+                var result = RequestBLO.Current.CancelRequestReturnIp(viewmodel.RequestInfo.RequestCode, customer,
+                    viewmodel.RequestInfo.TaskCode);
+                //dang ky ham cho client
+                Notify(result.NotificationCodes);
+                return RedirectToAction("Detail", "Request", new
+                { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.CANCEL_REQUEST_RETURN_IP });
+            }
         }
         [Roles(Constants.Role.CUSTOMER)]
         [HttpPost]
         public ActionResult CancelRequestRentRack(ProcessRequestRentRackViewModel viewmodel)
         {
-            var customer = GetCurrentUserName();
-            var result = RequestBLO.Current.CancelRequestRentRack(viewmodel.RequestInfo.RequestCode, customer,
-                viewmodel.RequestInfo.TaskCode);
-            //dang ky ham cho client
-            Notify(result.NotificationCodes);
-            return RedirectToAction("Detail", "Request", new
-            { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.CANCEL_REQUEST_RENT_RACK });
+            var status = RequestBLO.Current.GetByKeys(new Request { RequestCode = viewmodel.RequestInfo.RequestCode }).StatusCode;
+            if (status == Constants.StatusCode.REQUEST_REJECTED || status == Constants.StatusCode.REQUEST_DONE || status == Constants.StatusCode.REQUEST_CANCELLED)
+            {
+                return RedirectToAction("Detail", "Request", new
+                {
+                    code = viewmodel.RequestInfo.RequestCode,
+                    msg = Constants.Message.ERROR_CANCEL_REQUEST
+                });
+            }
+            else
+            {
+                var customer = GetCurrentUserName();
+                var result = RequestBLO.Current.CancelRequestRentRack(viewmodel.RequestInfo.RequestCode, customer,
+                    viewmodel.RequestInfo.TaskCode);
+                //dang ky ham cho client
+                Notify(result.NotificationCodes);
+                return RedirectToAction("Detail", "Request", new
+                { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.CANCEL_REQUEST_RENT_RACK });
+            }
         }
         [Roles(Constants.Role.CUSTOMER)]
         [HttpPost]
         public ActionResult CancelRequestReturnRack(ProcessRequestReturnRackViewModel viewmodel)
         {
-            var customer = GetCurrentUserName();
-            var result = RequestBLO.Current.CancelRequestReturnRack(viewmodel.RequestInfo.RequestCode, customer,
-                viewmodel.RequestInfo.TaskCode);
-            //dang ky ham cho client
-            Notify(result.NotificationCodes);
-            return RedirectToAction("Detail", "Request", new
-            { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.CANCEL_REQUEST_RETURN_RACK });
+            var status = RequestBLO.Current.GetByKeys(new Request { RequestCode = viewmodel.RequestInfo.RequestCode }).StatusCode;
+            if (status == Constants.StatusCode.REQUEST_REJECTED || status == Constants.StatusCode.REQUEST_DONE || status == Constants.StatusCode.REQUEST_CANCELLED)
+            {
+                return RedirectToAction("Detail", "Request", new
+                {
+                    code = viewmodel.RequestInfo.RequestCode,
+                    msg = Constants.Message.ERROR_CANCEL_REQUEST
+                });
+            }
+            else
+            {
+                var customer = GetCurrentUserName();
+                var result = RequestBLO.Current.CancelRequestReturnRack(viewmodel.RequestInfo.RequestCode, customer,
+                    viewmodel.RequestInfo.TaskCode);
+                //dang ky ham cho client
+                Notify(result.NotificationCodes);
+                return RedirectToAction("Detail", "Request", new
+                { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.CANCEL_REQUEST_RETURN_RACK });
+            }
         }
         #endregion
 

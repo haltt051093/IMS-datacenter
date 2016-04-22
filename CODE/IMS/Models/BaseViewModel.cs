@@ -10,6 +10,7 @@ namespace IMS.Models
         public string FormController { get; set; }
         public string FormAction { get; set; }
         public string SuccessMessage { get; set; }
+        public string ErrorMessage { get; set; }
         public bool IsAssignedUser { get; set; }
         //dropdownlist
         public List<SelectListItem> FilterByRequestType { get; set; }
