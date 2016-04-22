@@ -114,7 +114,11 @@ namespace IMS.Controllers
                             Value = x.RackCode,
                             Text = x.RackName
                         }).ToList();
+                        if (data.Racks1.Count > 0)
+                        {
                         data.Notice = "HaveRack";
+                    }
+                        
                     }
                 
                 
