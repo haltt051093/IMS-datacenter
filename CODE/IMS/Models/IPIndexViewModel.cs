@@ -23,6 +23,7 @@ namespace IMS.Models
         public string NetworkIP { get; set; }
         public string Action { get; set; }
         public string SuccessMessage { get; set; }
+        public string FailAdd { get; set; }
         public string FailBlock { get; set; }
         public string FailUnBlock { get; set; }
 

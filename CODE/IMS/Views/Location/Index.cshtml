@@ -14,6 +14,7 @@
 <section class="main-content">
     <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS hidden">
         @Html.HiddenFor(model => model.SuccessMessage)
+        @Html.HiddenFor(model => model.FailMessage)
     </div>
     <label id="countrack" style="color: #3c8dbc">Amount of Empty Rack: @Model.RackAvailableCount</label>
     <div>
@@ -140,6 +141,15 @@
             position: "center"
         });
         $('#SuccessMessage').val("");
+    }
+    var message = $('#FailMessage').val();
+    if (message) {
+        notif({
+            msg: "" + message,
+            type: "error",
+            position: "center"
+        });
+        $('#FailMessage').val("");
     }
     function addLocationComplete(data) {
         var response = data.responseJSON;

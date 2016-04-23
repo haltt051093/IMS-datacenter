@@ -14,12 +14,13 @@ namespace IMS.Controllers
     public class IPController : CoreController
     {
         [Authorize(Roles = "Staff,Shift Head,Manager")]
-        public ActionResult Index(string Message, string FailBlock, string FailUnBlock)
+        public ActionResult Index(string Message, string FailBlock, string FailUnBlock, string FailAdd)
         {
             var data = new IPIndexViewModel();
             data.SuccessMessage = Message;
             data.FailBlock = FailBlock;
             data.FailUnBlock = FailUnBlock;
+            data.FailAdd = FailAdd;
             var ips = IPAddressPoolBLO.Current.GetAllIP();
             var ipuse = ips.Select(x => x).Where(x => x.StatusCode != Constants.StatusCode.IP_DEACTIVATE);
             var listnet1 = IPAddressPoolBLO.Current.GetNetworkIPToDeact();
@@ -146,34 +147,43 @@ namespace IMS.Controllers
             }
                 else
                 {
-                var ips = new List<IPAddressPool>();
-                if (iivm.Option == "After")
-                {
-                    ips = IPAddressPoolBLO.Current.GenerateIPAfterFirst(iivm.Address, iivm.Netmask);
-                }
-                if (iivm.Option == "Before")
-                {
-                    ips = IPAddressPoolBLO.Current.GenerateIPBeforeLast(iivm.Address, iivm.Netmask);
-                }
-
-
-                var k = ips.Count - 1;
-                ips[k].StatusCode = Constants.StatusCode.IP_RESERVE;
-
-                for (var i = 0; i < ips.Count - 1; i++)
-                {
-                    if (ips[i].IPAddress == ips[i].NetworkIP || ips[i].IPAddress == ips[i].Gateway)
+                var existing = IPAddressPoolBLO.Current.GetByKeys(new IPAddressPool { IPAddress = iivm.Address });
+                    if (existing == null)
                     {
-                        ips[i].StatusCode = Constants.StatusCode.IP_RESERVE;
+                        var ips = new List<IPAddressPool>();
+                        if (iivm.Option == "After")
+                        {
+                            ips = IPAddressPoolBLO.Current.GenerateIPAfterFirst(iivm.Address, iivm.Netmask);
+                        }
+                        if (iivm.Option == "Before")
+                        {
+                            ips = IPAddressPoolBLO.Current.GenerateIPBeforeLast(iivm.Address, iivm.Netmask);
+                        }
+
+
+                        var k = ips.Count - 1;
+                        ips[k].StatusCode = Constants.StatusCode.IP_RESERVE;
+
+                        for (var i = 0; i < ips.Count - 1; i++)
+                        {
+                            if (ips[i].IPAddress == ips[i].NetworkIP || ips[i].IPAddress == ips[i].Gateway)
+                            {
+                                ips[i].StatusCode = Constants.StatusCode.IP_RESERVE;
+                            }
+                            else
+                            {
+                                ips[i].StatusCode = Constants.StatusCode.IP_AVAILABLE;
+                            }
+                        }
+                        IPAddressPoolBLO.Current.AddIP(ips);
+
+                        return RedirectToAction("Index", new {Message = "New IP Addresses were added!"});
                     }
                     else
                     {
-                        ips[i].StatusCode = Constants.StatusCode.IP_AVAILABLE;
+                        return RedirectToAction("Index", new {FailAdd = "IP Range has just been added!"});
                     }
-                }
-                IPAddressPoolBLO.Current.AddIP(ips);
-
-                return RedirectToAction("Index", new { Message = "New IP Addresses were added!" });
+               
             }
         
         }
