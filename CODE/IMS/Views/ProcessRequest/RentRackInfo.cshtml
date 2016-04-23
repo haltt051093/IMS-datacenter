@@ -369,8 +369,7 @@
                     @Html.LabelFor(model => model.RequestInfo.NotFinishReason)
                 </div>
                 <div class="@Constants.HtmlFormat.MODAL_CONTROL_CLASS">
-                    @*<textarea rows="2" name="reason" />*@
-                    <TEXTAREA NAME="reason" COLS=40 ROWS=2></TEXTAREA>
+                    <TEXTAREA NAME="reason" COLS=35 ROWS=2></TEXTAREA>
                     <input type="hidden" name="taskcode" value="@Model.RequestInfo.TaskCode" />
                     <input type="hidden" name="requestcode" value="@Model.RequestInfo.RequestCode" />
                 </div>

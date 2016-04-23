@@ -1608,7 +1608,7 @@ namespace IMS.Data.Business
                         }
                     }
                 }
-                var name = item.ServerCode +"_"+item.DefaultIP+ ".doc";
+                var name = item.ServerCode + "_" + item.DefaultIP + ".doc";
                 wordDoc.SaveAs(name);
                 wordApp.Documents.Open(name);
                 wordApp.Application.Quit();
@@ -1730,6 +1730,20 @@ namespace IMS.Data.Business
                            RequestCode = r.RequestCode
                        };
             return list.OrderByDescending(x => x.RequestedTime).Take(10).ToList();
+        }
+
+        public bool IsShiftHeadDoingTask(string shifthead, string taskCode)
+        {
+            var assignee = TaskBLO.Current.GetByKeys(new Models.Task { TaskCode = taskCode }).AssignedStaff;
+            if (shifthead == assignee)
+            {
+                var role = AccountBLO.Current.GetByKeys(new Account { Username = shifthead }).Role;
+                if (role == Constants.Role.SHIFT_HEAD)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
