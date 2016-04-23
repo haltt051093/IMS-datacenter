@@ -55,7 +55,7 @@
     <div class="modal-dialog" style="width: 400px">
         <div class="modal-content">
 
-            @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "Post", Url = Url.Action("AddLocation", "Location"), OnComplete = "addLocationComplete" }))
+            @using (Html.BeginForm())
             {
                 <div class="modal-header">
                     <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i> @Labels.AddRack</div>

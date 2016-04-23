@@ -60,7 +60,7 @@
 <div id="addip-modal" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" style="width: 300px">
         <div class="modal-content">
-            @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "Post", Url = Url.Action("AddIPRange", "IP"), OnComplete = "addIPComplete" }))
+            @using (Html.BeginForm())
             {
                 <div class="modal-header">
                     <div class="@Constants.HtmlFormat.MODAL_HEADER_CLASS"><i class="fa fa-plus"></i> @Labels.AddIP</div>

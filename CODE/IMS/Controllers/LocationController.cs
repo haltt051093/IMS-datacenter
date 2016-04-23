@@ -60,6 +60,22 @@ namespace IMS.Controllers
         }
 
         [HttpPost]
+        public ActionResult Index(LocationIndexViewModel livm)
+        {
+            //if (IsAuthorized())
+            //{
+            if (ModelState.IsValid)
+            {
+                var rack = new Rack();
+                rack.RackName = livm.RackName;
+                rack.MaximumPower = livm.MaximumPower;
+                RackBLO.Current.AddRackAndLocation(rack);
+                return RedirectToAction("Index", new { Message = "New Rack was added!" });
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
         public JsonResult AddLocation(LocationIndexViewModel data)
         {
             var result = new JsonResultModel();
