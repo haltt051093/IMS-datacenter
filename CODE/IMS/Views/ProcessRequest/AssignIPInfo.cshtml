@@ -100,7 +100,7 @@
                         </div>
                         <div class="@Constants.HtmlFormat.FORM_DETAIL_X2_CLASS">
                             @Html.DisplayFor(model => model.RequestInfo.AssigneeName, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                            <br/>
+                            <br />
                             @Html.HiddenFor(model => model.RequestInfo.Assignee)
                             @if ((User.IsInRole("Shift Head") || User.IsInRole("Manager")))
                             {
@@ -176,65 +176,67 @@
             {
                 if (Model.NumberOfIP > Model.NumberOfAvailableIP)
                 {
-                @Html.Raw("Available IPs in the same range are not enough to assign. Current available IP number is:" + Model.NumberOfAvailableIP)
+                    @Html.Raw("Available IPs in the same range are not enough to assign. Current available IP number is:" + Model.NumberOfAvailableIP)
                 }
                 else
                 {
-                <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-                    <div class="col-xs-6">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                @Html.LabelFor(model => model.SelectedIps, "Available IPs in the same range")
+                    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                        <div class="col-xs-6">
+                            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                                <div class="col-xs-4 tf-form-label">
+                                    @Html.LabelFor(model => model.SelectedIps, "Available IPs")
+                                </div>
+                                <div class="col-xs-8 tf-form-control">
+                                    @if (Model.IpSelectListItems != null)
+                                    {
+                                        @Html.ListBoxFor(model => model.SelectedIps, new MultiSelectList(Model.IpSelectListItems, "Value", "Text"),
+                             new { SelectionMode = "multiple", @id = "availableIps", Size = 8, style = "width: 100%;", @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                        @Html.ValidationMessageFor(model => model.SelectedIps)
+                                    }
+                                    else
+                                    {
+                                        @Html.ListBoxFor(model => model.SelectedIps, new MultiSelectList(Model.IpSelectListItems, "Value", "Text"),
+                             new { SelectionMode = "multiple", @id = "availableIps", Size = 8, style = "width: 100%;", @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                        @Html.ValidationMessageFor(model => model.SelectedIps)
+                                    }
+                                </div>
                             </div>
                         </div>
-                        @if (Model.IpSelectListItems != null)
-                        {
-                        <div class="row">
-                            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                                @Html.ListBoxFor(model => model.SelectedIps, new MultiSelectList(Model.IpSelectListItems, "Value", "Text"),
-                             new { SelectionMode = "multiple", @id = "availableIps", rows = 30, @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                @Html.ValidationMessageFor(model => model.SelectedIps)
-                            </div>
-                        </div>
-                        }
-                        else
-                        {
-                        <div class="row">
-                            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                                @Html.ListBoxFor(model => model.SelectedIps, new MultiSelectList(Model.IpSelectListItems, "Value", "Text"),
-                             new { SelectionMode = "multiple", @id = "availableIps", rows = 30, @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                @Html.ValidationMessageFor(model => model.SelectedIps)
-                            </div>
-                        </div>
-                        }
-                        <div class="row">
-                            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                                Number of IPs:
-                                @Html.DisplayFor(model => model.NumberOfAvailableIP, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-6" style="color: #f20054">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                @Html.LabelFor(model => model.IPs, "IPs to Assign")
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                                @Html.ListBoxFor(model => model.IPs, Model.SelectedIps, new { @id = "selectedIps", rows = 30, @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-                                @Html.ValidationMessageFor(model => model.IPsString)
-                                @Html.HiddenFor(model => model.IPsString)
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                                Number of IPs:
-                                @Html.DisplayFor(model => model.NumberOfSelectedIP, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                        <div class="col-xs-6" style="color: #f20054">
+                            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                                <div class="col-xs-4 tf-form-label">
+                                    @Html.LabelFor(model => model.IPs, "IPs to Assign")
+                                </div>
+                                <div class="col-xs-8 tf-form-control">
+                                    @Html.ListBoxFor(model => model.IPs, Model.SelectedIps, new { @id = "selectedIps", Size = 8, style = "width: 100%;", @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                    @Html.ValidationMessageFor(model => model.IPsString)
+                                    @Html.HiddenFor(model => model.IPsString)
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                        <div class="col-xs-6">
+                            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                                <div class="col-xs-4 tf-form-label">
+                                </div>
+                                <div class="col-xs-8 tf-form-control">
+                                    Number of IPs: 
+                                    @Html.DisplayFor(model => model.NumberOfAvailableIP, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6" style="color: #f20054">
+                            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                                <div class="col-xs-4 tf-form-label">
+                                </div>
+                                <div class="col-xs-8 tf-form-control">
+                                    Number of IPs: 
+                                    @Html.DisplayFor(model => model.NumberOfSelectedIP, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 }
             }
         }
@@ -309,7 +311,7 @@
                 }
             </div>
         </div>
-         <!-- Reject request MODAL -->
+                        <!-- Reject request MODAL -->
         <div id="Rejectrequest" class="@Constants.HtmlFormat.MODAL_CLASS" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog" style="width: 400px">
                 <div class="modal-content">

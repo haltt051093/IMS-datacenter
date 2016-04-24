@@ -22,8 +22,9 @@ namespace IMS.Controllers
                 .GetAll()
                 .Select(x => new SelectListItem { Value = x.RequestTypeCode, Text = x.RequestTypeName })
                 .ToList();
-            data.FilterByStatus = StatusBLO.Current
-                .GetStatusByObject(Constants.Object.OBJECT_REQUEST)
+            var listStatus = StatusBLO.Current.GetStatusByObject(Constants.Object.OBJECT_REQUEST).
+                Where(x => x.StatusCode != Constants.StatusCode.REQUEST_TEMP).ToList();
+            data.FilterByStatus = listStatus
                 .Select(x => new SelectListItem
                 {
                     Value = x.StatusCode,

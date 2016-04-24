@@ -27,8 +27,9 @@ namespace IMS.Controllers
                 .GetAll()
                 .Select(x => new SelectListItem { Value = x.RequestTypeCode, Text = x.RequestTypeName })
                 .ToList();
-            data.FilterByStatus = StatusBLO.Current
-                .GetStatusByObject(Constants.Object.OBJECT_REQUEST)
+            var listStatus = StatusBLO.Current.GetStatusByObject(Constants.Object.OBJECT_REQUEST).
+                Where(x => x.StatusCode != Constants.StatusCode.REQUEST_TEMP).ToList();
+            data.FilterByStatus = listStatus
                 .Select(x => new SelectListItem { Value = x.StatusCode, Text = x.StatusName, Selected = (x.StatusCode == Constants.StatusCode.REQUEST_PENDINGPROCESSING) })
                 .ToList();
             data.FilterByPeriodOfTime = new List<SelectListItem>
@@ -61,13 +62,9 @@ namespace IMS.Controllers
             {
                 var data = new RequestAddServerViewModel();
                 data.Servers = new List<ServerExtendedModel>();
-                if (Session[Constants.Session.REQUEST_CODE] == null)
-                {
-                    Session[Constants.Session.REQUEST_CODE] = requestCode;
-                }
-                var code = Session[Constants.Session.REQUEST_CODE].ToString();
-                data.ServerCount = code;
-                var serverInfos = TempRequestBLO.Current.GetByRequestCode(code);
+                data.rCode = requestCode;
+                data.ServerCount = requestCode;
+                var serverInfos = TempRequestBLO.Current.GetByRequestCode(requestCode);
                 foreach (var serverInfo in serverInfos)
                 {
                     var server = JsonConvert.DeserializeObject<ServerExtendedModel>(serverInfo.Data);
@@ -95,6 +92,7 @@ namespace IMS.Controllers
             {
                 var customer = GetCurrentUserName();
                 var data = new RequestBringServerAwayViewModel();
+                data.rCode = requestCode;
                 //lay server cua customer
                 var serverOfCustomer = ServerBLO.Current.GetServersOfCustomerByStatus(customer, Constants.StatusCode.SERVER_RUNNING);
                 if (serverOfCustomer.Count > 0)
@@ -104,33 +102,17 @@ namespace IMS.Controllers
                     //rack cua server, select all va list cua rack, neu ko co thi ko hien
                     var rackOfCustomer = RackOfCustomerBLO.Current.GetRacksOfCustomer(customer,
                         Constants.StatusCode.RACKOFCUSTOMER_CURRENT);
-                    //if (rackOfCustomer.Count > 0)
-                    //{
-                    //    if (q.RackCode != null)
-                    //    {
-                    //        var list = new List<ServerExtendedModel>();
-                    //        foreach (var server in serverOfCustomer)
-                    //        {
-                    //            server.Checked = true;
-                    //            list.Add(server);
-                    //        }
-                    //        data.ServerOfCustomer = list;
-                    //        data.RackOfCustomer = rackOfCustomer
-                    //        .Select(x => new SelectListItem { Value = x.RackCode, Text = x.RackName, Selected = x.RackCode == q.RackCode })
-                    //        .ToList();
-                    //    }
-                    //    else
-                    //    {
-                    //        data.ServerOfCustomer = serverOfCustomer;
-                    //        data.RackOfCustomer = rackOfCustomer
-                    //        .Select(x => new SelectListItem { Value = x.RackCode, Text = x.RackName })
-                    //        .ToList();
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    data.ServerOfCustomer = serverOfCustomer;
-                    //}
+                    if (rackOfCustomer.Count > 0)
+                    {
+                        data.ServerOfCustomer = serverOfCustomer;
+                        data.RackOfCustomer = rackOfCustomer
+                        .Select(x => new SelectListItem { Value = x.RackCode, Text = x.RackName })
+                        .ToList();
+                    }
+                    else
+                    {
+                        data.ServerOfCustomer = serverOfCustomer;
+                    }
                     data.RequestInfo = new RequestInfoModel();
                     var now = DateTime.Now;
                     if (now.Hour >= 20)
@@ -381,7 +363,6 @@ namespace IMS.Controllers
         public ActionResult AddServer(RequestAddServerViewModel viewmodel)
         {
             var customer = GetCurrentUserName();
-            var requestCode = Session[Constants.Session.REQUEST_CODE].ToString();
             //Add request and log
             var appointmentTime = viewmodel.RequestInfo.AppointmentTimeStr.ToDateTime("dd/MM/yyyy HH:mm");
             if (!string.IsNullOrWhiteSpace(viewmodel.RequestInfo.Description))
@@ -393,16 +374,11 @@ namespace IMS.Controllers
                 viewmodel.RequestInfo.Description = Constants.Message.CONTENT_NULL;
             }
             var result = RequestBLO.Current.AddRequestAddServer(customer, viewmodel.RequestInfo.Description,
-                appointmentTime, requestCode);
-            //Xoa session server
-            if (Session[Constants.Session.REQUEST_CODE] != null)
-            {
-                Session[Constants.Session.REQUEST_CODE] = null;
-            }
+                appointmentTime, viewmodel.rCode);
             //dang ky ham cho client
             Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
-            { code = requestCode, msg = Constants.Message.SEND_REQUEST_ADD_SERVER });
+            { code = viewmodel.rCode, msg = Constants.Message.SEND_REQUEST_ADD_SERVER });
         }
 
         [HttpPost]
@@ -743,7 +719,7 @@ namespace IMS.Controllers
             {
                 var temp = new TempRequest();
                 data.Server.Customer = GetCurrentUserName();
-                temp.RequestCode = Session[Constants.Session.REQUEST_CODE].ToString();
+                temp.RequestCode = data.rCode;
                 temp.Data = JsonConvert.SerializeObject(data.Server);
                 temp.TempCode = TempRequestBLO.Current.GenerateCode();
                 TempRequestBLO.Current.Add(temp);

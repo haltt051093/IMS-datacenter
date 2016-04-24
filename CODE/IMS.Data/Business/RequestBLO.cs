@@ -199,16 +199,15 @@ namespace IMS.Data.Business
 
         #region create request
         public NotificationResultModel AddRequestAddServer(string customer, string description,
-            DateTime? appointmentTime, string uniqueRequestCode)
+            DateTime? appointmentTime, string requestCode)
         {
             if (description == null)
             {
                 description = Constants.Message.CONTENT_NULL;
             }
             //request
-            var requestCode = AddRequestANDLog(Constants.RequestTypeCode.ADD_SERVER,
-                    Constants.StatusCode.REQUEST_PENDING, customer, description,
-                    appointmentTime, null, Constants.TypeOfLog.LOG_ADD_SERVER, uniqueRequestCode);
+            UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_ADD_SERVER, Constants.StatusCode.REQUEST_PENDING,
+                null, null, description, null, DateTime.Now, null, appointmentTime);
             //server
             var temps = TempRequestBLO.Current.GetByRequestCode(requestCode);
             foreach (var temp in temps)
@@ -506,12 +505,11 @@ namespace IMS.Data.Business
             var listServerIp = LogBLO.Current.GetLogInfoByRequestCode(requestCode, Constants.Object.OBJECT_SERVERIP);
             if (listServerIp != null && listServerIp.Count > 0)
             {
-                var serverCode = listServerIp[0].ServerCode;
                 for (int i = 0; i < listServerIp.Count; i++)
                 {
                     var ip = listServerIp[i].ChangedValueOfObject;
                     //update and log serverip
-                    ServerIPBLO.Current.UpdateServerIpANDLog(requestCode, serverCode, ip,
+                    ServerIPBLO.Current.UpdateServerIpANDLog(requestCode, listServerIp[i].ServerCode, ip,
                         Constants.TypeOfLog.LOG_BRING_SERVER_AWAY, Constants.StatusCode.SERVERIP_CURRENT,
                         customer);
                 }
@@ -1266,9 +1264,6 @@ namespace IMS.Data.Business
                 //add and log request
                 UpdateRequestStatusANDLog(requestCode, Constants.TypeOfLog.LOG_BRING_SERVER_AWAY,
                     Constants.StatusCode.REQUEST_REJECTED, assignee, assignee, reason, reason, DateTime.Now, null,null);
-
-                //giai phong location, co can log ko?
-                LocationBLO.Current.SetLocationAvailable(server.ServerCode);
             }
             //update task
             TaskBLO.Current.UpdateTaskStatus(taskCode, Constants.StatusCode.TASK_COMPLETED);

@@ -114,6 +114,7 @@
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
             </div>
             @Html.HiddenFor(x => x.RequestInfo.RequestCode)
+            @Html.HiddenFor(model => model.rCode)
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
                 <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
                     Send Request
@@ -179,6 +180,7 @@
                     </div>
                     @Html.HiddenFor(model => model.Server.TempCode)
                     @Html.HiddenFor(model => model.Server.btnAction)
+                    @Html.HiddenFor(model => model.rCode)
                     <div class="modal-footer">
                         <button type="submit" id="submitserver" name="@Constants.FormAction.ACTION_NAME"
                                 value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">

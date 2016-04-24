@@ -34,7 +34,6 @@
                         </tr>
                     </thead>
                     <tbody id="tbodyid">
-                        
                         @if (Model.AllRacks == null)
                         {
                             <tr>
@@ -86,24 +85,27 @@
                 @Html.ValidationMessageFor(model => model.RequestInfo.Description)
             </div>
         </div>
-        <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
-            <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+        if (Model.AllRacks != null)
+        {
+            <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
+                <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
+                </div>
+                <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                    @Html.HiddenFor(x => x.rCode)
+                    @Html.HiddenFor(model => model.SelectedRacks, new { id = "selectedRacks" })
+                    <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
+                        Send Request
+                    </button>
+                </div>
             </div>
-            <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-                @Html.HiddenFor(x => x.rCode)
-                @Html.HiddenFor(model => model.SelectedRacks, new { id = "selectedRacks" })
-                <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
-                    Send Request
-                </button>
-            </div>
-        </div>
+        }
     }
 </section>
 
 <script>
-    $(function() {
+    $(function () {
 
-        $("#checkAll").change(function() {
+        $("#checkAll").change(function () {
             var state = $('#checkAll').is(':checked');
             $('tr.check input[type="checkbox"]:not(:disabled)').prop('checked', state);
         });
@@ -121,14 +123,14 @@
                     position: "center"
                 });
                 return false;
-            } 
+            }
         });
 
         $('.returnall').on('click', function () {
             var rackCode = $(this).attr('rack-code');
             window.location.assign('@Url.Action("ReturnRackByBringServerAway", "Request")' + '/' + rackCode);
         });
-            @*$.ajax({
+        @*$.ajax({
                 cache: false,
                 url: '@(Url.Action("Create", "Request"))',
                 type: 'post',
@@ -141,6 +143,6 @@
                     alert('Save Successful');
                 }
             });*@
-       // });
+        // });
     });
 </script>
