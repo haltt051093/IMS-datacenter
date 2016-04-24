@@ -33,6 +33,7 @@ namespace IMS.Core
             public const string REQUEST_CANCELLED = "STATUS08";
             public const string REQUEST_REJECTED = "STATUS09";
             public const string REQUEST_PENDINGPROCESSING = "STATUS38";
+            public const string REQUEST_TEMP = "STATUS40";
 
             public const string SERVER_WAITING = "STATUS01";
             public const string SERVER_RUNNING = "STATUS02";

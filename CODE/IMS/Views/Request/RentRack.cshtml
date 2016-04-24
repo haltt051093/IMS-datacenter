@@ -43,6 +43,7 @@
             <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
             </div>
             <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
+                @Html.HiddenFor(x => x.rCode)
                 <button type="submit" id="btnAccept" name="@Constants.FormAction.ACTION_NAME" value="@Constants.FormAction.OK_ACTION" class="@Constants.HtmlFormat.PRIMARY_BUTTON_CLASS">
                     Send Request
                 </button>

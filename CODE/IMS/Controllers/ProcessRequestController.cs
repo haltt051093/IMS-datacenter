@@ -524,7 +524,6 @@ namespace IMS.Controllers
                     var taskstatus = TaskBLO.Current.GetByKeys(new Task { TaskCode = viewmodel.RequestInfo.TaskCode }).StatusCode;
                     if (taskstatus == Constants.StatusCode.TASK_WAITING || taskstatus == Constants.StatusCode.TASK_NOTFINISH || check)
                     {
-                        var shifthead = GetCurrentUserName();
                         if (viewmodel.RequestInfo.TaskStatus != Constants.StatusCode.TASK_NOTFINISH)
                         {
                             var preTask = RequestBLO.Current.CancelTask(viewmodel.RequestInfo.TaskCode,
@@ -680,7 +679,6 @@ namespace IMS.Controllers
                     var taskstatus = TaskBLO.Current.GetByKeys(new Task { TaskCode = viewmodel.RequestInfo.TaskCode }).StatusCode;
                     if (taskstatus == Constants.StatusCode.TASK_WAITING || taskstatus == Constants.StatusCode.TASK_NOTFINISH || check)
                     {
-                        var shifthead = GetCurrentUserName();
                         if (viewmodel.RequestInfo.TaskStatus != Constants.StatusCode.TASK_NOTFINISH)
                         {
                             var preTask = RequestBLO.Current.CancelTask(viewmodel.RequestInfo.TaskCode,

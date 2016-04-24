@@ -41,163 +41,175 @@ namespace IMS.Controllers
             return View(data);
         }
 
-        #region Create Request
-        public ActionResult Create(RequestCreateViewModel q)
+        public ActionResult InitialRequest(RequestCreateViewModel q)
         {
             var requestTypeCode = q.Type;
+            var customer = GetCurrentUserName();
             if (!string.IsNullOrEmpty(requestTypeCode))
             {
-                if (requestTypeCode == Constants.RequestTypeCode.ADD_SERVER)
+                var requestCode = RequestBLO.Current.AddInitialRequest(requestTypeCode, customer);
+                return RedirectToAction("Create", "Request", new { requestCode = requestCode });
+            }
+            return View("Index");
+        }
+
+        #region Create Request
+        public ActionResult Create(string requestCode)
+        {
+            var requestTypeCode = RequestBLO.Current.GetByKeys(new Request { RequestCode = requestCode }).RequestType;
+            if (requestTypeCode == Constants.RequestTypeCode.ADD_SERVER)
+            {
+                var data = new RequestAddServerViewModel();
+                data.Servers = new List<ServerExtendedModel>();
+                if (Session[Constants.Session.REQUEST_CODE] == null)
                 {
-                    var data = new RequestAddServerViewModel();
-                    data.Servers = new List<ServerExtendedModel>();
-                    if (Session[Constants.Session.REQUEST_CODE] == null)
-                    {
-                        var requestCode = RequestBLO.Current.GenerateCode();
-                        Session[Constants.Session.REQUEST_CODE] = requestCode;
-                    }
-                    var code = Session[Constants.Session.REQUEST_CODE].ToString();
-                    data.ServerCount = code;
-                    var serverInfos = TempRequestBLO.Current.GetByRequestCode(code);
-                    foreach (var serverInfo in serverInfos)
-                    {
-                        var server = JsonConvert.DeserializeObject<ServerExtendedModel>(serverInfo.Data);
-                        server.TempCode = serverInfo.TempCode;
-                        data.Servers.Add(server);
-                    }
+                    Session[Constants.Session.REQUEST_CODE] = requestCode;
+                }
+                var code = Session[Constants.Session.REQUEST_CODE].ToString();
+                data.ServerCount = code;
+                var serverInfos = TempRequestBLO.Current.GetByRequestCode(code);
+                foreach (var serverInfo in serverInfos)
+                {
+                    var server = JsonConvert.DeserializeObject<ServerExtendedModel>(serverInfo.Data);
+                    server.TempCode = serverInfo.TempCode;
+                    data.Servers.Add(server);
+                }
+                data.RequestInfo = new RequestInfoModel();
+                var now = DateTime.Now;
+                if (now.Hour >= 16)
+                {
+                    data.RequestInfo.AppointmentTimeStr = now.Date.AddHours(32).ToString("dd/MM/yyyy HH:mm");
+                }
+                else
+                {
+                    var nextHour = now.Date.AddHours(now.Hour + 2);
+                    data.RequestInfo.AppointmentTimeStr = nextHour.ToString("dd/MM/yyyy HH:mm");
+                }
+                data.ServerSizes = new int[] { 1, 2, 4 }
+                    .Select(x => new SelectListItem { Value = x.ToString(), Text = x.ToString() })
+                    .ToList();
+                return View("AddServer", data);
+
+            }
+            if (requestTypeCode == Constants.RequestTypeCode.BRING_SERVER_AWAY)
+            {
+                var customer = GetCurrentUserName();
+                var data = new RequestBringServerAwayViewModel();
+                //lay server cua customer
+                var serverOfCustomer = ServerBLO.Current.GetServersOfCustomerByStatus(customer, Constants.StatusCode.SERVER_RUNNING);
+                if (serverOfCustomer.Count > 0)
+                {
+                    //Muon hien thi number of server trong rack tuy theo viec lua chon dropdownlist
+                    data.ServerNumber = serverOfCustomer.Count();
+                    //rack cua server, select all va list cua rack, neu ko co thi ko hien
+                    var rackOfCustomer = RackOfCustomerBLO.Current.GetRacksOfCustomer(customer,
+                        Constants.StatusCode.RACKOFCUSTOMER_CURRENT);
+                    //if (rackOfCustomer.Count > 0)
+                    //{
+                    //    if (q.RackCode != null)
+                    //    {
+                    //        var list = new List<ServerExtendedModel>();
+                    //        foreach (var server in serverOfCustomer)
+                    //        {
+                    //            server.Checked = true;
+                    //            list.Add(server);
+                    //        }
+                    //        data.ServerOfCustomer = list;
+                    //        data.RackOfCustomer = rackOfCustomer
+                    //        .Select(x => new SelectListItem { Value = x.RackCode, Text = x.RackName, Selected = x.RackCode == q.RackCode })
+                    //        .ToList();
+                    //    }
+                    //    else
+                    //    {
+                    //        data.ServerOfCustomer = serverOfCustomer;
+                    //        data.RackOfCustomer = rackOfCustomer
+                    //        .Select(x => new SelectListItem { Value = x.RackCode, Text = x.RackName })
+                    //        .ToList();
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    data.ServerOfCustomer = serverOfCustomer;
+                    //}
                     data.RequestInfo = new RequestInfoModel();
                     var now = DateTime.Now;
-                    if (now.Hour >= 16)
+                    if (now.Hour >= 20)
                     {
                         data.RequestInfo.AppointmentTimeStr = now.Date.AddHours(32).ToString("dd/MM/yyyy HH:mm");
                     }
                     else
                     {
-                        var nextHour = now.Date.AddHours(now.Hour + 2);
-                        data.RequestInfo.AppointmentTimeStr = nextHour.ToString("dd/MM/yyyy HH:mm");
+                        data.RequestInfo.AppointmentTimeStr = now.Date.AddHours(10).ToString("dd/MM/yyyy HH:mm");
                     }
-                    data.ServerSizes = new int[] { 1, 2, 4 }
-                        .Select(x => new SelectListItem { Value = x.ToString(), Text = x.ToString() })
-                        .ToList();
-                    return View("AddServer", data);
-
                 }
-                if (requestTypeCode == Constants.RequestTypeCode.BRING_SERVER_AWAY)
+                return View("BringServerAway", data);
+            }
+            else if (requestTypeCode == Constants.RequestTypeCode.ASSIGN_IP)
+            {
+                var customer = GetCurrentUserName();
+                var data = new RequestAssignIPViewModel();
+                data.rCode = requestCode;
+                var listNumbers = new List<string>();
+                for (var i = 1; i < 11; i++)
                 {
-                    var customer = GetCurrentUserName();
-                    var data = new RequestBringServerAwayViewModel();
-                    //lay server cua customer
-                    var serverOfCustomer = ServerBLO.Current.GetServersOfCustomerByStatus(customer, Constants.StatusCode.SERVER_RUNNING);
-                    if (serverOfCustomer.Count > 0)
+                    listNumbers.Add(i.ToString());
+                }
+                data.NumberOfIPOptions = listNumbers
+                    .Select(x => new SelectListItem { Value = x, Text = x })
+                    .ToList();
+                var listServers = ServerBLO.Current.GetServersOfCustomerByStatus(customer, Constants.StatusCode.SERVER_RUNNING);
+                data.ServerOptions = listServers
+                    .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.ServerDefaultIP })
+                    .ToList();
+                return View("AssignIP", data);
+            }
+            else if (requestTypeCode == Constants.RequestTypeCode.CHANGE_IP)
+            {
+                var customer = GetCurrentUserName();
+                var data = new RequestChangeIPViewModel();
+                data.rCode = requestCode;
+                var listServers = ServerBLO.Current.GetServersOfCustomerByStatus(customer, Constants.StatusCode.SERVER_RUNNING);
+                data.ServerOptions = listServers
+                    .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.ServerDefaultIP })
+                    .ToList();
+                return View("ChangeIP", data);
+            }
+            else if (requestTypeCode == Constants.RequestTypeCode.RETURN_IP)
+            {
+                var customer = GetCurrentUserName();
+                var data = new RequestReturnIPViewModel();
+                data.rCode = requestCode;
+                var listServers = ServerBLO.Current.GetServersOfCustomerByStatus(customer, Constants.StatusCode.SERVER_RUNNING);
+                data.ServerOptions = listServers
+                    .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.ServerDefaultIP })
+                    .ToList();
+                return View("ReturnIP", data);
+            }
+            else if (requestTypeCode == Constants.RequestTypeCode.RENT_RACK)
+            {
+                var data = new RequestRentRackViewModel();
+                data.rCode = requestCode;
+                var myList = new List<SelectListItem>();
+                for (var i = 0; i < 10; i++)
+                {
+                    var num = (i + 1).ToString();
+                    var item = new SelectListItem()
                     {
-                        //Muon hien thi number of server trong rack tuy theo viec lua chon dropdownlist
-                        data.ServerNumber = serverOfCustomer.Count();
-                        //rack cua server, select all va list cua rack, neu ko co thi ko hien
-                        var rackOfCustomer = RackOfCustomerBLO.Current.GetRacksOfCustomer(customer,
-                            Constants.StatusCode.RACKOFCUSTOMER_CURRENT);
-                        if (rackOfCustomer.Count > 0)
-                        {
-                            if (q.RackCode != null)
-                            {
-                                var list = new List<ServerExtendedModel>();
-                                foreach (var server in serverOfCustomer)
-                                {
-                                    server.Checked = true;
-                                    list.Add(server);
-                                }
-                                data.ServerOfCustomer = list;
-                                data.RackOfCustomer = rackOfCustomer
-                                .Select(x => new SelectListItem { Value = x.RackCode, Text = x.RackName, Selected = x.RackCode == q.RackCode })
-                                .ToList();
-                            }
-                            else
-                            {
-                                data.ServerOfCustomer = serverOfCustomer;
-                                data.RackOfCustomer = rackOfCustomer
-                                .Select(x => new SelectListItem { Value = x.RackCode, Text = x.RackName })
-                                .ToList();
-                            }
-                        }
-                        else
-                        {
-                            data.ServerOfCustomer = serverOfCustomer;
-                        }
-                        data.RequestInfo = new RequestInfoModel();
-                        var now = DateTime.Now;
-                        if (now.Hour >= 20)
-                        {
-                            data.RequestInfo.AppointmentTimeStr = now.Date.AddHours(32).ToString("dd/MM/yyyy HH:mm");
-                        }
-                        else
-                        {
-                            data.RequestInfo.AppointmentTimeStr = now.Date.AddHours(10).ToString("dd/MM/yyyy HH:mm");
-                        }
-                    }
-                    return View("BringServerAway", data);
+                        Value = num,
+                        Text = num
+                    };
+                    myList.Add(item);
                 }
-                else if (requestTypeCode == Constants.RequestTypeCode.ASSIGN_IP)
-                {
-                    var customer = GetCurrentUserName();
-                    var data = new RequestAssignIPViewModel();
-                    var listNumbers = new List<string>();
-                    for (var i = 1; i < 11; i++)
-                    {
-                        listNumbers.Add(i.ToString());
-                    }
-                    data.NumberOfIPOptions = listNumbers
-                        .Select(x => new SelectListItem { Value = x, Text = x })
-                        .ToList();
-                    var listServers = ServerBLO.Current.GetServersOfCustomerByStatus(customer, Constants.StatusCode.SERVER_RUNNING);
-                    data.ServerOptions = listServers
-                        .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.ServerDefaultIP })
-                        .ToList();
-                    return View("AssignIP", data);
-                }
-                else if (requestTypeCode == Constants.RequestTypeCode.CHANGE_IP)
-                {
-                    var customer = GetCurrentUserName();
-                    //co the change duoc nhieu IP--> bo sung t
-                    var data = new RequestChangeIPViewModel();
-                    var listServers = ServerBLO.Current.GetServersOfCustomerByStatus(customer, Constants.StatusCode.SERVER_RUNNING);
-                    data.ServerOptions = listServers
-                        .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.ServerDefaultIP })
-                        .ToList();
-                    return View("ChangeIP", data);
-                }
-                else if (requestTypeCode == Constants.RequestTypeCode.RETURN_IP)
-                {
-                    var customer = GetCurrentUserName();
-                    var data = new RequestReturnIPViewModel();
-                    var listServers = ServerBLO.Current.GetServersOfCustomerByStatus(customer, Constants.StatusCode.SERVER_RUNNING);
-                    data.ServerOptions = listServers
-                        .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.ServerDefaultIP })
-                        .ToList();
-                    return View("ReturnIP", data);
-                }
-                else if (requestTypeCode == Constants.RequestTypeCode.RENT_RACK)
-                {
-                    var data = new RequestRentRackViewModel();
-                    var myList = new List<SelectListItem>();
-                    for (var i = 0; i < 10; i++)
-                    {
-                        var num = (i + 1).ToString();
-                        var item = new SelectListItem()
-                        {
-                            Value = num,
-                            Text = num
-                        };
-                        myList.Add(item);
-                    }
-                    data.ListRackNumbers = myList;
-                    return View("RentRack", data);
-                }
-                else if (requestTypeCode == Constants.RequestTypeCode.RETURN_RACK)
-                {
-                    var customer = GetCurrentUserName();
-                    var data = new RequestReturnRackViewModel();
-                    data.AllRacks = RackOfCustomerBLO.Current.CountServerPerRack(customer);
-                    return View("ReturnRack", data);
-                }
+                data.ListRackNumbers = myList;
+                return View("RentRack", data);
+            }
+            else if (requestTypeCode == Constants.RequestTypeCode.RETURN_RACK)
+            {
+                var customer = GetCurrentUserName();
+                var data = new RequestReturnRackViewModel();
+                data.rCode = requestCode;
+                data.AllRacks = RackOfCustomerBLO.Current.CountServerPerRack(customer);
+                return View("ReturnRack", data);
             }
             return RedirectToAction("Index", "Home");
         }
@@ -408,7 +420,7 @@ namespace IMS.Controllers
                 viewmodel.RequestInfo.Description = Constants.Message.CONTENT_NULL;
             }
             var result = RequestBLO.Current.AddRequestBringServerAway(customer, viewmodel.RequestInfo.Description,
-                viewmodel.ServerOfCustomer, appointmentTime);
+                viewmodel.ServerOfCustomer, appointmentTime, viewmodel.rCode);
             //dang ky ham cho client
             Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
@@ -432,7 +444,7 @@ namespace IMS.Controllers
             }
             viewmodel.RequestInfo.Description = JsonConvert.SerializeObject(requestDetail);
             //Add request and log
-            var result = RequestBLO.Current.AddRequestAssignIP(customer, viewmodel.RequestInfo.Description, viewmodel.SelectedServer);
+            var result = RequestBLO.Current.AddRequestAssignIP(customer, viewmodel.RequestInfo.Description, viewmodel.SelectedServer, viewmodel.rCode);
             //dang ky ham cho client
             Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
@@ -452,7 +464,7 @@ namespace IMS.Controllers
                 viewmodel.RequestInfo.Description = Constants.Message.CONTENT_NULL;
             }
             //Add request and log
-            var result = RequestBLO.Current.AddRequestChangeIP(customer, viewmodel.RequestInfo.Description, viewmodel.SelectedServer, viewmodel.ReturningIPs);
+            var result = RequestBLO.Current.AddRequestChangeIP(customer, viewmodel.RequestInfo.Description, viewmodel.SelectedServer, viewmodel.ReturningIPs, viewmodel.rCode);
             ////dang ky ham cho client
             Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
@@ -473,7 +485,7 @@ namespace IMS.Controllers
                 viewmodel.RequestInfo.Description = Constants.Message.CONTENT_NULL;
             }
             var result = RequestBLO.Current.AddRequestReturnIP(customer, viewmodel.RequestInfo.Description,
-                viewmodel.SelectedServer, viewmodel.ReturningIPs);
+                viewmodel.SelectedServer, viewmodel.ReturningIPs, viewmodel.rCode);
             //dang ky ham cho client
             Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
@@ -497,7 +509,7 @@ namespace IMS.Controllers
             }
             viewmodel.RequestInfo.Description = JsonConvert.SerializeObject(requestDetail);
             //Add and log request
-            var result = RequestBLO.Current.AddRequestRentRack(customer, viewmodel.RequestInfo.Description);
+            var result = RequestBLO.Current.AddRequestRentRack(customer, viewmodel.RequestInfo.Description, viewmodel.rCode);
             //dang ky ham cho client
             Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new
@@ -517,7 +529,7 @@ namespace IMS.Controllers
             {
                 viewmodel.RequestInfo.Description = Constants.Message.CONTENT_NULL;
             }
-            var result = RequestBLO.Current.AddRequestReturnRack(customer, viewmodel.RequestInfo.Description, viewmodel.AllRacks);
+            var result = RequestBLO.Current.AddRequestReturnRack(customer, viewmodel.RequestInfo.Description, viewmodel.AllRacks, viewmodel.rCode);
             //dang ky ham cho client
             Notify(result.NotificationCodes);
             return RedirectToAction("Detail", "Request", new

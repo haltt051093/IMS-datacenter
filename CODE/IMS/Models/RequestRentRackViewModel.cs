@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using IMS.Data.ViewModels;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using IMS.Validations;
 
 namespace IMS.Models
 {
-    public class RequestRentRackViewModel
+    public class RequestRentRackViewModel : BaseViewModel
     {
         public RequestRentRackViewModel()
         {
@@ -20,7 +19,7 @@ namespace IMS.Models
 
         //main info
         public List<SelectListItem> ListRackNumbers { get; set; }
-        [Display(Name ="Number of racks")]
+        [Display(Name = "Number of racks")]
         public int RackNumbers { get; set; }
         [CustomRequired(ErrorMessage = "Please select number of racks")]
         public string RackNumValidation { get; set; }

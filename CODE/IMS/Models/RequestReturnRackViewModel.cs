@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Web.Mvc;
 using IMS.Data.ViewModels;
 
 namespace IMS.Models
 {
-    public class RequestReturnRackViewModel
+    public class RequestReturnRackViewModel : BaseViewModel
     {
         //main info
         public List<RackOfCustomerExtendedModel> AllRacks { get; set; }

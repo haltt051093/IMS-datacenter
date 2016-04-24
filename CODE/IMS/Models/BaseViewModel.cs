@@ -12,6 +12,7 @@ namespace IMS.Models
         public string SuccessMessage { get; set; }
         public string ErrorMessage { get; set; }
         public bool IsAssignedUser { get; set; }
+        public string rCode { get; set; }
         //dropdownlist
         public List<SelectListItem> FilterByRequestType { get; set; }
         public List<SelectListItem> FilterByStatus { get; set; }

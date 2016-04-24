@@ -175,13 +175,12 @@ namespace IMS.Data.Repository
             return requestCode;
         }
 
-        public void UpdateRequestStatusANDLog(string requestCode, string typeOfLog, string newStatus, string assignee, string staffCode, string description, string reason)
+        public void UpdateRequestStatusANDLog(string requestCode, string typeOfLog, string newStatus, string assignee, string staffCode, string description, string reason, DateTime? requestedTime, string serverCode, DateTime? appointmentTime)
         {
             var request = (from r in Current.Table
                            where r.RequestCode == requestCode
                            select r).FirstOrDefault();
             request.StatusCode = newStatus;
-            request.RequestedTime = DateTime.Now;
             if (assignee != null)
             {
                 request.Assignee = assignee;
@@ -189,6 +188,18 @@ namespace IMS.Data.Repository
             if (reason != null)
             {
                 request.Reason = reason;
+            }
+            if(requestedTime != null)
+            {
+                request.RequestedTime = requestedTime;
+            }
+            if(appointmentTime != null)
+            {
+                request.AppointmentTime = appointmentTime;
+            }
+            if (description != null)
+            {
+                request.Description = description;
             }
             Update(request);
             // log request status
@@ -201,7 +212,8 @@ namespace IMS.Data.Repository
                 ChangedValueOfObject = requestCode,
                 Username = staffCode,
                 Description = description,
-                LogTime = DateTime.Now
+                LogTime = DateTime.Now,
+                ServerCode = serverCode
             };
             LogBLO.Current.Add(logRequest);
         }

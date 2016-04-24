@@ -5,7 +5,7 @@ using IMS.Validations;
 
 namespace IMS.Models
 {
-    public class RequestBringServerAwayViewModel
+    public class RequestBringServerAwayViewModel : BaseViewModel
     {
         public RequestBringServerAwayViewModel()
         {
