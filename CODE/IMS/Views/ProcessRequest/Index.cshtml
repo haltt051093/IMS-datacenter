@@ -70,6 +70,18 @@
                     <td>
                         @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.LogTime)
                     </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.RequestCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.StatusCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.RequestTypeCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Requests[i].LastestStatusRequest.DaysFromNow)
+                    </td>
                 </tr>
             }
         </tbody>
@@ -158,40 +170,96 @@
     }
 </script>
 
-<script type="text/javascript">
-    $(function () {
-        $("#example1").DataTable({
-            //"iDisplayLength": -1,
-            "aaSorting": [[3, "desc"]], // Sort by first column descending
-            "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                $(nRow).addClass('highlight');
-
-                if (aData[2] == "Pending") {
-                    $(nRow).addClass('background-warning');
-                };
-                if (aData[2] == "Processing") {
-                    $(nRow).addClass('background-info');
-                };
+<script>
+    $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            var typeCode = $("#FilterByRequestType").val();
+            var statusCode = $("#SelectedStatus").val();
+            var duration = $('#FilterByPeriodOfTime').val();
+            if (typeCode == null) {
+                typeCode = '';
             }
-        });
+            if (statusCode == null) {
+                statusCode = '';
+            }
+            if (duration == null || isNaN(duration)) {
+                duration = 99999;
+            }
+            duration = duration - 0;
 
-        $('#example1').on('click', '.clickmee', function () {
-            var requestcode = $(this).attr('request-code');
-            window.location.assign('@Url.Action("Detail", "ProcessRequest")' + '/' + requestcode);
+            var rowTypeCode = data[6];
+            var rowStatusCode = data[5];
+            var rowDuration = data[7];
+            var isShow = false;
+            if (typeCode == '' && statusCode == '' && duration >= rowDuration) {
+                isShow = true;
+            } else if (typeCode != '' && statusCode == '') {
+                if (rowTypeCode == typeCode && duration >= rowDuration) {
+                    isShow = true;
+                }
+            } else if (typeCode == '' && statusCode != '') {
+                if (checkStatus(rowStatusCode, statusCode) && duration >= rowDuration) {
+                    isShow = true;
+                }
+            } else {
+                if (rowTypeCode == typeCode && checkStatus(rowStatusCode, statusCode) && duration >= rowDuration) {
+                    isShow = true;
+                }
+            }
+            return isShow;
         });
+</script>
 
-        $("#FilterByRequestType").change(function () {
-            filterRequest();
-        });
+<script type="text/javascript">
+    var table = $("#example1").DataTable({
+        //"iDisplayLength": -1,
+        "aaSorting": [[3, "desc"]], // Sort by first column descending
+        "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            $(nRow).addClass('highlight');
 
-        $("#SelectedStatus").change(function () {
-            filterRequest();
-        });
-
-        $("#FilterByPeriodOfTime").change(function () {
-            filterRequest();
-        });
-
-        filterRequest();
+            if (aData[2] == "Pending") {
+                $(nRow).addClass('background-warning');
+            };
+            if (aData[2] == "Processing") {
+                $(nRow).addClass('background-info');
+            };
+        },
+        columnDefs: [{
+            targets: [4],
+            visible: false,
+            searchable: true
+        }, {
+            targets: [5],
+            visible: false,
+            searchable: true
+        },
+        {
+            targets: [6],
+            visible: false,
+            searchable: false
+        }, {
+            targets: [7],
+            visible: false,
+            searchable: false
+        }]
     });
+
+    $('#example1').on('click', '.clickmee', function () {
+        var requestcode = $(this).attr('request-code');
+        window.location.assign('@Url.Action("Detail", "ProcessRequest")' + '/' + requestcode);
+    });
+
+    $("#FilterByRequestType").change(function () {
+        table.draw();
+    });
+
+    $("#SelectedStatus").change(function () {
+        table.draw();
+    });
+
+    $("#FilterByPeriodOfTime").change(function () {
+        table.draw();
+    });
+
+    filterRequest();
 </script>

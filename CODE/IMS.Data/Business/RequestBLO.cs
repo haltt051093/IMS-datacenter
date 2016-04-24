@@ -773,13 +773,38 @@ namespace IMS.Data.Business
             {
                 //Lay list available ip cung vung
                 var listAvailableIps = IPAddressPoolBLO.Current.GetAvailableIpsSameGateway(request.SelectedServer);
+                request.listAvailableIps = listAvailableIps;
+                var listAvaiIPOption = listAvailableIps;
                 if (listAvailableIps != null)
                 {
-                    request.NumberOfAvailableIP = listAvailableIps.Count;
-                    //selected values
-                    request.randomList = IPAddressPoolBLO.Current.GetRandomIPs(listAvailableIps, request.NumberOfIP);
-                    request.listAvailableIps = listAvailableIps;
-                    request.NumberOfSelectedIP = request.randomList.Count;
+                    if (listAvailableIps.Count >= request.NumberOfIP)
+                    {
+                        //selected values
+                        var randomList = IPAddressPoolBLO.Current.GetRandomIPs(listAvailableIps, request.NumberOfIP);
+
+                        for (int i = 0; i < randomList.Count; i++)
+                        {
+                            var randomIp = randomList[i];
+                            for (int j = 0; j < listAvailableIps.Count; j++)
+                            {
+                                var avaiIP = listAvailableIps[j];
+                                if (randomIp == avaiIP.IPAddress)
+                                {
+                                    listAvaiIPOption.Remove(avaiIP);
+                                    break;
+                                }
+                            }
+                        }
+                        request.randomList = randomList;
+                        request.listAvailableIpsOption = listAvaiIPOption;
+                        request.NumberOfSelectedIP = request.randomList.Count;
+                        request.NumberOfAvailableIP = listAvailableIps.Count - request.randomList.Count;
+                    }
+                    else
+                    {
+                        request.NumberOfAvailableIP = listAvailableIps.Count;
+                    }
+
                 }
             }
             if (request.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_DONE)
@@ -1748,6 +1773,26 @@ namespace IMS.Data.Business
             };
             dao.Add(request);
             return requestCode;
+        }
+
+        public bool CheckExistedRequest(string requestCode, string customer)
+        {
+            var request = dao.GetByKeys(new Request { RequestCode = requestCode });
+            if (customer != null)
+            {
+                if (request != null && request.Customer == customer)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                if (request != null)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

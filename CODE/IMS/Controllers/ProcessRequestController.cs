@@ -47,375 +47,379 @@ namespace IMS.Controllers
         [HttpGet]
         public ActionResult Detail(string code, string msg)
         {
-            var r = RequestBLO.Current.GetByKeys(new Request { RequestCode = code });
-            var rType = string.Empty;
-            if (r != null)
+            var checkRequest = RequestBLO.Current.CheckExistedRequest(code, null);
+            if (checkRequest)
             {
-                rType = r.RequestType;
-            }
-            if (rType.Equals(Constants.RequestTypeCode.ADD_SERVER))
-            {
-                var group = GetCurrentUserGroup();
-                var role = GetCurrentUserRole();
-                //Get request
-                var request = RequestBLO.Current.DetailProcessRequestAddServer(code, group, role);
-                var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestAddServerViewModel>(request);
-                var list = new List<ServerExtendedModel>();
-                foreach (var item in request.Serverss)
+                var r = RequestBLO.Current.GetByKeys(new Request { RequestCode = code });
+                var rType = string.Empty;
+                if (r != null)
                 {
-                    list.Add(item);
+                    rType = r.RequestType;
                 }
-                viewmodel.Servers = list;
-                //task
-                if (role == Constants.Role.STAFF && (request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING
-                                                     || request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING))
+                if (rType.Equals(Constants.RequestTypeCode.ADD_SERVER))
                 {
-                    viewmodel.IsAssignedUser = true;
-                }
-                else
-                {
-                    viewmodel.IsAssignedUser = false;
-                }
-                if (viewmodel.RequestInfo.AssigneeName == null)
-                {
-                    var activeShifthead = AccountBLO.Current.GetActiveShiftHead();
-                    viewmodel.RequestInfo.AssigneeName = activeShifthead.Fullname + " - " + activeShifthead.GroupCode;
-                }
-                viewmodel.CurrentUser = GetCurrentUserName();
-                viewmodel.StaffCodeOptions = request.listStaff
-                .Select(x => new SelectListItem
-                {
-                    Value = x.Username,
-                    Text = x.NameAndGroup,
-                    Selected = x.Role == Constants.Role.SHIFT_HEAD
-                })
-                .ToList();
-                if (msg != null)
-                {
-                    string check = msg.Substring(0, 5);
-                    if (check == "Error")
+                    var group = GetCurrentUserGroup();
+                    var role = GetCurrentUserRole();
+                    //Get request
+                    var request = RequestBLO.Current.DetailProcessRequestAddServer(code, group, role);
+                    var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestAddServerViewModel>(request);
+                    var list = new List<ServerExtendedModel>();
+                    foreach (var item in request.Serverss)
                     {
-                        viewmodel.ErrorMessage = msg;
+                        list.Add(item);
+                    }
+                    viewmodel.Servers = list;
+                    //task
+                    if (role == Constants.Role.STAFF && (request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING
+                                                         || request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING))
+                    {
+                        viewmodel.IsAssignedUser = true;
                     }
                     else
                     {
-                        viewmodel.SuccessMessage = msg;
+                        viewmodel.IsAssignedUser = false;
                     }
-                }
-                return View("AddServerInfo", viewmodel);
-            }
-            if (rType.Equals(Constants.RequestTypeCode.BRING_SERVER_AWAY))
-            {
-                var group = GetCurrentUserGroup();
-                var role = GetCurrentUserRole();
-                //Get request
-                var request = RequestBLO.Current.DetailProcessRequestBringServerAway(code, group, role);
-                var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestBringServerAwayViewModel>(request);
-                var list = new List<ServerExtendedModel>();
-                foreach (var item in request.ServerOfCustomers)
-                {
-                    list.Add(item);
-                }
-                viewmodel.ServerOfCustomer = list;
-                //task
-                if (role == Constants.Role.STAFF && (request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING
-                                                     || request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING))
-                {
-                    viewmodel.IsAssignedUser = true;
-                }
-                else
-                {
-                    viewmodel.IsAssignedUser = false;
-                }
-                viewmodel.CurrentUser = GetCurrentUserName();
-                viewmodel.StaffCodeOptions = request.listStaff
-                 .Select(x => new SelectListItem
-                 {
-                     Value = x.Username,
-                     Text = x.NameAndGroup,
-                     Selected = x.Role == Constants.Role.SHIFT_HEAD
-                 })
-                 .ToList();
-                if (viewmodel.RequestInfo.AssigneeName == null)
-                {
-                    var activeShifthead = AccountBLO.Current.GetActiveShiftHead();
-                    viewmodel.RequestInfo.AssigneeName = activeShifthead.Fullname + " - " + activeShifthead.GroupCode;
-                }
-                if (msg != null)
-                {
-                    string check = msg.Substring(0, 5);
-                    if (check == "Error")
+                    if (viewmodel.RequestInfo.AssigneeName == null)
                     {
-                        viewmodel.ErrorMessage = msg;
+                        var activeShifthead = AccountBLO.Current.GetActiveShiftHead();
+                        viewmodel.RequestInfo.AssigneeName = activeShifthead.Fullname + " - " + activeShifthead.GroupCode;
+                    }
+                    viewmodel.CurrentUser = GetCurrentUserName();
+                    viewmodel.StaffCodeOptions = request.listStaff
+                    .Select(x => new SelectListItem
+                    {
+                        Value = x.Username,
+                        Text = x.NameAndGroup,
+                        Selected = x.Role == Constants.Role.SHIFT_HEAD
+                    })
+                    .ToList();
+                    if (msg != null)
+                    {
+                        string check = msg.Substring(0, 5);
+                        if (check == "Error")
+                        {
+                            viewmodel.ErrorMessage = msg;
+                        }
+                        else
+                        {
+                            viewmodel.SuccessMessage = msg;
+                        }
+                    }
+                    return View("AddServerInfo", viewmodel);
+                }
+                if (rType.Equals(Constants.RequestTypeCode.BRING_SERVER_AWAY))
+                {
+                    var group = GetCurrentUserGroup();
+                    var role = GetCurrentUserRole();
+                    //Get request
+                    var request = RequestBLO.Current.DetailProcessRequestBringServerAway(code, group, role);
+                    var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestBringServerAwayViewModel>(request);
+                    var list = new List<ServerExtendedModel>();
+                    foreach (var item in request.ServerOfCustomers)
+                    {
+                        list.Add(item);
+                    }
+                    viewmodel.ServerOfCustomer = list;
+                    //task
+                    if (role == Constants.Role.STAFF && (request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING
+                                                         || request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING))
+                    {
+                        viewmodel.IsAssignedUser = true;
                     }
                     else
                     {
-                        viewmodel.SuccessMessage = msg;
+                        viewmodel.IsAssignedUser = false;
                     }
+                    viewmodel.CurrentUser = GetCurrentUserName();
+                    viewmodel.StaffCodeOptions = request.listStaff
+                     .Select(x => new SelectListItem
+                     {
+                         Value = x.Username,
+                         Text = x.NameAndGroup,
+                         Selected = x.Role == Constants.Role.SHIFT_HEAD
+                     })
+                     .ToList();
+                    if (viewmodel.RequestInfo.AssigneeName == null)
+                    {
+                        var activeShifthead = AccountBLO.Current.GetActiveShiftHead();
+                        viewmodel.RequestInfo.AssigneeName = activeShifthead.Fullname + " - " + activeShifthead.GroupCode;
+                    }
+                    if (msg != null)
+                    {
+                        string check = msg.Substring(0, 5);
+                        if (check == "Error")
+                        {
+                            viewmodel.ErrorMessage = msg;
+                        }
+                        else
+                        {
+                            viewmodel.SuccessMessage = msg;
+                        }
+                    }
+                    return View("BringServerAwayInfo", viewmodel);
                 }
-                return View("BringServerAwayInfo", viewmodel);
-            }
-            if (rType.Equals(Constants.RequestTypeCode.ASSIGN_IP))
-            {
-                var group = GetCurrentUserGroup();
-                var role = GetCurrentUserRole();
+                if (rType.Equals(Constants.RequestTypeCode.ASSIGN_IP))
+                {
+                    var group = GetCurrentUserGroup();
+                    var role = GetCurrentUserRole();
 
-                //Get request
-                var request = RequestBLO.Current.DetailProcessRequestAssignIP(code, group, role);
-                var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestAssignIPViewModel>(request);
-                viewmodel.CurrentUser = GetCurrentUserName();
-                //task
-                if (role == Constants.Role.STAFF && (request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING
-                                                     || request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
-                                                     && viewmodel.CurrentUser == request.RequestInfo.Assignee)
-                {
-                    viewmodel.IsAssignedUser = true;
-                }
-                else
-                {
-                    viewmodel.IsAssignedUser = false;
-                }
+                    //Get request
+                    var request = RequestBLO.Current.DetailProcessRequestAssignIP(code, group, role);
+                    var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestAssignIPViewModel>(request);
+                    viewmodel.CurrentUser = GetCurrentUserName();
+                    //task
+                    if (role == Constants.Role.STAFF && (request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING
+                                                         || request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
+                                                         && viewmodel.CurrentUser == request.RequestInfo.Assignee)
+                    {
+                        viewmodel.IsAssignedUser = true;
+                    }
+                    else
+                    {
+                        viewmodel.IsAssignedUser = false;
+                    }
 
-                viewmodel.StaffCodeOptions = request.listStaff
-                .Select(x => new SelectListItem
+                    viewmodel.StaffCodeOptions = request.listStaff
+                    .Select(x => new SelectListItem
+                    {
+                        Value = x.Username,
+                        Text = x.NameAndGroup,
+                        Selected = x.Role == Constants.Role.SHIFT_HEAD
+                    })
+                    .ToList();
+                    var listAvailableIps = request.listAvailableIps;
+                    if (listAvailableIps.Count >= viewmodel.NumberOfIP)
+                    {
+                        if (request.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
+                        {
+                            var randomList = request.randomList;
+                            viewmodel.SelectedIps = randomList.Select(x => new SelectListItem
+                            {
+                                Value = x,
+                                Text = x
+                            }).ToList();
+                            //cho hien thi multiple list, ko bao gom randomList
+                            //if (listAvailableIps != null)
+                            //{
+                            //    for (int i = 0; i < listAvailableIps.Count; i++)
+                            //    {
+                            //        for (int j = 0; j < randomList.Count; j++)
+                            //        {
+                            //            var item = listAvailableIps[i];
+                            //            if (item.IPAddress.Equals(randomList[j]))
+                            //            {
+                            //                listAvailableIps.Remove(item);
+                            //            }
+                            //        }
+                            //    }
+                                viewmodel.IpSelectListItems = request.listAvailableIpsOption.Select(x => new SelectListItem
+                                {
+                                    Value = x.IPAddress,
+                                    Text = x.IPAddress
+                                }).ToList();
+                            //}
+                        }
+                    }
+                    if (msg != null)
+                    {
+                        string check = msg.Substring(0, 5);
+                        if (check == "Error")
+                        {
+                            viewmodel.ErrorMessage = msg;
+                        }
+                        else
+                        {
+                            viewmodel.SuccessMessage = msg;
+                        }
+                    }
+                    return View("AssignIPInfo", viewmodel);
+                }
+                if (rType.Equals(Constants.RequestTypeCode.CHANGE_IP))
                 {
-                    Value = x.Username,
-                    Text = x.NameAndGroup,
-                    Selected = x.Role == Constants.Role.SHIFT_HEAD
-                })
-                .ToList();
-                var listAvailableIps = request.listAvailableIps;
-                if (viewmodel.NumberOfAvailableIP >= viewmodel.NumberOfIP)
-                {
+                    var group = GetCurrentUserGroup();
+                    var role = GetCurrentUserRole();
+                    //Get request
+                    var request = RequestBLO.Current.DetailProcessRequestChangeIP(code, group, role);
+                    var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestChangeIPViewModel>(request);
+                    viewmodel.CurrentUser = GetCurrentUserName();
+                    //task
+                    if (role == Constants.Role.STAFF && (request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING
+                                                         || request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
+                                                         && viewmodel.CurrentUser == request.RequestInfo.Assignee)
+                    {
+                        viewmodel.IsAssignedUser = true;
+                    }
+                    else
+                    {
+                        viewmodel.IsAssignedUser = false;
+                    }
+                    viewmodel.StaffCodeOptions = request.listStaff
+                     .Select(x => new SelectListItem
+                     {
+                         Value = x.Username,
+                         Text = x.NameAndGroup,
+                         Selected = x.Role == Constants.Role.SHIFT_HEAD
+                     })
+                     .ToList();
+
                     if (request.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
                     {
-                        var randomList = request.randomList;
-                        viewmodel.SelectedIps = randomList.Select(x => new SelectListItem
+                        viewmodel.RequiredNum = viewmodel.ReturningIPs.Count;
+                        viewmodel.AvailableIPNum = request.listAvailableIps.Count;
+                        if (viewmodel.AvailableIPNum >= viewmodel.RequiredNum)
                         {
-                            Value = x,
-                            Text = x
-                        }).ToList();
-                        //cho hien thi multiple list, ko bao gom randomList
-                        if (listAvailableIps != null)
-                        {
-                            for (int i = 0; i < listAvailableIps.Count; i++)
-                            {
-                                for (int j = 0; j < randomList.Count; j++)
-                                {
-                                    var item = listAvailableIps[i];
-                                    if (item.IPAddress.Equals(randomList[j]))
-                                    {
-                                        listAvailableIps.Remove(item);
-                                    }
-                                }
-                            }
-                            viewmodel.IpSelectListItems = listAvailableIps.Select(x => new SelectListItem
+                            viewmodel.NewIPsOptions = request.listAvailableIps.Select(x => new SelectListItem
                             {
                                 Value = x.IPAddress,
                                 Text = x.IPAddress
                             }).ToList();
                         }
                     }
-                }
-                if (msg != null)
-                {
-                    string check = msg.Substring(0, 5);
-                    if (check == "Error")
+                    if (msg != null)
                     {
-                        viewmodel.ErrorMessage = msg;
-                    }
-                    else
-                    {
-                        viewmodel.SuccessMessage = msg;
-                    }
-                }
-                return View("AssignIPInfo", viewmodel);
-            }
-            if (rType.Equals(Constants.RequestTypeCode.CHANGE_IP))
-            {
-                var group = GetCurrentUserGroup();
-                var role = GetCurrentUserRole();
-                //Get request
-                var request = RequestBLO.Current.DetailProcessRequestChangeIP(code, group, role);
-                var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestChangeIPViewModel>(request);
-                viewmodel.CurrentUser = GetCurrentUserName();
-                //task
-                if (role == Constants.Role.STAFF && (request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING
-                                                     || request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
-                                                     && viewmodel.CurrentUser == request.RequestInfo.Assignee)
-                {
-                    viewmodel.IsAssignedUser = true;
-                }
-                else
-                {
-                    viewmodel.IsAssignedUser = false;
-                }
-                viewmodel.StaffCodeOptions = request.listStaff
-                 .Select(x => new SelectListItem
-                 {
-                     Value = x.Username,
-                     Text = x.NameAndGroup,
-                     Selected = x.Role == Constants.Role.SHIFT_HEAD
-                 })
-                 .ToList();
-
-                if (request.RequestInfo.StatusCode == Constants.StatusCode.REQUEST_PROCESSING)
-                {
-                    viewmodel.RequiredNum = viewmodel.ReturningIPs.Count;
-                    viewmodel.AvailableIPNum = request.listAvailableIps.Count;
-                    if (viewmodel.AvailableIPNum >= viewmodel.RequiredNum)
-                    {
-                        viewmodel.NewIPsOptions = request.listAvailableIps.Select(x => new SelectListItem
+                        string check = msg.Substring(0, 5);
+                        if (check == "Error")
                         {
-                            Value = x.IPAddress,
-                            Text = x.IPAddress
-                        }).ToList();
+                            viewmodel.ErrorMessage = msg;
+                        }
+                        else
+                        {
+                            viewmodel.SuccessMessage = msg;
+                        }
                     }
+                    return View("ChangeIPInfo", viewmodel);
                 }
-                if (msg != null)
+                if (rType.Equals(Constants.RequestTypeCode.RETURN_IP))
                 {
-                    string check = msg.Substring(0, 5);
-                    if (check == "Error")
+                    var group = GetCurrentUserGroup();
+                    var role = GetCurrentUserRole();
+                    //Get request
+                    var request = RequestBLO.Current.DetailProcessRequestReturnIP(code, group, role);
+                    var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestReturnIPViewModel>(request);
+                    viewmodel.CurrentUser = GetCurrentUserName();
+                    //task
+                    if (role == Constants.Role.STAFF && (request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING
+                                                         || request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
+                                                         && viewmodel.CurrentUser == request.RequestInfo.Assignee)
                     {
-                        viewmodel.ErrorMessage = msg;
+                        viewmodel.IsAssignedUser = true;
                     }
                     else
                     {
-                        viewmodel.SuccessMessage = msg;
+                        viewmodel.IsAssignedUser = false;
                     }
-                }
-                return View("ChangeIPInfo", viewmodel);
-            }
-            if (rType.Equals(Constants.RequestTypeCode.RETURN_IP))
-            {
-                var group = GetCurrentUserGroup();
-                var role = GetCurrentUserRole();
-                //Get request
-                var request = RequestBLO.Current.DetailProcessRequestReturnIP(code, group, role);
-                var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestReturnIPViewModel>(request);
-                viewmodel.CurrentUser = GetCurrentUserName();
-                //task
-                if (role == Constants.Role.STAFF && (request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING
-                                                     || request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
-                                                     && viewmodel.CurrentUser == request.RequestInfo.Assignee)
-                {
-                    viewmodel.IsAssignedUser = true;
-                }
-                else
-                {
-                    viewmodel.IsAssignedUser = false;
-                }
-                viewmodel.StaffCodeOptions = request.listStaff
-                .Select(x => new SelectListItem
-                {
-                    Value = x.Username,
-                    Text = x.NameAndGroup,
-                    Selected = x.Role == Constants.Role.SHIFT_HEAD
-                })
-                .ToList();
-                if (msg != null)
-                {
-                    string check = msg.Substring(0, 5);
-                    if (check == "Error")
+                    viewmodel.StaffCodeOptions = request.listStaff
+                    .Select(x => new SelectListItem
                     {
-                        viewmodel.ErrorMessage = msg;
-                    }
-                    else
+                        Value = x.Username,
+                        Text = x.NameAndGroup,
+                        Selected = x.Role == Constants.Role.SHIFT_HEAD
+                    })
+                    .ToList();
+                    if (msg != null)
                     {
-                        viewmodel.SuccessMessage = msg;
+                        string check = msg.Substring(0, 5);
+                        if (check == "Error")
+                        {
+                            viewmodel.ErrorMessage = msg;
+                        }
+                        else
+                        {
+                            viewmodel.SuccessMessage = msg;
+                        }
                     }
+                    return View("ReturnIPInfo", viewmodel);
                 }
-                return View("ReturnIPInfo", viewmodel);
-            }
 
-            if (rType.Equals(Constants.RequestTypeCode.RENT_RACK))
-            {
-                var group = GetCurrentUserGroup();
-                var role = GetCurrentUserRole();
-                //Get request
-                var request = RequestBLO.Current.DetailProcessRequestRentRack(code, group, role);
-                var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestRentRackViewModel>(request);
-                viewmodel.CurrentUser = GetCurrentUserName();
-                //task
-                if (role == Constants.Role.STAFF && (request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING
-                                                     || request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
-                                                     && viewmodel.CurrentUser == request.RequestInfo.Assignee)
+                if (rType.Equals(Constants.RequestTypeCode.RENT_RACK))
                 {
-                    viewmodel.IsAssignedUser = true;
-                }
-                else
-                {
-                    viewmodel.IsAssignedUser = false;
-                }
-                viewmodel.StaffCodeOptions = request.listStaff
-                .Select(x => new SelectListItem
-                {
-                    Value = x.Username,
-                    Text = x.NameAndGroup,
-                    Selected = x.Role == Constants.Role.SHIFT_HEAD
-                })
-                .ToList();
-                //list row
-                if (request.RequestInfo.StatusCode != Constants.StatusCode.REQUEST_DONE)
-                {
-                    viewmodel.ListRows = request.rows.Select(x => new SelectListItem { Value = x, Text = x }).ToList();
-                }
-                if (msg != null)
-                {
-                    string check = msg.Substring(0, 5);
-                    if (check == "Error")
+                    var group = GetCurrentUserGroup();
+                    var role = GetCurrentUserRole();
+                    //Get request
+                    var request = RequestBLO.Current.DetailProcessRequestRentRack(code, group, role);
+                    var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestRentRackViewModel>(request);
+                    viewmodel.CurrentUser = GetCurrentUserName();
+                    //task
+                    if (role == Constants.Role.STAFF && (request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING
+                                                         || request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
+                                                         && viewmodel.CurrentUser == request.RequestInfo.Assignee)
                     {
-                        viewmodel.ErrorMessage = msg;
+                        viewmodel.IsAssignedUser = true;
                     }
                     else
                     {
-                        viewmodel.SuccessMessage = msg;
+                        viewmodel.IsAssignedUser = false;
                     }
-                }
-                return View("RentRackInfo", viewmodel);
-            }
-            if (rType.Equals(Constants.RequestTypeCode.RETURN_RACK))
-            {
-                var group = GetCurrentUserGroup();
-                var role = GetCurrentUserRole();
-                //Get request
-                var request = RequestBLO.Current.DetailProcessRequestReturnRack(code, group, role);
-                var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestReturnRackViewModel>(request);
-                viewmodel.CurrentUser = GetCurrentUserName();
-                //task
-                if (role == Constants.Role.STAFF && (request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING
-                                                     || request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
-                                                     && viewmodel.CurrentUser == request.RequestInfo.Assignee)
-                {
-                    viewmodel.IsAssignedUser = true;
-                }
-                else
-                {
-                    viewmodel.IsAssignedUser = false;
-                }
-                viewmodel.StaffCodeOptions = request.listStaff
-                .Select(x => new SelectListItem
-                {
-                    Value = x.Username,
-                    Text = x.NameAndGroup,
-                    Selected = x.Role == Constants.Role.SHIFT_HEAD
-                })
-                .ToList();
-                if (msg != null)
-                {
-                    string check = msg.Substring(0, 5);
-                    if (check == "Error")
+                    viewmodel.StaffCodeOptions = request.listStaff
+                    .Select(x => new SelectListItem
                     {
-                        viewmodel.ErrorMessage = msg;
+                        Value = x.Username,
+                        Text = x.NameAndGroup,
+                        Selected = x.Role == Constants.Role.SHIFT_HEAD
+                    })
+                    .ToList();
+                    //list row
+                    if (request.RequestInfo.StatusCode != Constants.StatusCode.REQUEST_DONE)
+                    {
+                        viewmodel.ListRows = request.rows.Select(x => new SelectListItem { Value = x, Text = x }).ToList();
+                    }
+                    if (msg != null)
+                    {
+                        string check = msg.Substring(0, 5);
+                        if (check == "Error")
+                        {
+                            viewmodel.ErrorMessage = msg;
+                        }
+                        else
+                        {
+                            viewmodel.SuccessMessage = msg;
+                        }
+                    }
+                    return View("RentRackInfo", viewmodel);
+                }
+                if (rType.Equals(Constants.RequestTypeCode.RETURN_RACK))
+                {
+                    var group = GetCurrentUserGroup();
+                    var role = GetCurrentUserRole();
+                    //Get request
+                    var request = RequestBLO.Current.DetailProcessRequestReturnRack(code, group, role);
+                    var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestReturnRackViewModel>(request);
+                    viewmodel.CurrentUser = GetCurrentUserName();
+                    //task
+                    if (role == Constants.Role.STAFF && (request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_WAITING
+                                                         || request.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
+                                                         && viewmodel.CurrentUser == request.RequestInfo.Assignee)
+                    {
+                        viewmodel.IsAssignedUser = true;
                     }
                     else
                     {
-                        viewmodel.SuccessMessage = msg;
+                        viewmodel.IsAssignedUser = false;
                     }
+                    viewmodel.StaffCodeOptions = request.listStaff
+                    .Select(x => new SelectListItem
+                    {
+                        Value = x.Username,
+                        Text = x.NameAndGroup,
+                        Selected = x.Role == Constants.Role.SHIFT_HEAD
+                    })
+                    .ToList();
+                    if (msg != null)
+                    {
+                        string check = msg.Substring(0, 5);
+                        if (check == "Error")
+                        {
+                            viewmodel.ErrorMessage = msg;
+                        }
+                        else
+                        {
+                            viewmodel.SuccessMessage = msg;
+                        }
+                    }
+                    return View("ReturnRackInfo", viewmodel);
                 }
-                return View("ReturnRackInfo", viewmodel);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Error");
         }
         #endregion
 

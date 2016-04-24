@@ -30,11 +30,11 @@
     </div>
     <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
         <div class="@Constants.HtmlFormat.FORM_LABEL_CLASS">
-            @Html.LabelFor(model => model.FilterByPeriodOfTime, "Period of Time")
+            @Html.LabelFor(model => model.SelectedTime, "Period of Time")
         </div>
         <div class="@Constants.HtmlFormat.FORM_CONTROL_CLASS">
-            @Html.DropDownListFor(m => m.FilterByPeriodOfTime, Model.FilterByPeriodOfTime, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
-            @Html.ValidationMessageFor(model => model.FilterByPeriodOfTime)
+            @Html.DropDownListFor(m => m.SelectedTime, Model.FilterByPeriodOfTime, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+            @Html.ValidationMessageFor(model => model.SelectedTime)
         </div>
     </div>
     <table id="example1" class="@Constants.HtmlFormat.DATATABLE_CLASS_HOVER">
@@ -105,7 +105,7 @@
     function filterRequest() {
         var typeCode = $("#FilterByRequestType").val();
         var statusCode = $("#FilterByStatus").val();
-        var duration = $('#FilterByPeriodOfTime').val();
+        var duration = $('#SelectedTime').val();
         if (typeCode == null) {
             typeCode = '';
         }

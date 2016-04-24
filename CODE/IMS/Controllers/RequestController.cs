@@ -39,161 +39,171 @@ namespace IMS.Controllers
                 new SelectListItem() {Value = "30", Text = "One Month"},
                 new SelectListItem() {Value = "99999", Text = "All", Selected = true }
             };
+            data.SelectedTime = "99999";
             return View(data);
         }
 
         public ActionResult InitialRequest(RequestCreateViewModel q)
         {
-            var requestTypeCode = q.Type;
-            var customer = GetCurrentUserName();
-            if (!string.IsNullOrEmpty(requestTypeCode))
+            var check = RequestTypeBLO.Current.IsExistedType(q.Type);
+            if (check)
             {
-                var requestCode = RequestBLO.Current.AddInitialRequest(requestTypeCode, customer);
-                return RedirectToAction("Create", "Request", new { requestCode = requestCode });
+                var requestTypeCode = q.Type;
+                var customer = GetCurrentUserName();
+                if (!string.IsNullOrEmpty(requestTypeCode))
+                {
+                    var requestCode = RequestBLO.Current.AddInitialRequest(requestTypeCode, customer);
+                    return RedirectToAction("Create", "Request", new { requestCode = requestCode });
+                }
+                return View("Index");
             }
-            return View("Index");
+            else
+            {
+                return RedirectToAction("Index", "Error");
+            }
+
         }
 
         #region Create Request
         public ActionResult Create(string requestCode)
         {
-            var requestTypeCode = RequestBLO.Current.GetByKeys(new Request { RequestCode = requestCode }).RequestType;
-            if (requestTypeCode == Constants.RequestTypeCode.ADD_SERVER)
+            var customer = GetCurrentUserName();
+            var checkRequest = RequestBLO.Current.CheckExistedRequest(requestCode, customer);
+            if (checkRequest)
             {
-                var data = new RequestAddServerViewModel();
-                data.Servers = new List<ServerExtendedModel>();
-                data.rCode = requestCode;
-                data.ServerCount = requestCode;
-                var serverInfos = TempRequestBLO.Current.GetByRequestCode(requestCode);
-                foreach (var serverInfo in serverInfos)
+                var requestTypeCode = RequestBLO.Current.GetByKeys(new Request { RequestCode = requestCode }).RequestType;
+                if (requestTypeCode == Constants.RequestTypeCode.ADD_SERVER)
                 {
-                    var server = JsonConvert.DeserializeObject<ServerExtendedModel>(serverInfo.Data);
-                    server.TempCode = serverInfo.TempCode;
-                    data.Servers.Add(server);
-                }
-                data.RequestInfo = new RequestInfoModel();
-                var now = DateTime.Now;
-                if (now.Hour >= 16)
-                {
-                    data.RequestInfo.AppointmentTimeStr = now.Date.AddHours(32).ToString("dd/MM/yyyy HH:mm");
-                }
-                else
-                {
-                    var nextHour = now.Date.AddHours(now.Hour + 2);
-                    data.RequestInfo.AppointmentTimeStr = nextHour.ToString("dd/MM/yyyy HH:mm");
-                }
-                data.ServerSizes = new int[] { 1, 2, 4 }
-                    .Select(x => new SelectListItem { Value = x.ToString(), Text = x.ToString() })
-                    .ToList();
-                return View("AddServer", data);
-
-            }
-            if (requestTypeCode == Constants.RequestTypeCode.BRING_SERVER_AWAY)
-            {
-                var customer = GetCurrentUserName();
-                var data = new RequestBringServerAwayViewModel();
-                data.rCode = requestCode;
-                //lay server cua customer
-                var serverOfCustomer = ServerBLO.Current.GetServersOfCustomerByStatus(customer, Constants.StatusCode.SERVER_RUNNING);
-                if (serverOfCustomer.Count > 0)
-                {
-                    //Muon hien thi number of server trong rack tuy theo viec lua chon dropdownlist
-                    data.ServerNumber = serverOfCustomer.Count();
-                    //rack cua server, select all va list cua rack, neu ko co thi ko hien
-                    var rackOfCustomer = RackOfCustomerBLO.Current.GetRacksOfCustomer(customer,
-                        Constants.StatusCode.RACKOFCUSTOMER_CURRENT);
-                    if (rackOfCustomer.Count > 0)
+                    var data = new RequestAddServerViewModel();
+                    data.Servers = new List<ServerExtendedModel>();
+                    data.rCode = requestCode;
+                    data.ServerCount = requestCode;
+                    var serverInfos = TempRequestBLO.Current.GetByRequestCode(requestCode);
+                    foreach (var serverInfo in serverInfos)
                     {
-                        data.ServerOfCustomer = serverOfCustomer;
-                        data.RackOfCustomer = rackOfCustomer
-                        .Select(x => new SelectListItem { Value = x.RackCode, Text = x.RackName })
-                        .ToList();
-                    }
-                    else
-                    {
-                        data.ServerOfCustomer = serverOfCustomer;
+                        var server = JsonConvert.DeserializeObject<ServerExtendedModel>(serverInfo.Data);
+                        server.TempCode = serverInfo.TempCode;
+                        data.Servers.Add(server);
                     }
                     data.RequestInfo = new RequestInfoModel();
                     var now = DateTime.Now;
-                    if (now.Hour >= 20)
+                    if (now.Hour >= 16)
                     {
                         data.RequestInfo.AppointmentTimeStr = now.Date.AddHours(32).ToString("dd/MM/yyyy HH:mm");
                     }
                     else
                     {
-                        data.RequestInfo.AppointmentTimeStr = now.Date.AddHours(10).ToString("dd/MM/yyyy HH:mm");
+                        var nextHour = now.Date.AddHours(now.Hour + 2);
+                        data.RequestInfo.AppointmentTimeStr = nextHour.ToString("dd/MM/yyyy HH:mm");
                     }
+                    data.ServerSizes = new int[] { 1, 2, 4 }
+                        .Select(x => new SelectListItem { Value = x.ToString(), Text = x.ToString() })
+                        .ToList();
+                    return View("AddServer", data);
+
                 }
-                return View("BringServerAway", data);
-            }
-            else if (requestTypeCode == Constants.RequestTypeCode.ASSIGN_IP)
-            {
-                var customer = GetCurrentUserName();
-                var data = new RequestAssignIPViewModel();
-                data.rCode = requestCode;
-                var listNumbers = new List<string>();
-                for (var i = 1; i < 11; i++)
+                if (requestTypeCode == Constants.RequestTypeCode.BRING_SERVER_AWAY)
                 {
-                    listNumbers.Add(i.ToString());
-                }
-                data.NumberOfIPOptions = listNumbers
-                    .Select(x => new SelectListItem { Value = x, Text = x })
-                    .ToList();
-                var listServers = ServerBLO.Current.GetServersOfCustomerByStatus(customer, Constants.StatusCode.SERVER_RUNNING);
-                data.ServerOptions = listServers
-                    .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.ServerDefaultIP })
-                    .ToList();
-                return View("AssignIP", data);
-            }
-            else if (requestTypeCode == Constants.RequestTypeCode.CHANGE_IP)
-            {
-                var customer = GetCurrentUserName();
-                var data = new RequestChangeIPViewModel();
-                data.rCode = requestCode;
-                var listServers = ServerBLO.Current.GetServersOfCustomerByStatus(customer, Constants.StatusCode.SERVER_RUNNING);
-                data.ServerOptions = listServers
-                    .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.ServerDefaultIP })
-                    .ToList();
-                return View("ChangeIP", data);
-            }
-            else if (requestTypeCode == Constants.RequestTypeCode.RETURN_IP)
-            {
-                var customer = GetCurrentUserName();
-                var data = new RequestReturnIPViewModel();
-                data.rCode = requestCode;
-                var listServers = ServerBLO.Current.GetServersOfCustomerByStatus(customer, Constants.StatusCode.SERVER_RUNNING);
-                data.ServerOptions = listServers
-                    .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.ServerDefaultIP })
-                    .ToList();
-                return View("ReturnIP", data);
-            }
-            else if (requestTypeCode == Constants.RequestTypeCode.RENT_RACK)
-            {
-                var data = new RequestRentRackViewModel();
-                data.rCode = requestCode;
-                var myList = new List<SelectListItem>();
-                for (var i = 0; i < 10; i++)
-                {
-                    var num = (i + 1).ToString();
-                    var item = new SelectListItem()
+                    var data = new RequestBringServerAwayViewModel();
+                    data.rCode = requestCode;
+                    //lay server cua customer
+                    var serverOfCustomer = ServerBLO.Current.GetServersOfCustomerByStatus(customer, Constants.StatusCode.SERVER_RUNNING);
+                    if (serverOfCustomer.Count > 0)
                     {
-                        Value = num,
-                        Text = num
-                    };
-                    myList.Add(item);
+                        //Muon hien thi number of server trong rack tuy theo viec lua chon dropdownlist
+                        data.ServerNumber = serverOfCustomer.Count();
+                        //rack cua server, select all va list cua rack, neu ko co thi ko hien
+                        var rackOfCustomer = RackOfCustomerBLO.Current.GetRacksOfCustomer(customer,
+                            Constants.StatusCode.RACKOFCUSTOMER_CURRENT);
+                        if (rackOfCustomer.Count > 0)
+                        {
+                            data.ServerOfCustomer = serverOfCustomer;
+                            data.RackOfCustomer = rackOfCustomer
+                            .Select(x => new SelectListItem { Value = x.RackCode, Text = x.RackName })
+                            .ToList();
+                        }
+                        else
+                        {
+                            data.ServerOfCustomer = serverOfCustomer;
+                        }
+                        data.RequestInfo = new RequestInfoModel();
+                        var now = DateTime.Now;
+                        if (now.Hour >= 20)
+                        {
+                            data.RequestInfo.AppointmentTimeStr = now.Date.AddHours(32).ToString("dd/MM/yyyy HH:mm");
+                        }
+                        else
+                        {
+                            data.RequestInfo.AppointmentTimeStr = now.Date.AddHours(10).ToString("dd/MM/yyyy HH:mm");
+                        }
+                    }
+                    return View("BringServerAway", data);
                 }
-                data.ListRackNumbers = myList;
-                return View("RentRack", data);
+                else if (requestTypeCode == Constants.RequestTypeCode.ASSIGN_IP)
+                {
+                    var data = new RequestAssignIPViewModel();
+                    data.rCode = requestCode;
+                    var listNumbers = new List<string>();
+                    for (var i = 1; i < 11; i++)
+                    {
+                        listNumbers.Add(i.ToString());
+                    }
+                    data.NumberOfIPOptions = listNumbers
+                        .Select(x => new SelectListItem { Value = x, Text = x })
+                        .ToList();
+                    var listServers = ServerBLO.Current.GetServersOfCustomerByStatus(customer, Constants.StatusCode.SERVER_RUNNING);
+                    data.ServerOptions = listServers
+                        .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.ServerDefaultIP })
+                        .ToList();
+                    return View("AssignIP", data);
+                }
+                else if (requestTypeCode == Constants.RequestTypeCode.CHANGE_IP)
+                {
+                    var data = new RequestChangeIPViewModel();
+                    data.rCode = requestCode;
+                    var listServers = ServerBLO.Current.GetServersOfCustomerByStatus(customer, Constants.StatusCode.SERVER_RUNNING);
+                    data.ServerOptions = listServers
+                        .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.ServerDefaultIP })
+                        .ToList();
+                    return View("ChangeIP", data);
+                }
+                else if (requestTypeCode == Constants.RequestTypeCode.RETURN_IP)
+                {
+                    var data = new RequestReturnIPViewModel();
+                    data.rCode = requestCode;
+                    var listServers = ServerBLO.Current.GetServersOfCustomerByStatus(customer, Constants.StatusCode.SERVER_RUNNING);
+                    data.ServerOptions = listServers
+                        .Select(x => new SelectListItem { Value = x.ServerCode, Text = x.ServerDefaultIP })
+                        .ToList();
+                    return View("ReturnIP", data);
+                }
+                else if (requestTypeCode == Constants.RequestTypeCode.RENT_RACK)
+                {
+                    var data = new RequestRentRackViewModel();
+                    data.rCode = requestCode;
+                    var myList = new List<SelectListItem>();
+                    for (var i = 0; i < 10; i++)
+                    {
+                        var num = (i + 1).ToString();
+                        var item = new SelectListItem()
+                        {
+                            Value = num,
+                            Text = num
+                        };
+                        myList.Add(item);
+                    }
+                    data.ListRackNumbers = myList;
+                    return View("RentRack", data);
+                }
+                else if (requestTypeCode == Constants.RequestTypeCode.RETURN_RACK)
+                {
+                    var data = new RequestReturnRackViewModel();
+                    data.rCode = requestCode;
+                    data.AllRacks = RackOfCustomerBLO.Current.CountServerPerRack(customer);
+                    return View("ReturnRack", data);
+                }
             }
-            else if (requestTypeCode == Constants.RequestTypeCode.RETURN_RACK)
-            {
-                var customer = GetCurrentUserName();
-                var data = new RequestReturnRackViewModel();
-                data.rCode = requestCode;
-                data.AllRacks = RackOfCustomerBLO.Current.CountServerPerRack(customer);
-                return View("ReturnRack", data);
-            }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Error");
         }
         #endregion
 
@@ -201,160 +211,165 @@ namespace IMS.Controllers
         [HttpGet]
         public ActionResult Detail(string code, string msg)
         {
-            var r = RequestBLO.Current.GetByKeys(new Request { RequestCode = code });
-            var rType = string.Empty;
-            if (r != null)
+            var customer = GetCurrentUserName();
+            var checkRequest = RequestBLO.Current.CheckExistedRequest(code, customer);
+            if (checkRequest)
             {
-                rType = r.RequestType;
-            }
-            if (rType.Equals(Constants.RequestTypeCode.ADD_SERVER))
-            {
-                //Get request
-                var request = RequestBLO.Current.DetailProcessRequestAddServer(code, null, null);
-                var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestAddServerViewModel>(request);
-                var list = new List<ServerExtendedModel>();
-                foreach (var item in request.Serverss)
+                var r = RequestBLO.Current.GetByKeys(new Request { RequestCode = code });
+                var rType = string.Empty;
+                if (r != null)
                 {
-                    list.Add(item);
+                    rType = r.RequestType;
                 }
-                viewmodel.Servers = list;
-                if (msg != null)
+                if (rType.Equals(Constants.RequestTypeCode.ADD_SERVER))
                 {
-                    string check = msg.Substring(0, 5);
-                    if (check == "Error")
+                    //Get request
+                    var request = RequestBLO.Current.DetailProcessRequestAddServer(code, null, null);
+                    var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestAddServerViewModel>(request);
+                    var list = new List<ServerExtendedModel>();
+                    foreach (var item in request.Serverss)
                     {
-                        viewmodel.ErrorMessage = msg;
+                        list.Add(item);
                     }
-                    else
+                    viewmodel.Servers = list;
+                    if (msg != null)
                     {
-                        viewmodel.SuccessMessage = msg;
+                        string check = msg.Substring(0, 5);
+                        if (check == "Error")
+                        {
+                            viewmodel.ErrorMessage = msg;
+                        }
+                        else
+                        {
+                            viewmodel.SuccessMessage = msg;
+                        }
                     }
+                    return View("AddServerDetail", viewmodel);
                 }
-                return View("AddServerDetail", viewmodel);
-            }
-            if (rType.Equals(Constants.RequestTypeCode.BRING_SERVER_AWAY))
-            {
-                //Get request
-                var request = RequestBLO.Current.DetailProcessRequestBringServerAway(code, null, null);
-                var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestBringServerAwayViewModel>(request);
-                var list = new List<ServerExtendedModel>();
-                foreach (var item in request.ServerOfCustomers)
+                if (rType.Equals(Constants.RequestTypeCode.BRING_SERVER_AWAY))
                 {
-                    list.Add(item);
+                    //Get request
+                    var request = RequestBLO.Current.DetailProcessRequestBringServerAway(code, null, null);
+                    var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestBringServerAwayViewModel>(request);
+                    var list = new List<ServerExtendedModel>();
+                    foreach (var item in request.ServerOfCustomers)
+                    {
+                        list.Add(item);
+                    }
+                    viewmodel.ServerOfCustomer = list;
+                    if (msg != null)
+                    {
+                        string check = msg.Substring(0, 5);
+                        if (check == "Error")
+                        {
+                            viewmodel.ErrorMessage = msg;
+                        }
+                        else
+                        {
+                            viewmodel.SuccessMessage = msg;
+                        }
+                    }
+                    return View("BringServerAwayDetail", viewmodel);
                 }
-                viewmodel.ServerOfCustomer = list;
-                if (msg != null)
+                if (rType.Equals(Constants.RequestTypeCode.ASSIGN_IP))
                 {
-                    string check = msg.Substring(0, 5);
-                    if (check == "Error")
+                    //Get request
+                    var request = RequestBLO.Current.DetailProcessRequestAssignIP(code, null, null);
+                    var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestAssignIPViewModel>(request);
+                    if (msg != null)
                     {
-                        viewmodel.ErrorMessage = msg;
+                        string check = msg.Substring(0, 5);
+                        if (check == "Error")
+                        {
+                            viewmodel.ErrorMessage = msg;
+                        }
+                        else
+                        {
+                            viewmodel.SuccessMessage = msg;
+                        }
                     }
-                    else
-                    {
-                        viewmodel.SuccessMessage = msg;
-                    }
+                    return View("AssignIPDetail", viewmodel);
                 }
-                return View("BringServerAwayDetail", viewmodel);
-            }
-            if (rType.Equals(Constants.RequestTypeCode.ASSIGN_IP))
-            {
-                //Get request
-                var request = RequestBLO.Current.DetailProcessRequestAssignIP(code, null, null);
-                var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestAssignIPViewModel>(request);
-                if (msg != null)
+                if (rType.Equals(Constants.RequestTypeCode.CHANGE_IP))
                 {
-                    string check = msg.Substring(0, 5);
-                    if (check == "Error")
+                    //Get request
+                    var request = RequestBLO.Current.DetailProcessRequestChangeIP(code, null, null);
+                    var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestChangeIPViewModel>(request);
+                    if (msg != null)
                     {
-                        viewmodel.ErrorMessage = msg;
+                        string check = msg.Substring(0, 5);
+                        if (check == "Error")
+                        {
+                            viewmodel.ErrorMessage = msg;
+                        }
+                        else
+                        {
+                            viewmodel.SuccessMessage = msg;
+                        }
                     }
-                    else
-                    {
-                        viewmodel.SuccessMessage = msg;
-                    }
+                    return View("ChangeIPDetail", viewmodel);
                 }
-                return View("AssignIPDetail", viewmodel);
-            }
-            if (rType.Equals(Constants.RequestTypeCode.CHANGE_IP))
-            {
-                //Get request
-                var request = RequestBLO.Current.DetailProcessRequestChangeIP(code, null, null);
-                var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestChangeIPViewModel>(request);
-                if (msg != null)
-                {
-                    string check = msg.Substring(0, 5);
-                    if (check == "Error")
-                    {
-                        viewmodel.ErrorMessage = msg;
-                    }
-                    else
-                    {
-                        viewmodel.SuccessMessage = msg;
-                    }
-                }
-                return View("ChangeIPDetail", viewmodel);
-            }
 
-            if (rType.Equals(Constants.RequestTypeCode.RETURN_IP))
-            {
-                //Get request
-                var request = RequestBLO.Current.DetailProcessRequestReturnIP(code, null, null);
-                var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestReturnIPViewModel>(request);
-                if (msg != null)
+                if (rType.Equals(Constants.RequestTypeCode.RETURN_IP))
                 {
-                    string check = msg.Substring(0, 5);
-                    if (check == "Error")
+                    //Get request
+                    var request = RequestBLO.Current.DetailProcessRequestReturnIP(code, null, null);
+                    var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestReturnIPViewModel>(request);
+                    if (msg != null)
                     {
-                        viewmodel.ErrorMessage = msg;
+                        string check = msg.Substring(0, 5);
+                        if (check == "Error")
+                        {
+                            viewmodel.ErrorMessage = msg;
+                        }
+                        else
+                        {
+                            viewmodel.SuccessMessage = msg;
+                        }
                     }
-                    else
-                    {
-                        viewmodel.SuccessMessage = msg;
-                    }
+                    return View("ReturnIPDetail", viewmodel);
                 }
-                return View("ReturnIPDetail", viewmodel);
-            }
 
-            if (rType.Equals(Constants.RequestTypeCode.RENT_RACK))
-            {
-                //Get request
-                var request = RequestBLO.Current.DetailProcessRequestRentRack(code, null, null);
-                var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestRentRackViewModel>(request);
-                if (msg != null)
+                if (rType.Equals(Constants.RequestTypeCode.RENT_RACK))
                 {
-                    string check = msg.Substring(0, 5);
-                    if (check == "Error")
+                    //Get request
+                    var request = RequestBLO.Current.DetailProcessRequestRentRack(code, null, null);
+                    var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestRentRackViewModel>(request);
+                    if (msg != null)
                     {
-                        viewmodel.ErrorMessage = msg;
+                        string check = msg.Substring(0, 5);
+                        if (check == "Error")
+                        {
+                            viewmodel.ErrorMessage = msg;
+                        }
+                        else
+                        {
+                            viewmodel.SuccessMessage = msg;
+                        }
                     }
-                    else
-                    {
-                        viewmodel.SuccessMessage = msg;
-                    }
+                    return View("RentRackDetail", viewmodel);
                 }
-                return View("RentRackDetail", viewmodel);
-            }
-            if (rType.Equals(Constants.RequestTypeCode.RETURN_RACK))
-            {
-                //Get request
-                var request = RequestBLO.Current.DetailProcessRequestReturnRack(code, null, null);
-                var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestReturnRackViewModel>(request);
-                if (msg != null)
+                if (rType.Equals(Constants.RequestTypeCode.RETURN_RACK))
                 {
-                    string check = msg.Substring(0, 5);
-                    if (check == "Error")
+                    //Get request
+                    var request = RequestBLO.Current.DetailProcessRequestReturnRack(code, null, null);
+                    var viewmodel = Mapper.Map<ProcessRequestExtendedModel, ProcessRequestReturnRackViewModel>(request);
+                    if (msg != null)
                     {
-                        viewmodel.ErrorMessage = msg;
+                        string check = msg.Substring(0, 5);
+                        if (check == "Error")
+                        {
+                            viewmodel.ErrorMessage = msg;
+                        }
+                        else
+                        {
+                            viewmodel.SuccessMessage = msg;
+                        }
                     }
-                    else
-                    {
-                        viewmodel.SuccessMessage = msg;
-                    }
+                    return View("ReturnRackDetail", viewmodel);
                 }
-                return View("ReturnRackDetail", viewmodel);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Error");
         }
         #endregion
 

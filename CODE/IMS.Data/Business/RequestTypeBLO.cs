@@ -40,6 +40,16 @@ namespace IMS.Data.Business
             }
             return null;
         }
+
+        public bool IsExistedType(string requestType)
+        {
+            var type = dao.GetByKeys(new RequestType { RequestTypeCode = requestType });
+            if (type != null)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
 

@@ -26,6 +26,7 @@ namespace IMS.Data.ViewModels
         public string SelectedServer { get; set; }
         public string SelectedDefaultIP { get; set; }
         public List<string> randomList { get; set; }
+        public List<IPAddressPoolExtendedModel> listAvailableIpsOption { get; set; }
         public List<string> IPs { get; set; }
         public List<IPAddressPoolExtendedModel> listAvailableIps { get; set; }
         //change ip, return ip

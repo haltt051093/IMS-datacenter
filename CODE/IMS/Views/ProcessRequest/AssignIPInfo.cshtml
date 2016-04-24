@@ -10,7 +10,7 @@
     };
 }
 <section class="main-content">
-    @using (Html.BeginForm("ProcessRequestAssignIp", "ProcessRequest", FormMethod.Post))
+    @using (Html.BeginForm("ProcessRequestAssignIp", "ProcessRequest", FormMethod.Post, new { id = "main-form" }))
     {
         <div class="@Constants.HtmlFormat.FORM_ROW_CLASS">
             @Html.HiddenFor(model => model.SuccessMessage)
@@ -174,7 +174,7 @@
         {
             if (Model.RequestInfo.Assignee == Model.CurrentUser && Model.RequestInfo.TaskStatus == Constants.StatusCode.TASK_DOING)
             {
-                if (Model.NumberOfIP > Model.NumberOfAvailableIP)
+                if (Model.NumberOfIP > Model.NumberOfAvailableIP + Model.NumberOfSelectedIP)
                 {
                     @Html.Raw("Available IPs in the same range are not enough to assign. Current available IP number is:" + Model.NumberOfAvailableIP)
                 }
@@ -222,7 +222,7 @@
                                 </div>
                                 <div class="col-xs-8 tf-form-control">
                                     Number of IPs:
-                                    @Html.DisplayFor(model => model.NumberOfAvailableIP, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                    <span id="NumberOfAvailableIP">@Html.DisplayFor(model => model.NumberOfAvailableIP, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })</span>
                                 </div>
                             </div>
                         </div>
@@ -232,7 +232,7 @@
                                 </div>
                                 <div class="col-xs-8 tf-form-control">
                                     Number of IPs:
-                                    @Html.DisplayFor(model => model.NumberOfSelectedIP, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })
+                                    <span id="NumberOfSelectedIP">@Html.DisplayFor(model => model.NumberOfSelectedIP, new { @class = Constants.HtmlFormat.FORM_INNER_CLASS })</span>
                                 </div>
                             </div>
                         </div>
@@ -494,13 +494,11 @@
         var pass = $('#availableIps').val();
         $('#selectedIps').append('<option value="' + pass + '">' + pass + '</option>');
         $("[id*=availableIps] option:selected").remove();
-        var avaiNum = $('#NumberOfAvailableIP').val();
-        var num1 = avaiNum - 1;
-        $('#NumberOfAvailableIP').val(num1);
-        var selectedNum = $('#NumberOfSelectedIP').val();
-        var num2 = selectedNum + 1;
-        $('#NumberOfSelectedIP').val(num2);
+        $('#NumberOfAvailableIP').html($('#availableIps option').length);
+        $('#NumberOfSelectedIP').html($('#selectedIps option').length);
         syncIPs();
+        $('#IPsString').validate();
+        $('#IPsString').valid();
         return false;
     });
 
@@ -515,13 +513,12 @@
             $(this).remdaoveAttr("selected");
             //remove gia tri duoc chon khoi list
         }
-        var avaiNum = $('#NumberOfAvailableIP').val();
-        var num1 = avaiNum + 1;
-        $('#NumberOfAvailableIP').val(num1);
-        var selectedNum = $('#NumberOfSelectedIP').val();
-        var num2 = selectedNum - 1;
-        $('#NumberOfSelectedIP').val(num2);
+        $('#NumberOfAvailableIP').html($('#availableIps option').length);
+        $('#NumberOfSelectedIP').html($('#selectedIps option').length);
         syncIPs();
+        $('#IPsString').validate();
+        $('#IPsString').valid();
+        return false;
     });
 
     syncIPs();
