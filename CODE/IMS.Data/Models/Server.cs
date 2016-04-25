@@ -16,6 +16,7 @@ namespace IMS.Data.Models
 
         public string Model { get; set; }
         [Required]
+        [Range(100,2000, ErrorMessage ="Power must be smaller than 2000W")]
         public int? Power { get; set; }
 
         public int? Size { get; set; }
