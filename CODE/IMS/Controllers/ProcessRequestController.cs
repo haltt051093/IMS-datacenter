@@ -198,26 +198,11 @@ namespace IMS.Controllers
                                 Value = x,
                                 Text = x
                             }).ToList();
-                            //cho hien thi multiple list, ko bao gom randomList
-                            //if (listAvailableIps != null)
-                            //{
-                            //    for (int i = 0; i < listAvailableIps.Count; i++)
-                            //    {
-                            //        for (int j = 0; j < randomList.Count; j++)
-                            //        {
-                            //            var item = listAvailableIps[i];
-                            //            if (item.IPAddress.Equals(randomList[j]))
-                            //            {
-                            //                listAvailableIps.Remove(item);
-                            //            }
-                            //        }
-                            //    }
-                                viewmodel.IpSelectListItems = request.listAvailableIpsOption.Select(x => new SelectListItem
-                                {
-                                    Value = x.IPAddress,
-                                    Text = x.IPAddress
-                                }).ToList();
-                            //}
+                            viewmodel.IpSelectListItems = request.listAvailableIpsOption.Select(x => new SelectListItem
+                            {
+                                Value = x.IPAddress,
+                                Text = x.IPAddress
+                            }).ToList();
                         }
                     }
                     if (msg != null)
@@ -419,7 +404,7 @@ namespace IMS.Controllers
                     return View("ReturnRackInfo", viewmodel);
                 }
             }
-            return RedirectToAction("Index","Error");
+            return RedirectToAction("Index", "Error");
         }
         #endregion
 

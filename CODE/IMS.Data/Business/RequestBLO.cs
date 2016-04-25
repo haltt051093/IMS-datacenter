@@ -774,7 +774,11 @@ namespace IMS.Data.Business
                 //Lay list available ip cung vung
                 var listAvailableIps = IPAddressPoolBLO.Current.GetAvailableIpsSameGateway(request.SelectedServer);
                 request.listAvailableIps = listAvailableIps;
-                var listAvaiIPOption = listAvailableIps;
+                var listAvaiIPOption = new List<IPAddressPoolExtendedModel>();
+                foreach(var item in listAvailableIps)
+                {
+                    listAvaiIPOption.Add(item);
+                }
                 if (listAvailableIps != null)
                 {
                     if (listAvailableIps.Count >= request.NumberOfIP)
@@ -785,9 +789,9 @@ namespace IMS.Data.Business
                         for (int i = 0; i < randomList.Count; i++)
                         {
                             var randomIp = randomList[i];
-                            for (int j = 0; j < listAvailableIps.Count; j++)
+                            for (int j = 0; j < listAvaiIPOption.Count; j++)
                             {
-                                var avaiIP = listAvailableIps[j];
+                                var avaiIP = listAvaiIPOption[j];
                                 if (randomIp == avaiIP.IPAddress)
                                 {
                                     listAvaiIPOption.Remove(avaiIP);
