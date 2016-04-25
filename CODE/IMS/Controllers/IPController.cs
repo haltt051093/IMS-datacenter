@@ -157,9 +157,11 @@ namespace IMS.Controllers
                         {
                             ips = IPAddressPoolBLO.Current.GenerateIPBeforeLast(iivm.Address, iivm.Netmask);
                         }
-                var gateway = ips.Select(x => x.Gateway).FirstOrDefault();
-                var existing = IPAddressPoolBLO.Current.GetAll().Where(x => x.Gateway == gateway).ToList();
-                if (existing.Count==0||existing==null )
+                var network = ips.Select(x => x.NetworkIP).FirstOrDefault();
+                var existing = IPAddressPoolBLO.Current.GetAll().Where(x => x.NetworkIP == network).ToList();
+                var existing1 = IPAddressPoolBLO.Current.GetByKeys(new IPAddressPool { IPAddress = iivm.Address });
+
+                if (existing.Count==0&&existing1==null )
                 {
                     var k = ips.Count - 1;
                         ips[k].StatusCode = Constants.StatusCode.IP_RESERVE;
