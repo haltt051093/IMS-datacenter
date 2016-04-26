@@ -147,9 +147,7 @@ namespace IMS.Controllers
             }
                 else
                 {
-                var existing = IPAddressPoolBLO.Current.GetByKeys(new IPAddressPool { IPAddress = iivm.Address });
-                    if (existing == null)
-                    {
+               
                         var ips = new List<IPAddressPool>();
                         if (iivm.Option == "After")
                         {
@@ -159,9 +157,11 @@ namespace IMS.Controllers
                         {
                             ips = IPAddressPoolBLO.Current.GenerateIPBeforeLast(iivm.Address, iivm.Netmask);
                         }
-
-
-                        var k = ips.Count - 1;
+                var gateway = ips.Select(x => x.Gateway).FirstOrDefault();
+                var existing = IPAddressPoolBLO.Current.GetAll().Where(x => x.Gateway == gateway).ToList();
+                if (existing.Count==0||existing==null )
+                {
+                    var k = ips.Count - 1;
                         ips[k].StatusCode = Constants.StatusCode.IP_RESERVE;
 
                         for (var i = 0; i < ips.Count - 1; i++)
