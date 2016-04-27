@@ -46,7 +46,7 @@ namespace IMS.Data.Repository
 
         public List<LocationViewModel> GetRackOfCustomer(Server server)
         {
-            var query = @"select roc.RackCode from RackOfCustomer roc where roc.Customer = '" + server.Customer + @"'";
+            var query = @"select roc.RackCode from RackOfCustomer roc where roc.Customer = '" + server.Customer + @"'and roc.StatusCode!='STATUS28'";
             return RawQuery<LocationViewModel>(query, new object[] { });
         }
 
