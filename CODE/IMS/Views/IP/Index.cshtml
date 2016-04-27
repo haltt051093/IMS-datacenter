@@ -15,6 +15,7 @@
         @Html.HiddenFor(model => model.SuccessMessage)
         @Html.HiddenFor(model => model.FailBlock)
         @Html.HiddenFor(model => model.FailUnBlock)
+        @Html.HiddenFor(model => model.FailAdd)
     </div>
     <div>
         <a class="btn btn-primary" data-toggle="modal" data-target="#addip-modal"><i class="fa fa-plus"></i> @Labels.AddIP</a>
@@ -294,6 +295,15 @@
             position: "center"
         });
         $('#FailUnBlock').val("");
+    }
+    var message = $('#FailAdd').val();
+    if (message) {
+        notif({
+            msg: "" + message,
+            type: "error",
+            position: "center"
+        });
+        $('#FailAdd').val("");
     }
     function addIPComplete(data) {
         var response = data.responseJSON;

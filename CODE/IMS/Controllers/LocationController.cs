@@ -19,9 +19,10 @@ namespace IMS.Controllers
     public class LocationController : CoreController
     {
         [Authorize(Roles = "Staff,Shift Head,Manager")]
-        public ActionResult Index(string Message)
+        public ActionResult Index(string Message, string Fail)
         {
             var data = new LocationIndexViewModel();
+            data.FailMessage = Fail;
             data.SuccessMessage = Message;
             var locations = LocationBLO.Current.GetAllLocation();
             for (int i = 0; i < locations.Count; i++)
@@ -64,15 +65,22 @@ namespace IMS.Controllers
         {
             //if (IsAuthorized())
             //{
-            if (ModelState.IsValid)
+            
+                var existing = RackBLO.Current.GetByName(new Rack { RackName = livm.RackName });
+            if (existing == null)
             {
                 var rack = new Rack();
                 rack.RackName = livm.RackName;
                 rack.MaximumPower = livm.MaximumPower;
                 RackBLO.Current.AddRackAndLocation(rack);
-                return RedirectToAction("Index", new { Message = "New Rack was added!" });
+                return RedirectToAction("Index", new {Message = "New Rack was added!"});
             }
-            return RedirectToAction("Index");
+            else
+            {
+                return RedirectToAction("Index", new {Fail = "Rack has just been added!"});
+            }   
+            
+           
         }
 
         [HttpPost]
