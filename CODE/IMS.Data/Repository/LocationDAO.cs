@@ -41,7 +41,7 @@ namespace IMS.Data.Repository
             {
                 q = new GetLocationQuery();
             }
-            var query = @"select l.LocationCode,ser.ServerCode,ser.DefaultIP, l.RackUnit, s.StatusName,r.RackName,r.RackCode, ser.Id,r.StatusCode as RackStatus, acc.Fullname, acc1.Fullname as ServerOwner, ser.Power, s1.StatusName as ServerStatus, ser.Bandwidth, ser.Size from Location as l
+            var query = @"select l.LocationCode,ser.ServerCode,ser.DefaultIP, l.RackUnit, s.StatusName,r.RackName,r.RackCode, ser.Id,r.StatusCode as RackStatus, acc.Fullname, acc1.Fullname as ServerOwner, ser.Power, s1.StatusName as ServerStatus, ser.Bandwidth, ser.Size,acc1.Phone, acc1.Email from Location as l
                             left join Status as s
                             on s.StatusCode = l.StatusCode
                             join Rack as r

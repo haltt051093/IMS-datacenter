@@ -22,6 +22,8 @@ namespace IMS.Data.ViewModels
         public int? Power { get; set; }
         public string ServerStatus { get; set; }
         public string Bandwidth { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
        
     }
 }
