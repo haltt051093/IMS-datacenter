@@ -113,7 +113,7 @@ namespace IMS.Data.Business
 
                 //list serverLocation
                 var listServerLocation = GetLogInfoByRequestCode(requestCode, Constants.Object.OBJECT_LOCATION)
-                    .Where(x => x.ObjectStatus == Constants.StatusCode.LOCATION_USED)
+                    .Where(x => x.ObjectStatus == Constants.StatusCode.LOCATION_USED && x.ServerCode == item.ServerCode)
                     .Select(x => x.ChangedValueOfObject);
                 s.locations = listServerLocation.ToList();
                 data.ReturnLocationNumber = data.ReturnLocationNumber + listServerLocation.ToList().Count();

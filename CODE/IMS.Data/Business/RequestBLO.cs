@@ -273,7 +273,8 @@ namespace IMS.Data.Business
                             Object = Constants.Object.OBJECT_LOCATION,
                             ChangedValueOfObject = location.RackName + "U" + location.RackUnit,
                             ObjectStatus = Constants.StatusCode.LOCATION_USED,
-                            Username = customer
+                            Username = customer,
+                            ServerCode = item.ServerCode
                         };
                         LogBLO.Current.Add(logLocation);
                     }
