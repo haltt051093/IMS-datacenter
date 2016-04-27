@@ -136,19 +136,6 @@
         }
         duration = duration - 0;
 
-        //if (typeCode == '' && statusCode == '') {
-        //    $('#example1 tbody[type-code][status-code]').show();
-        //}
-        //else {
-        //$('#example1 tbody').hide();
-        //if (typeCode != '' && statusCode == '') {
-        //    $('#example1 tbody[type-code="' + typeCode + '"]').show();
-        //} else if (statusCode != '' && typeCode == '') {
-        //    $('#example1 tbody[status-code="' + statusCode + '"]').show();
-        //} else {
-        //    $('#example1 tbody[type-code="' + typeCode + '"][status-code="' + statusCode + '"]').show();
-        //}
-        //}
         $('#example1 tr[type-code][status-code]').each(function (i, e) {
             var row = $(e);
             var rowTypeCode = row.attr('type-code');
