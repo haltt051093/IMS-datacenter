@@ -490,17 +490,28 @@ namespace IMS.Controllers
                 }
                 if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
                 {
-                    var assignee = viewmodel.RequestInfo.Assignee;
-                    if (viewmodel.RequestInfo.Assignee == null)
+                    var assignee = RequestBLO.Current.GetByKeys(new Request { RequestCode = viewmodel.RequestInfo.RequestCode }).Assignee;
+                    if (assignee == null)
                     {
                         assignee = GetCurrentUserName();
                     }
-                    var result = RequestBLO.Current.RejectRequestAddServer(viewmodel.RequestInfo.RequestCode, viewmodel.Servers,
+                    if (assignee == viewmodel.RequestInfo.Assignee)
+                    {
+                        var result = RequestBLO.Current.RejectRequestAssignIP(viewmodel.RequestInfo.RequestCode,
                             assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
-                    //dang ky ham cho client
-                    Notify(result.NotificationCodes);
-                    return RedirectToAction("Detail", "ProcessRequest",
-                        new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.REJECT_REQUEST_ADD_SERVER });
+                        //dang ky ham cho client
+                        Notify(result.NotificationCodes);
+                        return RedirectToAction("Detail", "ProcessRequest",
+                            new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.REJECT_REQUEST_ADD_SERVER });
+                    }
+                    else
+                    {
+                        return RedirectToAction("Detail", "ProcessRequest", new
+                        {
+                            code = viewmodel.RequestInfo.RequestCode,
+                            msg = "Error! You are not authorized."
+                        });
+                    }
                 }
                 if (Request.Form[Constants.FormAction.PROCESS_ACTION] != null)
                 {
@@ -521,7 +532,7 @@ namespace IMS.Controllers
                 if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
                 {
                     var shifthead = GetCurrentUserName();
-                    var check = RequestBLO.Current.IsShiftHeadDoingTask(shifthead, viewmodel.RequestInfo.TaskCode);
+                    var check = RequestBLO.Current.IsShiftHeadDoingTask(viewmodel.RequestInfo.TaskCode);
                     var taskstatus = TaskBLO.Current.GetByKeys(new Task { TaskCode = viewmodel.RequestInfo.TaskCode }).StatusCode;
                     if (taskstatus == Constants.StatusCode.TASK_WAITING || taskstatus == Constants.StatusCode.TASK_NOTFINISH || check)
                     {
@@ -645,17 +656,28 @@ namespace IMS.Controllers
                 }
                 if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
                 {
-                    var assignee = viewmodel.RequestInfo.Assignee;
-                    if (viewmodel.RequestInfo.Assignee == null)
+                    var assignee = RequestBLO.Current.GetByKeys(new Request { RequestCode = viewmodel.RequestInfo.RequestCode }).Assignee;
+                    if (assignee == null)
                     {
                         assignee = GetCurrentUserName();
                     }
-                    var result = RequestBLO.Current.RejectRequestBringServerAway(viewmodel.RequestInfo.RequestCode, viewmodel.ServerOfCustomer,
-                        assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
-                    //dang ky ham cho client
-                    Notify(result.NotificationCodes);
-                    return RedirectToAction("Detail", "ProcessRequest",
-                        new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.REJECT_REQUEST_BRING_SERVER_AWAY });
+                    if (assignee == viewmodel.RequestInfo.Assignee)
+                    {
+                        var result = RequestBLO.Current.RejectRequestAssignIP(viewmodel.RequestInfo.RequestCode,
+                            assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
+                        //dang ky ham cho client
+                        Notify(result.NotificationCodes);
+                        return RedirectToAction("Detail", "ProcessRequest",
+                            new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.REJECT_REQUEST_BRING_SERVER_AWAY });
+                    }
+                    else
+                    {
+                        return RedirectToAction("Detail", "ProcessRequest", new
+                        {
+                            code = viewmodel.RequestInfo.RequestCode,
+                            msg = "Error! You are not authorized."
+                        });
+                    }
                 }
                 if (Request.Form[Constants.FormAction.PROCESS_ACTION] != null)
                 {
@@ -676,7 +698,7 @@ namespace IMS.Controllers
                 if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
                 {
                     var shifthead = GetCurrentUserName();
-                    var check = RequestBLO.Current.IsShiftHeadDoingTask(shifthead, viewmodel.RequestInfo.TaskCode);
+                    var check = RequestBLO.Current.IsShiftHeadDoingTask(viewmodel.RequestInfo.TaskCode);
                     var taskstatus = TaskBLO.Current.GetByKeys(new Task { TaskCode = viewmodel.RequestInfo.TaskCode }).StatusCode;
                     if (taskstatus == Constants.StatusCode.TASK_WAITING || taskstatus == Constants.StatusCode.TASK_NOTFINISH || check)
                     {
@@ -785,7 +807,7 @@ namespace IMS.Controllers
                 if (Request.Form[Constants.FormAction.APPROVE_ACTION] != null)
                 {
                     var assignee = RequestBLO.Current.GetByKeys(new Request { RequestCode = viewmodel.RequestInfo.RequestCode }).Assignee;
-                    if(assignee == viewmodel.RequestInfo.Assignee)
+                    if (assignee == viewmodel.RequestInfo.Assignee)
                     {
                         //get ip
                         var ips = viewmodel.IPsString;
@@ -818,22 +840,33 @@ namespace IMS.Controllers
                 }
                 if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
                 {
-                    var assignee = viewmodel.RequestInfo.Assignee;
-                    if (viewmodel.RequestInfo.Assignee == null)
+                    var assignee = RequestBLO.Current.GetByKeys(new Request { RequestCode = viewmodel.RequestInfo.RequestCode }).Assignee;
+                    if (assignee == null)
                     {
                         assignee = GetCurrentUserName();
                     }
-                    var result = RequestBLO.Current.RejectRequestAssignIP(viewmodel.RequestInfo.RequestCode,
-                        assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
-                    //dang ky ham cho client
-                    Notify(result.NotificationCodes);
-                    return RedirectToAction("Detail", "ProcessRequest",
-                        new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.REJECT_REQUEST_ASSIGN_IP });
+                    if (assignee == viewmodel.RequestInfo.Assignee)
+                    {
+                        var result = RequestBLO.Current.RejectRequestAssignIP(viewmodel.RequestInfo.RequestCode,
+                            assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
+                        //dang ky ham cho client
+                        Notify(result.NotificationCodes);
+                        return RedirectToAction("Detail", "ProcessRequest",
+                            new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.REJECT_REQUEST_ASSIGN_IP });
+                    }
+                    else
+                    {
+                        return RedirectToAction("Detail", "ProcessRequest", new
+                        {
+                            code = viewmodel.RequestInfo.RequestCode,
+                            msg = "Error! You are not authorized."
+                        });
+                    }
                 }
                 if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
                 {
                     var shifthead = GetCurrentUserName();
-                    var check = RequestBLO.Current.IsShiftHeadDoingTask(shifthead, viewmodel.RequestInfo.TaskCode);
+                    var check = RequestBLO.Current.IsShiftHeadDoingTask(viewmodel.RequestInfo.TaskCode);
                     var taskstatus = TaskBLO.Current.GetByKeys(new Task { TaskCode = viewmodel.RequestInfo.TaskCode }).StatusCode;
                     if (taskstatus == Constants.StatusCode.TASK_WAITING || taskstatus == Constants.StatusCode.TASK_NOTFINISH || check)
                     {
@@ -866,7 +899,7 @@ namespace IMS.Controllers
                             msg = "Error! Staff is processing request."
                         });
                     }
-                   
+
                 }
                 if (Request.Form[Constants.FormAction.ACCEPT_TASK_ACTION] != null)
                 {
@@ -886,7 +919,7 @@ namespace IMS.Controllers
                             msg = "Error! Your task is cancelled."
                         });
                     }
-                        
+
                 }
                 if (Request.Form[Constants.FormAction.NOT_FINISHED_TASK_ACTION] != null)
                 {
@@ -975,23 +1008,33 @@ namespace IMS.Controllers
                 }
                 if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
                 {
-                    var assignee = viewmodel.RequestInfo.Assignee;
-                    if (viewmodel.RequestInfo.Assignee == null)
+                    var assignee = RequestBLO.Current.GetByKeys(new Request { RequestCode = viewmodel.RequestInfo.RequestCode }).Assignee;
+                    if (assignee == null)
                     {
                         assignee = GetCurrentUserName();
                     }
-                    var result = RequestBLO.Current.RejectRequestChangeIP(viewmodel.RequestInfo.RequestCode, viewmodel.ReturningIPs,
-                        assignee, viewmodel.RequestInfo.TaskCode,
-                        viewmodel.SelectedServer, viewmodel.RequestInfo.Reason);
-                    //dang ky ham cho client
-                    Notify(result.NotificationCodes);
-                    return RedirectToAction("Detail", "ProcessRequest",
-                        new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.REJECT_REQUEST_CHANGE_IP });
+                    if (assignee == viewmodel.RequestInfo.Assignee)
+                    {
+                        var result = RequestBLO.Current.RejectRequestAssignIP(viewmodel.RequestInfo.RequestCode,
+                            assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
+                        //dang ky ham cho client
+                        Notify(result.NotificationCodes);
+                        return RedirectToAction("Detail", "ProcessRequest",
+                            new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.REJECT_REQUEST_CHANGE_IP });
+                    }
+                    else
+                    {
+                        return RedirectToAction("Detail", "ProcessRequest", new
+                        {
+                            code = viewmodel.RequestInfo.RequestCode,
+                            msg = "Error! You are not authorized."
+                        });
+                    }
                 }
                 if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
                 {
                     var shifthead = GetCurrentUserName();
-                    var check = RequestBLO.Current.IsShiftHeadDoingTask(shifthead, viewmodel.RequestInfo.TaskCode);
+                    var check = RequestBLO.Current.IsShiftHeadDoingTask(viewmodel.RequestInfo.TaskCode);
                     var taskstatus = TaskBLO.Current.GetByKeys(new Task { TaskCode = viewmodel.RequestInfo.TaskCode }).StatusCode;
                     if (taskstatus == Constants.StatusCode.TASK_WAITING || taskstatus == Constants.StatusCode.TASK_NOTFINISH || check)
                     {
@@ -1120,23 +1163,33 @@ namespace IMS.Controllers
                 }
                 if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
                 {
-                    var assignee = viewmodel.RequestInfo.Assignee;
-                    if (viewmodel.RequestInfo.Assignee == null)
+                    var assignee = RequestBLO.Current.GetByKeys(new Request { RequestCode = viewmodel.RequestInfo.RequestCode }).Assignee;
+                    if (assignee == null)
                     {
                         assignee = GetCurrentUserName();
                     }
-                    var result = RequestBLO.Current.RejectRequestReturnIP(viewmodel.RequestInfo.RequestCode, viewmodel.ReturningIPs,
-                        assignee, viewmodel.RequestInfo.TaskCode, viewmodel.SelectedServer,
-                        viewmodel.RequestInfo.Reason);
-                    //dang ky ham cho client
-                    Notify(result.NotificationCodes);
-                    return RedirectToAction("Detail", "ProcessRequest",
-                        new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.REJECT_REQUEST_RETURN_IP });
+                    if (assignee == viewmodel.RequestInfo.Assignee)
+                    {
+                        var result = RequestBLO.Current.RejectRequestAssignIP(viewmodel.RequestInfo.RequestCode,
+                            assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
+                        //dang ky ham cho client
+                        Notify(result.NotificationCodes);
+                        return RedirectToAction("Detail", "ProcessRequest",
+                            new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.REJECT_REQUEST_RETURN_IP });
+                    }
+                    else
+                    {
+                        return RedirectToAction("Detail", "ProcessRequest", new
+                        {
+                            code = viewmodel.RequestInfo.RequestCode,
+                            msg = "Error! You are not authorized."
+                        });
+                    }
                 }
                 if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
                 {
                     var shifthead = GetCurrentUserName();
-                    var check = RequestBLO.Current.IsShiftHeadDoingTask(shifthead, viewmodel.RequestInfo.TaskCode);
+                    var check = RequestBLO.Current.IsShiftHeadDoingTask(viewmodel.RequestInfo.TaskCode);
                     var taskstatus = TaskBLO.Current.GetByKeys(new Task { TaskCode = viewmodel.RequestInfo.TaskCode }).StatusCode;
                     if (taskstatus == Constants.StatusCode.TASK_WAITING || taskstatus == Constants.StatusCode.TASK_NOTFINISH || check)
                     {
@@ -1265,22 +1318,33 @@ namespace IMS.Controllers
                 }
                 if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
                 {
-                    var assignee = viewmodel.RequestInfo.Assignee;
-                    if (viewmodel.RequestInfo.Assignee == null)
+                    var assignee = RequestBLO.Current.GetByKeys(new Request { RequestCode = viewmodel.RequestInfo.RequestCode }).Assignee;
+                    if (assignee == null)
                     {
                         assignee = GetCurrentUserName();
                     }
-                    var result = RequestBLO.Current.RejectRequestRentRack(viewmodel.RequestInfo.RequestCode,
-                        assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
-                    //dang ky ham cho client
-                    Notify(result.NotificationCodes);
-                    return RedirectToAction("Detail", "ProcessRequest",
-                        new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.REJECT_REQUEST_RENT_RACK });
+                    if (assignee == viewmodel.RequestInfo.Assignee)
+                    {
+                        var result = RequestBLO.Current.RejectRequestAssignIP(viewmodel.RequestInfo.RequestCode,
+                            assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
+                        //dang ky ham cho client
+                        Notify(result.NotificationCodes);
+                        return RedirectToAction("Detail", "ProcessRequest",
+                            new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.REJECT_REQUEST_RENT_RACK });
+                    }
+                    else
+                    {
+                        return RedirectToAction("Detail", "ProcessRequest", new
+                        {
+                            code = viewmodel.RequestInfo.RequestCode,
+                            msg = "Error! You are not authorized."
+                        });
+                    }
                 }
                 if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
                 {
                     var shifthead = GetCurrentUserName();
-                    var check = RequestBLO.Current.IsShiftHeadDoingTask(shifthead, viewmodel.RequestInfo.TaskCode);
+                    var check = RequestBLO.Current.IsShiftHeadDoingTask(viewmodel.RequestInfo.TaskCode);
                     var taskstatus = TaskBLO.Current.GetByKeys(new Task { TaskCode = viewmodel.RequestInfo.TaskCode }).StatusCode;
                     if (taskstatus == Constants.StatusCode.TASK_WAITING || taskstatus == Constants.StatusCode.TASK_NOTFINISH || check)
                     {
@@ -1409,22 +1473,33 @@ namespace IMS.Controllers
                 }
                 if (Request.Form[Constants.FormAction.REJECT_ACTION] != null)
                 {
-                    var assignee = viewmodel.RequestInfo.Assignee;
-                    if (viewmodel.RequestInfo.Assignee == null)
+                    var assignee = RequestBLO.Current.GetByKeys(new Request { RequestCode = viewmodel.RequestInfo.RequestCode }).Assignee;
+                    if (assignee == null)
                     {
                         assignee = GetCurrentUserName();
                     }
-                    var result = RequestBLO.Current.RejectRequestReturnRack(viewmodel.RequestInfo.RequestCode, assignee,
-                        viewmodel.RequestInfo.TaskCode, viewmodel.CustomerInfo.Customer, viewmodel.RequestInfo.Reason);
-                    //dang ky ham cho client
-                    Notify(result.NotificationCodes);
-                    return RedirectToAction("Detail", "ProcessRequest",
-                        new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.REJECT_REQUEST_RETURN_RACK });
+                    if (assignee == viewmodel.RequestInfo.Assignee)
+                    {
+                        var result = RequestBLO.Current.RejectRequestAssignIP(viewmodel.RequestInfo.RequestCode,
+                            assignee, viewmodel.RequestInfo.TaskCode, viewmodel.RequestInfo.Reason);
+                        //dang ky ham cho client
+                        Notify(result.NotificationCodes);
+                        return RedirectToAction("Detail", "ProcessRequest",
+                            new { code = viewmodel.RequestInfo.RequestCode, msg = Constants.Message.REJECT_REQUEST_RETURN_RACK });
+                    }
+                    else
+                    {
+                        return RedirectToAction("Detail", "ProcessRequest", new
+                        {
+                            code = viewmodel.RequestInfo.RequestCode,
+                            msg = "Error! You are not authorized."
+                        });
+                    }
                 }
                 if (Request.Form[Constants.FormAction.REASSIGN_ACTION] != null)
                 {
                     var shifthead = GetCurrentUserName();
-                    var check = RequestBLO.Current.IsShiftHeadDoingTask(shifthead, viewmodel.RequestInfo.TaskCode);
+                    var check = RequestBLO.Current.IsShiftHeadDoingTask(viewmodel.RequestInfo.TaskCode);
                     var taskstatus = TaskBLO.Current.GetByKeys(new Task { TaskCode = viewmodel.RequestInfo.TaskCode }).StatusCode;
                     if (taskstatus == Constants.StatusCode.TASK_WAITING || taskstatus == Constants.StatusCode.TASK_NOTFINISH || check)
                     {
